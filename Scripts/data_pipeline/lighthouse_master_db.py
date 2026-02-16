@@ -291,6 +291,26 @@ FRED_CURATED = {
     "RHORUSQ156N": "Homeownership Rate",
     "FIXHAI": "Housing Affordability Index",
 
+    # Housing Regional
+    "HOUSTNE": "Housing Starts Northeast",
+    "HOUSTMW": "Housing Starts Midwest",
+    "HOUSTS": "Housing Starts South",
+    "HOUSTW": "Housing Starts West",
+    "PERMITNSA": "Building Permits NSA",
+
+    # Housing Prices - Additional
+    "SPCS20RSA": "Case-Shiller 20-City Composite HPI",
+    "USSTHPI": "FHFA All-Transactions HPI",
+
+    # Housing Credit - Additional
+    "RHVRUSQ156N": "Homeowner Vacancy Rate",
+
+    # Regional Median Prices (Existing Homes)
+    "HOSMEDUSMWM052N": "Median Existing Home Price Midwest",
+    "HOSMEDUSNEM052N": "Median Existing Home Price Northeast",
+    "HOSMEDUSSOM052N": "Median Existing Home Price South",
+    "HOSMEDUSWTM052N": "Median Existing Home Price West",
+
     # Government/Fiscal
     "MTSDS133FMS": "Federal Budget Balance",
     "MTSO133FMS": "Federal Outlays Monthly",

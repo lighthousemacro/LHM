@@ -1516,7 +1516,7 @@ def chart_28():
     add_last_value_label(ax, nahb_series, color=THEME['primary'], fmt='{:.0f}')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, '21 months below 50.\nBuilders buying volume with margin.', x=0.82, y=0.88)
+    add_annotation_box(ax, '21 months below 50.\nBuilders buying volume with margin.', x=0.18, y=0.88)
 
     brand_fig(fig, 'NAHB Housing Market Index',
               subtitle='Builder Sentiment | Above 50 = Expansion',

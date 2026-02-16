@@ -398,6 +398,28 @@ FRED_CURATED = {
     "EXHOSLUSSOM495S": "Existing Home Sales South",
     "EXHOSLUSWTM495S": "Existing Home Sales West",
 
+    # Housing Prices - Extended
+    "ASPUS": "Average Sales Price All Houses Sold",
+    "ASPNHSUS": "Average Sales Price New Houses Sold",
+    "SPCS10RSA": "Case-Shiller 10-City Composite HPI",
+
+    # Housing Supply - Extended
+    "MNMFS": "Months Supply New Houses for Sale",
+    "TLRESCONS": "Total Residential Construction Spending",
+    "HOUST5F": "Housing Starts 5+ Units",
+
+    # Housing Credit - Extended
+    "BOGZ1FA893065015Q": "Home Mortgage Liabilities",
+    "HHMSDODNS": "Household Mortgage Debt Service Ratio",
+    "HNONWPDPI": "Household Net Worth to DPI Ratio",
+
+    # Shelter Inflation - Extended
+    "CPIHOSSL": "CPI Housing SA",
+
+    # Housing International Comparison (BIS)
+    "QUSR628BIS": "BIS Real Residential Property Prices US",
+    "QUSR368BIS": "BIS Nominal Residential Property Prices US",
+
     # Fiscal
     "MTSDS133FMS": "Federal Budget Balance",
     "MTSO133FMS": "Federal Outlays Monthly",

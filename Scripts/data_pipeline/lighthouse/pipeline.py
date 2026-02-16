@@ -19,6 +19,7 @@ from .market_fetchers import MarketDataFetcher
 from .crypto_free_fetchers import FreeCryptoFetcher  # Replaced TokenTerminal with free APIs
 from .breadth_fetcher import BreadthDataFetcher  # New: DIY breadth from S&P 500 components
 from .zillow_fetcher import ZillowFetcher  # Zillow ZHVI + ZORI (free public CSVs)
+from .tradingview_fetcher import TradingViewFetcher  # TradingView ECONOMICS: series (NAHB, MBA, etc.)
 from .quality import update_quality_flags
 
 # Configure logging
@@ -133,7 +134,7 @@ def run_daily_update(
 
     # Default to all sources
     if sources is None:
-        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW"]
+        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW"]
 
     # Track totals
     total_series = 0
@@ -260,6 +261,19 @@ def run_daily_update(
             logger.error(f"ZILLOW failed: {e}")
             errors.append(f"ZILLOW: {e}")
             results["ZILLOW"] = (0, 0)
+
+    if "TRADINGVIEW" in sources:
+        print("\n--- TRADINGVIEW (NAHB, MBA, Pending Home Sales) ---")
+        try:
+            fetcher = TradingViewFetcher(conn)
+            tv_series, tv_obs = fetcher.fetch_all()
+            results["TRADINGVIEW"] = (tv_series, tv_obs)
+            total_series += tv_series
+            total_obs += tv_obs
+        except Exception as e:
+            logger.error(f"TRADINGVIEW failed: {e}")
+            errors.append(f"TRADINGVIEW: {e}")
+            results["TRADINGVIEW"] = (0, 0)
 
     # Run quality checks
     if not skip_quality:

@@ -682,21 +682,17 @@ def chart_08():
     ax.plot(starts.index, starts, color=THEME['secondary'], linewidth=2.5,
             label=f'Starts ({starts.iloc[-1]:.0f}K)')
 
-    # Shade gap
     combined = pd.DataFrame({'permits': permits, 'starts': starts}).dropna()
-    ax.fill_between(combined.index, combined['permits'], combined['starts'],
-                    where=(combined['permits'] > combined['starts']),
-                    color=THEME['primary'], alpha=0.10, label='Pipeline building')
-    ax.fill_between(combined.index, combined['permits'], combined['starts'],
-                    where=(combined['permits'] < combined['starts']),
-                    color=THEME['secondary'], alpha=0.10, label='Pipeline draining')
 
     style_single_ax(ax)
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:,.0f}K'))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     set_xlim_to_data(ax, combined.index)
     add_recessions(ax, start_date='2015-01-01')
+    add_last_value_label(ax, permits, color=THEME['primary'], fmt='{:,.0f}K')
+    add_last_value_label(ax, starts, color=THEME['secondary'], fmt='{:,.0f}K')
     ax.legend(loc='upper left', **legend_style())
+    add_annotation_box(ax, "Permits lead starts by 1-2 months.\nGap = future supply pipeline.", x=0.85, y=0.90)
 
     brand_fig(fig, 'Building Permits vs. Housing Starts',
               subtitle='The Construction Pipeline',
@@ -723,9 +719,11 @@ def chart_09():
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     set_xlim_to_data(ax, under.index)
     add_recessions(ax, start_date='2015-01-01')
+    add_last_value_label(ax, under, color=THEME['primary'], fmt='{:,.0f}K')
+    add_last_value_label(ax, comp, color=THEME['secondary'], fmt='{:,.0f}K')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Under construction peaked mid-2023.\nCompletions catching up.', x=0.7, y=0.50)
+    add_annotation_box(ax, 'Under construction peaked mid-2023.\nCompletions catching up.', x=0.8, y=0.40)
 
     brand_fig(fig, 'Housing Units Under Construction vs. Completions',
               subtitle='Thousands of Units, SAAR',
@@ -760,6 +758,7 @@ def chart_10():
     add_last_value_label(ax, national, color=THEME['primary'], fmt='{:.1f}%')
     add_last_value_label(ax, city20, color=THEME['secondary'], fmt='{:.1f}%')
     ax.legend(loc='upper left', **legend_style())
+    add_annotation_box(ax, 'Low single-digit appreciation.\nTight supply supporting prices.', x=0.78, y=0.88)
 
     brand_fig(fig, 'Case-Shiller Home Price Index',
               subtitle='National vs. 20-City Composite | Year-over-Year %',
@@ -1432,6 +1431,181 @@ def chart_26():
 
 
 # ============================================
+# K. TRADINGVIEW DATA CHARTS (27-30)
+# ============================================
+def chart_27():
+    """Existing Home Sales (SAAR) vs 30Y Mortgage Rate (dual axis, inverted RHS)."""
+    print('\nChart 27: Existing Home Sales vs Mortgage Rate...')
+
+    # Full existing home sales history from TradingView (697 months back to 1968)
+    # FRED's EXHOSLUSM495S only has ~13 months after NAR restructured.
+    sales_raw = fetch_db('TV_USEHS', start='2015-01-01')
+    if sales_raw.empty:
+        print('  WARNING: TV_USEHS not in DB. Run TradingView fetcher first.')
+        return
+    sales = sales_raw['value'].dropna() / 1e6  # Convert to millions
+    rate = fetch_weekly_to_monthly('MORTGAGE30US', start='2015-01-01')
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+
+    c1, c2 = THEME['primary'], THEME['secondary']
+    ax1.plot(sales.index, sales, color=c1, linewidth=2.5,
+             label=f'Existing Home Sales ({sales.iloc[-1]:.2f}M)')
+    ax2.plot(rate.index, rate, color=c2, linewidth=2.5,
+             label=f'30Y Mortgage Rate ({rate.iloc[-1]:.2f}%)')
+
+    # Invert right axis so rising rates go down
+    ax2.invert_yaxis()
+
+    # Reference lines for key levels
+    ax1.axhline(4.5, color=COLORS['sea'], linewidth=1.0, linestyle='--', alpha=0.5,
+                label='Thaw threshold (4.5M)')
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}M'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    set_xlim_to_data(ax1, sales.index)
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax1, sales, color=c1, fmt='{:.2f}M', side='left')
+    add_last_value_label(ax2, rate, color=c2, fmt='{:.2f}%', side='right')
+    add_recessions(ax1, start_date='2015-01-01')
+    ax1.legend(loc='upper left', **legend_style())
+    ax2.legend(loc='upper right', **legend_style())
+
+    add_annotation_box(ax1, 'Sales collapsed from 6.5M to 3.9M.\nFrozen in 3.8-4.3M band since mid-2023.', x=0.80, y=0.80)
+
+    brand_fig(fig, 'Existing Home Sales vs. 30-Year Mortgage Rate',
+              subtitle='Inverted Rate Axis | The Frozen Market',
+              source='NAR via TradingView, Freddie Mac via FRED')
+    save_fig(fig, 'chart_27_existing_sales_vs_rate.png')
+
+
+def chart_28():
+    """NAHB Housing Market Index (from TradingView)."""
+    print('\nChart 28: NAHB Housing Market Index...')
+
+    nahb = fetch_db('TV_USHMI', start='2005-01-01')
+    if nahb.empty:
+        print('  WARNING: TV_USHMI not in DB. Run TradingView fetcher first.')
+        return
+
+    nahb_series = nahb['value'].dropna()
+
+    fig, ax = new_fig()
+
+    ax.plot(nahb_series.index, nahb_series, color=THEME['primary'], linewidth=2.5,
+            label=f'NAHB HMI ({nahb_series.iloc[-1]:.0f})')
+    ax.fill_between(nahb_series.index, 0, nahb_series,
+                    where=(nahb_series >= 50),
+                    color=THEME['primary'], alpha=THEME['fill_alpha'])
+    ax.fill_between(nahb_series.index, 0, nahb_series,
+                    where=(nahb_series < 50),
+                    color=THEME['secondary'], alpha=THEME['fill_alpha'])
+
+    # 50 = breakeven
+    ax.axhline(50, color=COLORS['doldrums'], linewidth=1.5, linestyle='--',
+               label='Breakeven (50)')
+
+    style_single_ax(ax)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    set_xlim_to_data(ax, nahb_series.index)
+    add_recessions(ax, start_date='2005-01-01')
+    add_last_value_label(ax, nahb_series, color=THEME['primary'], fmt='{:.0f}')
+    ax.legend(loc='upper left', **legend_style())
+
+    add_annotation_box(ax, '21 months below 50.\nBuilders buying volume with margin.', x=0.82, y=0.88)
+
+    brand_fig(fig, 'NAHB Housing Market Index',
+              subtitle='Builder Sentiment | Above 50 = Expansion',
+              source='NAHB via TradingView')
+    save_fig(fig, 'chart_28_nahb_hmi.png')
+
+
+def chart_29():
+    """MBA Purchase Application Index (from TradingView)."""
+    print('\nChart 29: MBA Purchase Application Index...')
+
+    mba = fetch_db('TV_USPIND', start='2010-01-01')
+    if mba.empty:
+        print('  WARNING: TV_USPIND not in DB. Run TradingView fetcher first.')
+        return
+
+    mba_series = mba['value'].dropna()
+    # Smooth with 3-month MA for readability (weekly data stored as monthly)
+    mba_smooth = mba_series.rolling(3, min_periods=1).mean()
+
+    fig, ax = new_fig()
+
+    ax.plot(mba_smooth.index, mba_smooth, color=THEME['primary'], linewidth=2.5,
+            label=f'MBA Purchase Index 3m MA ({mba_smooth.iloc[-1]:.0f})')
+    ax.plot(mba_series.index, mba_series, color=THEME['primary'], linewidth=0.8,
+            alpha=0.3)
+
+    # Pre-pandemic average (2017-2019)
+    pre_pandemic = mba_series.loc['2017-01-01':'2019-12-31'].mean()
+    ax.axhline(pre_pandemic, color=COLORS['doldrums'], linewidth=1.0, linestyle='--',
+               label=f'2017-2019 Avg ({pre_pandemic:.0f})')
+
+    style_single_ax(ax)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:,.0f}'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    set_xlim_to_data(ax, mba_smooth.index)
+    add_recessions(ax, start_date='2010-01-01')
+    add_last_value_label(ax, mba_smooth, color=THEME['primary'], fmt='{:,.0f}')
+    ax.legend(loc='upper left', **legend_style())
+
+    add_annotation_box(ax, 'Highest-frequency demand signal.\nLeads sales by 4-8 weeks.', x=0.78, y=0.88)
+
+    brand_fig(fig, 'MBA Purchase Application Index',
+              subtitle='Mortgage Demand | 3-Month Moving Average',
+              source='Mortgage Bankers Association via TradingView')
+    save_fig(fig, 'chart_29_mba_purchase.png')
+
+
+def chart_30():
+    """Pending Home Sales YoY% (from TradingView)."""
+    print('\nChart 30: Pending Home Sales YoY%...')
+
+    phs = fetch_db('TV_USPHSIYY', start='2010-01-01')
+    if phs.empty:
+        print('  WARNING: TV_USPHSIYY not in DB. Run TradingView fetcher first.')
+        return
+
+    phs_series = phs['value'].dropna()
+
+    fig, ax = new_fig()
+
+    ax.plot(phs_series.index, phs_series, color=THEME['primary'], linewidth=2.5,
+            label=f'Pending Home Sales YoY% ({phs_series.iloc[-1]:.1f}%)')
+    ax.fill_between(phs_series.index, 0, phs_series,
+                    where=(phs_series >= 0),
+                    color=THEME['primary'], alpha=THEME['fill_alpha'])
+    ax.fill_between(phs_series.index, 0, phs_series,
+                    where=(phs_series < 0),
+                    color=THEME['secondary'], alpha=THEME['fill_alpha'])
+
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--')
+
+    style_single_ax(ax)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    set_xlim_to_data(ax, phs_series.index)
+    add_recessions(ax, start_date='2010-01-01')
+    add_last_value_label(ax, phs_series, color=THEME['primary'], fmt='{:.1f}%')
+    ax.legend(loc='upper left', **legend_style())
+
+    add_annotation_box(ax, 'Pending sales = signed contracts.\nLeads closings by 1-2 months.', x=0.78, y=0.15)
+
+    brand_fig(fig, 'Pending Home Sales',
+              subtitle='Year-over-Year % Change',
+              source='NAR via TradingView')
+    save_fig(fig, 'chart_30_pending_home_sales.png')
+
+
+# ============================================
 # CHART MAP & MAIN
 # ============================================
 CHART_MAP = {
@@ -1461,12 +1635,16 @@ CHART_MAP = {
     24: chart_24,
     25: chart_25,
     26: chart_26,
+    27: chart_27,
+    28: chart_28,
+    29: chart_29,
+    30: chart_30,
 }
 
 
 def main():
     parser = argparse.ArgumentParser(description='Generate Housing educational charts')
-    parser.add_argument('--chart', type=int, help='Chart number to generate (1-26)')
+    parser.add_argument('--chart', type=int, help='Chart number to generate (1-30)')
     parser.add_argument('--theme', default='both', choices=['dark', 'white', 'both'],
                         help='Theme to generate')
     parser.add_argument('--all', action='store_true', help='Generate all charts')

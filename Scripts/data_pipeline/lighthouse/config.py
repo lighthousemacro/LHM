@@ -392,6 +392,12 @@ FRED_CURATED = {
     "HOSMEDUSSOM052N": "Median Existing Home Price South",
     "HOSMEDUSWTM052N": "Median Existing Home Price West",
 
+    # Regional Existing Home Sales
+    "EXHOSLUSNEM495S": "Existing Home Sales Northeast",
+    "EXHOSLUSMWM495S": "Existing Home Sales Midwest",
+    "EXHOSLUSSOM495S": "Existing Home Sales South",
+    "EXHOSLUSWTM495S": "Existing Home Sales West",
+
     # Fiscal
     "MTSDS133FMS": "Federal Budget Balance",
     "MTSO133FMS": "Federal Outlays Monthly",

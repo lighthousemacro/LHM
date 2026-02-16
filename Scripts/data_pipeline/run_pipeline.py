@@ -73,7 +73,7 @@ def main():
     parser.add_argument("--quick", action="store_true", help="Skip quality checks")
     parser.add_argument("--fred-only", action="store_true", help="Only update FRED")
     parser.add_argument("--sources", nargs="+",
-                       choices=["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO"],
+                       choices=["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "ZILLOW"],
                        help="Only update specific sources")
     parser.add_argument("--skip-indices", action="store_true",
                        help="Skip proprietary index computation")

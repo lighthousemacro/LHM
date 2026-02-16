@@ -18,6 +18,7 @@ from .fetchers import FREDFetcher, BLSFetcher, BEAFetcher, NYFedFetcher, OFRFetc
 from .market_fetchers import MarketDataFetcher
 from .crypto_free_fetchers import FreeCryptoFetcher  # Replaced TokenTerminal with free APIs
 from .breadth_fetcher import BreadthDataFetcher  # New: DIY breadth from S&P 500 components
+from .zillow_fetcher import ZillowFetcher  # Zillow ZHVI + ZORI (free public CSVs)
 from .quality import update_quality_flags
 
 # Configure logging
@@ -132,7 +133,7 @@ def run_daily_update(
 
     # Default to all sources
     if sources is None:
-        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH"]
+        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW"]
 
     # Track totals
     total_series = 0
@@ -246,6 +247,19 @@ def run_daily_update(
             logger.error(f"BREADTH failed: {e}")
             errors.append(f"BREADTH: {e}")
             results["BREADTH"] = (0, 0)
+
+    if "ZILLOW" in sources:
+        print("\n--- ZILLOW (ZHVI + ZORI) ---")
+        try:
+            fetcher = ZillowFetcher(conn)
+            zillow_series, zillow_obs = fetcher.fetch_all()
+            results["ZILLOW"] = (zillow_series, zillow_obs)
+            total_series += zillow_series
+            total_obs += zillow_obs
+        except Exception as e:
+            logger.error(f"ZILLOW failed: {e}")
+            errors.append(f"ZILLOW: {e}")
+            results["ZILLOW"] = (0, 0)
 
     # Run quality checks
     if not skip_quality:

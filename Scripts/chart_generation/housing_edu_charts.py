@@ -17,6 +17,7 @@ import argparse
 import time
 import ssl
 import certifi
+import sqlite3
 from datetime import datetime
 import pandas as pd
 import numpy as np
@@ -180,6 +181,39 @@ def rolling_zscore(series, window=60):
     mu = series.rolling(window, min_periods=24).mean()
     sigma = series.rolling(window, min_periods=24).std()
     return (series - mu) / sigma
+
+
+def fetch_db(series_id, start='2000-01-01'):
+    """Fetch a series from the master DB (for Zillow and other non-FRED data)."""
+    cache_key = f"db_{series_id}_{start}"
+    if cache_key in _DATA_CACHE:
+        return _DATA_CACHE[cache_key].copy()
+
+    conn = sqlite3.connect(DB_PATH)
+    df = pd.read_sql(
+        "SELECT date, value FROM observations WHERE series_id = ? AND date >= ? ORDER BY date",
+        conn, params=(series_id, start)
+    )
+    conn.close()
+
+    if df.empty:
+        return pd.DataFrame(columns=['value'])
+
+    df['date'] = pd.to_datetime(df['date'])
+    df = df.set_index('date')
+    _DATA_CACHE[cache_key] = df.copy()
+    return df
+
+
+def fetch_db_yoy(series_id, start='1999-01-01', trim='2000-01-01'):
+    """Fetch DB series, compute YoY%, trim."""
+    df = fetch_db(series_id, start=start)
+    if df.empty:
+        return pd.Series(dtype=float)
+    df['yoy'] = df['value'].pct_change(12, fill_method=None) * 100
+    if trim:
+        df = df.loc[trim:]
+    return df['yoy'].dropna()
 
 
 def align_yaxis_zero(a1, a2):
@@ -361,21 +395,21 @@ def save_fig(fig, filename):
 # A. DEMAND CHARTS (1-5)
 # ============================================
 def chart_01():
-    """Existing Home Sales vs 30Y Mortgage Rate (dual axis, inverted RHS)."""
-    print('\nChart 1: Existing Home Sales vs Mortgage Rate...')
+    """New Home Sales vs 30Y Mortgage Rate (dual axis, inverted RHS)."""
+    print('\nChart 1: New Home Sales vs Mortgage Rate...')
 
-    sales = fetch_fred_level('EXHOSLUSM495S', start='2018-01-01')
+    # NOTE: EXHOSLUSM495S (Existing Home Sales) was restructured on FRED in 2025
+    # and only has ~13 months of history. Using HSN1F (New Home Sales) instead
+    # which has full history and shows the same rate-sensitivity story.
+    sales = fetch_fred_level('HSN1F', start='2018-01-01')
     rate = fetch_weekly_to_monthly('MORTGAGE30US', start='2018-01-01')
-
-    # Sales are in thousands, convert to millions
-    sales = sales / 1000
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
 
     c1, c2 = THEME['primary'], THEME['secondary']
     ax1.plot(sales.index, sales, color=c1, linewidth=2.5,
-             label=f'Existing Home Sales SAAR ({sales.iloc[-1]:.2f}M)')
+             label=f'New Home Sales SAAR ({sales.iloc[-1]:,.0f}K)')
     ax2.plot(rate.index, rate, color=c2, linewidth=2.5,
              label=f'30Y Mortgage Rate ({rate.iloc[-1]:.2f}%)')
 
@@ -383,34 +417,37 @@ def chart_01():
     ax2.invert_yaxis()
 
     style_dual_ax(ax1, ax2, c1, c2)
-    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}M'))
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:,.0f}K'))
     ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
     set_xlim_to_data(ax1, sales.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax1, sales, color=c1, fmt='{:.2f}M', side='left')
+    add_last_value_label(ax1, sales, color=c1, fmt='{:,.0f}K', side='left')
     add_last_value_label(ax2, rate, color=c2, fmt='{:.2f}%', side='right')
     add_recessions(ax1, start_date='2018-01-01')
     ax1.legend(loc='upper left', **legend_style())
     ax2.legend(loc='upper right', **legend_style())
 
-    add_annotation_box(ax1, 'Volume collapsed as rates doubled.\nThe frozen equilibrium.', x=0.65, y=0.45)
+    add_annotation_box(ax1, 'Sales cratered as rates doubled.\nBuilders adapted with rate buydowns.', x=0.78, y=0.65)
 
-    brand_fig(fig, 'Existing Home Sales vs. 30-Year Mortgage Rate',
-              subtitle='Inverted Rate Axis | Volume-Rate Divergence',
-              source='NAR, Freddie Mac via FRED')
+    brand_fig(fig, 'New Home Sales vs. 30-Year Mortgage Rate',
+              subtitle='Inverted Rate Axis | 2018-Present',
+              source='Census Bureau, Freddie Mac via FRED')
     save_fig(fig, 'chart_01_sales_vs_rate.png')
 
 
 def chart_02():
-    """Regional Median Existing Home Prices YoY%."""
-    print('\nChart 2: Regional Median Home Prices YoY%...')
+    """Regional Home Prices YoY% via Case-Shiller city indices."""
+    print('\nChart 2: Regional Home Prices YoY% (Case-Shiller)...')
 
+    # NOTE: NAR regional median price series (HOSMEDUS*) were restructured on FRED
+    # in 2025 and only have ~13 months of history. Using Case-Shiller city indices
+    # as regional proxies instead (full history).
     regions = {
-        'Northeast': ('HOSMEDUSNEM052N', THEME['primary']),
-        'Midwest': ('HOSMEDUSMWM052N', THEME['quaternary']),
-        'South': ('HOSMEDUSSOM052N', THEME['secondary']),
-        'West': ('HOSMEDUSWTM052N', THEME['tertiary']),
+        'New York': ('NYXRSA', THEME['primary']),
+        'Chicago': ('CHXRSA', THEME['quaternary']),
+        'Atlanta': ('ATXRSA', THEME['secondary']),
+        'San Francisco': ('SFXRSA', THEME['tertiary']),
     }
 
     fig, ax = new_fig()
@@ -432,89 +469,87 @@ def chart_02():
     add_recessions(ax, start_date='2019-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'K-shaped divergence: Northeast vs Sun Belt.', x=0.5, y=0.15)
+    add_annotation_box(ax, 'Sun Belt cooled sharply. Northeast resilient.', x=0.72, y=0.85)
 
-    brand_fig(fig, 'Regional Median Existing Home Prices',
+    brand_fig(fig, 'Regional Home Prices: Case-Shiller City Indices',
               subtitle='Year-over-Year % Change',
-              source='NAR via FRED')
+              source='S&P CoreLogic Case-Shiller via FRED')
     save_fig(fig, 'chart_02_regional_prices_yoy.png')
 
 
 def chart_03():
-    """New Home Sales as % of Total Sales."""
-    print('\nChart 3: New Home Sales as % of Total...')
+    """New Home Sales (SAAR) long history — builder market share proxy."""
+    print('\nChart 3: New Home Sales Level (Builder Market Share)...')
 
+    # NOTE: EXHOSLUSM495S (existing home sales) only has 13 months on FRED
+    # after NAR restructured. Can't compute new/total ratio with long history.
+    # Showing new home sales level instead — the recovery from 2022 lows
+    # while existing sales remain frozen tells the builder market share story.
     new = fetch_fred_level('HSN1F', start='2005-01-01')
-    existing = fetch_fred_level('EXHOSLUSM495S', start='2005-01-01')
-
-    # Align indices
-    combined = pd.DataFrame({'new': new, 'existing': existing}).dropna()
-    ratio = combined['new'] / (combined['new'] + combined['existing']) * 100
 
     fig, ax = new_fig()
 
-    ax.fill_between(ratio.index, 0, ratio, color=THEME['primary'], alpha=THEME['fill_alpha'])
-    ax.plot(ratio.index, ratio, color=THEME['primary'], linewidth=2.5,
-            label=f'New / Total Sales ({ratio.iloc[-1]:.1f}%)')
+    ax.fill_between(new.index, 0, new, color=THEME['primary'], alpha=THEME['fill_alpha'])
+    ax.plot(new.index, new, color=THEME['primary'], linewidth=2.5,
+            label=f'New Home Sales SAAR ({new.iloc[-1]:,.0f}K)')
 
-    # Historical average line
-    hist_avg = ratio.loc[:'2019-12-31'].mean()
+    # Pre-pandemic average
+    hist_avg = new.loc['2015-01-01':'2019-12-31'].mean()
     ax.axhline(hist_avg, color=COLORS['doldrums'], linewidth=1.0, linestyle='--',
-               label=f'Pre-2020 Average ({hist_avg:.1f}%)')
+               label=f'2015-2019 Average ({hist_avg:,.0f}K)')
 
     style_single_ax(ax)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:,.0f}K'))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    set_xlim_to_data(ax, ratio.index)
+    set_xlim_to_data(ax, new.index)
     add_recessions(ax, start_date='2005-01-01')
-    add_last_value_label(ax, ratio, color=THEME['primary'], fmt='{:.1f}%')
+    add_last_value_label(ax, new, color=THEME['primary'], fmt='{:,.0f}K')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Builders filling the lock-in void.\nResale market dysfunction.', x=0.7, y=0.85)
+    add_annotation_box(ax, 'Builders recovered via rate buydowns\nwhile resale market stays frozen.', x=0.45, y=0.93)
 
-    brand_fig(fig, 'New Home Sales as % of Total Home Sales',
-              subtitle='Builder Market Share Rising',
-              source='Census, NAR via FRED')
+    brand_fig(fig, 'New Home Sales: Builders Filling the Void',
+              subtitle='Seasonally Adjusted Annual Rate (Thousands) | 2005-Present',
+              source='Census Bureau via FRED')
     save_fig(fig, 'chart_03_new_pct_of_total.png')
 
 
 def chart_04():
-    """Mortgage Rate vs Housing Affordability Index (dual axis)."""
-    print('\nChart 4: Mortgage Rate vs Affordability Index...')
+    """Mortgage Rate vs Mortgage Debt Service as % of DPI (dual axis)."""
+    print('\nChart 4: Mortgage Rate vs Debt Service Burden...')
 
-    rate = fetch_weekly_to_monthly('MORTGAGE30US', start='2018-01-01')
-    afford = fetch_fred_level('FIXHAI', start='2018-01-01')
+    # NOTE: FIXHAI (NAR Affordability Index) was restructured on FRED in 2025
+    # and only has ~13 months of history. Using MDSP (Mortgage Debt Service
+    # Payments as % of Disposable Income) instead — quarterly, back to 2005.
+    rate = fetch_weekly_to_monthly('MORTGAGE30US', start='2005-01-01')
+    mdsp = fetch_fred_level('MDSP', start='2005-01-01')
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
 
-    c1, c2 = THEME['quaternary'], THEME['secondary']
-    ax1.plot(afford.index, afford, color=c1, linewidth=2.5,
-             label=f'Affordability Index ({afford.iloc[-1]:.0f})')
+    c1, c2 = THEME['primary'], THEME['secondary']
+    ax1.plot(mdsp.index, mdsp, color=c1, linewidth=2.5,
+             label=f'Mortgage Debt Service / DPI ({mdsp.iloc[-1]:.1f}%)')
     ax2.plot(rate.index, rate, color=c2, linewidth=2.5,
-             label=f'30Y Mortgage Rate ({rate.iloc[-1]:.2f}%)')
-
-    # Breakeven line at 100
-    ax1.axhline(100, color=COLORS['venus'], linewidth=1.5, linestyle='-',
-                label='Breakeven (100)', alpha=0.8)
-
-    ax2.invert_yaxis()
+             label=f'30Y Mortgage Rate ({rate.iloc[-1]:.1f}%)')
 
     style_dual_ax(ax1, ax2, c1, c2)
-    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
     ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
     set_xlim_to_data(ax1, rate.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax1, afford, color=c1, fmt='{:.0f}', side='left')
-    add_last_value_label(ax2, rate, color=c2, fmt='{:.2f}%', side='right')
-    add_recessions(ax1, start_date='2018-01-01')
-    ax1.legend(loc='lower left', **legend_style())
-    ax2.legend(loc='lower right', **legend_style())
+    add_last_value_label(ax1, mdsp, color=c1, fmt='{:.1f}%', side='left')
+    add_last_value_label(ax2, rate, color=c2, fmt='{:.1f}%', side='right')
+    add_recessions(ax1, start_date='2005-01-01')
+    ax1.legend(loc='upper left', **legend_style())
+    ax2.legend(loc='upper right', **legend_style())
 
-    brand_fig(fig, '30-Year Mortgage Rate vs. Housing Affordability Index',
-              subtitle='Below 100 = Median Income Cannot Afford Median Home',
-              source='Freddie Mac, NAR via FRED')
+    add_annotation_box(ax1, 'Rates doubled but debt service stayed\nbelow 2007 peak. Lock-in effect at work.', x=0.55, y=0.80)
+
+    brand_fig(fig, 'Mortgage Rate vs. Debt Service Burden',
+              subtitle='Mortgage Payments as % of Disposable Income | 2005-Present',
+              source='Freddie Mac, Federal Reserve via FRED')
     save_fig(fig, 'chart_04_rate_vs_affordability.png')
 
 
@@ -537,7 +572,7 @@ def chart_05():
 
     fig, ax = new_fig()
 
-    bar_colors = [THEME['quaternary'], THEME['quaternary'], THEME['primary'],
+    bar_colors = [THEME['quaternary'], THEME['tertiary'], THEME['primary'],
                   THEME['secondary'], THEME['accent']]
     bars = ax.bar(range(len(rates)), payments, color=bar_colors, width=0.6, edgecolor='none')
 
@@ -593,7 +628,7 @@ def chart_06():
     add_recessions(ax, start_date='2015-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'MF boom unwinding.\nSF stuck in narrow range.', x=0.75, y=0.85)
+    add_annotation_box(ax, 'SF drives the cycle.\nMF a fraction of total.', x=0.87, y=0.93)
 
     brand_fig(fig, 'Housing Starts: Single-Family vs. Multi-Family',
               subtitle='Thousands of Units, SAAR',
@@ -923,7 +958,7 @@ def chart_15():
     add_last_value_label(ax, dq, color=THEME['secondary'], fmt='{:.2f}%')
     ax.legend(loc='upper right', **legend_style())
 
-    add_annotation_box(ax, 'Not 2008. Credit channel is not engaged.\nBorrower profiles historically strong.', x=0.65, y=0.65)
+    add_annotation_box(ax, 'Not 2008. Credit channel is not engaged.\nBorrower profiles historically strong.', x=0.65, y=0.75)
 
     brand_fig(fig, 'Mortgage Delinquency Rate (30+ Days)',
               subtitle='Single-Family Residential | All Commercial Banks',
@@ -1077,12 +1112,13 @@ def chart_20():
     """Tariff Cost Impact bar chart (static data)."""
     print('\nChart 20: Tariff Cost Impact...')
 
-    materials = ['Canadian Softwood\nLumber', 'Steel\n(Structural)', 'Chinese Fixtures\n& Cabinets',
-                 'Copper\n(Wiring/Plumbing)', 'Aluminum', 'Appliances']
+    materials = ['Lumber', 'Steel', 'Fixtures & Cabinets',
+                 'Copper', 'Aluminum', 'Appliances']
     costs = [6500, 4000, 3000, 2250, 1500, 1250]
     total = sum(costs)
 
     fig, ax = new_fig()
+    fig.subplots_adjust(left=0.17)
 
     # Horizontal bar chart, sorted by cost
     y_pos = range(len(materials))
@@ -1094,7 +1130,7 @@ def chart_20():
     # Labels
     all_labels = materials + ['TOTAL']
     ax.set_yticks(range(len(all_labels)))
-    ax.set_yticklabels(all_labels, fontsize=10, color=THEME['fg'])
+    ax.set_yticklabels(all_labels, fontsize=11, color=THEME['fg'])
 
     # Value labels
     for i, (cost, label) in enumerate(zip(costs + [total], all_labels)):
@@ -1184,6 +1220,218 @@ def chart_21():
 
 
 # ============================================
+# I. ZILLOW DATA (Charts 22-24)
+# ============================================
+def chart_22():
+    """Zillow ZORI YoY% vs CPI Shelter YoY% (leading indicator relationship)."""
+    print('\nChart 22: Zillow ZORI vs CPI Shelter (Lead/Lag)...')
+
+    # ZORI from DB
+    zori_yoy = fetch_db_yoy('ZILLOW_ZORI_NATIONAL', start='2014-01-01', trim='2016-01-01')
+
+    # CPI Shelter YoY from FRED
+    shelter_yoy = fetch_fred_yoy('CUSR0000SAH1', start='2014-01-01', trim='2016-01-01')
+
+    fig, ax = new_fig()
+    ax2 = ax.twinx()
+
+    ax2.plot(zori_yoy.index, zori_yoy, color=THEME['primary'], linewidth=2.5,
+             label=f'Zillow ZORI YoY% ({zori_yoy.iloc[-1]:.1f}%)')
+    ax.plot(shelter_yoy.index, shelter_yoy, color=THEME['secondary'], linewidth=2.5,
+            label=f'CPI Shelter YoY% ({shelter_yoy.iloc[-1]:.1f}%)')
+
+    c1, c2 = THEME['secondary'], THEME['primary']
+    style_dual_ax(ax, ax2, c1, c2)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    common_start = max(zori_yoy.index.min(), shelter_yoy.index.min())
+    common_end = max(zori_yoy.index.max(), shelter_yoy.index.max())
+    set_xlim_to_data(ax, pd.date_range(common_start, common_end))
+    align_yaxis_zero(ax, ax2)
+
+    add_last_value_label(ax2, zori_yoy, color=THEME['primary'], fmt='{:.1f}%')
+    add_last_value_label(ax, shelter_yoy, color=THEME['secondary'], fmt='{:.1f}%', side='left')
+
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax.legend(h2 + h1, l2 + l1, loc='upper left', **legend_style())
+
+    add_annotation_box(ax, 'ZORI leads CPI Shelter by 12-18 months.\nMarket rents peaked 2022, shelter CPI peaked 2024.', x=0.22, y=0.70)
+
+    brand_fig(fig, 'Zillow ZORI vs CPI Shelter Inflation',
+              subtitle='Market Rents Lead Official Shelter CPI by 12-18 Months',
+              source='Zillow, BLS via FRED')
+    save_fig(fig, 'chart_22_zori_vs_shelter.png')
+
+
+def chart_23():
+    """Zillow ZHVI YoY% vs Case-Shiller National YoY%."""
+    print('\nChart 23: Zillow ZHVI vs Case-Shiller (Lead/Lag)...')
+
+    zhvi_yoy = fetch_db_yoy('ZILLOW_ZHVI_NATIONAL', start='1999-01-01', trim='2001-01-01')
+    cs_yoy = fetch_fred_yoy('CSUSHPINSA', start='1999-01-01', trim='2001-01-01')
+
+    fig, ax = new_fig()
+
+    ax.plot(zhvi_yoy.index, zhvi_yoy, color=THEME['primary'], linewidth=2.5,
+            label=f'Zillow ZHVI YoY% ({zhvi_yoy.iloc[-1]:.1f}%)')
+    ax.plot(cs_yoy.index, cs_yoy, color=THEME['secondary'], linewidth=2.5,
+            label=f'Case-Shiller National YoY% ({cs_yoy.iloc[-1]:.1f}%)')
+
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_single_ax(ax)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    common_start = max(zhvi_yoy.index.min(), cs_yoy.index.min())
+    common_end = max(zhvi_yoy.index.max(), cs_yoy.index.max())
+    set_xlim_to_data(ax, pd.date_range(common_start, common_end))
+    add_recessions(ax, start_date=str(common_start.date()))
+
+    add_last_value_label(ax, zhvi_yoy, color=THEME['primary'], fmt='{:.1f}%')
+    ax.legend(loc='upper left', **legend_style())
+
+    add_annotation_box(ax, 'ZHVI leads Case-Shiller by 1-2 months.\nBroader coverage (all homes vs repeat sales).', x=0.55, y=0.90)
+
+    brand_fig(fig, 'Zillow ZHVI vs Case-Shiller National',
+              subtitle='Home Price Indices Year-over-Year',
+              source='Zillow, S&P/Case-Shiller via FRED')
+    save_fig(fig, 'chart_23_zhvi_vs_case_shiller.png')
+
+
+def chart_24():
+    """Regional Existing Home Sales (NE, MW, S, W)."""
+    print('\nChart 24: Regional Existing Home Sales...')
+
+    # NOTE: Regional existing home sales series (EXHOSLUS*) were added to FRED
+    # in 2025 and only have ~13 months of history. Set start accordingly.
+    regions = {
+        'Northeast': fetch_fred_level('EXHOSLUSNEM495S', start='2024-01-01'),
+        'Midwest': fetch_fred_level('EXHOSLUSMWM495S', start='2024-01-01'),
+        'South': fetch_fred_level('EXHOSLUSSOM495S', start='2024-01-01'),
+        'West': fetch_fred_level('EXHOSLUSWTM495S', start='2024-01-01'),
+    }
+    colors_map = [THEME['primary'], THEME['secondary'], THEME['tertiary'], THEME['quaternary']]
+
+    fig, ax = new_fig()
+
+    for (name, data), color in zip(regions.items(), colors_map):
+        # Convert to thousands for readability
+        data_k = data / 1e3
+        ax.plot(data_k.index, data_k, color=color, linewidth=2.5,
+                label=f'{name} ({data_k.iloc[-1]:,.0f}K)')
+
+    style_single_ax(ax)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:,.0f}K'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b\n%Y'))
+    # Use South (largest) for x limits
+    set_xlim_to_data(ax, regions['South'].index)
+    ax.legend(loc='upper right', **legend_style())
+
+    brand_fig(fig, 'Existing Home Sales by Region',
+              subtitle='Seasonally Adjusted Annual Rate (SAAR) | 2025-2026',
+              source='NAR via FRED')
+    save_fig(fig, 'chart_24_regional_existing_sales.png')
+
+
+# ============================================
+# J. ARTICLE-SPECIFIC CHARTS (Charts 25-26)
+# ============================================
+def chart_25():
+    """New Home Inventory and Months' Supply (for article Figure 8)."""
+    print('\nChart 25: New Home Inventory + Months Supply...')
+
+    # NOTE: Existing home inventory (HOSINVUSM495N) only has 13 months on FRED.
+    # Using new home inventory (MNMFS) and months supply (MSACSR) instead —
+    # full history back to 2005. Tells the supply glut/deficit story clearly.
+    inv = fetch_fred_level('MNMFS', start='2005-01-01')   # New homes for sale (thousands)
+    ms = fetch_fred_level('MSACSR', start='2005-01-01')    # Months supply
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+
+    c1, c2 = THEME['primary'], THEME['secondary']
+
+    ax1.plot(inv.index, inv, color=c1, linewidth=2.5,
+             label=f'New Homes For Sale ({inv.iloc[-1]:,.0f}K)')
+
+    # Line for months supply
+    ax2.plot(ms.index, ms, color=c2, linewidth=2.5,
+             label=f'Months Supply ({ms.iloc[-1]:.1f})')
+
+    # Balanced market reference
+    ax2.axhline(6.0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.5,
+                label='6 mo = Balanced Market')
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:,.0f}K'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f} mo'))
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    set_xlim_to_data(ax1, inv.index)
+    add_recessions(ax1, start_date='2005-01-01')
+
+    add_last_value_label(ax1, inv, color=c1, fmt='{:,.0f}K', side='left')
+    add_last_value_label(ax2, ms, color=c2, fmt='{:.1f} mo')
+
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
+
+    add_annotation_box(ax1, 'Inventory elevated vs 2020 lows\nbut months supply rising on weak demand.', x=0.45, y=0.93)
+
+    brand_fig(fig, 'New Home Inventory and Months\' Supply',
+              subtitle='Homes For Sale (Thousands) vs. Months at Current Sales Pace',
+              source='Census Bureau via FRED')
+    save_fig(fig, 'chart_25_inventory_months_supply.png')
+
+
+def chart_26():
+    """ZORI YoY% and Rental Vacancy Rate (for article Figure 11)."""
+    print('\nChart 26: ZORI YoY + Rental Vacancy...')
+
+    zori_yoy = fetch_db_yoy('ZILLOW_ZORI_NATIONAL', start='2016-01-01', trim='2017-01-01')
+    vacancy = fetch_quarterly_level('RRVRUSQ156N', start='2017-01-01')
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+
+    c1, c2 = THEME['secondary'], THEME['primary']
+
+    ax1.plot(zori_yoy.index, zori_yoy, color=c1, linewidth=2.5,
+             label=f'ZORI YoY% ({zori_yoy.iloc[-1]:.1f}%)')
+    ax2.plot(vacancy.index, vacancy, color=c2, linewidth=2.5,
+             label=f'Rental Vacancy Rate ({vacancy.iloc[-1]:.1f}%)')
+
+    # Invert ZORI axis so falling rent growth goes up (visually correlated with rising vacancy)
+    ax1.invert_yaxis()
+
+    ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    common_start = max(zori_yoy.index.min(), vacancy.index.min())
+    common_end = max(zori_yoy.index.max(), vacancy.index.max())
+    set_xlim_to_data(ax1, pd.date_range(common_start, common_end))
+
+    add_last_value_label(ax1, zori_yoy, color=c1, fmt='{:.1f}%', side='left')
+    add_last_value_label(ax2, vacancy, color=c2, fmt='{:.1f}%')
+
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
+
+    add_annotation_box(ax1, 'MF completion wave pushing vacancy higher.\nRent growth normalized from 15%+ to <2%.', x=0.60, y=0.92)
+
+    brand_fig(fig, 'Zillow ZORI YoY% and Rental Vacancy Rate',
+              subtitle='Rent Growth Normalizing as Multifamily Supply Delivers',
+              source='Zillow, Census via FRED')
+    save_fig(fig, 'chart_26_zori_vacancy.png')
+
+
+# ============================================
 # CHART MAP & MAIN
 # ============================================
 CHART_MAP = {
@@ -1208,12 +1456,17 @@ CHART_MAP = {
     19: chart_19,
     20: chart_20,
     21: chart_21,
+    22: chart_22,
+    23: chart_23,
+    24: chart_24,
+    25: chart_25,
+    26: chart_26,
 }
 
 
 def main():
     parser = argparse.ArgumentParser(description='Generate Housing educational charts')
-    parser.add_argument('--chart', type=int, help='Chart number to generate (1-21)')
+    parser.add_argument('--chart', type=int, help='Chart number to generate (1-26)')
     parser.add_argument('--theme', default='both', choices=['dark', 'white', 'both'],
                         help='Theme to generate')
     parser.add_argument('--all', action='store_true', help='Generate all charts')

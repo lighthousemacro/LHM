@@ -1495,14 +1495,27 @@ def chart_28():
 
     fig, ax = new_fig()
 
-    ax.plot(nahb_series.index, nahb_series, color=THEME['primary'], linewidth=2.5,
+    import numpy as np
+    import matplotlib.collections as mcoll
+    # Single line, blue above 50, orange below 50
+    points = np.array([mdates.date2num(nahb_series.index), nahb_series.values]).T.reshape(-1, 1, 2)
+    segments = np.concatenate([points[:-1], points[1:]], axis=1)
+    # Color each segment by midpoint value
+    midpoints = (nahb_series.values[:-1] + nahb_series.values[1:]) / 2
+    colors = [THEME['primary'] if m >= 50 else THEME['secondary'] for m in midpoints]
+    lc = mcoll.LineCollection(segments, colors=colors, linewidths=2.5, zorder=3)
+    ax.add_collection(lc)
+    # Dummy for legend
+    ax.plot([], [], color=THEME['primary'], linewidth=2.5,
             label=f'NAHB HMI ({nahb_series.iloc[-1]:.0f})')
-    ax.fill_between(nahb_series.index, 0, nahb_series,
+    ax.fill_between(nahb_series.index, 50, nahb_series,
                     where=(nahb_series >= 50),
-                    color=THEME['primary'], alpha=THEME['fill_alpha'])
-    ax.fill_between(nahb_series.index, 0, nahb_series,
+                    color=THEME['primary'], alpha=THEME['fill_alpha'],
+                    interpolate=True)
+    ax.fill_between(nahb_series.index, 50, nahb_series,
                     where=(nahb_series < 50),
-                    color=THEME['secondary'], alpha=THEME['fill_alpha'])
+                    color=THEME['secondary'], alpha=THEME['fill_alpha'],
+                    interpolate=True)
 
     # 50 = breakeven
     ax.axhline(50, color=COLORS['doldrums'], linewidth=1.5, linestyle='--',
@@ -1513,7 +1526,8 @@ def chart_28():
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     set_xlim_to_data(ax, nahb_series.index)
     add_recessions(ax, start_date='2005-01-01')
-    add_last_value_label(ax, nahb_series, color=THEME['primary'], fmt='{:.0f}')
+    pill_color = THEME['primary'] if nahb_series.iloc[-1] >= 50 else THEME['secondary']
+    add_last_value_label(ax, nahb_series, color=pill_color, fmt='{:.0f}')
     ax.legend(loc='upper left', **legend_style())
 
     add_annotation_box(ax, '21 months below 50.\nBuilders buying volume with margin.', x=0.18, y=0.88)

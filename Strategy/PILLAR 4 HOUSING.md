@@ -999,35 +999,6 @@ These are the thresholds that, when breached, demand attention and potential reg
 
 ---
 
-## Data Sources Master Reference
-
-| **Source** | **URL** | **Indicators Covered** | **Frequency** |
-|---|---|---|---|
-| **Census Bureau** | census.gov/construction | Starts, permits, completions, new sales, spending | Monthly |
-| **NAR** | nar.realtor/research-and-statistics | Existing sales, prices, inventory, affordability, buyer profile | Monthly |
-| **NAHB** | nahb.org/news-and-economics | Builder confidence, housing market index | Monthly |
-| **Freddie Mac PMMS** | freddiemac.com/pmms | Mortgage rates | Weekly |
-| **MBA** | mba.org | Purchase/refi apps, MCAI, originations, NDS | Weekly/Quarterly |
-| **S&P/Cotality** | spglobal.com | Case-Shiller HPI (national, 20-city, tiers) | Monthly |
-| **FHFA** | fhfa.gov | House Price Index (national, state, division) | Monthly/Quarterly |
-| **Zillow** | zillow.com/research | ZHVI, ZORI, for-sale data, days on market | Monthly |
-| **Redfin** | redfin.com/news/data-center | Prices, sales, listings, bidding wars, DOM | Weekly/Monthly |
-| **Realtor.com** | realtor.com/research | Active listings, new listings, median list prices | Weekly/Monthly |
-| **Apartment List** | apartmentlist.com/research | Rent index, vacancy index | Monthly |
-| **Altos Research** | altosresearch.com (via HousingWire) | Market Action Index, inventory, price changes | Weekly |
-| **Cotality (fka CoreLogic)** | cotality.com | Home equity, negative equity, delinquency, HPI | Monthly/Quarterly |
-| **ICE/Black Knight** | ice.com | Mortgage performance, originations, home equity | Monthly |
-| **ATTOM** | attomdata.com | Foreclosure filings, distressed sales | Monthly |
-| **BLS** | bls.gov | CPI Shelter, PPI Construction, Employment, JOLTS | Monthly |
-| **Federal Reserve** | federalreserve.gov | SLOOS, H.4.1 (MBS holdings), Z.1 (equity data) | Quarterly/Weekly |
-| **ShowingTime** | showingtime.com | Home showing activity index | Monthly |
-| **RealPage** | realpage.com | Multifamily absorption, rents, occupancy | Monthly/Quarterly |
-| **JCHS (Harvard)** | jchs.harvard.edu | State of the Nation's Housing (annual), household projections | Annual |
-| **Google Trends** | trends.google.com | Search interest: housing-related terms | Weekly |
-| **Public Builder Filings** | SEC EDGAR | Quarterly earnings: DHI, LEN, PHM, TOL, KBH, NVR, TMHC, MTH | Quarterly |
-
----
-
 ## Appendix: Housing's Place in the MRI
 
 Housing enters the MRI as Pillar 4 with a weight of 0.06 (6%). This is the lowest single-pillar weight in the macro framework, reflecting three realities:

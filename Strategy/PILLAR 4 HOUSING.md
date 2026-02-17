@@ -1050,6 +1050,40 @@ HCI → MRI (Pillar 4 contribution):
 
 ---
 
+## Invalidation Criteria
+
+### Bull Case (Housing Thaw) Invalidation Thresholds
+
+If the following occur simultaneously for 3+ months, the bearish housing thesis is invalidated:
+
+| **Signal** | **Threshold** |
+|---|---|
+| 30Y Mortgage Rate | Drops below 6.0% |
+| Existing Home Sales | Exceeds 4.5M SAAR |
+| Housing Starts | Exceeds 1.5M |
+| NAHB Index | Exceeds 55 |
+| MBA Purchase Index YoY% | Turns positive (+10%+) |
+| HCI | Exceeds +0.3 (neutral regime) |
+
+**Action if Invalidated:** Rotate to homebuilders (XHB, ITB), building materials (lumber, copper), home improvement (HD, LOW). Housing thaw = consumer confidence revival.
+
+### Bear Case (Housing Crisis) Confirmation Thresholds
+
+If the following occur, housing is deteriorating beyond frozen into crisis:
+
+| **Signal** | **Threshold** |
+|---|---|
+| Mortgage Delinquency 30+ | Exceeds 4.0% |
+| Existing Home Sales | Drops below 3.0M |
+| Case-Shiller YoY% | Turns negative for 3+ months |
+| Housing Starts | Drops below 1.0M |
+| Negative Equity Share | Exceeds 5% |
+| HCI | Drops below -1.0 (crisis regime) |
+
+**Action if Confirmed:** Maximum defensive. Avoid all housing exposure (homebuilders, REITs, mortgage lenders). Overweight cash (SGOV), long duration (TLT). Housing crisis = recession confirmation.
+
+---
+
 ## FRED Series Reference Appendix
 
 All FRED series codes referenced in this pillar, organized by category. Pipeline source: `Lighthouse_Master.db` via `lighthouse_master_db.py`.

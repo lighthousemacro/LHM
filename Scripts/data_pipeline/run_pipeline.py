@@ -95,6 +95,17 @@ def main():
         sources=sources
     )
 
+    # Rebuild horizon dataset (transforms raw observations -> z-scores for index computation)
+    if not args.skip_indices:
+        print("\n" + "=" * 70)
+        print("REBUILDING HORIZON DATASET")
+        print("=" * 70)
+        try:
+            from horizon_dataset_builder import build_horizon_dataset
+            build_horizon_dataset()
+        except Exception as e:
+            print(f"WARNING: Horizon dataset rebuild failed: {e}")
+
     # Compute proprietary indices
     if not args.skip_indices:
         print("\n" + "=" * 70)
@@ -210,7 +221,7 @@ def main():
 
         _conn2 = _sqlite3b.connect(INDICES_DB_PATH)
         _brief = build_brief(_conn2)
-        _output_path = Path.home() / "Desktop" / "LHM_Morning_Brief.md"
+        _output_path = Path.home() / "Desktop" / "LHM_Morning_Brief.html"
         _output_path.write_text(_brief)
         log_brief(_brief)
         _summary = build_notification_summary(_conn2)

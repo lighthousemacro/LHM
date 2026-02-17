@@ -563,18 +563,18 @@ Sometimes inflation is driven by just 2-3 large categories (shelter, auto insura
 | Medical Care Services | CUSR0000SAM2 | 3.5% | 6.779% |
 | Hospital Services | CUSR0000SEMD | 6.6% | 1.985% |
 | Physicians' Services | CUSR0000SEMC | 1.9% | 1.804% |
-| Prescription Drugs | CUUR0000SEMF01 | 2.0% | 0.917% |
+| Prescription Drugs | BLS (not on FRED) | 2.0% | 0.917% |
 
 **Other Key Categories:**
 
 | Category | FRED Code | YoY% | Weight |
 |----------|-----------|------|--------|
-| Apparel | CUUR0000SAA | 0.6% | 2.461% |
-| Recreation | CUSR0000SAR | 3.0% | 5.292% |
-| Personal Care Services | CUSR0000SEGB | 3.7% | 0.659% |
-| Communication | CUSR0000SAE2 | -1.9% | 3.149% |
-| Computers/Peripherals | CUSR0000SEEE01 | -0.6% | 0.257% |
-| Smartphones | CUSR0000SEEE03 | -9.8% | ~0.39% |
+| Apparel | CPIAPPSL | 0.6% | 2.461% |
+| Recreation | CPIRECSL | 3.0% | 5.292% |
+| Personal Care Services | CUUR0000SEGC / BLS | 3.7% | 0.659% |
+| Communication | CUSR0000SAE2 / BLS | -1.9% | 3.149% |
+| Computers/Peripherals | CUSR0000SEEE01 / BLS | -0.6% | 0.257% |
+| Smartphones | BLS (not on FRED) | -9.8% | ~0.39% |
 
 **Goods Categories Currently in Deflation:**
 

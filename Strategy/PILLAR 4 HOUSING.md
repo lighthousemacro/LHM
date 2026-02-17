@@ -390,7 +390,7 @@ Mortgage credit health determines whether housing stress transmits to the bankin
 |---|---|---|---|---|
 | **Mortgage Delinquency Rate (30+ Days)** | DRSFRMACBS | Quarterly | Lagging 1-2 qtrs | Stress gauge |
 | **Mortgage Delinquency Rate (60+ Days)** | MBA NDS | Quarterly | Lagging 1-2 qtrs | Intermediate stress |
-| **Mortgage Delinquency Rate (90+ Days)** | DRSFRM | Quarterly | Lagging 2-3 qtrs | Serious delinquency |
+| **Mortgage Delinquency Rate (90+ Days)** | MBA NDS | Quarterly | Lagging 2-3 qtrs | Serious delinquency |
 | **Foreclosure Inventory Rate** | MBA NDS | Quarterly | Lagging 2-4 qtrs | Active foreclosures |
 | **Foreclosure Starts** | MBA NDS | Quarterly | Leads inventory 1-2 qtrs | New foreclosure initiations |
 | **Foreclosure Filings** | ATTOM | Monthly | Lagging 3-6 qtrs | End-stage stress |

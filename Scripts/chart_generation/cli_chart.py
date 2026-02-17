@@ -30,7 +30,7 @@ OUTPUT_BASE = f'{BASE_PATH}/Outputs/CLI_Charts'
 COLORS = {
     'ocean': '#0089D1',
     'dusk': '#FF6723',
-    'sky': '#4FC3F7',
+    'sky': '#33CCFF',
     'venus': '#FF2389',
     'sea': '#00BB99',
     'doldrums': '#D3D6D9',

@@ -358,7 +358,7 @@ ax.legend(loc='upper left', **legend_style())
 |---|---|---|
 | Primary series | Ocean | `#0089D1` |
 | Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#4FC3F7` |
+| Tertiary series | Sky | `#33CCFF` |
 | Quaternary series | Sea | `#00BB99` |
 | Accent | Venus | `#FF2389` |
 | Background | Dark Navy | `#0A1628` |
@@ -373,7 +373,7 @@ ax.legend(loc='upper left', **legend_style())
 |---|---|---|
 | Primary series | Ocean | `#0089D1` |
 | Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#4FC3F7` |
+| Tertiary series | Sky | `#33CCFF` |
 | Quaternary series | Sea | `#00BB99` |
 | Accent | Venus | `#FF2389` |
 | Background | White | `#ffffff` |
@@ -401,7 +401,7 @@ THEME = {
     'brand2_color': '#FF6723',   # Dusk
     'primary': '#0089D1',        # Ocean (ALWAYS primary on both themes)
     'secondary': '#FF6723',      # Dusk
-    'tertiary': '#4FC3F7',       # Sky
+    'tertiary': '#33CCFF',       # Sky
     'quaternary': '#00BB99',     # Sea
     'accent': '#FF2389',         # Venus
     'fill_alpha': 0.20,          # For area fills if needed
@@ -425,7 +425,7 @@ THEME = {
     'brand2_color': '#FF6723',   # Dusk
     'primary': '#0089D1',        # Ocean
     'secondary': '#FF6723',      # Dusk
-    'tertiary': '#4FC3F7',       # Sky (pops against white bg)
+    'tertiary': '#33CCFF',       # Sky (pops against white bg)
     'quaternary': '#00BB99',     # Sea
     'accent': '#FF2389',         # Venus
     'fill_alpha': 0.15,
@@ -484,7 +484,7 @@ Output structure:
 |---|---|---|
 | **Ocean** | `#0089D1` | Primary data (white theme), borders, branding |
 | **Dusk** | `#FF6723` | Secondary series, accent bar segment |
-| **Sky** | `#4FC3F7` | Primary data (dark theme) |
+| **Sky** | `#33CCFF` | Primary data (dark theme) |
 | **Venus** | `#FF2389` | 2% target lines, critical alerts |
 | **Sea** | `#00BB99` | Tertiary series, on-target regime bands |
 | **Doldrums** | `#D3D6D9` | Zero lines |

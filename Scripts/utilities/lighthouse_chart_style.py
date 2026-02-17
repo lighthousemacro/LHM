@@ -18,7 +18,7 @@ import numpy as np
 LIGHTHOUSE_COLORS = {
     'ocean_blue': '#0089D1',      # Primary data series, bullish signals
     'dusk_orange': '#FF6723',     # Warning thresholds, secondary emphasis
-    'electric_cyan': '#4FC3F7',   # Volatility indicators, highlights (bright cerulean)
+    'electric_cyan': '#33CCFF',   # Volatility indicators, highlights (bright cerulean)
     'hot_magenta': '#FF2389',     # Critical alerts, extreme stress
     'teal_green': '#00BB99',      # Secondary series, stable metrics
     'neutral_gray': '#D3D6D9',    # Backgrounds, grids, reference

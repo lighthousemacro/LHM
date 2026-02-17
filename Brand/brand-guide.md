@@ -14,7 +14,7 @@
 |-------|-----|-------|
 | Ocean | `#0089D1` | Primary brand color, headers, borders, accents |
 | Dusk | `#FF6723` | Warnings, accent bar |
-| Sky | `#4FC3F7` | Volatility, momentum (bright cerulean) |
+| Sky | `#33CCFF` | Volatility, momentum (bright cerulean) |
 | Venus | `#FF2389` | Critical alerts |
 | Sea | `#00BB99` | Secondary series, Chart 1 primary |
 | Doldrums | `#D3D6D9` | Backgrounds, grids |

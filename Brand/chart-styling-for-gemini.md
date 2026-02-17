@@ -354,7 +354,7 @@ ax.legend(loc='upper left', **legend_style())
 ### Dark Theme
 | Role | Color | Hex |
 |---|---|---|
-| Primary series | Sky | `#4FC3F7` |
+| Primary series | Sky | `#33CCFF` |
 | Secondary series | Dusk | `#FF6723` |
 | Tertiary series | Sea | `#00BB99` |
 | Accent | Venus | `#FF2389` |
@@ -370,7 +370,7 @@ ax.legend(loc='upper left', **legend_style())
 |---|---|---|
 | Primary series | Ocean | `#0089D1` |
 | Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#4FC3F7` |
+| Tertiary series | Sky | `#33CCFF` |
 | Quaternary series | Sea | `#00BB99` |
 | Accent | Venus | `#FF2389` |
 | Background | White | `#ffffff` |
@@ -394,15 +394,15 @@ THEME = {
     'zero_line': '#e6edf3',      # Available but prefer COLORS['doldrums'] for standard zero lines
     'recession': '#ffffff',
     'recession_alpha': 0.06,
-    'brand_color': '#4FC3F7',    # Sky
+    'brand_color': '#33CCFF',    # Sky
     'brand2_color': '#FF6723',   # Dusk
-    'primary': '#4FC3F7',        # Sky
+    'primary': '#33CCFF',        # Sky
     'secondary': '#FF6723',      # Dusk
     'tertiary': '#00BB99',       # Sea
     'accent': '#FF2389',         # Venus
     'fill_alpha': 0.20,          # For area fills if needed
     'box_bg': '#0A1628',         # Annotation box background
-    'box_edge': '#4FC3F7',       # Annotation box edge (note: currently hardcoded as Ocean in helper)
+    'box_edge': '#33CCFF',       # Annotation box edge (note: currently hardcoded as Ocean in helper)
     'legend_bg': '#0f1f38',
     'legend_fg': '#e6edf3',
     'mode': 'dark',
@@ -421,7 +421,7 @@ THEME = {
     'brand2_color': '#FF6723',   # Dusk
     'primary': '#0089D1',        # Ocean
     'secondary': '#FF6723',      # Dusk
-    'tertiary': '#4FC3F7',       # Sky (pops against white bg)
+    'tertiary': '#33CCFF',       # Sky (pops against white bg)
     'quaternary': '#00BB99',     # Sea
     'accent': '#FF2389',         # Venus
     'fill_alpha': 0.15,
@@ -480,7 +480,7 @@ Output structure:
 |---|---|---|
 | **Ocean** | `#0089D1` | Primary data (white theme), borders, branding |
 | **Dusk** | `#FF6723` | Secondary series, accent bar segment |
-| **Sky** | `#4FC3F7` | Primary data (dark theme) |
+| **Sky** | `#33CCFF` | Primary data (dark theme) |
 | **Venus** | `#FF2389` | 2% target lines, critical alerts |
 | **Sea** | `#00BB99` | Tertiary series, on-target regime bands |
 | **Doldrums** | `#D3D6D9` | Zero lines |

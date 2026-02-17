@@ -17,7 +17,7 @@ import requests
 COLORS = {
     'ocean': '#0089D1',
     'dusk': '#FF6723',
-    'sky': '#4FC3F7',
+    'sky': '#33CCFF',
     'sea': '#00BB99',
     'venus': '#FF2389',
     'doldrums': '#D3D6D9',
@@ -32,7 +32,7 @@ THEME = {
     'spine': '#1e3350',
     'primary': '#0089D1',        # Ocean (Primary Data - RHS) - ALWAYS
     'secondary': '#FF6723',      # Dusk (Secondary Data - LHS)
-    'tertiary': '#4FC3F7',       # Sky (third series)
+    'tertiary': '#33CCFF',       # Sky (third series)
     'accent': '#FF2389',         # Venus
     'legend_bg': '#0f1f38',
     'legend_fg': '#e6edf3',

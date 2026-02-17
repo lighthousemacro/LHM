@@ -1386,6 +1386,74 @@ Measures the breadth of job gains across industries. Different from state diffus
 
 ---
 
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **LPI** | **LFI** | **Key Signal** | **Outcome** | **Lead Time** |
+|---|---|---|---|---|---|
+| **Late 2006** | -0.4 | +0.6 | Quits peaked Q3 2005, declining 15 months. Temp help flat. Hours softening. | Recession Dec 2007 | 12-15 months |
+| **Late 2007** | -1.2 | +1.4 | Claims rising, temp help negative YoY, quits sub-2.0%. Full cascade. | Deep recession confirmed | 0-3 months |
+| **GFC Trough (2009)** | -2.1 | +2.3 | LT unemployed share 45%, claims >600k, quits 1.3%. | Recovery began June 2009 | Coincident |
+| **Late 2018** | +0.1 | +0.2 | Manufacturing hours softening, temp help decelerating. Quits still elevated. | Manufacturing recession only, no broad downturn | N/A (false signal at aggregate level) |
+| **Feb 2020** | +0.8 | -0.3 | All flows healthy. Quits elevated. No leading signals. | COVID shock (exogenous, not cycle-driven) | No lead (exogenous) |
+| **Late 2021** | +1.6 | -1.2 | Record quits (4.5M), record openings (11.5M), job-hopper premium >2 ppts. | Tightest labor market in 50 years | N/A |
+| **Late 2023** | +0.3 | +0.5 | Quits normalizing (3.5M), openings declining, temp help negative. | Normalization without recession (so far) | Ongoing |
+
+### False Signals
+
+**Temp Help (2022-present):** The most notable false signal in the labor pillar's history. Temp help employment declined 18.1% (577,000 jobs) from March 2022 without triggering a recession. Fed researchers Tito and Bowdle (2024) found that pandemic-era disruptions shifted the industry toward less cyclically sensitive professional occupations, reducing its predictive value. The indicator remains worth monitoring but should carry lower weight than its pre-2020 track record suggests.
+
+**2018-2019 Manufacturing Slowdown:** Manufacturing hours, manufacturing employment, and some flow indicators softened materially in 2018-2019. The aggregate LPI hovered near zero, suggesting neutral conditions. The weakness was concentrated in goods-producing sectors (trade war impact) and did not transmit broadly to services or consumer spending. This episode demonstrates why sectoral analysis matters: a manufacturing-only recession doesn't necessarily produce a broad recession.
+
+### Structural Breaks
+
+**Post-COVID Labor Market (2020-present):** Several structural shifts affect historical comparisons:
+
+1. **JOLTS Data Quality:** Response rates dropped ~30 percentage points (from ~60% to ~30%). Goldman Sachs estimates median monthly standard errors increased over 90%. Revisions averaging 180,000, double pre-pandemic levels. All JOLTS-based signals carry wider uncertainty bands.
+
+2. **Temp Help Compositional Shift:** The industry shifted toward professional/technical staffing and away from cyclically sensitive industrial/manufacturing placements. The structural link between temp help and broad employment may be permanently weakened.
+
+3. **Remote Work and Geographic Arbitrage:** Labor supply dynamics changed as remote work enabled geographic mobility. Traditional geographic segmentation (Rust Belt vs. Sun Belt) may carry less predictive weight for white-collar sectors.
+
+4. **Immigration Policy Regime:** Post-2020 immigration restrictions constrain labor supply in ways that weren't present in previous cycles. The speed limit for non-inflationary employment growth has shifted.
+
+5. **Labor Hoarding Behavior:** Corporate memory of 2021-2022 hiring difficulties has extended hoarding periods beyond historical norms. The gap between "hiring freeze" and "mass layoffs" may be longer than in previous cycles, but the eventual transition may also be more abrupt.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Lead vs Official Data** |
+|---|---|---|---|---|
+| **Indeed Hiring Lab** | Job Postings Index (IHLIDXUS) | Daily | FRED (free) | Leads JOLTS openings by ~6 weeks |
+| **Challenger** | Job Cut Announcements | Monthly | Press release (free) | Leads actual separations by 1-3 months |
+| **ADP** | National Employment Report (ADPMNUSNERSA) | Monthly | FRED (free) | Coincident with BLS, different methodology |
+| **Chicago Fed** | LMCI (Labor Market Conditions Index) | Monthly | chicagofed.org (free) | Coincident, composite of 34 indicators |
+| **Atlanta Fed** | Wage Growth Tracker | Monthly | FRED (free) | Coincident, microdata-based |
+| **Richmond Fed** | SOS Recession Indicator | Weekly | richmondfed.org (free) | Real-time Sahm-style using insured unemployment |
+| **Kansas City Fed** | Labor Market Conditions Indicators | Monthly | kansascityfed.org (free) | Momentum and level-of-activity composites |
+| **Philadelphia Fed** | State Coincident Indexes | Monthly | philadelphiafed.org (free) | State-level economic conditions |
+| **BLS QCEW** | County-Level Employment | Quarterly | BLS API (free) | 6-month lag, but definitive establishment count |
+| **BLS BED** | Job Creation/Destruction by Firm Size | Quarterly | BLS website (free) | 7-month lag, small firm dynamics |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "Benchmarking the steady-state" (FEDS 2013-19) | Barnichon & Nekarda | 90% of gap between unemployment and steady-state closes in 3-5 months |
+| "Temporary Help Employment in Recession and Recovery" | Upjohn Institute (2008) | Temp help declines precede broader labor market downturns by 6-12 months |
+| "A Broken Leading Indicator?" (SSRN 5748032) | Various (2024) | Post-pandemic temp help signal distortion analysis |
+| Sahm Rule | Claudia Sahm | 3-month MA of unemployment rising 0.50+ ppts from 12-month low signals recession |
+| Beveridge Curve research | Minneapolis Fed | Poaching vacancies and ghost postings inflate V/U ratio, overstating tightness |
+| BLS Monthly Labor Review (Feb 2021) | BLS Staff | Temp help declines preceded 1990-91, 2001, 2007-09 recessions by 6-12 months |
+| Tito & Bowdle (2024) | Federal Reserve | "Pandemic-era labor market disruptions altered cyclical behavior of temporary help employment" |
+| Philadelphia Fed State Coincident Indexes | Crone & Clayton-Matthews | State diffusion methodology: >26 states declining has preceded every recession since 1980 |
+
+---
+
 ## Conclusion: Labor is the Engine
 
 Labor isn't a sector. It's the economy itself, measured in real-time.
@@ -1398,5 +1466,128 @@ When quits decline, workers are seeing something management hasn't admitted. Whe
 
 ---
 
+## Appendix: FRED Series Reference
+
+All FRED series used in this pillar. Every series should be in Lighthouse_Master.db.
+
+| **FRED Code** | **Description** | **Frequency** | **Subsection** |
+|---|---|---|---|
+| JTSJOL | Job Openings Level Total Nonfarm | Monthly | A |
+| JTSHIL | Hires Level Total Nonfarm | Monthly | A |
+| JTSQUL | Quits Level Total Nonfarm | Monthly | A |
+| JTSQUR | Quits Rate Total Nonfarm | Monthly | A |
+| JTSLDL | Layoffs Discharges Level Total Nonfarm | Monthly | A |
+| JTSTSL | Total Separations Level Total Nonfarm | Monthly | A |
+| JTSHIR | Hires Rate Total Nonfarm | Monthly | A |
+| JTSTSR | Total Separations Rate Total Nonfarm | Monthly | A |
+| JTS1000JOR | JOLTS Job Openings Rate (alt code) | Monthly | A |
+| JTS1000QUR | JOLTS Quits Rate (alt code) | Monthly | A |
+| JTS1000HIR | JOLTS Hires Rate (alt code) | Monthly | A |
+| ICSA | Initial Jobless Claims | Weekly | A |
+| CCSA | Continued Claims | Weekly | A |
+| IURSA | Insured Unemployment Rate | Weekly | A |
+| CES0500000003 | Avg Hourly Earnings Total Private | Monthly | B |
+| AHETPI | Avg Hourly Earnings Production Nonsupervisory | Monthly | B |
+| CES0500000030 | Avg Weekly Earnings Production Nonsupervisory | Monthly | B |
+| ECIALLCIV | Employment Cost Index Total Compensation All Civilian | Quarterly | B |
+| ECIWAG | Employment Cost Index Wages Salaries | Quarterly | B |
+| CIU2010000000000I | ECI Total Compensation Private Industry | Quarterly | B |
+| FRBATLWGT12MMUMHGO | Atlanta Fed Wage Growth 12M Overall | Monthly | B, L |
+| FRBATLWGT3MMAUMHWGO | Atlanta Fed Wage Growth 3M Overall | Monthly | B |
+| FRBATLWGT12MMUMHWGJST | Atlanta Fed Wage Growth Job Stayers | Monthly | B, L |
+| FRBATLWGT12MMUMHWGJSW | Atlanta Fed Wage Growth Job Switchers | Monthly | B, L |
+| FRBATLWGT12MMUMHWGWD1WP | Atlanta Fed Wage Growth 1st-25th Pctl | Monthly | L |
+| FRBATLWGT12MMUMHWGWD76WP | Atlanta Fed Wage Growth 76th-100th Pctl | Monthly | L |
+| CLF16OV | Civilian Labor Force Level | Monthly | C |
+| CIVPART | Labor Force Participation Rate | Monthly | C |
+| LNS11300060 | LFPR Prime Age 25-54 | Monthly | C, J |
+| LNS11300001 | LFPR Men | Monthly | C, J |
+| LNS11300002 | LFPR Women | Monthly | C, J |
+| LNS11300003 | LFPR White | Monthly | C |
+| LNS11324230 | LFPR 55 Yrs and Over | Monthly | J |
+| LRAC25MAUSM156S | LFPR Male 25-54 Prime Age (OECD) | Monthly | J |
+| LRAC25FEUSM156S | LFPR Female 25-54 Prime Age (OECD) | Monthly | J |
+| LNS12032194 | Part Time for Economic Reasons | Monthly | C |
+| LNS12026620 | Multiple Jobholders Pct of Employed | Monthly | C |
+| NILFWJN | Not in Labor Force Want a Job Now | Monthly | C |
+| LNU05026645 | Discouraged Workers | Monthly | C |
+| U6RATE | U-6 Underemployment Rate | Monthly | C |
+| LNS12500000 | Employed Usually Work Full Time | Monthly | D |
+| LNS12600000 | Employed Usually Work Part Time | Monthly | D |
+| TEMPHELPS | Temp Help Services Employment | Monthly | D |
+| PAYEMS | Total Nonfarm Payrolls | Monthly | D, H |
+| MANEMP | Manufacturing Employment | Monthly | D, H |
+| USCONS | All Employees Construction | Monthly | H |
+| USTRADE | All Employees Retail Trade | Monthly | H |
+| USPBS | All Employees Professional Business Services | Monthly | H |
+| USFIRE | All Employees Financial Activities | Monthly | H |
+| USINFO | All Employees Information | Monthly | H |
+| USLAH | All Employees Leisure Hospitality | Monthly | H |
+| USGOVT | All Employees Government | Monthly | H |
+| CES6562000001 | All Employees Health Care Social Assistance | Monthly | H, M |
+| UNRATE | Unemployment Rate U3 | Monthly | E |
+| UNEMPLOY | Unemployment Level | Monthly | E |
+| UEMPLT5 | Unemployed Less Than 5 Weeks | Monthly | E |
+| UEMP5TO14 | Unemployed 5 to 14 Weeks | Monthly | E |
+| UEMP15T26 | Unemployed 15 to 26 Weeks | Monthly | E |
+| UEMP27OV | Unemployed 27 Weeks and Over | Monthly | E |
+| UEMPMED | Median Weeks Unemployed | Monthly | E |
+| UEMPMEAN | Mean Duration Unemployment Weeks | Monthly | E |
+| LNS13023621 | Unemployment Level Job Losers | Monthly | E |
+| LNS13023705 | Unemployment Level Job Leavers | Monthly | E |
+| LNS13023557 | Unemployment Level Reentrants | Monthly | E |
+| LNS13023569 | Unemployment Level New Entrants | Monthly | E |
+| AWHAETP | Avg Weekly Hours Total Private | Monthly | F |
+| AWHMAN | Avg Weekly Hours Manufacturing Production | Monthly | F |
+| AWOTMAN | Avg Overtime Hours Manufacturing Production | Monthly | F |
+| AWHI | Aggregate Weekly Hours Index Total Private | Monthly | F |
+| OPHNFB | Nonfarm Business Output Per Hour | Quarterly | F |
+| ULCNFB | Unit Labor Costs Nonfarm Business | Quarterly | F |
+| COMPNFB | Nonfarm Business Compensation Per Hour | Quarterly | F |
+| HOANBS | Nonfarm Business Hours Worked | Quarterly | F |
+| PRS85006092 | Nonfarm Unit Labor Costs | Quarterly | F |
+| LNS14000012 | Unemployment Rate 16-19 Yrs | Monthly | I.A |
+| LNS14000036 | Unemployment Rate 20-24 Yrs | Monthly | I.A |
+| LNS14024887 | Unemployment Rate 16-24 Yrs | Monthly | I.A |
+| LNS14000060 | Unemployment Rate 25-54 Yrs Prime Age | Monthly | I.A |
+| LNS14024230 | Unemployment Rate 55 Yrs and Over | Monthly | I.A |
+| LNS14027659 | Unemployment Rate Less Than HS Diploma 25+ | Monthly | I.B |
+| LNS14027660 | Unemployment Rate HS Graduates No College 25+ | Monthly | I.B |
+| LNS14027689 | Unemployment Rate Some College Associate 25+ | Monthly | I.B |
+| LNS14027662 | Unemployment Rate Bachelors Degree and Higher 25+ | Monthly | I.B |
+| LNS14000003 | Unemployment Rate White | Monthly | I.C |
+| LNS14000006 | Unemployment Rate Black | Monthly | I.C |
+| LNS14000009 | Unemployment Rate Hispanic | Monthly | I.C |
+| LNU04032183 | Unemployment Rate Asian | Monthly | I.C |
+| LNS14000001 | Unemployment Rate Men | Monthly | I.D |
+| LNS14000002 | Unemployment Rate Women | Monthly | I.D |
+| U1RATE | Unemployment Rate U1 (15+ weeks) | Monthly | E |
+| U2RATE | Unemployment Rate U2 (Job Losers) | Monthly | E |
+| JTS3000QUR | JOLTS Quits Rate Manufacturing | Monthly | M |
+| JTS2300QUR | JOLTS Quits Rate Construction | Monthly | M |
+| JTS4400QUR | JOLTS Quits Rate Retail Trade | Monthly | M |
+| JTS540099QUR | JOLTS Quits Rate Professional Business Services | Monthly | M |
+| JTS7000QUR | JOLTS Quits Rate Leisure Hospitality | Monthly | M |
+| JTS6200QUR | JOLTS Quits Rate Health Care Social Assistance | Monthly | M |
+| SAHMREALTIME | Sahm Rule Recession Indicator | Monthly | Additional |
+| IHLIDXUS | Indeed Job Postings Index US | Daily | O |
+| ADPMNUSNERSA | ADP National Employment | Monthly | O |
+| LES1252881600Q | Median Usual Weekly Earnings | Quarterly | B |
+
+**Non-FRED Sources Referenced:**
+
+| **Source** | **Indicator** | **Access** |
+|---|---|---|
+| BLS (BED) | Job Creation/Destruction by Firm Size | BLS website (free, quarterly, 7-month lag) |
+| Challenger | Job Cut Announcements | Press release (free, monthly) |
+| Indeed Hiring Lab | Job Postings by Sector/Metro | GitHub/website (free, daily) |
+| BLS (QCEW) | County-Level Employment | BLS API (free, quarterly, 6-month lag) |
+| Philadelphia Fed | State Coincident Indexes | philadelphiafed.org (free, monthly) |
+| Chicago Fed | LMCI Components | chicagofed.org (free, monthly) |
+| Atlanta Fed | Spider Chart (15 labor measures) | atlantafed.org (free, monthly) |
+
+---
+
+*Last Updated: 2026-02-16*
 *Bob Sheehan, CFA, CMT*
 *Founder & CIO, Lighthouse Macro*

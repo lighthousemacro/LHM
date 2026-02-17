@@ -377,6 +377,10 @@ FRED_CURATED = {
     "CES0500000030": "Avg Weekly Earnings Production Nonsupervisory",
     "CIU2010000000000I": "ECI Total Compensation Private Industry",
 
+    # Prime-Age LFPR by Gender (OECD-sourced, on FRED)
+    "LRAC25MAUSM156S": "LFPR Male 25-54 Prime Age",
+    "LRAC25FEUSM156S": "LFPR Female 25-54 Prime Age",
+
     # Recession / Confirmation Indicators
     "SAHMREALTIME": "Sahm Rule Recession Indicator",
     "IHLIDXUS": "Indeed Job Postings Index US",

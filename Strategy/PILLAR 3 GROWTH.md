@@ -84,8 +84,8 @@ Headline GDP masks critical composition shifts. Components tell you **what's dri
 | **Gross Private Investment** | GPDI | ~18% | Business investment + residential |
 | **Government Spending** | GCE | ~17% | Federal + state + local |
 | **Net Exports** | NETEXP | ~-3% | Exports - Imports (usually negative) |
-| **PCE: Goods** | DGDSRG3A086NBEA | ~23% of GDP | Durable + nondurable goods |
-| **PCE: Services** | DSERRC1A027NBEA | ~45% of GDP | Services consumption |
+| **PCE: Goods** | PCEDG (Durable) + PCEND (Nondurable) | ~23% of GDP | Durable + nondurable goods |
+| **PCE: Services** | PCES | ~45% of GDP | Services consumption |
 | **Fixed Investment: Nonresidential** | PNFI | ~13% of GDP | Business capex (equipment + structures + IP) |
 | **Fixed Investment: Residential** | PRFI | ~4% of GDP | Housing construction |
 | **Change in Private Inventories** | CBI | Variable | Inventory builds/liquidations |

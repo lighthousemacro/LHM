@@ -1623,4 +1623,141 @@ That's our view from the Watch. Until next time, we'll be sure to keep the light
 
 *Bob Sheehan, CFA, CMT*
 *Founder & CIO, Lighthouse Macro*
-*January 2026*
+
+---
+
+## FRED Series Reference Appendix
+
+### GDP & National Accounts (Quarterly, BEA)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| GDPC1 | Real GDP | Yes |
+| GDP | Nominal GDP | Yes |
+| GDI | Gross Domestic Income | Yes |
+| GDPDEF | GDP Price Deflator | Yes |
+| GPDI | Gross Private Domestic Investment | Yes |
+| GCE | Government Consumption Expenditures | Yes |
+| FGCE | Federal Consumption Expenditures | Yes |
+| PCEC | Personal Consumption Expenditures (Nominal) | Yes |
+| PCES | PCE Services (Monthly) | Yes |
+| PNFI | Private Nonresidential Fixed Investment | Yes |
+| PRFI | Private Residential Fixed Investment | Yes |
+| CBI | Change in Private Inventories | Yes |
+| EXPGS | Exports of Goods and Services | Yes |
+| IMPGS | Imports of Goods and Services | Yes |
+| NETEXP | Net Exports | Yes |
+| A713RX1Q020SBEA | Real Final Sales to Domestic Purchasers | Yes |
+| FINSLC1 | Real Final Sales of Domestic Product | Yes |
+| DPIC96 | Real Disposable Personal Income | Yes |
+
+### Industrial Production (Monthly, Federal Reserve)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| INDPRO | Industrial Production Total Index | Yes |
+| IPMAN | IP Manufacturing | Yes |
+| IPBUSEQ | IP Business Equipment | Yes |
+| IPCONGD | IP Consumer Goods | Yes |
+| IPDMAT | IP Durable Materials | Yes |
+| IPNMAT | IP Nondurable Materials | Yes |
+| IPMINE | IP Mining | Yes |
+| IPUTIL | IP Utilities | Yes |
+| TCU | Total Capacity Utilization | Yes |
+
+### Retail Sales & Consumer Spending (Monthly, Census)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| RSXFS | Advance Retail Sales (ex-Food Services) | Yes |
+| RSXFSN | Advance Retail Sales Retail Trade | Yes |
+| MRTSSM441USS | Retail Sales: Motor Vehicle & Parts Dealers | Yes |
+| RSGASS | Retail Sales: Gasoline Stations | Yes |
+| RSFSDP | Retail Sales: Food Services & Drinking Places | Yes |
+| ECOMPCTSA | E-Commerce Retail Sales % of Total | Yes |
+
+### Business Investment & Orders (Monthly, Census)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| DGORDER | Durable Goods New Orders | Yes |
+| NEWORDER | Core Capital Goods Orders (Nondefense ex-Aircraft) | Yes |
+| ANXAVS | Core Capital Goods Shipments (Nondefense ex-Aircraft) | Yes |
+| ANDENO | Manufacturers' New Orders: Nondefense Capital Goods | Yes |
+| ISRATIO | Total Business Inventories/Sales Ratio | Yes |
+| INVCMRMTSPL | Real Manufacturing and Trade Inventories | Yes |
+| CMRMTSPL | Real Manufacturing and Trade Sales | Yes |
+
+### Employment & Productivity (Monthly, BLS)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| PAYEMS | Total Nonfarm Payrolls | Yes |
+| USPRIV | All Employees Total Private | Yes |
+| MANEMP | Manufacturing Employment | Yes |
+| AWHAETP | Average Weekly Hours (Total Private) | Yes |
+| AWHI | Average Weekly Hours Index | Yes |
+| ADPMNUSNERSA | ADP National Employment | Yes |
+| OPHNFB | Nonfarm Business Labor Productivity | Yes |
+| ULCNFB | Nonfarm Business Unit Labor Costs | Yes |
+| PRS30006092 | Manufacturing Sector Labor Productivity | Yes |
+
+### Freight & Transportation (Monthly, BTS)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| TRUCKD11 | Truck Tonnage Index | Yes |
+| RAILFRTCARLOADSD11 | Rail Freight Carloads | Yes |
+| RAILFRTINTERMODALD11 | Rail Freight Intermodal Traffic | Yes |
+| TSIFRGHT | Transportation Services Index: Freight | Yes |
+| TSITTL | Transportation Services Index: Total | Yes |
+| FRGSHPUSM649NCIS | OECD Freight Shipments | Yes |
+
+### Housing (Monthly, Census)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| HOUST | Housing Starts | Yes |
+| HOUST1F | Housing Starts Single Family | Yes |
+| PERMIT | Building Permits | Yes |
+| HSN1F | New Home Sales | Yes |
+| EXHOSLUSM495S | Existing Home Sales | Yes |
+
+### Leading/Coincident Indicators
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| USSLIND | Leading Index for the United States | Yes |
+| SAHMREALTIME | Sahm Rule Real-Time Indicator | Yes |
+| CPIAUCSL | Consumer Price Index (All Urban) | Yes |
+
+### Business Surveys (OECD via FRED)
+
+| **FRED Code** | **Description** | **In Pipeline** |
+|---|---|---|
+| BSCICP02USM460S | Business Confidence Indicator (Empire State proxy) | Yes |
+| BSCICP03USM665S | Consumer Confidence Indicator OECD (Philly Fed proxy) | Yes |
+
+### Non-FRED Sources
+
+| **Source** | **Indicator** | **Frequency** | **Access** |
+|---|---|---|---|
+| ISM | Manufacturing PMI, Services PMI | Monthly | ismworld.org |
+| S&P Global | Flash PMI (Mfg + Services) | Monthly | spglobal.com |
+| Atlanta Fed | GDPNow Real-Time Tracker | ~Weekly | atlantafed.org |
+| NY Fed | GDP Nowcast, WEI | Weekly | newyorkfed.org |
+| NAHB | Builder Confidence (HMI) | Monthly | nahb.org |
+| NFIB | Small Business Optimism | Monthly | nfib.com |
+| Conference Board | LEI, CEO Confidence | Monthly/Quarterly | conference-board.org |
+| Cass Information | Freight Index (Shipments + Expenditures) | Monthly | cassinfo.com |
+| AAR | Weekly Rail Traffic | Weekly | aar.org |
+| EIA | Electricity Consumption (Total, Industrial, Commercial) | Monthly | eia.gov |
+| TradingView | ISM data, NFIB, other non-FRED series | Varies | tradingview.com |
+
+**Total FRED Series: 66 | Non-FRED Sources: 11 | All FRED series in pipeline: Yes (after Feb 2026 audit)**
+
+---
+
+*Last Updated: February 2026*
+*Author: Bob Sheehan, CFA, CMT*
+*Lighthouse Macro*

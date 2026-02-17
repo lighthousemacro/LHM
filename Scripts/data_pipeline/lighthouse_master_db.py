@@ -591,6 +591,47 @@ FRED_CURATED = {
     # Conference Board CEO Confidence: conference-board.org/topics/CEO-Confidence
     # Chief Executive CEO Confidence Index: chiefexecutive.net/ceo-confidence-index
     # Must be sourced directly from those sites
+
+    # ===== PILLAR 3 (GROWTH) ADDITIONS - Feb 2026 Audit =====
+
+    # GDP Components (quarterly, BEA)
+    "GDP": "Gross Domestic Product (Nominal)",
+    "GDI": "Gross Domestic Income",
+    "GPDI": "Gross Private Domestic Investment",
+    "GCE": "Government Consumption Expenditures and Gross Investment",
+    "FGCE": "Federal Consumption Expenditures and Gross Investment",
+    "PCEC": "Personal Consumption Expenditures (Nominal)",
+    "CBI": "Change in Private Inventories",
+    "NETEXP": "Net Exports of Goods and Services",
+
+    # Final Sales (strips inventory noise)
+    "A713RX1Q020SBEA": "Real Final Sales to Domestic Purchasers",
+    "FINSLC1": "Real Final Sales of Domestic Product",
+
+    # PCE Services (monthly)
+    "PCES": "Personal Consumption Expenditures Services",
+
+    # Employment
+    "USPRIV": "All Employees Total Private",
+
+    # Industrial Production Detail
+    # IPUTIL already above
+    "ECOMPCTSA": "E-Commerce Retail Sales Pct of Total",
+
+    # Capital Goods & Equipment
+    "ANXAVS": "Nondefense Capital Goods Shipments Ex-Aircraft",
+
+    # Motor Vehicle Retail
+    "MRTSSM441USS": "Retail Sales Motor Vehicle and Parts Dealers",
+
+    # Leading/Coincident Indicators
+    "USSLIND": "Leading Index for the United States",
+
+    # Disposable Income
+    "DPIC96": "Real Disposable Personal Income",
+
+    # Productivity
+    "PRS30006092": "Manufacturing Sector Labor Productivity",
 }
 
 # ==========================================

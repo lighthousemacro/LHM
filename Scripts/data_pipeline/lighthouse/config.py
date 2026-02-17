@@ -656,6 +656,32 @@ FRED_CURATED = {
     "USSLIND": "Leading Index for the United States",
     "DPIC96": "Real Disposable Personal Income",
     "PRS30006092": "Manufacturing Sector Labor Productivity",
+
+    # ===== PILLAR 4 (HOUSING) ADDITIONS - Feb 2026 Audit =====
+    "RRVRUSQ156N": "Rental Vacancy Rate in the United States",
+    "RHVRUSQ156N": "Homeowner Vacancy Rate in the United States",
+    "CES2000000003": "Average Hourly Earnings: Construction",
+
+    # ===== PILLAR 5 (CONSUMER) ADDITIONS - Feb 2026 Audit =====
+    "RSFSXMV": "Advance Retail Sales: Retail and Food Services Ex Motor Vehicles",
+    "REVOLSL": "Revolving Consumer Credit Owned and Securitized",
+    "NONREVSL": "Nonrevolving Consumer Credit Owned and Securitized",
+    "PSAVE": "Personal Saving",
+    "A063RC1": "Personal Current Transfer Receipts: Government Social Benefits",
+    "PCE": "Personal Consumption Expenditures",
+    "PCDG": "Personal Consumption Expenditures: Durable Goods",
+    "PCND": "Personal Consumption Expenditures: Nondurable Goods",
+    "PCESV": "Personal Consumption Expenditures: Services",
+    "PI": "Personal Income",
+    "DPI": "Disposable Personal Income",
+    "A576RC1": "Compensation of Employees: Wages and Salaries",
+    "A229RX0": "Real Disposable Personal Income: Per Capita",
+    "DGDSRC1": "Personal Consumption Expenditures: Goods (Nominal Monthly)",
+    "BOGZ1FL192090005Q": "Households Net Worth Level",
+    "HDTGPDUSQ163N": "Household Debt to GDP for United States",
+    "FODSP": "Household Financial Obligations as Percent of DPI",
+    "TERMCBCCALLNS": "Commercial Bank Interest Rate on Credit Card Plans All Accounts",
+    "DRCLACBS": "Delinquency Rate on Consumer Loans All Commercial Banks",
 }
 
 # ==========================================

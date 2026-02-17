@@ -45,7 +45,7 @@ Spending is the output variable—what consumers actually do. Track it at multip
 |---|---|---|---|---|
 | **Personal Consumption Expenditures (PCE)** | PCE | Monthly | Coincident | Total consumer spending (nominal) |
 | **Real PCE** | PCEC96 | Monthly | Coincident | Inflation-adjusted spending |
-| **PCE: Goods** | DGDSRA3A086NBEA | Monthly | Coincident | Durable + nondurable goods |
+| **PCE: Goods** | DGDSRC1 | Monthly | Coincident | Durable + nondurable goods |
 | **PCE: Durable Goods** | PCDG | Monthly | **Leads services 2-4 mo** | Big-ticket items (cars, appliances) |
 | **PCE: Nondurable Goods** | PCND | Monthly | Coincident | Consumables (food, gas, clothing) |
 | **PCE: Services** | PCESV | Monthly | Lagging 1-2 mo | 65% of PCE (healthcare, housing, dining) |

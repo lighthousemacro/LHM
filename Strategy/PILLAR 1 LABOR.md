@@ -151,8 +151,8 @@ Wages are sticky. They accelerate during expansions and decelerate slowly during
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
 | **Average Hourly Earnings (AHE)** | CES0500000003 | Monthly | Coincident | Headline wage growth (all workers) |
-| **AHE: Production & Nonsupervisory** | CES0500000008 | Monthly | Coincident | 80% of workforce, less mgmt skew |
-| **Real Average Hourly Earnings** | CES0500000012 (deflated) | Monthly | Leading 1-2 mo | Purchasing power gauge |
+| **AHE: Production & Nonsupervisory** | AHETPI | Monthly | Coincident | 80% of workforce, less mgmt skew |
+| **Real Average Hourly Earnings** | Derived (CES0500000003 / CPIAUCSL) | Monthly | Leading 1-2 mo | Purchasing power gauge |
 | **Average Weekly Earnings** | CES0500000030 | Monthly | Coincident | AHE × Hours (income proxy) |
 | **Employment Cost Index (ECI)** | ECIALLCIV | Quarterly | Level lags 1-2 qtrs | Total compensation (wages + benefits) |
 | **ECI: Wages & Salaries** | ECIWAG | Quarterly | Level lags 1-2 qtrs | Excludes benefits component |

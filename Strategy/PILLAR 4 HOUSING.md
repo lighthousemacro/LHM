@@ -722,47 +722,43 @@ HCI = 0.15 × z(Construction)    +  0.12 × z(Sales)
 Each sub-composite rolls up the key indicators from its section:
 
 ```
-z(Construction) = 0.30×z(SF_Starts_YoY) + 0.25×z(Permits_YoY) + 0.20×z(Completions_YoY)
-                + 0.15×z(Under_Construction) + 0.10×z(MF_Starts_YoY)
+z(Construction)      = 0.30×z(SF_Starts_YoY) + 0.25×z(Permits_YoY) + 0.20×z(Completions_YoY)
+                     + 0.15×z(Under_Construction) + 0.10×z(MF_Starts_YoY)
 
-z(Sales)        = 0.25×z(Existing_Sales_YoY) + 0.20×z(New_Sales_YoY)
-                + 0.25×z(Pending_Index) + 0.15×z(MBA_Purchase_YoY)
-                + 0.15×z(-Days_on_Market)
+z(Sales)             = 0.25×z(Existing_Sales_YoY) + 0.20×z(New_Sales_YoY)
+                     + 0.25×z(Pending_Index) + 0.15×z(MBA_Purchase_YoY)
+                     + 0.15×z(-Days_on_Market)
 
-z(Prices)       = 0.30×z(CS_National_YoY) + 0.25×z(FHFA_YoY) + 0.20×z(Zillow_YoY)
-                + 0.15×z(Real_HPI_YoY) + 0.10×z(-Regional_Dispersion)
+z(Prices)            = 0.30×z(CS_National_YoY) + 0.25×z(FHFA_YoY) + 0.20×z(Zillow_YoY)
+                     + 0.15×z(Real_HPI_YoY) + 0.10×z(-Regional_Dispersion)
 
-z(Affordability)= 0.25×z(-Mortgage_Rate) + 0.25×z(NAR_Afford_Index)
-                + 0.25×z(-Payment_to_Income) + 0.15×z(-Mortgage_Spread)
-                + 0.10×z(-ARM_Share)
+z(Affordability)     = 0.25×z(-Mortgage_Rate) + 0.25×z(NAR_Afford_Index)
+                     + 0.25×z(-Payment_to_Income) + 0.15×z(-Mortgage_Spread)
+                     + 0.10×z(-ARM_Share)
 
-z(Inventory)    = 0.30×z(-Months_Supply_Existing) + 0.20×z(-Months_Supply_New)
-                + 0.20×z(-Active_Listings_YoY) + 0.15×z(-Price_Reductions_Share)
-                + 0.15×z(Structural_Deficit)
+z(Inventory)         = 0.30×z(-Months_Supply_Existing) + 0.20×z(-Months_Supply_New)
+                     + 0.20×z(-Active_Listings_YoY) + 0.15×z(-Price_Reductions_Share)
+                     + 0.15×z(Structural_Deficit)
 
-z(Builder)      = 0.30×z(NAHB_Index) + 0.25×z(NAHB_Future)
-                + 0.20×z(-Price_Cuts_Share) + 0.25×z(Aggregate_Orders_YoY)
+z(Builder_Sentiment) = 0.30×z(NAHB_Index) + 0.25×z(NAHB_Future)
+                     + 0.20×z(-Price_Cuts_Share) + 0.25×z(Aggregate_Orders_YoY)
 
-z(Credit)       = 0.25×z(-Delinquency_30d) + 0.20×z(-Foreclosure_Rate)
-                + 0.15×z(-Negative_Equity) + 0.15×z(MCAI_Level)
-                + 0.15×z(-FHA_DQ_Rate) + 0.10×z(-SLOOS_Net_Tightening)
+z(Mortgage_Credit)   = 0.25×z(-Delinquency_30d) + 0.20×z(-Foreclosure_Rate)
+                     + 0.15×z(-Negative_Equity) + 0.15×z(MCAI_Level)
+                     + 0.15×z(-FHA_DQ_Rate) + 0.10×z(-SLOOS_Net_Tightening)
 
-z(Rental)       = 0.25×z(-Vacancy_Rate) + 0.25×z(Rent_YoY)
-                + 0.20×z(MF_Absorption_Rate) + 0.15×z(-Concession_Rate)
-                + 0.15×z(-MF_Pipeline_Ratio)
+z(Rental)            = 0.25×z(-Vacancy_Rate) + 0.25×z(Rent_YoY)
+                     + 0.20×z(MF_Absorption_Rate) + 0.15×z(-Concession_Rate)
+                     + 0.15×z(-MF_Pipeline_Ratio)
 
-z(Demographics) = 0.35×z(HH_Formation) + 0.25×z(25_44_Pop_Growth)
-                + 0.20×z(Homeownership_Rate) + 0.20×z(Net_Immigration)
+z(Alt_HF_Data)       = 0.35×z(XHB_Rel_Strength) + 0.35×z(Google_Trends_Momentum)
+                     + 0.30×z(Lumber_Momentum)
 
-z(Costs)        = 0.25×z(-Construction_PPI_YoY) + 0.20×z(-Lumber_YoY)
-                + 0.20×z(-Construction_AHE_YoY) + 0.20×z(Construction_Employment_YoY)
-                + 0.15×z(-Regulatory_Cost)
-
-z(Policy)       = Qualitative overlay (-1, 0, +1 regime)
-                  -1 = net restrictive (QT active, tariffs rising, no GSE reform)
-                   0 = neutral
-                  +1 = net supportive (QE/MBS purchases, tax incentives, deregulation)
+z(Demographics)      = 0.40×z(HH_Formation) + 0.30×z(25_44_Pop_Growth)
+                     + 0.30×z(Homeownership_Rate)
 ```
+
+**v2.0 Changes from v1.0:** Dropped Costs and Policy as standalone components (their signals are embedded in Affordability and Builder Sentiment). Added Alt/HF Data (real-time leading indicators). Increased Construction weight (0.12→0.15) and Affordability (0.12→0.15) to reflect their forward-looking power. Reduced Demographics (0.06→0.03) given its slow-moving structural nature.
 
 ### HCI Regime Classification
 

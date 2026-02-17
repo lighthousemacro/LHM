@@ -686,18 +686,36 @@ These market prices embed housing expectations and provide real-time signals.
 
 ---
 
-## Housing Composite Index (HCI): The Master Signal
+## Housing Composite Index (HCI) v2.0: The Master Signal
 
 ### Formula
 
-The HCI synthesizes the full housing pillar into a single normalized composite.
+The HCI synthesizes all housing sub-indicators into a single regime score, weighted by predictive power and signal reliability.
 
 ```
-HCI = 0.12 × z(Construction)  + 0.12 × z(Sales)      + 0.10 × z(Prices)
-    + 0.12 × z(Affordability) + 0.10 × z(Inventory)   + 0.08 × z(Builder)
-    + 0.10 × z(Credit)        + 0.08 × z(Rental)      + 0.06 × z(Demographics)
-    + 0.06 × z(Costs)         + 0.06 × z(Policy)
+HCI = 0.15 × z(Construction)    +  0.12 × z(Sales)
+    + 0.10 × z(Prices)          +  0.15 × z(Affordability)
+    + 0.10 × z(Inventory)       +  0.10 × z(Builder_Sentiment)
+    + 0.12 × z(Mortgage_Credit)  +  0.08 × z(Rental)
+    + 0.05 × z(Alt_HF_Data)     +  0.03 × z(Demographics)
 ```
+
+**Component Calculations:**
+
+| **Component** | **Weight** | **Constituent Sub-Indicators** | **Direction** |
+|---|---|---|---|
+| **Construction** | 0.15 | Starts YoY, Permits YoY, SF/MF Ratio, Pipeline Rate | Higher = Bullish |
+| **Sales** | 0.12 | Existing YoY, New YoY, Pending HSI, MBA Purchase YoY | Higher = Bullish |
+| **Prices** | 0.10 | Case-Shiller YoY, FHFA YoY, Real HPI YoY | Higher = Bullish* |
+| **Affordability** | 0.15 | NAR Affordability Index, Payment-to-Income (inv), Rate Level (inv) | Higher = Better Affordability |
+| **Inventory** | 0.10 | Months' Supply (inv), Inventory YoY (inv), Deficit Estimate | Balanced target ~4 months |
+| **Builder Sentiment** | 0.10 | NAHB Index, Future Sales, Order Growth, Margin Trend | Higher = Bullish |
+| **Mortgage Credit** | 0.12 | Delinquency (inv), MCAI, Equity Cushion, SLOOS (inv) | Higher = Healthier |
+| **Rental** | 0.08 | Rent YoY (inv for disinflation), Vacancy Change (inv), MF Pipeline (inv) | Higher = Less Inflationary |
+| **Alt/HF Data** | 0.05 | XHB Rel Strength, Google Trends, Lumber Momentum | Higher = Bullish |
+| **Demographics** | 0.03 | Formation-Construction Gap, Millennial Ownership Gap | Higher = More Structural Demand |
+
+*Note: For prices, "bullish" in HCI context means housing sector health, not necessarily a positive macro signal. Rapidly appreciating prices without volume = unhealthy.*
 
 ### Sub-Composite Definitions
 

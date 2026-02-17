@@ -367,7 +367,7 @@ Position Size = Regime_Multiplier × Conviction_Weight × Liquidity_Adjustment
 |---|---|---|
 | **Ocean** | `#0089D1` | Primary data (white theme), borders, branding |
 | **Dusk** | `#FF6723` | Secondary series, accent bar segment |
-| **Sky** | `#4FC3F7` | Primary data (dark theme) |
+| **Sky** | `#33CCFF` | Primary data (dark theme) |
 | **Venus** | `#FF2389` | 2% target lines, critical alerts |
 | **Sea** | `#00BB99` | Tertiary series, on-target regime bands |
 | **Doldrums** | `#D3D6D9` | Zero lines |

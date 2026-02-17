@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """
-LIGHTHOUSE MACRO - MORNING BRIEF
-=================================
-Generates a daily morning briefing from the latest pipeline data.
-Designed to run post-pipeline (~07:30 ET) via launchd or cron.
+LIGHTHOUSE MACRO - MORNING BRIEF (HTML DASHBOARD)
+===================================================
+Generates a self-contained HTML morning briefing with:
+  - Proprietary index dashboard (Diagnostic Dozen)
+  - 8 embedded charts (base64 PNGs)
+  - FRED release calendar (next 7 days)
+  - RSS macro headlines (Fed, BLS, BEA)
+  - Regime change alerts and threshold flags
+
+Designed to run post-pipeline (~07:30 ET) via launchd.
 
 Outputs:
-    1. Markdown file: ~/Desktop/LHM_Morning_Brief.md (overwritten daily)
+    1. HTML file: ~/Desktop/LHM_Morning_Brief.html
     2. macOS notification with headline summary
     3. Persistent log: /Users/bob/LHM/logs/morning_brief.log
 
@@ -14,20 +20,25 @@ Usage:
     python morning_brief.py              # Full brief
     python morning_brief.py --no-notify  # Skip macOS notification
     python morning_brief.py --stdout     # Print to stdout instead of file
+    python morning_brief.py --no-charts  # Skip chart generation (faster)
+    python morning_brief.py --no-news    # Skip FRED calendar + RSS
 """
 
 import sqlite3
 import subprocess
 import sys
 import os
+import requests
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from compute_indices import STATUS_THRESHOLDS, get_status
+from lighthouse.config import API_KEYS
 
 DB_PATH = Path("/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
-OUTPUT_PATH = Path.home() / "Desktop" / "LHM_Morning_Brief.md"
+OUTPUT_PATH = Path.home() / "Desktop" / "LHM_Morning_Brief.html"
 LOG_PATH = Path("/Users/bob/LHM/logs/morning_brief.log")
 
 # Indices to feature in the brief, grouped by engine
@@ -51,6 +62,28 @@ ALERT_THRESHOLDS = {
     "SLI": [(-0.5, "CONTRACTING"), (-1.0, "SEVERELY CONTRACTING")],
 }
 
+# Key FRED releases to watch for
+KEY_RELEASES = {
+    "Employment Situation", "Consumer Price Index", "Producer Price Index",
+    "FOMC", "Gross Domestic Product", "Personal Income and Outlays",
+    "JOLTS", "Retail Sales", "Housing Starts", "Industrial Production",
+    "Existing Home Sales", "New Residential Sales", "Durable Goods",
+    "PCE", "University of Michigan", "ISM Manufacturing",
+    "Federal Funds Rate", "Beige Book", "Treasury Statement",
+    "Import and Export Prices", "Initial Claims",
+}
+
+# RSS feeds for macro headlines
+RSS_FEEDS = [
+    ("Federal Reserve", "https://www.federalreserve.gov/feeds/press_all.xml"),
+    ("BLS", "https://www.bls.gov/feed/bls_latest.rss"),
+    ("BEA", "https://apps.bea.gov/rss/rss.xml"),
+]
+
+
+# ============================================================
+# DATA FUNCTIONS (unchanged from original)
+# ============================================================
 
 def get_latest_indices(conn: sqlite3.Connection) -> dict:
     """Get the most recent value for each index."""
@@ -197,39 +230,202 @@ def detect_threshold_alerts(current: dict) -> list:
                     "label": label,
                     "status": current[index_id]["status"],
                 })
-                break  # Only report the most severe threshold crossed
+                break
     return alerts
 
 
-def format_index_line(index_id: str, info: dict, prior: dict = None, width: int = 12) -> str:
-    """Format a single index line with value, status, and change."""
-    val = info["value"]
-    status = info["status"]
-    date = info["date"]
+# ============================================================
+# FRED RELEASE CALENDAR
+# ============================================================
 
-    change_str = ""
-    if prior and index_id in prior:
-        delta = val - prior[index_id]["value"]
-        arrow = "^" if delta > 0 else "v" if delta < 0 else "="
-        change_str = f" ({arrow}{abs(delta):+.3f})"
-
-    # Staleness warning
-    stale = ""
+def fetch_fred_calendar() -> list:
+    """Fetch upcoming FRED releases for the next 7 days."""
     try:
-        idx_date = datetime.strptime(date[:10], "%Y-%m-%d")
-        days_old = (datetime.now() - idx_date).days
-        if days_old > 7:
-            stale = f" [STALE: {days_old}d old]"
-        elif days_old > 2:
-            stale = f" [{days_old}d old]"
+        api_key = API_KEYS.get("FRED", "")
+        if not api_key:
+            return []
+
+        today = datetime.now().strftime("%Y-%m-%d")
+        end = (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d")
+
+        url = "https://api.stlouisfed.org/fred/releases/dates"
+        params = {
+            "api_key": api_key,
+            "file_type": "json",
+            "realtime_start": today,
+            "realtime_end": end,
+            "include_release_dates_with_no_data": "true",
+            "sort_order": "asc",
+        }
+
+        resp = requests.get(url, params=params, timeout=15)
+        resp.raise_for_status()
+        data = resp.json()
+
+        releases = []
+        seen = set()
+        for item in data.get("release_dates", []):
+            name = item.get("release_name", "")
+            date = item.get("date", "")
+            # Filter to key releases only
+            if any(key.lower() in name.lower() for key in KEY_RELEASES):
+                key = f"{name}_{date}"
+                if key not in seen:
+                    seen.add(key)
+                    releases.append({"name": name, "date": date})
+
+        return releases[:15]
+    except Exception as e:
+        print(f"  FRED calendar fetch failed: {e}")
+        return []
+
+
+# ============================================================
+# RSS HEADLINES
+# ============================================================
+
+def fetch_rss_headlines() -> list:
+    """Fetch recent headlines from macro RSS feeds."""
+    headlines = []
+    for source, url in RSS_FEEDS:
+        try:
+            headers = {"User-Agent": "LighthouseMacro/1.0 (data pipeline)"}
+            resp = requests.get(url, timeout=8, headers=headers)
+            resp.raise_for_status()
+            root = ET.fromstring(resp.content)
+
+            # Handle both RSS and Atom feeds
+            items = root.findall(".//item")
+            if not items:
+                # Try Atom format
+                ns = {"atom": "http://www.w3.org/2005/Atom"}
+                items = root.findall(".//atom:entry", ns)
+
+            for item in items[:3]:
+                title = ""
+                link = ""
+                pub_date = ""
+
+                # RSS format
+                title_el = item.find("title")
+                link_el = item.find("link")
+                date_el = item.find("pubDate")
+
+                if title_el is not None and title_el.text:
+                    title = title_el.text.strip()
+                if link_el is not None:
+                    if link_el.text:
+                        link = link_el.text.strip()
+                    elif link_el.get("href"):
+                        link = link_el.get("href")
+                if date_el is not None and date_el.text:
+                    pub_date = date_el.text.strip()
+
+                # Atom format fallback
+                if not title:
+                    ns = {"atom": "http://www.w3.org/2005/Atom"}
+                    t = item.find("atom:title", ns)
+                    if t is not None and t.text:
+                        title = t.text.strip()
+                    l = item.find("atom:link", ns)
+                    if l is not None:
+                        link = l.get("href", "")
+
+                if title:
+                    headlines.append({
+                        "source": source,
+                        "title": title[:120],
+                        "link": link,
+                        "date": pub_date[:25] if pub_date else "",
+                    })
+        except Exception as e:
+            print(f"  RSS fetch failed for {source}: {e}")
+            continue
+
+    return headlines
+
+
+# ============================================================
+# HTML TEMPLATE
+# ============================================================
+
+def _status_color(status: str) -> str:
+    """Map a status string to a CSS color."""
+    if not status:
+        return "#8b949e"
+    s = status.upper()
+    if any(w in s for w in ["CRISIS", "SCARCE", "HIGH RISK", "WEAK", "TRADE CRISIS",
+                            "SEVERELY", "BLOW-OFF", "PORT", "RECESSION"]):
+        return "#FF2389"  # Venus
+    if any(w in s for w in ["ELEVATED", "PRE-RECESSION", "CAUTIOUS", "LATE",
+                            "TIGHT", "STRESSED", "HEADWIND", "FEARFUL",
+                            "MISPRICED", "BEARISH", "RED", "PRE_CRISIS"]):
+        return "#FF6723"  # Dusk
+    if any(w in s for w in ["NEUTRAL", "MID-CYCLE", "BALANCED", "NORMAL",
+                            "FROZEN", "SLOWING", "STAGE"]):
+        return "#8b949e"  # muted
+    if any(w in s for w in ["EXPANSION", "ON TARGET", "TREND", "LOOSE",
+                            "LOW RISK", "BULLISH", "GREEN", "ACCUMULATION",
+                            "CAPITAL", "RAPID"]):
+        return "#00BB99"  # Sea
+    return "#8b949e"
+
+
+def _change_html(index_id: str, current: dict, prior: dict) -> str:
+    """Format value change as styled HTML."""
+    if index_id not in current:
+        return ""
+    val = current[index_id]["value"]
+    if index_id not in prior:
+        return f"{val:+.3f}"
+    delta = val - prior[index_id]["value"]
+    if abs(delta) < 0.001:
+        return f'<span style="color:#8b949e">=</span>'
+    color = "#00BB99" if delta > 0 else "#FF6723"
+    arrow = "&#9650;" if delta > 0 else "&#9660;"
+    return f'<span style="color:{color}">{arrow} {abs(delta):.3f}</span>'
+
+
+def _staleness_badge(date_str: str) -> str:
+    """Return a staleness badge if data is old."""
+    if not date_str:
+        return ""
+    try:
+        d = datetime.strptime(date_str[:10], "%Y-%m-%d")
+        days = (datetime.now() - d).days
+        if days > 7:
+            return f'<span class="stale-badge">{days}d</span>'
+        elif days > 2:
+            return f'<span class="age-badge">{days}d</span>'
     except (ValueError, TypeError):
         pass
+    return ""
 
-    return f"| {index_id:<{width}} | {val:>8.3f}{change_str:<14} | {status:<22} |{stale}"
+
+def _index_row(index_id: str, current: dict, prior: dict) -> str:
+    """Build a single table row for an index."""
+    if index_id not in current:
+        return ""
+    info = current[index_id]
+    val = info["value"]
+    status = info["status"] or "N/A"
+    date = info.get("date", "")
+    color = _status_color(status)
+    change = _change_html(index_id, current, prior)
+    stale = _staleness_badge(date)
+
+    return f"""<tr>
+        <td class="idx-name">{index_id}</td>
+        <td class="idx-value">{val:+.3f}</td>
+        <td class="idx-change">{change}</td>
+        <td class="idx-status" style="color:{color}">{status}</td>
+        <td class="idx-stale">{stale}</td>
+    </tr>"""
 
 
-def build_brief(conn: sqlite3.Connection) -> str:
-    """Build the full morning brief markdown."""
+def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
+                include_news: bool = True) -> str:
+    """Build the full morning brief as self-contained HTML."""
     now = datetime.now()
     current = get_latest_indices(conn)
     prior = get_prior_indices(conn, current)
@@ -237,139 +433,590 @@ def build_brief(conn: sqlite3.Connection) -> str:
     regime_changes = detect_regime_changes(current, prior)
     alerts = detect_threshold_alerts(current)
 
-    lines = []
-    lines.append(f"# LHM Morning Brief - {now.strftime('%A, %B %d, %Y')}")
-    lines.append(f"*Generated {now.strftime('%H:%M ET')}*\n")
+    # Generate charts
+    chart_data = []
+    if include_charts:
+        try:
+            from brief_charts import generate_dashboard_charts
+            chart_data = generate_dashboard_charts(conn)
+            print(f"  Generated {len(chart_data)} charts")
+        except Exception as e:
+            print(f"  WARNING: Chart generation failed: {e}")
 
-    # Pipeline health header
-    lines.append("## Pipeline Status")
+    # Fetch calendar and RSS
+    calendar = []
+    headlines = []
+    if include_news:
+        calendar = fetch_fred_calendar()
+        headlines = fetch_rss_headlines()
+        print(f"  Calendar: {len(calendar)} releases | RSS: {len(headlines)} headlines")
+
+    # Pipeline status line
+    pipe_status = ""
     if health.get("last_run"):
         run = health["last_run"]
-        run_status = "OK" if "completed" in str(run["status"]) else run["status"]
-        lines.append(f"- Last run: {run['timestamp'][:16]} | {run['series_updated']} series | {run_status}")
-        duration_min = run["duration_seconds"] / 60 if run["duration_seconds"] else 0
-        lines.append(f"- Duration: {duration_min:.0f} min | {run['observations_added']:,} observations added")
+        status_word = "OK" if "completed" in str(run["status"]) else run["status"]
+        pipe_status = f'{run["timestamp"][:16]} | {run["series_updated"]} series | {status_word}'
     else:
-        lines.append("- **WARNING: No pipeline run found**")
+        pipe_status = "No pipeline run found"
 
-    # Horizon dataset staleness
+    # Horizon status
+    horizon_html = ""
     if health.get("horizon_latest"):
-        horizon_date = health["horizon_latest"][:10]
+        h_date_str = health["horizon_latest"][:10]
         try:
-            h_date = datetime.strptime(horizon_date, "%Y-%m-%d")
+            h_date = datetime.strptime(h_date_str, "%Y-%m-%d")
             h_days = (now - h_date).days
             if h_days > 3:
-                lines.append(f"- **HORIZON DATASET STALE: {horizon_date} ({h_days} days old)**")
-                lines.append(f"  - Macro indices (MRI, LFI, LCI, etc.) frozen at {horizon_date}")
-                lines.append(f"  - Run: `python horizon_dataset_builder.py` to update")
+                horizon_html = f'<div class="alert-box warning">HORIZON DATASET STALE: {h_date_str} ({h_days}d old). Macro indices frozen.</div>'
             else:
-                lines.append(f"- Horizon dataset: {horizon_date} (current)")
+                horizon_html = f'<div class="status-ok">Horizon: {h_date_str}</div>'
         except (ValueError, TypeError):
             pass
 
-    # Data quality
+    # Quality flags
+    quality_html = ""
     if health.get("quality"):
         q = health["quality"]
         suspect = q.get("suspect", 0)
         warning = q.get("warning", 0)
         if suspect > 0 or warning > 0:
-            lines.append(f"- Quality flags: {suspect} suspect, {warning} warning")
+            quality_html = f'<span class="quality-flags">{suspect} suspect, {warning} warning</span>'
 
-    lines.append("")
+    # Hero cards (MRI, Recession Prob, Warning Level)
+    mri_val = current.get("MRI", {}).get("value", 0)
+    mri_status = current.get("MRI", {}).get("status", "N/A") or "N/A"
+    rec_val = current.get("REC_PROB", {}).get("value", 0)
+    rec_status = current.get("REC_PROB", {}).get("status", "N/A") or "N/A"
+    warn_val = current.get("WARNING_LEVEL", {}).get("value", 0)
+    warn_status = current.get("WARNING_LEVEL", {}).get("status", "N/A") or "N/A"
+    alloc_val = current.get("ALLOC_MULTIPLIER", {}).get("value", 0)
+    alloc_status = current.get("ALLOC_MULTIPLIER", {}).get("status", "N/A") or "N/A"
 
-    # ALERTS section (regime changes + threshold alerts)
+    # Alerts HTML
+    alerts_html = ""
     if regime_changes or alerts:
-        lines.append("## Alerts")
-        if regime_changes:
-            lines.append("### Regime Changes")
-            for rc in regime_changes:
-                lines.append(f"- **{rc['index']}**: {rc['from_status']} -> **{rc['to_status']}** "
-                           f"({rc['from_value']:.3f} -> {rc['to_value']:.3f})")
-            lines.append("")
+        alert_items = []
+        for rc in regime_changes:
+            alert_items.append(
+                f'<div class="alert-item regime">'
+                f'<span class="alert-idx">{rc["index"]}</span> '
+                f'<span class="alert-from">{rc["from_status"]}</span> '
+                f'&#8594; <span class="alert-to" style="color:{_status_color(rc["to_status"])}">'
+                f'{rc["to_status"]}</span> '
+                f'<span class="alert-val">({rc["from_value"]:.3f} &#8594; {rc["to_value"]:.3f})</span>'
+                f'</div>'
+            )
+        for a in alerts:
+            alert_items.append(
+                f'<div class="alert-item threshold">'
+                f'<span class="alert-idx">{a["index"]}</span> '
+                f'at <span class="alert-val">{a["value"]:.3f}</span> '
+                f'<span class="alert-status" style="color:{_status_color(a["status"])}">[{a["status"]}]</span>'
+                f'</div>'
+            )
+        alerts_html = f"""
+        <div class="section">
+            <h2>Alerts</h2>
+            {"".join(alert_items)}
+        </div>"""
 
-        if alerts:
-            lines.append("### Threshold Flags")
-            for a in alerts:
-                lines.append(f"- **{a['index']}** at {a['value']:.3f} [{a['status']}]")
-            lines.append("")
+    # Charts HTML
+    charts_html = ""
+    if chart_data:
+        chart_items = []
+        for c in chart_data:
+            if c.get("base64"):
+                chart_items.append(
+                    f'<div class="chart-card">'
+                    f'<img src="data:image/png;base64,{c["base64"]}" alt="{c["title"]}" />'
+                    f'</div>'
+                )
+        charts_html = f"""
+        <div class="section">
+            <h2>Market Snapshot</h2>
+            <div class="chart-grid">
+                {"".join(chart_items)}
+            </div>
+        </div>"""
 
-    # MRI headline
-    if "MRI" in current:
-        mri = current["MRI"]
-        lines.append(f"## MRI: {mri['value']:.3f} [{mri['status']}]")
-        # Allocation guidance
-        if "ALLOC_MULTIPLIER" in current:
-            am = current["ALLOC_MULTIPLIER"]
-            lines.append(f"Allocation Multiplier: {am['value']:.2f}x [{am['status']}]")
-        if "REC_PROB" in current:
-            rp = current["REC_PROB"]
-            lines.append(f"Recession Probability: {rp['value']:.1%} [{rp['status']}]")
-        lines.append("")
+    # Index tables
+    def _build_table(title: str, indices: list, show_header: bool = True) -> str:
+        rows = [_index_row(idx, current, prior) for idx in indices]
+        rows = [r for r in rows if r]
+        if not rows:
+            return ""
+        header = f"<h2>{title}</h2>" if show_header else ""
+        return f"""
+        <div class="section">
+            {header}
+            <table class="index-table">
+                <thead><tr>
+                    <th>Index</th><th>Value</th><th>Change</th><th>Status</th><th></th>
+                </tr></thead>
+                <tbody>{"".join(rows)}</tbody>
+            </table>
+        </div>"""
 
-    # Engine 1: Macro Dynamics
-    lines.append("## Engine 1: Macro Dynamics")
-    lines.append(f"| {'Index':<12} | {'Value':<22} | {'Status':<22} |")
-    lines.append(f"|{'-'*14}|{'-'*24}|{'-'*24}|")
-    for idx in MACRO_INDICES:
-        if idx in current:
-            lines.append(format_index_line(idx, current[idx], prior))
-    lines.append("")
+    engine1_html = _build_table("Engine 1: Macro Dynamics", MACRO_INDICES)
+    core_html = _build_table("Core Signals", CORE_SIGNALS, show_header=True)
+    engine2_html = _build_table("Engine 2: Monetary Mechanics", MONETARY_INDICES)
+    engine3_html = _build_table("Engine 3: Structure &amp; Sentiment", STRUCTURE_INDICES)
+    risk_html = _build_table("Risk Dashboard", ADVANCED)
 
-    # Core Signals
-    lines.append("### Core Signals")
-    for idx in CORE_SIGNALS:
-        if idx in current:
-            lines.append(format_index_line(idx, current[idx], prior))
-    lines.append("")
+    # Calendar HTML
+    calendar_html = ""
+    if calendar:
+        cal_items = []
+        for r in calendar:
+            try:
+                d = datetime.strptime(r["date"], "%Y-%m-%d")
+                day_str = d.strftime("%a %b %d")
+            except (ValueError, TypeError):
+                day_str = r["date"]
+            cal_items.append(
+                f'<div class="cal-item">'
+                f'<span class="cal-date">{day_str}</span>'
+                f'<span class="cal-name">{r["name"]}</span>'
+                f'</div>'
+            )
+        calendar_html = f"""
+        <div class="section">
+            <h2>Upcoming Releases</h2>
+            {"".join(cal_items)}
+        </div>"""
 
-    # Engine 2: Monetary Mechanics
-    lines.append("## Engine 2: Monetary Mechanics")
-    lines.append(f"| {'Index':<12} | {'Value':<22} | {'Status':<22} |")
-    lines.append(f"|{'-'*14}|{'-'*24}|{'-'*24}|")
-    for idx in MONETARY_INDICES:
-        if idx in current:
-            lines.append(format_index_line(idx, current[idx], prior))
-    lines.append("")
+    # RSS HTML
+    rss_html = ""
+    if headlines:
+        rss_items = []
+        for h in headlines:
+            link_attr = f' href="{h["link"]}" target="_blank"' if h.get("link") else ""
+            tag = "a" if link_attr else "span"
+            rss_items.append(
+                f'<div class="rss-item">'
+                f'<span class="rss-source">{h["source"]}</span>'
+                f'<{tag}{link_attr} class="rss-title">{h["title"]}</{tag}>'
+                f'</div>'
+            )
+        rss_html = f"""
+        <div class="section">
+            <h2>Macro Headlines</h2>
+            {"".join(rss_items)}
+        </div>"""
 
-    # Engine 3: Market Structure & Sentiment
-    lines.append("## Engine 3: Structure & Sentiment")
-    lines.append(f"| {'Index':<12} | {'Value':<22} | {'Status':<22} |")
-    lines.append(f"|{'-'*14}|{'-'*24}|{'-'*24}|")
-    for idx in STRUCTURE_INDICES:
-        if idx in current:
-            lines.append(format_index_line(idx, current[idx], prior))
-    lines.append("")
-
-    # Advanced / Risk
-    lines.append("## Risk Dashboard")
-    lines.append(f"| {'Index':<12} | {'Value':<22} | {'Status':<22} |")
-    lines.append(f"|{'-'*14}|{'-'*24}|{'-'*24}|")
-    for idx in ADVANCED:
-        if idx in current:
-            lines.append(format_index_line(idx, current[idx], prior))
-    lines.append("")
-
-    # Critical data freshness
+    # Stale series
+    stale_html = ""
     if health.get("critical_freshness"):
-        stale_series = []
+        stale_items = []
         for series_id, latest_date in health["critical_freshness"].items():
             try:
                 s_date = datetime.strptime(latest_date[:10], "%Y-%m-%d")
                 days_old = (now - s_date).days
                 if days_old > 10:
-                    stale_series.append((series_id, latest_date[:10], days_old))
+                    stale_items.append((series_id, latest_date[:10], days_old))
             except (ValueError, TypeError):
                 pass
-        if stale_series:
-            lines.append("## Stale Critical Series")
-            for sid, dt, days in sorted(stale_series, key=lambda x: -x[2]):
-                lines.append(f"- {sid}: last updated {dt} ({days}d ago)")
-            lines.append("")
+        if stale_items:
+            rows = "".join(
+                f'<div class="stale-item"><span>{sid}</span><span>{dt}</span><span class="stale-badge">{days}d</span></div>'
+                for sid, dt, days in sorted(stale_items, key=lambda x: -x[2])
+            )
+            stale_html = f"""
+            <div class="section">
+                <h2>Stale Critical Series</h2>
+                {rows}
+            </div>"""
 
-    lines.append("---")
-    lines.append(f"*Lighthouse Macro | {now.strftime('%Y-%m-%d %H:%M ET')}*")
+    # Assemble full HTML
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LHM Morning Brief - {now.strftime('%b %d, %Y')}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {{
+            --ocean: #0089D1;
+            --dusk: #FF6723;
+            --sky: #4FC3F7;
+            --venus: #FF2389;
+            --sea: #00BB99;
+            --doldrums: #D3D6D9;
+            --bg: #0A1628;
+            --card: #0f2140;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --border: #1e3350;
+        }}
 
-    return "\n".join(lines)
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+
+        body {{
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0;
+        }}
+
+        .wrapper {{
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }}
+
+        /* ---- HEADER ---- */
+        .header {{
+            text-align: center;
+            padding: 1.5rem 0 1rem;
+            border-bottom: 3px solid var(--ocean);
+            margin-bottom: 1.5rem;
+        }}
+        .header-brand {{
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--ocean);
+            margin-bottom: 0.25rem;
+        }}
+        .header-title {{
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }}
+        .header-meta {{
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-family: 'Source Code Pro', monospace;
+        }}
+
+        /* ---- ACCENT BAR ---- */
+        .accent-bar {{
+            height: 4px;
+            background: linear-gradient(90deg, var(--ocean) 66%, var(--dusk) 66%);
+            margin-bottom: 1.5rem;
+        }}
+
+        /* ---- HERO CARDS ---- */
+        .hero-grid {{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }}
+        .hero-card {{
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }}
+        .hero-label {{
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.4rem;
+        }}
+        .hero-value {{
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }}
+        .hero-status {{
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }}
+
+        /* ---- SECTIONS ---- */
+        .section {{
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }}
+        .section h2 {{
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--ocean);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }}
+
+        /* ---- INDEX TABLE ---- */
+        .index-table {{
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.82rem;
+        }}
+        .index-table thead th {{
+            text-align: left;
+            color: var(--muted);
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.3rem 0.5rem;
+            border-bottom: 1px solid var(--border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }}
+        .index-table tbody tr {{
+            border-bottom: 1px solid rgba(30, 51, 80, 0.5);
+        }}
+        .index-table tbody tr:hover {{
+            background: rgba(0, 137, 209, 0.05);
+        }}
+        .index-table td {{
+            padding: 0.4rem 0.5rem;
+        }}
+        .idx-name {{
+            font-weight: 600;
+            color: var(--text);
+        }}
+        .idx-value {{
+            color: var(--sky);
+        }}
+        .idx-change {{
+            font-size: 0.75rem;
+        }}
+        .idx-status {{
+            font-weight: 600;
+            font-size: 0.78rem;
+        }}
+
+        /* ---- BADGES ---- */
+        .stale-badge {{
+            background: rgba(255, 103, 35, 0.2);
+            color: var(--dusk);
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }}
+        .age-badge {{
+            background: rgba(139, 148, 158, 0.15);
+            color: var(--muted);
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+        }}
+
+        /* ---- ALERTS ---- */
+        .alert-box {{
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }}
+        .alert-box.warning {{
+            background: rgba(255, 103, 35, 0.1);
+            border: 1px solid var(--dusk);
+            color: var(--dusk);
+        }}
+        .status-ok {{
+            font-size: 0.8rem;
+            color: var(--sea);
+            margin-bottom: 0.5rem;
+        }}
+        .quality-flags {{
+            font-size: 0.75rem;
+            color: var(--muted);
+        }}
+        .alert-item {{
+            padding: 0.4rem 0;
+            font-size: 0.82rem;
+            border-bottom: 1px solid rgba(30, 51, 80, 0.3);
+        }}
+        .alert-item:last-child {{ border-bottom: none; }}
+        .alert-idx {{
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 700;
+            color: var(--text);
+        }}
+        .alert-from {{
+            color: var(--muted);
+        }}
+        .alert-to {{
+            font-weight: 700;
+        }}
+        .alert-val {{
+            font-family: 'Source Code Pro', monospace;
+            color: var(--muted);
+            font-size: 0.78rem;
+        }}
+        .alert-status {{
+            font-weight: 600;
+            font-size: 0.78rem;
+        }}
+
+        /* ---- CHARTS ---- */
+        .chart-grid {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }}
+        .chart-card {{
+            border: 2px solid var(--ocean);
+            border-radius: 6px;
+            overflow: hidden;
+        }}
+        .chart-card img {{
+            width: 100%;
+            height: auto;
+            display: block;
+        }}
+
+        /* ---- CALENDAR ---- */
+        .cal-item {{
+            display: flex;
+            gap: 1rem;
+            padding: 0.35rem 0;
+            font-size: 0.82rem;
+            border-bottom: 1px solid rgba(30, 51, 80, 0.3);
+        }}
+        .cal-item:last-child {{ border-bottom: none; }}
+        .cal-date {{
+            font-family: 'Source Code Pro', monospace;
+            color: var(--ocean);
+            font-weight: 600;
+            min-width: 90px;
+        }}
+        .cal-name {{
+            color: var(--text);
+        }}
+
+        /* ---- RSS ---- */
+        .rss-item {{
+            display: flex;
+            gap: 0.8rem;
+            padding: 0.35rem 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(30, 51, 80, 0.3);
+            align-items: baseline;
+        }}
+        .rss-item:last-child {{ border-bottom: none; }}
+        .rss-source {{
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--ocean);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 50px;
+        }}
+        .rss-title {{
+            color: var(--text);
+            text-decoration: none;
+        }}
+        a.rss-title:hover {{
+            color: var(--sky);
+            text-decoration: underline;
+        }}
+
+        /* ---- STALE SERIES ---- */
+        .stale-item {{
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            font-size: 0.8rem;
+            font-family: 'Source Code Pro', monospace;
+            border-bottom: 1px solid rgba(30, 51, 80, 0.3);
+        }}
+        .stale-item:last-child {{ border-bottom: none; }}
+
+        /* ---- FOOTER ---- */
+        .footer {{
+            text-align: center;
+            padding: 1.5rem 0 1rem;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }}
+        .footer-tagline {{
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--ocean);
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+        }}
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {{
+            .hero-grid {{ grid-template-columns: repeat(2, 1fr); }}
+            .chart-grid {{ grid-template-columns: 1fr; }}
+            .wrapper {{ padding: 0.8rem; }}
+        }}
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <div class="accent-bar"></div>
+
+    <div class="header">
+        <div class="header-brand">LIGHTHOUSE MACRO</div>
+        <div class="header-title">Morning Brief &mdash; {now.strftime('%A, %B %d, %Y')}</div>
+        <div class="header-meta">Pipeline: {pipe_status} &bull; {now.strftime('%H:%M ET')}</div>
+    </div>
+
+    {horizon_html}
+
+    <!-- Hero Cards -->
+    <div class="hero-grid">
+        <div class="hero-card">
+            <div class="hero-label">MRI</div>
+            <div class="hero-value" style="color:{_status_color(mri_status)}">{mri_val:+.3f}</div>
+            <div class="hero-status" style="color:{_status_color(mri_status)}">{mri_status}</div>
+        </div>
+        <div class="hero-card">
+            <div class="hero-label">Recession Prob</div>
+            <div class="hero-value" style="color:{_status_color(rec_status)}">{rec_val:.1%}</div>
+            <div class="hero-status" style="color:{_status_color(rec_status)}">{rec_status}</div>
+        </div>
+        <div class="hero-card">
+            <div class="hero-label">Warning Level</div>
+            <div class="hero-value" style="color:{_status_color(warn_status)}">{warn_val:.0f}</div>
+            <div class="hero-status" style="color:{_status_color(warn_status)}">{warn_status}</div>
+        </div>
+        <div class="hero-card">
+            <div class="hero-label">Allocation</div>
+            <div class="hero-value" style="color:{_status_color(alloc_status)}">{alloc_val:.2f}x</div>
+            <div class="hero-status" style="color:{_status_color(alloc_status)}">{alloc_status}</div>
+        </div>
+    </div>
+
+    {alerts_html}
+    {charts_html}
+    {engine1_html}
+    {core_html}
+    {engine2_html}
+    {engine3_html}
+    {risk_html}
+    {calendar_html}
+    {rss_html}
+    {stale_html}
+
+    <div class="footer">
+        <div class="footer-tagline">MACRO, ILLUMINATED.</div>
+        Lighthouse Macro &bull; {now.strftime('%Y-%m-%d %H:%M ET')}
+    </div>
+
+</div>
+</body>
+</html>"""
+
+    return html
 
 
 def build_notification_summary(conn: sqlite3.Connection) -> str:
@@ -432,8 +1079,8 @@ def log_brief(brief: str):
         f.write(f"\n{'='*70}\n")
         f.write(f"MORNING BRIEF - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write(f"{'='*70}\n")
-        f.write(brief)
-        f.write("\n")
+        # For log, just record a compact summary, not the full HTML
+        f.write(f"HTML dashboard generated at {OUTPUT_PATH}\n")
 
 
 def main():
@@ -442,12 +1089,18 @@ def main():
     parser = argparse.ArgumentParser(description="Lighthouse Macro Morning Brief")
     parser.add_argument("--no-notify", action="store_true", help="Skip macOS notification")
     parser.add_argument("--stdout", action="store_true", help="Print to stdout instead of file")
+    parser.add_argument("--no-charts", action="store_true", help="Skip chart generation (faster)")
+    parser.add_argument("--no-news", action="store_true", help="Skip FRED calendar + RSS")
     args = parser.parse_args()
 
     conn = sqlite3.connect(DB_PATH)
 
     # Build the brief
-    brief = build_brief(conn)
+    brief = build_brief(
+        conn,
+        include_charts=not args.no_charts,
+        include_news=not args.no_news,
+    )
 
     # Output
     if args.stdout:

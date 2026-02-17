@@ -294,6 +294,94 @@ FRED_CURATED = {
     # Term Premium
     "THREEFYTP10": "10Y Term Premium ACM",
 
+    # ===== PILLAR 1 (LABOR) ADDITIONS - Feb 2026 =====
+
+    # JOLTS Levels (needed for derived ratios like Hires/Quits, V/U)
+    "JTSJOL": "JOLTS Job Openings Level Total Nonfarm",
+    "JTSHIL": "JOLTS Hires Level Total Nonfarm",
+    "JTSQUL": "JOLTS Quits Level Total Nonfarm",
+    "JTSQUR": "JOLTS Quits Rate Total Nonfarm",
+    "JTSLDL": "JOLTS Layoffs Discharges Level Total Nonfarm",
+    "JTSTSL": "JOLTS Total Separations Level Total Nonfarm",
+    "JTSHIR": "JOLTS Hires Rate Total Nonfarm",
+    "JTSTSR": "JOLTS Total Separations Rate Total Nonfarm",
+
+    # JOLTS Sector Quits Rates (sector confidence signals)
+    "JTS3000QUR": "JOLTS Quits Rate Manufacturing",
+    "JTS2300QUR": "JOLTS Quits Rate Construction",
+    "JTS4400QUR": "JOLTS Quits Rate Retail Trade",
+    "JTS540099QUR": "JOLTS Quits Rate Professional Business Services",
+    "JTS7000QUR": "JOLTS Quits Rate Leisure Hospitality",
+    "JTS6200QUR": "JOLTS Quits Rate Health Care Social Assistance",
+
+    # Unemployment Duration Decomposition
+    "UNEMPLOY": "Unemployment Level",
+    "UEMPLT5": "Unemployed Less Than 5 Weeks",
+    "UEMP5TO14": "Unemployed 5 to 14 Weeks",
+    "UEMP15T26": "Unemployed 15 to 26 Weeks",
+    "UEMPMED": "Median Weeks Unemployed",
+
+    # Unemployment Reasons
+    "LNS13023621": "Unemployment Level Job Losers",
+    "LNS13023705": "Unemployment Level Job Leavers",
+    "LNS13023557": "Unemployment Level Reentrants",
+    "LNS13023569": "Unemployment Level New Entrants",
+
+    # Demographic Unemployment - Gender
+    "LNS14000001": "Unemployment Rate Men",
+    "LNS14000002": "Unemployment Rate Women",
+
+    # Demographic Unemployment - Age
+    "LNS14000060": "Unemployment Rate 25-54 Yrs Prime Age",
+    "LNS14024887": "Unemployment Rate 16-24 Yrs",
+
+    # Demographic Unemployment - Education (25+)
+    "LNS14027659": "Unemployment Rate Less Than HS Diploma 25+",
+    "LNS14027660": "Unemployment Rate HS Graduates No College 25+",
+    "LNS14027689": "Unemployment Rate Some College Associate 25+",
+    "LNS14027662": "Unemployment Rate Bachelors Degree and Higher 25+",
+
+    # Demographic Unemployment - Race (additional)
+    "LNU04032183": "Unemployment Rate Asian",
+
+    # LFPR Demographic Breakdowns
+    "LNS11300001": "LFPR Men",
+    "LNS11324230": "LFPR 55 Yrs and Over",
+    "CLF16OV": "Civilian Labor Force Level",
+
+    # Employment Quality
+    "LNS12500000": "Employed Usually Work Full Time",
+    "LNS12600000": "Employed Usually Work Part Time",
+    "LNS12026620": "Multiple Jobholders Pct of Employed",
+    "NILFWJN": "Not in Labor Force Want a Job Now",
+    "LNU05026645": "Discouraged Workers",
+
+    # Industry Employment (Payroll)
+    "TEMPHELPS": "Temp Help Services Employment",
+    "USCONS": "All Employees Construction",
+    "USTRADE": "All Employees Retail Trade",
+    "USPBS": "All Employees Professional Business Services",
+    "USFIRE": "All Employees Financial Activities",
+    "USINFO": "All Employees Information",
+    "USLAH": "All Employees Leisure Hospitality",
+    "USGOVT": "All Employees Government",
+    "CES6562000001": "All Employees Health Care Social Assistance",
+
+    # Hours Worked (leading indicators)
+    "AWHAETP": "Avg Weekly Hours Total Private",
+    "AWHMAN": "Avg Weekly Hours Manufacturing Production",
+    "AWOTMAN": "Avg Overtime Hours Manufacturing Production",
+    "AWHI": "Aggregate Weekly Hours Index Total Private",
+
+    # Additional Wages
+    "CES0500000030": "Avg Weekly Earnings Production Nonsupervisory",
+    "CIU2010000000000I": "ECI Total Compensation Private Industry",
+
+    # Recession / Confirmation Indicators
+    "SAHMREALTIME": "Sahm Rule Recession Indicator",
+    "IHLIDXUS": "Indeed Job Postings Index US",
+    "IURSA": "Insured Unemployment Rate",
+
     # ISM / PMI - NOTE: ISM data was removed from FRED in June 2016 due to licensing
     # NAPM, NAPMNOI, NAPMII, etc. are no longer available via FRED API
     # Use Regional Fed surveys as proxies or get ISM data from other sources

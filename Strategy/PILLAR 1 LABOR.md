@@ -630,9 +630,11 @@ Prime-age (25-54) LFPR strips out retirement and education effects, giving the c
 | **Segment** | **FRED Code** | **Pre-COVID Peak** | **Structural Trend** |
 |---|---|---|---|
 | **Prime-Age Total** | LNS11300060 | 83.1% (Jan 2020) | Recovered to 83.5%+ by 2023 |
-| **Prime-Age Men** | LNS11300061 | 89.2% | Long-term secular decline |
-| **Prime-Age Women** | LNS11300062 | 77.0% | Long-term secular increase |
+| **Prime-Age Men** | LRAC25MAUSM156S | 89.2% | Long-term secular decline |
+| **Prime-Age Women** | LRAC25FEUSM156S | 77.0% | Long-term secular increase |
 | **55+ Years** | LNS11324230 | 40.3% | COVID acceleration of early retirement |
+| **Men (All)** | LNS11300001 | 69.2% | Long-term secular decline |
+| **Women (All)** | LNS11300002 | 57.5% | Long-term secular increase |
 
 #### Participation Rate Signals
 

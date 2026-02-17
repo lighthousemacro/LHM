@@ -217,7 +217,7 @@ The Atlanta Fed decomposes CPI into "sticky" (slow to change: services, rent) an
 |---|---|---|---|---|
 | **Sticky CPI (Atlanta Fed)** | CORESTICKM159SFRBATL | Monthly | **Leads core by 3-6 mo** | Slow-moving components |
 | **Sticky CPI YoY%** | Derived | Monthly | Leading | Persistence gauge |
-| **Flexible CPI (Atlanta Fed)** | COREFLEXM159SFRBATL | Monthly | Coincident | Fast-moving components |
+| **Flexible CPI (Atlanta Fed)** | COREFLEXCPIM159SFRBATL | Monthly | Coincident | Fast-moving components |
 | **Flexible CPI YoY%** | Derived | Monthly | Coincident | Volatile signal |
 | **Sticky-Flexible Spread** | Derived | Monthly | Leading 6-12 mo | Inflation persistence vs transitory |
 

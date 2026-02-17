@@ -472,7 +472,7 @@ Note: Temp Help is technically within Professional & Business Services but track
 | **Manufacturing** | MANEMP | ~10% | Cyclical, early to weaken |
 | **Construction** | USCONS | ~5% | Housing/rate sensitive |
 | **Professional Services** | USPBS | ~15% | Coincident (but Temp Help within it leads) |
-| **Healthcare** | USHCE | ~13% | Defensive (counter-cyclical) |
+| **Healthcare** | CES6562000001 | ~13% | Defensive (counter-cyclical) |
 | **Retail Trade** | USTRADE | ~10% | Coincident to lagging |
 | **Leisure & Hospitality** | USLAH | ~11% | Lagging (last to recover) |
 | **Government** | USGOVT | ~14% | **Counter-cyclical** (policy response) |

@@ -1022,6 +1022,94 @@ HCI → MRI (Pillar 4 contribution):
 
 ---
 
+## FRED Series Reference Appendix
+
+All FRED series codes referenced in this pillar, organized by category. Pipeline source: `Lighthouse_Master.db` via `lighthouse_master_db.py`.
+
+### Construction (Section A)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| PERMIT | Building Permits (SAAR) | Monthly |
+| PERMIT1 | Building Permits: Single-Family | Monthly |
+| HOUST | Housing Starts (SAAR) | Monthly |
+| HOUST1F | Housing Starts: Single-Family | Monthly |
+| COMPUTSA | Housing Completions (SAAR) | Monthly |
+| UNDCONTSA | Units Under Construction | Monthly |
+| PERMITNSA | Building Permits (NSA) | Monthly |
+| HOUSTNE | Housing Starts: Northeast | Monthly |
+| HOUSTMW | Housing Starts: Midwest | Monthly |
+| HOUSTS | Housing Starts: South | Monthly |
+| HOUSTW | Housing Starts: West | Monthly |
+
+### Sales (Section B)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| HSN1F | New Home Sales (SAAR) | Monthly |
+| EXHOSLUSM495S | Existing Home Sales (SAAR) | Monthly |
+| MSACSR | Months' Supply of New Houses | Monthly |
+
+### Prices (Section C)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| CSUSHPINSA | Case-Shiller National Home Price Index (NSA) | Monthly |
+| SPCS20RSA | Case-Shiller 20-City Composite (SA) | Monthly |
+| USSTHPI | FHFA House Price Index | Monthly |
+
+### Affordability & Rates (Section D)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| MORTGAGE30US | 30-Year Fixed Rate Mortgage Average | Weekly |
+| MORTGAGE15US | 15-Year Fixed Rate Mortgage Average | Weekly |
+| DGS10 | 10-Year Treasury Constant Maturity Rate | Daily |
+
+### Mortgage Credit Health (Section G)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DRSFRMACBS | Delinquency Rate on SF Residential Mortgages, All CB (SA) | Quarterly |
+
+### Rental Market (Section H)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| RRVRUSQ156N | Rental Vacancy Rate in the United States | Quarterly |
+| CUSR0000SAH1 | CPI: Shelter (SA, All Urban Consumers) | Monthly |
+
+### Demographics (Section I/K)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| RHORUSQ156N | Homeownership Rate in the United States | Quarterly |
+| RHVRUSQ156N | Homeowner Vacancy Rate in the United States | Quarterly |
+
+### Construction Costs & Labor (Section J/L)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| USCONS | All Employees: Construction (Thousands) | Monthly |
+| CES2000000003 | Average Hourly Earnings: Construction | Monthly |
+
+### Non-FRED Data Sources
+
+| **Indicator** | **Source** | **Notes** |
+|---|---|---|
+| NAHB HMI | nahb.org | Excel download, free, monthly |
+| MBA Purchase Index | MBA | Proprietary, no free FRED source |
+| NAR Pending Home Sales | NAR | Not on FRED, NAR subscription |
+| NAR Existing Home Sales (regional) | FRED | EXHOSLUSNEM495S, EXHOSLUSMWM495S, EXHOSLUSSOM495S, EXHOSLUSWTM495S |
+| Mortgage Delinquency 60+/90+ Day | MBA NDS | MBA National Delinquency Survey (not on FRED by duration bucket) |
+| Zillow ZHVI / ZORI | Zillow Research | Free CSV downloads, in pipeline via zillow_fetcher.py |
+| Foreclosure Filings | ATTOM | attomdata.com |
+| Tappable Equity | Cotality / ICE | Quarterly reports |
+| MCAI | MBA | Monthly, not on FRED |
+| SLOOS Residential | Federal Reserve | Quarterly survey, not a FRED series |
+
+---
+
 **END OF PILLAR 4: HOUSING**
 
 *Framework Version: 2.0*
@@ -1029,4 +1117,5 @@ HCI → MRI (Pillar 4 contribution):
 *Categories: 12 (Construction, Sales, Prices, Affordability, Inventory, Builder Sentiment, Mortgage Credit, Rental, Alternative/HF, Policy, Demographics, Construction Costs)*
 *Derived Metrics: 60+*
 *Regime Thresholds: 80+*
+*Last Updated: February 2026*
 

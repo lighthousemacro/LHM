@@ -272,7 +272,7 @@ The consumer's ability to spend depends on net worth (assets minus liabilities).
 | **Household Net Worth / DPI** | Derived | Quarterly | Lagging | Wealth-to-income ratio |
 | **Household Debt / DPI** | HDTGPDUSQ163N | Quarterly | Lagging | Leverage ratio |
 | **Household Debt Service Ratio** | TDSP | Quarterly | Coincident | Payment burden |
-| **Financial Obligations Ratio** | FOR | Quarterly | Coincident | Broader payment burden |
+| **Financial Obligations Ratio** | FODSP | Quarterly | Coincident | Broader payment burden (discontinued but data through ~2024) |
 | **Home Equity** | Z.1 Flow of Funds | Quarterly | Lagging | Housing wealth |
 | **Stock Holdings** | Z.1 Flow of Funds | Quarterly | Lagging | Equity wealth |
 

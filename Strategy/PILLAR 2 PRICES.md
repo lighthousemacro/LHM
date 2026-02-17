@@ -524,16 +524,16 @@ Sometimes inflation is driven by just 2-3 large categories (shelter, auto insura
 |------|-----------|------|------|--------|
 | All Items CPI-U | CPIAUCSL | 2.7% | +0.3% | 100.000% |
 | Core CPI (ex food/energy) | CPILFESL | 2.6% | +0.2% | 80.028% |
-| Food | CUUR0000SAF | 3.1% | +0.7% | 13.657% |
-| Energy | CUUR0000SAE | 2.3% | +0.3% | 6.315% |
-| Services less energy | CUUR0000SAS | 3.0% | +0.3% | 60.805% |
-| Commodities less food/energy | CUUR0000SACL1E | 1.4% | 0.0% | 19.223% |
+| Food | CPIUFDSL / BLS | 3.1% | +0.7% | 13.657% |
+| Energy | CPIENGSL / BLS | 2.3% | +0.3% | 6.315% |
+| Services less energy | CUSR0000SASLE | 3.0% | +0.3% | 60.805% |
+| Commodities less food/energy | CUSR0000SACL1E | 1.4% | 0.0% | 19.223% |
 
 **Shelter Components (Weight: 35.5%):**
 
 | Item | FRED Code | YoY% | MoM% | Weight |
 |------|-----------|------|------|--------|
-| Shelter (total) | CUSR0000SAH1 | 3.2% | +0.4% | 35.514% |
+| Shelter (total) | CUSR0000SAH1 / CPIHOSSL | 3.2% | +0.4% | 35.514% |
 | Owners' Equivalent Rent | CUSR0000SEHC | 3.4% | +0.3% | 26.362% |
 | Rent of Primary Residence | CUSR0000SEHA | 2.9% | +0.3% | 7.491% |
 | Lodging Away From Home | CUSR0000SEHB | varies | +2.9% | 1.292% |

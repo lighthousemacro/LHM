@@ -762,13 +762,23 @@ z(Demographics)      = 0.40×z(HH_Formation) + 0.30×z(25_44_Pop_Growth)
 
 ### HCI Regime Classification
 
-| **HCI Range** | **Regime** | **Interpretation** | **Historical Analog** |
+| **HCI Range** | **Regime** | **Description** | **MRI Input** |
 |---|---|---|---|
-| **> +1.0** | Housing Boom | Broad strength, overheating risk | 2004-2006, Late 2020-Early 2022 |
-| **+0.5 to +1.0** | Expansion | Healthy growth across pillars | 2016-2019, Mid 2020 |
-| **-0.5 to +0.5** | Neutral / Mixed | Cross-currents, no clear direction | 2014-2015, Current |
-| **-1.0 to -0.5** | Contraction | Broad weakness, early correction | Early 2022, 2006-2007 |
-| **< -1.0** | Housing Recession | Systemic decline | 2008-2011 |
+| > +1.0 | **Boom** | Strong across all dimensions. Overheating risk. | Bullish (watch for excess) |
+| +0.5 to +1.0 | **Expansion** | Broad-based improvement, sustainable growth | Bullish |
+| -0.5 to +0.5 | **Neutral / Frozen** | Mixed signals, low turnover, stasis | Neutral |
+| -1.0 to -0.5 | **Contraction** | Weakening demand, builder stress, rising inventory | Bearish |
+| < -1.0 | **Crisis** | Systemic stress, credit deterioration, price declines | Very Bearish |
+
+### HCI Interpretation Notes
+
+1. **Frozen ≠ Neutral.** The current regime (low transactions, stable prices, locked-in sellers) reads as "neutral" on HCI but is fundamentally abnormal. Monitor the spread between the Sales component (very weak) and the Prices component (stable) as a frozen market signature.
+
+2. **Affordability is the swing factor.** A 100 bps decline in mortgage rates can shift HCI by +0.3 to +0.5 points through affordability alone. This is the most rate-sensitive pillar in the entire framework.
+
+3. **Construction leads, prices lag.** Construction and builder sentiment components tend to turn 3-6 months before prices confirm. Weight early signals accordingly.
+
+4. **Credit is the systemic risk channel.** If Mortgage Credit drops below -0.5 while other components are stable, it signals trouble the rest of the market hasn't priced. The 2008 analog: credit deteriorated 12 months before prices collapsed.
 
 ### HCI Integration with MRI
 

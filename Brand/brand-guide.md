@@ -109,7 +109,7 @@ Twitter: @LHMacro
 
 The horizontal accent bar (visible in banner) uses:
 - Ocean Blue `#0089D1` for approximately 2/3 width (left side)
-- Dusk Orange `#FF4500` for approximately 1/3 width (right side)
+- Dusk Orange `#FF6723` for approximately 1/3 width (right side)
 - Height: 4-6px for documents, scalable for presentations
 
 Use this bar as a visual separator between header and content, or as a footer accent.

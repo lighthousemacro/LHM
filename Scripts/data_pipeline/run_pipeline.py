@@ -145,6 +145,82 @@ def main():
     except Exception as e:
         print(f"WARNING: Post-pipeline sync failed: {e}")
 
+    # Run threshold alerts
+    print("\n" + "=" * 70)
+    print("THRESHOLD ALERTS")
+    print("=" * 70)
+    try:
+        from threshold_alerts import (
+            load_state, save_state, get_latest_indices as get_alert_indices,
+            evaluate_rules, detect_status_transitions, format_alert_log,
+            format_alerts_md, send_notification,
+            ALERT_LOG_PATH, ALERT_MD_PATH, STATE_PATH
+        )
+        import sqlite3 as _sqlite3
+
+        _conn = _sqlite3.connect(INDICES_DB_PATH)
+        _state = load_state()
+        _current = get_alert_indices(_conn)
+        _alerts = evaluate_rules(_current, _state)
+        _transitions = detect_status_transitions(_current, _state)
+
+        _log_entry = format_alert_log(_alerts, _transitions)
+        _md_content = format_alerts_md(_alerts, _transitions, _current)
+
+        ALERT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        ALERT_MD_PATH.parent.mkdir(parents=True, exist_ok=True)
+        ALERT_MD_PATH.write_text(_md_content)
+        with open(ALERT_LOG_PATH, "a") as _f:
+            _f.write(_log_entry + "\n")
+
+        # Update state
+        for _a in _alerts:
+            _key = _a.get("rule_key", _a.get("index", "unknown"))
+            _state.setdefault("active_alerts", {})[_key] = {
+                "triggered": datetime.now().isoformat(),
+                "severity": _a["severity"],
+                "msg": _a["msg"],
+            }
+        _state["index_states"] = {
+            _idx: {"value": _info["value"], "status": _info["status"], "date": _info["date"]}
+            for _idx, _info in _current.items()
+        }
+        _state["last_check"] = datetime.now().isoformat()
+        save_state(_state)
+
+        if _alerts or _transitions:
+            for _t in _transitions:
+                print(f"  TRANSITION: {_t['index']} {_t['from_status']} -> {_t['to_status']}")
+            for _a in _alerts:
+                print(f"  [{_a['severity']}] {_a['msg']}")
+        else:
+            print("  No new alerts or transitions.")
+
+        _conn.close()
+    except Exception as e:
+        print(f"WARNING: Threshold alerts failed: {e}")
+
+    # Generate morning brief
+    print("\n" + "=" * 70)
+    print("MORNING BRIEF")
+    print("=" * 70)
+    try:
+        from morning_brief import build_brief, build_notification_summary, send_notification as send_brief_notify, log_brief
+        import sqlite3 as _sqlite3b
+
+        _conn2 = _sqlite3b.connect(INDICES_DB_PATH)
+        _brief = build_brief(_conn2)
+        _output_path = Path.home() / "Desktop" / "LHM_Morning_Brief.md"
+        _output_path.write_text(_brief)
+        log_brief(_brief)
+        _summary = build_notification_summary(_conn2)
+        send_brief_notify("LHM Morning Brief", _summary)
+        print(f"  Brief written to {_output_path}")
+        print(f"  Notification: {_summary}")
+        _conn2.close()
+    except Exception as e:
+        print(f"WARNING: Morning brief failed: {e}")
+
 
 if __name__ == "__main__":
     main()

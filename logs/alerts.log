@@ -1,0 +1,9 @@
+
+[2026-02-16 21:10:08] THRESHOLD ALERT CHECK
+[2026-02-16 21:10:08] === THRESHOLD ALERTS ===
+[2026-02-16 21:10:08] [MEDIUM] LFI ELEVATED: Labor fragility at 0.810. Monitor quits rate.
+[2026-02-16 21:10:08] [HIGH] CLG MISPRICED: Credit-Labor gap at -1.840. Spreads too tight for labor reality.
+[2026-02-16 21:10:08] [CRITICAL] CLG SEVERELY MISPRICED: Gap at -1.840. Add credit protection.
+[2026-02-16 21:10:08] [HIGH] MSI BEARISH: Market structure at -1.166. Reduce gross exposure.
+[2026-02-16 21:10:08] [CRITICAL] WARNING SYSTEM: RED. Multiple indicators flashing.
+[2026-02-16 21:10:08] [HIGH] WARNING SYSTEM: AMBER. Elevated risk signals.

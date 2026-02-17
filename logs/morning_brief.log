@@ -1,0 +1,87 @@
+
+======================================================================
+MORNING BRIEF - 2026-02-16 21:09:48
+======================================================================
+# LHM Morning Brief - Monday, February 16, 2026
+*Generated 21:09 ET*
+
+## Pipeline Status
+- Last run: 2026-02-16T16:27 | 305 series | OK
+- Duration: 3 min | 414,737 observations added
+- **HORIZON DATASET STALE: 2026-01-16 (31 days old)**
+  - Macro indices (MRI, LFI, LCI, etc.) frozen at 2026-01-16
+  - Run: `python horizon_dataset_builder.py` to update
+- Quality flags: 9 suspect, 41 warning
+
+## Alerts
+### Regime Changes
+- **CLG**: SEVERELY MISPRICED -> **MISPRICED** (-1.284 -> -1.840)
+- **CTI**: NEUTRAL -> **CAUTIOUS** (0.500 -> 0.382)
+- **FCI**: LOOSE -> **NEUTRAL** (0.523 -> 0.288)
+- **LFI**: NEUTRAL -> **ELEVATED** (0.244 -> 0.810)
+- **SLI**: RAPID EXPANSION -> **EXPANSION** (1.518 -> 1.336)
+- **SPI**: NEUTRAL -> **FEARFUL** (0.285 -> 1.004)
+- **SSD**: EUPHORIA + STRONG -> **BALANCED** (-0.689 -> -0.393)
+- **TCI**: HEADWIND -> **TRADE CRISIS** (-0.887 -> -1.111)
+
+### Threshold Flags
+- **LFI** at 0.810 [ELEVATED]
+- **CLG** at -1.840 [MISPRICED]
+- **MSI** at -1.166 [BEARISH]
+- **SPI** at 1.004 [FEARFUL]
+
+## MRI: 0.025 [MID-CYCLE]
+Allocation Multiplier: 0.15x [CAPITAL PRESERVATION]
+Recession Probability: 19.5% [LOW RISK]
+
+## Engine 1: Macro Dynamics
+| Index        | Value                  | Status                 |
+|--------------|------------------------|------------------------|
+| MRI          |    0.025 (^+0.042)     | MID-CYCLE              | [STALE: 31d old]
+| LPI          |    0.379 (^+0.012)     | NEUTRAL                | [STALE: 37d old]
+| PCI          |    0.050 (^+0.142)     | ON TARGET              | [STALE: 31d old]
+| GCI          |   -0.205 (^+0.013)     | TREND                  | [STALE: 77d old]
+| HCI          |    0.173 (v+0.004)     | FROZEN                 | [STALE: 77d old]
+| CCI          |   -0.569 (=+0.000)     | STRESSED               | [STALE: 107d old]
+| BCI          |    0.256 (^+0.042)     | SLOWING                | [STALE: 32d old]
+| TCI          |   -1.111 (v+0.224)     | TRADE CRISIS           | [STALE: 38d old]
+
+### Core Signals
+| LFI          |    0.810 (^+0.566)     | ELEVATED               | [STALE: 35d old]
+| CLG          |   -1.840 (v+0.556)     | MISPRICED              | [STALE: 35d old]
+
+## Engine 2: Monetary Mechanics
+| Index        | Value                  | Status                 |
+|--------------|------------------------|------------------------|
+| GCI_Gov      |    0.320 (^+0.011)     | NORMAL                 | [STALE: 38d old]
+| FCI          |    0.288 (v+0.235)     | NEUTRAL                | [STALE: 31d old]
+| LCI          |   -0.309 (^+0.087)     | TIGHT                  | [STALE: 31d old]
+
+## Engine 3: Structure & Sentiment
+| Index        | Value                  | Status                 |
+|--------------|------------------------|------------------------|
+| MSI          |   -1.166 (v+0.035)     | BEARISH                | [3d old]
+| SBD          |   -1.141 (v+0.401)     | ACCUMULATION           | [4d old]
+| SPI          |    1.004 (^+0.719)     | FEARFUL                | [4d old]
+| SSD          |   -0.393 (^+0.297)     | BALANCED               | [4d old]
+
+## Risk Dashboard
+| Index        | Value                  | Status                 |
+|--------------|------------------------|------------------------|
+| REC_PROB     |    0.195 (^+0.114)     | LOW RISK               | [STALE: 31d old]
+| ENSEMBLE_RISK |    0.695               | PRE_CRISIS             | [STALE: 31d old]
+| WARNING_LEVEL |    4.000               | RED                    | [STALE: 31d old]
+| ALLOC_MULTIPLIER |    0.150               | CAPITAL PRESERVATION   | [STALE: 31d old]
+| LIQ_STAGE    |    2.000 (=+0.000)     | STAGE 2 - RESERVE DRAIN | [STALE: 31d old]
+| SLI          |    1.336 (v+0.182)     | EXPANSION              | [STALE: 28d old]
+
+## Stale Critical Series
+- HOUST: last updated 2025-10-01 (138d ago)
+- PCEPILFE: last updated 2025-11-01 (107d ago)
+- INDPRO: last updated 2025-12-01 (77d ago)
+- CPIAUCSL: last updated 2026-01-01 (46d ago)
+- PAYEMS: last updated 2026-01-01 (46d ago)
+- UNRATE: last updated 2026-01-01 (46d ago)
+
+---
+*Lighthouse Macro | 2026-02-16 21:09 ET*

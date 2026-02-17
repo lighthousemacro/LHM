@@ -113,7 +113,18 @@ FRED_CURATED = {
     "MEDCPIM158SFRBCLE": "Median CPI",
     "CORESTICKM159SFRBATL": "Sticky Core CPI",
     "COREFLEXCPIM159SFRBATL": "Flexible Core CPI",
+    "STICKCPIM157SFRBATL": "Sticky Price CPI",
+    "FLEXCPIM157SFRBATL": "Flexible Price CPI",
     "PCETRIM12M159SFRBDAL": "Trimmed Mean PCE Inflation Rate",
+    "TRMMEANCPIM159SFRBCLE": "Trimmed Mean CPI SA",
+    "TRMMEANCPIM158SFRBCLE": "Trimmed Mean CPI Annualized Rate",
+
+    # CPI Major Aggregates (Pillar 2 Additions - Feb 2026)
+    "CPIRECSL": "CPI Recreation",
+    "CPITRNSL": "CPI Transportation",
+    "CUUR0000SETD": "CPI Motor Vehicle Maintenance Repair NSA",
+    "CUUR0000SEGC": "CPI Personal Care Services NSA",
+    "PPIFDS": "PPI Final Demand Services",
 
     # Atlanta Fed Wage Growth Tracker
     "FRBATLWGT12MMUMHGO": "Atlanta Fed Wage Growth 12M Overall",

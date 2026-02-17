@@ -466,10 +466,30 @@ FRED_CURATED = {
 
     # ===== PILLAR 2 (PRICES) ADDITIONS =====
 
+    # CPI Major Aggregates (SA)
+    "CUSR0000SAS": "CPI Services",
+    "CUSR0000SACL1E": "CPI Core Goods (Commodities Less Food Energy)",
+    "CUSR0000SASLE": "CPI Services Less Energy",
+    "CPIAPPSL": "CPI Apparel",
+    "CPIENGSL": "CPI Energy",
+    "CPIUFDSL": "CPI Food",
+    "CPIRECSL": "CPI Recreation",
+    "CPIMEDSL": "CPI Medical Care",
+    "CPITRNSL": "CPI Transportation",
+
     # CPI Components - Granular Detail
     "CUSR0000SAE2": "CPI Education Communication",
     "CUSR0000SEEE01": "CPI Computers Peripherals",
     "CUSR0000SEHB": "CPI Lodging Away from Home",
+    "CUSR0000SEHF01": "CPI Electricity",
+    "CUSR0000SEHF02": "CPI Utility Piped Gas",
+    "CUSR0000SEMC": "CPI Professional Medical Services",
+    "CUSR0000SEMD": "CPI Hospital Services",
+    "CUSR0000SETG01": "CPI Airline Fares",
+    "CUUR0000SETD": "CPI Motor Vehicle Maintenance Repair NSA",
+    "CUUR0000SEGC": "CPI Personal Care Services NSA",
+
+    # CPI Components - NSA Detail
     "CUUR0000SACL1E": "CPI Core Goods NSA",
     "CUUR0000SAF11": "CPI Food at Home NSA",
     "CUUR0000SAF112": "CPI Cereals Bakery NSA",
@@ -478,20 +498,44 @@ FRED_CURATED = {
     "CUUR0000SEFJ": "CPI Household Furnishings NSA",
     "CUUR0000SEFV": "CPI Food Away from Home NSA",
 
+    # Sticky/Flexible CPI (Atlanta Fed)
+    "CORESTICKM159SFRBATL": "Sticky Core CPI ex Food Energy",
+    "COREFLEXCPIM159SFRBATL": "Flexible Core CPI ex Food Energy",
+    "STICKCPIM157SFRBATL": "Sticky Price CPI",
+    "FLEXCPIM157SFRBATL": "Flexible Price CPI",
+
     # PPI Pipeline Detail
+    "PPIFIS": "PPI Final Demand",
+    "PPIFES": "PPI Final Demand Less Foods Energy",
+    "PPIFDS": "PPI Final Demand Services",
     "PPIACO": "PPI All Commodities",
+    "PPIITM": "PPI Intermediate Demand Unprocessed Goods",
     "PPICPE": "PPI Crude Petroleum",
     "PPICRM": "PPI Crude Materials",
-    "PPIFES": "PPI Final Demand Services",
+
+    # PCE Price Indices (Monthly)
+    "DGDSRG3M086SBEA": "PCE Goods Price Index",
+    "DSERRG3M086SBEA": "PCE Services Price Index",
+    "IA001260M": "PCE Services Ex Energy Housing (Supercore)",
+
+    # Inflation Expectations
+    "MICH": "UMich 1Y Inflation Expectations",
+
+    # Import/Export Prices
+    "IR": "Import Price Index All Commodities",
+    "IQ": "Export Price Index All Commodities",
 
     # GDP Deflator
     "GDPDEF": "GDP Implicit Price Deflator",
 
     # Trimmed Mean Inflation Measures
-    "TRMMEANCPIM094SFRBCLE": "Trimmed Mean CPI 16pct",
-    "TRMMEANCPIM157SFRBCLE": "Trimmed Mean CPI Annualized",
-    "PCETRIM1M158SFRBDAL": "Trimmed Mean PCE 1M",
-    "PCETRIM6M680SFRBDAL": "Trimmed Mean PCE 6M",
+    "TRMMEANCPIM094SFRBCLE": "Trimmed Mean CPI 16pct MoM SA",
+    "TRMMEANCPIM157SFRBCLE": "Trimmed Mean CPI 12M Pct Change",
+    "TRMMEANCPIM159SFRBCLE": "Trimmed Mean CPI SA",
+    "TRMMEANCPIM158SFRBCLE": "Trimmed Mean CPI Annualized Rate",
+    "PCETRIM1M158SFRBDAL": "Trimmed Mean PCE 1M Annualized",
+    "PCETRIM6M680SFRBDAL": "Trimmed Mean PCE 6M Annualized",
+    "PCETRIM12M159SFRBDAL": "Trimmed Mean PCE 12M",
 
     # ===== PILLAR 3 (GROWTH) ADDITIONS =====
 

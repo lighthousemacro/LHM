@@ -1044,21 +1044,44 @@ Liquidity Transmission
 
 ## Data Source Summary
 
-| **Category** | **Primary Source** | **Frequency** | **Release Lag** | **FRED Availability** |
-|---|---|---|---|---|
-| **CPI** | BLS | Monthly | ~13 days | Same day (CPIAUCSL, CPILFESL, etc.) |
-| **PCE** | BEA | Monthly | ~30 days | Same day (PCEPI, PCEPILFE, etc.) |
-| **PPI** | BLS | Monthly | ~14 days | Same day (PPIFIS, PPIFES, etc.) |
-| **Breakeven Inflation** | FRED/Treasury | Daily | Real-time | Same day (T5YIE, T10YIE, T5YIFR) |
-| **UMich Expectations** | UMich | Monthly (prelim/final) | ~12/25 days | Same day (MICH, MICH5Y10) |
-| **NY Fed SCE** | NY Fed | Monthly | ~10 days | Web scrape (not in FRED) |
-| **SPF** | Philadelphia Fed | Quarterly | ~20 days | Manual download |
-| **Sticky/Flexible CPI** | Atlanta Fed | Monthly | ~2 days after CPI | Same day (CORESTICKM159SFRBATL, etc.) |
-| **Market Rents** | Zillow, Apartment List | Monthly | ~5-10 days | Web scrape (not in FRED) |
+| **Category** | **Primary Source** | **Frequency** | **Release Lag** | **Access** | **In DB** |
+|---|---|---|---|---|---|
+| **CPI (Headline, Core, Components)** | BLS | Monthly | ~13 days | FRED API | Yes |
+| **CPI Item-Level (Granular)** | BLS | Monthly | ~13 days | BLS API / TradingView | Partial |
+| **PCE (Headline, Core, Components)** | BEA | Monthly | ~30 days | FRED API | Yes |
+| **PCE Decomposition (Goods, Services, Supercore)** | BEA | Monthly | ~30 days | FRED API | Yes |
+| **PCE Price Index Components (14 series)** | BEA NIPA | Quarterly | ~30 days | BEA Pipeline | Yes |
+| **GDP Price Deflators (9 series)** | BEA NIPA | Quarterly | ~30 days | BEA Pipeline | Yes |
+| **PPI (Final Demand, Services, Goods, Intermediate)** | BLS | Monthly | ~14 days | FRED API | Yes |
+| **Breakeven Inflation (5Y, 10Y, 5Y5Y)** | Treasury/FRED | Daily | Real-time | FRED API | Yes |
+| **UMich 1Y Inflation Expectations** | UMich | Monthly | ~12/25 days | FRED API (MICH) | Yes |
+| **UMich 5-10Y Inflation Expectations** | UMich | Monthly | ~12/25 days | TradingView (not on FRED) | No |
+| **NY Fed SCE (1Y, 3Y)** | NY Fed | Monthly | ~10 days | NY Fed website | No |
+| **SPF (Professional Forecasters)** | Philadelphia Fed | Quarterly | ~20 days | Manual download | No |
+| **Sticky/Flexible CPI (Core + Headline)** | Atlanta Fed | Monthly | ~2 days after CPI | FRED API | Yes |
+| **Trimmed Mean CPI (Cleveland Fed, 4 variants)** | Cleveland Fed | Monthly | ~2 days after CPI | FRED API | Yes |
+| **Trimmed Mean PCE (Dallas Fed, 3 variants)** | Dallas Fed | Monthly | ~30 days | FRED API | Yes |
+| **Median CPI** | Cleveland Fed | Monthly | ~2 days after CPI | FRED API | Yes |
+| **ECI (Total, Wages)** | BLS | Quarterly | ~30 days | FRED API | Yes |
+| **Unit Labor Costs** | BLS | Quarterly | ~30 days | FRED API | Yes |
+| **Import/Export Prices** | BLS | Monthly | ~14 days | FRED API | Yes |
+| **Trade-Weighted Dollar** | Fed | Daily | Real-time | FRED API | Yes |
+| **Market Rents (Zillow ZHVI/ZORI)** | Zillow | Monthly | ~5-10 days | Zillow CSV Pipeline | Yes |
+| **Market Rents (Apartment List)** | Apartment List | Monthly | ~10 days | Web (free) | No |
+| **NY Fed GSCPI (Supply Chain)** | NY Fed | Monthly | ~5 days | TradingView / NY Fed website | No |
+| **ISM Prices Paid** | ISM | Monthly | ~1 day | TradingView (not on FRED) | No |
 
 **Critical Timing:** CPI is released mid-month (~13th), PCE end-of-month (~30th). PCE is the **lagging** confirmation of what CPI already told you 2 weeks prior. Use CPI for real-time signals, PCE for Fed reaction function.
 
 **The Shelter Lag:** CPI Shelter data is **12-18 months stale** relative to market rents. Use Zillow/Apartment List for **real-time** shelter inflation signals, then wait 12 months for CPI to catch up.
+
+**Data Pipeline Sources:**
+- **FRED API**: ~55 series (CPI aggregates/components, PCE, PPI, breakevens, expectations, trimmed means, ECI, ULC, import/export, dollar)
+- **BEA Pipeline**: ~20 series (PCE price index decomposition, GDP deflators)
+- **BLS API**: Item-level CPI codes not on FRED (motor vehicle insurance, personal care, smartphones, etc.)
+- **Zillow Pipeline**: ZHVI and ZORI (national + top 20 MSAs)
+- **TradingView**: UMich 5-10Y expectations, GSCPI, ISM Prices Paid
+- **NY Fed Website**: SCE consumer expectations (1Y, 3Y)
 
 ---
 

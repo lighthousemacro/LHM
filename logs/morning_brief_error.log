@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 1145, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 1119, in main
+    brief = build_brief(
+        conn,
+        include_charts=not args.no_charts,
+        include_news=not args.no_news,
+    )
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 440, in build_brief
+    prior = get_prior_indices(conn, current)
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 131, in get_prior_indices
+    cursor = conn.execute(query, (index_id, info["date"]))
+sqlite3.OperationalError: database is locked

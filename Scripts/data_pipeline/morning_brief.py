@@ -34,6 +34,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "automation"))
 from compute_indices import STATUS_THRESHOLDS, get_status
 from lighthouse.config import API_KEYS
 
@@ -75,7 +76,15 @@ KEY_RELEASES = {
 
 # RSS feeds for macro headlines
 RSS_FEEDS = [
-    ("Federal Reserve", "https://www.federalreserve.gov/feeds/press_all.xml"),
+    # Tier 1: Markets & Macro
+    ("BBG", "https://feeds.bloomberg.com/markets/news.rss"),
+    ("BBG", "https://feeds.bloomberg.com/economics/news.rss"),
+    ("FT", "https://www.ft.com/markets?format=rss"),
+    ("FT", "https://www.ft.com/global-economy?format=rss"),
+    ("WSJ", "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain"),
+    ("WSJ", "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed"),
+    # Tier 2: Government sources
+    ("Fed", "https://www.federalreserve.gov/feeds/press_all.xml"),
     ("BLS", "https://www.bls.gov/feed/bls_latest.rss"),
     ("BEA", "https://apps.bea.gov/rss/rss.xml"),
 ]
@@ -301,7 +310,7 @@ def fetch_rss_headlines() -> list:
                 ns = {"atom": "http://www.w3.org/2005/Atom"}
                 items = root.findall(".//atom:entry", ns)
 
-            for item in items[:3]:
+            for item in items[:2]:
                 title = ""
                 link = ""
                 pub_date = ""
@@ -432,6 +441,16 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
     health = get_pipeline_health(conn)
     regime_changes = detect_regime_changes(current, prior)
     alerts = detect_threshold_alerts(current)
+
+    # Task/Content/CRM sections
+    automation_html = ""
+    try:
+        from briefing_helpers import get_all_brief_sections
+        automation_html = get_all_brief_sections()
+        if automation_html:
+            print(f"  Task/CRM sections loaded")
+    except Exception as e:
+        print(f"  WARNING: Task/CRM sections skipped: {e}")
 
     # Generate charts
     chart_data = []
@@ -640,7 +659,7 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
         :root {{
             --ocean: #0089D1;
             --dusk: #FF6723;
-            --sky: #4FC3F7;
+            --sky: #33CCFF;
             --venus: #FF2389;
             --sea: #00BB99;
             --doldrums: #D3D6D9;
@@ -997,6 +1016,7 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
     </div>
 
     {alerts_html}
+    {automation_html}
     {charts_html}
     {engine1_html}
     {core_html}

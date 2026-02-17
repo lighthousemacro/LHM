@@ -847,6 +847,34 @@ If Zillow ZORI YoY = -1.5% today:
 
 ---
 
+## Lead/Lag Relationships: The Housing Cascade
+
+```
+LEADING                           COINCIDENT                  LAGGING
+────────────────────────────────────────────────────────────────────────────────────
+│                                 │                          │
+│  MBA Purchase Index (4-8 wks)   │  Housing Starts          │  Case-Shiller HPI (3-6 mo)
+│  Building Permits (1-2 mo)      │  Existing Home Sales     │  CPI Shelter (12-18 mo)
+│  NAHB Index (1-3 mo)            │  New Home Sales          │  Mortgage Delinquency (1-2 qtrs)
+│  Mortgage Rate Changes (1-2 mo) │  Active Inventory        │  Foreclosures (3-6 qtrs)
+│  Pending Home Sales (1-2 mo)    │  Months' Supply          │  FHFA HPI (3-6 mo)
+│  Zillow Rent Index (12 mo→CPI)  │  Median Prices           │  Residential Investment GDP
+│  10Y Treasury (0-1 wk→Mortgage) │  Completions             │  Home Equity Loans
+│  Redfin Listings Data (2-4 wks) │                          │  Property Tax Receipts
+│                                 │                          │
+────────────────────────────────────────────────────────────────────────────────────
+```
+
+**The Critical Chain:**
+
+1. **Mortgage rates rise** (Fed hikes, Treasury selloff) → 4-8 weeks later → **MBA purchase apps collapse**
+2. **Purchase apps collapse** → 1-2 months later → **Sales volumes drop**
+3. **Sales drop + Supply frozen** → 3-6 months later → **Prices adjust (or don't, if supply collapses)**
+4. **Construction slows** → 6-9 months later → **GDP residential investment contracts**
+5. **Market rents cool** → 12-18 months later → **CPI shelter falls** (mechanical)
+
+---
+
 ## Historical Pattern Recognition
 
 ### Cycle Archetypes

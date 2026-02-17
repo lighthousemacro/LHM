@@ -123,9 +123,10 @@ Goods and services inflation behave completely differently. Goods are globally t
 | **Core Goods CPI YoY%** | Derived | Monthly | Leading | Supply chain/demand signal |
 | **Core Services CPI** | CUSR0000SASLE | Monthly | Lagging 6-12 mo | Services ex-energy services |
 | **Core Services CPI YoY%** | Derived | Monthly | Lagging | Wage-driven inflation |
-| **Core Services ex-Shelter** | CUSR0000SASL5XH (Proxy) | Monthly | Coincident | "Supercore" (wage signal) |
-| **Goods PCE** | DGOERG3A086NBEA | Quarterly | Leading | Goods consumption deflator |
-| **Services PCE** | DSERERG3A086NBEA | Quarterly | Lagging | Services consumption deflator |
+| **Core Services ex-Shelter** | Derived (CUSR0000SASLE - CUSR0000SAH1) | Monthly | Coincident | "Supercore" (wage signal) |
+| **PCE Supercore (Services ex-Energy/Housing)** | IA001260M | Monthly | Coincident | Fed's preferred supercore |
+| **Goods PCE Price Index** | DGDSRG3M086SBEA | Monthly | Leading | Goods consumption deflator |
+| **Services PCE Price Index** | DSERRG3M086SBEA | Monthly | Lagging | Services consumption deflator |
 
 #### Derived Goods/Services Metrics
 
@@ -154,7 +155,7 @@ Shelter is 34% of CPI and 18% of Core PCE. It's also the **most lagging** compon
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
-| **Shelter CPI** | CUSR0000SAH | Monthly | **Lags 12-18 mo** | Rent + OER (owners' equiv rent) |
+| **Shelter CPI** | CUSR0000SAH1 | Monthly | **Lags 12-18 mo** | Rent + OER (owners' equiv rent) |
 | **Shelter CPI YoY%** | Derived | Monthly | Lagging | 34% of CPI weight |
 | **Rent of Primary Residence** | CUSR0000SEHA | Monthly | Lags 12-15 mo | Actual rents paid |
 | **Owners' Equiv Rent (OER)** | CUSR0000SEHC | Monthly | Lags 12-18 mo | Imputed rent for homeowners |

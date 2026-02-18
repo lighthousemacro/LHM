@@ -410,7 +410,7 @@ FRED_CURATED = {
     "GACDFSA066MSFRBPHI": "Philly Fed Manufacturing",
     "CFNAIMA3": "Chicago Fed National Activity",
     "KCFSI": "Kansas City Fed FSI",
-    "DFXARC1M027SBEA": "Dallas Fed Manufacturing",
+    "BACTSAMFRBDAL": "Dallas Fed Manufacturing",
 
     # Durable Goods
     "DGORDER": "Durable Goods Orders",

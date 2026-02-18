@@ -51,6 +51,13 @@ TV_SERIES = {
     "ECONOMICS:USMAPL": ("TV_USMAPL", "MBA Mortgage Applications Composite", "Weekly", "Index", "Housing"),
     "ECONOMICS:USMMI": ("TV_USMMI", "MBA Mortgage Market Index", "Weekly", "Index", "Housing"),
     "ECONOMICS:USMOR": ("TV_USMOR", "Mortgage Originations", "Quarterly", "USD", "Housing"),
+    # Business Pillar
+    "ECONOMICS:USMPMI": ("TV_USMPMI", "ISM Manufacturing PMI", "Monthly", "Index", "Business"),
+    "ECONOMICS:USNPMI": ("TV_USNPMI", "ISM Non-Manufacturing PMI", "Monthly", "Index", "Business"),
+    "ECONOMICS:USNFIB": ("TV_USNFIB", "NFIB Small Business Optimism Index", "Monthly", "Index", "Business"),
+    "ECONOMICS:USISMNO": ("TV_USISMNO", "ISM Manufacturing New Orders", "Monthly", "Index", "Business"),
+    "ECONOMICS:USISMEI": ("TV_USISMEI", "ISM Manufacturing Employment", "Monthly", "Index", "Business"),
+    "ECONOMICS:USISMPMI": ("TV_USISMPMI", "ISM Manufacturing Prices", "Monthly", "Index", "Business"),
 }
 
 

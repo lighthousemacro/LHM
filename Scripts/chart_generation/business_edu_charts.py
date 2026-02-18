@@ -1,0 +1,952 @@
+#!/usr/bin/env python3
+"""
+Generate Charts for Educational Series: Post 6 - Business (Pillar 6)
+=====================================================================
+Generates BOTH white and dark theme versions.
+Matches format from Consumer: THE SPENDING ENGINE charts.
+
+Usage:
+    python business_edu_charts.py --chart 1
+    python business_edu_charts.py --chart 1 --theme dark
+    python business_edu_charts.py --all
+"""
+
+import os
+import argparse
+import time
+import ssl
+import certifi
+from datetime import datetime
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib.ticker as mticker
+from matplotlib.ticker import FuncFormatter
+from fredapi import Fred
+
+# Fix SSL certificate issue
+os.environ['SSL_CERT_FILE'] = certifi.where()
+os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
+
+# ============================================
+# PATHS & CONFIG
+# ============================================
+BASE_PATH = '/Users/bob/LHM'
+OUTPUT_BASE = f'{BASE_PATH}/Outputs/Educational_Charts/Business_Post_6'
+DB_PATH = f'{BASE_PATH}/Data/databases/Lighthouse_Master.db'
+
+fred = Fred()
+
+# Simple cache to avoid refetching same data across themes
+_DATA_CACHE = {}
+
+COLORS = {
+    'ocean': '#0089D1',
+    'dusk': '#FF6723',
+    'sky': '#33CCFF',
+    'venus': '#FF2389',
+    'sea': '#00BB99',
+    'doldrums': '#D3D6D9',
+    'starboard': '#00FF00',
+    'port': '#FF0000',
+}
+
+RECESSIONS = [
+    ('2001-03-01', '2001-11-01'),
+    ('2007-12-01', '2009-06-01'),
+    ('2020-02-01', '2020-04-01'),
+]
+
+# ============================================
+# THEME CONFIG
+# ============================================
+THEME = {}
+OUTPUT_DIR = ''
+
+
+def set_theme(mode='dark'):
+    global THEME, OUTPUT_DIR
+    if mode == 'dark':
+        THEME.update({
+            'bg': '#0A1628',
+            'fg': '#e6edf3',
+            'muted': '#8b949e',
+            'spine': '#1e3350',
+            'zero_line': '#e6edf3',
+            'recession': '#ffffff',
+            'recession_alpha': 0.06,
+            'ocean': COLORS['ocean'],
+            'dusk': COLORS['dusk'],
+            'sky': COLORS['sky'],
+            'sea': COLORS['sea'],
+            'venus': COLORS['venus'],
+            'primary': COLORS['ocean'],
+            'secondary': COLORS['dusk'],
+            'tertiary': COLORS['sky'],
+            'quaternary': COLORS['sea'],
+            'accent': COLORS['venus'],
+            'fill_alpha': 0.20,
+            'box_bg': '#0A1628',
+            'box_edge': COLORS['ocean'],
+            'legend_bg': '#0f1f38',
+            'legend_fg': '#e6edf3',
+            'mode': 'dark',
+        })
+    else:
+        THEME.update({
+            'bg': '#ffffff',
+            'fg': '#1a1a1a',
+            'muted': '#555555',
+            'spine': '#cccccc',
+            'zero_line': '#333333',
+            'recession': 'gray',
+            'recession_alpha': 0.12,
+            'ocean': COLORS['ocean'],
+            'dusk': COLORS['dusk'],
+            'sky': COLORS['sky'],
+            'sea': COLORS['sea'],
+            'venus': COLORS['venus'],
+            'primary': COLORS['ocean'],
+            'secondary': COLORS['dusk'],
+            'tertiary': COLORS['sky'],
+            'quaternary': COLORS['sea'],
+            'accent': COLORS['venus'],
+            'fill_alpha': 0.15,
+            'box_bg': '#ffffff',
+            'box_edge': COLORS['ocean'],
+            'legend_bg': '#f8f8f8',
+            'legend_fg': '#1a1a1a',
+            'mode': 'white',
+        })
+    OUTPUT_DIR = os.path.join(OUTPUT_BASE, mode)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+
+# ============================================
+# DATA HELPERS
+# ============================================
+def fetch_fred(series_id, start='2000-01-01'):
+    """Fetch a FRED series and return as DataFrame. Uses cache to avoid rate limits."""
+    cache_key = f"{series_id}_{start}"
+    if cache_key in _DATA_CACHE:
+        return _DATA_CACHE[cache_key].copy()
+
+    time.sleep(1.0)  # Rate limit protection
+    s = fred.get_series(series_id, observation_start=start)
+    df = s.to_frame(name='value')
+    df.index.name = 'date'
+    _DATA_CACHE[cache_key] = df.copy()
+    return df
+
+
+def yoy_pct(df, col='value'):
+    """Compute YoY % change from index level."""
+    return df[col].pct_change(12, fill_method=None) * 100
+
+
+def fetch_fred_yoy(series_id, start='1999-01-01', trim='2000-01-01'):
+    """Fetch FRED series, compute YoY%, drop NaN, trim to start date."""
+    df = fetch_fred(series_id, start=start)
+    df['yoy'] = yoy_pct(df)
+    if trim:
+        df = df.loc[trim:]
+    return df['yoy'].dropna()
+
+
+def fetch_fred_level(series_id, start='2000-01-01'):
+    """Fetch FRED series as-is (already a rate/level, not an index)."""
+    df = fetch_fred(series_id, start=start)
+    return df['value'].dropna()
+
+
+def fetch_quarterly_yoy(series_id, start='1999-01-01', trim='2000-01-01'):
+    """Fetch quarterly FRED series, compute YoY (4-period), forward-fill to monthly."""
+    df = fetch_fred(series_id, start=start)
+    df['yoy'] = df['value'].pct_change(4, fill_method=None) * 100
+    monthly = df['yoy'].resample('MS').ffill()
+    if trim:
+        monthly = monthly.loc[trim:]
+    return monthly.dropna()
+
+
+def fetch_quarterly_level(series_id, start='2000-01-01'):
+    """Fetch quarterly FRED series as level, forward-fill to monthly."""
+    df = fetch_fred(series_id, start=start)
+    monthly = df['value'].resample('MS').ffill()
+    return monthly.dropna()
+
+
+def rolling_zscore(series, window=60):
+    """Compute rolling z-score over a given window (months)."""
+    mu = series.rolling(window, min_periods=24).mean()
+    sigma = series.rolling(window, min_periods=24).std()
+    return (series - mu) / sigma
+
+
+# ============================================
+# CHART STYLING HELPERS
+# ============================================
+def new_fig(figsize=(14, 8)):
+    """Create figure with theme background."""
+    fig, ax = plt.subplots(figsize=figsize)
+    fig.patch.set_facecolor(THEME['bg'])
+    ax.set_facecolor(THEME['bg'])
+    fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94)
+    return fig, ax
+
+
+def style_ax(ax, right_primary=True):
+    """Style axes: all 4 spines at 0.5pt, grid off."""
+    ax.grid(False)
+    for spine in ['top', 'right', 'left', 'bottom']:
+        ax.spines[spine].set_visible(True)
+        ax.spines[spine].set_linewidth(0.5)
+        ax.spines[spine].set_color(THEME['spine'])
+    ax.tick_params(colors=THEME['fg'], labelsize=10)
+    ax.xaxis.label.set_color(THEME['fg'])
+    ax.yaxis.label.set_color(THEME['fg'])
+    ax.title.set_color(THEME['fg'])
+    if right_primary:
+        ax.yaxis.tick_right()
+        ax.yaxis.set_label_position('right')
+
+
+def style_dual_ax(ax1, ax2, c1, c2):
+    """Apply full styling to a dual-axis chart."""
+    style_ax(ax1, right_primary=False)
+    ax1.grid(False)
+    ax2.grid(False)
+    for spine in ax2.spines.values():
+        spine.set_color(THEME['spine'])
+        spine.set_linewidth(0.5)
+    ax1.tick_params(axis='both', which='both', length=0)
+    ax1.tick_params(axis='y', labelcolor=c1, labelsize=10)
+    ax2.tick_params(axis='both', which='both', length=0)
+    ax2.tick_params(axis='y', labelcolor=c2, labelsize=10)
+    ax1.yaxis.set_tick_params(which='both', right=False)
+    ax2.yaxis.set_tick_params(which='both', left=False)
+
+
+def style_single_ax(ax, fmt='{:.1f}%'):
+    """Apply full styling to a single-axis chart."""
+    style_ax(ax, right_primary=True)
+    ax.tick_params(axis='both', which='both', length=0)
+    ax.tick_params(axis='y', labelcolor=THEME['fg'], labelsize=10)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
+
+
+def add_annotation_box(ax, text, x=0.52, y=0.92):
+    """Add takeaway annotation box in dead space."""
+    ax.text(x, y, text, transform=ax.transAxes,
+            fontsize=10, color=THEME['fg'], ha='center', va='top',
+            style='italic',
+            bbox=dict(boxstyle='round,pad=0.5',
+                      facecolor=THEME['bg'], edgecolor='#0089D1',
+                      alpha=0.9))
+
+
+def brand_fig(fig, title, subtitle=None, source=None):
+    """Apply TT deck branding at figure level."""
+    fig.patch.set_facecolor(THEME['bg'])
+
+    OCEAN = '#0089D1'
+    DUSK = '#FF6723'
+
+    fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
+             color=OCEAN, fontweight='bold', va='top')
+    fig.text(0.97, 0.98, datetime.now().strftime('%B %d, %Y'),
+             fontsize=11, color=THEME['muted'], ha='right', va='top')
+
+    bar = fig.add_axes([0.03, 0.955, 0.94, 0.004])
+    bar.axhspan(0, 1, 0, 0.67, color=OCEAN)
+    bar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
+    bar.set_xlim(0, 1); bar.set_ylim(0, 1); bar.axis('off')
+
+    bbar = fig.add_axes([0.03, 0.035, 0.94, 0.004])
+    bbar.axhspan(0, 1, 0, 0.67, color=OCEAN)
+    bbar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
+    bbar.set_xlim(0, 1); bbar.set_ylim(0, 1); bbar.axis('off')
+
+    fig.text(0.97, 0.025, 'MACRO, ILLUMINATED.', fontsize=13,
+             color=OCEAN, ha='right', va='top', style='italic', fontweight='bold')
+
+    if source:
+        date_str = datetime.now().strftime('%m.%d.%Y')
+        fig.text(0.03, 0.022, f'Lighthouse Macro | {source}; {date_str}',
+                 fontsize=9, color=THEME['muted'], ha='left', va='top', style='italic')
+
+    fig.suptitle(title, fontsize=15, fontweight='bold', y=0.945,
+                 color=THEME['fg'])
+    if subtitle:
+        fig.text(0.5, 0.895, subtitle, fontsize=14, ha='center',
+                 color=OCEAN, style='italic')
+
+
+def add_last_value_label(ax, y_data, color, fmt='{:.1f}%', side='right', fontsize=9, pad=0.3):
+    """Add colored pill with bold white text on the axis edge."""
+    if len(y_data) == 0:
+        return
+    last_y = float(y_data.iloc[-1]) if hasattr(y_data, 'iloc') else float(y_data[-1])
+    label = fmt.format(last_y)
+    pill = dict(boxstyle=f'round,pad={pad}', facecolor=color, edgecolor=color, alpha=0.95)
+    if side == 'right':
+        ax.annotate(label, xy=(1.0, last_y), xycoords=('axes fraction', 'data'),
+                    fontsize=fontsize, fontweight='bold', color='white',
+                    ha='left', va='center',
+                    xytext=(6, 0), textcoords='offset points',
+                    bbox=pill)
+    else:
+        ax.annotate(label, xy=(0.0, last_y), xycoords=('axes fraction', 'data'),
+                    fontsize=fontsize, fontweight='bold', color='white',
+                    ha='right', va='center',
+                    xytext=(-6, 0), textcoords='offset points',
+                    bbox=pill)
+
+
+def add_recessions(ax, start_date=None):
+    """Add recession shading."""
+    for s, e in RECESSIONS:
+        ts, te = pd.Timestamp(s), pd.Timestamp(e)
+        if start_date and te < pd.Timestamp(start_date):
+            continue
+        ax.axvspan(ts, te, color=THEME['recession'],
+                   alpha=THEME['recession_alpha'], zorder=0)
+
+
+def set_xlim_to_data(ax, idx):
+    """Set x limits with padding."""
+    padding_left = pd.Timedelta(days=30)
+    padding_right = pd.Timedelta(days=180)
+    ax.set_xlim(idx.min() - padding_left, idx.max() + padding_right)
+
+
+def legend_style():
+    """Legend styling dict."""
+    return dict(
+        framealpha=0.95,
+        facecolor=THEME['legend_bg'],
+        edgecolor=THEME['spine'],
+        labelcolor=THEME['legend_fg'],
+    )
+
+
+def save_fig(fig, filename):
+    """Save figure to output directory."""
+    border_color = COLORS['ocean']
+    border_width = 4.0
+    fig.patches.append(plt.Rectangle(
+        (0, 0), 1, 1, transform=fig.transFigure,
+        fill=False, edgecolor=border_color, linewidth=border_width,
+        zorder=100, clip_on=False
+    ))
+
+    filepath = os.path.join(OUTPUT_DIR, filename)
+    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.10,
+                facecolor=THEME['bg'], edgecolor='none')
+    plt.close(fig)
+    print(f'  Saved: {filepath}')
+    return filepath
+
+
+def align_yaxis_zero(a1, a2):
+    """Align both y-axes at zero for dual-axis charts."""
+    y1_min, y1_max = a1.get_ylim()
+    y2_min, y2_max = a2.get_ylim()
+    r1 = abs(y1_min) / max(abs(y1_max), 1e-6)
+    r2 = abs(y2_min) / max(abs(y2_max), 1e-6)
+    r = max(r1, r2)
+    a1.set_ylim(bottom=-r * abs(y1_max), top=y1_max)
+    a2.set_ylim(bottom=-r * abs(y2_max), top=y2_max)
+
+
+# ============================================
+# CHART 1: OECD Business Confidence (Proxy for NFIB) [Figure 1]
+# ============================================
+def chart_01():
+    """OECD Business Confidence Indicator: the sentiment canary."""
+    print('\nChart 1: Business Confidence Indicator...')
+
+    bci = fetch_fred_level('BSCICP02USM460S', start='2000-01-01')
+
+    fig, ax = new_fig()
+
+    ax.plot(bci.index, bci, color=THEME['primary'], linewidth=2.5,
+            label=f'OECD Business Confidence ({bci.iloc[-1]:.1f})')
+
+    # Threshold bands
+    ax.axhline(100, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
+    ax.axhspan(100, bci.max() + 1, color=COLORS['sea'], alpha=0.06, label='Expansion (>100)')
+    ax.axhspan(bci.min() - 1, 100, color=COLORS['venus'], alpha=0.06, label='Contraction (<100)')
+
+    style_ax(ax, right_primary=True)
+    ax.tick_params(axis='both', which='both', length=0)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}'))
+    set_xlim_to_data(ax, bci.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, bci, color=THEME['primary'], fmt='{:.1f}', side='right')
+    add_recessions(ax)
+    ax.legend(loc='upper left', **legend_style())
+
+    bci_last = bci.iloc[-1]
+    regime = "expansion" if bci_last > 100 else "contraction"
+    add_annotation_box(ax,
+        f"Business confidence at {bci_last:.1f}, signaling {regime}.\n"
+        f"Below 100 for extended periods precedes GDP weakness.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Business Confidence Indicator',
+              subtitle='The Canary: Sentiment leads investment decisions',
+              source='OECD via FRED')
+
+    return save_fig(fig, 'chart_01_business_confidence.png')
+
+
+# ============================================
+# CHART 2: Core Capital Goods Orders YoY (The Forward Commitment) [Figure 2]
+# ============================================
+def chart_02():
+    """Core Capital Goods Orders (Nondefense ex-Aircraft) YoY: the purest capex signal."""
+    print('\nChart 2: Core Capital Goods Orders YoY...')
+
+    orders = fetch_fred_yoy('ANDENO')
+    shipments = fetch_fred_yoy('ANXAVS')
+
+    fig, ax = new_fig()
+
+    ax.plot(orders.index, orders, color=THEME['primary'], linewidth=2.5,
+            label=f'Core Capex Orders YoY ({orders.iloc[-1]:.1f}%)')
+    ax.plot(shipments.index, shipments, color=THEME['secondary'], linewidth=2.0,
+            label=f'Core Capex Shipments YoY ({shipments.iloc[-1]:.1f}%)')
+
+    # Shade negative territory
+    ax.fill_between(orders.index, 0, orders,
+                    where=(orders < 0),
+                    color=COLORS['venus'], alpha=0.10, label='Orders contracting')
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_single_ax(ax)
+    set_xlim_to_data(ax, orders.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, orders, color=THEME['primary'], side='right')
+    add_last_value_label(ax, shipments, color=THEME['secondary'], side='right')
+    add_recessions(ax)
+    ax.legend(loc='upper left', **legend_style())
+
+    orders_last = orders.iloc[-1]
+    ships_last = shipments.iloc[-1]
+    spread = orders_last - ships_last
+    add_annotation_box(ax,
+        f"Orders {orders_last:+.1f}% YoY vs Shipments {ships_last:+.1f}% YoY.\n"
+        f"Orders-Shipments spread: {spread:+.1f}pp. Negative = backlog shrinking.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Core Capital Goods: Orders vs Shipments',
+              subtitle='The Forward Commitment: CEOs voting with their checkbooks',
+              source='Census via FRED')
+
+    return save_fig(fig, 'chart_02_core_capex_orders.png')
+
+
+# ============================================
+# CHART 3: Bookings/Billings Ratio [Figure 3]
+# ============================================
+def chart_03():
+    """Bookings/Billings ratio (Orders / Shipments): demand vs supply balance."""
+    print('\nChart 3: Bookings/Billings Ratio...')
+
+    orders_df = fetch_fred('ANDENO', start='2000-01-01')
+    ships_df = fetch_fred('ANXAVS', start='2000-01-01')
+
+    ratio = (orders_df['value'] / ships_df['value']).dropna()
+    # 3-month smoothing to reduce noise
+    ratio_smooth = ratio.rolling(3, min_periods=1).mean()
+
+    fig, ax = new_fig()
+
+    ax.plot(ratio_smooth.index, ratio_smooth, color=THEME['primary'], linewidth=2.5,
+            label=f'Bookings/Billings (3M Avg) ({ratio_smooth.iloc[-1]:.2f}x)')
+    ax.plot(ratio.index, ratio, color=THEME['primary'], linewidth=0.8, alpha=0.3)
+
+    # Threshold lines
+    ax.axhline(1.0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7,
+               label='Equilibrium (1.0x)')
+    ax.axhline(0.95, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.7,
+               label='Demand < Supply (<0.95x)')
+
+    # Shade below 0.95
+    ax.fill_between(ratio_smooth.index, 0.95, ratio_smooth,
+                    where=(ratio_smooth < 0.95),
+                    color=COLORS['venus'], alpha=0.10)
+
+    style_ax(ax, right_primary=True)
+    ax.tick_params(axis='both', which='both', length=0)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.2f}x'))
+    set_xlim_to_data(ax, ratio_smooth.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, ratio_smooth, color=THEME['primary'],
+                         fmt='{:.2f}x', side='right')
+    add_recessions(ax)
+    ax.legend(loc='upper left', **legend_style())
+
+    last_val = ratio_smooth.iloc[-1]
+    status = "shrinking" if last_val < 1.0 else "growing"
+    add_annotation_box(ax,
+        f"Ratio at {last_val:.2f}x. Backlog {status}.\n"
+        f"Below 0.95x = demand weaker than supply. Orders drying up.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Core Capital Goods: Bookings/Billings Ratio',
+              subtitle='When orders lag shipments, the backlog is dying',
+              source='Census via FRED')
+
+    return save_fig(fig, 'chart_03_bookings_billings.png')
+
+
+# ============================================
+# CHART 4: Durable Goods Orders [Figure 4]
+# ============================================
+def chart_04():
+    """Durable Goods: Total vs Ex-Transportation YoY."""
+    print('\nChart 4: Durable Goods Orders...')
+
+    total = fetch_fred_yoy('DGORDER')
+    ex_transport = fetch_fred_yoy('ADXTNO')
+
+    fig, ax = new_fig()
+
+    ax.plot(total.index, total, color=THEME['primary'], linewidth=2.5,
+            label=f'Total Durables YoY ({total.iloc[-1]:.1f}%)')
+    ax.plot(ex_transport.index, ex_transport, color=THEME['secondary'], linewidth=2.5,
+            label=f'Ex-Transportation YoY ({ex_transport.iloc[-1]:.1f}%)')
+
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_single_ax(ax)
+    set_xlim_to_data(ax, total.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, total, color=THEME['primary'], side='right')
+    add_last_value_label(ax, ex_transport, color=THEME['secondary'], side='right')
+    add_recessions(ax)
+    ax.legend(loc='upper left', **legend_style())
+
+    total_last = total.iloc[-1]
+    ext_last = ex_transport.iloc[-1]
+    add_annotation_box(ax,
+        f"Total durables: {total_last:+.1f}% YoY. Ex-transport: {ext_last:+.1f}%.\n"
+        f"Ex-transport strips Boeing volatility. The cleaner trend signal.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Durable Goods Orders: Total vs Ex-Transportation',
+              subtitle='Stripping Boeing noise reveals the underlying trend',
+              source='Census via FRED')
+
+    return save_fig(fig, 'chart_04_durable_goods.png')
+
+
+# ============================================
+# CHART 5: Business Inventories & I/S Ratio [Figure 5]
+# ============================================
+def chart_05():
+    """Business Inventories YoY and Inventory/Sales Ratio: the mistake detector."""
+    print('\nChart 5: Inventories & I/S Ratio...')
+
+    inv_yoy = fetch_fred_yoy('BUSINV')
+    is_ratio = fetch_fred_level('ISRATIO', start='2000-01-01')
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+    c1, c2 = THEME['secondary'], THEME['primary']
+
+    ax1.plot(inv_yoy.index, inv_yoy, color=c1, linewidth=2.5,
+             label=f'Business Inventories YoY ({inv_yoy.iloc[-1]:.1f}%)')
+    ax2.plot(is_ratio.index, is_ratio, color=c2, linewidth=2.5,
+             label=f'Inventory/Sales Ratio ({is_ratio.iloc[-1]:.2f})')
+
+    ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    # Overstocked threshold on I/S ratio
+    ax2.axhline(1.40, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.7)
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.2f}'))
+    align_yaxis_zero(ax1, ax2)
+    set_xlim_to_data(ax1, inv_yoy.index)
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax1, inv_yoy, color=c1, side='left')
+    add_last_value_label(ax2, is_ratio, color=c2, fmt='{:.2f}', side='right')
+
+    add_recessions(ax1)
+
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
+
+    is_last = is_ratio.iloc[-1]
+    status = "elevated" if is_last > 1.38 else "balanced"
+    add_annotation_box(ax1,
+        f"I/S ratio at {is_last:.2f} ({status}). Threshold: 1.40.\n"
+        f"When inventories build faster than sales, production cuts follow.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Business Inventories & Inventory/Sales Ratio',
+              subtitle='The Mistake Detector: overstock signals liquidation ahead',
+              source='Census via FRED')
+
+    return save_fig(fig, 'chart_05_inventories.png')
+
+
+# ============================================
+# CHART 6: Regional Fed Manufacturing Surveys [Figure 6]
+# ============================================
+def chart_06():
+    """Regional Fed Surveys: Empire, Philly, Dallas composite view."""
+    print('\nChart 6: Regional Fed Manufacturing Surveys...')
+
+    empire = fetch_fred_level('GACDISA066MSFRBNY', start='2005-01-01')
+    philly = fetch_fred_level('GACDFSA066MSFRBPHI', start='2005-01-01')
+    dallas = fetch_fred_level('DFXARC1M027SBEA', start='2005-01-01')
+
+    fig, ax = new_fig()
+
+    ax.plot(empire.index, empire, color=THEME['primary'], linewidth=2.0,
+            label=f'Empire State ({empire.iloc[-1]:.1f})')
+    ax.plot(philly.index, philly, color=THEME['secondary'], linewidth=2.0,
+            label=f'Philly Fed ({philly.iloc[-1]:.1f})')
+    ax.plot(dallas.index, dallas, color=THEME['tertiary'], linewidth=2.0,
+            label=f'Dallas Fed ({dallas.iloc[-1]:.1f})')
+
+    # Compute 3-survey average
+    combined = pd.DataFrame({'empire': empire, 'philly': philly, 'dallas': dallas}).dropna()
+    avg = combined.mean(axis=1)
+    ax.plot(avg.index, avg, color=THEME['fg'], linewidth=3.0, alpha=0.7,
+            label=f'3-Survey Avg ({avg.iloc[-1]:.1f})', linestyle='-')
+
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
+    ax.axhspan(ax.get_ylim()[0], 0, color=COLORS['venus'], alpha=0.04)
+
+    style_ax(ax, right_primary=True)
+    ax.tick_params(axis='both', which='both', length=0)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    set_xlim_to_data(ax, avg.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, avg, color=THEME['fg'], fmt='{:.1f}', side='right')
+    add_recessions(ax, start_date='2005-01-01')
+    ax.legend(loc='upper left', **legend_style(), fontsize=9)
+
+    avg_last = avg.iloc[-1]
+    signal = "contraction" if avg_last < 0 else "expansion"
+    add_annotation_box(ax,
+        f"Regional Fed average at {avg_last:.1f} ({signal}).\n"
+        f"These surveys preview ISM by 2-3 weeks. Below zero = manufacturing shrinking.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Regional Fed Manufacturing Surveys',
+              subtitle='ISM Preview: regional surveys lead national data by weeks',
+              source='NY Fed, Philadelphia Fed, Dallas Fed via FRED')
+
+    return save_fig(fig, 'chart_06_regional_fed.png')
+
+
+# ============================================
+# CHART 7: Industrial Production & Capacity Utilization [Figure 7]
+# ============================================
+def chart_07():
+    """Industrial Production YoY and Manufacturing Capacity Utilization."""
+    print('\nChart 7: Industrial Production & Capacity Utilization...')
+
+    ip_yoy = fetch_fred_yoy('INDPRO')
+    cap_util = fetch_fred_level('MCUMFN', start='2000-01-01')
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+    c1, c2 = THEME['secondary'], THEME['primary']
+
+    ax1.plot(ip_yoy.index, ip_yoy, color=c1, linewidth=2.5,
+             label=f'Industrial Production YoY ({ip_yoy.iloc[-1]:.1f}%)')
+    ax2.plot(cap_util.index, cap_util, color=c2, linewidth=2.5,
+             label=f'Manufacturing Capacity Util. ({cap_util.iloc[-1]:.1f}%)')
+
+    ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+    # Long-run average capacity utilization (~78%)
+    ax2.axhline(78, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.5)
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    align_yaxis_zero(ax1, ax2)
+    set_xlim_to_data(ax1, ip_yoy.index)
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax1, ip_yoy, color=c1, side='left')
+    add_last_value_label(ax2, cap_util, color=c2, side='right')
+
+    add_recessions(ax1)
+
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
+
+    ip_last = ip_yoy.iloc[-1]
+    cu_last = cap_util.iloc[-1]
+    slack = "building" if cu_last < 78 else "tight"
+    add_annotation_box(ax1,
+        f"IP growth: {ip_last:+.1f}% YoY. Capacity util: {cu_last:.1f}% (slack {slack}).\n"
+        f"Below 78% = slack in system. Pricing power falls, disinflation follows.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Industrial Production & Manufacturing Capacity Utilization',
+              subtitle='Production output meets the capacity constraint',
+              source='Federal Reserve via FRED')
+
+    return save_fig(fig, 'chart_07_ip_capacity.png')
+
+
+# ============================================
+# CHART 8: Corporate Profits YoY [Figure 8]
+# ============================================
+def chart_08():
+    """Corporate Profits (before tax, no IVA/CCAdj) YoY: the bottom line."""
+    print('\nChart 8: Corporate Profits YoY...')
+
+    profits = fetch_quarterly_yoy('A464RC1Q027SBEA')
+
+    fig, ax = new_fig()
+
+    ax.plot(profits.index, profits, color=THEME['primary'], linewidth=2.5,
+            label=f'Corporate Profits YoY ({profits.iloc[-1]:.1f}%)')
+
+    # Shade negative (earnings recession)
+    ax.fill_between(profits.index, 0, profits,
+                    where=(profits < 0),
+                    color=COLORS['venus'], alpha=0.12, label='Earnings recession')
+
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_single_ax(ax)
+    set_xlim_to_data(ax, profits.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, profits, color=THEME['primary'], side='right')
+    add_recessions(ax)
+    ax.legend(loc='upper left', **legend_style())
+
+    p_last = profits.iloc[-1]
+    status = "growing" if p_last > 0 else "contracting"
+    add_annotation_box(ax,
+        f"Corporate profits {status} at {p_last:+.1f}% YoY.\n"
+        f"Margin compression precedes layoffs by 2-4 quarters.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Corporate Profits: Year-Over-Year Growth',
+              subtitle='The Bottom Line: profits peak before the economy does',
+              source='BEA via FRED')
+
+    return save_fig(fig, 'chart_08_corporate_profits.png')
+
+
+# ============================================
+# CHART 9: Unit Labor Costs vs Productivity [Figure 9]
+# ============================================
+def chart_09():
+    """Unit Labor Costs YoY vs Nonfarm Productivity YoY: the margin squeeze."""
+    print('\nChart 9: Unit Labor Costs vs Productivity...')
+
+    ulc = fetch_quarterly_yoy('ULCNFB')
+    prod = fetch_quarterly_yoy('OPHNFB')
+
+    fig, ax = new_fig()
+
+    ax.plot(ulc.index, ulc, color=THEME['primary'], linewidth=2.5,
+            label=f'Unit Labor Costs YoY ({ulc.iloc[-1]:.1f}%)')
+    ax.plot(prod.index, prod, color=THEME['secondary'], linewidth=2.5,
+            label=f'Productivity YoY ({prod.iloc[-1]:.1f}%)')
+
+    # Shade when ULC exceeds productivity (margin pressure)
+    common = pd.DataFrame({'ulc': ulc, 'prod': prod}).dropna()
+    ax.fill_between(common.index, common['ulc'], common['prod'],
+                    where=(common['ulc'] > common['prod']),
+                    color=COLORS['venus'], alpha=0.12, label='ULC > Productivity (margin pressure)')
+
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_single_ax(ax)
+    set_xlim_to_data(ax, ulc.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, ulc, color=THEME['primary'], side='right')
+    add_last_value_label(ax, prod, color=THEME['secondary'], side='right')
+    add_recessions(ax)
+    ax.legend(loc='upper left', **legend_style())
+
+    ulc_last = ulc.iloc[-1]
+    prod_last = prod.iloc[-1]
+    gap = ulc_last - prod_last
+    pressure = "Margins under pressure" if gap > 0 else "Margins expanding"
+    add_annotation_box(ax,
+        f"ULC {ulc_last:+.1f}% vs Productivity {prod_last:+.1f}%. Gap: {gap:+.1f}pp.\n"
+        f"{pressure}. When labor costs outrun productivity, layoffs follow.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Unit Labor Costs vs Nonfarm Productivity',
+              subtitle='The Margin Squeeze: labor costs eating into profits',
+              source='BLS via FRED')
+
+    return save_fig(fig, 'chart_09_ulc_vs_productivity.png')
+
+
+# ============================================
+# CHART 10: Business Loans & Delinquency [Figure 10]
+# ============================================
+def chart_10():
+    """C&I Loan Growth YoY and Business Loan Delinquency Rate."""
+    print('\nChart 10: Business Loans & Delinquency...')
+
+    loans_yoy = fetch_fred_yoy('BUSLOANS')
+    delinq = fetch_fred_level('DRBLACBS', start='2000-01-01')
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+    c1, c2 = THEME['primary'], THEME['secondary']
+
+    ax1.plot(loans_yoy.index, loans_yoy, color=c1, linewidth=2.5,
+             label=f'C&I Loan Growth YoY ({loans_yoy.iloc[-1]:.1f}%)')
+    ax2.plot(delinq.index, delinq, color=c2, linewidth=2.5,
+             label=f'Business Delinquency Rate ({delinq.iloc[-1]:.1f}%)')
+
+    ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    # Don't align at zero for this one - delinquency is always positive
+    set_xlim_to_data(ax1, loans_yoy.index)
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax1, loans_yoy, color=c1, side='left')
+    add_last_value_label(ax2, delinq, color=c2, side='right')
+
+    add_recessions(ax1)
+
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
+
+    loans_last = loans_yoy.iloc[-1]
+    delinq_last = delinq.iloc[-1]
+    add_annotation_box(ax1,
+        f"Loan growth: {loans_last:+.1f}% YoY. Delinquency: {delinq_last:.1f}%.\n"
+        f"When growth declines and delinquency rises, the credit cycle turns.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Business Loan Growth & Delinquency Rate',
+              subtitle='The Credit Channel: banks tighten as stress builds',
+              source='Federal Reserve via FRED')
+
+    return save_fig(fig, 'chart_10_business_credit.png')
+
+
+# ============================================
+# CHART 11: Manufacturing vs Business Equipment IP [Figure 11]
+# ============================================
+def chart_11():
+    """Manufacturing IP vs Business Equipment IP: goods economy bifurcation."""
+    print('\nChart 11: Manufacturing vs Business Equipment IP...')
+
+    mfg_ip = fetch_fred_yoy('IPMAN')
+    biz_equip = fetch_fred_yoy('IPBUSEQ')
+
+    fig, ax = new_fig()
+
+    ax.plot(mfg_ip.index, mfg_ip, color=THEME['primary'], linewidth=2.5,
+            label=f'Manufacturing IP YoY ({mfg_ip.iloc[-1]:.1f}%)')
+    ax.plot(biz_equip.index, biz_equip, color=THEME['secondary'], linewidth=2.5,
+            label=f'Business Equipment IP YoY ({biz_equip.iloc[-1]:.1f}%)')
+
+    ax.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
+
+    style_single_ax(ax)
+    set_xlim_to_data(ax, mfg_ip.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax, mfg_ip, color=THEME['primary'], side='right')
+    add_last_value_label(ax, biz_equip, color=THEME['secondary'], side='right')
+    add_recessions(ax)
+    ax.legend(loc='upper left', **legend_style())
+
+    mfg_last = mfg_ip.iloc[-1]
+    equip_last = biz_equip.iloc[-1]
+    spread = equip_last - mfg_last
+    add_annotation_box(ax,
+        f"Manufacturing IP: {mfg_last:+.1f}%. Business Equipment: {equip_last:+.1f}%.\n"
+        f"Spread: {spread:+.1f}pp. Divergence reveals old vs new economy split.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'Manufacturing vs Business Equipment Production',
+              subtitle='Old Economy vs New Economy: the production bifurcation',
+              source='Federal Reserve via FRED')
+
+    return save_fig(fig, 'chart_11_mfg_vs_equipment.png')
+
+
+# ============================================
+# CHART MAP & MAIN
+# ============================================
+CHART_MAP = {
+    1: chart_01,
+    2: chart_02,
+    3: chart_03,
+    4: chart_04,
+    5: chart_05,
+    6: chart_06,
+    7: chart_07,
+    8: chart_08,
+    9: chart_09,
+    10: chart_10,
+    11: chart_11,
+}
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Generate Business educational charts')
+    parser.add_argument('--chart', type=int, help='Chart number to generate (1-11)')
+    parser.add_argument('--theme', default='both', choices=['dark', 'white', 'both'],
+                        help='Theme to generate')
+    parser.add_argument('--all', action='store_true', help='Generate all charts')
+    args = parser.parse_args()
+
+    if args.all:
+        charts_to_gen = sorted(CHART_MAP.keys())
+    elif args.chart:
+        charts_to_gen = [args.chart]
+    else:
+        charts_to_gen = [1]
+
+    themes_to_gen = ['dark', 'white'] if args.theme == 'both' else [args.theme]
+
+    for mode in themes_to_gen:
+        set_theme(mode)
+        print(f'\n=== Generating {mode.upper()} theme ===')
+        for chart_num in charts_to_gen:
+            if chart_num not in CHART_MAP:
+                print(f'Chart {chart_num} not implemented yet.')
+                continue
+            try:
+                CHART_MAP[chart_num]()
+            except Exception as e:
+                print(f'  Error generating chart {chart_num}: {e}')
+                import traceback
+                traceback.print_exc()
+
+    print('\nDone.')
+
+
+if __name__ == '__main__':
+    main()

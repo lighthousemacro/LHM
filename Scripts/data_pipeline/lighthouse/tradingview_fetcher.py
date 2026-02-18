@@ -51,13 +51,24 @@ TV_SERIES = {
     "ECONOMICS:USMAPL": ("TV_USMAPL", "MBA Mortgage Applications Composite", "Weekly", "Index", "Housing"),
     "ECONOMICS:USMMI": ("TV_USMMI", "MBA Mortgage Market Index", "Weekly", "Index", "Housing"),
     "ECONOMICS:USMOR": ("TV_USMOR", "Mortgage Originations", "Quarterly", "USD", "Housing"),
-    # Business Pillar
-    "ECONOMICS:USMPMI": ("TV_USMPMI", "ISM Manufacturing PMI", "Monthly", "Index", "Business"),
-    "ECONOMICS:USNPMI": ("TV_USNPMI", "ISM Non-Manufacturing PMI", "Monthly", "Index", "Business"),
-    "ECONOMICS:USNFIB": ("TV_USNFIB", "NFIB Small Business Optimism Index", "Monthly", "Index", "Business"),
-    "ECONOMICS:USISMNO": ("TV_USISMNO", "ISM Manufacturing New Orders", "Monthly", "Index", "Business"),
-    "ECONOMICS:USISMEI": ("TV_USISMEI", "ISM Manufacturing Employment", "Monthly", "Index", "Business"),
-    "ECONOMICS:USISMPMI": ("TV_USISMPMI", "ISM Manufacturing Prices", "Monthly", "Index", "Business"),
+    # Business Pillar - ISM Manufacturing
+    "ECONOMICS:USISMMP": ("TV_USISMMP", "ISM Manufacturing PMI", "Monthly", "Index", "Business"),
+    "ECONOMICS:USMNO": ("TV_USMNO", "ISM Manufacturing New Orders", "Monthly", "Index", "Business"),
+    "ECONOMICS:USMEMP": ("TV_USMEMP", "ISM Manufacturing Employment", "Monthly", "Index", "Business"),
+    "ECONOMICS:USMPR": ("TV_USMPR", "ISM Manufacturing Prices Paid", "Monthly", "Index", "Business"),
+    # Business Pillar - ISM Services/Non-Manufacturing
+    "ECONOMICS:USBCOI": ("TV_USBCOI", "ISM Services PMI", "Monthly", "Index", "Business"),
+    "ECONOMICS:USNMBA": ("TV_USNMBA", "ISM Services Business Activity", "Monthly", "Index", "Business"),
+    "ECONOMICS:USNMNO": ("TV_USNMNO", "ISM Services New Orders", "Monthly", "Index", "Business"),
+    "ECONOMICS:USNMEMP": ("TV_USNMEMP", "ISM Services Employment", "Monthly", "Index", "Business"),
+    "ECONOMICS:USNMPR": ("TV_USNMPR", "ISM Services Prices", "Monthly", "Index", "Business"),
+    # Business Pillar - Regional Fed Surveys (additional)
+    "ECONOMICS:USRFMI": ("TV_USRFMI", "Richmond Fed Manufacturing Index", "Monthly", "Index", "Business"),
+    "ECONOMICS:USKFMI": ("TV_USKFMI", "Kansas City Fed Manufacturing Index", "Monthly", "Index", "Business"),
+    # Business Pillar - Leading/Confidence
+    "ECONOMICS:USLEI": ("TV_USLEI", "Conference Board Leading Economic Index", "Monthly", "Index", "Business"),
+    "ECONOMICS:USBOI": ("TV_USBOI", "OECD Business Outlook Index", "Monthly", "Index", "Business"),
+    "ECONOMICS:USFO": ("TV_USFO", "Factory Orders MoM", "Monthly", "Percent", "Business"),
 }
 
 

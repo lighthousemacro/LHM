@@ -16,6 +16,7 @@ import argparse
 import time
 import ssl
 import certifi
+import sqlite3
 from datetime import datetime
 import pandas as pd
 import numpy as np
@@ -138,6 +139,36 @@ def fetch_fred(series_id, start='2000-01-01'):
     df.index.name = 'date'
     _DATA_CACHE[cache_key] = df.copy()
     return df
+
+
+def fetch_db(series_id, start='2000-01-01'):
+    """Fetch a series from the master DB (for TradingView and other non-FRED data)."""
+    cache_key = f"db_{series_id}_{start}"
+    if cache_key in _DATA_CACHE:
+        return _DATA_CACHE[cache_key].copy()
+
+    conn = sqlite3.connect(DB_PATH)
+    df = pd.read_sql(
+        "SELECT date, value FROM observations WHERE series_id = ? AND date >= ? ORDER BY date",
+        conn, params=(series_id, start)
+    )
+    conn.close()
+
+    if df.empty:
+        return pd.DataFrame(columns=['value'])
+
+    df['date'] = pd.to_datetime(df['date'])
+    df = df.set_index('date')
+    _DATA_CACHE[cache_key] = df.copy()
+    return df
+
+
+def fetch_db_level(series_id, start='2000-01-01'):
+    """Fetch DB series as-is (already a rate/level/index)."""
+    df = fetch_db(series_id, start=start)
+    if df.empty:
+        return pd.Series(dtype=float)
+    return df['value'].dropna()
 
 
 def yoy_pct(df, col='value'):

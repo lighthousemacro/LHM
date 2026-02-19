@@ -52,12 +52,13 @@ TV_SERIES = {
     "ECONOMICS:USMMI": ("TV_USMMI", "MBA Mortgage Market Index", "Weekly", "Index", "Housing"),
     "ECONOMICS:USMOR": ("TV_USMOR", "Mortgage Originations", "Quarterly", "USD", "Housing"),
     # Business Pillar - ISM Manufacturing
-    "ECONOMICS:USISMMP": ("TV_USISMMP", "ISM Manufacturing PMI", "Monthly", "Index", "Business"),
+    "ECONOMICS:USISMMP": ("TV_USISMMP", "ISM Manufacturing Production", "Monthly", "Index", "Business"),
+    "ECONOMICS:USBCOI": ("TV_USBCOI", "ISM Manufacturing PMI", "Monthly", "Index", "Business"),
     "ECONOMICS:USMNO": ("TV_USMNO", "ISM Manufacturing New Orders", "Monthly", "Index", "Business"),
     "ECONOMICS:USMEMP": ("TV_USMEMP", "ISM Manufacturing Employment", "Monthly", "Index", "Business"),
     "ECONOMICS:USMPR": ("TV_USMPR", "ISM Manufacturing Prices Paid", "Monthly", "Index", "Business"),
     # Business Pillar - ISM Services/Non-Manufacturing
-    "ECONOMICS:USBCOI": ("TV_USBCOI", "ISM Services PMI", "Monthly", "Index", "Business"),
+    "ECONOMICS:USNMPMI": ("TV_USNMPMI", "ISM Services PMI", "Monthly", "Index", "Business"),
     "ECONOMICS:USNMBA": ("TV_USNMBA", "ISM Services Business Activity", "Monthly", "Index", "Business"),
     "ECONOMICS:USNMNO": ("TV_USNMNO", "ISM Services New Orders", "Monthly", "Index", "Business"),
     "ECONOMICS:USNMEMP": ("TV_USNMEMP", "ISM Services Employment", "Monthly", "Index", "Business"),

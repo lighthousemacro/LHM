@@ -8,7 +8,7 @@ VENUS = '#FF2389'
 SEA = '#00BB99'
 
 data = [
-    ("ISM Manufacturing PMI", "52.6", "Expansion (breakout from 10-month contraction)"),
+    ("ISM Manufacturing PMI", "52.6", "Expansion (breakout from 26-month contraction)"),
     ("ISM Services PMI", "53.8", "Modest expansion"),
     ("ISM Mfg New Orders", "57.1", "Strong demand"),
     ("ISM Mfg Employment", "48.1", "Still contracting (output without hiring)"),

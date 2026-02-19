@@ -484,51 +484,62 @@ def chart_02():
     mfg = fetch_db_level('TV_USISMMP', start='2000-01-01')
     svc = fetch_db_level('TV_USBCOI', start='2000-01-01')
 
-    fig, ax1 = new_fig()
-    ax2 = ax1.twinx()
+    # Two-panel layout: top 65%, bottom 35%
+    fig, (ax_top, ax_bot) = plt.subplots(2, 1, figsize=(14, 8),
+        gridspec_kw={'height_ratios': [65, 35], 'hspace': 0.0})
+    fig.patch.set_facecolor(THEME['bg'])
+    ax_top.set_facecolor(THEME['bg'])
+    ax_bot.set_facecolor(THEME['bg'])
+    fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94)
 
-    # Primary axis (LHS): both PMI lines
+    # === TOP PANEL: Both PMI lines ===
     c1 = THEME['primary']
     c2 = THEME['secondary']
-    ax1.plot(mfg.index, mfg, color=c1, linewidth=2.5,
-             label=f'ISM Manufacturing ({mfg.iloc[-1]:.1f})')
-    ax1.plot(svc.index, svc, color=c2, linewidth=2.5,
-             label=f'ISM Services ({svc.iloc[-1]:.1f})')
+    ax_top.plot(mfg.index, mfg, color=c1, linewidth=2.5,
+                label=f'ISM Manufacturing ({mfg.iloc[-1]:.1f})')
+    ax_top.plot(svc.index, svc, color=c2, linewidth=2.5,
+                label=f'ISM Services ({svc.iloc[-1]:.1f})')
+    ax_top.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
 
-    ax1.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
+    style_ax(ax_top, right_primary=True)
+    ax_top.spines['bottom'].set_linewidth(4.0)  # Panel divider
+    ax_top.tick_params(axis='both', which='both', length=0)
+    ax_top.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    set_xlim_to_data(ax_top, mfg.index)
+    ax_top.set_xticklabels([])  # Hide x labels on top panel
+    add_last_value_label(ax_top, mfg, color=c1, fmt='{:.1f}', side='right')
+    add_last_value_label(ax_top, svc, color=c2, fmt='{:.1f}', side='right')
+    add_recessions(ax_top)
+    ax_top.legend(loc='upper right', **legend_style())
 
-    # Secondary axis (RHS): Services - Manufacturing spread
+    spread_last_val = mfg.iloc[-1] - svc.iloc[-1]  # just for annotation
+    add_annotation_box(ax_top,
+        f"Manufacturing leads down by 6-9 months. Services follows.\n"
+        f"Gap narrows as cycles mature.",
+        x=0.55, y=0.12)
+
+    # === BOTTOM PANEL: Services - Manufacturing spread ===
     combined = pd.DataFrame({'mfg': mfg, 'svc': svc}).dropna()
     spread = combined['svc'] - combined['mfg']
-    c3 = THEME['tertiary']
-    ax2.fill_between(spread.index, 0, spread, where=(spread >= 0),
-                     color=c3, alpha=0.15)
-    ax2.fill_between(spread.index, 0, spread, where=(spread < 0),
-                     color=COLORS['venus'], alpha=0.15)
-    ax2.plot(spread.index, spread, color=c3, linewidth=1.5, alpha=0.7,
-             label=f'Spread: Svc-Mfg ({spread.iloc[-1]:+.1f})')
-    ax2.axhline(0, color=COLORS['doldrums'], linewidth=0.5, alpha=0.3)
+    c_spread = COLORS['sea']
 
-    style_dual_ax(ax1, ax2, THEME['fg'], c3)
-    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:+.0f}'))
-    set_xlim_to_data(ax1, mfg.index)
-    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    ax_bot.fill_between(spread.index, 0, spread, where=(spread >= 0),
+                        color=c_spread, alpha=0.20)
+    ax_bot.fill_between(spread.index, 0, spread, where=(spread < 0),
+                        color=COLORS['venus'], alpha=0.20)
+    ax_bot.plot(spread.index, spread, color=c_spread, linewidth=1.8,
+                label=f'Spread: Svc \u2212 Mfg ({spread.iloc[-1]:+.1f})')
+    ax_bot.axhline(0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
 
-    add_last_value_label(ax1, mfg, color=c1, fmt='{:.1f}', side='left')
-    add_last_value_label(ax1, svc, color=c2, fmt='{:.1f}', side='left')
-    add_last_value_label(ax2, spread, color=c3, fmt='{:+.1f}', side='right')
-    add_recessions(ax1)
-
-    lines1, labels1 = ax1.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper right', **legend_style())
-
-    spread_last = spread.iloc[-1]
-    add_annotation_box(ax1,
-        f"Services-Manufacturing spread: {spread_last:+.1f}pts.\n"
-        f"Manufacturing leads down by 6-9 months. Services follows.",
-        x=0.30, y=0.94)
+    style_ax(ax_bot, right_primary=True)
+    ax_bot.spines['top'].set_linewidth(4.0)  # Panel divider
+    ax_bot.tick_params(axis='both', which='both', length=0)
+    ax_bot.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:+.0f}'))
+    set_xlim_to_data(ax_bot, spread.index)
+    ax_bot.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    add_last_value_label(ax_bot, spread, color=c_spread, fmt='{:+.1f}', side='right')
+    add_recessions(ax_bot)
+    ax_bot.legend(loc='upper right', **legend_style())
 
     brand_fig(fig, 'ISM Manufacturing vs Services PMI',
               subtitle='The Late-Cycle Bifurcation: manufacturing leads, services follows',
@@ -544,9 +555,14 @@ def chart_03():
     """ISM Manufacturing key subcomponents: New Orders, Employment, Prices."""
     print('\nChart 3: ISM Manufacturing Subcomponents...')
 
-    new_orders = fetch_db_level('TV_USMNO', start='2000-01-01')
-    employment = fetch_db_level('TV_USMEMP', start='2000-01-01')
-    prices = fetch_db_level('TV_USMPR', start='2003-01-01')
+    new_orders = fetch_db_level('TV_USMNO', start='1997-01-01')
+    employment = fetch_db_level('TV_USMEMP', start='1997-01-01')
+    prices = fetch_db_level('TV_USMPR', start='1997-01-01')
+    # Start chart when all 3 series have data
+    common_start = max(new_orders.index[0], employment.index[0], prices.index[0])
+    new_orders = new_orders[new_orders.index >= common_start]
+    employment = employment[employment.index >= common_start]
+    prices = prices[prices.index >= common_start]
 
     fig, ax = new_fig()
 
@@ -554,7 +570,7 @@ def chart_03():
             label=f'New Orders ({new_orders.iloc[-1]:.1f})')
     ax.plot(employment.index, employment, color=THEME['secondary'], linewidth=2.5,
             label=f'Employment ({employment.iloc[-1]:.1f})')
-    ax.plot(prices.index, prices, color=THEME['tertiary'], linewidth=2.0,
+    ax.plot(prices.index, prices, color=COLORS['sea'], linewidth=2.0,
             label=f'Prices Paid ({prices.iloc[-1]:.1f})')
 
     ax.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
@@ -566,6 +582,8 @@ def chart_03():
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax, new_orders, color=THEME['primary'], fmt='{:.1f}', side='right')
+    add_last_value_label(ax, employment, color=THEME['secondary'], fmt='{:.1f}', side='right')
+    add_last_value_label(ax, prices, color=COLORS['sea'], fmt='{:.1f}', side='right')
     add_recessions(ax)
     ax.legend(loc='upper left', **legend_style())
 
@@ -621,7 +639,7 @@ def chart_04():
     add_annotation_box(ax,
         f"Orders {orders_last:+.1f}% vs Shipments {ships_last:+.1f}%.\n"
         f"Spread: {spread:+.1f}pp. Negative = backlog shrinking.",
-        x=0.52, y=0.92)
+        x=0.78, y=0.92)
 
     brand_fig(fig, 'Core Capital Goods: Orders vs Shipments',
               subtitle='The Forward Commitment: CEOs voting with their checkbooks',
@@ -641,44 +659,49 @@ def chart_05():
     ships_df = fetch_fred('ANXAVS', start='2000-01-01')
 
     ratio = (orders_df['value'] / ships_df['value']).dropna()
-    ratio_smooth = ratio.rolling(3, min_periods=1).mean()
+    ratio_3m = ratio.rolling(3, min_periods=1).mean()
+    ratio_6m = ratio.rolling(6, min_periods=1).mean()
 
     fig, ax = new_fig()
 
-    ax.plot(ratio_smooth.index, ratio_smooth, color=THEME['primary'], linewidth=2.5,
-            label=f'Bookings/Billings (3M Avg) ({ratio_smooth.iloc[-1]:.2f}x)')
-    ax.plot(ratio.index, ratio, color=THEME['primary'], linewidth=0.8, alpha=0.3)
+    ax.plot(ratio.index, ratio, color=THEME['primary'], linewidth=0.8, alpha=0.2)
+    ax.plot(ratio_3m.index, ratio_3m, color=THEME['primary'], linewidth=2.0,
+            label=f'3-Month Avg ({ratio_3m.iloc[-1]:.2f}x)')
+    ax.plot(ratio_6m.index, ratio_6m, color=COLORS['sea'], linewidth=2.5,
+            label=f'6-Month Avg ({ratio_6m.iloc[-1]:.2f}x)')
 
     ax.axhline(1.0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7,
                label='Equilibrium (1.0x)')
     ax.axhline(0.95, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.7,
                label='Demand < Supply (<0.95x)')
 
-    ax.fill_between(ratio_smooth.index, 0.95, ratio_smooth,
-                    where=(ratio_smooth < 0.95),
+    ax.fill_between(ratio_6m.index, 0.95, ratio_6m,
+                    where=(ratio_6m < 0.95),
                     color=COLORS['venus'], alpha=0.10)
 
     style_ax(ax, right_primary=True)
     ax.tick_params(axis='both', which='both', length=0)
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.2f}x'))
-    set_xlim_to_data(ax, ratio_smooth.index)
+    set_xlim_to_data(ax, ratio_3m.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax, ratio_smooth, color=THEME['primary'],
+    add_last_value_label(ax, ratio_3m, color=THEME['primary'],
+                         fmt='{:.2f}x', side='right')
+    add_last_value_label(ax, ratio_6m, color=COLORS['sea'],
                          fmt='{:.2f}x', side='right')
     add_recessions(ax)
     ax.legend(loc='upper left', **legend_style())
 
-    last_val = ratio_smooth.iloc[-1]
+    last_val = ratio_6m.iloc[-1]
     status = "shrinking" if last_val < 1.0 else "growing"
     add_annotation_box(ax,
         f"Ratio at {last_val:.2f}x. Backlog {status}.\n"
         f"Below 0.95x = demand weaker than supply. Orders drying up.",
-        x=0.52, y=0.92)
+        x=0.78, y=0.92)
 
     brand_fig(fig, 'Core Capital Goods: Bookings/Billings Ratio',
               subtitle='When orders lag shipments, the backlog is dying',
-              source='Census via FRED', data_date=ratio_smooth.index[-1])
+              source='Census via FRED', data_date=ratio_3m.index[-1])
 
     return save_fig(fig, 'chart_05_bookings_billings.png')
 

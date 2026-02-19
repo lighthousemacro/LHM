@@ -387,7 +387,7 @@ def legend_style():
     return dict(
         framealpha=0.95,
         facecolor=THEME['legend_bg'],
-        edgecolor=THEME['spine'],
+        edgecolor='#33CCFF' if THEME['mode'] == 'dark' else THEME['spine'],
         labelcolor=THEME['legend_fg'],
     )
 
@@ -907,7 +907,7 @@ def chart_08():
     add_annotation_box(ax,
         f"5-survey average at {avg_last:.1f} ({signal}).\n"
         f"Regional surveys preview ISM by 2-3 weeks. Below zero = manufacturing shrinking.",
-        x=0.45, y=0.08)
+        x=0.45, y=0.13)
 
     brand_fig(fig, 'Regional Fed Manufacturing Surveys',
               subtitle='ISM Preview: five districts tell one story',
@@ -1118,9 +1118,10 @@ def chart_12():
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
     # Format RHS ticks back to actual delinquency values
     ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{(x + delinq_mean):.1f}%'))
-    ax2.set_ylim(-2 - delinq_mean, 8 - delinq_mean)
+    ax1.set_ylim(-30, 45)
+    ax2.set_ylim(-3 - delinq_mean, 7 - delinq_mean)
     ax2.invert_yaxis()
-    ax1.set_xlim(common_start - pd.Timedelta(days=30), loans_yoy.index.max() + pd.Timedelta(days=180))
+    ax1.set_xlim(pd.Timestamp('1990-01-01') - pd.Timedelta(days=30), loans_yoy.index.max() + pd.Timedelta(days=180))
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax1, loans_yoy, color=c1, side='left')
@@ -1188,7 +1189,7 @@ def chart_13():
     add_annotation_box(ax,
         f"LEI {lei_last:+.1f}% YoY. Below -4% for 6+ months = recession.\n"
         f"Composite of 10 leading indicators: the economy's crystal ball.",
-        x=0.52, y=0.92)
+        x=0.72, y=0.95)
 
     brand_fig(fig, 'Conference Board Leading Economic Index',
               subtitle='10 indicators, one signal: where the economy is heading',

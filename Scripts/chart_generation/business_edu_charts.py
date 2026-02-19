@@ -277,8 +277,12 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
                       alpha=0.9))
 
 
-def brand_fig(fig, title, subtitle=None, source=None):
-    """Apply TT deck branding at figure level."""
+def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
+    """Apply TT deck branding at figure level.
+
+    Args:
+        data_date: Latest observation date (str or pd.Timestamp). Shown as 'Data thru MM.DD.YYYY'.
+    """
     fig.patch.set_facecolor(THEME['bg'])
 
     OCEAN = '#0089D1'
@@ -303,9 +307,17 @@ def brand_fig(fig, title, subtitle=None, source=None):
              color=OCEAN, ha='right', va='top', style='italic', fontweight='bold')
 
     if source:
-        date_str = datetime.now().strftime('%m.%d.%Y')
-        fig.text(0.03, 0.022, f'Lighthouse Macro | {source}; {date_str}',
-                 fontsize=9, color=THEME['muted'], ha='left', va='top', style='italic')
+        pull_str = datetime.now().strftime('%m.%d.%Y')
+        if data_date is not None:
+            if isinstance(data_date, str):
+                data_date = pd.Timestamp(data_date)
+            data_str = data_date.strftime('%m.%d.%Y')
+            fig.text(0.03, 0.022,
+                     f'Lighthouse Macro | {source} | Data thru {data_str} | Pulled {pull_str}',
+                     fontsize=9, color=THEME['muted'], ha='left', va='top', style='italic')
+        else:
+            fig.text(0.03, 0.022, f'Lighthouse Macro | {source}; {pull_str}',
+                     fontsize=9, color=THEME['muted'], ha='left', va='top', style='italic')
 
     fig.suptitle(title, fontsize=15, fontweight='bold', y=0.945,
                  color=THEME['fg'])
@@ -402,13 +414,40 @@ def chart_01():
 
     fig, ax = new_fig()
 
-    ax.plot(pmi.index, pmi, color=THEME['primary'], linewidth=2.5,
-            label=f'ISM Manufacturing PMI ({pmi.iloc[-1]:.1f})')
+    # Color the line by regime, interpolating exact crossing points at 50
+    from matplotlib.collections import LineCollection
+    threshold = 50
+    x_vals = mdates.date2num(pmi.index)
+    y_vals = pmi.values
+    new_segments = []
+    new_colors = []
+    for i in range(len(x_vals) - 1):
+        x0, y0 = x_vals[i], y_vals[i]
+        x1, y1 = x_vals[i + 1], y_vals[i + 1]
+        # Check if segment crosses the threshold
+        if (y0 - threshold) * (y1 - threshold) < 0:
+            # Interpolate the crossing point
+            t = (threshold - y0) / (y1 - y0)
+            x_cross = x0 + t * (x1 - x0)
+            # First half
+            new_segments.append([[x0, y0], [x_cross, threshold]])
+            new_colors.append(COLORS['sea'] if y0 >= threshold else COLORS['venus'])
+            # Second half
+            new_segments.append([[x_cross, threshold], [x1, y1]])
+            new_colors.append(COLORS['sea'] if y1 >= threshold else COLORS['venus'])
+        else:
+            new_segments.append([[x0, y0], [x1, y1]])
+            new_colors.append(COLORS['sea'] if y0 >= threshold else COLORS['venus'])
+    lc = LineCollection(new_segments, colors=new_colors, linewidths=2.5)
+    ax.add_collection(lc)
+    ax.autoscale()
 
-    # Key thresholds
+    # Invisible plots for legend entries
+    ax.plot([], [], color=COLORS['sea'], linewidth=2.5, label='Expansion (>50)')
+    ax.plot([], [], color=COLORS['venus'], linewidth=2.5, label='Contraction (<50)')
+
+    # Threshold line
     ax.axhline(50, color=COLORS['doldrums'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.axhspan(50, pmi.max() + 2, color=COLORS['sea'], alpha=0.04, label='Expansion (>50)')
-    ax.axhspan(pmi.min() - 2, 50, color=COLORS['venus'], alpha=0.04, label='Contraction (<50)')
 
     style_ax(ax, right_primary=True)
     ax.tick_params(axis='both', which='both', length=0)
@@ -416,7 +455,8 @@ def chart_01():
     set_xlim_to_data(ax, pmi.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax, pmi, color=THEME['primary'], fmt='{:.1f}', side='right')
+    add_last_value_label(ax, pmi, color=COLORS['sea'] if pmi.iloc[-1] >= 50 else COLORS['venus'],
+                         fmt='{:.1f}', side='right')
     add_recessions(ax)
     ax.legend(loc='upper left', **legend_style())
 
@@ -425,11 +465,11 @@ def chart_01():
     add_annotation_box(ax,
         f"ISM Manufacturing at {pmi_last:.1f} ({regime}).\n"
         f"Below 50 = contraction. Below 45 = deep recession signal.",
-        x=0.52, y=0.92)
+        x=0.78, y=0.92)
 
     brand_fig(fig, 'ISM Manufacturing PMI',
               subtitle='The earliest read on goods economy health',
-              source='ISM via TradingView')
+              source='ISM via TradingView', data_date=pmi.index[-1])
 
     return save_fig(fig, 'chart_01_ism_manufacturing.png')
 
@@ -444,41 +484,55 @@ def chart_02():
     mfg = fetch_db_level('TV_USISMMP', start='2000-01-01')
     svc = fetch_db_level('TV_USBCOI', start='2000-01-01')
 
-    fig, ax = new_fig()
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
 
-    ax.plot(mfg.index, mfg, color=THEME['primary'], linewidth=2.5,
-            label=f'ISM Manufacturing ({mfg.iloc[-1]:.1f})')
-    ax.plot(svc.index, svc, color=THEME['secondary'], linewidth=2.5,
-            label=f'ISM Services ({svc.iloc[-1]:.1f})')
+    # Primary axis (LHS): both PMI lines
+    c1 = THEME['primary']
+    c2 = THEME['secondary']
+    ax1.plot(mfg.index, mfg, color=c1, linewidth=2.5,
+             label=f'ISM Manufacturing ({mfg.iloc[-1]:.1f})')
+    ax1.plot(svc.index, svc, color=c2, linewidth=2.5,
+             label=f'ISM Services ({svc.iloc[-1]:.1f})')
 
-    # Shade divergence when services > manufacturing
+    ax1.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
+
+    # Secondary axis (RHS): Services - Manufacturing spread
     combined = pd.DataFrame({'mfg': mfg, 'svc': svc}).dropna()
-    ax.fill_between(combined.index, combined['mfg'], combined['svc'],
-                    where=(combined['svc'] > combined['mfg']),
-                    color=COLORS['dusk'], alpha=0.12, label='Services > Manufacturing')
+    spread = combined['svc'] - combined['mfg']
+    c3 = THEME['tertiary']
+    ax2.fill_between(spread.index, 0, spread, where=(spread >= 0),
+                     color=c3, alpha=0.15)
+    ax2.fill_between(spread.index, 0, spread, where=(spread < 0),
+                     color=COLORS['venus'], alpha=0.15)
+    ax2.plot(spread.index, spread, color=c3, linewidth=1.5, alpha=0.7,
+             label=f'Spread: Svc-Mfg ({spread.iloc[-1]:+.1f})')
+    ax2.axhline(0, color=COLORS['doldrums'], linewidth=0.5, alpha=0.3)
 
-    ax.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
+    style_dual_ax(ax1, ax2, THEME['fg'], c3)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:+.0f}'))
+    set_xlim_to_data(ax1, mfg.index)
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    style_ax(ax, right_primary=True)
-    ax.tick_params(axis='both', which='both', length=0)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
-    set_xlim_to_data(ax, mfg.index)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    add_last_value_label(ax1, mfg, color=c1, fmt='{:.1f}', side='left')
+    add_last_value_label(ax1, svc, color=c2, fmt='{:.1f}', side='left')
+    add_last_value_label(ax2, spread, color=c3, fmt='{:+.1f}', side='right')
+    add_recessions(ax1)
 
-    add_last_value_label(ax, mfg, color=THEME['primary'], fmt='{:.1f}', side='right')
-    add_last_value_label(ax, svc, color=THEME['secondary'], fmt='{:.1f}', side='right')
-    add_recessions(ax)
-    ax.legend(loc='upper left', **legend_style())
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper right', **legend_style())
 
-    spread = svc.iloc[-1] - mfg.iloc[-1]
-    add_annotation_box(ax,
-        f"Services-Manufacturing spread: {spread:+.1f}pts.\n"
+    spread_last = spread.iloc[-1]
+    add_annotation_box(ax1,
+        f"Services-Manufacturing spread: {spread_last:+.1f}pts.\n"
         f"Manufacturing leads down by 6-9 months. Services follows.",
-        x=0.52, y=0.92)
+        x=0.30, y=0.94)
 
     brand_fig(fig, 'ISM Manufacturing vs Services PMI',
               subtitle='The Late-Cycle Bifurcation: manufacturing leads, services follows',
-              source='ISM via TradingView')
+              source='ISM via TradingView', data_date=mfg.index[-1])
 
     return save_fig(fig, 'chart_02_ism_bifurcation.png')
 
@@ -525,7 +579,7 @@ def chart_03():
 
     brand_fig(fig, 'ISM Manufacturing Subcomponents',
               subtitle='New Orders lead. Employment confirms. Prices signal inflation.',
-              source='ISM via TradingView')
+              source='ISM via TradingView', data_date=new_orders.index[-1])
 
     return save_fig(fig, 'chart_03_ism_subcomponents.png')
 
@@ -571,7 +625,7 @@ def chart_04():
 
     brand_fig(fig, 'Core Capital Goods: Orders vs Shipments',
               subtitle='The Forward Commitment: CEOs voting with their checkbooks',
-              source='Census via FRED')
+              source='Census via FRED', data_date=orders.index[-1])
 
     return save_fig(fig, 'chart_04_core_capex_orders.png')
 
@@ -624,7 +678,7 @@ def chart_05():
 
     brand_fig(fig, 'Core Capital Goods: Bookings/Billings Ratio',
               subtitle='When orders lag shipments, the backlog is dying',
-              source='Census via FRED')
+              source='Census via FRED', data_date=ratio_smooth.index[-1])
 
     return save_fig(fig, 'chart_05_bookings_billings.png')
 
@@ -666,7 +720,7 @@ def chart_06():
 
     brand_fig(fig, 'Durable Goods Orders: Total vs Ex-Transportation',
               subtitle='Stripping Boeing noise reveals the underlying trend',
-              source='Census via FRED')
+              source='Census via FRED', data_date=total.index[-1])
 
     return save_fig(fig, 'chart_06_durable_goods.png')
 
@@ -717,7 +771,7 @@ def chart_07():
 
     brand_fig(fig, 'Business Inventories & Inventory/Sales Ratio',
               subtitle='The Mistake Detector: overstock signals liquidation ahead',
-              source='Census via FRED')
+              source='Census via FRED', data_date=is_ratio.index[-1])
 
     return save_fig(fig, 'chart_07_inventories.png')
 
@@ -781,7 +835,8 @@ def chart_08():
 
     brand_fig(fig, 'Regional Fed Manufacturing Surveys',
               subtitle='ISM Preview: five districts tell one story',
-              source='NY Fed, Philly Fed, Dallas Fed, Richmond Fed, KC Fed')
+              source='NY Fed, Philly Fed, Dallas Fed, Richmond Fed, KC Fed',
+              data_date=avg.index[-1])
 
     return save_fig(fig, 'chart_08_regional_fed.png')
 
@@ -833,7 +888,7 @@ def chart_09():
 
     brand_fig(fig, 'Industrial Production & Manufacturing Capacity Utilization',
               subtitle='Production output meets the capacity constraint',
-              source='Federal Reserve via FRED')
+              source='Federal Reserve via FRED', data_date=ip_yoy.index[-1])
 
     return save_fig(fig, 'chart_09_ip_capacity.png')
 
@@ -875,7 +930,7 @@ def chart_10():
 
     brand_fig(fig, 'Corporate Profits: Year-Over-Year Growth',
               subtitle='The Bottom Line: profits peak before the economy does',
-              source='BEA via FRED')
+              source='BEA via FRED', data_date=profits.index[-1])
 
     return save_fig(fig, 'chart_10_corporate_profits.png')
 
@@ -924,7 +979,7 @@ def chart_11():
 
     brand_fig(fig, 'Unit Labor Costs vs Nonfarm Productivity',
               subtitle='The Margin Squeeze: labor costs eating into profits',
-              source='BLS via FRED')
+              source='BLS via FRED', data_date=ulc.index[-1])
 
     return save_fig(fig, 'chart_11_ulc_vs_productivity.png')
 
@@ -973,7 +1028,7 @@ def chart_12():
 
     brand_fig(fig, 'Business Loan Growth & Delinquency Rate',
               subtitle='The Credit Channel: banks tighten as stress builds',
-              source='Federal Reserve via FRED')
+              source='Federal Reserve via FRED', data_date=loans_yoy.index[-1])
 
     return save_fig(fig, 'chart_12_business_credit.png')
 
@@ -1018,7 +1073,8 @@ def chart_13():
 
     brand_fig(fig, 'Conference Board Leading Economic Index',
               subtitle='10 indicators, one signal: where the economy is heading',
-              source='Conference Board via TradingView')
+              source='Conference Board via TradingView',
+              data_date=lei_yoy.dropna().index[-1])
 
     return save_fig(fig, 'chart_13_leading_index.png')
 

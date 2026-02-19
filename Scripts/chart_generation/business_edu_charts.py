@@ -764,21 +764,42 @@ def chart_07():
 
     ax1.plot(inv_yoy.index, inv_yoy, color=c1, linewidth=2.5,
              label=f'Business Inventories YoY ({inv_yoy.iloc[-1]:.1f}%)')
-    ax2.plot(is_ratio.index, is_ratio, color=c2, linewidth=2.5,
+
+    # Center ratio around its historical average so it aligns with 0% on LHS
+    is_mean = is_ratio.mean()
+    is_centered = is_ratio - is_mean
+    ax2.plot(is_centered.index, is_centered, color=c2, linewidth=2.5,
              label=f'Inventory/Sales Ratio ({is_ratio.iloc[-1]:.2f})')
 
     ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
-    ax2.axhline(1.40, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.7)
+    # 1.40 threshold centered: 1.40 - mean
+    ax2.axhline(1.40 - is_mean, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.7)
 
     style_dual_ax(ax1, ax2, c1, c2)
-    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.2f}'))
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
+    # Format RHS ticks back to actual ratio values
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{(x + is_mean):.2f}'))
     align_yaxis_zero(ax1, ax2)
     set_xlim_to_data(ax1, inv_yoy.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax1, inv_yoy, color=c1, side='left')
-    add_last_value_label(ax2, is_ratio, color=c2, fmt='{:.2f}', side='right')
+    # Custom pill showing original ratio value at the centered position
+    last_centered = float(is_centered.iloc[-1])
+    pill = dict(boxstyle='round,pad=0.3', facecolor=c2, edgecolor=c2, alpha=0.95)
+    ax2.annotate(f'{is_ratio.iloc[-1]:.2f}', xy=(1.0, last_centered),
+                 xycoords=('axes fraction', 'data'),
+                 fontsize=9, fontweight='bold', color='white',
+                 ha='left', va='center', xytext=(6, 0),
+                 textcoords='offset points', bbox=pill)
+    # Label 1.40 threshold on RHS axis
+    threshold_centered = 1.40 - is_mean
+    pill_thresh = dict(boxstyle='round,pad=0.3', facecolor=COLORS['venus'], edgecolor=COLORS['venus'], alpha=0.95)
+    ax2.annotate('Thr: 1.40', xy=(1.0, threshold_centered),
+                 xycoords=('axes fraction', 'data'),
+                 fontsize=9, fontweight='bold', color='white',
+                 ha='left', va='center', xytext=(6, 0),
+                 textcoords='offset points', bbox=pill_thresh)
     add_recessions(ax1)
 
     lines1, labels1 = ax1.get_legend_handles_labels()

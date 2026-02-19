@@ -998,10 +998,14 @@ def chart_09():
 # CHART 10: Corporate Profits YoY [Figure 10]
 # ============================================
 def chart_10():
-    """Corporate Profits (before tax, no IVA/CCAdj) YoY: the bottom line."""
+    """Corporate Profits After Tax (without IVA/CCAdj) YoY: the bottom line.
+
+    Uses FRED series CP. Previously used A464RC1Q027SBEA (before tax, without
+    IVA/CCAdj) which showed -2.4% while CP showed +4.3% for Q3 2025.
+    """
     print('\nChart 10: Corporate Profits YoY...')
 
-    profits = fetch_quarterly_yoy('A464RC1Q027SBEA')
+    profits = fetch_quarterly_yoy('CP')
 
     fig, ax = new_fig()
 
@@ -1031,7 +1035,7 @@ def chart_10():
 
     brand_fig(fig, 'Corporate Profits: Year-Over-Year Growth',
               subtitle='The Bottom Line: profits peak before the economy does',
-              source='BEA via FRED', data_date=profits.index[-1])
+              source='BEA via FRED (CP)', data_date=profits.index[-1])
 
     return save_fig(fig, 'chart_10_corporate_profits.png')
 

@@ -54,6 +54,14 @@ COLORS = {
 }
 
 RECESSIONS = [
+    ('1953-07-01', '1954-05-01'),
+    ('1957-08-01', '1958-04-01'),
+    ('1960-04-01', '1961-02-01'),
+    ('1969-12-01', '1970-11-01'),
+    ('1973-11-01', '1975-03-01'),
+    ('1980-01-01', '1980-07-01'),
+    ('1981-07-01', '1982-11-01'),
+    ('1990-07-01', '1991-03-01'),
     ('2001-03-01', '2001-11-01'),
     ('2007-12-01', '2009-06-01'),
     ('2020-02-01', '2020-04-01'),
@@ -127,7 +135,7 @@ def set_theme(mode='dark'):
 # ============================================
 # DATA HELPERS
 # ============================================
-def fetch_fred(series_id, start='2000-01-01'):
+def fetch_fred(series_id, start='1950-01-01'):
     """Fetch a FRED series and return as DataFrame. Uses cache to avoid rate limits."""
     cache_key = f"{series_id}_{start}"
     if cache_key in _DATA_CACHE:
@@ -163,7 +171,7 @@ def fetch_db(series_id, start='2000-01-01'):
     return df
 
 
-def fetch_db_level(series_id, start='2000-01-01'):
+def fetch_db_level(series_id, start='1950-01-01'):
     """Fetch DB series as-is (already a rate/level/index)."""
     df = fetch_db(series_id, start=start)
     if df.empty:
@@ -176,7 +184,7 @@ def yoy_pct(df, col='value'):
     return df[col].pct_change(12, fill_method=None) * 100
 
 
-def fetch_fred_yoy(series_id, start='1999-01-01', trim='2000-01-01'):
+def fetch_fred_yoy(series_id, start='1949-01-01', trim=None):
     """Fetch FRED series, compute YoY%, drop NaN, trim to start date."""
     df = fetch_fred(series_id, start=start)
     df['yoy'] = yoy_pct(df)
@@ -185,13 +193,13 @@ def fetch_fred_yoy(series_id, start='1999-01-01', trim='2000-01-01'):
     return df['yoy'].dropna()
 
 
-def fetch_fred_level(series_id, start='2000-01-01'):
+def fetch_fred_level(series_id, start='1950-01-01'):
     """Fetch FRED series as-is (already a rate/level, not an index)."""
     df = fetch_fred(series_id, start=start)
     return df['value'].dropna()
 
 
-def fetch_quarterly_yoy(series_id, start='1999-01-01', trim='2000-01-01'):
+def fetch_quarterly_yoy(series_id, start='1949-01-01', trim=None):
     """Fetch quarterly FRED series, compute YoY (4-period), forward-fill to monthly."""
     df = fetch_fred(series_id, start=start)
     df['yoy'] = df['value'].pct_change(4, fill_method=None) * 100
@@ -201,7 +209,7 @@ def fetch_quarterly_yoy(series_id, start='1999-01-01', trim='2000-01-01'):
     return monthly.dropna()
 
 
-def fetch_quarterly_level(series_id, start='2000-01-01'):
+def fetch_quarterly_level(series_id, start='1950-01-01'):
     """Fetch quarterly FRED series as level, forward-fill to monthly."""
     df = fetch_fred(series_id, start=start)
     monthly = df['value'].resample('MS').ffill()
@@ -465,7 +473,7 @@ def chart_01():
     add_annotation_box(ax,
         f"ISM Manufacturing at {pmi_last:.1f} ({regime}).\n"
         f"Below 50 = contraction. Below 45 = deep recession signal.",
-        x=0.78, y=0.92)
+        x=0.805, y=0.92)
 
     brand_fig(fig, 'ISM Manufacturing PMI',
               subtitle='The earliest read on goods economy health',
@@ -481,8 +489,12 @@ def chart_02():
     """ISM Manufacturing vs Services PMI: the late-cycle divergence."""
     print('\nChart 2: ISM Manufacturing vs Services PMI...')
 
-    mfg = fetch_db_level('TV_USISMMP', start='2000-01-01')
-    svc = fetch_db_level('TV_USBCOI', start='2000-01-01')
+    mfg = fetch_db_level('TV_USISMMP')
+    svc = fetch_db_level('TV_USBCOI')
+    # Start from youngest series
+    common_start = max(mfg.index[0], svc.index[0])
+    mfg = mfg[mfg.index >= common_start]
+    svc = svc[svc.index >= common_start]
 
     # Two-panel layout: top 65%, bottom 35%
     fig, (ax_top, ax_bot) = plt.subplots(2, 1, figsize=(14, 8),
@@ -555,9 +567,9 @@ def chart_03():
     """ISM Manufacturing key subcomponents: New Orders, Employment, Prices."""
     print('\nChart 3: ISM Manufacturing Subcomponents...')
 
-    new_orders = fetch_db_level('TV_USMNO', start='1997-01-01')
-    employment = fetch_db_level('TV_USMEMP', start='1997-01-01')
-    prices = fetch_db_level('TV_USMPR', start='1997-01-01')
+    new_orders = fetch_db_level('TV_USMNO')
+    employment = fetch_db_level('TV_USMEMP')
+    prices = fetch_db_level('TV_USMPR')
     # Start chart when all 3 series have data
     common_start = max(new_orders.index[0], employment.index[0], prices.index[0])
     new_orders = new_orders[new_orders.index >= common_start]
@@ -655,8 +667,8 @@ def chart_05():
     """Bookings/Billings ratio (Orders / Shipments): demand vs supply balance."""
     print('\nChart 5: Bookings/Billings Ratio...')
 
-    orders_df = fetch_fred('ANDENO', start='2000-01-01')
-    ships_df = fetch_fred('ANXAVS', start='2000-01-01')
+    orders_df = fetch_fred('ANDENO')
+    ships_df = fetch_fred('ANXAVS')
 
     ratio = (orders_df['value'] / ships_df['value']).dropna()
     ratio_3m = ratio.rolling(3, min_periods=1).mean()
@@ -756,7 +768,7 @@ def chart_07():
     print('\nChart 7: Inventories & I/S Ratio...')
 
     inv_yoy = fetch_fred_yoy('BUSINV')
-    is_ratio = fetch_fred_level('ISRATIO', start='2000-01-01')
+    is_ratio = fetch_fred_level('ISRATIO')
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -773,7 +785,7 @@ def chart_07():
 
     ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
     # 1.40 threshold centered: 1.40 - mean
-    ax2.axhline(1.40 - is_mean, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.7)
+    ax2.axhline(1.40 - is_mean, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.75)
 
     style_dual_ax(ax1, ax2, c1, c2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
@@ -794,7 +806,7 @@ def chart_07():
                  textcoords='offset points', bbox=pill)
     # Label 1.40 threshold on RHS axis
     threshold_centered = 1.40 - is_mean
-    pill_thresh = dict(boxstyle='round,pad=0.3', facecolor=COLORS['venus'], edgecolor=COLORS['venus'], alpha=0.95)
+    pill_thresh = dict(boxstyle='round,pad=0.3', facecolor=COLORS['venus'], edgecolor=COLORS['venus'], alpha=0.75)
     ax2.annotate('Thr: 1.40', xy=(1.0, threshold_centered),
                  xycoords=('axes fraction', 'data'),
                  fontsize=9, fontweight='bold', color='white',
@@ -828,12 +840,12 @@ def chart_08():
     print('\nChart 8: Regional Fed Manufacturing Surveys (5-Survey)...')
 
     # FRED sources
-    empire = fetch_fred_level('GACDISA066MSFRBNY', start='2005-01-01')
-    philly = fetch_fred_level('GACDFSA066MSFRBPHI', start='2005-01-01')
-    dallas = fetch_fred_level('BACTSAMFRBDAL', start='2005-01-01')
+    empire = fetch_fred_level('GACDISA066MSFRBNY')
+    philly = fetch_fred_level('GACDFSA066MSFRBPHI')
+    dallas = fetch_fred_level('BACTSAMFRBDAL')
     # TradingView sources
-    richmond = fetch_db_level('TV_USRFMI', start='2005-01-01')
-    kc = fetch_db_level('TV_USKFMI', start='2005-01-01')
+    richmond = fetch_db_level('TV_USRFMI')
+    kc = fetch_db_level('TV_USKFMI')
 
     fig, ax = new_fig()
 
@@ -875,7 +887,7 @@ def chart_08():
     add_annotation_box(ax,
         f"5-survey average at {avg_last:.1f} ({signal}).\n"
         f"Regional surveys preview ISM by 2-3 weeks. Below zero = manufacturing shrinking.",
-        x=0.52, y=0.92)
+        x=0.45, y=0.08)
 
     brand_fig(fig, 'Regional Fed Manufacturing Surveys',
               subtitle='ISM Preview: five districts tell one story',
@@ -893,7 +905,7 @@ def chart_09():
     print('\nChart 9: Industrial Production & Capacity Utilization...')
 
     ip_yoy = fetch_fred_yoy('INDPRO')
-    cap_util = fetch_fred_level('MCUMFN', start='2000-01-01')
+    cap_util = fetch_fred_level('MCUMFN')
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -901,26 +913,48 @@ def chart_09():
 
     ax1.plot(ip_yoy.index, ip_yoy, color=c1, linewidth=2.5,
              label=f'Industrial Production YoY ({ip_yoy.iloc[-1]:.1f}%)')
-    ax2.plot(cap_util.index, cap_util, color=c2, linewidth=2.5,
+
+    # Center capacity util on its historical mean so it aligns with 0% on LHS
+    cu_mean = cap_util.mean()
+    cu_centered = cap_util - cu_mean
+    ax2.plot(cu_centered.index, cu_centered, color=c2, linewidth=2.5,
              label=f'Mfg Capacity Util. ({cap_util.iloc[-1]:.1f}%)')
 
     ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
-    ax2.axhline(78, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.5)
+    ax2.axhline(78 - cu_mean, color=COLORS['venus'], linewidth=1.0, linestyle='-', alpha=0.75)
 
     style_dual_ax(ax1, ax2, c1, c2)
-    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
+    # Format RHS ticks back to actual capacity util values
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{(x + cu_mean):.0f}%'))
     align_yaxis_zero(ax1, ax2)
     set_xlim_to_data(ax1, ip_yoy.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax1, ip_yoy, color=c1, side='left')
-    add_last_value_label(ax2, cap_util, color=c2, side='right')
+    # Custom pill showing original cap util value at centered position
+    last_centered = float(cu_centered.iloc[-1])
+    pill_cu = dict(boxstyle='round,pad=0.3', facecolor=c2, edgecolor=c2, alpha=0.95)
+    ax2.annotate(f'{cap_util.iloc[-1]:.1f}%', xy=(1.0, last_centered),
+                 xycoords=('axes fraction', 'data'),
+                 fontsize=9, fontweight='bold', color='white',
+                 ha='left', va='center', xytext=(6, 0),
+                 textcoords='offset points', bbox=pill_cu)
+    # 78% threshold label
+    thresh_centered = 78 - cu_mean
+    pill_thresh = dict(boxstyle='round,pad=0.3', facecolor=COLORS['venus'], edgecolor=COLORS['venus'], alpha=0.75)
+    ax2.annotate('Thr: 78%', xy=(1.0, thresh_centered),
+                 xycoords=('axes fraction', 'data'),
+                 fontsize=9, fontweight='bold', color='white',
+                 ha='left', va='center', xytext=(6, 0),
+                 textcoords='offset points', bbox=pill_thresh)
     add_recessions(ax1)
 
     lines1, labels1 = ax1.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
+    leg_style = legend_style()
+    leg_style['framealpha'] = 1.0
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **leg_style)
 
     ip_last = ip_yoy.iloc[-1]
     cu_last = cap_util.iloc[-1]
@@ -928,7 +962,7 @@ def chart_09():
     add_annotation_box(ax1,
         f"IP growth: {ip_last:+.1f}% YoY. Capacity util: {cu_last:.1f}% (slack {slack}).\n"
         f"Below 78% = slack in system. Pricing power falls, disinflation follows.",
-        x=0.52, y=0.92)
+        x=0.52, y=0.96)
 
     brand_fig(fig, 'Industrial Production & Manufacturing Capacity Utilization',
               subtitle='Production output meets the capacity constraint',
@@ -1036,7 +1070,7 @@ def chart_12():
     print('\nChart 12: Business Loans & Delinquency...')
 
     loans_yoy = fetch_fred_yoy('BUSLOANS')
-    delinq = fetch_fred_level('DRBLACBS', start='2000-01-01')
+    delinq = fetch_fred_level('DRBLACBS')
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()

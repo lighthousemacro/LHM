@@ -279,13 +279,9 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
     """Add takeaway annotation box in dead space."""
     # Dark theme: Ocean fill at 20% to pop against chart bg
     # White theme: keep chart bg
-    if THEME['mode'] == 'dark':
-        box_fc = '#0089D1'
-        box_alpha = 1.0
-    else:
-        box_fc = THEME['bg']
-        box_alpha = 0.9
-    txt_color = '#ffffff' if THEME['mode'] == 'dark' else THEME['fg']
+    box_fc = '#0089D1'
+    box_alpha = 1.0
+    txt_color = '#ffffff'
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=txt_color, ha='center', va='top',
             style='italic',

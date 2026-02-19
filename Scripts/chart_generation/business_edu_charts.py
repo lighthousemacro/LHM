@@ -476,14 +476,14 @@ def chart_01():
     add_last_value_label(ax, pmi, color=COLORS['sea'] if pmi.iloc[-1] >= 50 else COLORS['venus'],
                          fmt='{:.1f}', side='right')
     add_recessions(ax)
-    ax.legend(loc='upper left', **legend_style())
+    ax.legend(loc='upper left', bbox_to_anchor=(0.15, 1.0), **legend_style())
 
     pmi_last = pmi.iloc[-1]
     regime = "expansion" if pmi_last > 50 else "contraction"
     add_annotation_box(ax,
         f"ISM Manufacturing at {pmi_last:.1f} ({regime}).\n"
         f"Below 50 = contraction. Below 45 = deep recession signal.",
-        x=0.63, y=0.92)
+        x=0.70, y=0.92)
 
     brand_fig(fig, 'ISM Manufacturing PMI',
               subtitle='The earliest read on goods economy health',
@@ -1077,7 +1077,7 @@ def chart_11():
     add_annotation_box(ax,
         f"ULC {ulc_last:+.1f}% vs Productivity {prod_last:+.1f}%. Gap: {gap:+.1f}pp.\n"
         f"{pressure}. When labor costs outrun productivity, layoffs follow.",
-        x=0.52, y=0.92)
+        x=0.72, y=0.92)
 
     brand_fig(fig, 'Unit Labor Costs vs Nonfarm Productivity',
               subtitle='The Margin Squeeze: labor costs eating into profits',
@@ -1096,25 +1096,42 @@ def chart_12():
     loans_yoy = fetch_fred_yoy('BUSLOANS')
     delinq = fetch_fred_level('DRBLACBS')
 
+    # X-axis starts when both series have data
+    common_start = max(loans_yoy.index[0], delinq.index[0])
+
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
     c1, c2 = THEME['primary'], THEME['secondary']
 
     ax1.plot(loans_yoy.index, loans_yoy, color=c1, linewidth=2.5,
              label=f'C&I Loan Growth YoY ({loans_yoy.iloc[-1]:.1f}%)')
-    ax2.plot(delinq.index, delinq, color=c2, linewidth=2.5,
-             label=f'Business Delinquency Rate ({delinq.iloc[-1]:.1f}%)')
+
+    # Center delinquency on its mean so 0% on LHS aligns with mean on RHS
+    delinq_mean = delinq.mean()
+    delinq_centered = delinq - delinq_mean
+    ax2.plot(delinq_centered.index, delinq_centered, color=c2, linewidth=2.5,
+             label=f'Business Delinquency Rate, inv. ({delinq.iloc[-1]:.1f}%)')
 
     ax1.axhline(0, color=COLORS['doldrums'], linewidth=0.8, alpha=0.5, linestyle='--')
 
     style_dual_ax(ax1, ax2, c1, c2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
-    set_xlim_to_data(ax1, loans_yoy.index)
+    # Format RHS ticks back to actual delinquency values
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{(x + delinq_mean):.1f}%'))
+    ax2.set_ylim(-2 - delinq_mean, 8 - delinq_mean)
+    ax2.invert_yaxis()
+    ax1.set_xlim(common_start - pd.Timedelta(days=30), loans_yoy.index.max() + pd.Timedelta(days=180))
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax1, loans_yoy, color=c1, side='left')
-    add_last_value_label(ax2, delinq, color=c2, side='right')
+    # Custom pill showing actual delinquency value at centered position
+    last_centered = float(delinq_centered.iloc[-1])
+    pill_d = dict(boxstyle='round,pad=0.3', facecolor=c2, edgecolor=c2, alpha=0.95)
+    ax2.annotate(f'{delinq.iloc[-1]:.1f}%', xy=(1.0, last_centered),
+                 xycoords=('axes fraction', 'data'),
+                 fontsize=9, fontweight='bold', color='white',
+                 ha='left', va='center', xytext=(6, 0),
+                 textcoords='offset points', bbox=pill_d)
     add_recessions(ax1)
 
     lines1, labels1 = ax1.get_legend_handles_labels()

@@ -424,7 +424,8 @@ def chart_01():
     """ISM Manufacturing PMI with expansion/contraction threshold."""
     print('\nChart 1: ISM Manufacturing PMI...')
 
-    pmi = fetch_db_level('TV_USISMMP', start='1950-01-01')
+    # TV_USBCOI = ISM Manufacturing PMI composite (NOT TV_USISMMP which is Production subindex)
+    pmi = fetch_db_level('TV_USBCOI', start='1950-01-01')
 
     fig, ax = new_fig()
 
@@ -495,8 +496,10 @@ def chart_02():
     """ISM Manufacturing vs Services PMI: the late-cycle divergence."""
     print('\nChart 2: ISM Manufacturing vs Services PMI...')
 
-    mfg = fetch_db_level('TV_USISMMP')
-    svc = fetch_db_level('TV_USBCOI')
+    # TV_USBCOI = ISM Manufacturing PMI composite
+    # TV_USNMBA = ISM Services Business Activity (closest available proxy for Services PMI)
+    mfg = fetch_db_level('TV_USBCOI')
+    svc = fetch_db_level('TV_USNMBA')
     # Start from youngest series
     common_start = max(mfg.index[0], svc.index[0])
     mfg = mfg[mfg.index >= common_start]
@@ -514,9 +517,9 @@ def chart_02():
     c1 = THEME['primary']
     c2 = THEME['secondary']
     ax_top.plot(mfg.index, mfg, color=c1, linewidth=2.5,
-                label=f'ISM Manufacturing ({mfg.iloc[-1]:.1f})')
+                label=f'ISM Manufacturing PMI ({mfg.iloc[-1]:.1f})')
     ax_top.plot(svc.index, svc, color=c2, linewidth=2.5,
-                label=f'ISM Services ({svc.iloc[-1]:.1f})')
+                label=f'ISM Services Activity ({svc.iloc[-1]:.1f})')
     ax_top.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
 
     style_ax(ax_top, right_primary=True)
@@ -546,7 +549,7 @@ def chart_02():
     ax_bot.fill_between(spread.index, 0, spread, where=(spread < 0),
                         color=COLORS['venus'], alpha=0.20)
     ax_bot.plot(spread.index, spread, color=c_spread, linewidth=1.8,
-                label=f'Spread: Svc \u2212 Mfg ({spread.iloc[-1]:+.1f})')
+                label=f'Spread: Svc Activity \u2212 Mfg PMI ({spread.iloc[-1]:+.1f})')
     ax_bot.axhline(0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
 
     style_ax(ax_bot, right_primary=True)
@@ -559,7 +562,7 @@ def chart_02():
     add_recessions(ax_bot)
     ax_bot.legend(loc='upper right', **legend_style())
 
-    brand_fig(fig, 'ISM Manufacturing vs Services PMI',
+    brand_fig(fig, 'ISM Manufacturing PMI vs Services Activity',
               subtitle='The Late-Cycle Bifurcation: manufacturing leads, services follows',
               source='ISM via TradingView', data_date=mfg.index[-1])
 

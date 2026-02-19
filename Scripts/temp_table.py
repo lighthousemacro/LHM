@@ -8,19 +8,19 @@ VENUS = '#FF2389'
 SEA = '#00BB99'
 
 data = [
-    ("ISM Manufacturing PMI", "52.6", "Expansion (breakout from 26-month contraction)"),
+    ("ISM Manufacturing PMI", "52.6", "Expansion (first time in 12 months)"),
     ("ISM Services PMI", "53.8", "Modest expansion"),
     ("ISM Mfg New Orders", "57.1", "Strong demand"),
     ("ISM Mfg Employment", "48.1", "Still contracting (output without hiring)"),
     ("ISM Mfg Prices Paid", "59.0", "Input costs rising"),
     ("Core Capex Orders YoY", "+5.9%", "Positive (steady growth)"),
-    ("Bookings/Billings Ratio", "1.28x", "Backlog building"),
+    ("Bookings/Billings Ratio", "~1.00x", "Stable backlogs"),
     ("Durable Goods ex-Transport YoY", "+5.1%", "Positive trend"),
     ("Inventory/Sales Ratio", "1.37", "Balanced"),
     ("Regional Fed 5-Survey Avg", "2.2", "Barely positive (lagging ISM)"),
     ("Industrial Production YoY", "+2.3%", "Modest growth"),
     ("Mfg Capacity Utilization", "75.5%", "Slack (below 78% threshold)"),
-    ("Corporate Profits YoY", "-2.4%", "Contracting (margin pressure)"),
+    ("Corporate Profits YoY", "+4.3%", "Positive but decelerating"),
     ("Unit Labor Costs YoY", "+1.3%", "Moderate"),
     ("Productivity YoY", "+1.9%", "Solid"),
     ("C&I Loan Growth YoY", "+3.0%", "Modest"),

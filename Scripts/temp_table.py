@@ -8,12 +8,12 @@ VENUS = '#FF2389'
 SEA = '#00BB99'
 
 data = [
-    ("ISM Manufacturing PMI", "55.9", "Expansion (breakout from 26-month contraction)"),
+    ("ISM Manufacturing PMI", "52.6", "Expansion (breakout from 10-month contraction)"),
     ("ISM Services PMI", "53.8", "Modest expansion"),
     ("ISM Mfg New Orders", "57.1", "Strong demand"),
     ("ISM Mfg Employment", "48.1", "Still contracting (output without hiring)"),
     ("ISM Mfg Prices Paid", "59.0", "Input costs rising"),
-    ("Core Capex Orders YoY", "+20.1%", "Very strong (front-loading risk)"),
+    ("Core Capex Orders YoY", "+5.9%", "Positive (steady growth)"),
     ("Bookings/Billings Ratio", "1.28x", "Backlog building"),
     ("Durable Goods ex-Transport YoY", "+5.1%", "Positive trend"),
     ("Inventory/Sales Ratio", "1.37", "Balanced"),

@@ -9,7 +9,7 @@ SEA = '#00BB99'
 
 data = [
     ("ISM Manufacturing PMI", "55.9", "Expansion (breakout from 26-month contraction)"),
-    ("ISM Services PMI", "52.6", "Modest expansion (decelerating)"),
+    ("ISM Services PMI", "53.8", "Modest expansion"),
     ("ISM Mfg New Orders", "57.1", "Strong demand"),
     ("ISM Mfg Employment", "48.1", "Still contracting (output without hiring)"),
     ("ISM Mfg Prices Paid", "59.0", "Input costs rising"),

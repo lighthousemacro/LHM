@@ -676,7 +676,7 @@ def chart_05():
     """Bookings/Billings ratio (Orders / Shipments): demand vs supply balance."""
     print('\nChart 5: Bookings/Billings Ratio...')
 
-    orders_df = fetch_fred('ANDENO')
+    orders_df = fetch_fred('NEWORDER')
     ships_df = fetch_fred('ANXAVS')
 
     ratio = (orders_df['value'] / ships_df['value']).dropna()

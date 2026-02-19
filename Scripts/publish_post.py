@@ -72,6 +72,7 @@ def publish_to_substack(md_path, cookie_string):
 
     from substack import Api
     from substack.post import Post
+    import requests as _requests
 
     with open(md_path) as f:
         md_text = f.read()
@@ -80,8 +81,11 @@ def publish_to_substack(md_path, cookie_string):
     print(f"  Title: {title}")
     print(f"  Subtitle: {subtitle}")
 
-    # Connect
+    # Connect — handle full cookie string (multiple cookies from DevTools)
     print("  Connecting to Substack...")
+
+    # If cookie_string has multiple cookies (semicolon-separated with various names),
+    # we need to construct the Api with all of them
     api = Api(
         cookies_string=cookie_string,
         publication_url="https://lighthousemacro.substack.com"

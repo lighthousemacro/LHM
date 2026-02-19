@@ -277,12 +277,22 @@ def style_single_ax(ax, fmt='{:.1f}%'):
 
 def add_annotation_box(ax, text, x=0.52, y=0.92):
     """Add takeaway annotation box in dead space."""
+    # Dark theme: Ocean fill at 20% to pop against chart bg
+    # White theme: keep chart bg
+    if THEME['mode'] == 'dark':
+        box_fc = '#0089D1'
+        box_alpha = 1.0
+    else:
+        box_fc = THEME['bg']
+        box_alpha = 0.9
+    txt_color = '#ffffff' if THEME['mode'] == 'dark' else THEME['fg']
     ax.text(x, y, text, transform=ax.transAxes,
-            fontsize=10, color=THEME['fg'], ha='center', va='top',
+            fontsize=10, color=txt_color, ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor=THEME['bg'], edgecolor='#0089D1',
-                      alpha=0.9))
+                      facecolor=box_fc, edgecolor='#33CCFF',
+                      linewidth=2.0,
+                      alpha=box_alpha))
 
 
 def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
@@ -473,7 +483,7 @@ def chart_01():
     add_annotation_box(ax,
         f"ISM Manufacturing at {pmi_last:.1f} ({regime}).\n"
         f"Below 50 = contraction. Below 45 = deep recession signal.",
-        x=0.78, y=0.92)
+        x=0.63, y=0.92)
 
     brand_fig(fig, 'ISM Manufacturing PMI',
               subtitle='The earliest read on goods economy health',

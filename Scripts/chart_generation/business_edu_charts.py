@@ -630,7 +630,7 @@ def chart_04():
     """Core Capital Goods Orders (Nondefense ex-Aircraft) YoY: the purest capex signal."""
     print('\nChart 4: Core Capital Goods Orders YoY...')
 
-    orders = fetch_fred_yoy('ANDENO')
+    orders = fetch_fred_yoy('NEWORDER')
     shipments = fetch_fred_yoy('ANXAVS')
 
     fig, ax = new_fig()

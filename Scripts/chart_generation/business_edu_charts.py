@@ -473,7 +473,7 @@ def chart_01():
     add_annotation_box(ax,
         f"ISM Manufacturing at {pmi_last:.1f} ({regime}).\n"
         f"Below 50 = contraction. Below 45 = deep recession signal.",
-        x=0.805, y=0.92)
+        x=0.78, y=0.92)
 
     brand_fig(fig, 'ISM Manufacturing PMI',
               subtitle='The earliest read on goods economy health',
@@ -528,7 +528,7 @@ def chart_02():
     add_annotation_box(ax_top,
         f"Manufacturing leads down by 6-9 months. Services follows.\n"
         f"Gap narrows as cycles mature.",
-        x=0.55, y=0.12)
+        x=0.58, y=0.12)
 
     # === BOTTOM PANEL: Services - Manufacturing spread ===
     combined = pd.DataFrame({'mfg': mfg, 'svc': svc}).dropna()
@@ -597,7 +597,7 @@ def chart_03():
     add_last_value_label(ax, employment, color=THEME['secondary'], fmt='{:.1f}', side='right')
     add_last_value_label(ax, prices, color=COLORS['sea'], fmt='{:.1f}', side='right')
     add_recessions(ax)
-    ax.legend(loc='upper left', **legend_style())
+    ax.legend(loc='upper center', bbox_to_anchor=(0.50, 1.0), **legend_style())
 
     no_last = new_orders.iloc[-1]
     emp_last = employment.iloc[-1]
@@ -651,7 +651,7 @@ def chart_04():
     add_annotation_box(ax,
         f"Orders {orders_last:+.1f}% vs Shipments {ships_last:+.1f}%.\n"
         f"Spread: {spread:+.1f}pp. Negative = backlog shrinking.",
-        x=0.78, y=0.92)
+        x=0.80, y=0.94)
 
     brand_fig(fig, 'Core Capital Goods: Orders vs Shipments',
               subtitle='The Forward Commitment: CEOs voting with their checkbooks',
@@ -695,6 +695,9 @@ def chart_05():
     ax.tick_params(axis='both', which='both', length=0)
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.2f}x'))
     set_xlim_to_data(ax, ratio_3m.index)
+    # Cap y-axis top based on 3MMA max + padding
+    y_top = ratio_3m.max() * 1.05
+    ax.set_ylim(top=y_top)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax, ratio_3m, color=THEME['primary'],
@@ -709,7 +712,7 @@ def chart_05():
     add_annotation_box(ax,
         f"Ratio at {last_val:.2f}x. Backlog {status}.\n"
         f"Below 0.95x = demand weaker than supply. Orders drying up.",
-        x=0.78, y=0.92)
+        x=0.78, y=0.98)
 
     brand_fig(fig, 'Core Capital Goods: Bookings/Billings Ratio',
               subtitle='When orders lag shipments, the backlog is dying',
@@ -878,7 +881,14 @@ def chart_08():
     set_xlim_to_data(ax, avg.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax, avg, color=THEME['fg'], fmt='{:.1f}', side='right')
+    # Custom pill for avg line - need dark text on light pill (and vice versa)
+    last_avg = float(avg.iloc[-1])
+    pill_fg = dict(boxstyle='round,pad=0.3', facecolor=THEME['fg'], edgecolor=THEME['fg'], alpha=0.95)
+    ax.annotate(f'{last_avg:.1f}', xy=(1.0, last_avg),
+                xycoords=('axes fraction', 'data'),
+                fontsize=9, fontweight='bold', color=THEME['bg'],
+                ha='left', va='center', xytext=(6, 0),
+                textcoords='offset points', bbox=pill_fg)
     add_recessions(ax, start_date='2005-01-01')
     ax.legend(loc='upper left', **legend_style(), fontsize=8, ncol=2)
 
@@ -906,6 +916,10 @@ def chart_09():
 
     ip_yoy = fetch_fred_yoy('INDPRO')
     cap_util = fetch_fred_level('MCUMFN')
+    # Start when both series have data
+    common_start = max(ip_yoy.index[0], cap_util.index[0])
+    ip_yoy = ip_yoy[ip_yoy.index >= common_start]
+    cap_util = cap_util[cap_util.index >= common_start]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -954,7 +968,7 @@ def chart_09():
     lines2, labels2 = ax2.get_legend_handles_labels()
     leg_style = legend_style()
     leg_style['framealpha'] = 1.0
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **leg_style)
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', bbox_to_anchor=(0.1, 1.0), **leg_style)
 
     ip_last = ip_yoy.iloc[-1]
     cu_last = cap_util.iloc[-1]
@@ -962,7 +976,7 @@ def chart_09():
     add_annotation_box(ax1,
         f"IP growth: {ip_last:+.1f}% YoY. Capacity util: {cu_last:.1f}% (slack {slack}).\n"
         f"Below 78% = slack in system. Pricing power falls, disinflation follows.",
-        x=0.52, y=0.96)
+        x=0.62, y=0.96)
 
     brand_fig(fig, 'Industrial Production & Manufacturing Capacity Utilization',
               subtitle='Production output meets the capacity constraint',

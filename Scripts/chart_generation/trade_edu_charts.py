@@ -588,8 +588,8 @@ def chart_04():
     ax.legend(loc='upper left', **legend_style())
 
     add_annotation_box(ax,
-        "Exports contracting while imports decelerate.\n"
-        "The strong dollar + retaliatory tariffs double hit.",
+        "Exports rebounding while imports contract.\n"
+        "Divergence signals shifting demand dynamics.",
         x=0.52, y=0.92)
 
     brand_fig(fig, 'U.S. Exports & Imports: Year-Over-Year Growth',
@@ -787,7 +787,7 @@ def chart_08():
 
     add_annotation_box(ax,
         "Trade policy uncertainty leads capex by 3-6 months.\n"
-        "Currently elevated but below 2019 peaks.",
+        "At record highs, eclipsing 2019 trade war peaks.",
         x=0.25, y=0.92)
 
     brand_fig(fig, 'Trade Policy Uncertainty Index',

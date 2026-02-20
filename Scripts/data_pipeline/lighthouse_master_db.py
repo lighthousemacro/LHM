@@ -678,6 +678,54 @@ FRED_CURATED = {
 
     # Delinquency
     "DRCLACBS": "Delinquency Rate on Consumer Loans All Commercial Banks",
+
+    # ===== PILLAR 7 (TRADE) ADDITIONS - Feb 2026 =====
+
+    # Trade Balance & Flows (additional)
+    "BOPSTB": "Trade Balance Services Only",
+    "EXPGSC1": "Real Exports Goods and Services Chained 2017",
+    "IMPGSC1": "Real Imports Goods and Services Chained 2017",
+    "NETEXC": "Real Net Exports Goods and Services",
+
+    # Import/Export Price Components
+    "IRFPPF": "Import Price Index All Commodities Ex Petroleum",
+    "IRFPCF": "Import Price Index Consumer Goods",
+    "IRFPKF": "Import Price Index Capital Goods",
+    "IRFPIF": "Import Price Index Industrial Supplies",
+    "EAFPAG": "Export Price Index Agricultural Commodities",
+    "EAFPNA": "Export Price Index Nonagricultural Commodities",
+
+    # Dollar Indices (Fed Trade-Weighted)
+    "DTWEXAFEGS": "Dollar Index Advanced Foreign Economies",
+    "DTWEXEMEGS": "Dollar Index Emerging Market Economies",
+    "RTWEXBGS": "Real Broad Trade Weighted Dollar Index",
+
+    # BIS Effective Exchange Rates
+    "RBUSBIS": "BIS Real Broad Effective Exchange Rate US",
+    "NBUSBIS": "BIS Nominal Broad Effective Exchange Rate US",
+    "RNUSBIS": "BIS Real Narrow Effective Exchange Rate US",
+
+    # Bilateral Trade
+    "EXPCH": "US Exports of Goods to China",
+    "IMPCH": "US Imports of Goods from China",
+    "EXPJP": "US Exports of Goods to Japan",
+    "IMPJP": "US Imports of Goods from Japan",
+
+    # Current Account (BEA)
+    "IEABC": "Balance on Current Account",
+    "IEABCG": "Balance on Goods Current Account",
+    "IEABCS": "Balance on Services Current Account",
+    "IEABCPI": "Balance on Primary Income Current Account",
+    "IEABCSI": "Balance on Secondary Income Current Account",
+
+    # Trade Policy Uncertainty
+    "EPUTRADE": "Trade Policy Uncertainty Index",
+
+    # E-Commerce
+    "ECOMSA": "E-Commerce Retail Sales",
+
+    # Foreign Holdings
+    "FDHBFIN": "Federal Debt Held by Foreign and International Investors",
 }
 
 # ==========================================

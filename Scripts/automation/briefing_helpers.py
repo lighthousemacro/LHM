@@ -36,9 +36,9 @@ def get_todays_tasks(db_path: Path = TASKS_DB) -> list:
     conn.row_factory = sqlite3.Row
     today = date.today().isoformat()
     rows = conn.execute(
-        "SELECT id, title, category, priority, status, due_date, notes "
+        "SELECT id, title, category, priority, status, due_date, due_time, notes "
         "FROM tasks WHERE due_date = ? AND status NOT IN ('done') "
-        "ORDER BY priority, id", (today,)
+        "ORDER BY due_time IS NULL, due_time, priority, id", (today,)
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
@@ -52,9 +52,9 @@ def get_overdue_tasks(db_path: Path = TASKS_DB) -> list:
     conn.row_factory = sqlite3.Row
     today = date.today().isoformat()
     rows = conn.execute(
-        "SELECT id, title, category, priority, status, due_date, notes "
+        "SELECT id, title, category, priority, status, due_date, due_time, notes "
         "FROM tasks WHERE due_date < ? AND due_date IS NOT NULL AND status NOT IN ('done') "
-        "ORDER BY due_date, priority", (today,)
+        "ORDER BY due_date, due_time, priority", (today,)
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
@@ -69,9 +69,9 @@ def get_upcoming_tasks(db_path: Path = TASKS_DB, days: int = 7) -> list:
     today = date.today().isoformat()
     end = (date.today() + timedelta(days=days)).isoformat()
     rows = conn.execute(
-        "SELECT id, title, category, priority, status, due_date, notes "
+        "SELECT id, title, category, priority, status, due_date, due_time, notes "
         "FROM tasks WHERE due_date > ? AND due_date <= ? AND status NOT IN ('done') "
-        "ORDER BY due_date, priority", (today, end)
+        "ORDER BY due_date, due_time, priority", (today, end)
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
@@ -218,9 +218,12 @@ def format_tasks_html(today_tasks: list, overdue_tasks: list, upcoming_tasks: li
     if today_tasks:
         items.append(f'<div style="color:{OCEAN};font-size:0.75rem;font-weight:600;margin:0.6rem 0 0.4rem">TODAY ({len(today_tasks)})</div>')
         for t in today_tasks:
+            time_str = ""
+            if t.get("due_time"):
+                time_str = f'<span style="font-family:Source Code Pro,monospace;font-size:0.78rem;color:{SKY};font-weight:600;margin-right:0.4rem">{t["due_time"]}</span>'
             items.append(
                 f'<div style="display:flex;justify-content:space-between;align-items:center;padding:0.3rem 0;border-bottom:1px solid rgba(30,51,80,0.3)">'
-                f'<span style="font-size:0.82rem">{_priority_badge(t["priority"])} {t["title"]}</span>'
+                f'<span style="font-size:0.82rem">{time_str}{_priority_badge(t["priority"])} {t["title"]}</span>'
                 f'<span>{_category_badge(t["category"])}</span>'
                 f'</div>'
             )

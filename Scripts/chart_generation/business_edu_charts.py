@@ -1082,8 +1082,11 @@ def chart_11():
         f"{pressure}. When labor costs outrun productivity, layoffs follow.",
         x=0.72, y=0.92)
 
+    subtitle = ('The Margin Squeeze: labor costs eating into profits'
+                if gap > 0
+                else 'Productivity outpacing labor costs: margins expanding')
     brand_fig(fig, 'Unit Labor Costs vs Nonfarm Productivity',
-              subtitle='The Margin Squeeze: labor costs eating into profits',
+              subtitle=subtitle,
               source='BLS via FRED', data_date=ulc.index[-1])
 
     return save_fig(fig, 'chart_11_ulc_vs_productivity.png')

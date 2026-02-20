@@ -1053,15 +1053,18 @@ def chart_11():
     """Unit Labor Costs YoY vs Nonfarm Productivity YoY: the margin squeeze."""
     print('\nChart 11: Unit Labor Costs vs Productivity...')
 
-    ulc = fetch_quarterly_yoy('ULCNFB')
-    prod = fetch_quarterly_yoy('OPHNFB')
+    ulc_raw = fetch_quarterly_yoy('ULCNFB')
+    prod_raw = fetch_quarterly_yoy('OPHNFB')
+
+    ulc = ulc_raw.rolling(2).mean().dropna()
+    prod = prod_raw.rolling(2).mean().dropna()
 
     fig, ax = new_fig()
 
     ax.plot(ulc.index, ulc, color=THEME['primary'], linewidth=2.5,
-            label=f'Unit Labor Costs YoY ({ulc.iloc[-1]:.1f}%)')
+            label=f'Unit Labor Costs 2Q MA ({ulc.iloc[-1]:.1f}%)')
     ax.plot(prod.index, prod, color=THEME['secondary'], linewidth=2.5,
-            label=f'Productivity YoY ({prod.iloc[-1]:.1f}%)')
+            label=f'Productivity 2Q MA ({prod.iloc[-1]:.1f}%)')
 
     common = pd.DataFrame({'ulc': ulc, 'prod': prod}).dropna()
     ax.fill_between(common.index, common['ulc'], common['prod'],

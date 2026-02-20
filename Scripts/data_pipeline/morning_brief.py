@@ -411,6 +411,33 @@ def _staleness_badge(date_str: str) -> str:
     return ""
 
 
+# Full names for display
+_INDEX_NAMES = {
+    "MRI": "Macro Risk Index",
+    "LPI": "Labor Pressure",
+    "LFI": "Labor Fragility",
+    "PCI": "Price Conditions",
+    "GCI": "Growth Conditions",
+    "HCI": "Housing Conditions",
+    "CCI": "Consumer Conditions",
+    "BCI": "Business Conditions",
+    "TCI": "Trade Conditions",
+    "GCI_Gov": "Government Conditions",
+    "FCI": "Financial Conditions",
+    "LCI": "Liquidity Cushion",
+    "CLG": "Credit-Labor Gap",
+    "MSI": "Market Structure",
+    "SBD": "Structure-Breadth Divergence",
+    "SPI": "Sentiment & Positioning",
+    "SSD": "Sentiment-Structure Divergence",
+    "SLI": "Stablecoin Liquidity",
+    "REC_PROB": "Recession Probability",
+    "ENSEMBLE_RISK": "Ensemble Risk",
+    "WARNING_LEVEL": "Warning Level",
+    "ALLOC_MULTIPLIER": "Allocation Multiplier",
+    "LIQ_STAGE": "Liquidity Stage",
+}
+
 # Indices where higher value = worse outcome (display high-to-low: bad left, good right)
 _HIGH_IS_BAD = {
     "MRI", "LFI", "PCI", "GCI_Gov", "YFS", "SVI", "LIQ_STAGE",
@@ -459,16 +486,8 @@ def _regime_gauge(index_id: str, current_status: str) -> str:
     for i, (_, label) in enumerate(display_tiers):
         color = colors[i]
         is_active = (label.upper() == (current_status or "").upper())
-        if is_active:
-            segments.append(
-                f'<span class="gauge-tier gauge-active" style="background:{color}; border-color:{color}">'
-                f'{label}</span>'
-            )
-        else:
-            segments.append(
-                f'<span class="gauge-tier" style="background:{color}">'
-                f'{label}</span>'
-            )
+        cls = "gauge-tier gauge-active" if is_active else "gauge-tier"
+        segments.append(f'<span class="{cls}" style="background:{color}">{label}</span>')
     return f'<div class="gauge-strip">{"".join(segments)}</div>'
 
 
@@ -495,9 +514,12 @@ def _index_panel_row(index_id: str, current: dict, prior: dict) -> str:
             f'</span>'
         )
 
+    full_name = _INDEX_NAMES.get(index_id, index_id)
+    display_name = f'{full_name} <span class="idx-abbrev">({index_id})</span>'
+
     return f"""<div class="panel-row">
         <div class="panel-left">
-            <span class="idx-name">{index_id}</span>
+            <span class="idx-name">{display_name}</span>
             <span class="idx-value">{val:+.3f}</span>
             <span class="idx-change">{change}</span>
             {stale}
@@ -852,9 +874,15 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
             justify-content: flex-end;
         }}
         .idx-name {{
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text);
-            min-width: 55px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+        }}
+        .idx-abbrev {{
+            color: var(--muted);
+            font-weight: 400;
+            font-size: 0.7rem;
         }}
         .idx-value {{
             color: var(--sky);
@@ -874,22 +902,24 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
             align-items: center;
         }}
         .gauge-tier {{
-            padding: 0.15rem 0.4rem;
+            flex: 1;
+            padding: 0.15rem 0;
             border-radius: 3px;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             font-family: 'Inter', sans-serif;
             font-weight: 500;
-            letter-spacing: 0.3px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.5);
             opacity: 0.2;
             white-space: nowrap;
-            border: 1.5px solid transparent;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
         }}
         .gauge-active {{
             opacity: 1;
             color: #fff;
             font-weight: 700;
-            border-style: solid;
+            font-size: 0.55rem;
             box-shadow: 0 0 6px rgba(255,255,255,0.1);
         }}
 

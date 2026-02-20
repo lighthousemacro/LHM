@@ -411,8 +411,32 @@ def _staleness_badge(date_str: str) -> str:
     return ""
 
 
-def _index_row(index_id: str, current: dict, prior: dict) -> str:
-    """Build a single table row for an index."""
+def _regime_gauge(index_id: str, current_status: str) -> str:
+    """Render an inline HTML gauge strip showing all regime tiers with the active one highlighted."""
+    tiers = STATUS_THRESHOLDS.get(index_id, [])
+    if not tiers:
+        return ""
+    # Tiers are stored high-to-low; reverse for display (best/lowest-risk on left)
+    display_tiers = list(reversed(tiers))
+    segments = []
+    for _, label in display_tiers:
+        color = _status_color(label)
+        is_active = (label.upper() == (current_status or "").upper())
+        if is_active:
+            segments.append(
+                f'<span class="gauge-tier gauge-active" style="background:{color}; border-color:{color}">'
+                f'{label}</span>'
+            )
+        else:
+            segments.append(
+                f'<span class="gauge-tier" style="background:{color}">'
+                f'{label}</span>'
+            )
+    return f'<div class="gauge-strip">{"".join(segments)}</div>'
+
+
+def _index_panel_row(index_id: str, current: dict, prior: dict) -> str:
+    """Build a single panel row for an index with gauge strip and regime change badge."""
     if index_id not in current:
         return ""
     info = current[index_id]
@@ -422,14 +446,31 @@ def _index_row(index_id: str, current: dict, prior: dict) -> str:
     color = _status_color(status)
     change = _change_html(index_id, current, prior)
     stale = _staleness_badge(date)
+    gauge = _regime_gauge(index_id, status)
 
-    return f"""<tr>
-        <td class="idx-name">{index_id}</td>
-        <td class="idx-value">{val:+.3f}</td>
-        <td class="idx-change">{change}</td>
-        <td class="idx-status" style="color:{color}">{status}</td>
-        <td class="idx-stale">{stale}</td>
-    </tr>"""
+    # Regime change badge
+    regime_badge = ""
+    prev = prior.get(index_id)
+    if prev and prev["status"] and prev["status"] != status:
+        regime_badge = (
+            f'<span class="regime-badge">'
+            f'was: {prev["status"]}'
+            f'</span>'
+        )
+
+    return f"""<div class="panel-row">
+        <div class="panel-left">
+            <span class="idx-name">{index_id}</span>
+            <span class="idx-value">{val:+.3f}</span>
+            <span class="idx-change">{change}</span>
+            {stale}
+        </div>
+        <div class="panel-center">{gauge}</div>
+        <div class="panel-right">
+            <span class="idx-status" style="color:{color}">{status}</span>
+            {regime_badge}
+        </div>
+    </div>"""
 
 
 def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
@@ -512,33 +553,7 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
     alloc_val = current.get("ALLOC_MULTIPLIER", {}).get("value", 0)
     alloc_status = current.get("ALLOC_MULTIPLIER", {}).get("status", "N/A") or "N/A"
 
-    # Alerts HTML
-    alerts_html = ""
-    if regime_changes or alerts:
-        alert_items = []
-        for rc in regime_changes:
-            alert_items.append(
-                f'<div class="alert-item regime">'
-                f'<span class="alert-idx">{rc["index"]}</span> '
-                f'<span class="alert-from">{rc["from_status"]}</span> '
-                f'&#8594; <span class="alert-to" style="color:{_status_color(rc["to_status"])}">'
-                f'{rc["to_status"]}</span> '
-                f'<span class="alert-val">({rc["from_value"]:.3f} &#8594; {rc["to_value"]:.3f})</span>'
-                f'</div>'
-            )
-        for a in alerts:
-            alert_items.append(
-                f'<div class="alert-item threshold">'
-                f'<span class="alert-idx">{a["index"]}</span> '
-                f'at <span class="alert-val">{a["value"]:.3f}</span> '
-                f'<span class="alert-status" style="color:{_status_color(a["status"])}">[{a["status"]}]</span>'
-                f'</div>'
-            )
-        alerts_html = f"""
-        <div class="section">
-            <h2>Alerts</h2>
-            {"".join(alert_items)}
-        </div>"""
+    # Alerts HTML — no longer a separate section; regime changes shown inline via panel badges
 
     # Charts HTML
     charts_html = ""
@@ -559,29 +574,23 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
             </div>
         </div>"""
 
-    # Index tables
-    def _build_table(title: str, indices: list, show_header: bool = True) -> str:
-        rows = [_index_row(idx, current, prior) for idx in indices]
+    # Index panels (gauge-based)
+    def _build_panel(title: str, indices: list) -> str:
+        rows = [_index_panel_row(idx, current, prior) for idx in indices]
         rows = [r for r in rows if r]
         if not rows:
             return ""
-        header = f"<h2>{title}</h2>" if show_header else ""
         return f"""
         <div class="section">
-            {header}
-            <table class="index-table">
-                <thead><tr>
-                    <th>Index</th><th>Value</th><th>Change</th><th>Status</th><th></th>
-                </tr></thead>
-                <tbody>{"".join(rows)}</tbody>
-            </table>
+            <h2>{title}</h2>
+            {"".join(rows)}
         </div>"""
 
-    engine1_html = _build_table("Engine 1: Macro Dynamics", MACRO_INDICES)
-    core_html = _build_table("Core Signals", CORE_SIGNALS, show_header=True)
-    engine2_html = _build_table("Engine 2: Monetary Mechanics", MONETARY_INDICES)
-    engine3_html = _build_table("Engine 3: Structure &amp; Sentiment", STRUCTURE_INDICES)
-    risk_html = _build_table("Risk Dashboard", ADVANCED)
+    engine1_html = _build_panel("Engine 1: Macro Dynamics", MACRO_INDICES)
+    core_html = _build_panel("Core Signals", CORE_SIGNALS)
+    engine2_html = _build_panel("Engine 2: Monetary Mechanics", MONETARY_INDICES)
+    engine3_html = _build_panel("Engine 3: Structure &amp; Sentiment", STRUCTURE_INDICES)
+    risk_html = _build_panel("Risk Dashboard", ADVANCED)
 
     # Calendar HTML
     calendar_html = ""
@@ -774,35 +783,41 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
             border-bottom: 1px solid var(--border);
         }}
 
-        /* ---- INDEX TABLE ---- */
-        .index-table {{
-            width: 100%;
-            border-collapse: collapse;
+        /* ---- PANEL ROWS (Gauge Layout) ---- */
+        .panel-row {{
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.45rem 0;
+            border-bottom: 1px solid rgba(30, 51, 80, 0.4);
             font-family: 'Source Code Pro', monospace;
             font-size: 0.82rem;
         }}
-        .index-table thead th {{
-            text-align: left;
-            color: var(--muted);
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 0.3rem 0.5rem;
-            border-bottom: 1px solid var(--border);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .panel-row:last-child {{ border-bottom: none; }}
+        .panel-row:hover {{ background: rgba(0, 137, 209, 0.05); }}
+        .panel-left {{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 200px;
+            flex-shrink: 0;
         }}
-        .index-table tbody tr {{
-            border-bottom: 1px solid rgba(30, 51, 80, 0.5);
+        .panel-center {{
+            flex: 1;
+            min-width: 0;
         }}
-        .index-table tbody tr:hover {{
-            background: rgba(0, 137, 209, 0.05);
-        }}
-        .index-table td {{
-            padding: 0.4rem 0.5rem;
+        .panel-right {{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            min-width: 140px;
+            justify-content: flex-end;
         }}
         .idx-name {{
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text);
+            min-width: 55px;
         }}
         .idx-value {{
             color: var(--sky);
@@ -813,6 +828,44 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
         .idx-status {{
             font-weight: 600;
             font-size: 0.78rem;
+        }}
+
+        /* ---- GAUGE STRIP ---- */
+        .gauge-strip {{
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }}
+        .gauge-tier {{
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.6rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            color: rgba(255,255,255,0.7);
+            opacity: 0.2;
+            white-space: nowrap;
+            border: 1.5px solid transparent;
+        }}
+        .gauge-active {{
+            opacity: 1;
+            color: #fff;
+            font-weight: 700;
+            border-style: solid;
+            box-shadow: 0 0 6px rgba(255,255,255,0.1);
+        }}
+
+        /* ---- REGIME BADGE ---- */
+        .regime-badge {{
+            font-size: 0.6rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--dusk);
+            background: rgba(255, 103, 35, 0.15);
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-weight: 600;
+            white-space: nowrap;
         }}
 
         /* ---- BADGES ---- */
@@ -832,7 +885,7 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
             border-radius: 4px;
         }}
 
-        /* ---- ALERTS ---- */
+        /* ---- ALERTS (status boxes) ---- */
         .alert-box {{
             padding: 0.6rem 0.8rem;
             border-radius: 6px;
@@ -852,32 +905,6 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
         .quality-flags {{
             font-size: 0.75rem;
             color: var(--muted);
-        }}
-        .alert-item {{
-            padding: 0.4rem 0;
-            font-size: 0.82rem;
-            border-bottom: 1px solid rgba(30, 51, 80, 0.3);
-        }}
-        .alert-item:last-child {{ border-bottom: none; }}
-        .alert-idx {{
-            font-family: 'Source Code Pro', monospace;
-            font-weight: 700;
-            color: var(--text);
-        }}
-        .alert-from {{
-            color: var(--muted);
-        }}
-        .alert-to {{
-            font-weight: 700;
-        }}
-        .alert-val {{
-            font-family: 'Source Code Pro', monospace;
-            color: var(--muted);
-            font-size: 0.78rem;
-        }}
-        .alert-status {{
-            font-weight: 600;
-            font-size: 0.78rem;
         }}
 
         /* ---- CHARTS ---- */
@@ -1015,7 +1042,6 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
         </div>
     </div>
 
-    {alerts_html}
     {automation_html}
     {charts_html}
     {engine1_html}

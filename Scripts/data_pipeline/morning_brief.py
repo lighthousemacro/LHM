@@ -411,6 +411,28 @@ def _staleness_badge(date_str: str) -> str:
     return ""
 
 
+def _gauge_colors(n: int) -> list:
+    """Return a fixed color gradient for n tiers: bad (left) to good (right)."""
+    # Venus -> Dusk -> Gray -> Sea -> Sky
+    palette = ["#FF2389", "#FF6723", "#8b949e", "#00BB99", "#33CCFF"]
+    if n <= 1:
+        return palette[2:3]
+    if n == 2:
+        return [palette[0], palette[4]]
+    if n == 3:
+        return [palette[0], palette[2], palette[4]]
+    if n == 4:
+        return [palette[0], palette[1], palette[3], palette[4]]
+    if n == 5:
+        return palette
+    # 6+ tiers (e.g. LIQ_STAGE): interpolate by stretching palette
+    colors = []
+    for i in range(n):
+        idx = i * (len(palette) - 1) / (n - 1)
+        colors.append(palette[round(idx)])
+    return colors
+
+
 def _regime_gauge(index_id: str, current_status: str) -> str:
     """Render an inline HTML gauge strip showing all regime tiers with the active one highlighted."""
     tiers = STATUS_THRESHOLDS.get(index_id, [])
@@ -418,9 +440,10 @@ def _regime_gauge(index_id: str, current_status: str) -> str:
         return ""
     # Tiers are stored high-to-low; reverse for display (best/lowest-risk on left)
     display_tiers = list(reversed(tiers))
+    colors = _gauge_colors(len(display_tiers))
     segments = []
-    for _, label in display_tiers:
-        color = _status_color(label)
+    for i, (_, label) in enumerate(display_tiers):
+        color = colors[i]
         is_active = (label.upper() == (current_status or "").upper())
         if is_active:
             segments.append(

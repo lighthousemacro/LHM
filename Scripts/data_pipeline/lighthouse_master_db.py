@@ -688,12 +688,12 @@ FRED_CURATED = {
     "NETEXC": "Real Net Exports Goods and Services",
 
     # Import/Export Price Components
-    "IRFPPF": "Import Price Index All Commodities Ex Petroleum",
-    "IRFPCF": "Import Price Index Consumer Goods",
-    "IRFPKF": "Import Price Index Capital Goods",
-    "IRFPIF": "Import Price Index Industrial Supplies",
-    "EAFPAG": "Export Price Index Agricultural Commodities",
-    "EAFPNA": "Export Price Index Nonagricultural Commodities",
+    "IREXPET": "Import Price Index All Commodities Excluding Petroleum",
+    "IR4": "Import Price Index Consumer Goods Excluding Automotives",
+    "IR2": "Import Price Index Capital Goods Except Automotive",
+    "IR1": "Import Price Index Industrial Supplies and Materials",
+    "IQAG": "Export Price Index Agricultural Commodities",
+    "IQEXAG": "Export Price Index Nonagricultural Commodities",
 
     # Dollar Indices (Fed Trade-Weighted)
     "DTWEXAFEGS": "Dollar Index Advanced Foreign Economies",

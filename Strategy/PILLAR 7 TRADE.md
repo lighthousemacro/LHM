@@ -91,13 +91,13 @@ Import and export prices are the **leading edge of inflation transmission**. Imp
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
 | **Import Price Index (All)** | IR | Monthly | **Leads CPI goods 3-6 mo** | Total import prices |
-| **Import Prices ex-Petroleum** | IRFPPF | Monthly | Leads core goods 3-4 mo | Core import prices (strips oil noise) |
-| **Import Prices: Industrial Supplies** | IRFPIF | Monthly | Leads PPI 2-3 mo | Commodity input costs |
-| **Import Prices: Consumer Goods** | IRFPCF | Monthly | **Leads retail prices 2-4 mo** | Final goods prices |
-| **Import Prices: Capital Goods** | IRFPKF | Monthly | Coincident | Equipment/machinery costs |
+| **Import Prices ex-Petroleum** | IREXPET | Monthly | Leads core goods 3-4 mo | Core import prices (strips oil noise) |
+| **Import Prices: Industrial Supplies** | IR1 | Monthly | Leads PPI 2-3 mo | Commodity input costs |
+| **Import Prices: Consumer Goods** | IR4 | Monthly | **Leads retail prices 2-4 mo** | Final goods prices |
+| **Import Prices: Capital Goods** | IR2 | Monthly | Coincident | Equipment/machinery costs |
 | **Export Price Index** | IQ | Monthly | Coincident | U.S. competitiveness proxy |
-| **Export Prices: Agricultural** | EAFPAG | Monthly | Coincident | Farm export prices (weather, demand) |
-| **Export Prices: Nonagricultural** | EAFPNA | Monthly | Coincident | Manufactured export prices |
+| **Export Prices: Agricultural** | IQAG | Monthly | Coincident | Farm export prices (weather, demand) |
+| **Export Prices: Nonagricultural** | IQEXAG | Monthly | Coincident | Manufactured export prices |
 | **Imports from China** | IMPCH | Monthly | Coincident | China-specific import prices/volumes |
 | **Exports to China** | EXPCH | Monthly | Coincident | China-specific export demand |
 

@@ -654,9 +654,9 @@ def chart_06():
     print('\nChart 6: Import Price Components...')
 
     imp_all = fetch_fred_yoy('IR', trim='2000-01-01')
-    imp_xpet = fetch_fred_yoy('IRFPPF', trim='2000-01-01')
-    imp_cons = fetch_fred_yoy('IRFPCF', trim='2000-01-01')
-    imp_ind = fetch_fred_yoy('IRFPIF', trim='2000-01-01')
+    imp_xpet = fetch_fred_yoy('IREXPET', trim='2000-01-01')
+    imp_cons = fetch_fred_yoy('IR4', trim='2000-01-01')
+    imp_ind = fetch_fred_yoy('IR1', trim='2000-01-01')
 
     fig, ax = new_fig()
 

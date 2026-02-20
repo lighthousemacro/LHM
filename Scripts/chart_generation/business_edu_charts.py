@@ -524,7 +524,7 @@ def chart_02():
     ax_top.plot(mfg.index, mfg, color=c1, linewidth=2.5,
                 label=f'ISM Manufacturing PMI ({mfg.iloc[-1]:.1f})')
     ax_top.plot(svc.index, svc, color=c2, linewidth=2.5,
-                label=f'ISM Services PMI (approx.) ({svc.iloc[-1]:.1f})')
+                label=f'ISM Services Composite (approx.) ({svc.iloc[-1]:.1f})')
     ax_top.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
 
     style_ax(ax_top, right_primary=True)

@@ -1113,7 +1113,7 @@ def main():
     parser.add_argument("--no-news", action="store_true", help="Skip FRED calendar + RSS")
     args = parser.parse_args()
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=30)
 
     # Build the brief
     brief = build_brief(

@@ -497,9 +497,14 @@ def chart_02():
     print('\nChart 2: ISM Manufacturing vs Services PMI...')
 
     # TV_USBCOI = ISM Manufacturing PMI composite
-    # TV_USNMBA = ISM Services Business Activity (closest available proxy for Services PMI)
+    # Approximate ISM Services PMI (NMI) from 4 of 5 subcomponents (missing Supplier Deliveries)
     mfg = fetch_db_level('TV_USBCOI')
-    svc = fetch_db_level('TV_USNMBA')
+    svc_ba = fetch_db_level('TV_USNMBA')   # Business Activity
+    svc_no = fetch_db_level('TV_USNMNO')   # New Orders
+    svc_emp = fetch_db_level('TV_USNMEMP') # Employment
+    svc_pr = fetch_db_level('TV_USNMPR')   # Prices
+    svc_df = pd.DataFrame({'ba': svc_ba, 'no': svc_no, 'emp': svc_emp, 'pr': svc_pr}).dropna()
+    svc = svc_df.mean(axis=1)  # Equal-weight average of 4 subcomponents
     # Start from youngest series
     common_start = max(mfg.index[0], svc.index[0])
     mfg = mfg[mfg.index >= common_start]
@@ -519,7 +524,7 @@ def chart_02():
     ax_top.plot(mfg.index, mfg, color=c1, linewidth=2.5,
                 label=f'ISM Manufacturing PMI ({mfg.iloc[-1]:.1f})')
     ax_top.plot(svc.index, svc, color=c2, linewidth=2.5,
-                label=f'ISM Services Activity ({svc.iloc[-1]:.1f})')
+                label=f'ISM Services PMI (approx.) ({svc.iloc[-1]:.1f})')
     ax_top.axhline(50, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
 
     style_ax(ax_top, right_primary=True)
@@ -549,7 +554,7 @@ def chart_02():
     ax_bot.fill_between(spread.index, 0, spread, where=(spread < 0),
                         color=COLORS['venus'], alpha=0.20)
     ax_bot.plot(spread.index, spread, color=c_spread, linewidth=1.8,
-                label=f'Spread: Svc Activity \u2212 Mfg PMI ({spread.iloc[-1]:+.1f})')
+                label=f'Spread: Svc PMI \u2212 Mfg PMI ({spread.iloc[-1]:+.1f})')
     ax_bot.axhline(0, color=COLORS['doldrums'], linewidth=1.0, linestyle='--', alpha=0.7)
 
     style_ax(ax_bot, right_primary=True)
@@ -562,9 +567,10 @@ def chart_02():
     add_recessions(ax_bot)
     ax_bot.legend(loc='upper right', **legend_style())
 
-    brand_fig(fig, 'ISM Manufacturing PMI vs Services Activity',
+    brand_fig(fig, 'ISM Manufacturing PMI vs Services PMI',
               subtitle='The Late-Cycle Bifurcation: manufacturing leads, services follows',
-              source='ISM via TradingView', data_date=mfg.index[-1])
+              source='ISM via TradingView (Services PMI approx. from 4 of 5 subcomponents)',
+              data_date=mfg.index[-1])
 
     return save_fig(fig, 'chart_02_ism_bifurcation.png')
 

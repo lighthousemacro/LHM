@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bob Sheehan, CFA, CMT - Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #333;
+            background: white;
+        }
+
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            padding: 0.5in 0.6in;
+            background: white;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 12px;
+            border-bottom: 2px solid #4A90A4;
+            padding-bottom: 10px;
+        }
+
+        .name {
+            font-size: 18pt;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .name span {
+            font-weight: 400;
+            font-size: 11pt;
+            color: #555;
+        }
+
+        .contact {
+            font-size: 9pt;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        .contact a {
+            color: #4A90A4;
+            text-decoration: none;
+        }
+
+        /* Section Headers */
+        h2 {
+            font-size: 11pt;
+            font-weight: 700;
+            color: #4A90A4;
+            margin: 14px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Profile */
+        .profile {
+            font-size: 9.5pt;
+            margin-bottom: 5px;
+        }
+
+        .profile ul {
+            margin-left: 18px;
+            margin-top: 5px;
+        }
+
+        .profile li {
+            margin-bottom: 3px;
+        }
+
+        /* Skills */
+        .skills {
+            font-size: 9pt;
+            line-height: 1.5;
+        }
+
+        /* Experience */
+        .job {
+            margin-bottom: 12px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        .job-dates {
+            font-size: 9pt;
+            color: #555;
+        }
+
+        .job-company {
+            font-size: 9.5pt;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        .job ul {
+            margin-left: 18px;
+            font-size: 9.5pt;
+        }
+
+        .job li {
+            margin-bottom: 3px;
+        }
+
+        /* Education */
+        .edu-item {
+            margin-bottom: 8px;
+        }
+
+        .edu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .edu-school {
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        .edu-dates {
+            font-size: 9pt;
+            color: #555;
+        }
+
+        .edu-detail {
+            font-size: 9.5pt;
+            color: #555;
+        }
+
+        /* Infrastructure Section */
+        .infra-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 9pt;
+            margin-top: 5px;
+        }
+
+        .infra-item {
+            background: #f5f5f5;
+            padding: 6px 8px;
+            border-left: 2px solid #4A90A4;
+        }
+
+        .infra-item strong {
+            color: #4A90A4;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                padding: 0.4in 0.5in;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="name">Bob Sheehan, CFA, CMT <span>| Macro Strategist | Investment Analyst | Data Scientist</span></div>
+            <div class="contact">
+                240-672-7418 | bob@lighthousemacro.com | <a href="https://linkedin.com/in/bob-sheehan-cfa-cmt">linkedin.com/in/bob-sheehan-cfa-cmt</a> | <a href="https://lighthousemacro.com">LighthouseMacro.com</a> | <a href="https://x.com/lhmacro">@LHMacro</a>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <h2>Profile</h2>
+        <div class="profile">
+            Macro Strategist & Investment Analyst with track record managing multi-asset portfolios ($4.5B AUM, 2.35 Sortino, 103% upside capture, 93% downside). Built institutional-grade research infrastructure combining systematic macro analysis with quantitative frameworks. Known for:
+            <ul>
+                <li>Building proprietary macro indicators and risk models that translate economic data into actionable investment signals</li>
+                <li>Developing systematic frameworks for position sizing, regime detection, and recession probability estimation</li>
+                <li>Delivering research to institutional clients including hedge funds, asset managers, and family offices</li>
+                <li>Chartered Financial Analyst (CFA) & Chartered Market Technician (CMT)</li>
+            </ul>
+        </div>
+
+        <!-- Skills -->
+        <h2>Core Competencies & Technical Skills</h2>
+        <div class="skills">
+            <strong>Investment:</strong> Global Macro, Portfolio Management, Asset Allocation, Risk Management, Technical Analysis, Equity Research, Cross-Asset Trading<br>
+            <strong>Quantitative:</strong> Python, SQL, Statistical Analysis, Machine Learning, Time Series Forecasting, Factor Models, Regime Detection<br>
+            <strong>Platforms:</strong> Bloomberg, FactSet, TradingView, Refinitiv, CoinGlass, DefiLlama, Token Terminal
+        </div>
+
+        <!-- Experience -->
+        <h2>Professional Experience</h2>
+
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">Founder & Chief Investment Officer</span>
+                <span class="job-dates">Apr 2024 – Present</span>
+            </div>
+            <div class="job-company">Lighthouse Macro | New York, NY (Remote)</div>
+            <ul>
+                <li>Built institutional macro research platform serving hedge funds, family offices, and allocators with systematic, data-driven analysis</li>
+                <li>Developed 12-pillar diagnostic framework (The Diagnostic Dozen) covering labor, prices, growth, housing, consumer, business, trade, fiscal, credit, liquidity, market structure, and sentiment</li>
+                <li>Created 41 proprietary composite indicators including Macro Risk Index (MRI), Labor Fragility Index (LFI), Liquidity Cushion Index (LCI), and Credit-Labor Gap (CLG)</li>
+                <li>Built recession probability model and early warning system synthesizing leading indicators across macro, credit, and liquidity domains</li>
+                <li>Engineered analytical database with 1.78M observations across 1,094 series from 5+ institutional data sources</li>
+                <li>Designed conviction-weighted position sizing framework with regime-based allocation (3-10 concentrated positions, 7-20% sizing)</li>
+                <li>Extended framework to crypto with 24-point scoring system for protocol fundamentals, technicals, and microstructure</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">Vice President, Market Strategy & Research</span>
+                <span class="job-dates">Apr 2025 – Sep 2025</span>
+            </div>
+            <div class="job-company">EquiLend | New York, NY</div>
+            <ul>
+                <li>Led market strategy and research for Data & Analytics team at leading securities finance technology provider</li>
+                <li>Produced market analysis on securities lending dynamics, including lockup expiration impact studies (CRWV, CRCL)</li>
+                <li>Identified critical warning signals in borrowing metrics ahead of volatility events (CRWV peak: 44,324 bps)</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">Senior Domain Expert | Economics & Finance</span>
+                <span class="job-dates">Nov 2025 – Present</span>
+            </div>
+            <div class="job-company">Mercor Intelligence | New York, NY (Contract)</div>
+            <ul>
+                <li>Providing domain expertise in economics, finance, investments, and portfolio management to improve AI models for leading AI research lab</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">Senior Research Analyst</span>
+                <span class="job-dates">Jul 2024 – Feb 2025</span>
+            </div>
+            <div class="job-company">Strom Capital Management LLC | New York, NY</div>
+            <ul>
+                <li>Conducted macro research and technical analysis in direct collaboration with Founder & CIO for discretionary global macro fund</li>
+                <li>Developed data science solutions to identify trading opportunities; authored investor communications</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">Institutional Research Sales</span>
+                <span class="job-dates">Nov 2021 – Jul 2022</span>
+            </div>
+            <div class="job-company">Trahan Macro Research | New York, NY</div>
+            <ul>
+                <li>Delivered macro and quantitative research to leading hedge funds, pension funds, and asset managers</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">AVP, Associate Portfolio Manager</span>
+                <span class="job-dates">Jul 2015 – Jun 2021</span>
+            </div>
+            <div class="job-company">Bank of America Private Bank | New York, NY</div>
+            <ul>
+                <li>Dual mandate: global multi-asset portfolios ($4.5B AUM) and proprietary Large Cap Equity Strategy ($800M AUM)</li>
+                <li>Achieved 2.35 Sortino ratio, 103% upside capture, 93% downside capture through systematic macro and technical approach</li>
+                <li>Led team's macro research and technical analysis efforts informing portfolio strategy and trading decisions</li>
+                <li>Presented investment commentary and portfolio updates to technical and non-technical stakeholders</li>
+            </ul>
+        </div>
+
+        <!-- Education -->
+        <h2>Education</h2>
+        <div class="edu-item">
+            <div class="edu-header">
+                <span class="edu-school">BrainStation | Diploma, Data Science</span>
+                <span class="edu-dates">Apr 2024 – Jul 2024</span>
+            </div>
+        </div>
+        <div class="edu-item">
+            <div class="edu-header">
+                <span class="edu-school">Providence College | B.S. Finance, Minor in Economics</span>
+                <span class="edu-dates">Sep 2011 – May 2015</span>
+            </div>
+            <div class="edu-detail">Division 1 Men's Lacrosse, 4x Big East All-Academic, Chi Alpha Sigma National Honor Society</div>
+        </div>
+    </div>
+</body>
+</html>

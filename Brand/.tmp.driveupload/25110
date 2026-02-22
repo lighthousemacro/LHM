@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse Macro - Philosophy & Approach</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --ocean: #0089D1;
+            --dusk: #FF6723;
+            --sea: #00BB99;
+            --dark: #333333;
+            --light: #F5F5F5;
+            --navy: #0A1628;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.5;
+            background: white;
+        }
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            padding: 0.5in;
+            background: white;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.15in;
+        }
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background: var(--ocean);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            margin-right: 12px;
+        }
+        .header-text {
+            flex: 1;
+        }
+        .header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--ocean);
+            letter-spacing: 1px;
+        }
+        .header-sub {
+            font-size: 9px;
+            color: #999;
+            letter-spacing: 0.5px;
+        }
+        .accent-bar {
+            height: 3px;
+            background: linear-gradient(90deg, var(--ocean) 70%, var(--dusk) 70%);
+            margin-bottom: 0.25in;
+        }
+
+        /* Title */
+        .doc-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--ocean);
+            margin-bottom: 4px;
+        }
+        .doc-subtitle {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 0.25in;
+            font-style: italic;
+        }
+
+        /* Sections */
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--ocean);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            margin-top: 18px;
+            padding-bottom: 3px;
+            border-bottom: 1.5px solid var(--light);
+        }
+        p {
+            font-size: 10px;
+            line-height: 1.55;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        .emphasis {
+            font-weight: 600;
+            color: var(--ocean);
+        }
+
+        /* Philosophy Grid */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        .phil-card {
+            background: var(--light);
+            border-left: 3px solid var(--ocean);
+            padding: 10px 12px;
+            border-radius: 0 4px 4px 0;
+        }
+        .phil-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+        .phil-card p {
+            font-size: 9px;
+            margin-bottom: 0;
+            color: #555;
+        }
+
+        /* Differentiation Table */
+        .diff-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9px;
+        }
+        .diff-table th {
+            background: var(--ocean);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 9px;
+            padding: 6px 8px;
+            text-align: left;
+        }
+        .diff-table td {
+            padding: 5px 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .diff-table tr:nth-child(even) {
+            background: var(--light);
+        }
+
+        /* Three Engines */
+        .engines {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .engine {
+            background: var(--navy);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .engine h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .engine .pills {
+            font-size: 8px;
+            color: var(--ocean);
+            font-weight: 600;
+        }
+        .engine p {
+            font-size: 8px;
+            color: var(--sea);
+            margin-bottom: 0;
+            margin-top: 4px;
+        }
+
+        /* Convergence Arrow */
+        .convergence {
+            text-align: center;
+            margin: 8px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ocean);
+        }
+
+        /* Invalidation */
+        .invalidation-box {
+            background: var(--light);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin: 10px 0;
+        }
+        .invalidation-box h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .invalidation-box p {
+            font-size: 9px;
+            color: #555;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 0.2in;
+            padding-top: 8px;
+            border-top: 1px solid #ddd;
+            font-size: 8px;
+            color: #999;
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--ocean);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-placeholder">LM</div>
+        <div class="header-text">
+            <div class="header-title">LIGHTHOUSE MACRO</div>
+            <div class="header-sub">Institutional Macro Research & Advisory</div>
+        </div>
+    </div>
+    <div class="accent-bar"></div>
+
+    <!-- Title -->
+    <div class="doc-title">Philosophy & Approach</div>
+    <div class="doc-subtitle">How We Think, What We Build, Why It Works</div>
+
+    <!-- Origin -->
+    <h2>Origin</h2>
+    <p>"Lighthouse" was the name of the house Bob lived in during college, where he first began studying finance and economics. What started as a nickname stuck, and over the years it evolved into the identity of the firm: a signal through the noise, a fixed point of reference in volatile markets. That's how Lighthouse Macro was born, and where "Macro, Illuminated" comes from.</p>
+    <p>Bob's neurodivergent wiring is core to the firm's edge. Where most analysts specialize in one domain and stay there, his ADHD-driven intellectual restlessness pushes him across the full macro landscape: Fed plumbing, labor economics, credit markets, Treasury microstructure, crypto integration, technical analysis, and quantitative modeling. The result isn't breadth without depth. It's institutional-grade expertise across multiple domains, and the ability to see connections specialists miss by staying in silos. The 12-pillar framework exists because Bob's mind naturally operates across all 12 simultaneously.</p>
+
+    <!-- Core Philosophy -->
+    <h2>Investment Philosophy</h2>
+    <p>We hold <span class="emphasis">strong opinions, weakly held</span>. Every position carries maximum conviction at entry, backed by a systematic framework and clear data. But conviction without discipline is just stubbornness. Every thesis comes with explicit invalidation criteria: the specific data points that would prove us wrong.</p>
+    <p>When invalidation triggers fire, we act. No anchoring. No narrative defense. The framework drives positioning, but the framework can be wrong. Data determines outcome.</p>
+
+    <div class="philosophy-grid">
+        <div class="phil-card">
+            <h3>Conviction-Weighted</h3>
+            <p>3-10 high-conviction positions sized by framework score. We concentrate where the edge is clearest rather than diversifying the signal away across 30+ marginal positions.</p>
+        </div>
+        <div class="phil-card">
+            <h3>Clear Invalidations</h3>
+            <p>Every thesis has an exit door. Bull case, bear case, specific thresholds. If the data says we're wrong, we rotate. No ego in the portfolio.</p>
+        </div>
+        <div class="phil-card">
+            <h3>Flows Over Stocks</h3>
+            <p>We track what's happening at the margin, not the cumulative result. Labor flows, Fed plumbing dynamics, credit conditions. The leading signals, not the lagging headlines.</p>
+        </div>
+        <div class="phil-card">
+            <h3>Cash as a Position</h3>
+            <p>30-100% cash is a valid allocation. When the framework signals elevated risk and structure breaks down, the best trade is no trade. Cash is not a residual, it is an active choice.</p>
+        </div>
+    </div>
+
+    <!-- Framework -->
+    <h2>The Diagnostic Dozen</h2>
+    <p>Twelve macro pillars organized into three engines. Each pillar generates a proprietary composite index. Together they feed the <span class="emphasis">Macro Risk Index (MRI)</span>, our master regime indicator that synthesizes the full macro landscape into a single actionable signal.</p>
+
+    <div class="engines">
+        <div class="engine">
+            <h3>Macro Dynamics</h3>
+            <div class="pills">Pillars 1-7</div>
+            <p>Labor, Prices, Growth, Housing, Consumer, Business, Trade</p>
+        </div>
+        <div class="engine">
+            <h3>Monetary Mechanics</h3>
+            <div class="pills">Pillars 8-10</div>
+            <p>Government, Financial Conditions, Fed Plumbing</p>
+        </div>
+        <div class="engine">
+            <h3>Market Structure</h3>
+            <div class="pills">Pillars 11-12</div>
+            <p>Breadth, Momentum, Sentiment, Positioning</p>
+        </div>
+    </div>
+    <div class="convergence">&#x2193; All 12 pillars converge into the Macro Risk Index (MRI) &#x2193;</div>
+    <p>When all three engines confirm, conviction is maximum. When they diverge, exposure is reduced. The convergence requirement prevents single-factor mistakes.</p>
+
+    <!-- Differentiation -->
+    <h2>What Makes Us Different</h2>
+    <table class="diff-table">
+        <tr>
+            <th>Attribute</th>
+            <th>Lighthouse Macro</th>
+            <th>Consensus Approach</th>
+        </tr>
+        <tr>
+            <td>Signal source</td>
+            <td>12 proprietary composites</td>
+            <td>Headlines, lagging data</td>
+        </tr>
+        <tr>
+            <td>Framework</td>
+            <td>Three-engine convergence</td>
+            <td>Single-dimensional analysis</td>
+        </tr>
+        <tr>
+            <td>Concentration</td>
+            <td>3-10 high-conviction positions</td>
+            <td>30+ marginal positions</td>
+        </tr>
+        <tr>
+            <td>Risk management</td>
+            <td>Dual stops (thesis + price)</td>
+            <td>Single trailing stop</td>
+        </tr>
+        <tr>
+            <td>Cash treatment</td>
+            <td>Active position (30-100% valid)</td>
+            <td>Residual drag</td>
+        </tr>
+        <tr>
+            <td>Invalidation</td>
+            <td>Explicit, pre-defined triggers</td>
+            <td>Narrative-driven discretion</td>
+        </tr>
+        <tr>
+            <td>Reproducibility</td>
+            <td>Code-driven, systematic</td>
+            <td>Subjective, ad hoc</td>
+        </tr>
+    </table>
+
+    <!-- Invalidation -->
+    <h2>The Invalidation Discipline</h2>
+    <div class="invalidation-box">
+        <h3>How It Works</h3>
+        <p>Every piece of analysis we publish includes explicit invalidation criteria. Bull case triggers define what would end a bearish thesis. Bear case triggers define what would end a bullish one. We specify the indicators, the thresholds, and the timeframes. When the data fires, we act. This is not a discretionary overlay. It is the core of the process. We are not in the business of being right. We are in the business of understanding probabilities, positioning accordingly, and adjusting when the data tells us to.</p>
+    </div>
+
+    <!-- What We Deliver -->
+    <h2>What We Deliver</h2>
+    <p><span class="emphasis">Published Research:</span> Currently publishing the 12-part Diagnostic Dozen educational series (free on Substack), plus regular long-form macro analysis, single-chart insights, periodic chartbooks (50-75 charts), and forward outlooks. All research is built on the proprietary framework, not recycled consensus.</p>
+    <p><span class="emphasis">Advisory &amp; Institutional:</span> Direct strategist access, bespoke research, model portfolio guidance, investment committee participation, and fractional CIO engagements. Tailored to the client's needs, from research-only subscriptions to embedded strategic partnerships.</p>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div>Bob Sheehan, CFA, CMT | Founder & CIO | bob@lighthousemacro.com | lighthousemacro.com</div>
+        <div class="footer-tagline">MACRO, ILLUMINATED.</div>
+    </div>
+
+</div>
+</body>
+</html>

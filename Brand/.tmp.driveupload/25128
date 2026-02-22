@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse Macro | Market Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ocean: #0089D1;
+            --dusk: #FF6723;
+            --sky: #00D4FF;
+            --venus: #FF2389;
+            --sea: #00BB99;
+            --doldrums: #D3D6D9;
+            --starboard: #00FF00;
+            --port: #FF0000;
+            --dark-bg: #0A1929;
+            --card-bg: #132F4C;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0A1929 0%, #1A2332 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            background: linear-gradient(90deg, var(--ocean) 0%, #006BA1 100%);
+            padding: 2rem 3rem;
+            box-shadow: 0 4px 20px rgba(0, 137, 209, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, var(--dusk) 100%);
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.25rem;
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+        }
+
+        .regime-banner {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #1A3A52 100%);
+            border: 2px solid var(--ocean);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 137, 209, 0.2);
+        }
+
+        .regime-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--sky);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .regime-title::before {
+            content: '⚡';
+            font-size: 2rem;
+        }
+
+        .regime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .regime-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--ocean);
+            padding: 1.25rem;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .regime-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 137, 209, 0.3);
+        }
+
+        .regime-card.warning {
+            border-left-color: var(--dusk);
+            background: rgba(255, 103, 35, 0.08);
+        }
+
+        .regime-card.critical {
+            border-left-color: var(--venus);
+            background: rgba(255, 35, 137, 0.08);
+        }
+
+        .regime-label {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .regime-value {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .regime-status {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .charts-section {
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--ocean);
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border: 2px solid var(--ocean);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--sky);
+        }
+
+        .chart-caption {
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, rgba(0, 137, 209, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border-left: 4px solid var(--sky);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .insight-box strong {
+            color: var(--sky);
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 2px solid var(--ocean);
+            text-align: center;
+        }
+
+        .contact-block {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .contact-block strong {
+            color: var(--sky);
+        }
+
+        .watermark-top {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            opacity: 0.3;
+            z-index: 1000;
+        }
+
+        .watermark-bottom {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            opacity: 0.3;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 1.5rem 1.5rem;
+            }
+            
+            .container {
+                padding: 1.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark-top">LIGHTHOUSE MACRO</div>
+    <div class="watermark-bottom">MACRO, ILLUMINATED.</div>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-text">LIGHTHOUSE MACRO</div>
+            <div class="tagline">MACRO, ILLUMINATED.</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Current Regime Status -->
+        <div class="regime-banner">
+            <div class="regime-title">Current Regime Snapshot</div>
+            <div class="regime-grid">
+                <div class="regime-card critical">
+                    <div class="regime-label">Master Risk Index</div>
+                    <div class="regime-value">+1.1</div>
+                    <div class="regime-status">HIGH RISK</div>
+                </div>
+                <div class="regime-card warning">
+                    <div class="regime-label">Liquidity Fragility</div>
+                    <div class="regime-value">+0.93</div>
+                    <div class="regime-status">ELEVATED</div>
+                </div>
+                <div class="regime-card warning">
+                    <div class="regime-label">Liquidity Conditions</div>
+                    <div class="regime-value">-0.8</div>
+                    <div class="regime-status">SCARCE</div>
+                </div>
+                <div class="regime-card warning">
+                    <div class="regime-label">Government Credit</div>
+                    <div class="regime-value">+1.1</div>
+                    <div class="regime-status">FISCAL DOMINANCE</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <strong>Framework Note:</strong> The Master Risk Index integrates 10 economic pillars with weighted contributions: Labor (-15%), Private Credit (+10%), General Credit (-15%), Housing (-8%), Consumer (-10%), Business (-10%), Trade (-7%), Government (+10%), Financial (-5%), and Liquidity (-10%). Current readings show multiple threshold breaches indicating heightened systemic fragility.
+        </div>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <h2 class="section-title">Market Intelligence Dashboard</h2>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Master Risk Index Evolution</div>
+                    <canvas id="mriChart"></canvas>
+                    <div class="chart-caption">Figure 1: 24-month MRI trajectory showing escalation into HIGH RISK territory</div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Liquidity Conditions vs S&P 500</div>
+                    <canvas id="liquidityChart"></canvas>
+                    <div class="chart-caption">Figure 2: LCI compression correlates with market stress episodes</div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Pillar Decomposition</div>
+                    <canvas id="pillarChart"></canvas>
+                    <div class="chart-caption">Figure 3: Current contribution by pillar to aggregate risk index</div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Threshold Monitor</div>
+                    <canvas id="thresholdChart"></canvas>
+                    <div class="chart-caption">Figure 4: Key economic indicators vs critical thresholds</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="insight-box">
+            <strong>Trading Implication:</strong> With LFI at +0.93 (above +0.5 fragility threshold) and LCI at -0.8 (scarce liquidity), the framework signals defensive positioning. Quits at 1.9% breaches the 2.0% pre-recessionary level, while RRP at $150B sits below the $200B buffer threshold. HY OAS at 290 suggests credit markets are mispricing tail risks.
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="contact-block">
+                <strong>Bob Sheehan, CFA, CMT</strong> | Founder & Chief Investment Officer<br>
+                Lighthouse Macro | LighthouseMacro.com | @LHMacro
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Chart.js default configuration
+        Chart.defaults.color = '#FFFFFF';
+        Chart.defaults.borderColor = 'rgba(211, 214, 217, 0.2)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // MRI Evolution Chart
+        const mriCtx = document.getElementById('mriChart').getContext('2d');
+        const mriData = {
+            labels: ['Jan 23', 'Apr 23', 'Jul 23', 'Oct 23', 'Jan 24', 'Apr 24', 'Jul 24', 'Oct 24', 'Jan 25'],
+            datasets: [{
+                label: 'Master Risk Index',
+                data: [-0.4, -0.2, 0.1, 0.3, 0.5, 0.7, 0.85, 1.0, 1.1],
+                borderColor: '#0089D1',
+                backgroundColor: 'rgba(0, 137, 209, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }, {
+                label: 'High Risk Threshold',
+                data: Array(9).fill(1.0),
+                borderColor: '#FF2389',
+                borderWidth: 2,
+                borderDash: [10, 5],
+                pointRadius: 0
+            }]
+        };
+
+        new Chart(mriCtx, {
+            type: 'line',
+            data: mriData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: true, position: 'top' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: { color: 'rgba(211, 214, 217, 0.1)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Liquidity Conditions Chart
+        const liqCtx = document.getElementById('liquidityChart').getContext('2d');
+        const liqData = {
+            labels: ['Jan 23', 'Apr 23', 'Jul 23', 'Oct 23', 'Jan 24', 'Apr 24', 'Jul 24', 'Oct 24', 'Jan 25'],
+            datasets: [{
+                label: 'LCI (Left Axis)',
+                data: [0.5, 0.3, 0.0, -0.2, -0.4, -0.5, -0.6, -0.7, -0.8],
+                borderColor: '#00D4FF',
+                backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                borderWidth: 3,
+                yAxisID: 'y',
+                tension: 0.4
+            }, {
+                label: 'S&P 500 (Right Axis)',
+                data: [4000, 4200, 4450, 4380, 4700, 5000, 5350, 5500, 5700],
+                borderColor: '#00BB99',
+                borderWidth: 2,
+                yAxisID: 'y1',
+                tension: 0.4
+            }]
+        };
+
+        new Chart(liqCtx, {
+            type: 'line',
+            data: liqData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: true, position: 'top' }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                        grid: { color: 'rgba(211, 214, 217, 0.1)' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'right',
+                        grid: { display: false }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Pillar Decomposition Chart
+        const pillarCtx = document.getElementById('pillarChart').getContext('2d');
+        const pillarData = {
+            labels: ['Labor', 'Pvt Credit', 'Gen Credit', 'Housing', 'Consumer', 'Business', 'Trade', 'Gov', 'Financial', 'Liquidity'],
+            datasets: [{
+                label: 'Contribution to MRI',
+                data: [0.23, -0.05, 0.18, 0.11, 0.14, 0.13, 0.09, -0.11, 0.07, 0.12],
+                backgroundColor: [
+                    '#FF2389', '#00BB99', '#FF6723', '#FF6723', '#FF6723', 
+                    '#FF6723', '#00D4FF', '#0089D1', '#00D4FF', '#FF6723'
+                ],
+                borderColor: '#0089D1',
+                borderWidth: 2
+            }]
+        };
+
+        new Chart(pillarCtx, {
+            type: 'bar',
+            data: pillarData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(211, 214, 217, 0.1)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Threshold Monitor Chart
+        const thresholdCtx = document.getElementById('thresholdChart').getContext('2d');
+        const thresholdData = {
+            labels: ['Quits Rate', 'LFI', 'RRP', 'HY OAS'],
+            datasets: [{
+                label: 'Current',
+                data: [1.9, 0.93, 150, 290],
+                backgroundColor: '#FF6723'
+            }, {
+                label: 'Threshold',
+                data: [2.0, 0.5, 200, 300],
+                backgroundColor: '#0089D1'
+            }]
+        };
+
+        new Chart(thresholdCtx, {
+            type: 'bar',
+            data: thresholdData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: true, position: 'top' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(211, 214, 217, 0.1)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

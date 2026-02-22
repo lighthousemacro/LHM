@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse Macro - Recession & Risk Framework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ocean: #0089D1;
+            --dusk: #FF6723;
+            --sky: #00D4FF;
+            --venus: #FF2389;
+            --sea: #00BB99;
+            --doldrums: #D3D6D9;
+            --dark: #333333;
+            --light: #F5F5F5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.4;
+            background: white;
+        }
+
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            padding: 0.4in;
+            background: white;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.15in;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+        }
+
+        .header-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 20pt;
+            color: var(--ocean);
+        }
+
+        .header-text .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 9pt;
+            color: var(--dark);
+            letter-spacing: 1px;
+        }
+
+        /* Accent Bar */
+        .accent-bar {
+            height: 4px;
+            background: linear-gradient(to right, var(--ocean) 65%, var(--dusk) 65%);
+            margin-bottom: 0.15in;
+        }
+
+        /* Title */
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16pt;
+            color: var(--dusk);
+            margin-bottom: 0.12in;
+            text-align: center;
+        }
+
+        /* Section Headers */
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11pt;
+            color: var(--ocean);
+            margin: 0.12in 0 0.08in 0;
+            padding-bottom: 3px;
+            border-bottom: 2px solid var(--ocean);
+        }
+
+        /* Philosophy Box */
+        .philosophy {
+            background: var(--dark);
+            color: white;
+            padding: 15px 18px;
+            margin-bottom: 0.15in;
+            font-size: 9.5pt;
+            line-height: 1.5;
+        }
+
+        .philosophy strong {
+            color: var(--sky);
+        }
+
+        /* Three Layer Architecture */
+        .layers-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 0.15in;
+        }
+
+        .layer-box {
+            border: 2px solid var(--ocean);
+            background: white;
+        }
+
+        .layer-box.warning {
+            border-color: var(--dusk);
+        }
+
+        .layer-box.ensemble {
+            border-color: var(--venus);
+        }
+
+        .layer-header {
+            background: var(--ocean);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .layer-box.warning .layer-header {
+            background: var(--dusk);
+        }
+
+        .layer-box.ensemble .layer-header {
+            background: var(--venus);
+        }
+
+        .layer-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        .layer-subtitle {
+            font-size: 8pt;
+            opacity: 0.9;
+        }
+
+        .layer-content {
+            padding: 12px 15px;
+            font-size: 8.5pt;
+        }
+
+        .layer-content p {
+            margin-bottom: 8px;
+        }
+
+        .layer-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Why It Works Box */
+        .why-box {
+            background: var(--light);
+            padding: 10px 12px;
+            margin-top: 8px;
+            border-left: 3px solid var(--sea);
+            font-size: 8pt;
+        }
+
+        .why-box strong {
+            color: var(--sea);
+        }
+
+        /* Connection Flow */
+        .connection-section {
+            background: var(--ocean);
+            color: white;
+            padding: 15px 18px;
+            margin-bottom: 0.12in;
+        }
+
+        .connection-section h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10pt;
+            margin-bottom: 10px;
+        }
+
+        .flow-diagram {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            gap: 8px;
+            align-items: center;
+            font-size: 8pt;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .flow-box strong {
+            display: block;
+            color: var(--sky);
+            margin-bottom: 3px;
+        }
+
+        .flow-arrow {
+            font-size: 16pt;
+            color: var(--sky);
+        }
+
+        /* Key Insight */
+        .insight-box {
+            background: var(--sea);
+            color: white;
+            padding: 12px 15px;
+            margin-bottom: 0.12in;
+            font-size: 9pt;
+        }
+
+        .insight-box strong {
+            font-size: 10pt;
+        }
+
+        /* Principles Grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 0.12in;
+        }
+
+        .principle-box {
+            background: var(--light);
+            padding: 12px;
+            border-top: 3px solid var(--ocean);
+        }
+
+        .principle-box h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9pt;
+            color: var(--ocean);
+            margin-bottom: 6px;
+        }
+
+        .principle-box p {
+            font-size: 8pt;
+        }
+
+        /* What We Don't Do */
+        .avoid-box {
+            border: 2px solid var(--doldrums);
+            padding: 12px 15px;
+            margin-bottom: 0.12in;
+        }
+
+        .avoid-box h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10pt;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .avoid-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 8pt;
+        }
+
+        .avoid-item {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .avoid-item::before {
+            content: "✗";
+            color: var(--venus);
+            font-weight: 700;
+            margin-right: 6px;
+        }
+
+        /* Output Box */
+        .output-box {
+            background: var(--light);
+            padding: 12px 15px;
+            border-left: 4px solid var(--dusk);
+            margin-bottom: 0.12in;
+        }
+
+        .output-box h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10pt;
+            color: var(--dusk);
+            margin-bottom: 8px;
+        }
+
+        .output-box p {
+            font-size: 8.5pt;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 0.1in;
+            padding-top: 8px;
+            border-top: 2px solid var(--ocean);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8pt;
+        }
+
+        .footer-left {
+            color: var(--dark);
+        }
+
+        .footer-right {
+            color: var(--ocean);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <img src="../Logo.JPG" alt="Lighthouse Macro" class="logo">
+            <div class="header-text">
+                <h1>LIGHTHOUSE MACRO</h1>
+                <div class="tagline">MACRO, ILLUMINATED.</div>
+            </div>
+        </div>
+
+        <div class="accent-bar"></div>
+
+        <div class="page-title">RECESSION & RISK FRAMEWORK</div>
+
+        <!-- Philosophy -->
+        <div class="philosophy">
+            Recessions don't announce themselves. They emerge from the interaction of labor fragility, credit conditions, and liquidity dynamics. <strong>No single indicator predicts them reliably.</strong> The yield curve inverts early, unemployment rises late, and markets often price risk only after it's too late to act. Our framework monitors the conditions that historically precede recessions, not the recession itself.
+        </div>
+
+        <!-- Three Layers -->
+        <h3>THREE-LAYER ARCHITECTURE</h3>
+        <div class="layers-grid">
+            <div class="layer-box">
+                <div class="layer-header">
+                    <div>
+                        <div class="layer-title">RECESSION PROBABILITY MODEL</div>
+                        <div class="layer-subtitle">Structural Assessment</div>
+                    </div>
+                </div>
+                <div class="layer-content">
+                    <p>Estimates the probability of recession onset within a forward-looking window based on the current state of leading indicators. This isn't a forecast of GDP. It's a probability distribution derived from historical patterns: when these conditions existed before, how often did recession follow?</p>
+                    <p>The model synthesizes labor market flows, credit conditions, yield curve dynamics, and real economy indicators into a single probability estimate. Lead times vary by indicator, and the model accounts for this by weighting inputs according to their historical reliability at different horizons.</p>
+                    <div class="why-box">
+                        <strong>Why it works:</strong> Recessions have consistent preconditions. Labor markets weaken before they break. Credit tightens before defaults spike. The probability model captures these leading relationships systematically rather than relying on any single signal.
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer-box warning">
+                <div class="layer-header">
+                    <div>
+                        <div class="layer-title">WARNING SYSTEM</div>
+                        <div class="layer-subtitle">Threshold Monitoring</div>
+                    </div>
+                </div>
+                <div class="layer-content">
+                    <p>Continuously monitors key indicators against historically significant thresholds. When an indicator crosses into territory that preceded past recessions, a warning triggers. This isn't about prediction. It's about pattern recognition.</p>
+                    <p>Warnings are additive: one warning is noise, multiple warnings demand attention. The system tracks both the number of active warnings and their clustering. When warnings across different domains (labor, credit, liquidity) fire simultaneously, the signal strengthens.</p>
+                    <div class="why-box">
+                        <strong>Why it works:</strong> Markets dismiss isolated warnings. But when labor, credit, and liquidity all flash warning simultaneously, the probability of coincidence drops dramatically. Cross-domain confirmation separates signal from noise.
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer-box ensemble">
+                <div class="layer-header">
+                    <div>
+                        <div class="layer-title">RISK ENSEMBLE (MRI)</div>
+                        <div class="layer-subtitle">Regime Classification</div>
+                    </div>
+                </div>
+                <div class="layer-content">
+                    <p>The Macro Risk Index synthesizes all twelve pillars of our diagnostic framework into a single regime indicator. It answers a different question than the recession model: not "is recession coming?" but "what is the current risk environment for asset allocation?"</p>
+                    <p>MRI operates in real-time, updating as conditions change. It classifies regimes from low risk through crisis, with each regime carrying specific implications for position sizing, sector allocation, and defensive posture. The ensemble approach ensures no single pillar dominates.</p>
+                    <div class="why-box">
+                        <strong>Why it works:</strong> Risk regimes matter more than point forecasts. Whether recession probability is 25% or 35% matters less than whether you're positioned for the current environment. MRI translates macro conditions into actionable allocation guidance.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connection Flow -->
+        <div class="connection-section">
+            <h4>HOW THE LAYERS CONNECT</h4>
+            <div class="flow-diagram">
+                <div class="flow-box">
+                    <strong>Recession Model</strong>
+                    Forward probability<br>6-12 month horizon
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">
+                    <strong>Warning System</strong>
+                    Threshold alerts<br>Cross-domain confirmation
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">
+                    <strong>MRI Ensemble</strong>
+                    Current regime<br>Allocation guidance
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Insight -->
+        <div class="insight-box">
+            <strong>Key Insight:</strong> The three layers answer different questions. The recession model asks "what's the probability?" The warning system asks "what's triggering?" The MRI asks "how should I be positioned now?" Together, they provide both the strategic view and the tactical response.
+        </div>
+
+        <!-- Design Principles -->
+        <h3>DESIGN PRINCIPLES</h3>
+        <div class="principles-grid">
+            <div class="principle-box">
+                <h4>Flows Over Stocks</h4>
+                <p>We track rates of change, not levels. The quits rate matters more than the unemployment rate. Credit growth matters more than credit outstanding. Flows lead, stocks lag.</p>
+            </div>
+            <div class="principle-box">
+                <h4>Ensemble Over Single Indicator</h4>
+                <p>No indicator is reliable in isolation. The yield curve has false positives. Unemployment has false negatives. Combining uncorrelated signals reduces error.</p>
+            </div>
+            <div class="principle-box">
+                <h4>Regimes Over Point Forecasts</h4>
+                <p>We classify environments, not predict outcomes. Being positioned for a high-risk regime is more valuable than predicting recession timing precisely.</p>
+            </div>
+            <div class="principle-box">
+                <h4>Lead Time Matters</h4>
+                <p>Different indicators lead by different amounts. The model accounts for this, weighting inputs by their historical lead time and reliability at each horizon.</p>
+            </div>
+        </div>
+
+        <!-- What We Don't Do -->
+        <div class="avoid-box">
+            <h4>WHAT WE DON'T DO</h4>
+            <div class="avoid-grid">
+                <div class="avoid-item">Predict specific recession start dates</div>
+                <div class="avoid-item">Rely on any single indicator</div>
+                <div class="avoid-item">Ignore signals that conflict with our view</div>
+                <div class="avoid-item">Treat model output as certainty</div>
+                <div class="avoid-item">Chase lagging indicators (unemployment)</div>
+                <div class="avoid-item">Dismiss low-probability, high-impact scenarios</div>
+            </div>
+        </div>
+
+        <!-- Output -->
+        <div class="output-box">
+            <h4>WHAT YOU GET</h4>
+            <p>A current recession probability estimate with confidence bands. Active warnings with cross-domain context. An MRI regime classification with specific allocation implications. Updated systematically as new data arrives. No black boxes, no hand-waving. The framework is transparent about what it tracks and why.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-left">
+                <strong>Bob Sheehan, CFA, CMT</strong> | Founder & CIO | bob@lighthousemacro.com | +1 (240) 672-7418
+            </div>
+            <div class="footer-right">
+                LighthouseMacro.com | @LHMacro
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -7098,3 +7098,53 @@ Crypto total: 426 series, 29,605 observations
 2026-02-22 06:15:40 [INFO]    Batch 1/11: 50 tickers
 2026-02-22 06:15:43 [INFO]    Batch 2/11: 50 tickers
 2026-02-22 06:15:46 [INFO]    Batch 3/11: 50 tickers
+2026-02-22 06:15:52 [INFO]    Batch 4/11: 50 tickers
+2026-02-22 06:15:53 [ERROR] 
+25 Failed downloads:
+2026-02-22 06:15:53 [ERROR] ['EQT', 'EA', 'EQIX', 'D', 'FDS', 'DUK', 'DTE', 'EME', 'EG', 'FDX', 'DHI', 'EXR', 'EMR']: TypeError("'NoneType' object is not subscriptable")
+2026-02-22 06:15:53 [ERROR] ['DD', 'EXE', 'ERIE', 'FICO', 'ES', 'EOG', 'DPZ', 'ETR', 'EFX', 'EXPE', 'FFIV', 'EXC']: OperationalError('unable to open database file')
+2026-02-22 06:15:54 [INFO]    Batch 5/11: 50 tickers
+2026-02-22 06:15:54 [ERROR] 
+47 Failed downloads:
+2026-02-22 06:15:54 [ERROR] ['GNRC', 'FTV', 'IT', 'GPC', 'FOXA', 'FOX', 'HOLX', 'HLT', 'HWM', 'HSY', 'ITW', 'GE', 'GPN', 'DOC', 'HIG']: TypeError("'NoneType' object is not subscriptable")
+2026-02-22 06:15:54 [ERROR] ['HD', 'GS', 'IDXX', 'GL', 'F', 'INCY', 'HBAN', 'HUM', 'HPQ', 'GD', 'GEV', 'GIS', 'HON', 'IEX', 'HII', 'FISV', 'BEN', 'GILD', 'HSIC', 'HAS', 'HAL', 'HCA', 'GEHC', 'GRMN', 'HRL', 'FTNT', 'HPE', 'HST', 'FCX', 'IBM', 'IR', 'GEN']: OperationalError('unable to open database file')
+2026-02-22 06:15:55 [INFO]    Batch 6/11: 50 tickers
+2026-02-22 06:15:56 [ERROR] 
+50 Failed downloads:
+2026-02-22 06:15:56 [ERROR] ['JBHT', 'KHC', 'LW', 'PODD', 'MPC']: TypeError("'NoneType' object is not subscriptable")
+2026-02-22 06:15:56 [ERROR] ['L', 'INTU', 'J', 'LULU', 'KVUE', 'KLAC', 'IVZ', 'MRSH', 'JNJ', 'LYB', 'IBKR', 'JPM', 'ICE', 'INVH', 'KDP', 'LDOS', 'KMI', 'KIM', 'LRCX', 'LHX', 'LH', 'JKHY', 'KMB', 'LMT', 'LEN', 'IRM', 'MAR', 'IQV', 'LOW', 'LIN', 'LVS', 'LLY', 'LII', 'KEYS', 'KR', 'ISRG', 'IFF', 'INTC', 'IP', 'KEY', 'JCI', 'LYV', 'KKR', 'JBL', 'MTB']: OperationalError('unable to open database file')
+2026-02-22 06:15:57 [INFO]    Batch 7/11: 50 tickers
+2026-02-22 06:15:57 [ERROR] 
+50 Failed downloads:
+2026-02-22 06:15:57 [ERROR] ['NDSN', 'MDLZ', 'NXPI', 'NWS', 'NFLX', 'MCK', 'MA', 'MRNA', 'NSC', 'ODFL', 'MTCH', 'MNST', 'NTRS', 'NVDA', 'NOC', 'NVR', 'MCHP', 'NUE', 'NI', 'TAP', 'MS', 'NCLH', 'OXY', 'MU', 'MSFT', 'NDAQ', 'MRK', 'MLM', 'ORLY', 'MSCI', 'MPWR', 'NRG', 'MGM', 'MTD', 'MCO', 'MAA', 'MET', 'MAS', 'NEM', 'META', 'MDT', 'MSI', 'MKC', 'NKE', 'MOH', 'MOS', 'MCD', 'NTAP', 'NWSA', 'NEE']: OperationalError('unable to open database file')
+2026-02-22 06:15:58 [INFO]    Batch 8/11: 50 tickers
+2026-02-22 06:15:58 [ERROR] 
+50 Failed downloads:
+2026-02-22 06:15:58 [ERROR] ['PFG', 'PG', 'QCOM', 'PSX', 'PPL', 'PAYX', 'OTIS', 'Q', 'PFE', 'PSKY', 'PTC', 'PWR', 'PEG', 'PCG', 'PLD', 'PAYC', 'RMD', 'PCAR', 'PNC', 'PPG', 'PYPL', 'PLTR', 'PANW', 'PNW', 'REGN', 'HOOD', 'OKE', 'O', 'PEP', 'ORCL', 'RL', 'RJF', 'RF', 'PNR', 'PKG', 'OMC', 'RSG', 'PHM', 'DGX', 'PRU', 'PSA', 'REG', 'PH', 'PM', 'ON', 'PGR', 'ROK', 'RVTY', 'RTX', 'POOL']: OperationalError('unable to open database file')
+2026-02-22 06:15:59 [INFO]    Batch 9/11: 50 tickers
+2026-02-22 06:16:00 [ERROR] 
+50 Failed downloads:
+2026-02-22 06:16:00 [ERROR] ['SPG', 'TJX', 'TEL', 'STLD', 'STE', 'SWKS', 'SNA', 'SOLV', 'ROST', 'ROP', 'STT', 'SWK', 'SRE', 'TMO', 'SW', 'SPGI', 'TPL', 'SLB', 'TROW', 'SNPS', 'LUV', 'TER', 'SYK', 'SJM', 'TMUS', 'TT', 'SBUX', 'SBAC', 'SHW', 'TTD', 'NOW', 'SO', 'ROL', 'SMCI', 'TTWO', 'SYY', 'RCL', 'TPR', 'TRGP', 'TSCO', 'TXN', 'TSLA', 'TDY', 'CRM', 'TGT', 'SNDK', 'TXT', 'TKO', 'SYF', 'STX']: OperationalError('unable to open database file')
+2026-02-22 06:16:01 [INFO]    Batch 10/11: 50 tickers
+2026-02-22 06:16:01 [ERROR] 
+50 Failed downloads:
+2026-02-22 06:16:01 [ERROR] ['WELL', 'ULTA', 'YUM', 'TRMB', 'DIS', 'UBER', 'VLO', 'WTW', 'USB', 'UAL', 'URI', 'UPS', 'VRSN', 'XEL', 'VST', 'TFC', 'UHS', 'WDC', 'TRV', 'WAB', 'WMT', 'WST', 'WSM', 'WY', 'VICI', 'VTR', 'TDG', 'WAT', 'WRB', 'WBD', 'VRSK', 'GWW', 'WEC', 'VMC', 'WFC', 'UDR', 'V', 'WM', 'UNH', 'VZ', 'WYNN', 'VRTX', 'WDAY', 'TYL', 'WMB', 'VLTO', 'XYL', 'VTRS', 'TSN', 'UNP']: OperationalError('unable to open database file')
+2026-02-22 06:16:02 [INFO]    Batch 11/11: 3 tickers
+2026-02-22 06:16:02 [ERROR] 
+3 Failed downloads:
+2026-02-22 06:16:02 [ERROR] ['ZBH', 'ZTS', 'ZBRA']: OperationalError('unable to open database file')
+2026-02-22 06:16:03 [INFO]    Got prices for 178 stocks, 751 days
+2026-02-22 06:16:03 [INFO] Computing % above MAs...
+2026-02-22 06:16:03 [INFO] Computing A/D line...
+2026-02-22 06:16:03 [INFO] Computing NH-NL...
+2026-02-22 06:16:04 [INFO] Computing McClellan...
+2026-02-22 06:16:04 [INFO] Computing breadth thrust...
+2026-02-22 06:16:04 [INFO] Storing metrics in database...
+2026-02-22 06:16:04 [ERROR] BREADTH failed: unable to open database file
+2026-02-22 06:16:04 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-02-22 06:16:04 [ERROR]   ZHVI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-02-22 06:16:04 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-02-22 06:16:04 [ERROR]   ZORI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zori/Metro_zori_uc_sfrcondomfr_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-02-22 06:16:04 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-02-22 06:16:04 [ERROR] TRADINGVIEW failed: [Errno 24] Too many open files: '/Users/bob/Library/Python/3.14/lib/python/site-packages/websocket/__init__.py'
+2026-02-22 06:16:04 [INFO] Running quality checks on 2065 series...

@@ -278,72 +278,58 @@ def load_all_pillar_latest():
 
 
 # =============================================================================
-# FIGURE 1: DIAGNOSTIC DOZEN PILLAR DASHBOARD
+# FIGURE 1: DEFENSIVE BASKET vs SPY — RELATIVE PERFORMANCE
 # =============================================================================
 
-def fig01_pillar_dashboard():
-    print('Building Figure 1: Pillar Dashboard...')
-    pillars = load_all_pillar_latest()
+def fig01_defensive_basket():
+    print('Building Figure 1: Defensive Basket vs SPY...')
 
-    # Map to 12-pillar order with display names
-    pillar_order = [
-        ('LPI', '1. Labor\n(LPI)'),
-        ('PCI', '2. Prices\n(PCI)'),
-        ('GCI', '3. Growth\n(GCI)'),
-        ('HCI', '4. Housing\n(HCI)'),
-        ('CCI', '5. Consumer\n(CCI)'),
-        ('BCI', '6. Business\n(BCI)'),
-        ('TCI', '7. Trade\n(TCI)'),
-        ('GCI_Gov', '8. Gov\'t\n(GCI-Gov)'),
-        ('FCI', '9. Financial\n(FCI)'),
-        ('LCI', '10. Plumbing\n(LCI)'),
-    ]
-
-    names = [p[1] for p in pillar_order]
-    vals = [pillars.get(p[0], 0) for p in pillar_order]
+    # Hardcoded relative returns (Jan 15 - Feb 22, 2026)
+    positions = ['XLU (Utilities)', 'XLP (Staples)', 'XLV (Healthcare)',
+                 'IWM (Small Cap)', 'SPY (Benchmark)']
+    rel_returns = [7.6, 3.8, 3.0, 1.5, 0.0]
 
     fig, ax = new_fig(figsize=(14, 8))
-    style_ax(ax, right_primary=True)
+    fig.subplots_adjust(left=0.14, right=0.97)  # Wider left for labels, tighter right
+    style_ax(ax, right_primary=False)
+    ax.yaxis.tick_left()
 
-    colors = []
-    for v in vals:
-        if v > 1.0:
-            colors.append('#892323')
-        elif v > 0.5:
-            colors.append('#FF6723')
-        elif v > -0.5:
-            colors.append('#00BB89')
-        else:
-            colors.append('#00BBFF')
+    # Colors: Ocean for positive, Doldrums for SPY benchmark
+    colors = ['#2389BB' if r > 0 else '#898989' for r in rel_returns]
 
-    bars = ax.bar(names, vals, color=colors, width=0.65, edgecolor='none', zorder=3)
+    # Horizontal bars — thick for mobile readability
+    bars = ax.barh(positions, rel_returns, color=colors, height=0.55,
+                   edgecolor='none', zorder=2)
 
-    # Value labels on bars
-    for bar_obj, v in zip(bars, vals):
-        ypos = v + 0.05 if v >= 0 else v - 0.12
-        ax.text(bar_obj.get_x() + bar_obj.get_width()/2, ypos, f'{v:.2f}',
-                ha='center', va='bottom' if v >= 0 else 'top',
-                fontsize=9, fontweight='bold', color=THEME['fg'])
+    # Zero line
+    ax.axvline(0, color=THEME['zero_line'], linewidth=1.0, linestyle='--',
+               alpha=0.6, zorder=5)
 
-    # Reference lines
-    ax.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5)
-    ax.axhline(0.5, color='#FF6723', linewidth=0.7, linestyle=':', alpha=0.4)
-    ax.axhline(-0.5, color='#00BBFF', linewidth=0.7, linestyle=':', alpha=0.4)
-    ax.axhline(1.0, color='#892323', linewidth=0.7, linestyle=':', alpha=0.4)
+    # Value labels at bar tips
+    for bar_obj, val in zip(bars, rel_returns):
+        x_pos = val + 0.15 if val >= 0 else val - 0.15
+        ha = 'left' if val >= 0 else 'right'
+        label = f'+{val:.1f}%' if val > 0 else '0.0%'
+        ax.text(x_pos, bar_obj.get_y() + bar_obj.get_height()/2, label,
+                ha=ha, va='center', fontsize=13, fontweight='bold',
+                color=THEME['fg'])
 
-    ax.set_ylim(-1.5, 1.5)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}'))
-    ax.tick_params(axis='x', labelsize=9)
+    # Invert y-axis so XLU (top performer) is at the top
+    ax.invert_yaxis()
 
-    # MRI callout
-    mri = pillars.get('MRI', 0)
-    add_annotation_box(ax, f'MRI: {mri:.2f} (Neutral regime)\nTCI ({pillars.get("TCI",0):.2f}) and LCI ({pillars.get("LCI",0):.2f}) are key stress points',
-                       x=0.50, y=0.95)
+    # Clean up x-axis
+    ax.set_xlim(-0.5, 9.5)
+    ax.xaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
+    ax.tick_params(axis='y', labelsize=13, pad=8)
+    ax.tick_params(axis='x', labelsize=10)
 
-    brand_fig(fig, 'The Diagnostic Dozen: Pillar Readings',
-              'Latest z-score readings across all 10 core pillars',
-              'Lighthouse Macro Master Database')
-    return save_fig(fig, 'fig01_pillar_dashboard.png')
+    add_annotation_box(ax, 'Defensive basket: +3-8% relative spread in five weeks.\nIn a flat tape, that is the entire game.',
+                       x=0.75, y=0.62)
+
+    brand_fig(fig, 'Defensive Basket vs SPY: Jan 15 to Feb 22',
+              'Relative performance, 5-week holding period',
+              'Yahoo Finance | Period: Jan 15 - Feb 22, 2026')
+    return save_fig(fig, 'fig01_defensive_basket.png')
 
 
 # =============================================================================
@@ -492,7 +478,75 @@ def fig05_hy_oas():
 
 
 # =============================================================================
-# FIGURE 6: CREDIT-LABOR GAP (CLG)
+# FIGURE 5 (NEW): CREDIT-LABOR DIVERGENCE — HY OAS (inv) vs QUITS
+# =============================================================================
+
+def fig05_credit_labor_divergence():
+    print('Building Figure 5: Credit-Labor Divergence...')
+    quits = load_series('JTSQUR', start='2020-01-01')
+    hy = load_series('BAMLH0A0HYM2', start='2020-01-01')
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+
+    c_primary = THEME['primary']    # Ocean — Quits on RHS
+    c_secondary = THEME['secondary']  # Dusk — HY OAS inverted on LHS
+
+    style_dual_ax(ax1, ax2, c_secondary, c_primary)
+
+    # RHS = Primary = Quits Rate (Ocean)
+    q_plot = quits.dropna()
+    ax2.plot(q_plot.index, q_plot, color=c_primary, linewidth=2.5,
+             label=f'Quits Rate ({q_plot.iloc[-1]:.1f}%)', zorder=2)
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+
+    # LHS = Secondary = HY OAS inverted (Dusk)
+    hy_bps = (hy * 100).dropna()  # Convert to bps
+    ax1.plot(hy_bps.index, hy_bps, color=c_secondary, linewidth=2.0,
+             label=f'HY OAS ({hy_bps.iloc[-1]:.0f} bps)', zorder=2)
+    ax1.invert_yaxis()  # INVERTED — low spreads go UP
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+
+    # Scale axes so pre-2020 lines roughly tracked
+    ax2.set_ylim(1.4, 3.5)
+    ax1.set_ylim(1100, 200)  # Inverted: 200 at top, 1100 at bottom
+
+    # Reference lines
+    # 2.0% quits threshold on RHS
+    ax2.axhline(2.0, color=THEME['accent'], linewidth=1.5, linestyle='--',
+                alpha=0.7, zorder=5)
+    ax2.text(0.37, 2.07, '2.0% Quits Threshold', fontsize=9, color=THEME['accent'],
+             alpha=0.8, fontstyle='italic', transform=ax2.get_yaxis_transform())
+
+    # 300 bps HY OAS threshold on LHS (inverted)
+    ax1.axhline(300, color=THEME['accent'], linewidth=1.5, linestyle='--',
+                alpha=0.5, zorder=5)
+    ax1.text(0.02, 310, '300 bps Complacent', fontsize=9, color=THEME['accent'],
+             alpha=0.5, fontstyle='italic', transform=ax1.get_yaxis_transform())
+
+    add_recessions(ax1, start_date='2020-01-01')
+    set_xlim_to_data(ax1, q_plot.index)
+
+    add_last_value_label(ax2, q_plot, c_primary, fmt='{:.1f}%', side='right')
+    add_last_value_label(ax1, hy_bps, c_secondary, fmt='{:.0f}', side='left')
+
+    add_annotation_box(ax1, 'Credit and labor are pricing two different economies.\nThe gap has not been this wide in over a year.',
+                       x=0.50, y=0.92)
+
+    # Combined legend
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
+
+    # Use quits date (monthly, lags daily HY OAS)
+    brand_fig(fig, 'The Divergence: Credit Spreads vs Labor Flows',
+              'HY OAS (inverted) vs JOLTS quits rate',
+              'FRED (ICE/BofA, BLS JOLTS)', data_date=q_plot.index[-1])
+    return save_fig(fig, 'fig05_credit_labor_divergence.png')
+
+
+# =============================================================================
+# FIGURE 6: CREDIT-LABOR GAP (CLG) — PROPRIETARY, DISABLED
 # =============================================================================
 
 def fig06_clg():
@@ -783,16 +837,29 @@ if __name__ == '__main__':
     print(f'{"="*60}\n')
 
     paths = []
-    # paths.append(fig01_pillar_dashboard())  # TODO: rebuild with 12 pillars, legend, threshold lines
-    paths.append(fig02_quits_rate())
-    paths.append(fig03_openings_rate())
-    # paths.append(fig04_lfi())   # Proprietary — skipping for this update
-    paths.append(fig05_hy_oas())
-    # paths.append(fig06_clg())   # Proprietary — skipping for this update
-    paths.append(fig07_vix())
-    paths.append(fig08_sofr_effr())
-    # paths.append(fig09_lci())   # Proprietary — skipping for this update
-    paths.append(fig10_yield_curve())
+    paths.append(fig01_defensive_basket())       # Fig 1: Defensive Basket vs SPY (NEW)
+    paths.append(fig02_quits_rate())              # Fig 2: JOLTS Quits Rate
+    paths.append(fig03_openings_rate())           # Fig 3: JOLTS Openings Rate
+    paths.append(fig05_hy_oas())                  # Fig 4: HY OAS  (rename below)
+    paths.append(fig05_credit_labor_divergence()) # Fig 5: Credit-Labor Divergence (NEW)
+    paths.append(fig07_vix())                     # Fig 6: VIX     (rename below)
+    paths.append(fig08_sofr_effr())               # Fig 7: SOFR/EFFR (rename below)
+    paths.append(fig10_yield_curve())             # Fig 8: Yield Curve (rename below)
+
+    # Rename files to match new 1-8 numbering
+    import shutil
+    renames = {
+        'fig05_hy_oas.png': 'fig04_hy_oas.png',
+        'fig07_vix.png': 'fig06_vix.png',
+        'fig08_sofr_effr.png': 'fig07_sofr_effr.png',
+        'fig10_yield_curve.png': 'fig08_yield_curve.png',
+    }
+    for old_name, new_name in renames.items():
+        old_path = os.path.join(OUT_DIR, old_name)
+        new_path = os.path.join(OUT_DIR, new_name)
+        if os.path.exists(old_path):
+            shutil.move(old_path, new_path)
+            print(f'  Renamed: {old_name} -> {new_name}')
 
     print(f'\n{"="*60}')
     print(f'All {len(paths)} charts saved to: {OUT_DIR}')

@@ -452,22 +452,30 @@ Framework first. Depth first.
 
 # SECTION 7: BRAND SYSTEM
 
-## Nautical 8-Color Palette
+## Signature 8-Color Palette (23/89/BB Mnemonic)
+
+Every color contains some combination of 23, 89, and BB. The brand palette is a signature.
+
+| Name | Hex | Mnemonic | Usage |
+|------|-----|----------|-------|
+| **Ocean** | `#2389BB` | 23+89+BB | Primary brand, headers, borders, chart primary |
+| **Dusk** | `#FF6723` | 23 | Secondary series, accent bar, CTA buttons |
+| **Sky** | `#00BBFF` | BB | Lighter blue for secondary chart lines |
+| **Venus** | `#FF2389` | 23+89 | 2% target lines, critical alerts |
+| **Sea** | `#00BB89` | BB+89 | Tertiary series, on-target regime bands |
+| **Doldrums** | `#898989` | 89+89 | Axis spines, labels, secondary text |
+| **Starboard** | `#238923` | 23+89 | Bullish regime, professional green |
+| **Port** | `#892323` | 89+23 | Bearish regime, crisis bands |
+
+### Reference Colors (Not in Mnemonic)
 
 | Name | Hex | Usage |
 |------|-----|-------|
-| **Ocean** | `#0089D1` | Primary brand, headers, borders, chart primary |
-| **Dusk** | `#FF6723` | Secondary series, accent bar, warnings |
-| **Sky** | `#33CCFF` | Primary data (dark theme), tertiary (white theme) |
-| **Venus** | `#FF2389` | 2% target lines, critical alerts |
-| **Sea** | `#00BB99` | Tertiary series, on-target regime bands |
-| **Doldrums** | `#D3D6D9` | Zero lines, reference |
-| **Starboard** | `#00FF00` | Extreme bullish |
-| **Port** | `#FF0000` | Crisis regime bands |
+| **Ref** | `#D1D1D1` | Zero lines, ghost reference lines |
 
 ### Accent Bar
 
-- Ocean `#0089D1` for 2/3 width (left)
+- Ocean `#2389BB` for 2/3 width (left)
 - Dusk `#FF6723` for 1/3 width (right)
 - Height: 4-6px documents, scalable for presentations
 

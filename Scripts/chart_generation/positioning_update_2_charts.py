@@ -763,7 +763,7 @@ def fig10_yield_curve():
     add_last_value_label(ax1, t_plot, c_secondary, fmt='{:.2f}%', side='left')
 
     last_curve = c_plot.iloc[-1]
-    add_annotation_box(ax1, f'10Y-2Y at +{last_curve:.0f} bps. Steepener building:\ndeficit dynamics, tariff pass-through, anchored front end.',
+    add_annotation_box(ax1, f'10Y-2Y at +{last_curve*100:.0f} bps. Steepener building:\ndeficit dynamics, tariff pass-through, anchored front end.',
                        x=0.50, y=0.97)
 
     # Combined legend

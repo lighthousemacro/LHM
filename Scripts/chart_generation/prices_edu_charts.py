@@ -39,7 +39,7 @@ COLORS = {
     'sea': '#00BB89',
     'doldrums': '#898989',
     'starboard': '#238923',
-    'port': '#FF0000',
+    'port': '#892323',
 }
 
 RECESSIONS = [

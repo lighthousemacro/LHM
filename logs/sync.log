@@ -21951,3 +21951,59 @@ rsync(29871): error: Client Materials: fstatat: Resource deadlock avoided
 [2026-02-23 05:45:03]   GitHub: OK
 [2026-02-23 05:45:03]   Cloud: OK
 [2026-02-23 05:45:03] ============================================================
+[2026-02-23 05:58:29] ============================================================
+[2026-02-23 05:58:29] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-02-23 05:58:29] ============================================================
+[2026-02-23 05:58:29] GIT SYNC: Starting...
+[2026-02-23 05:58:30] GIT SYNC: Committed: Daily pipeline sync 2026-02-23 05:58
+[2026-02-23 05:58:31] GIT SYNC: Pushed to origin/main.
+[2026-02-23 05:58:31] CLOUD SYNC: Starting...
+[2026-02-23 05:58:31] CLOUD SYNC [iCloud]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 05:58:31] CLOUD SYNC [GDrive]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 05:58:31] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(30546): error: ./.tmp.drivedownload: unlinkat: Directory not empty
+rsync(30546): error: Asset_Class_Frameworks/COMMODITIES.md: fstatat: Resource deadlock avoided
+rsync(30546): error: Asset_Class_Frameworks/CREDIT.md: fstatat: Resource deadlock avoided
+rsync(30546): error: Asset_Class_Frameworks/CRYPTO.md: fstatat: Resource deadlock avoided
+rsync(30546): error: Asset_Class_Frameworks/CURRENCIES.md: fstatat: Resource deadlock avoided
+rsync(30546): error: Asset_Class_Frameworks/EQUITIES.md: fstatat: Resource deadlock avoided
+rsync(30546): error: Asset_Class_Frameworks/RATES.md: fstatat: Resource deadlock avoided
+rsync(30546): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(30545): error: unexpected end of file
+
+[2026-02-23 05:58:31] CLOUD SYNC [GDrive]: rsync Brand failed: rsync(30548): error: .DS_Store: fstatat: Resource deadlock avoided
+rsync(30548): error: Banner.JPG: fstatat: Resource deadlock avoided
+rsync(30548): error: Bob_Sheehan_Resume_Jan2026.html: fstatat: Resource deadlock avoided
+rsync(30548): error: Logo.JPG: fstatat: Resource deadlock avoided
+rsync(30548): error: SKILL.md: fstatat: Resource deadlock avoided
+rsync(30548): error: banner 1100x220.jpg: fstatat: Resource deadlock avoided
+rsync(30548): error: banner_document_header.jpg: fstatat: Resource deadlock avoided
+rsync(30548): error: banner_email_header_1100x220.jpg: fstatat: Resource deadlock avoided
+rsync(30548): error: brand updates.zip: fstatat: Resource deadlock avoided
+rsync(30548): error: brand-guide.md: fstatat: Resource deadlock avoided
+rsync(30548): error: chart-styling-for-gemini.md: fstatat: Resource deadlock avoided
+rsync(30548): error: chart-styling.md: fstatat: Resource deadlock avoided
+rsync(30548): error: email_header_banner_1100x220.png: fstatat: Resource deadlock avoided
+rsync(30548): error: lighthouse_dashboard.html: fstatat: Resource deadlock avoided
+rsync(30548): error: lighthouse_icon_extracted.png: fstatat: Resource deadlock avoided
+rsync(30548): error: templates.md: fstatat: Resource deadlock avoided
+rsync(30548): error: voice-and-tone-for-gemini.md: fstatat: Resource deadlock avoided
+rsync(30548): error: .tmp.driveupload: fstatat: Resource deadlock avoided
+rsync(30548): error: .tmp.driveupload/25124: fstatat: Resource deadlock avoided
+rsync(30548): error: .tmp.driveupload/25136: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials/00_Philosophy_And_Approach.html: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials/01_Framework_Overview.html: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials/02_Twelve_Pillars_Summary.html: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials/03_Trading_Strategy_Summary.html: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials/04_Two_Books_Framework.html: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials/05_Crypto_Scoring_Framework.html: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials/06_Recession_Risk_Framework.html: fstatat: Resource deadlock avoided
+rsync(30548): error: .tmp.driveupload: fstatat: Resource deadlock avoided
+rsync(30548): error: Client Materials: fstatat: Resource deadlock avoided
+
+[2026-02-23 05:58:31] CLOUD SYNC [Dropbox]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 05:58:31] ----------------------------------------
+[2026-02-23 05:58:31] SYNC SUMMARY:
+[2026-02-23 05:58:31]   GitHub: OK
+[2026-02-23 05:58:31]   Cloud: OK
+[2026-02-23 05:58:31] ============================================================

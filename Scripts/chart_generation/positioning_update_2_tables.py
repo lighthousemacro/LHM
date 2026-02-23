@@ -48,41 +48,48 @@ def save_table_fig(fig, name):
 
 def build_summary_banner():
     print('Building: Summary Banner...')
-    fig = plt.figure(figsize=(14, 3.2))
+    fig = plt.figure(figsize=(14, 4.5))
     fig.patch.set_facecolor(BG)
 
-    # Dark banner background
-    banner = fig.add_axes([0.03, 0.15, 0.94, 0.75])
-    banner.set_facecolor('#1a2a3a')
-    banner.set_xlim(0, 1)
-    banner.set_ylim(0, 1)
-    banner.axis('off')
+    ax = fig.add_axes([0.03, 0.10, 0.94, 0.80])
+    ax.set_facecolor(BG)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis('off')
 
-    # Three column headers
+    # Three column headers in Ocean, big and bold
     cols = [
         ('SCOTUS Tariff Shock', 0.17),
         ('Labor Threshold', 0.50),
         ('Credit Denial', 0.83),
     ]
     for title, x in cols:
-        banner.text(x, 0.72, title, fontsize=16, fontweight='bold',
-                    color='white', ha='center', va='center',
-                    fontfamily='sans-serif')
+        ax.text(x, 0.70, title, fontsize=26, fontweight='bold',
+                color=OCEAN, ha='center', va='center',
+                fontfamily='sans-serif')
 
-    # Subtext
-    banner.text(0.50, 0.30,
-                'IEEPA tariffs struck down 6-3. Section 122 at 15% max replaces. '
-                'SOFR-EFFR: Quiet. Still Defensive, not Disorderly.',
-                fontsize=11, color='#aabbcc', ha='center', va='center',
-                fontfamily='sans-serif', style='italic')
+    # Box each column: vertical dividers + horizontal rule under headers
+    for xd in [0.34, 0.67]:
+        ax.axvline(xd, ymin=0.10, ymax=0.95, color=FOG, linewidth=1.5)
+    ax.axhline(y=0.52, xmin=0.02, xmax=0.98, color=FOG, linewidth=1.5)
+
+    # Subtext per column
+    subtexts = [
+        ('IEEPA tariffs struck\ndown 6-3. Section 122\nat 15% max replaces.', 0.17),
+        ('SOFR-EFFR: Quiet.\nStill Defensive,\nnot Disorderly.', 0.50),
+        ('Spreads pricing a\ndifferent economy\nthan labor reports.', 0.83),
+    ]
+    for txt, x in subtexts:
+        ax.text(x, 0.25, txt, fontsize=16, color=MUTED, ha='center', va='center',
+                fontfamily='sans-serif', style='italic', linespacing=1.5)
 
     # Accent bars
-    tbar = fig.add_axes([0.03, 0.92, 0.94, 0.03])
+    tbar = fig.add_axes([0.03, 0.92, 0.94, 0.025])
     tbar.axhspan(0, 1, 0, 0.67, color=OCEAN)
     tbar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
     tbar.set_xlim(0, 1); tbar.set_ylim(0, 1); tbar.axis('off')
 
-    bbar = fig.add_axes([0.03, 0.05, 0.94, 0.03])
+    bbar = fig.add_axes([0.03, 0.04, 0.94, 0.025])
     bbar.axhspan(0, 1, 0, 0.67, color=OCEAN)
     bbar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
     bbar.set_xlim(0, 1); bbar.set_ylim(0, 1); bbar.axis('off')

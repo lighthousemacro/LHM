@@ -36,8 +36,8 @@
 | **2026-02-03** | Created Asset Class Frameworks: Equities, Rates, Credit, Commodities, Currencies, Crypto in `/Users/bob/LHM/Strategy/Asset_Class_Frameworks/` |
 | **2026-02-03** | Built website pages: framework.html, methodology.html with full 12-pillar detail |
 | **2026-01-24** | Tania Reif/Senda: BCH analysis delivered Dec 22. Trial phase ongoing (~3 months). Awaiting response. |
-| **2026-01-24** | Christopher King engaged. Connected Bob with BrimxBrand for brand buildout. |
-| **2026-01-24** | BrimxBrand (Mike Stephenson, Kristina) handling website and brand. |
+| **2026-01-24** | Christopher King engaged. Connection did not materialize into anything. |
+| **2026-01-24** | Website and brand built by Bob himself. No external agency involved. |
 | **2025-10** | Pascal Hugli podcast appearance (repo markets, Fed plumbing, crypto/Treasury). |
 
 ---

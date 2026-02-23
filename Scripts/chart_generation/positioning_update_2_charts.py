@@ -100,9 +100,8 @@ def style_single_ax(ax):
 
 
 def set_xlim_to_data(ax, idx):
-    pad_left = pd.Timedelta(days=30)
     pad_right = pd.Timedelta(days=180)
-    ax.set_xlim(idx.min() - pad_left, idx.max() + pad_right)
+    ax.set_xlim(idx.min(), idx.max() + pad_right)
 
 
 def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
@@ -173,11 +172,11 @@ def add_last_value_label(ax, y_data, color, fmt='{:.1f}%', side='right', fontsiz
 
 def add_annotation_box(ax, text, x=0.52, y=0.92):
     ax.text(x, y, text, transform=ax.transAxes,
-            fontsize=10, color=THEME['fg'], ha='center', va='top',
-            style='italic',
+            fontsize=12, color='#2389BB', ha='center', va='top',
+            fontweight='bold', style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor=THEME['bg'], edgecolor='#2389BB',
-                      alpha=0.9))
+                      facecolor='#ffffff', edgecolor='#2389BB',
+                      linewidth=2.0))
 
 
 def add_recessions(ax, start_date=None):
@@ -483,7 +482,7 @@ def fig05_hy_oas():
 
     last_val = hy_plot.iloc[-1]
     add_annotation_box(ax, f'HY OAS at {last_val:.0f} bps: below the 300 bps complacent\nthreshold. Credit pricing a different economy than labor.',
-                       x=0.60, y=0.92)
+                       x=0.70, y=0.92)
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'HY OAS: Credit Still in Denial',
@@ -538,7 +537,7 @@ def fig06_clg():
 
 def fig07_vix():
     print('Building Figure 7: VIX...')
-    vix = load_series('VIXCLS', start='2020-01-01')
+    vix = load_series('VIXCLS', start='2004-01-01')
 
     fig, ax = new_fig()
     style_single_ax(ax)
@@ -557,15 +556,15 @@ def fig07_vix():
     # Reference zones
     ax.axhspan(10, 16, color='#00BB89', alpha=0.08, zorder=0)
     ax.axhspan(25, 45, color='#FF6723', alpha=0.08, zorder=0)
-    ax.text(0.02, 13, 'Complacent Zone', fontsize=8, color='#00BB89', alpha=0.6,
-            fontstyle='italic', transform=ax.get_yaxis_transform())
-    ax.text(0.02, 30, 'Fear Zone', fontsize=8, color='#FF6723', alpha=0.6,
-            fontstyle='italic', transform=ax.get_yaxis_transform())
+    ax.text(0.98, 11.5, 'Complacent Zone', fontsize=8, color='#00BB89', alpha=0.6,
+            fontstyle='italic', ha='right', transform=ax.get_yaxis_transform())
+    ax.text(0.98, 30, 'Fear Zone', fontsize=8, color='#FF6723', alpha=0.6,
+            fontstyle='italic', ha='right', transform=ax.get_yaxis_transform())
 
-    add_recessions(ax, start_date='2020-01-01')
-    set_xlim_to_data(ax, v_plot.index)
+    add_recessions(ax, start_date='2004-01-01')
+    set_xlim_to_data(ax, v_plot.loc['2020-01-01':].index)
     add_last_value_label(ax, v_plot, THEME['primary'], fmt='{:.1f}')
-    add_last_value_label(ax, vix_50d.dropna(), THEME['secondary'], fmt='{:.1f}', side='left')
+    add_last_value_label(ax, vix_50d.dropna(), THEME['secondary'], fmt='{:.1f}', side='right')
 
     last_val = v_plot.iloc[-1]
     add_annotation_box(ax, f'VIX at {last_val:.1f}: no longer complacent, not yet panicking.\nSCOTUS relief compressed the tariff tail.',
@@ -711,12 +710,12 @@ def fig10_yield_curve():
 
     last_curve = c_plot.iloc[-1]
     add_annotation_box(ax1, f'10Y-2Y at +{last_curve:.0f} bps. Steepener building:\ndeficit dynamics, tariff pass-through, anchored front end.',
-                       x=0.50, y=0.92)
+                       x=0.50, y=0.97)
 
     # Combined legend
     lines1, labels1 = ax1.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper right', **legend_style())
 
     brand_fig(fig, '10Y-2Y Curve: Steepener Building',
               'Treasury term structure with 10Y yield overlay',

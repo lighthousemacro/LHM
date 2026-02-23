@@ -601,7 +601,7 @@ Economics, Finance, Macro, Investing, Markets
 
 # SECTION 10: DATA INFRASTRUCTURE
 
-## Master Database
+## Lighthouse Macro Master Database
 
 - **Path:** `/Users/bob/LHM/Data/databases/Lighthouse_Master.db` (SQLite)
 - **Pipeline:** `/Users/bob/LHM/Scripts/data_pipeline/lighthouse_master_db.py`

@@ -560,33 +560,38 @@ def chart_03():
     """JOLTS Openings Rate: collapse to 2020 lows."""
     print('\nChart 3: JOLTS Openings Rate...')
 
-    # BLS_JTS000000000000000JOR = JOLTS Job Openings Rate
-    openings = fetch_db_level('BLS_JTS000000000000000JOR', start='2001-01-01')
+    # JTS1000JOR = Private sector openings rate (matches article narrative)
+    # BLS_JTS000000000000000JOR = Total nonfarm (3.9%)
+    openings_priv = fetch_db_level('JTS1000JOR', start='2001-01-01')
+    openings_nf = fetch_db_level('BLS_JTS000000000000000JOR', start='2001-01-01')
 
     fig, ax = new_fig()
 
-    ax.plot(openings.index, openings, color=THEME['primary'], linewidth=2.5,
-            label=f'JOLTS Openings Rate ({openings.iloc[-1]:.1f}%)')
-    ax.fill_between(openings.index, openings, alpha=THEME['fill_alpha'],
+    ax.plot(openings_priv.index, openings_priv, color=THEME['primary'], linewidth=2.5,
+            label=f'Private Openings Rate ({openings_priv.iloc[-1]:.1f}%)')
+    ax.plot(openings_nf.index, openings_nf, color=THEME['secondary'], linewidth=1.8,
+            linestyle='--', alpha=0.7,
+            label=f'Total Nonfarm ({openings_nf.iloc[-1]:.1f}%)')
+    ax.fill_between(openings_priv.index, openings_priv, alpha=THEME['fill_alpha'],
                     color=THEME['primary'])
 
     style_single_ax(ax)
-    set_xlim_to_data(ax, openings.index)
+    set_xlim_to_data(ax, openings_priv.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax, openings, color=THEME['primary'], side='right')
+    add_last_value_label(ax, openings_priv, color=THEME['primary'], side='right')
     add_recessions(ax, start_date='2001-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    o_last = openings.iloc[-1]
+    o_last = openings_priv.iloc[-1]
     add_annotation_box(ax,
-        f"Openings rate at {o_last:.1f}%, lowest since 2020.\n"
+        f"Private openings rate at {o_last:.1f}%, lowest since 2020.\n"
         f"Professional services, retail, and finance leading lower.",
         x=0.68, y=0.92)
 
     brand_fig(fig, 'JOLTS Job Openings Rate',
               subtitle='Demand for labor is collapsing',
-              source='BLS (JOLTS)', data_date=openings.index[-1])
+              source='BLS (JOLTS: Private + Nonfarm)', data_date=openings_priv.index[-1])
 
     return save_fig(fig, 'chart_03_jolts_openings.png')
 

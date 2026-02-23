@@ -323,8 +323,8 @@ def fig01_defensive_basket():
     ax.tick_params(axis='y', labelsize=13, pad=8)
     ax.tick_params(axis='x', labelsize=10)
 
-    add_annotation_box(ax, 'Defensive basket: +3-8% relative spread in five weeks.\nIn a flat tape, that is the entire game.',
-                       x=0.75, y=0.62)
+    add_annotation_box(ax, 'Defensive basket: up to +8% relative in five weeks.\nIn a flat tape, that is the entire game.',
+                       x=0.75, y=0.52)
 
     brand_fig(fig, 'Defensive Basket vs SPY: Jan 15 to Feb 22',
               'Relative performance, 5-week holding period',

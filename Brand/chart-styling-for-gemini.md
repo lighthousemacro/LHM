@@ -14,11 +14,11 @@ All educational, research, and deck charts follow this format unless explicitly 
 
 | Element | Position | Style |
 |---|---|---|
-| **LIGHTHOUSE MACRO** | Top-left | Ocean `#0089D1`, bold, fontsize 13 |
+| **LIGHTHOUSE MACRO** | Top-left | Ocean `#2389BB`, bold, fontsize 13 |
 | **Date** | Top-right | Muted color, fontsize 11, `%B %d, %Y` format |
 | **Top accent bar** | Below watermarks | Ocean 2/3, Dusk 1/3, height 0.004 |
 | **Bottom accent bar** | Above footer | Mirror of top bar |
-| **MACRO, ILLUMINATED.** | Bottom-right | Ocean `#0089D1`, bold italic, fontsize 13 |
+| **MACRO, ILLUMINATED.** | Bottom-right | Ocean `#2389BB`, bold italic, fontsize 13 |
 | **Source line** | Bottom-left | Muted, italic, fontsize 9, format: `Lighthouse Macro | {Source}; mm.dd.yyyy` |
 
 **Note:** Branding elements (watermarks, accent bars) always use Ocean/Dusk regardless of theme. They are not theme-driven.
@@ -28,7 +28,7 @@ All educational, research, and deck charts follow this format unless explicitly 
 | Element | Style |
 |---|---|
 | **Title** | fontsize 15, bold, centered, `y=0.945`, theme foreground color |
-| **Subtitle** | fontsize 14, italic, Ocean `#0089D1` (always Ocean, not theme-driven), centered, `y=0.895` |
+| **Subtitle** | fontsize 14, italic, Ocean `#2389BB` (always Ocean, not theme-driven), centered, `y=0.895` |
 
 ### Subplot Margins (fig.subplots_adjust)
 
@@ -42,13 +42,13 @@ fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94)
 ```python
 # Top accent bar
 bar = fig.add_axes([0.03, 0.955, 0.94, 0.004])
-bar.axhspan(0, 1, 0, 0.67, color='#0089D1')   # Ocean 2/3
+bar.axhspan(0, 1, 0, 0.67, color='#2389BB')   # Ocean 2/3
 bar.axhspan(0, 1, 0.67, 1.0, color='#FF6723')  # Dusk 1/3
 bar.set_xlim(0, 1); bar.set_ylim(0, 1); bar.axis('off')
 
 # Bottom accent bar (mirror)
 bbar = fig.add_axes([0.03, 0.035, 0.94, 0.004])
-bbar.axhspan(0, 1, 0, 0.67, color='#0089D1')
+bbar.axhspan(0, 1, 0, 0.67, color='#2389BB')
 bbar.axhspan(0, 1, 0.67, 1.0, color='#FF6723')
 bbar.set_xlim(0, 1); bbar.set_ylim(0, 1); bbar.axis('off')
 ```
@@ -266,11 +266,11 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor=THEME['bg'], edgecolor='#0089D1',
+                      facecolor=THEME['bg'], edgecolor='#2389BB',
                       alpha=0.9))
 ```
 
-- **Border color**: Always Ocean `#0089D1` (hardcoded, not theme-driven)
+- **Border color**: Always Ocean `#2389BB` (hardcoded, not theme-driven)
 - **Background**: Theme background color (opaque)
 - **Text**: Theme foreground, italic, fontsize 10
 - **Default position**: `x=0.52, y=0.92` (slightly right of center, near top)
@@ -368,7 +368,7 @@ ax.legend(loc='upper left', **legend_style())
 ### White Theme
 | Role | Color | Hex |
 |---|---|---|
-| Primary series | Ocean | `#0089D1` |
+| Primary series | Ocean | `#2389BB` |
 | Secondary series | Dusk | `#FF6723` |
 | Tertiary series | Sky | `#33CCFF` |
 | Quaternary series | Sea | `#00BB99` |
@@ -417,16 +417,16 @@ THEME = {
     'zero_line': '#333333',
     'recession': 'gray',
     'recession_alpha': 0.12,
-    'brand_color': '#0089D1',    # Ocean
+    'brand_color': '#2389BB',    # Ocean
     'brand2_color': '#FF6723',   # Dusk
-    'primary': '#0089D1',        # Ocean
+    'primary': '#2389BB',        # Ocean
     'secondary': '#FF6723',      # Dusk
     'tertiary': '#33CCFF',       # Sky (pops against white bg)
     'quaternary': '#00BB99',     # Sea
     'accent': '#FF2389',         # Venus
     'fill_alpha': 0.15,
     'box_bg': '#ffffff',
-    'box_edge': '#0089D1',       # Ocean
+    'box_edge': '#2389BB',       # Ocean
     'legend_bg': '#f8f8f8',
     'legend_fg': '#1a1a1a',
     'mode': 'white',
@@ -478,7 +478,7 @@ Output structure:
 
 | Name | Hex | Usage |
 |---|---|---|
-| **Ocean** | `#0089D1` | Primary data (white theme), borders, branding |
+| **Ocean** | `#2389BB` | Primary data (white theme), borders, branding |
 | **Dusk** | `#FF6723` | Secondary series, accent bar segment |
 | **Sky** | `#33CCFF` | Primary data (dark theme) |
 | **Venus** | `#FF2389` | 2% target lines, critical alerts |

@@ -351,21 +351,7 @@ ax.legend(loc='upper left', **legend_style())
 
 ## Color Assignments by Theme
 
-### Dark Theme
-| Role | Color | Hex |
-|---|---|---|
-| Primary series | Sky | `#00BBFF` |
-| Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sea | `#00BB89` |
-| Accent | Venus | `#FF2389` |
-| Background | Dark Navy | `#0A1628` |
-| Foreground text | Light | `#e6edf3` |
-| Muted text | Gray | `#8b949e` |
-| Spine | Dark Blue | `#1e3350` |
-| Legend bg | Dark Blue | `#0f1f38` |
-| Legend fg | Light | `#e6edf3` |
-
-### White Theme
+### White Theme (Primary)
 | Role | Color | Hex |
 |---|---|---|
 | Primary series | Ocean | `#2389BB` |
@@ -376,11 +362,26 @@ ax.legend(loc='upper left', **legend_style())
 | Background | White | `#ffffff` |
 | Foreground text | Dark | `#1a1a1a` |
 | Muted text | Gray | `#555555` |
-| Spine | Light Gray | `#cccccc` |
+| Spine | Doldrums | `#898989` |
 | Legend bg | Light | `#f8f8f8` |
 | Legend fg | Dark | `#1a1a1a` |
 
-**Rationale**: Sky replaces Ocean on dark theme because Ocean has insufficient contrast against dark navy.
+### Dark Theme (Optional)
+| Role | Color | Hex |
+|---|---|---|
+| Primary series | Ocean | `#2389BB` |
+| Secondary series | Dusk | `#FF6723` |
+| Tertiary series | Sky | `#00BBFF` |
+| Quaternary series | Sea | `#00BB89` |
+| Accent | Venus | `#FF2389` |
+| Background | Dark Navy | `#0A1628` |
+| Foreground text | Light | `#e6edf3` |
+| Muted text | Gray | `#8b949e` |
+| Spine | Dark Blue | `#1e3350` |
+| Legend bg | Dark Blue | `#0f1f38` |
+| Legend fg | Light | `#e6edf3` |
+
+**Note**: White theme is primary for all publications. Ocean is primary color on BOTH themes.
 
 ### Full Theme Dictionary
 

@@ -287,7 +287,7 @@ def fig01_defensive_basket():
     # Hardcoded relative returns (Jan 15 - Feb 22, 2026)
     positions = ['XLU (Utilities)', 'XLP (Staples)', 'XLV (Healthcare)',
                  'IWM (Small Cap)', 'SPY (Benchmark)']
-    rel_returns = [7.6, 3.8, 3.0, 1.5, 0.0]
+    rel_returns = [7.9, 7.6, 0.7, 0.1, 0.0]
 
     fig, ax = new_fig(figsize=(14, 8))
     fig.subplots_adjust(left=0.14, right=0.97)  # Wider left for labels, tighter right

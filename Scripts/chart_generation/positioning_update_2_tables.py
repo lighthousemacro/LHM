@@ -96,7 +96,7 @@ def build_summary_banner():
 
 def build_scorecard():
     print('Building: Scorecard Table...')
-    fig = plt.figure(figsize=(14, 7))
+    fig = plt.figure(figsize=(14, 9))
     fig.patch.set_facecolor(BG)
     ax = fig.add_axes([0.03, 0.05, 0.94, 0.88])
     ax.set_xlim(0, 1)
@@ -113,7 +113,7 @@ def build_scorecard():
                                            facecolor=OCEAN, edgecolor='none')
     ax.add_patch(header_rect)
     for x, h in zip(cols, headers):
-        ax.text(x + 0.06, 0.94, h, fontsize=11, fontweight='bold',
+        ax.text(x + 0.06, 0.94, h, fontsize=14, fontweight='bold',
                 color='white', va='center', ha='center')
 
     # Data rows
@@ -121,13 +121,13 @@ def build_scorecard():
         ['SPY\n(underweight)', 'Reduced\nexposure', '$693.66', '$689.43', '-0.6%', '--', 'Correct to\nunderweight'],
         ['IWM\n(underweight)', 'Reduced\nexposure', '$265.87', '$264.61', '-0.5%', '--', 'Correct to\nunderweight'],
         ['XLV\n(overweight)', 'Long', '$156.64', '$156.82', '+0.1%', '+0.7%', 'Outperformed'],
-        ['XLP\n(overweight)', 'Long', '$82.15', '$87.89', '+7.0%', '+7.6%', 'Outperformed'],
         ['XLU\n(overweight)', 'Long', '$43.17', '$46.33', '+7.3%', '+7.9%', 'Strong\noutperformance'],
+        ['XLP\n(overweight)', 'Long', '$82.15', '$87.89', '+7.0%', '+7.6%', 'Outperformed'],
         ['Credit\n(UW HY)', 'Reduced\nexposure', 'HY OAS\n~290 bps', 'HY OAS\n~288 bps', 'Spreads\nstill tight', '--', 'Structurally\ncorrect, early'],
         ['Vol (long\nconvexity)', 'Directional\nview', 'VIX at\n15.44', 'VIX at\n19.09', '+23.6%\n(VIX level)', '--', 'Directional call\nconfirmed'],
     ]
 
-    verdict_colors = [STARBOARD, STARBOARD, STARBOARD, STARBOARD, STARBOARD, DUSK, OCEAN]
+    verdict_colors = [STARBOARD, STARBOARD, STARBOARD, STARBOARD, STARBOARD, DOLDRUMS, STARBOARD]
 
     row_height = 0.88 / len(rows)
     for i, (row, vc) in enumerate(zip(rows, verdict_colors)):
@@ -147,7 +147,7 @@ def build_scorecard():
             if j == 6:  # Verdict column
                 color = vc
                 weight = 'bold'
-            ax.text(x + 0.06, y_center, val, fontsize=10, color=color,
+            ax.text(x + 0.06, y_center, val, fontsize=13, color=color,
                     fontweight=weight, va='center', ha='center')
 
     # Grid lines
@@ -166,7 +166,7 @@ def build_position_table(title, rows, filename):
     """Generic position table builder."""
     print(f'Building: {title}...')
     n_rows = len(rows)
-    fig_height = 1.8 + n_rows * 0.7
+    fig_height = 2.0 + n_rows * 0.9
     fig = plt.figure(figsize=(14, fig_height))
     fig.patch.set_facecolor(BG)
     ax = fig.add_axes([0.03, 0.05, 0.94, 0.85])
@@ -175,7 +175,7 @@ def build_position_table(title, rows, filename):
     ax.axis('off')
 
     # Title
-    fig.text(0.50, 0.95, title, fontsize=16, fontweight='bold',
+    fig.text(0.50, 0.95, title, fontsize=20, fontweight='bold',
              color=FG, ha='center', va='top', fontfamily='sans-serif')
 
     # Column positions and headers
@@ -189,7 +189,7 @@ def build_position_table(title, rows, filename):
                                            facecolor=OCEAN, edgecolor='none')
     ax.add_patch(header_rect)
     for x, h, w in zip(cols, headers, col_widths):
-        ax.text(x + w/2, 0.925, h, fontsize=11, fontweight='bold',
+        ax.text(x + w/2, 0.925, h, fontsize=14, fontweight='bold',
                 color='white', va='center', ha='center')
 
     # Data rows
@@ -207,7 +207,6 @@ def build_position_table(title, rows, filename):
         for j, (x, val, w) in enumerate(zip(cols, row, col_widths)):
             color = FG
             weight = 'normal'
-            fontsize = 10
             if j == 1:  # Direction column
                 weight = 'bold'
                 val_lower = val.lower()
@@ -219,7 +218,7 @@ def build_position_table(title, rows, filename):
                     color = OCEAN
                 else:
                     color = FG
-            ax.text(x + w/2, y_center, val, fontsize=fontsize, color=color,
+            ax.text(x + w/2, y_center, val, fontsize=13, color=color,
                     fontweight=weight, va='center', ha='center',
                     wrap=True)
 
@@ -253,7 +252,7 @@ def build_all_position_tables():
 
     # Real Assets and Cash
     build_position_table('Real Assets and Cash', [
-        ['Gold (GLD)', 'New Core Book\nexpression', 'Added. DXY weakening +\nrefund impulse constructive.', 'DXY above 108,\nreal yields above 2.5%'],
+        ['Gold (GLD)', 'Overweight', 'Bullish since May 2024.\nDXY weakening + refund impulse.', 'DXY above 108,\nreal yields above 2.5%'],
         ['Tail hedges', 'Vol call has\nplayed out', 'Jan call confirmed.\nWould not add at VIX ~20.', 'VIX drops below 14'],
         ['Cash (T-bill\nproxies)', 'Active position', 'Maintained. Dry powder\nfor plumbing dislocation.', 'MRI drops below -0.5'],
     ], 'table_positions_real_assets.png')
@@ -265,11 +264,11 @@ def build_all_position_tables():
 
 def build_invalidation():
     print('Building: Invalidation Criteria...')
-    fig = plt.figure(figsize=(14, 8))
+    fig = plt.figure(figsize=(14, 10))
     fig.patch.set_facecolor(BG)
 
     # Title
-    fig.text(0.50, 0.96, 'INVALIDATION CRITERIA', fontsize=20, fontweight='bold',
+    fig.text(0.50, 0.96, 'INVALIDATION CRITERIA', fontsize=24, fontweight='bold',
              color=FG, ha='center', va='top', fontfamily='sans-serif')
 
     # Divider line under title
@@ -290,22 +289,22 @@ def build_invalidation():
                                        linewidth=1.5)
     left.add_patch(left_bg)
 
-    left.text(0.50, 0.93, 'Defensive Case Breaks If:', fontsize=14, fontweight='bold',
+    left.text(0.50, 0.93, 'Defensive Case Breaks If:', fontsize=18, fontweight='bold',
               color=STARBOARD, ha='center', va='top')
 
     left_items = [
-        ('Labor recovers:', 'Quits rebounds above\n2.2% and job openings reverse higher.\nLong-term unemployment stabilizes.'),
-        ('Credit reconciles:', 'HY OAS widens to 350+\nbps, closing the gap between what\nspreads are pricing and what labor is saying.'),
-        ('Multiple macro inputs improve\nsimultaneously:', 'Labor, credit, and breadth\nall turn constructive. Risk environment\nshifts to neutral.'),
-        ('Breadth confirms:', 'Nasdaq % above 200d\nrecovers above 60%, price-breadth\ndivergence normalizes. Rally is real.'),
+        ('Labor recovers:', 'Quits rebounds above 2.2% and job\nopenings reverse higher. Long-term\nunemployment stabilizes.'),
+        ('Credit reconciles:', 'HY OAS widens to 350+ bps, closing\nthe gap between what spreads are\npricing and what labor is saying.'),
+        ('Multiple macro inputs improve\nsimultaneously:', 'Labor, credit, and breadth all turn\nconstructive. Risk environment\nshifts to neutral.'),
+        ('Breadth confirms:', 'Nasdaq % above 200d recovers\nabove 60%, price-breadth divergence\nnormalizes. Rally is real.'),
     ]
 
     y = 0.82
     for title, desc in left_items:
-        left.text(0.08, y, title, fontsize=11, fontweight='bold', color=FG, va='top')
-        y -= 0.04
-        left.text(0.08, y, desc, fontsize=10, color=MUTED, va='top', linespacing=1.4)
-        y -= 0.18
+        left.text(0.08, y, title, fontsize=14, fontweight='bold', color=FG, va='top')
+        y -= 0.05
+        left.text(0.08, y, desc, fontsize=13, color=MUTED, va='top', linespacing=1.4)
+        y -= 0.19
 
     # RIGHT BOX: Defensive Case Deepens If (red-ish)
     right = fig.add_axes([0.52, 0.05, 0.44, 0.83])
@@ -319,22 +318,22 @@ def build_invalidation():
                                         linewidth=1.5)
     right.add_patch(right_bg)
 
-    right.text(0.50, 0.93, 'Defensive Case Deepens If:', fontsize=14, fontweight='bold',
+    right.text(0.50, 0.93, 'Defensive Case Deepens If:', fontsize=18, fontweight='bold',
                color=PORT, ha='center', va='top')
 
     right_items = [
-        ('Quits breaks below 2.0%:', 'Pre-recessionary\nconfirmation. Core Book shifts to maximum\ndefensive. Overlay tightens stops.'),
-        ('Credit ignores further:', 'HY OAS holds\nbelow 300 while openings continue falling.\nThe snap-back, when it comes, will be violent.'),
-        ('Section 301/232 escalation:', 'If the\nadministration replaces IEEPA with broader,\nmore durable tariff authority, the tariff\nrelief trade reverses.'),
-        ('Plumbing stress emerges:', 'SOFR-EFFR\nspread breaks 15 bps. Defensive to\nDisorderly. Full risk-off.'),
+        ('Quits breaks below 2.0%:', 'Pre-recessionary confirmation. Core\nBook shifts to maximum defensive.\nOverlay tightens stops.'),
+        ('Credit ignores further:', 'HY OAS holds below 300 while openings\ncontinue falling. The snap-back, when\nit comes, will be violent.'),
+        ('Section 301/232 escalation:', 'If the administration replaces IEEPA\nwith broader, more durable tariff\nauthority, the relief trade reverses.'),
+        ('Plumbing stress emerges:', 'SOFR-EFFR spread breaks 15 bps.\nDefensive to Disorderly.\nFull risk-off.'),
     ]
 
     y = 0.82
     for title, desc in right_items:
-        right.text(0.08, y, title, fontsize=11, fontweight='bold', color=FG, va='top')
-        y -= 0.04
-        right.text(0.08, y, desc, fontsize=10, color=MUTED, va='top', linespacing=1.4)
-        y -= 0.18
+        right.text(0.08, y, title, fontsize=14, fontweight='bold', color=FG, va='top')
+        y -= 0.05
+        right.text(0.08, y, desc, fontsize=13, color=MUTED, va='top', linespacing=1.4)
+        y -= 0.19
 
     return save_table_fig(fig, 'table_invalidation.png')
 
@@ -349,7 +348,7 @@ if __name__ == '__main__':
     print(f'{"="*60}\n')
 
     paths = []
-    paths.append(build_summary_banner())
+    # paths.append(build_summary_banner())  # User has this one already
     paths.append(build_scorecard())
     build_all_position_tables()
     paths.append(build_invalidation())

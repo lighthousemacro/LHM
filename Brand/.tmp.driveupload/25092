@@ -486,7 +486,9 @@ Output structure:
 
 ---
 
-## Nautical 8-Color Palette (Quick Reference)
+## Signature 8-Color Palette (23/89/BB Mnemonic)
+
+Every color contains some combination of 23, 89, and BB. Quick Reference:
 
 | Name | Hex | Usage |
 |---|---|---|
@@ -498,3 +500,4 @@ Output structure:
 | **Doldrums** | `#898989` | Zero lines |
 | **Starboard** | `#238923` | Extreme bullish |
 | **Port** | `#892323` | Crisis regime bands |
+| **Fog** | `#D1D1D1` | Zero lines, ghost references |

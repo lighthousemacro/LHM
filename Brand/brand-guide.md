@@ -8,27 +8,35 @@
 
 ## Color Palette
 
-### Nautical 8-Color Palette
+### Signature 8-Color Palette (23/89/BB Mnemonic)
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Ocean | `#0089D1` | Primary brand color, headers, borders, accents |
-| Dusk | `#FF6723` | Warnings, accent bar |
-| Sky | `#33CCFF` | Volatility, momentum (bright cerulean) |
-| Venus | `#FF2389` | Critical alerts |
-| Sea | `#00BB99` | Secondary series, Chart 1 primary |
-| Doldrums | `#D3D6D9` | Backgrounds, grids |
-| Starboard | `#00FF00` | Extreme bullish |
-| Port | `#FF0000` | Crisis zones |
+Every color contains some combination of 23, 89, and BB. The brand palette is a signature.
 
-### Chart Background & Neutrals
+| Layer | Name | Hex | Mnemonic | Usage |
+|-------|------|-----|----------|-------|
+| Primary | Ocean | `#2389BB` | 23+89+BB | Anchor: headers, borders, links, chart primary |
+| The Beacon | Dusk | `#FF6723` | 23 | Key insights, CTA buttons, accent bar, callouts |
+| Secondary | Sky | `#00BBFF` | BB | Lighter blue for secondary chart lines |
+| Tertiary | Sea | `#00BB89` | BB+89 | Regime bands, on-target, trend shading |
+| Bullish | Starboard | `#238923` | 23+89 | Bullish regime, professional green |
+| Bearish | Port | `#892323` | 89+23 | Bearish regime, crisis bands |
+| Alert | Venus | `#FF2389` | 23+89 | 2% target lines, critical alerts |
+| Structural | Doldrums | `#898989` | 89+89 | Axis spines, labels, secondary text |
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Chart Background | `#0A1628` | Dark navy background for all charts |
-| White | `#FFFFFF` | Text on dark backgrounds |
-| Dark Gray | `#333333` | Body text on light backgrounds |
-| Light Gray | `#F5F5F5` | Background alternates, subtle separators |
+### Reference Colors
+
+| Name | Hex | Mnemonic | Usage |
+|------|-----|----------|-------|
+| Ref | `#D1D1D1` | D1+D1 | Zero lines, ghost reference lines |
+
+### Chart Background
+
+| Context | Color | Hex |
+|---------|-------|-----|
+| Primary (all publications) | White | `#FFFFFF` |
+| Optional secondary | Dark Navy | `#0A1628` |
+
+White theme is primary for all Substack, PDF, social, and Chartbook output.
 
 ## Typography
 
@@ -48,13 +56,14 @@ Google Fonts URLs:
 
 ## Logo Usage
 
-**Primary Logo:** `assets/logo.jpg` — White lighthouse on ocean blue background
-**Banner Logo:** `assets/banner.jpg` — Horizontal lockup with lighthouse icon, "LIGHTHOUSE MACRO" text, tagline, and blue/orange accent bar
+**Primary Logo:** `assets/logo.jpg` — White lighthouse on Ocean blue background
+**Banner Logo:** `assets/banner.jpg` — Horizontal lockup with lighthouse icon, "LIGHTHOUSE MACRO" text, tagline, and Ocean/Dusk accent bar
 
 ### Placement Rules
 - **Logo:** Top-left corner of documents, minimum 40px margin from edges
 - **Banner:** Title slides, cover pages, document headers
 - Clear space around logo: minimum 1/4 of logo width on all sides
+- **Logo background:** Update to `#2389BB` (Ocean)
 
 ## Watermark Specifications
 
@@ -65,7 +74,7 @@ Google Fonts URLs:
 
 Watermark styling:
 - Font: Montserrat Bold
-- Color: Ocean Blue `#0089D1` at 15-20% opacity
+- Color: Ocean `#2389BB` at 15-20% opacity
 - Size: Subtle but legible (typically 8-10pt)
 
 ## Contact Information
@@ -108,8 +117,21 @@ Twitter: @LHMacro
 ## Accent Bar
 
 The horizontal accent bar (visible in banner) uses:
-- Ocean Blue `#0089D1` for approximately 2/3 width (left side)
-- Dusk Orange `#FF6723` for approximately 1/3 width (right side)
+- Ocean `#2389BB` for approximately 2/3 width (left side)
+- Dusk `#FF6723` for approximately 1/3 width (right side)
 - Height: 4-6px for documents, scalable for presentations
 
 Use this bar as a visual separator between header and content, or as a footer accent.
+
+## Digital Implementation
+
+### Substack (research.lighthousemacro.com)
+- Web background: `#FFFFFF` (Institutional White)
+- Accent color: `#2389BB` (Ocean) — skins Subscribe buttons and hyperlinks
+- Logo: Update lighthouse icon background to `#2389BB`
+- Wordmark: High-res PNG (1344 x 256), transparent background
+
+### Main Website (lighthousemacro.com)
+- Hero sections: `#2389BB` backgrounds for primary authority
+- Navigation bar: `#2389BB` (Ocean)
+- CTA buttons (Subscribe, Contact): `#FF6723` (Dusk) — high contrast on white/Ocean backgrounds

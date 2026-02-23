@@ -502,16 +502,16 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 
 ## Core Rules
 
+- **White theme is primary.** Generate white theme for all publications (Substack, PDF, social). Dark theme is optional secondary.
 - No gridlines. All four spines visible at 0.5pt.
 - Right axis is primary. No tick marks.
-- Spine colors: Dark theme `#1e3350`, White theme `#cccccc`
-- Every chart: `border: 4.0pt solid #0089D1`
+- Spine color: Doldrums `#898989` (both themes). Dark theme may use `#1e3350` if contrast needed.
+- Every chart: `border: 4.0pt solid #2389BB`
 - DPI 200, bbox_inches='tight', pad_inches=0.10
-- Always generate both dark and white theme versions
 
 ## Axis Configuration
 
-**Dual-Axis:** RHS = Primary (Ocean/Sky), LHS = Secondary (Dusk). Both get last-value pills.
+**Dual-Axis:** RHS = Primary (Ocean), LHS = Secondary (Dusk). Both get last-value pills.
 
 **Single-Axis:** Ticks on RHS, RHS pill only.
 
@@ -526,13 +526,13 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 
 | Type | Color | Style |
 |---|---|---|
-| Zero line | Doldrums `#D3D6D9` | Dashed |
+| Zero line | Ref `#D1D1D1` | Dashed |
 | 2% Target | Venus `#FF2389` | Solid |
-| 3% Danger | Sea `#00BB99` | Solid |
+| 3% Danger | Sea `#00BB89` | Solid |
 
 ## Recession Shading
 
-Dark theme: white, alpha 0.06. White theme: gray, alpha 0.12.
+White theme (primary): gray, alpha 0.12. Dark theme (optional): white, alpha 0.06.
 
 ## Chart Layout
 

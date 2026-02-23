@@ -27,7 +27,7 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 
 | Name | Hex | Mnemonic | Usage |
 |------|-----|----------|-------|
-| Ref | `#D1D1D1` | D1+D1 | Zero lines, ghost reference lines |
+| Fog | `#D1D1D1` | D1+D1 | Zero lines, ghost reference lines |
 
 ### Chart Background
 

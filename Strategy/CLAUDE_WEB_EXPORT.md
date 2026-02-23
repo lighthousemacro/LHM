@@ -63,10 +63,10 @@ Founder & Chief Investment Officer, Lighthouse Macro
 - **"Lighthouse"** was the name of Bob's house in college where he first studied finance/economics. Evolved into the firm identity over the years.
 
 ### Key Relationships & Active Engagements
-- **Pascal Hugli** - Swiss investment manager (Maerki Baumann), host of "Less Noise More Signal" podcast/Substack. Bob appeared Oct 2025 discussing repo markets, Fed plumbing, crypto/Treasury dynamics. Pascal wants Bob back on. LHM is a recommended publication on Pascal's Substack. Mike (BrimxBrand) managing how Pascal brands Bob going forward.
+- **Pascal Hugli** - Swiss investment manager (Maerki Baumann), host of "Less Noise More Signal" podcast/Substack. Bob appeared Oct 2025 discussing repo markets, Fed plumbing, crypto/Treasury dynamics. Pascal wants Bob back on. LHM is a recommended publication on Pascal's Substack.
 - **Tania Reif** - PhD Columbia, former Soros Fund Management, Citadel, Laurion, Alphadyne, IMF. Founder & CIO of Senda Digital Assets (quantamental crypto fund, BVI). Heard Bob on Pascal's podcast. Bob has been doing work for Senda over a ~3-month trial phase.
-- **Christopher King** - Theo Advisors and 5+ other ventures. Wants Bob as the data/macro layer and point person for economic questions across his businesses. Connected Bob with BrimxBrand.
-- **Mike Stephenson (BrimxBrand)** - CEO of Brim & Brand LLC (Carmel, NY). Marketing/branding firm handling Lighthouse Macro brand buildout. Kristina on his team is point person for website build. Mike correctly identified Bob as neurodivergent/athlete on first call.
+- **Christopher King** - Theo Advisors and 5+ other ventures. Wants Bob as the data/macro layer. Last contact early Feb 2026, gone quiet.
+- **Tim Pierotti** - WealthVest CIO. Podcast appearance scheduled Feb 24/25. Explicitly helping Bob build profile.
 
 ---
 

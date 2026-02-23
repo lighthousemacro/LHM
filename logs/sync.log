@@ -26067,3 +26067,55 @@ rsync(43790): error: Client Materials: fstatat: Resource deadlock avoided
 [2026-02-23 13:01:40]   GitHub: OK
 [2026-02-23 13:01:40]   Cloud: OK
 [2026-02-23 13:01:40] ============================================================
+[2026-02-23 13:01:46] ============================================================
+[2026-02-23 13:01:46] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-02-23 13:01:46] ============================================================
+[2026-02-23 13:01:46] GIT SYNC: Starting...
+[2026-02-23 13:01:47] GIT SYNC: Committed: Daily pipeline sync 2026-02-23 13:01
+[2026-02-23 13:01:48] GIT SYNC: Pushed to origin/main.
+[2026-02-23 13:01:48] CLOUD SYNC: Starting...
+[2026-02-23 13:01:48] CLOUD SYNC [iCloud]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 13:01:48] CLOUD SYNC [GDrive]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 13:01:48] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(43847): error: ./.tmp.drivedownload: unlinkat: Directory not empty
+rsync(43847): error: Asset_Class_Frameworks/COMMODITIES.md: fstatat: Resource deadlock avoided
+rsync(43847): error: Asset_Class_Frameworks/CREDIT.md: fstatat: Resource deadlock avoided
+rsync(43847): error: Asset_Class_Frameworks/CRYPTO.md: fstatat: Resource deadlock avoided
+rsync(43847): error: Asset_Class_Frameworks/CURRENCIES.md: fstatat: Resource deadlock avoided
+rsync(43847): error: Asset_Class_Frameworks/EQUITIES.md: fstatat: Resource deadlock avoided
+rsync(43847): error: Asset_Class_Frameworks/RATES.md: fstatat: Resource deadlock avoided
+rsync(43847): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(43846): error: unexpected end of file
+
+[2026-02-23 13:01:48] CLOUD SYNC [GDrive]: rsync Brand failed: rsync(43849): error: .DS_Store: fstatat: Resource deadlock avoided
+rsync(43849): error: Banner2389bb.png: fstatat: Resource deadlock avoided
+rsync(43849): error: Bob_Sheehan_Resume_Jan2026.html: fstatat: Resource deadlock avoided
+rsync(43849): error: Logo2389bb.png: fstatat: Resource deadlock avoided
+rsync(43849): error: ReversLogo2389bb.png: fstatat: Resource deadlock avoided
+rsync(43849): error: SKILL.md: fstatat: Resource deadlock avoided
+rsync(43849): error: brand updates.zip: fstatat: Resource deadlock avoided
+rsync(43849): error: brand-guide.md: fstatat: Resource deadlock avoided
+rsync(43849): error: chart-styling-for-gemini.md: fstatat: Resource deadlock avoided
+rsync(43849): error: chart-styling.md: fstatat: Resource deadlock avoided
+rsync(43849): error: lighthouse_dashboard.html: fstatat: Resource deadlock avoided
+rsync(43849): error: templates.md: fstatat: Resource deadlock avoided
+rsync(43849): error: voice-and-tone-for-gemini.md: fstatat: Resource deadlock avoided
+rsync(43849): error: .tmp.drivedownload: fstatat: Resource deadlock avoided
+rsync(43849): error: .tmp.driveupload: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials/00_Philosophy_And_Approach.html: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials/01_Framework_Overview.html: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials/02_Twelve_Pillars_Summary.html: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials/03_Trading_Strategy_Summary.html: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials/04_Two_Books_Framework.html: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials/05_Crypto_Scoring_Framework.html: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials/06_Recession_Risk_Framework.html: fstatat: Resource deadlock avoided
+rsync(43849): error: .tmp.drivedownload: fstatat: Resource deadlock avoided
+rsync(43849): error: .tmp.driveupload: fstatat: Resource deadlock avoided
+rsync(43849): error: Client Materials: fstatat: Resource deadlock avoided
+
+[2026-02-23 13:01:48] CLOUD SYNC [Dropbox]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 13:01:48] ----------------------------------------
+[2026-02-23 13:01:48] SYNC SUMMARY:
+[2026-02-23 13:01:48]   GitHub: OK
+[2026-02-23 13:01:48]   Cloud: OK
+[2026-02-23 13:01:48] ============================================================

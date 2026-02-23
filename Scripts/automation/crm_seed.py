@@ -34,7 +34,7 @@ SEED_CONTACTS = [
         "title": "Principal",
         "category": "partner", "tier": "vip", "source": "referral",
         "twitter_handle": None,
-        "notes": "5+ ventures. Wants Bob as macro/data layer across his businesses. Connected Bob with BrimxBrand.",
+        "notes": "5+ ventures. Wants Bob as macro/data layer across his businesses. Last contact early Feb 2026, gone quiet.",
     },
     {
         "first_name": "Tim", "last_name": "Pierotti",
@@ -83,14 +83,6 @@ SEED_CONTACTS = [
         "category": "recruiter", "tier": "standard", "source": "inbound",
         "twitter_handle": None,
         "notes": "Has client adding crypto to traditional cap markets research. Bob open to consulting/outsourced, not full-time.",
-    },
-    {
-        "first_name": "Mike", "last_name": "Stephenson",
-        "email": None, "company": "BrimxBrand",
-        "title": "CEO",
-        "category": "partner", "tier": "vip", "source": "referral",
-        "twitter_handle": None,
-        "notes": "Marketing/branding firm handling LHM brand/website buildout. Kristina on his team = website point person. Connected via Christopher King.",
     },
 ]
 

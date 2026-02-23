@@ -483,8 +483,8 @@ def fig05_hy_oas():
 
 def fig05_credit_labor_divergence():
     print('Building Figure 5: Credit-Labor Divergence...')
-    quits = load_series('JTSQUR', start='2020-01-01')
-    hy = load_series('BAMLH0A0HYM2', start='2020-01-01')
+    quits = load_series('JTSQUR', start='2001-01-01')
+    hy = load_series('BAMLH0A0HYM2', start='2001-01-01')
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -508,8 +508,8 @@ def fig05_credit_labor_divergence():
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
 
     # Scale axes so pre-2020 lines roughly tracked
-    ax2.set_ylim(1.4, 3.5)
-    ax1.set_ylim(1100, 200)  # Inverted: 200 at top, 1100 at bottom
+    ax2.set_ylim(1.45, 3.225)
+    ax1.set_ylim(1050, 150)  # Inverted: 150 at top, 1050 at bottom
 
     # Reference lines
     # 2.0% quits threshold on RHS
@@ -521,17 +521,17 @@ def fig05_credit_labor_divergence():
     # 300 bps HY OAS threshold on LHS (inverted)
     ax1.axhline(300, color=THEME['accent'], linewidth=1.5, linestyle='--',
                 alpha=0.5, zorder=5)
-    ax1.text(0.02, 310, '300 bps Complacent', fontsize=9, color=THEME['accent'],
+    ax1.text(0.02, 330, '300 bps Complacent', fontsize=9, color=THEME['accent'],
              alpha=0.5, fontstyle='italic', transform=ax1.get_yaxis_transform())
 
-    add_recessions(ax1, start_date='2020-01-01')
-    set_xlim_to_data(ax1, q_plot.index)
+    add_recessions(ax1, start_date='2001-01-01')
+    set_xlim_to_data(ax1, q_plot.loc['2020-01-01':].index)
 
     add_last_value_label(ax2, q_plot, c_primary, fmt='{:.1f}%', side='right')
     add_last_value_label(ax1, hy_bps, c_secondary, fmt='{:.0f}', side='left')
 
-    add_annotation_box(ax1, 'Credit and labor are pricing two different economies.\nThe gap has not been this wide in over a year.',
-                       x=0.50, y=0.92)
+    add_annotation_box(ax1, 'Credit and labor are pricing two different economies.\nThe divergence has persisted for over two years.',
+                       x=0.50, y=0.97)
 
     # Combined legend
     lines1, labels1 = ax1.get_legend_handles_labels()

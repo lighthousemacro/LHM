@@ -730,7 +730,7 @@ Note: Custom research / signal databases = institutional-tier work, not included
 |---|---|---|
 | **Pascal Hugli** | Maerki Baumann, "Less Noise More Signal" podcast | Built CLI for his report. Podcast collab planned (liquidity deep-dive). LHM recommended on his Substack. |
 | **Tania Reif** | PhD Columbia, ex-Soros/Citadel/IMF. CIO Senda Digital Assets | ~3 month trial phase. Q1 formalization pending. |
-| **Christopher King** | Theo Advisors + ventures | Wants Bob as macro/data layer. BrimxBrand (Mike Stephenson, Kristina) is Chris's marketing team, may help Bob. Last contact ~early Feb 2026, gone quiet. |
+| **Christopher King** | Theo Advisors + ventures | Wants Bob as macro/data layer. Last contact ~early Feb 2026, gone quiet. |
 | **Tim Pierotti** | WealthVest CIO | Podcast appearance scheduled Feb 24/25. Explicitly helping Bob build profile. |
 | **Michael Nadeau** | The DeFi Report | Introductory call went well. Complementary: Bob top-down macro, Nadeau bottom-up DeFi. |
 

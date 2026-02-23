@@ -22,7 +22,7 @@ THEME = {
     'bg': '#ffffff',
     'fg': '#1a1a1a',
     'muted': '#555555',
-    'spine': '#898989',
+    'spine': '#cccccc',
     'zero_line': '#D1D1D1',
     'recession': 'gray',
     'recession_alpha': 0.12,
@@ -105,40 +105,54 @@ def set_xlim_to_data(ax, idx):
     ax.set_xlim(idx.min() - pad_left, idx.max() + pad_right)
 
 
-def brand_fig(fig, title, subtitle, source):
-    # Top-left watermark
-    fig.text(0.06, 0.97, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold',
-             color=THEME['brand_color'], va='top')
-    # Top-right date
-    fig.text(0.94, 0.97, DATE_STR, fontsize=11, color=THEME['muted'], va='top', ha='right')
+def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
+    """Apply LHM branding at figure level."""
+    fig.patch.set_facecolor(THEME['bg'])
+
+    OCEAN = '#2389BB'
+    DUSK = '#FF6723'
+
+    # Watermark + date ABOVE accent bar
+    fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold',
+             color=OCEAN, va='top')
+    fig.text(0.97, 0.98, DATE_STR, fontsize=11, color=THEME['muted'], va='top', ha='right')
+
     # Top accent bar
     bar = fig.add_axes([0.03, 0.955, 0.94, 0.004])
-    bar.axhspan(0, 1, 0, 0.67, color='#2389BB')
-    bar.axhspan(0, 1, 0.67, 1.0, color='#FF6723')
+    bar.axhspan(0, 1, 0, 0.67, color=OCEAN)
+    bar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
     bar.set_xlim(0, 1); bar.set_ylim(0, 1); bar.axis('off')
+
     # Bottom accent bar
     bbar = fig.add_axes([0.03, 0.035, 0.94, 0.004])
-    bbar.axhspan(0, 1, 0, 0.67, color='#2389BB')
-    bbar.axhspan(0, 1, 0.67, 1.0, color='#FF6723')
+    bbar.axhspan(0, 1, 0, 0.67, color=OCEAN)
+    bbar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
     bbar.set_xlim(0, 1); bbar.set_ylim(0, 1); bbar.axis('off')
-    # Title
-    fig.text(0.50, 0.945, title, fontsize=15, fontweight='bold', ha='center',
-             color=THEME['fg'])
+
+    # Title BELOW accent bar
+    fig.suptitle(title, fontsize=15, fontweight='bold', y=0.945,
+                 color=THEME['fg'])
     # Subtitle
-    fig.text(0.50, 0.895, subtitle, fontsize=14, fontstyle='italic', ha='center',
-             color=THEME['brand_color'])
+    if subtitle:
+        fig.text(0.50, 0.895, subtitle, fontsize=14, fontstyle='italic', ha='center',
+                 color=OCEAN)
+
     # Bottom-right tagline
-    fig.text(0.94, 0.015, 'MACRO, ILLUMINATED.', fontsize=13, fontweight='bold',
-             fontstyle='italic', color=THEME['brand_color'], ha='right')
+    fig.text(0.97, 0.025, 'MACRO, ILLUMINATED.', fontsize=13, fontweight='bold',
+             fontstyle='italic', color=OCEAN, ha='right', va='top')
     # Bottom-left source
-    fig.text(0.06, 0.015, f'Lighthouse Macro | {source}; {DATE_STR}',
-             fontsize=9, fontstyle='italic', color=THEME['muted'])
-    # Outer border
-    fig.patches.append(plt.Rectangle(
-        (0, 0), 1, 1, transform=fig.transFigure,
-        fill=False, edgecolor='#2389BB', linewidth=4.0,
-        zorder=100, clip_on=False
-    ))
+    if source:
+        pull_str = datetime.now().strftime('%m.%d.%Y')
+        if data_date is not None:
+            if isinstance(data_date, str):
+                data_date = pd.Timestamp(data_date)
+            data_str = data_date.strftime('%m.%d.%Y')
+            fig.text(0.03, 0.022,
+                     f'Lighthouse Macro | {source} | Data thru {data_str} | Pulled {pull_str}',
+                     fontsize=9, color=THEME['muted'], ha='left', va='top', style='italic')
+        else:
+            fig.text(0.03, 0.022, f'Lighthouse Macro | {source}; {pull_str}',
+                     fontsize=9, color=THEME['muted'], ha='left', va='top', style='italic')
 
 
 def add_last_value_label(ax, y_data, color, fmt='{:.1f}%', side='right', fontsize=9, pad=0.3):
@@ -204,8 +218,16 @@ def add_regime_bands(ax, ymin=-3.0, ymax=3.0):
 
 
 def save_fig(fig, name):
+    """Save figure to output directory."""
+    border_color = '#2389BB'
+    border_width = 4.0
+    fig.patches.append(plt.Rectangle(
+        (0, 0), 1, 1, transform=fig.transFigure,
+        fill=False, edgecolor=border_color, linewidth=border_width,
+        zorder=100, clip_on=False
+    ))
     path = os.path.join(OUT_DIR, name)
-    fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.00,
+    fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.05,
                 facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     print(f'  Saved: {path}')
@@ -219,10 +241,11 @@ def save_fig(fig, name):
 def load_series(series_id, start='2015-01-01'):
     conn = sqlite3.connect(DB_PATH)
     df = pd.read_sql_query(
-        f"SELECT date, value FROM observations WHERE series_id='{series_id}' AND date >= '{start}' ORDER BY date",
+        f"SELECT date, value FROM observations WHERE series_id='{series_id}' AND date >= '{start}' AND value IS NOT NULL ORDER BY date",
         conn
     )
     conn.close()
+    df = df[df['date'].str.match(r'^\d{4}-\d{2}-\d{2}', na=False)]
     df['date'] = pd.to_datetime(df['date'])
     df = df.dropna(subset=['value'])
     df = df.set_index('date')
@@ -337,12 +360,12 @@ def fig02_quits_rate():
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
 
     q_plot = quits.dropna()
+    ax.fill_between(q_plot.index, q_plot, alpha=THEME['fill_alpha'], color=THEME['primary'], zorder=1)
     ax.plot(q_plot.index, q_plot, color=THEME['primary'], linewidth=2.5,
-            label=f'Quits Rate ({q_plot.iloc[-1]:.1f}%)')
-    ax.fill_between(q_plot.index, q_plot, alpha=THEME['fill_alpha'], color=THEME['primary'])
+            label=f'Quits Rate ({q_plot.iloc[-1]:.1f}%)', zorder=2)
 
     # 2.0% threshold
-    ax.axhline(2.0, color=THEME['accent'], linewidth=1.5, linestyle='--', alpha=0.7)
+    ax.axhline(2.0, color=THEME['accent'], linewidth=1.5, linestyle='--', alpha=0.7, zorder=5)
     ax.text(0.02, 2.07, '2.0% Pre-Recessionary Threshold', fontsize=9, color=THEME['accent'],
             alpha=0.8, fontstyle='italic', transform=ax.get_yaxis_transform())
 
@@ -374,9 +397,9 @@ def fig03_openings_rate():
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
 
     o_plot = openings.dropna()
+    ax.fill_between(o_plot.index, o_plot, alpha=THEME['fill_alpha'], color=THEME['primary'], zorder=1)
     ax.plot(o_plot.index, o_plot, color=THEME['primary'], linewidth=2.5,
-            label=f'Openings Rate ({o_plot.iloc[-1]:.1f}%)')
-    ax.fill_between(o_plot.index, o_plot, alpha=THEME['fill_alpha'], color=THEME['primary'])
+            label=f'Openings Rate ({o_plot.iloc[-1]:.1f}%)', zorder=2)
 
     add_recessions(ax, start_date='2001-01-01')
     set_xlim_to_data(ax, o_plot.index)
@@ -445,12 +468,12 @@ def fig05_hy_oas():
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f} bps'))
 
     hy_plot = (hy * 100).dropna()  # Convert to bps
+    ax.fill_between(hy_plot.index, hy_plot, alpha=THEME['fill_alpha'], color=THEME['primary'], zorder=1)
     ax.plot(hy_plot.index, hy_plot, color=THEME['primary'], linewidth=2.5,
-            label=f'HY OAS ({hy_plot.iloc[-1]:.0f} bps)')
-    ax.fill_between(hy_plot.index, hy_plot, alpha=THEME['fill_alpha'], color=THEME['primary'])
+            label=f'HY OAS ({hy_plot.iloc[-1]:.0f} bps)', zorder=2)
 
     # 300 bps complacent threshold
-    ax.axhline(300, color=THEME['accent'], linewidth=1.5, linestyle='--', alpha=0.7)
+    ax.axhline(300, color=THEME['accent'], linewidth=1.5, linestyle='--', alpha=0.7, zorder=5)
     ax.text(0.02, 310, '300 bps: Complacent Threshold', fontsize=9, color=THEME['accent'],
             alpha=0.8, fontstyle='italic', transform=ax.get_yaxis_transform())
 
@@ -460,7 +483,7 @@ def fig05_hy_oas():
 
     last_val = hy_plot.iloc[-1]
     add_annotation_box(ax, f'HY OAS at {last_val:.0f} bps: below the 300 bps complacent\nthreshold. Credit pricing a different economy than labor.',
-                       x=0.50, y=0.92)
+                       x=0.60, y=0.92)
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'HY OAS: Credit Still in Denial',
@@ -527,9 +550,9 @@ def fig07_vix():
     vix_50d = v_plot.rolling(50).mean()
 
     ax.plot(v_plot.index, v_plot, color=THEME['primary'], linewidth=2.0, alpha=0.8,
-            label=f'VIX ({v_plot.iloc[-1]:.1f})')
+            label=f'VIX ({v_plot.iloc[-1]:.1f})', zorder=2)
     ax.plot(vix_50d.dropna().index, vix_50d.dropna(), color=THEME['secondary'], linewidth=2.0,
-            linestyle='-', label=f'50d MA ({vix_50d.dropna().iloc[-1]:.1f})')
+            linestyle='-', label=f'50d MA ({vix_50d.dropna().iloc[-1]:.1f})', zorder=3)
 
     # Reference zones
     ax.axhspan(10, 16, color='#00BB89', alpha=0.08, zorder=0)
@@ -561,8 +584,8 @@ def fig07_vix():
 
 def fig08_sofr_effr():
     print('Building Figure 8: SOFR vs EFFR...')
-    sofr = load_series('NYFED_SOFR', start='2022-01-01')
-    effr = load_series('NYFED_EFFR', start='2022-01-01')
+    sofr = load_series('OFR_FNYR-SOFR-A', start='2022-01-01')
+    effr = load_series('OFR_FNYR-EFFR-A', start='2022-01-01')
 
     fig, ax = new_fig()
     style_single_ax(ax)
@@ -572,9 +595,9 @@ def fig08_sofr_effr():
     e_plot = effr.dropna()
 
     ax.plot(s_plot.index, s_plot, color=THEME['primary'], linewidth=2.5,
-            label=f'SOFR ({s_plot.iloc[-1]:.2f}%)')
+            label=f'SOFR ({s_plot.iloc[-1]:.2f}%)', zorder=2)
     ax.plot(e_plot.index, e_plot, color=THEME['secondary'], linewidth=2.0,
-            label=f'EFFR ({e_plot.iloc[-1]:.2f}%)')
+            label=f'EFFR ({e_plot.iloc[-1]:.2f}%)', zorder=2)
 
     # Spread as shaded area
     common_idx = s_plot.index.intersection(e_plot.index)
@@ -666,19 +689,19 @@ def fig10_yield_curve():
 
     # RHS = Primary = 10Y-2Y Curve (Ocean)
     c_plot = curve.dropna()
+    ax2.fill_between(c_plot.index, c_plot, alpha=0.10, color=c_primary, zorder=1)
     ax2.plot(c_plot.index, c_plot, color=c_primary, linewidth=2.5,
-             label=f'10Y-2Y Spread ({c_plot.iloc[-1]:.2f}%)')
-    ax2.fill_between(c_plot.index, c_plot, alpha=0.10, color=c_primary)
+             label=f'10Y-2Y Spread ({c_plot.iloc[-1]:.2f}%)', zorder=2)
     ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
 
     # LHS = Secondary = 10Y Yield (Dusk)
     t_plot = ten_yr.dropna()
     ax1.plot(t_plot.index, t_plot, color=c_secondary, linewidth=2.0,
-             label=f'10Y Yield ({t_plot.iloc[-1]:.2f}%)')
+             label=f'10Y Yield ({t_plot.iloc[-1]:.2f}%)', zorder=2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
 
     # Zero line on curve
-    ax2.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5)
+    ax2.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5, zorder=5)
 
     add_recessions(ax1, start_date='2015-01-01')
     set_xlim_to_data(ax1, c_plot.index)
@@ -688,7 +711,7 @@ def fig10_yield_curve():
 
     last_curve = c_plot.iloc[-1]
     add_annotation_box(ax1, f'10Y-2Y at +{last_curve:.0f} bps. Steepener building:\ndeficit dynamics, tariff pass-through, anchored front end.',
-                       x=0.50, y=0.12)
+                       x=0.50, y=0.92)
 
     # Combined legend
     lines1, labels1 = ax1.get_legend_handles_labels()
@@ -761,18 +784,17 @@ if __name__ == '__main__':
     print(f'{"="*60}\n')
 
     paths = []
-    paths.append(fig01_pillar_dashboard())
+    # paths.append(fig01_pillar_dashboard())  # TODO: rebuild with 12 pillars, legend, threshold lines
     paths.append(fig02_quits_rate())
     paths.append(fig03_openings_rate())
-    paths.append(fig04_lfi())
+    # paths.append(fig04_lfi())   # Proprietary — skipping for this update
     paths.append(fig05_hy_oas())
-    paths.append(fig06_clg())
+    # paths.append(fig06_clg())   # Proprietary — skipping for this update
     paths.append(fig07_vix())
     paths.append(fig08_sofr_effr())
-    paths.append(fig09_lci())
+    # paths.append(fig09_lci())   # Proprietary — skipping for this update
     paths.append(fig10_yield_curve())
-    paths.append(fig11_mri())
 
     print(f'\n{"="*60}')
-    print(f'All 11 charts saved to: {OUT_DIR}')
+    print(f'All {len(paths)} charts saved to: {OUT_DIR}')
     print(f'{"="*60}')

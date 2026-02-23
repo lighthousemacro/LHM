@@ -1,7 +1,7 @@
 # Lighthouse Macro — Chart Styling Specification
 
-**Version:** 3.0 (TT Deck Standard)
-**Last Updated:** February 1, 2026
+**Version:** 4.0 (2026 Signature Palette + White Primary)
+**Last Updated:** February 23, 2026
 **Purpose:** Canonical reference for all Lighthouse Macro chart generation. Update this file when standards change.
 
 ---
@@ -443,12 +443,12 @@ THEME = {
 
 ## Outer Border
 
-Every chart gets a 1.5pt border at the absolute figure edge, using the theme's spine color.
+Every chart gets a **4.0pt Ocean border** at the absolute figure edge. Ocean regardless of theme.
 
 ```python
 fig.patches.append(plt.Rectangle(
     (0, 0), 1, 1, transform=fig.transFigure,
-    fill=False, edgecolor=THEME['spine'], linewidth=1.5,
+    fill=False, edgecolor='#2389BB', linewidth=4.0,
     zorder=100, clip_on=False
 ))
 ```
@@ -458,25 +458,31 @@ fig.patches.append(plt.Rectangle(
 ## Save Settings
 
 ```python
-fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.15,
+fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.00,
             facecolor=THEME['bg'], edgecolor='none')
 ```
 
 - **DPI**: 200
 - **No `tight_layout()`** — conflicts with accent bar axes
-- Use `bbox_inches='tight'` with `pad_inches=0.15`
+- Use `bbox_inches='tight'` with `pad_inches=0.00`
 
 ---
 
-## Dual-Theme Generation
+## Publishing Workflow
 
-Every chart script must generate **both dark and white** versions. Default behavior is `--theme both`.
+**White theme is primary.** Generate white theme for all publications.
 
 ```
 Output structure:
-  /Outputs/.../dark/chart_XX_name.png
-  /Outputs/.../white/chart_XX_name.png
+  /Outputs/.../white/chart_XX_name.png    # PRIMARY — use for Substack, PDF, social
+  /Outputs/.../dark/chart_XX_name.png     # OPTIONAL — website, special presentations
 ```
+
+- **Substack**: White theme charts
+- **PDF**: White theme charts
+- **Social media (X, LinkedIn)**: White theme
+- **Chartbook**: White theme
+- **Website hero sections**: Dark theme optional
 
 ---
 

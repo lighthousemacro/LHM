@@ -470,7 +470,7 @@ fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.00,
 
 - **DPI**: 200
 - **No `tight_layout()`** — conflicts with accent bar axes
-- Use `bbox_inches='tight'` with `pad_inches=0.15`
+- Use `bbox_inches='tight'` with `pad_inches=0.00`
 
 ---
 

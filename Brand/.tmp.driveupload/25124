@@ -6,6 +6,12 @@
 
 ---
 
+## Primary Theme: White
+
+**White theme is the default for all publications:** Substack, PDF, social media, Chartbook. Dark theme is optional secondary (e.g., for website hero sections or special presentations).
+
+---
+
 ## TT Deck Format (Primary Standard)
 
 All educational, research, and deck charts follow this format unless explicitly overridden.
@@ -82,14 +88,14 @@ These are the standard helper functions used by all chart scripts. They encapsul
 - Tick labels remain (colored to series on dual-axis charts)
 - **No rotated y-axis label text** — the pills and colored tick labels tell the story
 
-### Dark Theme Spine Color
-```python
-'spine': '#1e3350'
-```
-
-### White Theme Spine Color
+### White Theme Spine Color (Primary)
 ```python
 'spine': '#898989'   # Doldrums
+```
+
+### Dark Theme Spine Color (Optional)
+```python
+'spine': '#1e3350'
 ```
 
 ---
@@ -97,9 +103,9 @@ These are the standard helper functions used by all chart scripts. They encapsul
 ## Dual-Axis Charts
 
 ### Axis Assignment
-- **RHS = Primary = Blue (the "star" series). ALWAYS.**
-- **LHS = Secondary = Orange (Dusk). ALWAYS.**
-- Tick labels colored to match their series (blue RHS, orange LHS)
+- **RHS = Primary = Ocean (the "star" series). ALWAYS.**
+- **LHS = Secondary = Dusk. ALWAYS.**
+- Tick labels colored to match their series (Ocean RHS, Dusk LHS)
 
 ### Styling Flow
 ```python
@@ -227,13 +233,13 @@ ax.plot(g_plot.index, g_plot, ...)
 
 ## Reference Lines
 
-### Zero Line (Doldrums)
+### Zero Line (Fog)
 ```python
-ax.axhline(0, color='#898989', linewidth=0.8, alpha=0.5, linestyle='--')
+ax.axhline(0, color='#D1D1D1', linewidth=0.8, alpha=0.5, linestyle='--')
 ```
-Full-width dashed line. Use `COLORS['doldrums']` (`#898989`) for standard charts.
+Full-width dashed ghost line. Use `#D1D1D1` (Fog) for standard zero lines.
 
-**Note:** Some charts use `THEME['muted']` for the zero line (e.g. composite z-score charts where the zero line should match the axis text). Either is acceptable, but prefer Doldrums for YoY% charts and theme muted for z-score charts.
+**Note:** Some charts use `THEME['muted']` for the zero line (e.g. composite z-score charts where the zero line should match the axis text). Either is acceptable, but prefer Ref for YoY% charts and theme muted for z-score charts.
 
 ### 2% Target Line (Venus)
 ```python
@@ -244,7 +250,7 @@ Use on charts where the Fed's 2% target is relevant (inflation measures, PCE, st
 
 **Label positioning:** Use `ax.get_yaxis_transform()` for x-coordinate when you want labels anchored to the y-axis data value:
 ```python
-ax.text(0.02, 2.15, '2% Target', fontsize=8, color=COLORS['venus'],
+ax.text(0.02, 2.15, '2% Target', fontsize=8, color='#FF2389',
         alpha=0.7, style='italic', transform=ax.get_yaxis_transform())
 ```
 
@@ -296,15 +302,15 @@ For composite z-score indicators (PCI, LCI, MSI, etc.), use colored regime bands
 
 ```python
 # Regime bands with axhspan
-ax.axhspan(1.5, 3.0, color=COLORS['port'], alpha=0.25)     # Crisis
-ax.axhspan(1.0, 1.5, color=COLORS['dusk'], alpha=0.20)     # High
-ax.axhspan(0.5, 1.0, color=COLORS['dusk'], alpha=0.12)     # Elevated
-ax.axhspan(-0.5, 0.5, color=COLORS['sea'], alpha=0.12)     # On target
-ax.axhspan(-3.0, -0.5, color=COLORS['sky'], alpha=0.12)    # Deflationary/Low
+ax.axhspan(1.5, 3.0, color='#892323', alpha=0.25)     # Crisis (Port)
+ax.axhspan(1.0, 1.5, color='#FF6723', alpha=0.20)     # High (Dusk)
+ax.axhspan(0.5, 1.0, color='#FF6723', alpha=0.12)     # Elevated (Dusk)
+ax.axhspan(-0.5, 0.5, color='#00BB89', alpha=0.12)    # On target (Sea)
+ax.axhspan(-3.0, -0.5, color='#00BBFF', alpha=0.12)   # Deflationary/Low (Sky)
 
 # Regime labels — right-aligned inside chart area
 ax.text(0.98, 1.75, 'CRISIS', transform=ax.get_yaxis_transform(),
-        fontsize=9, color=COLORS['port'], va='center', ha='right',
+        fontsize=9, color='#892323', va='center', ha='right',
         fontweight='bold', alpha=0.8)
 # ... repeat for each zone with appropriate y-coordinate centered in band
 ```
@@ -326,8 +332,8 @@ RECESSIONS = [
     ('2007-12-01', '2009-06-01'),
     ('2020-02-01', '2020-04-01'),
 ]
-# Dark: white, alpha 0.06
-# White: gray, alpha 0.12
+# White theme (primary): gray, alpha 0.12
+# Dark theme (optional): white, alpha 0.06
 ax.axvspan(start, end, color=color, alpha=alpha, zorder=0)
 ```
 
@@ -350,6 +356,8 @@ ax.legend(loc='upper left', **legend_style())
 ---
 
 ## Color Assignments by Theme
+
+**UPDATED (Feb 2026):** Ocean `#2389BB` is PRIMARY for BOTH themes. White theme is primary publication format.
 
 ### White Theme (Primary)
 | Role | Color | Hex |
@@ -380,8 +388,6 @@ ax.legend(loc='upper left', **legend_style())
 | Spine | Dark Blue | `#1e3350` |
 | Legend bg | Dark Blue | `#0f1f38` |
 | Legend fg | Light | `#e6edf3` |
-
-**Note**: White theme is primary for all publications. Ocean is primary color on BOTH themes.
 
 ### Full Theme Dictionary
 
@@ -480,24 +486,48 @@ Output structure:
 
 - **Substack**: White theme charts
 - **PDF**: White theme charts
-- **Social media (X, LinkedIn)**: White theme
+- **Social media (X, LinkedIn)**: White theme (works well in both light and dark mode feeds)
 - **Chartbook**: White theme
 - **Website hero sections**: Dark theme optional
 
 ---
 
-## Signature 8-Color Palette (23/89/BB Mnemonic)
+## Signature 8-Color Palette (Quick Reference)
 
-Every color contains some combination of 23, 89, and BB. Quick Reference:
+| Name | Hex | Mnemonic | Usage |
+|---|---|---|---|
+| **Ocean** | `#2389BB` | 23+89+BB | Primary data, borders, branding |
+| **Dusk** | `#FF6723` | 23 | Secondary series, accent bar, CTAs |
+| **Sky** | `#00BBFF` | BB | Tertiary data lines |
+| **Venus** | `#FF2389` | 23+89 | 2% target lines, critical alerts |
+| **Sea** | `#00BB89` | BB+89 | Regime bands, on-target zones |
+| **Doldrums** | `#898989` | 89+89 | Spines, labels, structural gray |
+| **Starboard** | `#238923` | 23+89 | Bullish regime |
+| **Port** | `#892323` | 89+23 | Bearish regime, crisis bands |
+| **Fog** | `#D1D1D1` | D1+D1 | Zero lines, ghost references |
 
-| Name | Hex | Usage |
-|---|---|---|
-| **Ocean** | `#2389BB` | Primary data (white theme), borders, branding |
-| **Dusk** | `#FF6723` | Secondary series, accent bar segment |
-| **Sky** | `#00BBFF` | Primary data (dark theme) |
-| **Venus** | `#FF2389` | 2% target lines, critical alerts |
-| **Sea** | `#00BB89` | Tertiary series, on-target regime bands |
-| **Doldrums** | `#898989` | Zero lines |
-| **Starboard** | `#238923` | Extreme bullish |
-| **Port** | `#892323` | Crisis regime bands |
-| **Fog** | `#D1D1D1` | Zero lines, ghost references |
+---
+
+## Reference Implementation
+
+The canonical implementation of this spec lives in:
+```
+/Users/bob/LHM/Scripts/utilities/lighthouse_chart_style.py
+```
+
+For the TT research deck implementation:
+```
+/Users/bob/LHM/Scripts/chart_generation/tt_research_charts.py
+```
+
+---
+
+## PDF Generation
+
+Branded PDFs follow the style established in:
+```
+/Users/bob/LHM/Scripts/generate_two_books_pdf.py  (canonical PDF style)
+/Users/bob/LHM/Scripts/chart_generation/prices_edu_pdf.py  (educational article PDF)
+```
+
+Key elements: full-width Ocean/Dusk header bar with white text, matching thin footer bar, Ocean `#2389BB` H1/H2 headings, Ocean table headers with white text, justified body at 10pt. Open PDFs with PDF Expert.

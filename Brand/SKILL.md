@@ -63,7 +63,7 @@ Create styled HTML artifacts with embedded CSS using brand colors and Google Fon
 
 Every chart must have:
 ```css
-border: 2px solid #2389BB;
+border: 4pt solid #2389BB;
 ```
 
 Layout rules per `references/chart-styling.md`:

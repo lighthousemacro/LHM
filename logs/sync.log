@@ -27121,3 +27121,76 @@ MANUAL (copy from Desktop - accessible from phone via iCloud):
   6. ChatGPT         → paste into custom instructions
 
 ========================================
+[2026-02-23 16:15:00] ============================================================
+[2026-02-23 16:15:00] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-02-23 16:15:00] ============================================================
+[2026-02-23 16:15:00] GIT SYNC: Starting...
+[2026-02-23 16:15:01] GIT SYNC: Committed: Daily pipeline sync 2026-02-23 16:15
+[2026-02-23 16:15:02] GIT SYNC: Pushed to origin/main.
+[2026-02-23 16:15:02] CLOUD SYNC: Starting...
+[2026-02-23 16:15:02] CLOUD SYNC [iCloud]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 16:15:02] CLOUD SYNC [GDrive]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 16:15:02] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(48809): error: ./.tmp.drivedownload: unlinkat: Directory not empty
+rsync(48809): error: Asset_Class_Frameworks/COMMODITIES.md: fstatat: Resource deadlock avoided
+rsync(48809): error: Asset_Class_Frameworks/CREDIT.md: fstatat: Resource deadlock avoided
+rsync(48809): error: Asset_Class_Frameworks/CRYPTO.md: fstatat: Resource deadlock avoided
+rsync(48809): error: Asset_Class_Frameworks/CURRENCIES.md: fstatat: Resource deadlock avoided
+rsync(48809): error: Asset_Class_Frameworks/EQUITIES.md: fstatat: Resource deadlock avoided
+rsync(48809): error: Asset_Class_Frameworks/RATES.md: fstatat: Resource deadlock avoided
+rsync(48809): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(48808): error: unexpected end of file
+
+[2026-02-23 16:15:02] CLOUD SYNC [GDrive]: rsync Brand failed: rsync(48811): error: .DS_Store: fstatat: Resource deadlock avoided
+rsync(48811): error: Banner2389bb.png: fstatat: Resource deadlock avoided
+rsync(48811): error: Bob_Sheehan_Resume_Jan2026.html: fstatat: Resource deadlock avoided
+rsync(48811): error: Logo2389bb.png: fstatat: Resource deadlock avoided
+rsync(48811): error: ReversLogo2389bb.png: fstatat: Resource deadlock avoided
+rsync(48811): error: SKILL.md: fstatat: Resource deadlock avoided
+rsync(48811): error: brand updates.zip: fstatat: Resource deadlock avoided
+rsync(48811): error: brand-guide.md: fstatat: Resource deadlock avoided
+rsync(48811): error: chart-styling-for-gemini.md: fstatat: Resource deadlock avoided
+rsync(48811): error: chart-styling.md: fstatat: Resource deadlock avoided
+rsync(48811): error: lighthouse_dashboard.html: fstatat: Resource deadlock avoided
+rsync(48811): error: templates.md: fstatat: Resource deadlock avoided
+rsync(48811): error: voice-and-tone-for-gemini.md: fstatat: Resource deadlock avoided
+rsync(48811): error: .tmp.drivedownload: fstatat: Resource deadlock avoided
+rsync(48811): error: .tmp.driveupload: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials/00_Philosophy_And_Approach.html: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials/01_Framework_Overview.html: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials/02_Twelve_Pillars_Summary.html: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials/03_Trading_Strategy_Summary.html: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials/04_Two_Books_Framework.html: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials/05_Crypto_Scoring_Framework.html: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials/06_Recession_Risk_Framework.html: fstatat: Resource deadlock avoided
+rsync(48811): error: .tmp.drivedownload: fstatat: Resource deadlock avoided
+rsync(48811): error: .tmp.driveupload: fstatat: Resource deadlock avoided
+rsync(48811): error: Client Materials: fstatat: Resource deadlock avoided
+
+[2026-02-23 16:15:02] CLOUD SYNC [Dropbox]: Lighthouse_Master_20260223.db already exists, skipping.
+[2026-02-23 16:15:02] ----------------------------------------
+[2026-02-23 16:15:02] SYNC SUMMARY:
+[2026-02-23 16:15:02]   GitHub: OK
+[2026-02-23 16:15:02]   Cloud: OK
+[2026-02-23 16:15:02] ============================================================
+[2026-02-23 16:30:00] Updated LAST_SYNC to 2026-02-23
+[2026-02-23 16:30:00] Synced to Claude Code: /Users/bob/.claude/CLAUDE.md
+cp: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md: Operation not permitted
+[2026-02-23 16:30:00] Created desktop export: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md
+========================================
+MASTER CONTEXT SYNCED - 2026-02-23 16:30:00
+========================================
+
+LAST_SYNC updated to: 2026-02-23
+
+AUTOMATIC:
+  1. Claude Code:    DONE
+  2. Desktop Export: DONE (~/Desktop/LHM_MASTER_CONTEXT.md)
+
+MANUAL (copy from Desktop - accessible from phone via iCloud):
+  3. Claude.ai/iOS  → paste into custom instructions
+  4. Claude Desktop → paste into custom instructions
+  5. Gemini          → paste into context
+  6. ChatGPT         → paste into custom instructions
+
+========================================

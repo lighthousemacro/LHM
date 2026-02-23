@@ -366,14 +366,14 @@ def legend_style():
 def save_fig(fig, filename):
     """Save figure to output directory."""
     border_color = COLORS['ocean']
-    border_width = 4.0
+    border_width = 6.0
     fig.patches.append(plt.Rectangle(
         (0, 0), 1, 1, transform=fig.transFigure,
         fill=False, edgecolor=border_color, linewidth=border_width,
         zorder=100, clip_on=False
     ))
     filepath = os.path.join(OUTPUT_DIR, filename)
-    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.00,
+    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.04,
                 facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     print(f'  Saved: {filepath}')
@@ -453,10 +453,10 @@ def chart_01():
     plot_values = values + derived_values
     plot_statuses = statuses + derived_statuses
 
-    fig, ax = plt.subplots(figsize=(14, 10))
+    fig, ax = plt.subplots(figsize=(14, 8))
     fig.patch.set_facecolor(THEME['bg'])
     ax.set_facecolor(THEME['bg'])
-    fig.subplots_adjust(top=0.88, bottom=0.06, left=0.28, right=0.88)
+    fig.subplots_adjust(top=0.88, bottom=0.06, left=0.22, right=0.95)
 
     y_pos = np.arange(len(plot_labels))[::-1]  # Reverse so Pillar 1 is at top
 
@@ -473,7 +473,7 @@ def chart_01():
         else:
             bar_colors.append(COLORS['ocean'])
 
-    bars = ax.barh(y_pos, plot_values, color=bar_colors, height=0.6, alpha=0.85, zorder=3)
+    bars = ax.barh(y_pos, plot_values, color=bar_colors, height=0.8, alpha=0.85, zorder=3)
 
     # Add value + status labels (always to the right of the bar end)
     for i, (v, s) in enumerate(zip(plot_values, plot_statuses)):
@@ -496,6 +496,7 @@ def chart_01():
 
     ax.set_yticks(y_pos)
     ax.set_yticklabels(plot_labels, fontsize=11, color=THEME['fg'])
+    ax.set_ylim(y_pos.min() - 0.6, y_pos.max() + 0.6)
     ax.set_xlabel('Z-Score', fontsize=11, color=THEME['fg'])
 
     style_ax(ax, right_primary=False)

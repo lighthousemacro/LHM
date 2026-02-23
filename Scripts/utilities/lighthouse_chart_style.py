@@ -16,32 +16,33 @@ import numpy as np
 # =============================================================================
 
 LIGHTHOUSE_COLORS = {
-    'ocean_blue': '#0089D1',      # Primary data series, bullish signals
-    'dusk_orange': '#FF6723',     # Warning thresholds, secondary emphasis
-    'electric_cyan': '#33CCFF',   # Volatility indicators, highlights (bright cerulean)
-    'hot_magenta': '#FF2389',     # Critical alerts, extreme stress
-    'teal_green': '#00BB99',      # Secondary series, stable metrics
-    'neutral_gray': '#D3D6D9',    # Backgrounds, grids, reference
-    'lime_green': '#00FF00',      # Extreme bullish/overbought
-    'pure_red': '#FF0000'         # Crisis zones, recession signals
+    'ocean_blue': '#2389BB',      # Primary brand (23+89+BB mnemonic)
+    'dusk_orange': '#FF6723',     # Secondary, accent bar, CTAs (23)
+    'electric_cyan': '#00BBFF',   # Tertiary data lines (BB)
+    'hot_magenta': '#FF2389',     # Critical alerts, 2% target (23+89)
+    'teal_green': '#00BB89',      # Regime bands, on-target (BB+89)
+    'neutral_gray': '#898989',    # Spines, labels, structural (89+89)
+    'lime_green': '#238923',      # Bullish regime (23+89)
+    'pure_red': '#892323',        # Bearish regime, crisis (89+23)
+    'ref_gray': '#D1D1D1',        # Zero lines, ghost reference (D1+D1)
 }
 
 # Fill variants (30% opacity)
 LIGHTHOUSE_FILLS = {
-    'ocean_blue_fill': 'rgba(0, 137, 209, 0.3)',
+    'ocean_blue_fill': 'rgba(35, 137, 187, 0.3)',
     'dusk_orange_fill': 'rgba(255, 103, 35, 0.3)',
-    'stress_zone': 'rgba(255, 0, 0, 0.2)',
-    'expansion_zone': 'rgba(0, 255, 0, 0.2)',
-    'neutral_zone': 'rgba(211, 214, 217, 0.3)'
+    'stress_zone': 'rgba(137, 35, 35, 0.2)',
+    'expansion_zone': 'rgba(35, 137, 35, 0.2)',
+    'neutral_zone': 'rgba(137, 137, 137, 0.3)'
 }
 
 # Hex fills for matplotlib
 LIGHTHOUSE_FILLS_HEX = {
-    'ocean_blue_fill': '#0089D14D',
+    'ocean_blue_fill': '#2389BB4D',
     'dusk_orange_fill': '#FF67234D',
-    'stress_zone': '#FF000033',
-    'expansion_zone': '#00FF0033',
-    'neutral_zone': '#D3D6D94D',
+    'stress_zone': '#89232333',
+    'expansion_zone': '#23892333',
+    'neutral_zone': '#8989894D',
     'light_blue_bg': '#E6F4FB',
     'light_red_bg': '#FFEBEE',
     'light_green_bg': '#E8F5E9'

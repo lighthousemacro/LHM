@@ -2,10 +2,10 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-OCEAN = '#0089D1'
+OCEAN = '#2389BB'
 DUSK = '#FF6723'
 VENUS = '#FF2389'
-SEA = '#00BB99'
+SEA = '#00BB89'
 
 data = [
     ("ISM Manufacturing PMI", "52.6", "Expansion (first time in 12 months)"),

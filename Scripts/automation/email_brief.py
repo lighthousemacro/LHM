@@ -116,7 +116,7 @@ def main():
     if args.test:
         html = f"""
         <html><body style="background:#0A1628;color:#e6edf3;font-family:Inter,sans-serif;padding:2rem">
-        <h1 style="color:#0089D1">LHM Email Test</h1>
+        <h1 style="color:#2389BB">LHM Email Test</h1>
         <p>If you're reading this, email delivery works.</p>
         <p style="color:#8b949e">{now.strftime('%Y-%m-%d %H:%M:%S')}</p>
         </body></html>

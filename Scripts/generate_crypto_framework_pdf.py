@@ -42,12 +42,12 @@ except ImportError:
 # ============================================
 # LIGHTHOUSE MACRO BRAND COLORS
 # ============================================
-OCEAN_BLUE = colors.HexColor('#0089D1')
+OCEAN_BLUE = colors.HexColor('#2389BB')
 DUSK_ORANGE = colors.HexColor('#FF6723')
 SKY_CYAN = colors.HexColor('#00D4FF')
 VENUS_MAGENTA = colors.HexColor('#FF2389')
-SEA_TEAL = colors.HexColor('#00BB99')
-DOLDRUMS_GRAY = colors.HexColor('#D3D6D9')
+SEA_TEAL = colors.HexColor('#00BB89')
+DOLDRUMS_GRAY = colors.HexColor('#898989')
 DARK_GRAY = colors.HexColor('#333333')
 LIGHT_GRAY = colors.HexColor('#F5F5F5')
 

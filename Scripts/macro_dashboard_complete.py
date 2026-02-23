@@ -10,7 +10,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 # --------------------------------------------------
 # User-defined constants
 # --------------------------------------------------
-OCEAN_BLUE         = '0089D1'      # darker blue for lines
+OCEAN_BLUE         = '2389BB'      # darker blue for lines
 DEEP_ORANGE        = '#FF6B35'     # highlight orange
 NEON_CAROLINA_BLUE = '#00C5FF'     # light blue accent
 NEON_MAGENTA       = '#FF00FF'     # magenta accent

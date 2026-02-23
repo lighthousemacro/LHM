@@ -9,12 +9,12 @@ from pathlib import Path
 
 # ———————— COLORS ————————
 COLORS = {
-    'ocean': '#0089D1',
+    'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#33CCFF',
-    'sea': '#00BB99',
+    'sky': '#00BBFF',
+    'sea': '#00BB89',
     'venus': '#FF2389',
-    'doldrums': '#D3D6D9',
+    'doldrums': '#898989',
 }
 
 THEME = {
@@ -22,7 +22,7 @@ THEME = {
     'fg': '#e6edf3',
     'muted': '#8b949e',
     'spine': '#1e3350',
-    'primary': '#0089D1',
+    'primary': '#2389BB',
 }
 
 OUTPUT_DIR = Path('/Users/bob/Desktop/BTC_ETF_Article')

@@ -376,7 +376,7 @@ def _status_color(status: str) -> str:
     if any(w in s for w in ["EXPANSION", "ON TARGET", "TREND", "LOOSE",
                             "LOW RISK", "BULLISH", "GREEN", "ACCUMULATION",
                             "CAPITAL", "RAPID"]):
-        return "#00BB99"  # Sea
+        return "#00BB89"  # Sea
     return "#8b949e"
 
 
@@ -390,7 +390,7 @@ def _change_html(index_id: str, current: dict, prior: dict) -> str:
     delta = val - prior[index_id]["value"]
     if abs(delta) < 0.001:
         return f'<span style="color:#8b949e">=</span>'
-    color = "#00BB99" if delta > 0 else "#FF6723"
+    color = "#00BB89" if delta > 0 else "#FF6723"
     arrow = "&#9650;" if delta > 0 else "&#9660;"
     return f'<span style="color:{color}">{arrow} {abs(delta):.3f}</span>'
 
@@ -449,7 +449,7 @@ _HIGH_IS_BAD = {
 def _gauge_colors(n: int) -> list:
     """Return a fixed color gradient for n tiers: bad (left) to good (right)."""
     # Venus -> Dusk -> Gray -> Sea -> Sky
-    palette = ["#FF2389", "#FF6723", "#8b949e", "#00BB99", "#33CCFF"]
+    palette = ["#FF2389", "#FF6723", "#8b949e", "#00BB89", "#00BBFF"]
     if n <= 1:
         return palette[2:3]
     if n == 2:
@@ -725,12 +725,12 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True,
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --ocean: #0089D1;
+            --ocean: #2389BB;
             --dusk: #FF6723;
-            --sky: #33CCFF;
+            --sky: #00BBFF;
             --venus: #FF2389;
-            --sea: #00BB99;
-            --doldrums: #D3D6D9;
+            --sea: #00BB89;
+            --doldrums: #898989;
             --bg: #0A1628;
             --card: #0f2140;
             --text: #e6edf3;

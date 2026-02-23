@@ -20,7 +20,7 @@ from PIL import Image as PILImage
 # ============================================
 # BRAND COLORS (matches Two Books PDF)
 # ============================================
-OCEAN_BLUE = colors.HexColor('#0089D1')
+OCEAN_BLUE = colors.HexColor('#2389BB')
 DUSK_ORANGE = colors.HexColor('#FF6723')
 DARK_GRAY = colors.HexColor('#333333')
 LIGHT_GRAY = colors.HexColor('#F5F5F5')

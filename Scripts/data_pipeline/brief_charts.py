@@ -28,14 +28,14 @@ import numpy as np
 # ============================================================
 
 COLORS = {
-    'ocean': '#0089D1',
+    'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#33CCFF',
+    'sky': '#00BBFF',
     'venus': '#FF2389',
-    'sea': '#00BB99',
-    'doldrums': '#D3D6D9',
-    'starboard': '#00FF00',
-    'port': '#FF0000',
+    'sea': '#00BB89',
+    'doldrums': '#898989',
+    'starboard': '#238923',
+    'port': '#892323',
 }
 
 DARK_THEME = {

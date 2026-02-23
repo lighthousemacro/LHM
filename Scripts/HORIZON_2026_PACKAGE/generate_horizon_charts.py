@@ -100,7 +100,7 @@ def get_fetcher() -> DataFetcher:
 
 # 8-Color Palette
 LHM_COLORS = {
-    'ocean': '#0089D1',      # Primary data series
+    'ocean': '#2389BB',      # Primary data series
     'dusk': '#FF6723',       # Secondary / Warning thresholds
     'electric': '#03DDFF',   # Volatility / Highlights
     'hot': '#FF00F0',        # Extreme stress / Attention

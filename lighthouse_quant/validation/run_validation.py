@@ -379,15 +379,15 @@ def generate_report(
         <title>Lighthouse Macro - Indicator Validation Report</title>
         <style>
             body {{ font-family: 'Inter', sans-serif; margin: 40px; background: #f5f5f5; }}
-            h1 {{ color: #0089D1; }}
-            h2 {{ color: #333; border-bottom: 2px solid #0089D1; padding-bottom: 5px; }}
+            h1 {{ color: #2389BB; }}
+            h2 {{ color: #333; border-bottom: 2px solid #2389BB; padding-bottom: 5px; }}
             table {{ border-collapse: collapse; width: 100%; margin: 20px 0; background: white; }}
             th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
-            th {{ background: #0089D1; color: white; }}
+            th {{ background: #2389BB; color: white; }}
             tr:nth-child(even) {{ background: #f9f9f9; }}
-            .valid {{ color: #00BB99; font-weight: bold; }}
+            .valid {{ color: #00BB89; font-weight: bold; }}
             .invalid {{ color: #FF6723; font-weight: bold; }}
-            .metric {{ font-size: 24px; font-weight: bold; color: #0089D1; }}
+            .metric {{ font-size: 24px; font-weight: bold; color: #2389BB; }}
             .card {{ background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
         </style>
     </head>

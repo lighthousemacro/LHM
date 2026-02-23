@@ -14,11 +14,11 @@ TASKS_DB = Path("/Users/bob/LHM/Data/databases/lhm_tasks.db")
 CRM_DB = Path("/Users/bob/LHM/Data/databases/lhm_contacts.db")
 
 # Brand colors
-OCEAN = "#0089D1"
+OCEAN = "#2389BB"
 DUSK = "#FF6723"
-SKY = "#33CCFF"
+SKY = "#00BBFF"
 VENUS = "#FF2389"
-SEA = "#00BB99"
+SEA = "#00BB89"
 MUTED = "#8b949e"
 CARD_BG = "#0f2140"
 BORDER = "#1e3350"

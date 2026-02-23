@@ -35,7 +35,7 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 LHM_COLORS = {
-    'ocean': '#0089D1',      # Primary data series, branding
+    'ocean': '#2389BB',      # Primary data series, branding
     'dusk': '#FF6723',       # Secondary / Warning thresholds
     'electric': '#03DDFF',   # Volatility / Highlights
     'hot': '#FF00F0',        # Moving averages, extreme stress

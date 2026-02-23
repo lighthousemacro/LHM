@@ -49,9 +49,9 @@ def set_theme(mode='white'):
             'fg': '#e6edf3',
             'muted': '#8b949e',
             'spine': '#2a4060',
-            'brand_color': '#33CCFF',
+            'brand_color': '#00BBFF',
             'brand2_color': C['dusk_orange'],
-            'primary': '#33CCFF',
+            'primary': '#00BBFF',
             'subtitle': '#7a8a9e',
             'text_strong': '#e6edf3',
             'text_label': '#c0cad8',
@@ -116,8 +116,8 @@ PALETTE_WHITE = [C['ocean_blue'], C['dusk_orange'], C['hot_magenta'],
                  '#8B5CF6', '#00D4FF', '#F59E0B',
                  '#10B981', '#EF4444', '#6366F1', C['teal_green']]
 
-PALETTE_DARK = ['#33CCFF', '#FF6723', '#FF2389', '#A78BFA',
-                '#FBBF24', '#34D399', '#00BB99', '#F87171',
+PALETTE_DARK = ['#00BBFF', '#FF6723', '#FF2389', '#A78BFA',
+                '#FBBF24', '#34D399', '#00BB89', '#F87171',
                 '#818CF8', '#FB923C']
 
 def get_palette():
@@ -128,10 +128,10 @@ def clr(name):
     """Get theme-appropriate semantic color."""
     dark_map = {
         'green': '#34D399',
-        'blue': '#33CCFF',
+        'blue': '#00BBFF',
         'orange': '#FF6723',
         'red': '#FF4455',
-        'cyan': '#33CCFF',
+        'cyan': '#00BBFF',
         'magenta': '#FF2389',
         'teal': '#34D399',
     }
@@ -140,7 +140,7 @@ def clr(name):
         'blue': C['ocean_blue'],
         'orange': C['dusk_orange'],
         'red': C['pure_red'],
-        'cyan': '#33CCFF',
+        'cyan': '#00BBFF',
         'magenta': C['dusk_orange'],
         'teal': C['teal_green'],
     }
@@ -159,11 +159,11 @@ SECTOR_COLORS_WHITE = {
 }
 
 SECTOR_COLORS_DARK = {
-    'DeFi - DEX': '#33CCFF',
+    'DeFi - DEX': '#00BBFF',
     'DeFi - Lending': '#00DDAA',
     'DeFi - Derivatives': '#FF2389',
     'Layer 1 (Settlement)': '#FF6723',
-    'Layer 2 (Scaling)': '#33CCFF',
+    'Layer 2 (Scaling)': '#00BBFF',
     'Liquid Staking': '#A78BFA',
     'Infrastructure': '#FBBF24',
     'Uncategorized': '#6a7a8a',
@@ -181,7 +181,7 @@ def brand_ax(ax, title, subtitle=None):
     if subtitle:
         # Place subtitle just below the title, right-aligned
         ax.text(1.0, 1.005, subtitle, transform=ax.transAxes,
-                fontsize=8, ha='right', va='bottom', color='#0089D1', style='italic')
+                fontsize=8, ha='right', va='bottom', color='#2389BB', style='italic')
     for spine in ax.spines.values():
         spine.set_linewidth(0.5)
         spine.set_color(THEME['spine'])
@@ -219,7 +219,7 @@ def brand_fig(fig, title, subtitle=None, source=None):
     """Apply LHM branding at figure level."""
     fig.patch.set_facecolor(THEME['bg'])
 
-    OCEAN = '#0089D1'
+    OCEAN = '#2389BB'
     DUSK = '#FF6723'
 
     # Top-left watermark — Ocean Blue, bold
@@ -329,7 +329,7 @@ def chart_01_scoring_matrix():
     y = np.arange(len(protocols))
     bh = 0.25
 
-    ax.barh(y + bh, fin, bh, label='Financial', color=C['teal_green'] if THEME['mode'] == 'white' else '#00BB99', alpha=0.9)
+    ax.barh(y + bh, fin, bh, label='Financial', color=C['teal_green'] if THEME['mode'] == 'white' else '#00BB89', alpha=0.9)
     ax.barh(y, val, bh, label='Valuation', color=clr('orange'), alpha=0.9)
     ax.barh(y - bh, use, bh, label='Usage', color=clr('blue'), alpha=0.9)
 
@@ -599,7 +599,7 @@ def chart_07_subsidy_score():
     fig.subplots_adjust(top=0.84)
     brand_fig(fig, 'Subsidy Score Analysis', source='Token Terminal')
     fig.text(0.5, 0.90, 'Token Incentives per $1 of Revenue | <0.5 = Organic | >2.0 = Unsustainable',
-             fontsize=9, ha='center', color='#0089D1', style='italic')
+             fontsize=9, ha='center', color='#2389BB', style='italic')
     save(fig, '07_subsidy_score.png')
 
 

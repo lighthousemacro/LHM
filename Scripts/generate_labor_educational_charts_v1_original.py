@@ -40,14 +40,14 @@ try:
 except ImportError:
     # Fallback colors
     LIGHTHOUSE_COLORS = {
-        'ocean_blue': '#0089D1',
+        'ocean_blue': '#2389BB',
         'dusk_orange': '#FF6723',
         'electric_cyan': '#00FFFF',
         'hot_magenta': '#FF2389',
-        'teal_green': '#00BB99',
-        'neutral_gray': '#D3D6D9',
-        'lime_green': '#00FF00',
-        'pure_red': '#FF0000'
+        'teal_green': '#00BB89',
+        'neutral_gray': '#898989',
+        'lime_green': '#238923',
+        'pure_red': '#892323'
     }
 
 # ============================================

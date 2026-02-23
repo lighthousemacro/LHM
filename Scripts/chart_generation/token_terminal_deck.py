@@ -46,7 +46,7 @@ conn = sqlite3.connect(DB)
 # Ocean, Dusk, Venus, then supplementary distinct colors
 # =========================================================================
 CHART_PALETTE = [
-    C['ocean_blue'],     # #0089D1
+    C['ocean_blue'],     # #2389BB
     C['dusk_orange'],    # #FF6723
     C['hot_magenta'],    # #FF2389 (Venus)
     '#8B5CF6',           # Purple

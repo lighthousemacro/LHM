@@ -28,14 +28,14 @@ DATA_PATH = f'{BASE_PATH}/Scripts/backtest/cli_chart_data.csv'
 OUTPUT_BASE = f'{BASE_PATH}/Outputs/CLI_Charts'
 
 COLORS = {
-    'ocean': '#0089D1',
+    'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#33CCFF',
+    'sky': '#00BBFF',
     'venus': '#FF2389',
-    'sea': '#00BB99',
-    'doldrums': '#D3D6D9',
-    'starboard': '#00FF00',
-    'port': '#FF0000',
+    'sea': '#00BB89',
+    'doldrums': '#898989',
+    'starboard': '#238923',
+    'port': '#892323',
 }
 
 THEME = {}
@@ -131,7 +131,7 @@ def style_dual_ax(ax1, ax2, c1, c2):
 
 def brand_fig(fig, title, subtitle=None, source=None):
     fig.patch.set_facecolor(THEME['bg'])
-    OCEAN = '#0089D1'
+    OCEAN = '#2389BB'
     DUSK = '#FF6723'
 
     fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
@@ -325,7 +325,7 @@ def chart_cli(fwd_days=63):
     ax1.text(0.72, 0.97, box1_text, transform=ax1.transAxes,
              fontsize=10, color=THEME['fg'], ha='left', va='top',
              bbox=dict(boxstyle='round,pad=0.5',
-                       facecolor=THEME['bg'], edgecolor='#0089D1',
+                       facecolor=THEME['bg'], edgecolor='#2389BB',
                        alpha=0.92, linewidth=1.5))
 
     # Box 2 (bottom-center): How to read + stats (quintiles)
@@ -358,7 +358,7 @@ def chart_cli(fwd_days=63):
              fontsize=9.5, color=THEME['fg'], ha='center', va='bottom',
              family='monospace',
              bbox=dict(boxstyle='round,pad=0.5',
-                       facecolor=THEME['bg'], edgecolor='#0089D1',
+                       facecolor=THEME['bg'], edgecolor='#2389BB',
                        alpha=0.92, linewidth=1.5))
 
     # Branding
@@ -423,7 +423,7 @@ def chart_cli_regime_bars():
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             family='monospace',
             bbox=dict(boxstyle='round,pad=0.6',
-                      facecolor=THEME['bg'], edgecolor='#0089D1',
+                      facecolor=THEME['bg'], edgecolor='#2389BB',
                       alpha=0.92, linewidth=1.5))
 
     brand_fig(fig,

@@ -15,24 +15,24 @@ import requests
 
 # ———————— COLORS (FIXED) ————————
 COLORS = {
-    'ocean': '#0089D1',
+    'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#33CCFF',
-    'sea': '#00BB99',
+    'sky': '#00BBFF',
+    'sea': '#00BB89',
     'venus': '#FF2389',
-    'doldrums': '#D3D6D9',
+    'doldrums': '#898989',
 }
 
 # ———————— THEME DEFINITION (DARK) ————————
-# Updated: Ocean (#0089D1) is PRIMARY for BOTH themes per MEMORY.md
+# Updated: Ocean (#2389BB) is PRIMARY for BOTH themes per MEMORY.md
 THEME = {
     'bg': '#0A1628',
     'fg': '#e6edf3',
     'muted': '#8b949e',
     'spine': '#1e3350',
-    'primary': '#0089D1',        # Ocean (Primary Data - RHS) - ALWAYS
+    'primary': '#2389BB',        # Ocean (Primary Data - RHS) - ALWAYS
     'secondary': '#FF6723',      # Dusk (Secondary Data - LHS)
-    'tertiary': '#33CCFF',       # Sky (third series)
+    'tertiary': '#00BBFF',       # Sky (third series)
     'accent': '#FF2389',         # Venus
     'legend_bg': '#0f1f38',
     'legend_fg': '#e6edf3',

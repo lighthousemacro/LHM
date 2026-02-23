@@ -91,7 +91,7 @@ def chart_credit_spread_waterfall():
     dates = common_idx
 
     # Stacked area fill
-    ax.fill_between(dates, 0, aaa, color='#00FF00', alpha=0.6, label='AAA')
+    ax.fill_between(dates, 0, aaa, color='#238923', alpha=0.6, label='AAA')
     ax.fill_between(dates, aaa, aaa + bbb, color=LIGHTHOUSE_COLORS['ocean_blue'], alpha=0.6, label='BBB')
     ax.fill_between(dates, aaa + bbb, aaa + bbb + hy, color=LIGHTHOUSE_COLORS['pure_red'], alpha=0.5, label='HY')
 
@@ -113,7 +113,7 @@ def chart_credit_spread_waterfall():
     ylim = ax.get_ylim()
 
     for (label, value, y_pos, color) in [
-        ('AAA', current_aaa, aaa_y_pos, '#00FF00'),
+        ('AAA', current_aaa, aaa_y_pos, '#238923'),
         ('BBB', current_bbb, bbb_y_pos, LIGHTHOUSE_COLORS['ocean_blue']),
         ('HY', current_hy, hy_y_pos, LIGHTHOUSE_COLORS['pure_red'])
     ]:

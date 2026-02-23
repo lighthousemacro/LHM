@@ -26,15 +26,15 @@ HTML = r"""<!DOCTYPE html>
 <html><head><title>LHM - Substack Setup</title>
 <style>
 body { font-family: -apple-system, sans-serif; max-width: 650px; margin: 50px auto; padding: 20px; background: #0a1628; color: #e8edf3; }
-h1 { color: #0089D1; font-size: 24px; }
-.step { margin: 16px 0; padding: 16px; background: #0f1f38; border-left: 3px solid #0089D1; border-radius: 0 6px 6px 0; }
-.step strong { color: #33CCFF; }
+h1 { color: #2389BB; font-size: 24px; }
+.step { margin: 16px 0; padding: 16px; background: #0f1f38; border-left: 3px solid #2389BB; border-radius: 0 6px 6px 0; }
+.step strong { color: #00BBFF; }
 code { background: #1e3350; padding: 3px 8px; border-radius: 4px; font-size: 14px; }
-textarea { width: 100%; font-family: monospace; font-size: 13px; background: #1e3350; color: #e8edf3; border: 1px solid #0089D1; padding: 10px; border-radius: 6px; resize: vertical; }
-button { background: #0089D1; color: white; border: none; padding: 14px 28px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px; margin-top: 12px; }
+textarea { width: 100%; font-family: monospace; font-size: 13px; background: #1e3350; color: #e8edf3; border: 1px solid #2389BB; padding: 10px; border-radius: 6px; resize: vertical; }
+button { background: #2389BB; color: white; border: none; padding: 14px 28px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px; margin-top: 12px; }
 button:hover { background: #006da8; }
 #status { margin-top: 16px; padding: 14px; border-radius: 6px; display: none; font-weight: bold; }
-.success { background: #00BB99; color: white; display: block !important; }
+.success { background: #00BB89; color: white; display: block !important; }
 .error { background: #FF2389; color: white; display: block !important; }
 img { max-width: 100%; border-radius: 6px; margin: 8px 0; }
 ol li { margin: 6px 0; }
@@ -44,7 +44,7 @@ ol li { margin: 6px 0; }
 <p style="color:#6b7d99">One-time setup. Takes 60 seconds.</p>
 
 <div class="step">
-<strong>Step 1:</strong> Open <a href="https://substack.com" target="_blank" style="color:#33CCFF">substack.com</a> in Chrome. Make sure you're logged in.
+<strong>Step 1:</strong> Open <a href="https://substack.com" target="_blank" style="color:#00BBFF">substack.com</a> in Chrome. Make sure you're logged in.
 </div>
 
 <div class="step">

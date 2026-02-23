@@ -35,16 +35,16 @@ def generate_html_dashboard():
 
     # Regime colors
     regime_colors = {
-        "EXPANSION": "#00BB99",
+        "EXPANSION": "#00BB89",
         "LATE_CYCLE": "#FF6723",
         "HOLLOW_RALLY": "#FF6723",
         "PRE_CRISIS": "#FF2389",
-        "CRISIS": "#FF0000",
+        "CRISIS": "#892323",
     }
     regime_color = regime_colors.get(result.regime.name, "#FF2389")
 
     warning_colors = {
-        "GREEN": "#00BB99",
+        "GREEN": "#00BB89",
         "YELLOW": "#FFD700",
         "AMBER": "#FF6723",
         "RED": "#FF2389",
@@ -61,14 +61,14 @@ def generate_html_dashboard():
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --ocean: #0089D1;
+            --ocean: #2389BB;
             --dusk: #FF6723;
             --sky: #00D4FF;
             --venus: #FF2389;
-            --sea: #00BB99;
-            --doldrums: #D3D6D9;
-            --starboard: #00FF00;
-            --port: #FF0000;
+            --sea: #00BB89;
+            --doldrums: #898989;
+            --starboard: #238923;
+            --port: #892323;
             --bg-dark: #0a1628;
             --bg-card: #0f2140;
             --text-primary: #ffffff;

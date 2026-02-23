@@ -26,10 +26,10 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 # Brand colors
 BG = '#0A1628'
-OCEAN = '#0089D1'
+OCEAN = '#2389BB'
 DUSK = '#FF6723'
-SEA = '#00BB99'
-SKY = '#33CCFF'
+SEA = '#00BB89'
+SKY = '#00BBFF'
 WHITE = '#e6edf3'
 MUTED = '#7a8a9e'
 SPINE = '#2a4060'

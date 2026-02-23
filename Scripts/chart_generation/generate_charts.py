@@ -2036,7 +2036,7 @@ def chart_excess_savings_by_cohort():
     bottom_20 = np.concatenate([np.linspace(0, 300, 18), np.linspace(300, -250, n - 18)])
 
     fig, ax = create_figure(figsize=(16, 9))
-    ax.fill_between(dates, 0, top_20, color='#00BB99', alpha=0.85, label='Top 20%')
+    ax.fill_between(dates, 0, top_20, color='#00BB89', alpha=0.85, label='Top 20%')
     ax.fill_between(dates, 0, middle_60, color=LIGHTHOUSE_COLORS['ocean_blue'], alpha=0.85, label='Middle 60%')
     ax.fill_between(dates, 0, bottom_20, color=LIGHTHOUSE_COLORS['pure_red'], alpha=0.85, label='Bottom 20%')
     ax.axhline(y=0, color='black', linewidth=1.5)

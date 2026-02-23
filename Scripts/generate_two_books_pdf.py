@@ -14,7 +14,7 @@ from reportlab.pdfgen import canvas
 from datetime import datetime
 
 # Brand Colors
-OCEAN_BLUE = colors.HexColor('#0089D1')
+OCEAN_BLUE = colors.HexColor('#2389BB')
 DUSK_ORANGE = colors.HexColor('#FF6723')
 SKY_BLUE = colors.HexColor('#00D4FF')
 DARK_GRAY = colors.HexColor('#333333')

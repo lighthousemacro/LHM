@@ -9,7 +9,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
 
 # Colors
-OCEAN = HexColor('#0089D1')
+OCEAN = HexColor('#2389BB')
 DARK = HexColor('#1a1a1a')
 GRAY = HexColor('#444444')
 

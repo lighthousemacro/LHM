@@ -24,7 +24,7 @@ LIGHTHOUSE_COLORS = {
     'neutral_gray': '#898989',    # Spines, labels, structural (89+89)
     'lime_green': '#238923',      # Bullish regime (23+89)
     'pure_red': '#892323',        # Bearish regime, crisis (89+23)
-    'ref_gray': '#D1D1D1',        # Zero lines, ghost reference (D1+D1)
+    'fog': '#D1D1D1',             # Zero lines, ghost reference (D1+D1)
 }
 
 # Fill variants (30% opacity)

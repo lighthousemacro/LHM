@@ -46,14 +46,15 @@ fred = Fred()
 _DATA_CACHE = {}
 
 COLORS = {
-    'ocean': '#0089D1',
+    'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#33CCFF',
+    'sky': '#00BBFF',
     'venus': '#FF2389',
-    'sea': '#00BB99',
-    'doldrums': '#D3D6D9',
-    'starboard': '#00FF00',
-    'port': '#FF0000',
+    'sea': '#00BB89',
+    'doldrums': '#898989',
+    'starboard': '#238923',
+    'port': '#892323',
+    'fog': '#D1D1D1',
 }
 
 RECESSIONS = [
@@ -110,7 +111,7 @@ def set_theme(mode='dark'):
             'bg': '#ffffff',
             'fg': '#1a1a1a',
             'muted': '#555555',
-            'spine': '#cccccc',
+            'spine': COLORS['doldrums'],
             'zero_line': '#333333',
             'recession': 'gray',
             'recession_alpha': 0.12,
@@ -257,14 +258,14 @@ def style_single_ax(ax, fmt='{:.1f}%'):
 
 def add_annotation_box(ax, text, x=0.52, y=0.92):
     """Add takeaway annotation box."""
-    box_fc = '#0089D1'
+    box_fc = COLORS['ocean']
     box_alpha = 1.0
     txt_color = '#ffffff'
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=txt_color, ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor=box_fc, edgecolor='#33CCFF',
+                      facecolor=box_fc, edgecolor=COLORS['sky'],
                       linewidth=2.0,
                       alpha=box_alpha))
 
@@ -273,8 +274,8 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
     """Apply LHM branding at figure level."""
     fig.patch.set_facecolor(THEME['bg'])
 
-    OCEAN = '#0089D1'
-    DUSK = '#FF6723'
+    OCEAN = COLORS['ocean']
+    DUSK = COLORS['dusk']
 
     fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
              color=OCEAN, fontweight='bold', va='top')
@@ -357,7 +358,7 @@ def legend_style():
     return dict(
         framealpha=0.95,
         facecolor=THEME['legend_bg'],
-        edgecolor='#33CCFF' if THEME['mode'] == 'dark' else THEME['spine'],
+        edgecolor=COLORS['sky'] if THEME['mode'] == 'dark' else THEME['spine'],
         labelcolor=THEME['legend_fg'],
     )
 
@@ -372,7 +373,7 @@ def save_fig(fig, filename):
         zorder=100, clip_on=False
     ))
     filepath = os.path.join(OUTPUT_DIR, filename)
-    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.10,
+    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.00,
                 facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     print(f'  Saved: {filepath}')

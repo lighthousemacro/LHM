@@ -600,6 +600,7 @@ def chart_04():
 
     lfi_df = fetch_index('LFI', start='2001-01-01')
     lfi_raw = lfi_df['value'].dropna()
+    lfi_spot = lfi_raw.iloc[-1]  # Latest raw reading
     # Apply 3-month MA to smooth daily noise
     lfi = lfi_raw.rolling(63, min_periods=20).mean()
     lfi = lfi.dropna()
@@ -612,6 +613,10 @@ def chart_04():
             label=f'LFI 3M MA ({lfi.iloc[-1]:.2f})')
     ax.fill_between(lfi.index, lfi, alpha=THEME['fill_alpha'] * 0.5,
                     color=THEME['primary'])
+
+    # Mark latest spot reading
+    ax.scatter([lfi_raw.index[-1]], [lfi_spot], color=COLORS['venus'],
+               s=60, zorder=5, label=f'Spot: {lfi_spot:.2f}')
 
     # +0.5 elevated threshold
     ax.axhline(0.5, color=COLORS['dusk'], linewidth=1.5, linestyle='-', alpha=0.8,
@@ -637,10 +642,11 @@ def chart_04():
     add_recessions(ax, start_date='2001-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    lfi_last = lfi.iloc[-1]
+    lfi_ma = lfi.iloc[-1]
     add_annotation_box(ax,
-        f"LFI at {lfi_last:+.2f}. Above +0.5 = elevated fragility.\n"
-        f"Long-term unemployment building, quits decelerating, hires/quits compressing.",
+        f"LFI spot: {lfi_spot:+.2f} (3M MA: {lfi_ma:+.2f}).\n"
+        f"Spot spiked above +0.5 elevated threshold in mid-January.\n"
+        f"Long-term unemployment building, quits decelerating.",
         x=0.62, y=0.92)
 
     brand_fig(fig, 'Labor Fragility Index (LFI)',
@@ -710,7 +716,10 @@ def chart_06():
     print('\nChart 6: Credit-Labor Gap...')
 
     clg_df = fetch_index('CLG', start='2000-01-01')
-    clg = clg_df['value'].dropna()
+    clg_raw = clg_df['value'].dropna()
+    clg_spot = clg_raw.iloc[-1]  # Latest raw reading
+    # Apply 3-month MA to smooth daily noise
+    clg = clg_raw.rolling(63, min_periods=20).mean().dropna()
 
     fig, ax = new_fig()
 
@@ -754,13 +763,16 @@ def chart_06():
 
     add_last_value_label(ax, clg, color=COLORS['venus'] if clg.iloc[-1] < -1.0 else COLORS['sea'],
                          fmt='{:.2f}', side='right')
+    # Mark latest spot reading
+    ax.scatter([clg_raw.index[-1]], [clg_spot], color=COLORS['venus'],
+               s=60, zorder=5)
     add_recessions(ax, start_date='2000-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    clg_last = clg.iloc[-1]
+    clg_ma = clg.iloc[-1]
     add_annotation_box(ax,
-        f"CLG at {clg_last:.2f}. Below -1.0 = credit too tight for labor reality.\n"
-        f"Deepest negative divergence in over a year. The snap-back will be violent.",
+        f"CLG spot: {clg_spot:.2f}, 3M MA: {clg_ma:.2f}.\n"
+        f"Spot deeply below -1.0. Credit ignoring labor fundamentals.",
         x=0.62, y=0.15)
 
     brand_fig(fig, 'Credit-Labor Gap (CLG)',
@@ -921,14 +933,22 @@ def chart_09():
     print('\nChart 9: Liquidity Cushion Index...')
 
     lci_df = fetch_index('LCI', start='2010-01-01')
-    lci = lci_df['value'].dropna()
+    lci_raw = lci_df['value'].dropna()
+    lci_spot = lci_raw.iloc[-1]
+    # Apply 3-month MA to smooth daily noise
+    lci = lci_raw.rolling(63, min_periods=20).mean().dropna()
 
     fig, ax = new_fig()
 
+    # Faint raw for context
+    ax.plot(lci_raw.index, lci_raw, color=THEME['primary'], linewidth=0.4, alpha=0.25)
     ax.plot(lci.index, lci, color=THEME['primary'], linewidth=2.5,
-            label=f'LCI ({lci.iloc[-1]:.2f})')
-    ax.fill_between(lci.index, lci, alpha=THEME['fill_alpha'],
+            label=f'LCI 3M MA ({lci.iloc[-1]:.2f})')
+    ax.fill_between(lci.index, lci, alpha=THEME['fill_alpha'] * 0.5,
                     color=THEME['primary'])
+    # Mark latest spot reading
+    ax.scatter([lci_raw.index[-1]], [lci_spot], color=COLORS['dusk'],
+               s=60, zorder=5, label=f'Spot: {lci_spot:.2f}')
 
     # Regime thresholds
     ax.axhline(0.5, color=COLORS['sea'], linewidth=1.2, linestyle='-', alpha=0.6,
@@ -951,10 +971,10 @@ def chart_09():
     add_last_value_label(ax, lci, color=THEME['primary'], fmt='{:.2f}', side='right')
     ax.legend(loc='upper left', **legend_style(), fontsize=9)
 
-    lci_last = lci.iloc[-1]
+    lci_ma = lci.iloc[-1]
     add_annotation_box(ax,
-        f"LCI at {lci_last:.2f}. Approaching -0.5 scarce regime.\n"
-        f"RRP exhausted (sub-$1B). System operating without a shock absorber.",
+        f"LCI spot: {lci_spot:.2f}, 3M MA: {lci_ma:.2f}.\n"
+        f"Approaching -0.5 scarce regime. RRP exhausted.",
         x=0.62, y=0.92)
 
     brand_fig(fig, 'Liquidity Cushion Index (LCI)',
@@ -1035,12 +1055,20 @@ def chart_11():
     print('\nChart 11: Macro Risk Index...')
 
     mri_df = fetch_index('MRI', start='2000-01-01')
-    mri = mri_df['value'].dropna()
+    mri_raw = mri_df['value'].dropna()
+    mri_spot = mri_raw.iloc[-1]
+    # Apply 3-month MA to smooth daily noise
+    mri = mri_raw.rolling(63, min_periods=20).mean().dropna()
 
     fig, ax = new_fig()
 
+    # Faint raw for context
+    ax.plot(mri_raw.index, mri_raw, color=THEME['primary'], linewidth=0.4, alpha=0.25)
     ax.plot(mri.index, mri, color=THEME['primary'], linewidth=2.5,
-            label=f'MRI ({mri.iloc[-1]:.2f})')
+            label=f'MRI 3M MA ({mri.iloc[-1]:.2f})')
+    # Mark latest spot
+    ax.scatter([mri_raw.index[-1]], [mri_spot], color=COLORS['dusk'],
+               s=60, zorder=5, label=f'Spot: {mri_spot:.2f}')
 
     # Regime zone shading
     ax.axhspan(-3.0, -0.5, color=COLORS['sea'], alpha=0.05, label='Low Risk')
@@ -1080,8 +1108,8 @@ def chart_11():
         regime = "Crisis"
 
     add_annotation_box(ax,
-        f"MRI at {mri_last:+.2f} ({regime}).\n"
-        f"Ticking down modestly as tariff pressure releases.\n"
+        f"MRI spot: {mri_spot:+.2f}, 3M MA: {mri_last:+.2f} ({regime}).\n"
+        f"Ticking down as tariff pressure releases.\n"
         f"Defensive posture holds. Labor is the binding constraint.",
         x=0.62, y=0.15)
 

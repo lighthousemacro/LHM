@@ -1,6 +1,6 @@
 ---
 name: lhm-brand-system
-description: Branded document generation for Lighthouse Macro. Creates PDF reports, PPTX presentations, DOCX documents, and HTML artifacts with consistent brand identity including logo, colors (Ocean Blue #0089D1, Dusk Orange #FF4500), typography (Montserrat/Inter), chart styling, and professional formatting. Use when creating any Lighthouse Macro deliverable: Chartbooks, Beacon analysis, Beam insights, Horizon outlooks, framework documents, presentations, or any branded content. Triggers on requests for LHM-branded materials, macro research formatting, or professional financial document generation.
+description: Branded document generation for Lighthouse Macro. Creates PDF reports, PPTX presentations, DOCX documents, and HTML artifacts with consistent brand identity including logo, colors (Ocean Blue #2389BB, Dusk Orange #FF4500), typography (Montserrat/Inter), chart styling, and professional formatting. Use when creating any Lighthouse Macro deliverable: Chartbooks, Beacon analysis, Beam insights, Horizon outlooks, framework documents, presentations, or any branded content. Triggers on requests for LHM-branded materials, macro research formatting, or professional financial document generation.
 ---
 
 # Lighthouse Macro Brand System
@@ -11,7 +11,7 @@ Generate professional, branded documents for Lighthouse Macro with consistent vi
 
 | Element | Value |
 |---------|-------|
-| Primary Color | `#0089D1` (Ocean Blue) |
+| Primary Color | `#2389BB` (Ocean Blue) |
 | Accent Color | `#FF4500` (Dusk Orange) |
 | Header Font | Montserrat Bold |
 | Body Font | Inter |
@@ -28,7 +28,7 @@ Generate professional, branded documents for Lighthouse Macro with consistent vi
    - `references/templates.md` — structure for each document type
 3. **Apply brand elements:**
    - Logo/banner placement per document type
-   - Ocean Blue borders on all charts (2px solid #0089D1)
+   - Ocean Blue borders on all charts (2px solid #2389BB)
    - Captions below charts: "Figure N: Description"
    - Accent bar where appropriate (blue-orange gradient)
    - Watermarks: "LIGHTHOUSE MACRO" top-left, "MACRO, ILLUMINATED." bottom-right
@@ -62,7 +62,7 @@ Create styled HTML artifacts with embedded CSS using brand colors and Google Fon
 
 Every chart must have:
 ```css
-border: 2px solid #0089D1;
+border: 2px solid #2389BB;
 ```
 
 Layout rules per `references/chart-styling.md`:

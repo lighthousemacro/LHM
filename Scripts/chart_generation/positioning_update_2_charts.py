@@ -226,7 +226,7 @@ def save_fig(fig, name):
         zorder=100, clip_on=False
     ))
     path = os.path.join(OUT_DIR, name)
-    fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.05,
+    fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.025,
                 facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     print(f'  Saved: {path}')
@@ -365,7 +365,7 @@ def fig02_quits_rate():
 
     # 2.0% threshold
     ax.axhline(2.0, color=THEME['accent'], linewidth=1.5, linestyle='--', alpha=0.7, zorder=5)
-    ax.text(0.02, 2.07, '2.0% Pre-Recessionary Threshold', fontsize=9, color=THEME['accent'],
+    ax.text(0.37, 2.07, '2.0% Pre-Recessionary Threshold', fontsize=9, color=THEME['accent'],
             alpha=0.8, fontstyle='italic', transform=ax.get_yaxis_transform())
 
     add_recessions(ax, start_date='2001-01-01')
@@ -379,7 +379,7 @@ def fig02_quits_rate():
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'JOLTS Quits Rate: Sitting on the Line',
               'Total nonfarm quits rate, seasonally adjusted',
-              'BLS JOLTS')
+              'BLS JOLTS', data_date=q_plot.index[-1])
     return save_fig(fig, 'fig02_quits_rate.png')
 
 
@@ -411,7 +411,7 @@ def fig03_openings_rate():
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'JOLTS Job Openings Rate: Collapse to 2020 Lows',
               'Total nonfarm job openings rate, seasonally adjusted',
-              'BLS JOLTS')
+              'BLS JOLTS', data_date=o_plot.index[-1])
     return save_fig(fig, 'fig03_openings_rate.png')
 
 
@@ -487,7 +487,7 @@ def fig05_hy_oas():
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'HY OAS: Credit Still in Denial',
               'ICE BofA US High Yield Option-Adjusted Spread',
-              'FRED (ICE/BofA)')
+              'FRED (ICE/BofA)', data_date=hy_plot.index[-1])
     return save_fig(fig, 'fig05_hy_oas.png')
 
 
@@ -554,11 +554,11 @@ def fig07_vix():
             linestyle='-', label=f'50d MA ({vix_50d.dropna().iloc[-1]:.1f})', zorder=3)
 
     # Reference zones
-    ax.axhspan(10, 16, color='#00BB89', alpha=0.08, zorder=0)
-    ax.axhspan(25, 45, color='#FF6723', alpha=0.08, zorder=0)
-    ax.text(0.98, 11.5, 'Complacent Zone', fontsize=8, color='#00BB89', alpha=0.6,
+    ax.axhspan(10, 16, color='#238923', alpha=0.08, zorder=0)
+    ax.axhspan(25, 45, color='#892323', alpha=0.08, zorder=0)
+    ax.text(0.98, 11.5, 'Complacent Zone', fontsize=8, color='#238923', alpha=0.6,
             fontstyle='italic', ha='right', transform=ax.get_yaxis_transform())
-    ax.text(0.98, 30, 'Fear Zone', fontsize=8, color='#FF6723', alpha=0.6,
+    ax.text(0.98, 30, 'Fear Zone', fontsize=8, color='#892323', alpha=0.6,
             fontstyle='italic', ha='right', transform=ax.get_yaxis_transform())
 
     add_recessions(ax, start_date='2004-01-01')
@@ -573,7 +573,7 @@ def fig07_vix():
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'VIX: From Complacency to Recalibration',
               'CBOE Volatility Index with 50-day moving average',
-              'CBOE via FRED')
+              'CBOE via FRED', data_date=v_plot.index[-1])
     return save_fig(fig, 'fig07_vix.png')
 
 
@@ -615,7 +615,7 @@ def fig08_sofr_effr():
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'SOFR vs EFFR: The One Switch',
               'Secured vs unsecured overnight funding rates',
-              'NY Fed')
+              'NY Fed', data_date=s_plot.index[-1])
     return save_fig(fig, 'fig08_sofr_effr.png')
 
 
@@ -719,7 +719,7 @@ def fig10_yield_curve():
 
     brand_fig(fig, '10Y-2Y Curve: Steepener Building',
               'Treasury term structure with 10Y yield overlay',
-              'FRED (US Treasury)')
+              'FRED (US Treasury)', data_date=c_plot.index[-1])
     return save_fig(fig, 'fig10_yield_curve.png')
 
 

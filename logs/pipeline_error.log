@@ -7888,3 +7888,394 @@ Breadth total: 13 series, 9,750 observations
 2026-02-24 08:36:21 [INFO]    Business_Lending: 0 series, 0 obs
 2026-02-24 08:36:21 [INFO] --- FRED: Curated Series ---
 2026-02-24 09:00:46 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=CUSR0000SEMC&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-02-24 09:23:33 [ERROR] Error fetching FRBATLWGT12MMUMHWGJSW: database or disk is full
+2026-02-24 09:23:49 [ERROR] Error fetching FRBATLWGT12MMUMHWGWD1WP: database or disk is full
+2026-02-24 09:23:50 [ERROR] Error fetching FRBATLWGT12MMUMHWGWD76WP: database or disk is full
+2026-02-24 09:24:23 [ERROR] Error fetching PPIFGS: database or disk is full
+2026-02-24 09:24:28 [ERROR] Error fetching PPIFDF: database or disk is full
+2026-02-24 09:24:42 [ERROR] Error fetching PPIIDC: database or disk is full
+2026-02-24 09:24:46 [ERROR] Error fetching PPIITM: database or disk is full
+2026-02-24 09:24:50 [ERROR] Error fetching WPSFD4131: database or disk is full
+2026-02-24 09:24:55 [ERROR] Error fetching WPUFD49116: database or disk is full
+2026-02-24 09:24:56 [ERROR] Error fetching WPSFD41312: database or disk is full
+2026-02-24 09:24:59 [ERROR] Error fetching MICH: database or disk is full
+2026-02-24 09:25:01 [ERROR] Error fetching EXPINF1YR: database or disk is full
+2026-02-24 09:25:01 [ERROR] Error fetching EXPINF2YR: database or disk is full
+2026-02-24 09:25:03 [ERROR] Error fetching EXPINF5YR: unable to open database file
+2026-02-24 09:25:04 [ERROR] Error fetching EXPINF10YR: unable to open database file
+2026-02-24 09:25:05 [ERROR] Error fetching EXPINF30YR: unable to open database file
+2026-02-24 09:25:05 [ERROR] Error fetching GDP: unable to open database file
+2026-02-24 09:25:05 [ERROR] Error fetching GDPC1: unable to open database file
+2026-02-24 09:25:06 [ERROR] Error fetching INDPRO: unable to open database file
+2026-02-24 09:25:06 [ERROR] Error fetching RSAFS: unable to open database file
+2026-02-24 09:25:07 [ERROR] Error fetching UMCSENT: unable to open database file
+2026-02-24 09:25:07 [ERROR] Error fetching FEDFUNDS: unable to open database file
+2026-02-24 09:25:20 [ERROR] Error fetching DGS1: unable to open database file
+2026-02-24 09:25:27 [ERROR] Error fetching DGS2: unable to open database file
+--- Logging error ---
+2026-02-24 09:25:34 [ERROR] Error fetching DGS5: database or disk is full
+2026-02-24 09:25:41 [ERROR] Error fetching DGS10: database or disk is full
+2026-02-24 09:26:04 [ERROR] Error fetching DGS30: unable to open database file
+2026-02-24 09:26:30 [ERROR] Error fetching T10Y2Y: unable to open database file
+2026-02-24 09:26:32 [ERROR] Error fetching T10Y3M: unable to open database file
+2026-02-24 09:26:33 [ERROR] Error fetching MORTGAGE30US: unable to open database file
+2026-02-24 09:26:33 [ERROR] Error fetching BAMLH0A0HYM2: unable to open database file
+2026-02-24 09:26:34 [ERROR] Error fetching BAMLC0A0CM: unable to open database file
+2026-02-24 09:26:35 [ERROR] Error fetching M2SL: unable to open database file
+2026-02-24 09:26:35 [ERROR] Error fetching WALCL: unable to open database file
+2026-02-24 09:26:35 [ERROR] Error fetching RRPONTSYD: unable to open database file
+2026-02-24 09:26:36 [ERROR] Error fetching TOTRESNS: unable to open database file
+2026-02-24 09:26:37 [ERROR] Error fetching HOUST: unable to open database file
+2026-02-24 09:26:38 [ERROR] Error fetching PERMIT: unable to open database file
+2026-02-24 09:26:38 [ERROR] Error fetching CSUSHPINSA: unable to open database file
+2026-02-24 09:26:39 [ERROR] Error fetching MSPUS: unable to open database file
+2026-02-24 09:26:40 [ERROR] Error fetching TOTALSL: unable to open database file
+2026-02-24 09:26:40 [ERROR] Error fetching PSAVERT: unable to open database file
+2026-02-24 09:26:41 [ERROR] Error fetching TDSP: unable to open database file
+2026-02-24 09:26:41 [ERROR] Error fetching GFDEBTN: unable to open database file
+2026-02-24 09:26:42 [ERROR] Error fetching GFDEGDQ188S: unable to open database file
+2026-02-24 09:26:42 [ERROR] Error fetching DRALACBS: unable to open database file
+2026-02-24 09:26:42 [ERROR] Error fetching DRSFRMACBS: unable to open database file
+2026-02-24 09:26:43 [ERROR] Error fetching DRCCLACBS: unable to open database file
+2026-02-24 09:26:44 [ERROR] Error fetching VIXCLS: unable to open database file
+2026-02-24 09:26:44 [ERROR] Error fetching DCOILWTICO: unable to open database file
+2026-02-24 09:26:45 [ERROR] Error fetching DTWEXBGS: unable to open database file
+2026-02-24 09:26:45 [ERROR] Error fetching LNS14000003: unable to open database file
+2026-02-24 09:26:46 [ERROR] Error fetching LNS14000006: unable to open database file
+2026-02-24 09:26:47 [ERROR] Error fetching LNS14000009: unable to open database file
+2026-02-24 09:26:47 [ERROR] Error fetching LNS14000012: unable to open database file
+2026-02-24 09:26:48 [ERROR] Error fetching LNS14000013: unable to open database file
+2026-02-24 09:26:49 [ERROR] Error fetching LNS14000024: unable to open database file
+2026-02-24 09:26:49 [ERROR] Error fetching LNS14000025: unable to open database file
+2026-02-24 09:26:50 [ERROR] Error fetching LNS14000036: unable to open database file
+2026-02-24 09:26:50 [ERROR] Error fetching LNS14024230: unable to open database file
+2026-02-24 09:26:51 [ERROR] Error fetching LNS11300002: unable to open database file
+2026-02-24 09:26:51 [ERROR] Error fetching LNS11300003: unable to open database file
+2026-02-24 09:26:52 [ERROR] Error fetching LNS11300060: unable to open database file
+2026-02-24 09:26:52 [ERROR] Error fetching LNS12032194: unable to open database file
+2026-02-24 09:26:52 [ERROR] Error fetching UEMPMEAN: unable to open database file
+2026-02-24 09:26:53 [ERROR] Error fetching UEMP27OV: unable to open database file
+2026-02-24 09:26:53 [ERROR] Error fetching U1RATE: unable to open database file
+2026-02-24 09:26:54 [ERROR] Error fetching U2RATE: unable to open database file
+2026-02-24 09:26:55 [ERROR] Error fetching CUSR0000SAH1: unable to open database file
+2026-02-24 09:26:55 [ERROR] Error fetching CUSR0000SEHA: unable to open database file
+2026-02-24 09:26:55 [ERROR] Error fetching CUSR0000SEHC: unable to open database file
+2026-02-24 09:26:56 [ERROR] Error fetching CUSR0000SAF11: unable to open database file
+2026-02-24 09:26:56 [ERROR] Error fetching CUSR0000SEFV: unable to open database file
+2026-02-24 09:26:57 [ERROR] Error fetching CUSR0000SAH2: unable to open database file
+--- Logging error ---
+2026-02-24 09:26:57 [ERROR] Error fetching CUSR0000SETB01: unable to open database file
+--- Logging error ---
+2026-02-24 09:26:58 [ERROR] Error fetching CUSR0000SEHF01: unable to open database file
+--- Logging error ---
+2026-02-24 09:26:58 [ERROR] Error fetching CUSR0000SEHF02: unable to open database file
+--- Logging error ---
+2026-02-24 09:26:59 [ERROR] Error fetching CUSR0000SAM1: unable to open database file
+--- Logging error ---
+2026-02-24 09:26:59 [ERROR] Error fetching CUSR0000SAM2: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:00 [ERROR] Error fetching CUSR0000SAS4: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:00 [ERROR] Error fetching CUSR0000SETA02: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:00 [ERROR] Error fetching CUSR0000SETA01: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:01 [ERROR] Error fetching CUSR0000SETC: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:01 [ERROR] Error fetching CUSR0000SETG01: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:02 [ERROR] Error fetching CUSR0000SAE1: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:02 [ERROR] Error fetching CUSR0000SEHE: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:02 [ERROR] Error fetching CUSR0000SEEB: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:03 [ERROR] Error fetching CUSR0000SEGA: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:03 [ERROR] Error fetching CUSR0000SEHF: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:04 [ERROR] Error fetching CUSR0000SS62031: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:04 [ERROR] Error fetching DGDSRG3M086SBEA: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:05 [ERROR] Error fetching DSERRG3M086SBEA: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:05 [ERROR] Error fetching PCEDG: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:05 [ERROR] Error fetching PCEND: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:06 [ERROR] Error fetching PCES: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:07 [ERROR] Error fetching IA001260M: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:07 [ERROR] Error fetching IA001176M: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:07 [ERROR] Error fetching JCXFE: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:08 [ERROR] Error fetching NFCI: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:08 [ERROR] Error fetching ANFCI: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:09 [ERROR] Error fetching STLFSI4: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:09 [ERROR] Error fetching DRTSCILM: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:09 [ERROR] Error fetching DRTSCLCC: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:10 [ERROR] Error fetching TOTCI: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:10 [ERROR] Error fetching CONSUMER: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:10 [ERROR] Error fetching BUSLOANS: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:11 [ERROR] Error fetching REALLN: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:11 [ERROR] Error fetching WTREGEN: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:11 [ERROR] Error fetching H41RESPPALDKNWW: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:12 [ERROR] Error fetching DGS1MO: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:12 [ERROR] Error fetching DGS3MO: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:13 [ERROR] Error fetching DGS6MO: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:13 [ERROR] Error fetching T10YFF: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:14 [ERROR] Error fetching T5YFF: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:14 [ERROR] Error fetching DFII5: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:15 [ERROR] Error fetching DFII10: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:15 [ERROR] Error fetching T5YIFR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:15 [ERROR] Error fetching T10YIE: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:16 [ERROR] Error fetching T5YIE: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:16 [ERROR] Error fetching THREEFYTP10: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:17 [ERROR] Error fetching JTSJOL: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:17 [ERROR] Error fetching JTSHIL: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:17 [ERROR] Error fetching JTSQUL: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:18 [ERROR] Error fetching JTSQUR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:18 [ERROR] Error fetching JTSLDL: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:18 [ERROR] Error fetching JTSTSL: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:19 [ERROR] Error fetching JTSHIR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:19 [ERROR] Error fetching JTSTSR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:19 [ERROR] Error fetching JTS3000QUR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:20 [ERROR] Error fetching JTS2300QUR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:20 [ERROR] Error fetching JTS4400QUR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:20 [ERROR] Error fetching JTS540099QUR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:21 [ERROR] Error fetching JTS7000QUR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:21 [ERROR] Error fetching JTS6200QUR: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:21 [ERROR] Error fetching UNEMPLOY: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:22 [ERROR] Error fetching UEMPLT5: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:22 [ERROR] Error fetching UEMP5TO14: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:22 [ERROR] Error fetching UEMP15T26: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:23 [ERROR] Error fetching UEMPMED: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:23 [ERROR] Error fetching LNS13023621: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:23 [ERROR] Error fetching LNS13023705: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:24 [ERROR] Error fetching LNS13023557: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:24 [ERROR] Error fetching LNS13023569: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:24 [ERROR] Error fetching LNS14000001: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:25 [ERROR] Error fetching LNS14000002: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:25 [ERROR] Error fetching LNS14000060: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:25 [ERROR] Error fetching LNS14024887: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:26 [ERROR] Error fetching LNS14027659: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:26 [ERROR] Error fetching LNS14027660: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:26 [ERROR] Error fetching LNS14027689: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:27 [ERROR] Error fetching LNS14027662: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:27 [ERROR] Error fetching LNU04032183: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:27 [ERROR] Error fetching LNS11300001: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:28 [ERROR] Error fetching LNS11324230: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:28 [ERROR] Error fetching CLF16OV: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:28 [ERROR] Error fetching LNS12500000: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:29 [ERROR] Error fetching LNS12600000: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:29 [ERROR] Error fetching LNS12026620: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:29 [ERROR] Error fetching NILFWJN: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:30 [ERROR] Error fetching LNU05026645: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:30 [ERROR] Error fetching TEMPHELPS: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:30 [ERROR] Error fetching USCONS: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:31 [ERROR] Error fetching USTRADE: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:31 [ERROR] Error fetching USPBS: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:31 [ERROR] Error fetching USFIRE: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:32 [ERROR] Error fetching USINFO: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:32 [ERROR] Error fetching USLAH: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:32 [ERROR] Error fetching USGOVT: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:33 [ERROR] Error fetching CES6562000001: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:33 [ERROR] Error fetching AWHAETP: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:33 [ERROR] Error fetching AWHMAN: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:34 [ERROR] Error fetching AWOTMAN: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:34 [ERROR] Error fetching AWHI: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:35 [ERROR] Error fetching CES0500000030: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:35 [ERROR] Error fetching CIU2010000000000I: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:35 [ERROR] Error fetching LRAC25MAUSM156S: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:36 [ERROR] Error fetching LRAC25FEUSM156S: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:36 [ERROR] Error fetching SAHMREALTIME: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:37 [ERROR] Error fetching IHLIDXUS: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:37 [ERROR] Error fetching IURSA: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:37 [ERROR] Error fetching MANEMP: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:38 [ERROR] Error fetching GACDISA066MSFRBNY: unable to open database file
+--- Logging error ---
+2026-02-24 09:27:38 [WARNING] Attempt 1 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series/observations?series_id=GACDFSA066MSFRBPHI&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+--- Logging error ---
+2026-02-24 09:27:40 [WARNING] Attempt 2 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series/observations?series_id=GACDFSA066MSFRBPHI&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
+--- Logging error ---
+2026-02-24 09:27:45 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series/observations
+--- Logging error ---
+2026-02-24 09:27:45 [ERROR] Error fetching GACDFSA066MSFRBPHI: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series/observations?series_id=GACDFSA066MSFRBPHI&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json
+--- Logging error ---
+2026-02-24 09:27:45 [WARNING] Attempt 1 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series/observations?series_id=CFNAIMA3&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+--- Logging error ---
+2026-02-24 09:27:48 [WARNING] Attempt 2 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series/observations?series_id=CFNAIMA3&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
+--- Logging error ---
+2026-02-24 09:28:58 [ERROR] Error fetching KCFSI: database or disk is full
+2026-02-24 09:29:39 [ERROR] Error fetching DGORDER: database or disk is full
+2026-02-24 09:29:42 [ERROR] Error fetching ADXTNO: unable to open database file
+2026-02-24 09:29:43 [ERROR] Error fetching NEWORDER: unable to open database file
+2026-02-24 09:30:22 [ERROR] Error fetching AMTMNO: database or disk is full
+2026-02-24 09:30:25 [ERROR] Error fetching ACDGNO: unable to open database file
+2026-02-24 09:30:26 [ERROR] Error fetching ANDENO: unable to open database file
+2026-02-24 09:30:26 [ERROR] Error fetching AMNMNO: unable to open database file
+2026-02-24 09:30:27 [ERROR] Error fetching BOPGSTB: unable to open database file
+2026-02-24 09:30:27 [ERROR] Error fetching BOPGTB: unable to open database file
+2026-02-24 09:30:27 [ERROR] Error fetching BOPTEXP: unable to open database file
+2026-02-24 09:30:28 [ERROR] Error fetching BOPTIMP: unable to open database file
+2026-02-24 09:30:28 [ERROR] Error fetching IMPGS: unable to open database file
+2026-02-24 09:30:29 [ERROR] Error fetching EXPGS: unable to open database file
+2026-02-24 09:30:29 [ERROR] Error fetching IR: unable to open database file
+2026-02-24 09:30:30 [ERROR] Error fetching IQ: unable to open database file
+2026-02-24 09:30:30 [ERROR] Error fetching NETEXP: unable to open database file
+2026-02-24 09:30:30 [ERROR] Error fetching RAILFRTCARLOADSD11: unable to open database file
+2026-02-24 09:30:31 [ERROR] Error fetching TSIFRGHT: unable to open database file
+2026-02-24 09:30:31 [ERROR] Error fetching TSITTL: unable to open database file
+2026-02-24 09:30:32 [ERROR] Error fetching FRGSHPUSM649NCIS: unable to open database file
+2026-02-24 09:30:32 [ERROR] Error fetching ALTSALES: unable to open database file
+2026-02-24 09:30:33 [ERROR] Error fetching LAUTOSA: unable to open database file
+2026-02-24 09:30:33 [ERROR] Error fetching LTOTALNSA: unable to open database file
+2026-02-24 09:30:34 [ERROR] Error fetching HTRUCKSSAAR: unable to open database file
+2026-02-24 09:30:34 [ERROR] Error fetching TOTALSA: unable to open database file
+2026-02-24 09:30:35 [ERROR] Error fetching AISRSA: unable to open database file
+2026-02-24 09:30:35 [ERROR] Error fetching RSXFS: unable to open database file
+2026-02-24 09:30:36 [ERROR] Error fetching RSMVPD: unable to open database file
+2026-02-24 09:30:36 [ERROR] Error fetching RSFSDP: unable to open database file
+2026-02-24 09:30:37 [ERROR] Error fetching RSGASS: unable to open database file
+2026-02-24 09:30:37 [ERROR] Error fetching RSBMGESD: unable to open database file
+2026-02-24 09:30:37 [ERROR] Error fetching RSGCSN: unable to open database file
+2026-02-24 09:30:38 [ERROR] Error fetching RSNSR: unable to open database file
+2026-02-24 09:30:38 [ERROR] Error fetching RSHPCS: unable to open database file
+2026-02-24 09:30:38 [ERROR] Error fetching RSSGHBMS: unable to open database file
+2026-02-24 09:30:39 [ERROR] Error fetching RSFHFS: unable to open database file
+2026-02-24 09:30:39 [ERROR] Error fetching RSEAS: unable to open database file
+2026-02-24 09:30:40 [ERROR] Error fetching RSCCAS: unable to open database file
+2026-02-24 09:30:40 [ERROR] Error fetching HSN1F: unable to open database file
+2026-02-24 09:30:42 [ERROR] Error fetching MSPNHSUS: unable to open database file
+2026-02-24 09:30:42 [ERROR] Error fetching MSACSR: unable to open database file
+2026-02-24 09:30:43 [ERROR] Error fetching HOSINVUSM495N: unable to open database file
+--- Logging error ---
+2026-02-24 09:30:44 [ERROR] Error fetching EXHOSLUSM495S: unable to open database file
+--- Logging error ---
+2026-02-24 09:30:44 [ERROR] Error fetching PERMIT1: unable to open database file
+--- Logging error ---
+2026-02-24 09:30:45 [ERROR] Error fetching COMPUTSA: unable to open database file
+--- Logging error ---
+2026-02-24 09:30:46 [ERROR] Error fetching UNDCONTSA: unable to open database file
+--- Logging error ---
+2026-02-24 09:30:53 [ERROR] Error fetching MORTGAGE15US: unable to open database file
+--- Logging error ---
+2026-02-24 09:30:55 [ERROR] Error fetching RHORUSQ156N: unable to open database file
+--- Logging error ---
+2026-02-24 09:30:55 [ERROR] Error fetching FIXHAI: unable to open database file
+--- Logging error ---
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/fetchers.py", line 153, in fetch_curated
+    series_updated, series_obs = self._fetch_series(series_id, series_info, "Curated")
+                                 ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/fetchers.py", line 188, in _fetch_series
+    c.executemany("INSERT OR REPLACE INTO observations VALUES (?,?,?)", obs_list)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open database file
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/logging/__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+Call stack:
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 237, in <module>
+    main()
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 93, in main
+    run_daily_update(
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 149, in run_daily_update
+    series, obs = fetcher.fetch_all()
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/fetchers.py", line 216, in fetch_all
+    updated, obs = self.fetch_curated()
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/fetchers.py", line 157, in fetch_curated
+    logger.error(f"Error fetching {series_id}: {e}")
+Message: 'Error fetching FIXHAI: unable to open database file'
+Arguments: ()

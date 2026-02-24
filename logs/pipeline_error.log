@@ -8279,3 +8279,385 @@ Call stack:
     logger.error(f"Error fetching {series_id}: {e}")
 Message: 'Error fetching FIXHAI: unable to open database file'
 Arguments: ()
+2026-02-24 09:50:30 [INFO]    Curated: 205 series, 115,936 obs
+2026-02-24 09:50:30 [INFO]    BLS 1990-2009...
+2026-02-24 09:50:34 [INFO]    BLS 1990-2009: 6,196 obs
+2026-02-24 09:50:35 [INFO]    BLS 2010-2026...
+2026-02-24 09:51:30 [INFO]    BLS 2010-2026: 5,963 obs
+2026-02-24 09:51:31 [INFO]    BEA GDP_Components...
+2026-02-24 09:51:32 [INFO]    BEA GDP_Components: 2,704 obs
+2026-02-24 09:51:32 [INFO]    BEA Real_GDP_Growth...
+2026-02-24 09:51:35 [INFO]    BEA Real_GDP_Growth: 2,600 obs
+2026-02-24 09:51:36 [INFO]    BEA Personal_Income...
+2026-02-24 09:51:42 [INFO]    BEA Personal_Income: 4,472 obs
+2026-02-24 09:51:42 [INFO]    BEA PCE_Components...
+2026-02-24 09:51:43 [INFO]    BEA PCE_Components: 3,224 obs
+2026-02-24 09:51:44 [INFO]    BEA Corporate_Profits...
+2026-02-24 09:51:46 [INFO]    BEA Corporate_Profits: 5,081 obs
+2026-02-24 09:51:47 [INFO]    BEA GDI...
+2026-02-24 09:51:49 [INFO]    BEA GDI: 2,484 obs
+2026-02-24 09:51:49 [INFO]    BEA Govt_Receipts_Expenditures...
+2026-02-24 09:51:50 [INFO]    BEA Govt_Receipts_Expenditures: 4,462 obs
+2026-02-24 09:51:51 [INFO]    BEA PCE_Price_Index...
+2026-02-24 09:51:57 [INFO]    BEA PCE_Price_Index: 3,224 obs
+2026-02-24 09:51:57 [INFO]    BEA GDP_Price_Index...
+2026-02-24 09:51:59 [INFO]    BEA GDP_Price_Index: 2,496 obs
+2026-02-24 09:51:59 [INFO]    NY Fed from 2018-04-03...
+2026-02-24 09:52:03 [INFO]    NY Fed: 19,740 obs
+2026-02-24 09:52:03 [INFO]    OFR OFR_SOFR...
+2026-02-24 09:52:04 [INFO]    OFR OFR_SOFR: 1,970 obs
+2026-02-24 09:52:04 [INFO]    OFR OFR_EFFR...
+2026-02-24 09:52:05 [INFO]    OFR OFR_EFFR: 2,505 obs
+2026-02-24 09:52:05 [INFO]    OFR OFR_OBFR...
+2026-02-24 09:52:05 [INFO]    OFR OFR_OBFR: 2,505 obs
+2026-02-24 09:52:05 [INFO]    OFR OFR_TGCR...
+2026-02-24 09:52:06 [INFO]    OFR OFR_TGCR: 1,970 obs
+2026-02-24 09:52:06 [INFO]    OFR OFR_BGCR...
+2026-02-24 09:52:07 [INFO]    OFR OFR_BGCR: 1,970 obs
+2026-02-24 09:52:07 [INFO]    OFR MMF_Total_Assets...
+2026-02-24 09:52:08 [INFO]    OFR MMF_Total_Assets: 183 obs
+2026-02-24 09:52:08 [INFO]    OFR MMF_Repo_Total...
+2026-02-24 09:52:09 [INFO]    OFR MMF_Repo_Total: 183 obs
+2026-02-24 09:52:09 [INFO]    OFR MMF_Repo_with_Fed...
+2026-02-24 09:52:09 [INFO]    OFR MMF_Repo_with_Fed: 151 obs
+2026-02-24 09:52:10 [INFO]    OFR MMF_Treasury_Total...
+2026-02-24 09:52:10 [INFO]    OFR MMF_Treasury_Total: 183 obs
+2026-02-24 09:52:10 [INFO]    OFR PD_Repo_Total...
+2026-02-24 09:52:11 [INFO]    OFR PD_Repo_Total: 55 obs
+2026-02-24 09:52:11 [INFO]    OFR PD_ReverseRepo_Total...
+2026-02-24 09:52:11 [INFO]    OFR PD_ReverseRepo_Total: 31 obs
+2026-02-24 09:52:11 [INFO]    OFR PD_Repo_Treasury_Total...
+2026-02-24 09:52:12 [INFO]    OFR PD_Repo_Treasury_Total: 365 obs
+2026-02-24 09:52:12 [INFO]    OFR FSI...
+2026-02-24 09:52:32 [INFO]    OFR FSI: 59,499 obs
+2026-02-24 09:52:32 [INFO] === MARKET DATA FETCH ===
+2026-02-24 09:52:32 [INFO] --- Yahoo Finance (S&P 500) ---
+2026-02-24 09:52:32 [INFO]    Fetching S&P 500 from 2000-01-01...
+2026-02-24 09:52:40 [INFO]    S&P 500: 97,363 observations
+2026-02-24 09:52:40 [INFO] --- Breadth Data ---
+2026-02-24 09:52:40 [INFO]    Breadth data requires premium sources (StockCharts, Bloomberg)
+2026-02-24 09:52:40 [INFO]    Using proxy computations where possible...
+2026-02-24 09:52:40 [INFO] --- Sentiment Data ---
+2026-02-24 09:52:49 [INFO]    VIX metrics: 17,954 observations
+2026-02-24 09:52:49 [INFO]    Fetching AAII sentiment...
+2026-02-24 09:52:50 [INFO]    AAII sentiment: 8,044 observations
+2026-02-24 09:52:50 [INFO]    Fetching NAAIM exposure...
+2026-02-24 09:52:50 [INFO]    NAAIM requires web scraping or direct data agreement
+2026-02-24 09:52:50 [INFO] --- Put/Call Ratio ---
+2026-02-24 09:52:50 [INFO]    Put/Call ratio requires CBOE data feed...
+2026-02-24 09:52:50 [INFO] === MARKET DATA COMPLETE: 21 series, 123,361 obs ===
+2026-02-24 09:52:50 [INFO] 
+--- FREE CRYPTO DATA (DefiLlama + CoinGecko) ---
+2026-02-24 09:52:50 [INFO] Fetching TVL data from DefiLlama...
+2026-02-24 09:52:52 [WARNING]    Sui: HTTP 400
+2026-02-24 09:52:55 [WARNING]    Optimism: HTTP 400
+2026-02-24 09:52:55 [WARNING]    Base: HTTP 400
+2026-02-24 09:52:55 [WARNING]    Polygon: HTTP 400
+2026-02-24 09:52:59 [INFO]    Uniswap: 2,672 observations
+2026-02-24 09:53:23 [INFO]    Curve: 2,202 observations
+2026-02-24 09:53:28 [INFO]    PancakeSwap: 1,771 observations
+2026-02-24 09:53:29 [INFO]    Raydium: 1,807 observations
+2026-02-24 09:53:33 [INFO]    Aerodrome: 912 observations
+2026-02-24 09:53:34 [INFO]    Aave: 2,108 observations
+2026-02-24 09:53:35 [WARNING]    Compound: HTTP 400
+2026-02-24 09:53:35 [INFO]    Morpho: 1,287 observations
+2026-02-24 09:53:36 [INFO]    Spark: 1,032 observations
+2026-02-24 09:53:36 [INFO]    GMX: 1,639 observations
+2026-02-24 09:53:37 [INFO]    dYdX: 1,935 observations
+2026-02-24 09:53:37 [INFO]    Hyperliquid: 993 observations
+2026-02-24 09:53:38 [INFO]    Synthetix: 2,393 observations
+2026-02-24 09:53:38 [INFO]    Lido: 1,894 observations
+2026-02-24 09:53:39 [INFO]    Rocket Pool: 1,608 observations
+2026-02-24 09:53:39 [INFO]    Jito: 1,190 observations
+2026-02-24 09:53:40 [WARNING]    Marinade: HTTP 400
+2026-02-24 09:53:41 [INFO]    MakerDAO: 2,610 observations
+2026-02-24 09:53:42 [INFO] Fetching fees/revenue from DefiLlama...
+2026-02-24 09:53:42 [INFO]    Fees/revenue: 0 protocols, 0 observations
+2026-02-24 09:53:42 [INFO] Fetching chain TVL from DefiLlama...
+2026-02-24 09:53:42 [INFO]    Chain TVL: 367 chains
+2026-02-24 09:53:42 [INFO] Fetching stablecoin data from DefiLlama...
+2026-02-24 09:53:42 [INFO] Fetching 30d price history from CoinGecko...
+2026-02-24 09:53:42 [INFO]    BTC: 93 observations
+2026-02-24 09:53:44 [INFO]    ETH: 93 observations
+2026-02-24 09:53:47 [INFO]    SOL: 93 observations
+2026-02-24 09:53:49 [INFO]    AVAX: 93 observations
+2026-02-24 09:53:51 [INFO]    NEAR: 93 observations
+2026-02-24 09:53:53 [INFO]    SUI: 93 observations
+2026-02-24 09:53:55 [WARNING] Rate limited, waiting 60s...
+2026-02-24 09:54:57 [INFO]    ARB: 93 observations
+2026-02-24 09:54:58 [INFO]    OP: 93 observations
+2026-02-24 09:55:00 [INFO]    MATIC: 3 observations
+2026-02-24 09:55:02 [INFO]    UNI: 93 observations
+2026-02-24 09:55:04 [INFO]    CRV: 93 observations
+2026-02-24 09:55:06 [WARNING] Rate limited, waiting 60s...
+2026-02-24 09:56:11 [INFO]    GMX: 93 observations
+2026-02-24 09:56:12 [INFO]    LDO: 93 observations
+2026-02-24 09:56:14 [WARNING] Rate limited, waiting 60s...
+2026-02-24 09:57:14 [WARNING] Rate limited, waiting 60s...
+2026-02-24 09:58:14 [INFO]    GRT: 93 observations
+2026-02-24 09:58:16 [INFO]    MKR: 93 observations
+2026-02-24 09:58:17 [INFO] Fetching global crypto metrics...
+2026-02-24 09:58:18 [INFO]    Global metrics: 5 series
+2026-02-24 09:58:18 [INFO] 
+Crypto total: 429 series, 29,730 observations
+2026-02-24 09:58:19 [INFO] Found 503 S&P 500 constituents
+2026-02-24 09:58:19 [INFO] Fetching prices for 503 tickers...
+2026-02-24 09:58:19 [INFO]    Batch 1/11: 50 tickers
+2026-02-24 09:58:22 [INFO]    Batch 2/11: 50 tickers
+2026-02-24 09:58:24 [INFO]    Batch 3/11: 50 tickers
+2026-02-24 09:58:29 [ERROR] 
+49 Failed downloads:
+2026-02-24 09:58:29 [ERROR] ['DAL', 'CEG', 'ED', 'CSCO', 'DHR', 'CPRT', 'DECK', 'CMCSA', 'CTAS', 'FANG', 'CTVA']: TypeError("'NoneType' object is not subscriptable")
+2026-02-24 09:58:29 [ERROR] ['CRH', 'DE', 'C', 'CRWD', 'CCI', 'CINF', 'DVA', 'CL', 'CSX', 'CHD', 'FIX', 'DRI', 'GLW', 'DELL', 'COIN', 'CFG', 'DXCM', 'CVS', 'CAG', 'CVX', 'STZ', 'CTSH', 'CPAY', 'DDOG', 'CMS', 'COO', 'DVN', 'CMG', 'COP', 'CB', 'CI', 'CME', 'CLX', 'CMI', 'COST', 'KO', 'CIEN', 'CTRA']: OperationalError('unable to open database file')
+2026-02-24 09:58:30 [INFO]    Batch 4/11: 50 tickers
+2026-02-24 09:58:30 [ERROR] 
+50 Failed downloads:
+2026-02-24 09:58:30 [ERROR] ['FITB', 'EQIX', 'ETN', 'EBAY', 'FRT', 'ETR', 'EG', 'EXPD', 'FICO', 'D', 'ECL', 'ESS', 'DPZ', 'EQT', 'EXPE', 'EQR', 'DLR', 'DLTR', 'FSLR', 'DOW', 'FFIV', 'ERIE', 'EW', 'EVRG', 'EXR', 'FE', 'EFX', 'FDS', 'DTE', 'DOV', 'DD', 'XOM', 'EPAM', 'FAST', 'EA', 'DHI', 'ES', 'EME', 'DASH', 'EXC', 'EOG', 'ELV', 'EMR', 'DUK', 'DG', 'FDX', 'EL', 'EXE', 'FIS']: OperationalError('unable to open database file')
+2026-02-24 09:58:30 [ERROR] ['EIX']: TypeError("'NoneType' object is not subscriptable")
+2026-02-24 09:58:31 [INFO]    Batch 5/11: 50 tickers
+2026-02-24 09:58:31 [ERROR] 
+50 Failed downloads:
+2026-02-24 09:58:31 [ERROR] ['FOX', 'HUBB', 'IBM', 'GEV', 'HUM', 'HCA', 'HAL', 'HST', 'GPN', 'GL', 'IDXX', 'FTNT', 'HLT', 'HWM', 'BEN', 'HSIC', 'HAS', 'HRL', 'HIG', 'DOC', 'GD', 'GEN', 'GIS', 'FOXA', 'GILD', 'GEHC', 'GM', 'IR', 'GPC', 'GRMN', 'FISV', 'HON', 'HSY', 'INCY', 'HPE', 'IT', 'GE', 'FTV', 'GS', 'HOLX', 'HPQ', 'GDDY', 'HD', 'HBAN', 'FCX', 'HII', 'IEX', 'ITW', 'F', 'GNRC']: OperationalError('unable to open database file')
+2026-02-24 09:58:32 [INFO]    Batch 6/11: 50 tickers
+2026-02-24 09:58:33 [ERROR] 
+50 Failed downloads:
+2026-02-24 09:58:33 [ERROR] ['IRM', 'MPC', 'JKHY', 'LDOS', 'JPM', 'LYV', 'LRCX', 'ICE', 'L', 'KVUE', 'JBL', 'LW', 'IP', 'INVH', 'LVS', 'KIM', 'LMT', 'ISRG', 'KEY', 'KMB', 'KHC', 'LEN', 'KMI', 'INTU', 'MRSH', 'LII', 'KR', 'LOW', 'LYB', 'LHX', 'LULU', 'MAR', 'KLAC', 'KDP', 'JBHT', 'LIN', 'IBKR', 'IVZ', 'LLY', 'IQV', 'MTB', 'JCI', 'KEYS', 'PODD', 'INTC', 'J', 'IFF', 'KKR', 'LH', 'JNJ']: OperationalError('unable to open database file')
+2026-02-24 09:58:34 [INFO]    Batch 7/11: 50 tickers
+2026-02-24 09:58:34 [ERROR] 
+50 Failed downloads:
+2026-02-24 09:58:34 [ERROR] ['MCK', 'MPWR', 'MTCH', 'MDT', 'MKC', 'NXPI', 'NKE', 'MCO', 'NVR', 'MCD', 'MSCI', 'MS', 'NCLH', 'NDAQ', 'MDLZ', 'NUE', 'NWS', 'MA', 'MTD', 'MET', 'NTAP', 'MRNA', 'MOS', 'NOC', 'MOH', 'MGM', 'MSI', 'NDSN', 'ODFL', 'TAP', 'MAA', 'OXY', 'NWSA', 'MAS', 'MCHP', 'MRK', 'META', 'NFLX', 'NSC', 'MNST', 'NVDA', 'MU', 'NTRS', 'NRG', 'NEM', 'NEE', 'NI', 'ORLY', 'MLM', 'MSFT']: OperationalError('unable to open database file')
+2026-02-24 09:58:35 [INFO]    Batch 8/11: 50 tickers
+2026-02-24 09:58:35 [ERROR] 
+50 Failed downloads:
+2026-02-24 09:58:35 [ERROR] ['PGR', 'O', 'POOL', 'PPG', 'PLTR', 'RSG', 'REGN', 'PAYX', 'PFE', 'OTIS', 'DGX', 'PEG', 'ON', 'PFG', 'PNR', 'PCG', 'PG', 'PLD', 'RJF', 'REG', 'PNW', 'PCAR', 'RF', 'RVTY', 'OMC', 'HOOD', 'PANW', 'PSKY', 'PKG', 'PTC', 'PH', 'PM', 'PSA', 'PSX', 'PWR', 'Q', 'RMD', 'ROK', 'RL', 'PHM', 'PAYC', 'PYPL', 'PEP', 'PRU', 'OKE', 'QCOM', 'RTX', 'PPL', 'ORCL', 'PNC']: OperationalError('unable to open database file')
+2026-02-24 09:58:36 [INFO]    Batch 9/11: 50 tickers
+2026-02-24 09:58:36 [ERROR] 
+50 Failed downloads:
+2026-02-24 09:58:36 [ERROR] ['SWKS', 'SYF', 'ROP', 'SYY', 'ROL', 'SHW', 'TEL', 'LUV', 'TPL', 'TPR', 'TGT', 'TDY', 'SO', 'SNDK', 'TMO', 'SPGI', 'TT', 'TKO', 'SBAC', 'TSLA', 'ROST', 'TXN', 'STT', 'SNPS', 'RCL', 'TER', 'SYK', 'SWK', 'SOLV', 'STE', 'SBUX', 'NOW', 'SJM', 'TMUS', 'TRGP', 'SRE', 'STX', 'CRM', 'SW', 'SLB', 'TROW', 'SMCI', 'TTD', 'STLD', 'TSCO', 'SNA', 'TTWO', 'TXT', 'SPG', 'TJX']: OperationalError('unable to open database file')
+2026-02-24 09:58:37 [INFO]    Batch 10/11: 50 tickers
+2026-02-24 09:58:37 [ERROR] 
+50 Failed downloads:
+2026-02-24 09:58:37 [ERROR] ['TDG', 'WMT', 'WRB', 'WM', 'WBD', 'TRV', 'VST', 'DIS', 'WYNN', 'WSM', 'TYL', 'VRTX', 'VICI', 'UNP', 'TRMB', 'WAT', 'UAL', 'WAB', 'WDC', 'VRSN', 'WY', 'ULTA', 'WDAY', 'UPS', 'XYL', 'UDR', 'VLO', 'VZ', 'USB', 'WFC', 'TSN', 'UHS', 'VLTO', 'WELL', 'VRSK', 'URI', 'VMC', 'GWW', 'YUM', 'V', 'WTW', 'WEC', 'TFC', 'UBER', 'VTRS', 'WST', 'UNH', 'VTR', 'XEL', 'WMB']: OperationalError('unable to open database file')
+2026-02-24 09:58:38 [INFO]    Batch 11/11: 3 tickers
+2026-02-24 09:58:38 [ERROR] 
+3 Failed downloads:
+2026-02-24 09:58:38 [ERROR] ['ZBRA', 'ZBH', 'ZTS']: OperationalError('unable to open database file')
+2026-02-24 09:58:40 [INFO]    Got prices for 101 stocks, 751 days
+2026-02-24 09:58:40 [INFO] Computing % above MAs...
+2026-02-24 09:58:40 [INFO] Computing A/D line...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:116: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2026-02-24 09:58:40 [INFO] Computing NH-NL...
+2026-02-24 09:58:40 [INFO] Computing McClellan...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:156: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2026-02-24 09:58:40 [INFO] Computing breadth thrust...
+2026-02-24 09:58:40 [INFO] Storing metrics in database...
+2026-02-24 09:58:40 [ERROR] BREADTH failed: unable to open database file
+2026-02-24 09:58:40 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-02-24 09:58:40 [ERROR]   ZHVI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-02-24 09:58:40 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-02-24 09:58:40 [ERROR]   ZORI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zori/Metro_zori_uc_sfrcondomfr_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-02-24 09:58:40 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-02-24 09:58:40 [ERROR] TRADINGVIEW failed: [Errno 24] Too many open files: '/Users/bob/Library/Python/3.14/lib/python/site-packages/websocket/__init__.py'
+2026-02-24 09:58:40 [INFO] Running quality checks on 2074 series...
+2026-02-24 09:58:43 [INFO]    Checked 100 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:44 [INFO]    Checked 200 series...
+2026-02-24 09:58:45 [INFO]    Checked 300 series...
+2026-02-24 09:58:45 [INFO]    Checked 400 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:46 [INFO]    Checked 500 series...
+2026-02-24 09:58:46 [INFO]    Checked 600 series...
+2026-02-24 09:58:47 [INFO]    Checked 700 series...
+2026-02-24 09:58:48 [INFO]    Checked 800 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:50 [INFO]    Checked 900 series...
+2026-02-24 09:58:52 [INFO]    Checked 1000 series...
+2026-02-24 09:58:54 [INFO]    Checked 1100 series...
+2026-02-24 09:58:55 [INFO]    Checked 1200 series...
+2026-02-24 09:58:55 [INFO]    Checked 1300 series...
+2026-02-24 09:58:56 [INFO]    Checked 1400 series...
+2026-02-24 09:58:56 [INFO]    Checked 1500 series...
+2026-02-24 09:58:57 [INFO]    Checked 1600 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:58 [INFO]    Checked 1700 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:58 [INFO]    Checked 1800 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:58 [INFO]    Checked 1900 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:58 [INFO]    Checked 2000 series...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/quality.py:221: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df["date"] = pd.to_datetime(df["date"], errors="coerce")
+2026-02-24 09:58:58 [INFO] 
+--- Quality Summary ---
+2026-02-24 09:58:58 [INFO]    stale: 1051
+2026-02-24 09:58:58 [INFO]    good: 892
+2026-02-24 09:58:58 [INFO]    insufficient: 110
+2026-02-24 09:58:58 [INFO]    suspect: 13
+2026-02-24 09:58:58 [INFO]    warning: 8
+2026-02-24 09:58:58 [INFO] Quality flags updated in database.

@@ -27997,3 +27997,18 @@ MANUAL (copy from Desktop - accessible from phone via iCloud):
   6. ChatGPT         → paste into custom instructions
 
 ========================================
+[2026-02-24 08:30:32] ============================================================
+[2026-02-24 08:30:32] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-02-24 08:30:32] ============================================================
+[2026-02-24 08:30:32] GIT SYNC: Starting...
+[2026-02-24 08:32:24] GIT SYNC: Committed: Daily pipeline sync 2026-02-24 08:31
+[2026-02-24 08:33:19] GIT SYNC: Pushed to origin/main.
+[2026-02-24 08:33:20] CLOUD SYNC: Starting...
+[2026-02-24 08:35:06] CLOUD SYNC [iCloud]: Error: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Library/Mobile Documents/com~apple~CloudDocs/LHM_Backups/Lighthouse_Master_20260224.db'
+[2026-02-24 08:35:07] CLOUD SYNC [GDrive]: Error: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Library/CloudStorage/GDrive-bob@lighthousemacro.com/My Drive/LHM_Backups/Lighthouse_Master_20260224.db'
+[2026-02-24 08:35:07] CLOUD SYNC [Dropbox]: Error: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260224.db'
+[2026-02-24 08:35:07] ----------------------------------------
+[2026-02-24 08:35:07] SYNC SUMMARY:
+[2026-02-24 08:35:07]   GitHub: OK
+[2026-02-24 08:35:07]   Cloud: FAILED
+[2026-02-24 08:35:07] ============================================================

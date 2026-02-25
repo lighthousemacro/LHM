@@ -179,9 +179,9 @@ The 4-component model already captures the core signal. The conceptual component
 
 ## CURRENT READING
 
-As of Feb 13, 2026: **+0.05 to +0.07 (Q3, Neutral)**
+As of Feb 25, 2026: **+0.18 (Q4, Strength)**
 
-No strong directional signal. Dollar headwind and plumbing dynamics roughly offsetting.
+Liquidity impulse firming. Crossed Q3/Q4 boundary (+0.14) in recent weeks. Dollar weakening and reserve dynamics improving. Technicals diverging (Z-RoC at -1.25, price below both MAs).
 
 ---
 

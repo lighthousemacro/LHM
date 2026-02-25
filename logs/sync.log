@@ -30440,3 +30440,39 @@ rsync(62765): error: Client Materials: fstatat: Resource deadlock avoided
 [2026-02-24 22:45:02]   GitHub: OK
 [2026-02-24 22:45:02]   Cloud: OK
 [2026-02-24 22:45:02] ============================================================
+[2026-02-25 00:09:34] ============================================================
+[2026-02-25 00:09:34] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-02-25 00:09:34] ============================================================
+[2026-02-25 00:09:34] GIT SYNC: Starting...
+[2026-02-25 00:10:52] GIT SYNC: Committed: Daily pipeline sync 2026-02-25 00:10
+[2026-02-25 00:11:00] GIT SYNC: Pushed to origin/main.
+[2026-02-25 00:11:00] CLOUD SYNC: Starting...
+[2026-02-25 00:11:51] CLOUD SYNC [iCloud]: Copied Lighthouse_Master_20260225.db
+[2026-02-25 00:11:52] CLOUD SYNC [GDrive]: Error: [Errno 11] Resource deadlock avoided: '/Users/bob/Library/CloudStorage/GDrive-bob@lighthousemacro.com/My Drive/LHM_Backups'
+[2026-02-25 00:12:55] CLOUD SYNC [Dropbox]: Copied Lighthouse_Master_20260225.db
+[2026-02-25 00:12:56] ----------------------------------------
+[2026-02-25 00:12:56] SYNC SUMMARY:
+[2026-02-25 00:12:56]   GitHub: OK
+[2026-02-25 00:12:56]   Cloud: FAILED
+[2026-02-25 00:12:56] ============================================================
+[2026-02-25 00:15:02] Updated LAST_SYNC to 2026-02-25
+[2026-02-25 00:15:02] Synced to Claude Code: /Users/bob/.claude/CLAUDE.md
+cp: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md: Operation not permitted
+[2026-02-25 00:15:02] Created desktop export: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md
+========================================
+MASTER CONTEXT SYNCED - 2026-02-25 00:15:02
+========================================
+
+LAST_SYNC updated to: 2026-02-25
+
+AUTOMATIC:
+  1. Claude Code:    DONE
+  2. Desktop Export: DONE (~/Desktop/LHM_MASTER_CONTEXT.md)
+
+MANUAL (copy from Desktop - accessible from phone via iCloud):
+  3. Claude.ai/iOS  → paste into custom instructions
+  4. Claude Desktop → paste into custom instructions
+  5. Gemini          → paste into context
+  6. ChatGPT         → paste into custom instructions
+
+========================================

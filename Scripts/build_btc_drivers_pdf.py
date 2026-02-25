@@ -141,7 +141,7 @@ def build_pdf():
     body = s['body']
 
     story.append(Paragraph(
-        'Gun to my head, two indicators: the Crypto Liquidity Impulse (CLI) and our Technical Structure scoring system.',
+        'Gun to my head, two indicators: Lighthouse Macro\'s Crypto Liquidity Impulse (CLI) and our Technical Structure scoring system.',
         body))
     story.append(Paragraph(
         'One maps the macro tide as it flows through specific pipes into crypto. The other tells you whether price action is confirming or diverging from that tide. They occupy fundamentally different information domains: liquidity conditions versus market structure. That\'s the point.',
@@ -162,7 +162,7 @@ def build_pdf():
 
     # Tier 1
     story.append(Paragraph(
-        'Tier 1 (40% weight, 11 to 13 week lead) captures the macro tide: Global M2 momentum and dollar direction. Michael Howell\'s work at CrossBorder Capital provides the empirical anchor. His variance decomposition attributes roughly 40% of Bitcoin\'s systematic price variance to global liquidity, with Granger causality kicking in at week 5 and peaking at weeks 11 to 13. Bitcoin\'s liquidity beta runs approximately 4.5x (gold\'s is 1.8x). The honest measure (12-month rolling correlation) averages 0.51. Still the highest of any asset class. Lyn Alden and Sam Callahan found BTC moves directionally with global M2 in 83% of 12-month periods.',
+        'Tier 1 (40% weight, 11 to 13 week lead) captures the macro tide: Global M2 momentum and dollar direction. Empirical research on global liquidity transmission attributes roughly 40% of Bitcoin\'s systematic price variance to global liquidity conditions, with Granger causality kicking in at week 5 and peaking at weeks 11 to 13. Bitcoin\'s liquidity beta runs approximately 4.5x (gold\'s is 1.8x). The honest measure (12-month rolling correlation) averages 0.51. Still the highest of any asset class. BTC moves directionally with global M2 in 83% of 12-month periods.',
         body))
 
     # FIGURE 1
@@ -293,7 +293,7 @@ def build_pdf():
         'Global M2 with a 70 to 80 Day Lag. Originated with Joe Consorti at Theya Bitcoin in late 2024. The "optimal" lag varies wildly (56 to 108 days). Sample: 14 months. Consorti himself conceded by mid-2025 that the relationship had broken down. Log returns correlation: 0.02 same-day.',
         body))
     story.append(Paragraph(
-        'The 4-Year Halving Cycle. N = 3 completed cycles. Miners went from 68% to 3.9% of transaction value. Post-2024, BTC delivered its worst halving-epoch performance to date. Howell finds no evidence for a traditional 4-year cycle, attributing the apparent pattern to a 65-month global liquidity cycle. Which brings us back to indicator #1.',
+        'The 4-Year Halving Cycle. N = 3 completed cycles. Miners went from 68% to 3.9% of transaction value. Post-2024, BTC delivered its worst halving-epoch performance to date. Recent empirical work finds no evidence for a traditional 4-year cycle, attributing the apparent pattern to a 65-month global liquidity cycle. Which brings us back to indicator #1.',
         body))
 
     # --- HONEST CAVEAT ---

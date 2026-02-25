@@ -19,7 +19,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from matplotlib.ticker import FuncFormatter
+from matplotlib.ticker import FuncFormatter, FixedLocator
 from matplotlib.collections import LineCollection
 from datetime import datetime
 import yfinance as yf
@@ -187,6 +187,19 @@ def legend_style():
                 edgecolor=THEME['spine'], labelcolor=THEME['legend_fg'])
 
 
+def btc_log_ticks(ax):
+    """Set clean dollar tick labels on a log-scale BTC axis."""
+    ticks = [5000, 10000, 15000, 20000, 30000, 40000, 50000,
+             60000, 80000, 100000, 150000, 200000]
+    ymin, ymax = ax.get_ylim()
+    visible = [t for t in ticks if ymin <= t <= ymax]
+    if visible:
+        ax.yaxis.set_major_locator(FixedLocator(visible))
+    ax.yaxis.set_major_formatter(FuncFormatter(
+        lambda x, p: f'${x:,.0f}' if x >= 1000 else f'${x:.0f}'))
+    ax.yaxis.set_minor_formatter(FuncFormatter(lambda x, p: ''))
+
+
 def align_yaxis_zero(a1, a2):
     y1_min, y1_max = a1.get_ylim()
     y2_min, y2_max = a2.get_ylim()
@@ -284,8 +297,7 @@ def fig_01_dxy_vs_btc():
              label='BTC/USD (RHS, log)', zorder=3)
     ax2.set_yscale('log')
     ax2.set_ylabel('BTC/USD (log scale)', color=c_btc, fontsize=11)
-    ax2.yaxis.set_major_formatter(FuncFormatter(
-        lambda x, p: f'${x:,.0f}' if x >= 1000 else f'${x:.0f}'))
+    btc_log_ticks(ax2)
 
     style_dual_ax(ax1, ax2, c_dxy, c_btc)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
@@ -490,21 +502,24 @@ def fig_03_regime_bars():
 
 def fig_04_trend_structure():
     print('\n  Figure 4: BTC Trend Structure')
-    btc = fetch_btc(start='2021-06-01')
+    btc = fetch_btc(start='2016-01-01')
     price = btc['BTC']
 
-    # 21d EMA (substituted for 50d SMA for crypto) and 200d SMA
-    ema21 = price.ewm(span=21, adjust=False).mean()
+    # 50d SMA, 200d SMA, 200w SMA (1400 trading days)
+    sma50 = price.rolling(50).mean()
     sma200 = price.rolling(200).mean()
+    sma200w = price.rolling(1400).mean()
 
-    # Drop NaN from 200d
+    # Drop NaN from 200d, then trim display to 2022+
     valid = sma200.dropna().index
+    valid = valid[valid >= '2022-01-01']
     price = price.loc[valid]
-    ema21 = ema21.loc[valid]
+    sma50 = sma50.loc[valid]
     sma200 = sma200.loc[valid]
+    sma200w = sma200w.loc[valid]
 
-    # Regime: bullish = price > ema21 AND ema21 > sma200
-    raw_bull = (price > ema21) & (ema21 > sma200)
+    # Regime: bullish = price > 50d AND 50d > 200d (more stable than 21d EMA)
+    raw_bull = (price > sma50) & (sma50 > sma200)
 
     # Build regime segments, then iteratively merge short ones
     segments = []
@@ -544,14 +559,17 @@ def fig_04_trend_structure():
     # Plot price and MAs
     ax.plot(price.index, price.values, color=C['doldrums'], linewidth=1.5,
             alpha=0.7, label='BTC/USD', zorder=3)
-    ax.plot(ema21.index, ema21.values, color=C['dusk'], linewidth=2.0,
-            label='21-Day EMA', zorder=4)
+    ax.plot(sma50.index, sma50.values, color=C['dusk'], linewidth=2.0,
+            label='50-Day MA', zorder=4)
     ax.plot(sma200.index, sma200.values, color=C['ocean'], linewidth=2.0,
             label='200-Day MA', zorder=4)
+    sma200w_plot = sma200w.dropna()
+    if len(sma200w_plot) > 0:
+        ax.plot(sma200w_plot.index, sma200w_plot.values, color=C['sky'], linewidth=2.0,
+                label='200-Week MA', zorder=4)
 
     ax.set_yscale('log')
-    ax.yaxis.set_major_formatter(FuncFormatter(
-        lambda x, p: f'${x:,.0f}' if x >= 1000 else f'${x:.0f}'))
+    btc_log_ticks(ax)
 
     style_ax(ax, right_primary=True)
     set_xlim_to_data(ax, price.index, pad_left=15, pad_right=120)
@@ -559,14 +577,19 @@ def fig_04_trend_structure():
 
     # Stagger pills so they don't overlap
     last_price = float(price.dropna().iloc[-1])
-    last_ema = float(ema21.dropna().iloc[-1])
+    last_50 = float(sma50.dropna().iloc[-1])
     last_sma = float(sma200.dropna().iloc[-1])
     # Sort by value descending, assign offsets
-    pills = sorted([
+    pills = [
         (last_price, C['doldrums'], 'BTC'),
-        (last_ema, C['dusk'], 'EMA'),
-        (last_sma, C['ocean'], 'SMA'),
-    ], key=lambda x: -x[0])
+        (last_50, C['dusk'], '50d'),
+        (last_sma, C['ocean'], '200d'),
+    ]
+    sma200w_valid = sma200w.dropna()
+    if len(sma200w_valid) > 0:
+        last_200w = float(sma200w_valid.iloc[-1])
+        pills.append((last_200w, C['sky'], '200w'))
+    pills = sorted(pills, key=lambda x: -x[0])
     for idx_p, (val, col, _) in enumerate(pills):
         label = f'${val:,.0f}'
         pill_box = dict(boxstyle='round,pad=0.25', facecolor=col, edgecolor=col, alpha=0.95)
@@ -640,8 +663,7 @@ def fig_05_zroc():
     ax_top.add_collection(lc)
 
     ax_top.set_yscale('log')
-    ax_top.yaxis.set_major_formatter(FuncFormatter(
-        lambda x, p: f'${x:,.0f}' if x >= 1000 else f'${x:.0f}'))
+    btc_log_ticks(ax_top)
     style_ax(ax_top, right_primary=True)
     ax_top.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
@@ -654,8 +676,10 @@ def fig_05_zroc():
 
     # BOTTOM PANEL: Z-RoC
     ax_bot.axhline(0, color=C['fog'], linewidth=0.8, linestyle='--', zorder=1)
-    ax_bot.axhline(2, color=C['fog'], linewidth=0.5, linestyle=':', alpha=0.5)
-    ax_bot.axhline(-2, color=C['fog'], linewidth=0.5, linestyle=':', alpha=0.5)
+    ax_bot.axhline(1, color=C['doldrums'], linewidth=0.6, linestyle=':', alpha=0.4)
+    ax_bot.axhline(-1, color=C['doldrums'], linewidth=0.6, linestyle=':', alpha=0.4)
+    ax_bot.axhline(2, color=C['doldrums'], linewidth=0.8, linestyle='--', alpha=0.8)
+    ax_bot.axhline(-2, color=C['doldrums'], linewidth=0.8, linestyle='--', alpha=0.8)
     ax_bot.text(1.02, 2, '+2\u03c3', transform=ax_bot.get_yaxis_transform(),
                 fontsize=8, color=THEME['muted'], va='center')
     ax_bot.text(1.02, -2, '-2\u03c3', transform=ax_bot.get_yaxis_transform(),
@@ -732,17 +756,16 @@ def fig_06_relative_strength():
     # For top panel: use full BTC data (includes weekends) for accurate latest price
     btc_top = btc_full['BTC'].loc[btc_full.index >= valid[0]]
 
-    fig, ax_top, ax_bot = new_fig_2panel(figsize=(14, 10), height_ratios=[2, 1])
+    fig, ax_top, ax_bot = new_fig_2panel(figsize=(14, 11), height_ratios=[1.2, 1])
 
     # TOP PANEL: BTC Price (full daily data)
-    ax_top.plot(btc_top.index, btc_top.values, color=C['sky'], linewidth=1.8,
+    ax_top.plot(btc_top.index, btc_top.values, color=C['ocean'], linewidth=1.8,
                 alpha=0.9, label='BTC/USD', zorder=3)
     ax_top.set_yscale('log')
-    ax_top.yaxis.set_major_formatter(FuncFormatter(
-        lambda x, p: f'${x:,.0f}' if x >= 1000 else f'${x:.0f}'))
+    btc_log_ticks(ax_top)
     style_ax(ax_top, right_primary=True)
 
-    add_pill(ax_top, btc_top, C['sky'], fmt='${:,.0f}', side='right', pad=0.25)
+    add_pill(ax_top, btc_top, C['ocean'], fmt='${:,.0f}', side='right', pad=0.25)
 
     ann_box(ax_top, ('Technical Overlay Component 3: Relative Strength\n'
                      'BTC vs SPX across multiple timeframes\n'
@@ -752,14 +775,14 @@ def fig_06_relative_strength():
     # BOTTOM PANEL: Ratio + 50d MA
     ax_bot.plot(ratio.index, ratio.values, color=C['sky'], linewidth=1.0,
                 alpha=0.5, label='BTC/SPY Ratio', zorder=2)
-    ax_bot.plot(ratio_ma50.index, ratio_ma50.values, color=C['ocean'],
+    ax_bot.plot(ratio_ma50.index, ratio_ma50.values, color=C['sky'],
                 linewidth=2.0, label='50-Day MA', zorder=3)
 
     ax_bot.set_ylabel('BTC/SPY Ratio', color=THEME['muted'], fontsize=10)
     style_ax(ax_bot, right_primary=True)
     ax_bot.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
 
-    add_pill(ax_bot, ratio_ma50, C['ocean'], fmt='{:.0f}', side='right')
+    add_pill(ax_bot, ratio_ma50, C['sky'], fmt='{:.0f}', side='right')
 
     set_xlim_to_data(ax_top, btc_top.index, pad_left=15, pad_right=120)
     set_xlim_to_data(ax_bot, ratio.index, pad_left=15, pad_right=120)

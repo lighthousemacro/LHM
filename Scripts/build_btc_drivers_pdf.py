@@ -79,24 +79,59 @@ def make_styles():
 def build_pdf():
     s = make_styles()
 
+    def draw_page(canvas, doc):
+        """Draw accent bar + header/footer on every page."""
+        w, h = letter
+        margin = 0.85 * inch
+        bar_h = 4
+
+        # Top accent bar: Ocean 2/3, Dusk 1/3
+        bar_y = h - 0.45 * inch
+        bar_w = w - 2 * margin
+        canvas.setFillColor(OCEAN)
+        canvas.rect(margin, bar_y, bar_w * 0.67, bar_h, fill=1, stroke=0)
+        canvas.setFillColor(DUSK)
+        canvas.rect(margin + bar_w * 0.67, bar_y, bar_w * 0.33, bar_h, fill=1, stroke=0)
+
+        # "LIGHTHOUSE MACRO" top-left
+        canvas.setFillColor(OCEAN)
+        canvas.setFont(TITLE_FONT, 11)
+        canvas.drawString(margin, bar_y + 10, 'LIGHTHOUSE MACRO')
+
+        # Date top-right
+        canvas.setFillColor(GRAY)
+        canvas.setFont(BODY_FONT, 10)
+        canvas.drawRightString(w - margin, bar_y + 10, 'February 2026')
+
+        # Bottom accent bar
+        bot_y = 0.45 * inch
+        canvas.setFillColor(OCEAN)
+        canvas.rect(margin, bot_y, bar_w * 0.67, bar_h, fill=1, stroke=0)
+        canvas.setFillColor(DUSK)
+        canvas.rect(margin + bar_w * 0.67, bot_y, bar_w * 0.33, bar_h, fill=1, stroke=0)
+
+        # Footer left
+        canvas.setFillColor(GRAY)
+        canvas.setFont(BODY_FONT, 8)
+        canvas.drawString(margin, bot_y - 12,
+                          'Bob Sheehan, CFA, CMT | Lighthouse Macro | LighthouseMacro.com | @LHMacro')
+
+        # Footer right
+        canvas.setFillColor(OCEAN)
+        canvas.setFont(TITLE_FONT, 9)
+        canvas.drawRightString(w - margin, bot_y - 12, 'MACRO, ILLUMINATED.')
+
     doc = SimpleDocTemplate(
         OUT_PDF, pagesize=letter,
         leftMargin=0.85*inch, rightMargin=0.85*inch,
-        topMargin=0.7*inch, bottomMargin=0.7*inch
+        topMargin=0.9*inch, bottomMargin=0.8*inch
     )
 
     story = []
     W = doc.width
 
-    # --- HEADER ---
-    story.append(Paragraph('LIGHTHOUSE MACRO', s['brand']))
-    story.append(Spacer(1, 2))
-
-    story.append(Spacer(1, 4))
-
-    # Date
-    story.append(Paragraph('February 2026', s['date']))
-    story.append(Spacer(1, 16))
+    # --- HEADER (handled by page template, just add spacing) ---
+    story.append(Spacer(1, 8))
 
     # Title
     story.append(Paragraph("What Is REALLY Driving Bitcoin's Price?", s['title']))
@@ -269,17 +304,18 @@ def build_pdf():
         body))
 
     # --- FOOTER ---
+    # --- BIO ---
     story.append(Spacer(1, 20))
-
+    story.append(HRFlowable(width='100%', thickness=1, color=OCEAN, spaceAfter=8))
     story.append(Paragraph(
-        '<i>Bob Sheehan, CFA, CMT is the Founder and Chief Investment Officer of Lighthouse Macro, an institutional macro research firm. His work on Fed plumbing, liquidity transmission, and cross-asset strategy has been featured on Pascal Hugli\'s "Less Noise More Signal" podcast and Substack. Former Associate PM at Bank of America Private Bank ($4.5B AUM, 2.35 Sortino ratio). Former VP, Data & Analytics at EquiLend.</i>',
+        '<i>Bob Sheehan, CFA, CMT is the Founder and Chief Investment Officer of Lighthouse Macro, an institutional macro research firm. His work on Fed plumbing, liquidity transmission, and cross-asset strategy has been featured on Pascal Hugli\'s "Less Noise More Signal" podcast and Substack. Former Associate PM at Bank of America Private Bank ($4.5B AUM, 2.35 Sortino, 103% upside capture, 76% downside capture vs S&amp;P 500). Former VP, Data & Analytics at EquiLend.</i>',
         s['bio']))
     story.append(Paragraph(
         'Lighthouse Macro | LighthouseMacro.com | @LHMacro | bob@lighthousemacro.com',
         s['bio']))
 
-    # Build
-    doc.build(story)
+    # Build with page template
+    doc.build(story, onFirstPage=draw_page, onLaterPages=draw_page)
     print(f'  PDF saved: {OUT_PDF}')
 
 

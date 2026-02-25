@@ -145,7 +145,7 @@ def build_pdf():
     story.append(Paragraph('Architecture: Three Tiers, Eight Components', s['h1']))
 
     # Tier 1
-    story.append(Paragraph('Tier 1: Macro Liquidity Tide (40% conceptual weight, 11-13 week lead)', s['h2']))
+    story.append(Paragraph('Tier 1: Macro Liquidity Tide (highest weight, 11-13 week lead)', s['h2']))
     story.append(Paragraph(
         'Captures the global liquidity backdrop that sets the direction for all risk assets.',
         body))
@@ -160,7 +160,7 @@ def build_pdf():
         bullet))
 
     # Tier 2
-    story.append(Paragraph('Tier 2: US Plumbing Mechanics (35% conceptual weight, 1-6 week lead)', s['h2']))
+    story.append(Paragraph('Tier 2: US Plumbing Mechanics (1-6 week lead)', s['h2']))
     story.append(Paragraph(
         'Maps the internal plumbing of the US financial system, where most crypto liquidity originates.',
         body))
@@ -182,7 +182,7 @@ def build_pdf():
         bullet))
 
     # Tier 3
-    story.append(Paragraph('Tier 3: Crypto-Native Transmission (25% conceptual weight, 0-2 week lead)', s['h2']))
+    story.append(Paragraph('Tier 3: Crypto-Native Transmission (0-2 week lead)', s['h2']))
     story.append(Paragraph(
         'Captures the channels through which macro liquidity actually reaches crypto markets.',
         body))
@@ -201,8 +201,8 @@ def build_pdf():
     # Leverage filter
     story.append(Paragraph('Leverage Regime Filter', s['h2']))
     story.append(Paragraph(
-        'Perpetual futures funding rates applied as a multiplicative overlay after composite calculation. '
-        'Captures the ~17% of time when crypto positioning dynamics override macro liquidity trends.',
+        'Perpetual futures funding rates applied as an overlay. '
+        'When crypto positioning dynamics override macro liquidity trends, the filter adjusts the signal accordingly.',
         body))
 
     # --- METHODOLOGY ---
@@ -378,8 +378,8 @@ def build_pdf():
     story.append(Spacer(1, 16))
     story.append(HRFlowable(width='100%', thickness=1, color=OCEAN, spaceAfter=8))
     story.append(Paragraph(
-        '<i>Architecture, components, and empirical results are public. '
-        'Exact component weights, z-score methodology, and regime filter calibration are proprietary.</i>',
+        '<i>Architecture, components, tier structure, and empirical results are public. '
+        'Z-score calibration, normalization windows, and regime filter parameters are proprietary.</i>',
         s['disclosure']))
     story.append(Paragraph(
         '<i>Lighthouse Macro | LighthouseMacro.com | @LHMacro | bob@lighthousemacro.com</i>',

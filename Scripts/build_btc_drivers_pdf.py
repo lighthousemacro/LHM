@@ -162,7 +162,7 @@ def build_pdf():
 
     # Tier 1
     story.append(Paragraph(
-        'Tier 1 (40% weight, 11 to 13 week lead) captures the macro tide: Global M2 momentum and dollar direction. Empirical research on global liquidity transmission attributes roughly 40% of Bitcoin\'s systematic price variance to global liquidity conditions, with Granger causality kicking in at week 5 and peaking at weeks 11 to 13. Bitcoin\'s liquidity beta runs approximately 4.5x (gold\'s is 1.8x). The honest measure (12-month rolling correlation) averages 0.51. Still the highest of any asset class. BTC moves directionally with global M2 in 83% of 12-month periods.',
+        'Tier 1 (highest weight, 11 to 13 week lead) captures the macro tide: Global M2 momentum and dollar direction. Empirical research on global liquidity transmission attributes roughly 40% of Bitcoin\'s systematic price variance to global liquidity conditions, with Granger causality kicking in at week 5 and peaking at weeks 11 to 13. Bitcoin\'s liquidity beta runs approximately 4.5x (gold\'s is 1.8x). The honest measure (12-month rolling correlation) averages 0.51. Still the highest of any asset class. BTC moves directionally with global M2 in 83% of 12-month periods.',
         body))
 
     # FIGURE 1
@@ -171,21 +171,21 @@ def build_pdf():
         story.append(Spacer(1, 6))
         story.append(Image(fig1_path, width=W, height=W*0.55))
         story.append(Paragraph(
-            'Figure 1: DXY (inverted) vs BTC/USD. Dollar peaks align with BTC cycle bottoms. Tier 1 captures this with DXY 63-Day RoC (25% of CLI weight).',
+            'Figure 1: DXY (inverted) vs BTC/USD. Dollar peaks align with BTC cycle bottoms.',
             s['caption']))
 
     # Tier 2
     story.append(Paragraph(
-        'Tier 2 (35% weight, 1 to 6 week lead) maps the plumbing: the net liquidity impulse from WALCL, TGA, and RRP, plus wholesale funding stress via SOFR-IORB spreads and credit conditions via HY OAS. Post-RRP depletion, TGA rebuilds hit bank reserves directly. That\'s a regime change most net-liquidity trackers haven\'t internalized.',
+        'Tier 2 (1 to 6 week lead) maps the plumbing: the net liquidity impulse from WALCL, TGA, and RRP, plus wholesale funding stress via SOFR-IORB spreads and credit conditions via HY OAS. Post-RRP depletion, TGA rebuilds hit bank reserves directly. That\'s a regime change most net-liquidity trackers haven\'t internalized.',
         body))
 
     # Tier 3
     story.append(Paragraph(
-        'Tier 3 (25% weight, 0 to 2 week lead) captures crypto-native transmission. Stablecoin supply momentum shows a 95% contemporaneous correlation with BTC (Bitcoin Magazine Pro). FalconX Research ran formal Granger causality tests on ETF flows: F-statistic of 8.48, p = 0.004. With US spot Bitcoin ETFs holding roughly 1.3 million BTC (about 7% of total supply), this channel is no longer marginal.',
+        'Tier 3 (0 to 2 week lead) captures crypto-native transmission. Stablecoin supply momentum shows a 95% contemporaneous correlation with BTC (Bitcoin Magazine Pro). FalconX Research ran formal Granger causality tests on ETF flows: F-statistic of 8.48, p = 0.004. With US spot Bitcoin ETFs holding roughly 1.3 million BTC (about 7% of total supply), this channel is no longer marginal.',
         body))
 
     story.append(Paragraph(
-        'A leverage regime filter (perpetual futures funding rates) is applied multiplicatively after the composite calculation. It captures the ~17% of time when crypto positioning dynamics override macro liquidity trends.',
+        'A leverage regime filter (perpetual futures funding rates) is applied as an overlay. When crypto positioning dynamics override macro liquidity trends, the filter adjusts the signal accordingly.',
         body))
 
     # FIGURE 2
@@ -194,7 +194,7 @@ def build_pdf():
         story.append(Spacer(1, 6))
         story.append(Image(fig2_path, width=W, height=W*0.55))
         story.append(Paragraph(
-            'Figure 2: CLI vs 42-Day Forward BTC Returns (2018-2026). Quintile bands shaded. Current reading: +0.18 (Q4, strength).',
+            'Figure 2: CLI vs Forward BTC Returns (2018-2026). Quintile bands shaded. Current reading: +0.18 (Q4, strength).',
             s['caption']))
 
     # FIGURE 3
@@ -208,7 +208,7 @@ def build_pdf():
 
     # Disclosure
     story.append(Paragraph(
-        '<i>Disclosure: Architecture, components, and empirical results are public. Exact weights, z-score methodology, and regime filter calibration are proprietary.</i>',
+        '<i>Disclosure: Architecture, components, tier structure, and empirical results are public. Exact component weights, z-score methodology, and regime filter calibration are proprietary.</i>',
         s['disclosure']))
 
     # --- INDICATOR 2: TECHNICAL STRUCTURE ---

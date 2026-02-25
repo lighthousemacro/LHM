@@ -8812,3 +8812,126 @@ Crypto total: 429 series, 29,730 observations
 2026-02-25 07:15:02 [INFO]    LINK: 93 observations
 2026-02-25 07:15:04 [INFO]    GRT: 93 observations
 2026-02-25 07:15:07 [WARNING] Rate limited, waiting 60s...
+2026-02-25 07:16:13 [INFO] Fetching global crypto metrics...
+2026-02-25 07:16:15 [INFO]    Global metrics: 5 series
+2026-02-25 07:16:15 [INFO] 
+Crypto total: 433 series, 29,840 observations
+2026-02-25 07:16:22 [INFO] Found 503 S&P 500 constituents
+2026-02-25 07:16:22 [INFO] Fetching prices for 503 tickers...
+2026-02-25 07:16:22 [INFO]    Batch 1/11: 50 tickers
+2026-02-25 07:16:29 [INFO]    Batch 2/11: 50 tickers
+2026-02-25 07:16:31 [INFO]    Batch 3/11: 50 tickers
+2026-02-25 07:16:33 [INFO]    Batch 4/11: 50 tickers
+2026-02-25 07:16:35 [INFO]    Batch 5/11: 50 tickers
+2026-02-25 07:16:37 [INFO]    Batch 6/11: 50 tickers
+2026-02-25 07:16:38 [ERROR] 
+40 Failed downloads:
+2026-02-25 07:16:38 [ERROR] ['MRSH', 'KMB', 'JBHT', 'J', 'LYV', 'JCI', 'LYB', 'PODD', 'JNJ', 'KKR', 'INTU', 'JPM', 'LULU', 'KLAC', 'KMI', 'KIM', 'KDP', 'LEN', 'IVZ', 'INTC', 'LHX']: TypeError("'NoneType' object is not subscriptable")
+2026-02-25 07:16:38 [ERROR] ['LH', 'ICE', 'IBKR', 'LDOS', 'MPC', 'MAR', 'JKHY', 'L', 'KEYS', 'IFF', 'LIN', 'IQV', 'KEY', 'IP', 'LLY', 'LOW', 'KVUE', 'INVH', 'LRCX']: OperationalError('unable to open database file')
+2026-02-25 07:16:40 [INFO]    Batch 7/11: 50 tickers
+2026-02-25 07:16:40 [ERROR] 
+49 Failed downloads:
+2026-02-25 07:16:40 [ERROR] ['MSI', 'MOS', 'MRNA', 'NKE', 'NDAQ', 'MET', 'MCO', 'MRK', 'NWS', 'NEE', 'NVDA', 'NVR', 'MNST', 'MCK', 'NXPI', 'MU', 'NI']: TypeError("'NoneType' object is not subscriptable")
+2026-02-25 07:16:40 [ERROR] ['NRG', 'MDLZ', 'MAA', 'NTRS', 'MPWR', 'NSC', 'ORLY', 'NDSN', 'MCHP', 'MTCH', 'NOC', 'NCLH', 'NUE', 'MTD', 'MGM', 'MLM', 'NWSA', 'MCD', 'NTAP', 'MSCI', 'ODFL', 'MOH', 'MKC', 'MDT', 'OXY', 'MAS', 'NEM', 'MSFT', 'MS', 'MA', 'META', 'NFLX']: OperationalError('unable to open database file')
+2026-02-25 07:16:41 [INFO]    Batch 8/11: 50 tickers
+2026-02-25 07:16:42 [ERROR] 
+50 Failed downloads:
+2026-02-25 07:16:42 [ERROR] ['PSKY', 'REGN', 'PANW', 'Q', 'O', 'RTX', 'RVTY', 'PAYC', 'ORCL', 'POOL', 'PGR', 'PG', 'PM', 'OMC', 'PYPL', 'PH']: TypeError("'NoneType' object is not subscriptable")
+2026-02-25 07:16:42 [ERROR] ['PLD', 'QCOM', 'PEG', 'PPG', 'PRU', 'PKG', 'ON', 'REG', 'PFE', 'PNC', 'PFG', 'ROK', 'PHM', 'PAYX', 'PLTR', 'HOOD', 'PWR', 'PNW', 'PPL', 'RF', 'RL', 'PSX', 'RMD', 'OTIS', 'OKE', 'PCAR', 'PCG', 'RJF', 'DGX', 'PEP', 'PNR', 'PSA', 'RSG', 'PTC']: OperationalError('unable to open database file')
+2026-02-25 07:16:43 [INFO]    Batch 9/11: 50 tickers
+2026-02-25 07:16:43 [ERROR] 
+50 Failed downloads:
+2026-02-25 07:16:43 [ERROR] ['STT', 'SO', 'TT', 'TMO', 'TSLA', 'SNA', 'CRM', 'TDY', 'TPL', 'TXN', 'STX', 'SOLV', 'SW', 'NOW', 'SRE', 'TSCO', 'ROST', 'TPR', 'SLB', 'SNPS', 'SPGI', 'SWKS', 'SYK', 'STLD', 'TGT', 'TTD', 'RCL', 'SYF', 'STE', 'SMCI', 'SNDK', 'TTWO', 'TXT', 'SBAC', 'TJX', 'ROP', 'TEL', 'TKO', 'SJM', 'SWK', 'TMUS', 'ROL', 'SPG', 'SBUX']: OperationalError('unable to open database file')
+2026-02-25 07:16:43 [ERROR] ['SHW', 'TROW', 'LUV', 'SYY', 'TRGP', 'TER']: TypeError("'NoneType' object is not subscriptable")
+2026-02-25 07:16:44 [INFO]    Batch 10/11: 50 tickers
+2026-02-25 07:16:44 [ERROR] 
+50 Failed downloads:
+2026-02-25 07:16:44 [ERROR] ['XYL', 'UNP', 'UAL', 'VTR', 'WMB', 'XEL', 'WTW', 'V', 'VRSK', 'WST', 'UPS', 'TDG', 'TYL', 'TSN', 'WSM', 'WRB', 'VMC', 'WAT', 'VTRS', 'WDAY', 'UDR', 'WELL', 'WM', 'VLO', 'WFC', 'TFC', 'VST', 'DIS', 'TRMB', 'WEC', 'VRTX', 'YUM', 'VICI', 'WYNN', 'WY', 'ULTA', 'VRSN', 'URI', 'USB', 'WMT', 'TRV', 'WDC', 'UNH']: OperationalError('unable to open database file')
+2026-02-25 07:16:44 [ERROR] ['VLTO', 'WBD', 'UBER', 'WAB', 'GWW', 'VZ', 'UHS']: TypeError("'NoneType' object is not subscriptable")
+2026-02-25 07:16:45 [INFO]    Batch 11/11: 3 tickers
+2026-02-25 07:16:45 [ERROR] 
+3 Failed downloads:
+2026-02-25 07:16:45 [ERROR] ['ZTS', 'ZBH', 'ZBRA']: OperationalError('unable to open database file')
+2026-02-25 07:16:46 [INFO]    Got prices for 261 stocks, 751 days
+2026-02-25 07:16:46 [INFO] Computing % above MAs...
+2026-02-25 07:16:47 [INFO] Computing A/D line...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:116: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-02-25 07:16:47 [INFO] Computing NH-NL...
+2026-02-25 07:16:47 [INFO] Computing McClellan...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:156: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-02-25 07:16:47 [INFO] Computing breadth thrust...
+2026-02-25 07:16:47 [INFO] Storing metrics in database...
+2026-02-25 07:16:54 [INFO]    SPX_PCT_ABOVE_20D: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_PCT_ABOVE_50D: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_PCT_ABOVE_200D: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_ADVANCES: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_DECLINES: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_AD_LINE: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_AD_RATIO: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_NEW_HIGHS: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_NEW_LOWS: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_NET_NEW_HIGHS: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_MCCLELLAN_OSC: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_MCCLELLAN_SUM: 751 observations
+2026-02-25 07:16:54 [INFO]    SPX_BREADTH_THRUST: 751 observations
+2026-02-25 07:16:54 [INFO] 
+Breadth total: 13 series, 9,763 observations
+2026-02-25 07:16:54 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-02-25 07:16:56 [INFO]   ZHVI: 21 series, 6,570 observations
+2026-02-25 07:16:56 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-02-25 07:16:57 [INFO]   ZORI: 21 series, 2,773 observations
+2026-02-25 07:16:57 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-02-25 07:17:00 [INFO]     TV_USHMI: 494 observations
+2026-02-25 07:17:01 [INFO]   Fetching ECONOMICS:USPIND -> TV_USPIND...
+2026-02-25 07:17:02 [INFO]     TV_USPIND: 434 observations
+2026-02-25 07:17:03 [INFO]   Fetching ECONOMICS:USMRI -> TV_USMRI...
+2026-02-25 07:17:06 [INFO]     TV_USMRI: 434 observations
+2026-02-25 07:17:07 [INFO]   Fetching ECONOMICS:USPHSIYY -> TV_USPHSIYY...
+2026-02-25 07:17:07 [INFO]     TV_USPHSIYY: 288 observations
+2026-02-25 07:17:08 [INFO]   Fetching ECONOMICS:USPHSIMM -> TV_USPHSIMM...
+2026-02-25 07:17:10 [INFO]     TV_USPHSIMM: 300 observations
+2026-02-25 07:17:11 [INFO]   Fetching ECONOMICS:USCONSTS -> TV_USCONSTS...
+2026-02-25 07:17:12 [INFO]     TV_USCONSTS: 741 observations
+2026-02-25 07:17:13 [INFO]   Fetching ECONOMICS:USPRR -> TV_USPRR...
+2026-02-25 07:17:14 [INFO]     TV_USPRR: 220 observations
+2026-02-25 07:17:15 [INFO]   Fetching ECONOMICS:USAMS -> TV_USAMS...
+2026-02-25 07:17:19 [INFO]     TV_USAMS: 432 observations
+2026-02-25 07:17:20 [INFO]   Fetching ECONOMICS:USEHS -> TV_USEHS...
+2026-02-25 07:17:21 [INFO]     TV_USEHS: 697 observations
+2026-02-25 07:17:22 [INFO]   Fetching ECONOMICS:USMAPL -> TV_USMAPL...
+2026-02-25 07:17:24 [INFO]     TV_USMAPL: 434 observations
+2026-02-25 07:17:25 [INFO]   Fetching ECONOMICS:USMMI -> TV_USMMI...
+2026-02-25 07:17:26 [INFO]     TV_USMMI: 434 observations
+2026-02-25 07:17:27 [INFO]   Fetching ECONOMICS:USMOR -> TV_USMOR...
+2026-02-25 07:17:28 [INFO]     TV_USMOR: 92 observations
+2026-02-25 07:17:29 [INFO]   Fetching ECONOMICS:USISMMP -> TV_USISMMP...
+2026-02-25 07:17:31 [INFO]     TV_USISMMP: 913 observations
+2026-02-25 07:17:32 [INFO]   Fetching ECONOMICS:USBCOI -> TV_USBCOI...
+2026-02-25 07:17:32 [INFO]     TV_USBCOI: 937 observations
+2026-02-25 07:17:34 [INFO]   Fetching ECONOMICS:USMNO -> TV_USMNO...
+2026-02-25 07:29:14 [INFO]     TV_USMNO: 913 observations
+2026-02-25 07:29:15 [INFO]   Fetching ECONOMICS:USMEMP -> TV_USMEMP...
+2026-02-25 07:29:19 [INFO]     TV_USMEMP: 913 observations
+2026-02-25 07:29:20 [INFO]   Fetching ECONOMICS:USMPR -> TV_USMPR...
+2026-02-25 07:29:21 [INFO]     TV_USMPR: 277 observations
+2026-02-25 07:29:22 [INFO]   Fetching ECONOMICS:USNMPMI -> TV_USNMPMI...
+2026-02-25 07:29:42 [WARNING]     TV_USNMPMI: No data returned
+2026-02-25 07:29:43 [INFO]   Fetching ECONOMICS:USNMBA -> TV_USNMBA...
+2026-02-25 07:29:49 [INFO]     TV_USNMBA: 343 observations
+2026-02-25 07:29:50 [INFO]   Fetching ECONOMICS:USNMNO -> TV_USNMNO...
+2026-02-25 07:29:52 [INFO]     TV_USNMNO: 343 observations
+2026-02-25 07:29:53 [INFO]   Fetching ECONOMICS:USNMEMP -> TV_USNMEMP...
+2026-02-25 07:29:54 [INFO]     TV_USNMEMP: 343 observations
+2026-02-25 07:29:56 [INFO]   Fetching ECONOMICS:USNMPR -> TV_USNMPR...
+2026-02-25 07:29:56 [INFO]     TV_USNMPR: 343 observations
+2026-02-25 07:29:57 [INFO]   Fetching ECONOMICS:USRFMI -> TV_USRFMI...
+2026-02-25 07:30:05 [INFO]     TV_USRFMI: 388 observations
+2026-02-25 07:30:06 [INFO]   Fetching ECONOMICS:USKFMI -> TV_USKFMI...
+2026-02-25 07:30:07 [INFO]     TV_USKFMI: 295 observations
+2026-02-25 07:30:08 [INFO]   Fetching ECONOMICS:USLEI -> TV_USLEI...
+2026-02-25 07:30:10 [INFO]     TV_USLEI: 803 observations
+2026-02-25 07:30:11 [INFO]   Fetching ECONOMICS:USBOI -> TV_USBOI...
+2026-02-25 07:30:12 [INFO]     TV_USBOI: 525 observations
+2026-02-25 07:30:13 [INFO]   Fetching ECONOMICS:USFO -> TV_USFO...

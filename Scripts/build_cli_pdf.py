@@ -352,24 +352,27 @@ def build_pdf():
         body))
 
     # --- INVALIDATION ---
-    story.append(Paragraph('Invalidation', s['h1']))
-    story.append(Paragraph('The CLI framework breaks if:', body))
-    story.append(Paragraph(
+    from reportlab.platypus import KeepTogether
+    invalidation_block = []
+    invalidation_block.append(Paragraph('Invalidation', s['h1']))
+    invalidation_block.append(Paragraph('The CLI framework breaks if:', body))
+    invalidation_block.append(Paragraph(
         '<bullet>&bull;</bullet>The correlation between dollar direction and BTC reverses persistently '
         '(it has before: pre-2020, Fed tightening <i>increased</i> BTC prices)',
         bullet))
-    story.append(Paragraph(
+    invalidation_block.append(Paragraph(
         '<bullet>&bull;</bullet>Stablecoin market structure changes fundamentally '
         '(e.g., regulatory crackdown eliminates the on-ramp channel)',
         bullet))
-    story.append(Paragraph(
+    invalidation_block.append(Paragraph(
         '<bullet>&bull;</bullet>Reserve dynamics decouple from risk asset transmission '
         '(structural regime shift in Fed operations)',
         bullet))
-    story.append(Paragraph(
+    invalidation_block.append(Paragraph(
         '<bullet>&bull;</bullet>Bitcoin\'s correlation to macro liquidity collapses as it '
         'transitions to a different asset class identity',
         bullet))
+    story.append(KeepTogether(invalidation_block))
 
     # --- DISCLOSURE ---
     story.append(Spacer(1, 16))

@@ -506,33 +506,37 @@ def fig_04_trend_structure():
     # Regime: bullish = price > ema21 AND ema21 > sma200
     raw_bull = (price > ema21) & (ema21 > sma200)
 
-    # Build regime segments, then filter out any shorter than min_days
-    min_days = 15
+    # Build regime segments, then iteratively merge short ones
     segments = []
     start_idx = valid[0]
     prev = raw_bull.iloc[0]
     for i in range(1, len(valid)):
         curr = raw_bull.iloc[i]
         if curr != prev:
-            segments.append((start_idx, valid[i-1], prev))
+            segments.append([start_idx, valid[i-1], prev])
             start_idx = valid[i]
         prev = curr
-    segments.append((start_idx, valid[-1], prev))
+    segments.append([start_idx, valid[-1], prev])
 
-    # Merge short segments into their neighbors
-    merged = []
-    for seg in segments:
-        duration = (seg[1] - seg[0]).days
-        if duration < min_days and merged:
-            # Absorb into previous segment
-            merged[-1] = (merged[-1][0], seg[1], merged[-1][2])
-        else:
-            merged.append(seg)
+    # Iteratively merge segments shorter than min_days until stable
+    min_days = 30
+    changed = True
+    while changed:
+        changed = False
+        new_segs = []
+        for seg in segments:
+            duration = (seg[1] - seg[0]).days
+            if duration < min_days and new_segs:
+                new_segs[-1][1] = seg[1]
+                changed = True
+            else:
+                new_segs.append(seg)
+        segments = new_segs
 
     fig, ax = new_fig()
 
     # Regime shading from merged segments
-    for start_s, end_s, is_bull in merged:
+    for start_s, end_s, is_bull in segments:
         color = C['starboard'] if is_bull else C['port']
         alpha = 0.10 if is_bull else 0.08
         ax.axvspan(start_s, end_s, color=color, alpha=alpha, zorder=0)

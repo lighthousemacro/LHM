@@ -773,16 +773,16 @@ def fig_06_relative_strength():
             x=0.02, y=0.97, fontsize=10)
 
     # BOTTOM PANEL: Ratio + 50d MA
-    ax_bot.plot(ratio.index, ratio.values, color=C['sky'], linewidth=1.0,
-                alpha=0.5, label='BTC/SPY Ratio', zorder=2)
-    ax_bot.plot(ratio_ma50.index, ratio_ma50.values, color=C['sky'],
+    ax_bot.plot(ratio.index, ratio.values, color=C['ocean'], linewidth=1.0,
+                alpha=0.4, label='BTC/SPY Ratio', zorder=2)
+    ax_bot.plot(ratio_ma50.index, ratio_ma50.values, color=C['dusk'],
                 linewidth=2.0, label='50-Day MA', zorder=3)
 
     ax_bot.set_ylabel('BTC/SPY Ratio', color=THEME['muted'], fontsize=10)
     style_ax(ax_bot, right_primary=True)
     ax_bot.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
 
-    add_pill(ax_bot, ratio_ma50, C['sky'], fmt='{:.0f}', side='right')
+    add_pill(ax_bot, ratio_ma50, C['dusk'], fmt='{:.0f}', side='right')
 
     set_xlim_to_data(ax_top, btc_top.index, pad_left=15, pad_right=120)
     set_xlim_to_data(ax_bot, ratio.index, pad_left=15, pad_right=120)

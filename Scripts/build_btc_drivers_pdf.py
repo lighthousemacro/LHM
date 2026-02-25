@@ -221,7 +221,7 @@ def build_pdf():
     # Component 1: Trend
     story.append(Paragraph('Component 1: Trend Structure (0 to 4 points)', s['h2']))
     story.append(Paragraph(
-        'Price position relative to the 50-day and 200-day moving averages, plus the slope of those averages. A clean uptrend has price above both, with both sloping up. Degradation happens in stages: price dips below the 50-day first, then the slope rolls over, then the 200-day gives way. Each stage costs points. For crypto specifically, we substitute a 21-day EMA for the 50-day SMA because the 50-day lags crypto regime shifts by enough to matter.',
+        'Price position relative to the 50-day and 200-day moving averages, plus the slope of those averages. A clean uptrend has price above both, with both sloping up. Degradation happens in stages: price dips below the 50-day first, then the slope rolls over, then the 200-day gives way. Each stage costs points. The 200-week moving average serves as structural support, the level where long-term holders have historically accumulated.',
         body))
 
     # FIGURE 4
@@ -282,6 +282,8 @@ def build_pdf():
         body))
 
     # --- WHAT DOESN'T WORK ---
+    from reportlab.platypus import PageBreak
+    story.append(PageBreak())
     story.append(Paragraph("What Doesn't Work (And Why People Still Use It)", s['h1']))
 
     story.append(Paragraph(

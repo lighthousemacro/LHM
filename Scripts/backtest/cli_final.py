@@ -41,7 +41,7 @@ def load_series(conn, sid):
 
 
 def fetch_btc():
-    btc = yf.download('BTC-USD', start='2014-01-01', end='2026-02-13', progress=False)
+    btc = yf.download('BTC-USD', start='2014-01-01', progress=False)
     if isinstance(btc.columns, pd.MultiIndex):
         btc = btc.droplevel(1, axis=1)
     btc = btc[['Close']].rename(columns={'Close': 'BTC'})

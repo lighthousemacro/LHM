@@ -226,24 +226,95 @@ def chart_mri(conn):
 
 
 def chart_spx(conn):
-    """S&P 500 with 200d and 50d MAs."""
-    spx = _fetch_series(conn, 'SPX_Close', '2023-06-01')
-    fig, ax = _make_fig('S&P 500')
-    _style_ax(ax)
+    """S&P 500: 3-panel (Price + MAs, RS vs ACWX, Z-RoC)."""
+    spx = _fetch_series(conn, 'SPX_Close', '2023-01-01')
+    ma200 = _fetch_series(conn, 'SPX_200d_MA', '2023-01-01')
+    ma50 = _fetch_series(conn, 'SPX_50d_MA', '2023-01-01')
+    zroc = _fetch_series(conn, 'SPX_Z_RoC_63d', '2023-01-01')
+
+    fig, axes = plt.subplots(3, 1, figsize=(10, 10), height_ratios=[3, 1.5, 1.5])
+    fig.patch.set_facecolor(THEME['bg'])
+
+    # Brand text top-right
+    fig.text(0.98, 0.99, 'LIGHTHOUSE MACRO', fontsize=7,
+             color=COLORS['ocean'], fontweight='bold', ha='right', va='top',
+             alpha=0.6)
+
+    # ---- Panel 1: Price + MAs ----
+    ax1 = axes[0]
+    ax1.set_title('S&P 500', fontsize=11, fontweight='bold',
+                   color=THEME['fg'], pad=12, loc='left', fontfamily='sans-serif')
+    _style_ax(ax1)
 
     if not spx.empty:
-        ma200 = spx.rolling(200, min_periods=100).mean()
-        ma50 = spx.rolling(50, min_periods=25).mean()
-        ax.plot(spx.index, spx, color=COLORS['ocean'], linewidth=2,
-                label='S&P 500', zorder=5)
-        ax.plot(ma200.index, ma200, color=COLORS['dusk'], linewidth=1.2,
-                linestyle='--', alpha=0.8, label='200d MA')
-        ax.plot(ma50.index, ma50, color=COLORS['sky'], linewidth=1,
-                linestyle=':', alpha=0.7, label='50d MA')
-        _add_last_value(ax, spx, COLORS['ocean'], fmt=',.0f')
-        ax.legend(loc='upper left', fontsize=7, facecolor=THEME['bg'],
-                  edgecolor=THEME['spine'], labelcolor=THEME['fg'])
-    ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'{x:,.0f}'))
+        ax1.plot(spx.index, spx, color=COLORS['doldrums'], linewidth=1.5,
+                 label='Price', zorder=2)
+        ax1.fill_between(spx.index, spx.min() * 0.98, spx,
+                         color=COLORS['doldrums'], alpha=0.04, zorder=1)
+    if not ma50.empty:
+        ax1.plot(ma50.index, ma50, color=COLORS['dusk'], linewidth=2,
+                 label='50d MA', zorder=3)
+    if not ma200.empty:
+        ax1.plot(ma200.index, ma200, color=COLORS['ocean'], linewidth=2.5,
+                 label='200d MA', zorder=4)
+    if not spx.empty:
+        _add_last_value(ax1, spx, COLORS['doldrums'], fmt=',.0f')
+    ax1.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'{x:,.0f}'))
+    ax1.legend(loc='upper left', fontsize=7, facecolor=THEME['bg'],
+               edgecolor=THEME['spine'], labelcolor=THEME['fg'])
+
+    # ---- Panel 2: Relative Strength vs ACWX ----
+    ax2 = axes[1]
+    ax2.set_title('Relative Strength vs ACWX', fontsize=9, fontweight='bold',
+                   color=THEME['fg'], pad=8, loc='left', fontfamily='sans-serif')
+    _style_ax(ax2)
+
+    try:
+        import yfinance as yf
+        acwx = yf.download('ACWX', start='2022-06-01', progress=False, auto_adjust=True)
+        if not acwx.empty:
+            acwx_close = acwx['Close'].squeeze()
+            acwx_close.index = acwx_close.index.tz_localize(None)
+            # Align dates
+            common = spx.index.intersection(acwx_close.index)
+            if len(common) > 50:
+                rs = (spx.loc[common] / acwx_close.loc[common])
+                rs = rs / rs.iloc[0] * 100  # Rebase to 100
+                rs_ma50 = rs.rolling(50, min_periods=25).mean()
+                ax2.plot(rs.index, rs, color=COLORS['ocean'], linewidth=2, label='SPX/ACWX')
+                ax2.plot(rs_ma50.index, rs_ma50, color=COLORS['dusk'], linewidth=1.2,
+                         linestyle='--', alpha=0.8, label='50d MA')
+                _add_last_value(ax2, rs, COLORS['ocean'], fmt='.1f')
+                ax2.legend(loc='upper left', fontsize=7, facecolor=THEME['bg'],
+                           edgecolor=THEME['spine'], labelcolor=THEME['fg'])
+            else:
+                ax2.text(0.5, 0.5, 'Insufficient ACWX data', transform=ax2.transAxes,
+                         ha='center', va='center', color=THEME['muted'], fontsize=9)
+        else:
+            ax2.text(0.5, 0.5, 'ACWX data unavailable', transform=ax2.transAxes,
+                     ha='center', va='center', color=THEME['muted'], fontsize=9)
+    except Exception:
+        ax2.text(0.5, 0.5, 'ACWX data unavailable', transform=ax2.transAxes,
+                 ha='center', va='center', color=THEME['muted'], fontsize=9)
+
+    # ---- Panel 3: Z-RoC (63d) ----
+    ax3 = axes[2]
+    ax3.set_title('Z-RoC (63-Day Momentum)', fontsize=9, fontweight='bold',
+                   color=THEME['fg'], pad=8, loc='left', fontfamily='sans-serif')
+    _style_ax(ax3)
+
+    if not zroc.empty:
+        ax3.fill_between(zroc.index, 0, zroc, where=zroc >= 0,
+                         color=COLORS['sea'], alpha=THEME['fill_alpha'])
+        ax3.fill_between(zroc.index, 0, zroc, where=zroc < 0,
+                         color=COLORS['port'], alpha=THEME['fill_alpha'])
+        ax3.plot(zroc.index, zroc, color=COLORS['ocean'], linewidth=2)
+        _add_last_value(ax3, zroc, COLORS['ocean'], fmt='.2f')
+        _threshold_line(ax3, 1.5, '', COLORS['venus'])
+        _threshold_line(ax3, -1.5, '', COLORS['venus'])
+    _zero_line(ax3)
+
+    fig.tight_layout(h_pad=1.5)
     return {'title': 'S&P 500', 'base64': _fig_to_base64(fig)}
 
 

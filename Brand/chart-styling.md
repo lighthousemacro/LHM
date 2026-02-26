@@ -20,7 +20,8 @@ All educational, research, and deck charts follow this format unless explicitly 
 
 | Element | Position | Style |
 |---|---|---|
-| **LIGHTHOUSE MACRO** | Top-left | Ocean `#2389BB`, bold, fontsize 13 |
+| **Lighthouse icon** | Top-left corner | 128px PNG, transparent bg, ~0.018 figure width |
+| **LIGHTHOUSE MACRO** | Top-left, right of icon | Ocean `#2389BB`, bold, fontsize 13, x=0.035 |
 | **Date** | Top-right | Muted color, fontsize 11, `%B %d, %Y` format |
 | **Top accent bar** | Below watermarks | Ocean 2/3, Dusk 1/3, height 0.004 |
 | **Bottom accent bar** | Above footer | Mirror of top bar |

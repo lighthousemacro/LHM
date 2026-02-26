@@ -201,9 +201,6 @@ PILLAR_SERIES = {
 
         # Employment Cost Index
         "COMPHAI",
-
-        # Employment Cost Index (FRED category: Employment_Cost_Index source)
-        "ECIALLCIV", "ECIWAG",
     ],
 
     # ------------------------------------------------------------------
@@ -332,6 +329,111 @@ PILLAR_SERIES = {
 
         # Import Prices (inflation pass-through)
         "IR", "IQ",
+
+        # BEA GDP Price Index (all components)
+        "BEA_GDP_Price_Index_Gross_domestic_product",
+        "BEA_GDP_Price_Index_Personal_consumption_expenditures",
+        "BEA_GDP_Price_Index_Goods",
+        "BEA_GDP_Price_Index_Durable_goods",
+        "BEA_GDP_Price_Index_Nondurable_goods",
+        "BEA_GDP_Price_Index_Services",
+        "BEA_GDP_Price_Index_Gross_private_domestic_investment",
+        "BEA_GDP_Price_Index_Fixed_investment",
+        "BEA_GDP_Price_Index_Nonresidential",
+        "BEA_GDP_Price_Index_Structures",
+        "BEA_GDP_Price_Index_Equipment",
+        "BEA_GDP_Price_Index_Intellectual_property_products",
+        "BEA_GDP_Price_Index_Residential",
+        "BEA_GDP_Price_Index_Exports",
+        "BEA_GDP_Price_Index_Imports",
+        "BEA_GDP_Price_Index_Government_consumption_expenditures_and_gross_investment",
+        "BEA_GDP_Price_Index_Federal",
+        "BEA_GDP_Price_Index_National_defense",
+        "BEA_GDP_Price_Index_Nondefense",
+        "BEA_GDP_Price_Index_State_and_local",
+
+        # BEA PCE Price Index (all components)
+        "BEA_PCE_Price_Index_Personal_consumption_expenditures_(PCE)",
+        "BEA_PCE_Price_Index_Goods",
+        "BEA_PCE_Price_Index_Durable_goods",
+        "BEA_PCE_Price_Index_Nondurable_goods",
+        "BEA_PCE_Price_Index_Services",
+        "BEA_PCE_Price_Index_Clothing_and_footwear",
+        "BEA_PCE_Price_Index_Energy_goods_and_services",
+        "BEA_PCE_Price_Index_Financial_services_and_insurance",
+        "BEA_PCE_Price_Index_Food_and_beverages_purchased_for_off-premises_consumption",
+        "BEA_PCE_Price_Index_Food_services_and_accommodations",
+        "BEA_PCE_Price_Index_Furnishings_and_durable_household_equipment",
+        "BEA_PCE_Price_Index_Gasoline_and_other_energy_goods",
+        "BEA_PCE_Price_Index_Health_care",
+        "BEA_PCE_Price_Index_Household_consumption_expenditures_(for_services)",
+        "BEA_PCE_Price_Index_Housing",
+        "BEA_PCE_Price_Index_Housing_and_utilities",
+        "BEA_PCE_Price_Index_Market-based_PCE",
+        "BEA_PCE_Price_Index_Market-based_PCE_excluding_food_and_energy",
+        "BEA_PCE_Price_Index_Motor_vehicles_and_parts",
+        "BEA_PCE_Price_Index_Other_durable_goods",
+        "BEA_PCE_Price_Index_Other_nondurable_goods",
+        "BEA_PCE_Price_Index_Other_services",
+        "BEA_PCE_Price_Index_PCE_excluding_food,_energy,_and_housing",
+        "BEA_PCE_Price_Index_PCE_excluding_food_and_energy",
+        "BEA_PCE_Price_Index_PCE_services_excluding_energy_and_housing",
+        "BEA_PCE_Price_Index_Recreation_services",
+        "BEA_PCE_Price_Index_Recreational_goods_and_vehicles",
+        "BEA_PCE_Price_Index_Transportation_services",
+        "BEA_PCE_Price_Index_Gross_output_of_nonprofit_institutions",
+        "BEA_PCE_Price_Index_Less:_Receipts_from_sales_of_goods_and_services_by_nonprofit_institutions",
+        "BEA_PCE_Price_Index_Final_consumption_expenditures_of_nonprofit_institutions_serving_households_(NPI",
+
+        # FRED CPI Detail (category-discovered, not in curated)
+        "CPIEALL", "CPIEAPPAREL", "CPIEBEV", "CPIECOMEDU",
+        "CPIEHOUSE", "CPIEMEDCARE", "CPIEREC", "CPIETRANS",
+        "CWSR0000SA0", "CWUR0000SA0", "SUUR0000SA0",
+        "CPIEOTRGS",
+
+        # International CPI (OECD MEI)
+        "AUSCPIALLAINMEI", "AUSCPIALLQINMEI",
+        "AUTCPIALLMINMEI",
+        "BELCPIALLMINMEI",
+        "BRACPIALLMINMEI",
+        "CANCPIALLMINMEI", "CANCPIALLQINMEI",
+        "CANCPIFODMINMEI", "CANCPIHOUMINMEI",
+        "CHECPIALLMINMEI",
+        "CHLCPIALLMINMEI",
+        "CHNCPIALLAINMEI", "CHNCPIALLMINMEI", "CHNCPIALLQINMEI",
+        "CZECPIALLMINMEI",
+        "DEUCPIALLAINMEI", "DEUCPIALLMINMEI", "DEUCPIALLQINMEI", "DEUCPIFODQINMEI",
+        "DNKCPIALLMINMEI", "DNKCPIFODAINMEI",
+        "ESPCPIALLMINMEI",
+        "FINCPIALLMINMEI",
+        "FRACPIALLMINMEI",
+        "GBRCPIALLAINMEI", "GBRCPIALLMINMEI", "GBRCPIALLQINMEI",
+        "GBRCPICORMINMEI", "GBRCPIFODAINMEI",
+        "GRCCPIALLMINMEI", "GRCCPIFODAINMEI",
+        "HUNCPIALLMINMEI",
+        "IDNCPIALLMINMEI",
+        "INDCPIALLAINMEI", "INDCPIALLMINMEI", "INDCPIALLQINMEI",
+        "IRLCPIALLMINMEI",
+        "ISRCPIALLMINMEI",
+        "ITACPIALLMINMEI", "ITACPIALLQINMEI",
+        "JPNCPIALLAINMEI", "JPNCPIALLMINMEI", "JPNCPIALLQINMEI",
+        "JPNCPIFODAINMEI", "JPNCPIFODMINMEI", "JPNCPIHOUMINMEI",
+        "KORCPIALLMINMEI", "KORCPIALLQINMEI",
+        "KORCPIFODAINMEI", "KORCPIHOUMINMEI",
+        "MEXCPIALLMINMEI", "MEXCPIALLQINMEI",
+        "MEXCPIENGQINMEI", "MEXCPIFODAINMEI", "MEXCPIFODMINMEI",
+        "NLDCPIALLMINMEI",
+        "NORCPIALLMINMEI",
+        "NZLCPIALLQINMEI",
+        "POLCPIALLAINMEI", "POLCPIALLMINMEI", "POLCPIALLQINMEI",
+        "PRTCPIALLMINMEI",
+        "RUSCPIALLAINMEI", "RUSCPIALLMINMEI", "RUSCPIALLQINMEI",
+        "SWECPIALLMINMEI",
+        "TURCPIALLAINMEI", "TURCPIALLMINMEI", "TURCPIALLQINMEI",
+        "USACPIALLAINMEI", "USACPIALLMINMEI", "USACPIALLQINMEI",
+        "USACPIBLS", "USACPICORMINMEI", "USACPIENGMINMEI", "USACPIHICMINMEI",
+        "ZAFCPIALLAINMEI", "ZAFCPIALLMINMEI", "ZAFCPIALLQINMEI",
+        "ZAFCPIENGQINMEI", "ZAFCPIFODAINMEI", "ZAFCPIFODMINMEI",
     ],
 
     # ------------------------------------------------------------------
@@ -480,6 +582,103 @@ PILLAR_SERIES = {
         "BEA_GDI_Wages_and_salaries",
         "BEA_GDI_Net_operating_surplus",
         "BEA_GDI_Statistical_discrepancy",
+
+        # BEA GDI (remaining components)
+        "BEA_GDI_Business_current_transfer_payments_(net)",
+        "BEA_GDI_Consumption_of_fixed_capital",
+        "BEA_GDI_Corporate_profits_with_inventory_valuation_and_capital_consumption_adjustments,_domestic_ind",
+        "BEA_GDI_Current_surplus_of_government_enterprises",
+        "BEA_GDI_Government",
+        "BEA_GDI_Less:_Subsidies",
+        "BEA_GDI_Net_dividends",
+        "BEA_GDI_Net_interest_and_miscellaneous_payments,_domestic_industries",
+        "BEA_GDI_Private",
+        "BEA_GDI_Private_enterprises",
+        "BEA_GDI_Profits_after_tax_with_inventory_valuation_and_capital_consumption_adjustments",
+        "BEA_GDI_Proprietors'_income_with_inventory_valuation_and_capital_consumption_adjustments",
+        "BEA_GDI_Rental_income_of_persons_with_capital_consumption_adjustment",
+        "BEA_GDI_Supplements_to_wages_and_salaries",
+        "BEA_GDI_Taxes_on_corporate_income",
+        "BEA_GDI_Taxes_on_production_and_imports",
+        "BEA_GDI_To_persons",
+        "BEA_GDI_To_the_rest_of_the_world",
+        "BEA_GDI_Undistributed_corporate_profits_with_inventory_valuation_and_capital_consumption_adjustments",
+
+        # GDP National Accounts (remaining)
+        "A023RC1A027NBEA", "A023RC1Q027SBEA",
+        "A027RX1Q020SBEA", "A032RC1A027NBEA",
+        "A261RX1Q020SBEA", "A464RC1Q027SBEA",
+        "A791RC0Q052SBEA",
+        "A939RC0A052NBEA", "A939RC0Q052SBEA", "A939RX0Q048SBEA",
+        "CBIC1", "FSDP", "GDB",
+        "LA0000031Q027SBEA",
+        "LB0000031Q020SBEA", "LB0000091Q020SBEA",
+        "NA000334Q", "NB000334Q", "NC000334Q", "ND000334Q", "OB000334Q",
+        "PB0000031Q225SBEA", "PB0000091Q225SBEA",
+        "STLENI",
+        "W369RG3Q066SBEA", "W370RG3Q020SBEA",
+        "X032RC1A027NBEA",
+        "Y001RE1Q156NBEA", "Y034RY2Q224SBEA",
+        "Y694RC1Q027SBEA", "Y694RX1Q020SBEA",
+
+        # Industrial Production Sub-Components (FRED Curated category)
+        "IPMAN", "IPMINE", "IPUTIL", "IPNMAT",
+        "DFXARC1M027SBEA",
+
+        # US Recession Indicators
+        "USREC", "USRECD", "USRECDM", "USRECDP",
+        "USRECM", "USRECP",
+        "USRECQ", "USRECQM", "USRECQP",
+        "USAREC", "USARECD", "USARECDM", "USARECDP",
+        "USARECM", "USARECP",
+        "JHDUSRGDPBR", "JHGDPBRINDX",
+        "USPHCI",
+
+        # International Recession Indicators
+        "4BIGEUROREC", "4BIGEURORECD", "4BIGEURORECM",
+        "AUSREC", "AUSRECM", "AUSRECP",
+        "AUTREC", "AUTRECD",
+        "BELREC",
+        "BRAREC", "BRARECM",
+        "CANREC", "CANRECD", "CANRECDM", "CANRECM",
+        "CHEREC", "CHERECM",
+        "CHLREC", "CHLRECDM",
+        "CHNREC", "CHNRECD", "CHNRECDM", "CHNRECDP", "CHNRECM", "CHNRECP",
+        "CZERECDP",
+        "DEUREC", "DEURECD", "DEURECDM", "DEURECM",
+        "DNKRECD", "DNKRECDM", "DNKRECDP", "DNKRECP",
+        "ESPREC", "ESTRECP",
+        "EUROREC", "EURORECD", "EURORECM", "EURORECP",
+        "FINRECD",
+        "FRAREC", "FRARECDP",
+        "GBRREC", "GBRRECD", "GBRRECDM", "GBRRECDP", "GBRRECM", "GBRRECP",
+        "GRCREC", "GRCRECD", "GRCRECDM",
+        "HUNRECD",
+        "IDNREC", "IDNRECD", "IDNRECDM", "IDNRECM",
+        "INDREC", "INDRECD", "INDRECDM", "INDRECDP",
+        "IRLREC", "IRLRECM",
+        "ISRRECD", "ISRRECDM", "ISRRECP",
+        "ITAREC", "ITARECD", "ITARECDM",
+        "JPNREC", "JPNRECD", "JPNRECDM", "JPNRECDP", "JPNRECM", "JPNRECP",
+        "KORREC", "KORRECD",
+        "LUXRECDM", "LUXRECM",
+        "MEXRECD", "MEXRECM",
+        "MSCRECD", "MSCRECDM", "MSCRECM",
+        "NAFTARECD",
+        "NDLREC", "NDLRECD", "NDLRECDM", "NDLRECDP",
+        "NORREC", "NORRECD", "NORRECDM", "NORRECDP", "NORRECM", "NORRECP",
+        "NZLREC", "NZLRECM", "NZLRECP",
+        "OECDEUROPEREC", "OECDEUROPERECD", "OECDEUROPERECDM", "OECDEUROPERECDP",
+        "OECDNMEREC", "OECDNMERECD", "OECDNMERECDM", "OECDNMERECP",
+        "OECDREC", "OECDRECD", "OECDRECDM", "OECDRECDP", "OECDRECM", "OECDRECP",
+        "POLREC", "POLRECD", "POLRECDP", "POLRECM",
+        "PRTREC", "PRTRECM",
+        "RUSREC", "RUSRECDP", "RUSRECM",
+        "SVKREC", "SVKRECD",
+        "SVNRECDP", "SVNRECM",
+        "SWEREC", "SWERECD", "SWERECM", "SWERECP",
+        "TURREC", "TURRECD", "TURRECDM", "TURRECDP", "TURRECP",
+        "ZAFREC", "ZAFRECDP",
     ],
 
     # ------------------------------------------------------------------
@@ -624,6 +823,13 @@ PILLAR_SERIES = {
 
         # Mortgage Market Rates
         "MORTG", "WMORTG", "WRMORTG",
+
+        # FRED Housing (category-discovered, remaining)
+        "EXHOSLUSM495N",  # Existing Home Sales Not SA
+        "EXSFHSUSM495S",  # Existing Single Family Home Sales
+        "HSFMEDUSM052N",  # Median Sales Price Single Family
+        "MDSP",  # Median Sales Price Houses Sold
+        "NHWAHORUSQ156N",  # Non-Hispanic White Alone Homeownership Rate
     ],
 
     # ------------------------------------------------------------------
@@ -749,6 +955,41 @@ PILLAR_SERIES = {
         "MRTSSM442USN", "MRTSSM7225USN",
         "RSGCS", "S4248SM144NCEN",
         "MRTSSM441USS",
+
+        # BEA Personal Income (remaining components)
+        "BEA_Personal_Income_Employer_contributions_for_employee_pension_and_insurance_funds",
+        "BEA_Personal_Income_Employer_contributions_for_government_social_insurance",
+        "BEA_Personal_Income_Farm",
+        "BEA_Personal_Income_Government",
+        "BEA_Personal_Income_Less:_Contributions_for_government_social_insurance,_domestic",
+        "BEA_Personal_Income_Nonfarm",
+        "BEA_Personal_Income_Other",
+        "BEA_Personal_Income_Other_current_transfer_receipts,_from_business_(net)",
+        "BEA_Personal_Income_Personal_income_excluding_current_transfer_receipts,_Billions_of_chained_(2017)_",
+        "BEA_Personal_Income_Personal_outlays,_current_dollars",
+        "BEA_Personal_Income_Private_industries",
+        "BEA_Personal_Income_Rental_income_of_persons_with_capital_consumption_adjustment",
+        "BEA_Personal_Income_To_government",
+        "BEA_Personal_Income_To_the_rest_of_the_world_(net)",
+        "BEA_Personal_Income_Total,_Billions_of_chained_(2017)_dollars",
+
+        # FRED Personal Income Detail
+        "A067RC1A027NBEA", "A067RO1Q156NBEA",
+        "A067RX1A020NBEA", "A068RC1",
+        "A071RC1A027NBEA", "A072RC1Q156SBEA",
+        "A792RC0A052NBEA", "A792RC0Q052SBEA",
+        "B069RC1",
+        "BA06RC1A027NBEA",
+        "DGDSRX1",
+        "DSPI",
+        "NA000349Q", "NC000349Q",
+        "PCECA", "PCECC96", "PCECCA",
+        "PIECTR",
+        "RPI", "RPIPCUS",
+        "W055RC1", "W209RC1",
+        "W388RC1A027NBEA",
+        "W729RC1", "W823RC1", "W824RC1", "W825RC1",
+        "W875RX1",
     ],
 
     # ------------------------------------------------------------------
@@ -846,6 +1087,55 @@ PILLAR_SERIES = {
 
         # Nowcasts
         "BBKMCOIX", "BBKMGDP",
+
+        # BEA Corporate Profits (remaining components)
+        "BEA_Corporate_Profits_Business_current_transfer_payments_(net)",
+        "BEA_Corporate_Profits_Compensation_of_employees",
+        "BEA_Corporate_Profits_Consumption_of_fixed_capital",
+        "BEA_Corporate_Profits_Current_surplus_of_government_enterprises",
+        "BEA_Corporate_Profits_Employer_contributions_for_employee_pension_and_insurance_funds",
+        "BEA_Corporate_Profits_Employer_contributions_for_government_social_insurance",
+        "BEA_Corporate_Profits_Government",
+        "BEA_Corporate_Profits_Less:_Capital_transfers_paid_(net)",
+        "BEA_Corporate_Profits_Less:_Subsidies",
+        "BEA_Corporate_Profits_National_income",
+        "BEA_Corporate_Profits_Net_interest_and_miscellaneous_payments",
+        "BEA_Corporate_Profits_Other",
+        "BEA_Corporate_Profits_Proprietors'_income_(without_IVA_and_CCAdj)",
+        "BEA_Corporate_Profits_Proprietors'_income_with_IVA",
+        "BEA_Corporate_Profits_Proprietors'_income_with_IVA_and_CCAdj",
+        "BEA_Corporate_Profits_Rental_income_of_persons_(without_CCAdj)",
+        "BEA_Corporate_Profits_Rental_income_of_persons_with_CCAdj",
+        "BEA_Corporate_Profits_Supplements_to_wages_and_salaries",
+        "BEA_Corporate_Profits_Taxes_on_production_and_imports",
+        "BEA_Corporate_Profits_To_government_(net)",
+        "BEA_Corporate_Profits_To_persons_(net)",
+        "BEA_Corporate_Profits_To_the_rest_of_the_world_(net)",
+        "BEA_Corporate_Profits_Wages_and_salaries",
+
+        # FRED Business
+        "A053RC1Q027SBEA",
+
+        # Industrial Production by Industry (IPG series)
+        "IPG21112S", "IPG211S", "IPG21222S", "IPG21223S",
+        "IPG2211A2N", "IPG2211S",
+        "IPG311A2S", "IPG311S", "IPG313A4S",
+        "IPG321S", "IPG322S", "IPG323S", "IPG324S",
+        "IPG3254S", "IPG325S", "IPG326S", "IPG3273S", "IPG327S",
+        "IPG3311A2S", "IPG3313S", "IPG331S", "IPG332S",
+        "IPG333111S", "IPG333S", "IPG3344S", "IPG334S", "IPG335S",
+        "IPG33611S", "IPG33612S", "IPG3361T3S", "IPG3364S",
+        "IPG337S",
+        "IPGMFA", "IPGMFN",
+        "IPMANSICS",
+        "IPN213111S", "IPN31152N", "IPN3118S",
+        "IPN32221S",
+        "IPN3311A2BS", "IPN3311A2RN", "IPN3311A2RS",
+        "IPN3391S",
+        "IPNMAN",
+
+        # Motor Vehicle Assemblies
+        "MVAAUTLTTS", "MVAHMTRCKS", "MVATOTASSS",
     ],
 
     # ------------------------------------------------------------------
@@ -1113,6 +1403,46 @@ PILLAR_SERIES = {
 
         # Yield Curve (credit signal)
         "T10Y2Y", "T10Y3M",
+
+        # H.8 Bank Balance Sheet (remaining detail)
+        "H8B1001NCBCMG",
+        "H8B1002NCBCAG", "H8B1002NCBCMG",
+        "H8B1003NCBCAG", "H8B1003NCBCMG",
+        "H8B1011NCBCAG",
+        "H8B1020NCBCMG",
+        "H8B1023NCBCMG",
+        "H8B1026NCBCAG", "H8B1026NCBCMG",
+        "H8B1027NCBCMG",
+        "H8B1029NCBCMG",
+        "H8B1043NCBCMG",
+        "H8B1047NCBCAG", "H8B1047NCBCMG",
+        "H8B1048NCBCAG", "H8B1048NCBCMG",
+        "H8B1058NCBCMG",
+        "H8B1072NCBCMG",
+        "H8B1110NCBCMG",
+        "H8B1151NCBCAG", "H8B1151NCBCMG",
+        "H8B1152NCBCAG", "H8B1152NCBCMG",
+        "H8B1220NCBCAG", "H8B1220NCBCMG",
+        "H8B1221NCBCMG",
+        "H8B1247NCBCMG",
+        "H8B1301NCBCMG",
+        "H8B1301NCBCQG",
+        "H8B1302NCBCAG", "H8B1302NCBCMG",
+        "H8B1303NCBCAG", "H8B1303NCBCMG",
+        "H8B3053NCBA", "H8B3053NCBCQG", "H8B3053NCBD", "H8B3053NCBDM",
+        "H8B3092NCBA", "H8B3092NCBAM", "H8B3092NCBCMG", "H8B3092NCBD", "H8B3092NCBDM",
+        "H8B3094NCBA", "H8B3094NCBAM", "H8B3094NCBCMG", "H8B3094NCBD", "H8B3094NCBDM",
+        "H8B3095NCBA", "H8B3095NCBAM", "H8B3095NCBD",
+        "H8B3219NCBCMG",
+        "H8B3248NCBCMG",
+        "H8B3305NCBCMG",
+
+        # Bank Profitability
+        "LLSRUS",  # Net Charge-Offs
+        "ROAUS",  # Return on Average Assets
+
+        # Interest Rates (FRED category)
+        "RMMPCCFCNA",
     ],
 
     # ------------------------------------------------------------------

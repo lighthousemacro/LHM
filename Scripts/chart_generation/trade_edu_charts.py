@@ -2,8 +2,12 @@
 """
 Generate Charts for Educational Series: Post 7 - Trade (Pillar 7)
 =====================================================================
+30 charts covering: trade balance, import/export prices, dollar dynamics,
+bilateral trade, current account, supply chains, tariffs, energy trade,
+domestic distribution, inventories, and terms of trade.
+
 Generates BOTH white and dark theme versions.
-Matches format from Business/Consumer/Housing charts.
+Build 2-3x more charts than needed (~10-12) for article selection.
 
 Usage:
     python trade_edu_charts.py --chart 1
@@ -1921,7 +1925,7 @@ CHART_MAP = {
 
 def main():
     parser = argparse.ArgumentParser(description='Generate Trade educational charts')
-    parser.add_argument('--chart', type=int, help='Chart number to generate (1-10)')
+    parser.add_argument('--chart', type=int, help='Chart number to generate (1-30)')
     parser.add_argument('--theme', default='both', choices=['dark', 'white', 'both'],
                         help='Theme to generate')
     parser.add_argument('--all', action='store_true', help='Generate all charts')

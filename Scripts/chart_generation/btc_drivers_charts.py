@@ -19,6 +19,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.image as mpimg
 from matplotlib.ticker import FuncFormatter, FixedLocator
 from matplotlib.collections import LineCollection
 from datetime import datetime
@@ -33,6 +34,7 @@ warnings.filterwarnings('ignore')
 # =============================================================================
 BASE_PATH = '/Users/bob/LHM'
 DB_PATH = f'{BASE_PATH}/Data/databases/Lighthouse_Master.db'
+ICON_PATH = f'{BASE_PATH}/Brand/icon_transparent_128.png'
 CLI_DATA = f'{BASE_PATH}/Scripts/backtest/cli_chart_data.csv'
 OUT_DIR = f'{BASE_PATH}/Outputs/BTC_Drivers/white'
 os.makedirs(OUT_DIR, exist_ok=True)
@@ -126,7 +128,18 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
     fig.patch.set_facecolor(THEME['bg'])
     OCEAN, DUSK = C['ocean'], C['dusk']
 
-    fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold',
+    # Lighthouse icon (top-left, next to text)
+    if os.path.exists(ICON_PATH):
+        icon_img = mpimg.imread(ICON_PATH)
+        icon_w = 0.018
+        icon_aspect = icon_img.shape[0] / icon_img.shape[1]
+        fig_aspect = fig.get_figwidth() / fig.get_figheight()
+        icon_h = icon_w * icon_aspect * fig_aspect
+        icon_ax = fig.add_axes([0.012, 0.985 - icon_h, icon_w, icon_h])
+        icon_ax.imshow(icon_img, aspect='equal')
+        icon_ax.axis('off')
+
+    fig.text(0.035, 0.98, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold',
              color=OCEAN, va='top')
     fig.text(0.97, 0.98, DATE_STR, fontsize=11, color=THEME['muted'],
              va='top', ha='right')

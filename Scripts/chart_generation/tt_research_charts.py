@@ -16,8 +16,10 @@ import pandas as pd
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
+import os
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
+import matplotlib.image as mpimg
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import FancyBboxPatch, Rectangle
 from matplotlib.lines import Line2D
@@ -30,6 +32,7 @@ from lighthouse_chart_style import (
 )
 
 DB = Path('/Users/bob/LHM/Data/databases/Lighthouse_Master.db')
+ICON_PATH = '/Users/bob/LHM/Brand/icon_transparent_128.png'
 
 conn = sqlite3.connect(DB)
 
@@ -222,8 +225,19 @@ def brand_fig(fig, title, subtitle=None, source=None):
     OCEAN = '#2389BB'
     DUSK = '#FF6723'
 
+    # Lighthouse icon (top-left, next to text)
+    if os.path.exists(ICON_PATH):
+        icon_img = mpimg.imread(ICON_PATH)
+        icon_w = 0.018
+        icon_aspect = icon_img.shape[0] / icon_img.shape[1]
+        fig_aspect = fig.get_figwidth() / fig.get_figheight()
+        icon_h = icon_w * icon_aspect * fig_aspect
+        icon_ax = fig.add_axes([0.012, 0.985 - icon_h, icon_w, icon_h])
+        icon_ax.imshow(icon_img, aspect='equal')
+        icon_ax.axis('off')
+
     # Top-left watermark — Ocean Blue, bold
-    fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=11,
+    fig.text(0.035, 0.98, 'LIGHTHOUSE MACRO', fontsize=11,
              color=OCEAN, fontweight='bold', va='top')
 
     # Date top-right

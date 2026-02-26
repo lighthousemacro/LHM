@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.image as mpimg
 from matplotlib.ticker import FuncFormatter
 from datetime import datetime, timedelta
 import os
@@ -50,6 +51,7 @@ RECESSIONS = [
 ]
 
 DB_PATH = '/Users/bob/LHM/Data/databases/Lighthouse_Master.db'
+ICON_PATH = '/Users/bob/LHM/Brand/icon_transparent_128.png'
 OUT_DIR = '/Users/bob/LHM/Outputs/positioning_update_2/white'
 os.makedirs(OUT_DIR, exist_ok=True)
 
@@ -112,7 +114,18 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
     DUSK = '#FF6723'
 
     # Watermark + date ABOVE accent bar
-    fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold',
+    # Lighthouse icon (top-left, next to text)
+    if os.path.exists(ICON_PATH):
+        icon_img = mpimg.imread(ICON_PATH)
+        icon_w = 0.018
+        icon_aspect = icon_img.shape[0] / icon_img.shape[1]
+        fig_aspect = fig.get_figwidth() / fig.get_figheight()
+        icon_h = icon_w * icon_aspect * fig_aspect
+        icon_ax = fig.add_axes([0.012, 0.985 - icon_h, icon_w, icon_h])
+        icon_ax.imshow(icon_img, aspect='equal')
+        icon_ax.axis('off')
+
+    fig.text(0.035, 0.98, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold',
              color=OCEAN, va='top')
     fig.text(0.97, 0.98, DATE_STR, fontsize=11, color=THEME['muted'], va='top', ha='right')
 

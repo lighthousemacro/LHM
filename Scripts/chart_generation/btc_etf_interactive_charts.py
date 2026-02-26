@@ -3,8 +3,10 @@ BTC ETF Interactive Report Charts
 Extracted from HTML interactive report and rendered in Lighthouse Macro style
 """
 
+import os
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import matplotlib.image as mpimg
 from matplotlib.ticker import FuncFormatter
 import pandas as pd
 import numpy as np
@@ -37,6 +39,7 @@ THEME = {
 # ———————— OUTPUT PATH ————————
 OUTPUT_DIR = Path('/Users/bob/LHM/Outputs/Educational_Charts/BTC_ETF')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+ICON_PATH = '/Users/bob/LHM/Brand/icon_transparent_128.png'
 
 
 # ———————— HELPER FUNCTIONS ————————
@@ -77,8 +80,19 @@ def brand_fig(fig, title, subtitle, source='Lighthouse Macro'):
     ax_bot.set_ylim(0, 1)
     ax_bot.axis('off')
 
+    # Lighthouse icon (top-left, next to text)
+    if os.path.exists(ICON_PATH):
+        icon_img = mpimg.imread(ICON_PATH)
+        icon_w = 0.018
+        icon_aspect = icon_img.shape[0] / icon_img.shape[1]
+        fig_aspect = fig.get_figwidth() / fig.get_figheight()
+        icon_h = icon_w * icon_aspect * fig_aspect
+        icon_ax = fig.add_axes([0.042, 0.985 - icon_h, icon_w, icon_h])
+        icon_ax.imshow(icon_img, aspect='equal')
+        icon_ax.axis('off')
+
     # Top-left: LIGHTHOUSE MACRO
-    fig.text(0.06, 0.98, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold', color=COLORS['ocean'])
+    fig.text(0.065, 0.98, 'LIGHTHOUSE MACRO', fontsize=13, fontweight='bold', color=COLORS['ocean'])
 
     # Top-right: Date
     fig.text(0.94, 0.98, 'February 05, 2026', fontsize=11, color=THEME['muted'], ha='right')

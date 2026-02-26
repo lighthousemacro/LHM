@@ -22,6 +22,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
+import matplotlib.image as mpimg
 from matplotlib.ticker import FuncFormatter
 from fredapi import Fred
 
@@ -35,6 +36,7 @@ os.environ['REQUESTS_CA_BUNDLE'] = certifi.where()
 BASE_PATH = '/Users/bob/LHM'
 OUTPUT_BASE = f'{BASE_PATH}/Outputs/Educational_Charts/Growth_Post_3'
 DB_PATH = f'{BASE_PATH}/Data/databases/Lighthouse_Master.db'
+ICON_PATH = f'{BASE_PATH}/Brand/icon_transparent_128.png'
 
 fred = Fred()
 
@@ -258,7 +260,18 @@ def brand_fig(fig, title, subtitle=None, source=None):
     OCEAN = '#2389BB'
     DUSK = '#FF6723'
 
-    fig.text(0.03, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
+    # Lighthouse icon (top-left, next to text)
+    if os.path.exists(ICON_PATH):
+        icon_img = mpimg.imread(ICON_PATH)
+        icon_w = 0.018
+        icon_aspect = icon_img.shape[0] / icon_img.shape[1]
+        fig_aspect = fig.get_figwidth() / fig.get_figheight()
+        icon_h = icon_w * icon_aspect * fig_aspect
+        icon_ax = fig.add_axes([0.012, 0.985 - icon_h, icon_w, icon_h])
+        icon_ax.imshow(icon_img, aspect='equal')
+        icon_ax.axis('off')
+
+    fig.text(0.035, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
              color=OCEAN, fontweight='bold', va='top')
     fig.text(0.97, 0.98, datetime.now().strftime('%B %d, %Y'),
              fontsize=11, color=THEME['muted'], ha='right', va='top')

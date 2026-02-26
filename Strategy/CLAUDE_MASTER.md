@@ -493,6 +493,7 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 ## Logo & Watermarks
 
 - **Logo:** White lighthouse on ocean blue background. Top-left, 40px margin.
+- **Chart Icon:** `Brand/icon_transparent_128.png` (128x290px, Ocean blue, transparent bg). Placed top-left on all charts next to "LIGHTHOUSE MACRO" text.
 - **Banner:** Horizontal lockup with icon, text, tagline, accent bar.
 - **Watermarks:** "LIGHTHOUSE MACRO" top-left, "MACRO, ILLUMINATED." bottom-right. Montserrat Bold, Ocean at 15-20% opacity.
 

@@ -698,6 +698,9 @@ def chart_06():
     set_xlim_to_data(ax, imp_all.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, imp_all, color=THEME['primary'], side='right')
+    add_last_value_label(ax, imp_xpet, color=THEME['secondary'], side='right')
+    add_last_value_label(ax, imp_cons, color=THEME['tertiary'], side='right')
+    add_last_value_label(ax, imp_ind, color=THEME['quaternary'], side='right')
     add_recessions(ax, start_date='2000-01-01')
     ax.legend(loc='upper left', ncol=2, **legend_style())
 
@@ -851,6 +854,12 @@ def chart_09():
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, ca_total / 1000, color=THEME['primary'],
                          fmt='${:.0f}B', side='right')
+    add_last_value_label(ax, ca_goods / 1000, color=THEME['secondary'],
+                         fmt='${:.0f}B', side='right')
+    add_last_value_label(ax, ca_services / 1000, color=THEME['tertiary'],
+                         fmt='${:.0f}B', side='right')
+    add_last_value_label(ax, ca_income / 1000, color=THEME['quaternary'],
+                         fmt='${:.0f}B', side='right')
     add_recessions(ax, start_date='1990-01-01')
     ax.legend(loc='lower left', **legend_style())
 
@@ -895,13 +904,19 @@ def chart_10():
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, total, color=THEME['primary'],
                          fmt='{:.2f}', side='right')
+    add_last_value_label(ax, wholesale, color=THEME['secondary'],
+                         fmt='{:.2f}', side='right')
+    add_last_value_label(ax, retail, color=THEME['tertiary'],
+                         fmt='{:.2f}', side='right')
+    add_last_value_label(ax, mfg, color=THEME['quaternary'],
+                         fmt='{:.2f}', side='right')
     add_recessions(ax, start_date='1992-01-01')
     ax.legend(loc='upper left', **legend_style())
 
     add_annotation_box(ax,
         "Wholesale I/S rising = importers front-loading\n"
         "ahead of tariff escalation. Watch for reversal.",
-        x=0.52, y=0.15)
+        x=0.52, y=0.93)
 
     brand_fig(fig, 'Inventory-to-Sales Ratios',
               subtitle='Where trade flows meet domestic demand',

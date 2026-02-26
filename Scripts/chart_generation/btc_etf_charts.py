@@ -274,7 +274,7 @@ def legend_style():
 def save_fig(fig, name):
     """Save with standard settings."""
     path = OUTPUT_DIR / f'{name}.png'
-    fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.10,
+    fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.025,
                 facecolor=THEME['bg'], edgecolor='none')
     print(f"Saved: {path}")
     plt.close(fig)

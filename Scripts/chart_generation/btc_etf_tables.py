@@ -54,7 +54,7 @@ def brand_fig_minimal(fig, title):
 
 def save_fig(fig, name):
     path = OUTPUT_DIR / f'{name}.png'
-    fig.savefig(path, dpi=200, pad_inches=0.10,
+    fig.savefig(path, dpi=200, pad_inches=0.025,
                 facecolor=THEME['bg'], edgecolor='none')
     print(f"Saved: {path}")
     plt.close(fig)

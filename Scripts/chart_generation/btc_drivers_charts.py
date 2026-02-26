@@ -58,7 +58,7 @@ THEME = {
     'bg': '#ffffff',
     'fg': '#1a1a1a',
     'muted': '#555555',
-    'spine': '#cccccc',
+    'spine': '#898989',
     'primary': C['ocean'],
     'secondary': C['dusk'],
     'tertiary': C['sky'],

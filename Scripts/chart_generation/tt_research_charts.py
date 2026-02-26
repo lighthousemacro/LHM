@@ -86,7 +86,7 @@ def set_theme(mode='white'):
             'text_strong': '#333333',
             'text_label': '#333333',
             'bar_edge': '#333333',
-            'zero_line': '#333333',
+            'zero_line': '#D1D1D1',
             'legend_bg': '#ffffff',
             'legend_fg': '#1a1a1a',
             'fill_alpha': 0.15,

@@ -22,7 +22,7 @@ THEME = {
     'bg': '#ffffff',
     'fg': '#1a1a1a',
     'muted': '#555555',
-    'spine': '#cccccc',
+    'spine': '#898989',
     'zero_line': '#D1D1D1',
     'recession': 'gray',
     'recession_alpha': 0.12,

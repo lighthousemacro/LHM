@@ -107,8 +107,8 @@ def set_theme(mode='dark'):
             'bg': '#ffffff',
             'fg': '#1a1a1a',
             'muted': '#555555',
-            'spine': '#cccccc',
-            'zero_line': '#333333',
+            'spine': '#898989',
+            'zero_line': '#D1D1D1',
             'recession': 'gray',
             'recession_alpha': 0.12,
             'ocean': COLORS['ocean'],
@@ -399,7 +399,7 @@ def save_fig(fig, filename):
     ))
 
     filepath = os.path.join(OUTPUT_DIR, filename)
-    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.10,
+    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.025,
                 facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     print(f'  Saved: {filepath}')

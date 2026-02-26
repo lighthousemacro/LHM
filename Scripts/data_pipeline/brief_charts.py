@@ -225,8 +225,28 @@ def chart_mri(conn):
     return {'title': 'Macro Risk Index', 'base64': _fig_to_base64(fig)}
 
 
+def _color_segmented_line(ax, x, y, ma, color_above, color_below, linewidth=2.5):
+    """Draw a line that changes color based on whether it's above/below its MA.
+    Uses LineCollection for clean crossover transitions."""
+    from matplotlib.collections import LineCollection
+    points = np.array([mdates.date2num(x), y]).T.reshape(-1, 1, 2)
+    segments = np.concatenate([points[:-1], points[1:]], axis=1)
+    # Color based on whether value is above or below MA
+    colors = []
+    for i in range(len(y) - 1):
+        if np.isnan(ma.iloc[i]):
+            colors.append(COLORS['doldrums'])
+        elif y.iloc[i] >= ma.iloc[i]:
+            colors.append(color_above)
+        else:
+            colors.append(color_below)
+    lc = LineCollection(segments, colors=colors, linewidths=linewidth)
+    ax.add_collection(lc)
+    ax.autoscale()
+
+
 def chart_spx(conn):
-    """S&P 500: 3-panel (Price + MAs, RS vs ACWX, Z-RoC)."""
+    """S&P 500: 3-panel (Price + MAs, RS vs ACWX, Z-RoC). TradingView style."""
     spx = _fetch_series(conn, 'SPX_Close', '2023-01-01')
     ma200 = _fetch_series(conn, 'SPX_200d_MA', '2023-01-01')
     ma50 = _fetch_series(conn, 'SPX_50d_MA', '2023-01-01')
@@ -235,7 +255,6 @@ def chart_spx(conn):
     fig, axes = plt.subplots(3, 1, figsize=(10, 10), height_ratios=[3, 1.5, 1.5])
     fig.patch.set_facecolor(THEME['bg'])
 
-    # Brand text top-right
     fig.text(0.98, 0.99, 'LIGHTHOUSE MACRO', fontsize=7,
              color=COLORS['ocean'], fontweight='bold', ha='right', va='top',
              alpha=0.6)
@@ -263,7 +282,7 @@ def chart_spx(conn):
     ax1.legend(loc='upper left', fontsize=7, facecolor=THEME['bg'],
                edgecolor=THEME['spine'], labelcolor=THEME['fg'])
 
-    # ---- Panel 2: Relative Strength vs ACWX ----
+    # ---- Panel 2: Relative Strength vs ACWX (color-coded) ----
     ax2 = axes[1]
     ax2.set_title('Relative Strength vs ACWX', fontsize=9, fontweight='bold',
                    color=THEME['fg'], pad=8, loc='left', fontfamily='sans-serif')
@@ -275,15 +294,17 @@ def chart_spx(conn):
         if not acwx.empty:
             acwx_close = acwx['Close'].squeeze()
             acwx_close.index = acwx_close.index.tz_localize(None)
-            # Align dates
             common = spx.index.intersection(acwx_close.index)
             if len(common) > 50:
                 rs = (spx.loc[common] / acwx_close.loc[common])
-                rs = rs / rs.iloc[0] * 100  # Rebase to 100
+                rs = rs / rs.iloc[0] * 100
                 rs_ma50 = rs.rolling(50, min_periods=25).mean()
-                ax2.plot(rs.index, rs, color=COLORS['ocean'], linewidth=2, label='SPX/ACWX')
-                ax2.plot(rs_ma50.index, rs_ma50, color=COLORS['dusk'], linewidth=1.2,
-                         linestyle='--', alpha=0.8, label='50d MA')
+                # Color-coded RS line: Ocean above MA, Venus below
+                _color_segmented_line(ax2, rs.index, rs, rs_ma50,
+                                      COLORS['ocean'], COLORS['venus'], linewidth=2.5)
+                ax2.plot(rs_ma50.dropna().index, rs_ma50.dropna(),
+                         color=COLORS['doldrums'], linewidth=1, linestyle='--',
+                         alpha=0.6, label='50d MA')
                 _add_last_value(ax2, rs, COLORS['ocean'], fmt='.1f')
                 ax2.legend(loc='upper left', fontsize=7, facecolor=THEME['bg'],
                            edgecolor=THEME['spine'], labelcolor=THEME['fg'])
@@ -297,22 +318,29 @@ def chart_spx(conn):
         ax2.text(0.5, 0.5, 'ACWX data unavailable', transform=ax2.transAxes,
                  ha='center', va='center', color=THEME['muted'], fontsize=9)
 
-    # ---- Panel 3: Z-RoC (63d) ----
+    # ---- Panel 3: Z-RoC (TradingView style) ----
+    # Dusk line, Sky +-2 sigma bands, background shading at extremes
     ax3 = axes[2]
-    ax3.set_title('Z-RoC (63-Day Momentum)', fontsize=9, fontweight='bold',
+    ax3.set_title('Z-RoC (63d Momentum)', fontsize=9, fontweight='bold',
                    color=THEME['fg'], pad=8, loc='left', fontfamily='sans-serif')
     _style_ax(ax3)
 
     if not zroc.empty:
-        ax3.fill_between(zroc.index, 0, zroc, where=zroc >= 0,
-                         color=COLORS['sea'], alpha=THEME['fill_alpha'])
-        ax3.fill_between(zroc.index, 0, zroc, where=zroc < 0,
-                         color=COLORS['port'], alpha=THEME['fill_alpha'])
-        ax3.plot(zroc.index, zroc, color=COLORS['ocean'], linewidth=2)
-        _add_last_value(ax3, zroc, COLORS['ocean'], fmt='.2f')
-        _threshold_line(ax3, 1.5, '', COLORS['venus'])
-        _threshold_line(ax3, -1.5, '', COLORS['venus'])
-    _zero_line(ax3)
+        # Background zones at extremes (like TradingView bgcolor)
+        ax3.fill_between(zroc.index, 2.0, zroc.clip(lower=2.0),
+                         where=zroc >= 2.0,
+                         color=COLORS['dusk'], alpha=0.08, zorder=0)
+        ax3.fill_between(zroc.index, -2.0, zroc.clip(upper=-2.0),
+                         where=zroc <= -2.0,
+                         color=COLORS['sky'], alpha=0.08, zorder=0)
+        # Main line in Dusk
+        ax3.plot(zroc.index, zroc, color=COLORS['dusk'], linewidth=3, zorder=5)
+        # Sigma bands in Sky
+        ax3.axhline(y=2.0, color=COLORS['sky'], linewidth=1.5, linestyle='-', alpha=0.7)
+        ax3.axhline(y=-2.0, color=COLORS['sky'], linewidth=1.5, linestyle='-', alpha=0.7)
+        _add_last_value(ax3, zroc, COLORS['dusk'], fmt='.2f')
+    # Zero line in gray
+    ax3.axhline(y=0, color=COLORS['doldrums'], linewidth=0.8, linestyle=':', alpha=0.5)
 
     fig.tight_layout(h_pad=1.5)
     return {'title': 'S&P 500', 'base64': _fig_to_base64(fig)}

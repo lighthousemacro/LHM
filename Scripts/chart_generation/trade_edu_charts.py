@@ -287,7 +287,7 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
     box_alpha = 1.0
     txt_color = '#ffffff'
     ax.text(x, y, text, transform=ax.transAxes,
-            fontsize=10, color=txt_color, ha='center', va='top',
+            fontsize=11, fontweight='bold', color=txt_color, ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
                       facecolor=box_fc, edgecolor='#00BBFF',
@@ -557,7 +557,7 @@ def chart_03():
     add_annotation_box(ax,
         "Strong dollar = cheap imports, expensive exports.\n"
         "EM currencies under disproportionate stress.",
-        x=0.52, y=0.92)
+        x=0.50, y=0.95)
 
     brand_fig(fig, 'Trade-Weighted Dollar: The Competitiveness Gauge',
               subtitle='Broad, Advanced Economies, and Emerging Markets',
@@ -659,7 +659,7 @@ def chart_05():
     add_annotation_box(ax,
         "China imports peaked 2018 and are falling.\n"
         "Decoupling is real: 22% → 13% import share.",
-        x=0.37, y=0.92)
+        x=0.40, y=0.92)
 
     brand_fig(fig, 'U.S.-China Trade: The Decoupling',
               subtitle='Import share falling, but the deficit shifted, not eliminated',
@@ -1018,7 +1018,7 @@ def chart_12():
     add_annotation_box(ax,
         "Dollar Z-RoC: momentum of the dollar.\n"
         "At extremes (>1.5 or <-1.5), reversals are probable.",
-        x=0.52, y=0.93)
+        x=0.52, y=0.955)
 
     brand_fig(fig, 'Dollar Z-RoC: The Momentum Signal',
               subtitle='63-day rate of change, z-scored for regime detection',
@@ -1074,7 +1074,7 @@ def chart_13():
     add_annotation_box(ax1,
         "Import prices ex-petro lead core PCE by ~4 months.\n"
         "The tariff pipeline is building pressure.",
-        x=0.52, y=0.15)
+        x=0.55, y=0.93)
 
     brand_fig(fig, 'The Tariff Pipeline: Import Prices → Core PCE',
               subtitle='Import prices ex-petroleum (4-month lag) vs Core PCE',
@@ -1471,7 +1471,7 @@ def chart_21():
     add_annotation_box(ax,
         "Net exports are a persistent GDP drag.\n"
         "Narrowing = GDP add, but quality matters.",
-        x=0.70, y=0.92)
+        x=0.685, y=0.20)
 
     brand_fig(fig, 'Real Net Exports: The GDP Drag',
               subtitle='Trade as a GDP component (chained 2017 dollars)',

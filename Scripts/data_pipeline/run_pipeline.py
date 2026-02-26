@@ -77,11 +77,27 @@ def main():
                        help="Only update specific sources")
     parser.add_argument("--skip-indices", action="store_true",
                        help="Skip proprietary index computation")
+    parser.add_argument("--skip-pillars", action="store_true",
+                       help="Skip pillar sub-database build")
+    parser.add_argument("--build-pillars", action="store_true",
+                       help="Only build pillar sub-databases (skip data fetch)")
 
     args = parser.parse_args()
 
     if args.stats:
         get_stats()
+        return
+
+    if args.build_pillars:
+        print("\n" + "=" * 70)
+        print("BUILDING PILLAR SUB-DATABASES (standalone)")
+        print("=" * 70)
+        try:
+            from build_pillar_dbs import main as build_pillars_main
+            sys.argv = [sys.argv[0]]  # Reset argv for sub-parser
+            build_pillars_main()
+        except Exception as e:
+            print(f"ERROR building pillar DBs: {e}")
         return
 
     sources = None
@@ -231,6 +247,22 @@ def main():
         _conn2.close()
     except Exception as e:
         print(f"WARNING: Morning brief failed: {e}")
+
+    # Build pillar sub-databases
+    if not args.skip_pillars:
+        print("\n" + "=" * 70)
+        print("BUILDING PILLAR SUB-DATABASES")
+        print("=" * 70)
+        try:
+            from build_pillar_dbs import build_pillar_db, show_stats, PILLAR_DB_DIR
+            PILLAR_DB_DIR.mkdir(parents=True, exist_ok=True)
+            _master_conn = sqlite3.connect(str(DB_PATH))
+            for _p in range(1, 13):
+                build_pillar_db(_p, _master_conn, verbose=True)
+            _master_conn.close()
+            show_stats()
+        except Exception as e:
+            print(f"WARNING: Pillar DB build failed: {e}")
 
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ from pathlib import Path
 LHM_ROOT = Path("/Users/bob/LHM")
 DATA_DIR = LHM_ROOT / "Data"
 DB_PATH = DATA_DIR / "databases" / "Lighthouse_Master.db"
+PILLAR_DB_DIR = DATA_DIR / "databases" / "pillars"
 OUTPUT_DIR = LHM_ROOT / "lighthouse_quant" / "outputs"
 
 # Ensure output directory exists

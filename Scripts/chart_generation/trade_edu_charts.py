@@ -659,7 +659,7 @@ def chart_05():
     add_annotation_box(ax,
         "China imports peaked 2018 and are falling.\n"
         "Decoupling is real: 22% → 13% import share.",
-        x=0.92, y=0.92)
+        x=0.37, y=0.92)
 
     brand_fig(fig, 'U.S.-China Trade: The Decoupling',
               subtitle='Import share falling, but the deficit shifted, not eliminated',
@@ -753,9 +753,9 @@ def chart_07():
     ax.legend(loc='upper left', **legend_style())
 
     add_annotation_box(ax,
-        "Below 100 = we pay more for imports than we\n"
-        "earn on exports. Tariffs push this lower.",
-        x=0.52, y=0.15)
+        "Above 100 = export prices outpacing imports.\n"
+        "Energy independence and services exports driving favorable terms.",
+        x=0.52, y=0.92)
 
     brand_fig(fig, 'Terms of Trade: Competitiveness Barometer',
               subtitle='Export prices relative to import prices (100 = neutral)',
@@ -811,7 +811,7 @@ def chart_08():
     add_annotation_box(ax,
         "Trade policy uncertainty leads capex by 3-6 months.\n"
         "At record highs, eclipsing 2019 trade war peaks.",
-        x=0.25, y=0.92)
+        x=0.55, y=0.80)
 
     brand_fig(fig, 'Trade Policy Uncertainty Index',
               subtitle='When businesses cannot plan, they do not invest',
@@ -828,10 +828,10 @@ def chart_09():
     """Current Account Balance: Goods, Services, Primary Income decomposition."""
     print('\nChart 9: Current Account Balance...')
 
-    ca_total = fetch_quarterly_level('IEABC', start='1999-01-01')
-    ca_goods = fetch_quarterly_level('IEABCG', start='1999-01-01')
-    ca_services = fetch_quarterly_level('IEABCS', start='1999-01-01')
-    ca_income = fetch_quarterly_level('IEABCPI', start='1999-01-01')
+    ca_total = fetch_quarterly_level('IEABC', start='1990-01-01')
+    ca_goods = fetch_quarterly_level('IEABCG', start='1990-01-01')
+    ca_services = fetch_quarterly_level('IEABCS', start='1990-01-01')
+    ca_income = fetch_quarterly_level('IEABCPI', start='1990-01-01')
 
     fig, ax = new_fig()
 
@@ -851,13 +851,13 @@ def chart_09():
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, ca_total / 1000, color=THEME['primary'],
                          fmt='${:.0f}B', side='right')
-    add_recessions(ax, start_date='1999-01-01')
+    add_recessions(ax, start_date='1990-01-01')
     ax.legend(loc='lower left', **legend_style())
 
     add_annotation_box(ax,
         "Goods deficit dominates, but services surplus\n"
         "and primary income partially offset.",
-        x=0.52, y=0.92)
+        x=0.55, y=0.15)
 
     brand_fig(fig, 'Current Account Decomposition',
               subtitle='The financial mirror of every trade deficit',
@@ -1018,7 +1018,7 @@ def chart_12():
     add_annotation_box(ax,
         "Dollar Z-RoC: momentum of the dollar.\n"
         "At extremes (>1.5 or <-1.5), reversals are probable.",
-        x=0.52, y=0.15)
+        x=0.52, y=0.93)
 
     brand_fig(fig, 'Dollar Z-RoC: The Momentum Signal',
               subtitle='63-day rate of change, z-scored for regime detection',

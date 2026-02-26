@@ -726,6 +726,35 @@ FRED_CURATED = {
 
     # Foreign Holdings
     "FDHBFIN": "Federal Debt Held by Foreign and International Investors",
+
+    # ===== TRADE PILLAR - RETAIL DETAIL (Feb 2026 Expansion) =====
+
+    # Real Retail Sales
+    "RRSFS": "Advance Real Retail and Food Services Sales",
+
+    # Monthly Retail Trade Detail
+    "MRTSSM44X72USS": "Retail Sales Retail Trade and Food Services",
+    "RETAILSMSA": "Retailers Sales Total",
+    "MRTSSM4453USN": "Retail Sales Beer Wine Liquor Stores",
+    "MRTSSM44112USN": "Retail Sales Used Car Dealers",
+    "MRTSSM442USN": "Retail Sales Furniture Home Furnishings Stores",
+    "MRTSSM7225USN": "Retail Sales Restaurants Eating Places",
+
+    # Advance Retail Detail
+    "RSGCS": "Advance Retail Sales Grocery Stores",
+
+    # Wholesale
+    "S4248SM144NCEN": "Wholesale Nondurable Goods Beer Wine Spirits Sales",
+
+    # ===== TRADE PILLAR - BEA INTERNATIONAL (Feb 2026 Expansion) =====
+
+    # Capital Account
+    "IEABCP": "Balance on Capital Account",
+    "IEABCPN": "Balance on Capital Account NSA",
+
+    # BEA International Goods and Services
+    "IEAMGSN": "Imports of Goods and Services BEA Quarterly",
+    "IEAXGS": "Exports of Goods and Services BEA Quarterly",
 }
 
 # ==========================================

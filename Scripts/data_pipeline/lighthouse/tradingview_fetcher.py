@@ -17,6 +17,27 @@ Series stored in master DB as TV_{SYMBOL}:
   - TV_USMAPL:    MBA Mortgage Applications Composite (weekly)
   - TV_USMMI:     MBA Mortgage Market Index (weekly)
   - TV_USMOR:     Mortgage Originations (quarterly)
+  - TV_USBOT:     US Balance of Trade (monthly)
+  - TV_USCA:      US Current Account Balance (quarterly)
+  - TV_USGTB:     US Goods Trade Balance (monthly)
+  - TV_USIMP:     US Imports (monthly)
+  - TV_USEXP:     US Exports (monthly)
+  - TV_USCF:      US Capital Flows (monthly)
+  - TV_USTICNLF:  US TIC Net Long-Term Flows (monthly)
+  - TV_USFDI:     US Foreign Direct Investment (quarterly)
+  - TV_USED:      US External Debt (quarterly)
+  - TV_USTI:      US Terms of Trade Index (monthly)
+  - TV_USTOT:     US Terms of Trade (monthly)
+  - TV_USCOP:     US Crude Oil Production (monthly)
+  - TV_USWCOP:    US Weekly Crude Oil Production (weekly)
+  - TV_USOE:      US Oil Exports (monthly)
+  - TV_USGRES:    US Gold Reserves (monthly)
+  - TV_USTR:      US Tourism Receipts (quarterly)
+  - TV_USWES:     US Weapon Sales Exports (monthly)
+  - TV_USCAG:     US Current Account Goods (quarterly)
+  - TV_USCURAG:   US Current Account Goods Alternate (quarterly)
+  - TV_USCURAS:   US Current Account Services (quarterly)
+  - TV_USTA:      US Trade Account (monthly)
 """
 
 import json
@@ -70,6 +91,32 @@ TV_SERIES = {
     "ECONOMICS:USLEI": ("TV_USLEI", "Conference Board Leading Economic Index", "Monthly", "Index", "Business"),
     "ECONOMICS:USBOI": ("TV_USBOI", "OECD Business Outlook Index", "Monthly", "Index", "Business"),
     "ECONOMICS:USFO": ("TV_USFO", "Factory Orders MoM", "Monthly", "Percent", "Business"),
+    # Trade Pillar - Balance & Flows
+    "ECONOMICS:USBOT": ("TV_USBOT", "US Balance of Trade", "Monthly", "Millions USD", "Trade"),
+    "ECONOMICS:USCA": ("TV_USCA", "US Current Account Balance", "Quarterly", "Millions USD", "Trade"),
+    "ECONOMICS:USGTB": ("TV_USGTB", "US Goods Trade Balance", "Monthly", "Millions USD", "Trade"),
+    "ECONOMICS:USIMP": ("TV_USIMP", "US Imports", "Monthly", "Millions USD", "Trade"),
+    "ECONOMICS:USEXP": ("TV_USEXP", "US Exports", "Monthly", "Millions USD", "Trade"),
+    "ECONOMICS:USCAG": ("TV_USCAG", "US Current Account Goods", "Quarterly", "Millions USD", "Trade"),
+    "ECONOMICS:USCURAG": ("TV_USCURAG", "US Current Account Goods Alternate", "Quarterly", "Millions USD", "Trade"),
+    "ECONOMICS:USCURAS": ("TV_USCURAS", "US Current Account Services", "Quarterly", "Millions USD", "Trade"),
+    "ECONOMICS:USTA": ("TV_USTA", "US Trade Account", "Monthly", "Millions USD", "Trade"),
+    # Trade Pillar - Capital Flows & Foreign
+    "ECONOMICS:USCF": ("TV_USCF", "US Capital Flows", "Monthly", "Millions USD", "Trade"),
+    "ECONOMICS:USTICNLF": ("TV_USTICNLF", "US TIC Net Long-Term Flows", "Monthly", "Millions USD", "Trade"),
+    "ECONOMICS:USFDI": ("TV_USFDI", "US Foreign Direct Investment", "Quarterly", "Millions USD", "Trade"),
+    "ECONOMICS:USED": ("TV_USED", "US External Debt", "Quarterly", "Millions USD", "Trade"),
+    # Trade Pillar - Terms of Trade
+    "ECONOMICS:USTI": ("TV_USTI", "US Terms of Trade Index", "Monthly", "Index", "Trade"),
+    "ECONOMICS:USTOT": ("TV_USTOT", "US Terms of Trade", "Monthly", "Index", "Trade"),
+    # Trade Pillar - Energy & Commodities
+    "ECONOMICS:USCOP": ("TV_USCOP", "US Crude Oil Production", "Monthly", "Thousands Barrels/Day", "Trade"),
+    "ECONOMICS:USWCOP": ("TV_USWCOP", "US Weekly Crude Oil Production", "Weekly", "Thousands Barrels/Day", "Trade"),
+    "ECONOMICS:USOE": ("TV_USOE", "US Oil Exports", "Monthly", "Thousands Barrels/Day", "Trade"),
+    # Trade Pillar - Other
+    "ECONOMICS:USGRES": ("TV_USGRES", "US Gold Reserves", "Monthly", "Millions USD", "Trade"),
+    "ECONOMICS:USTR": ("TV_USTR", "US Tourism Receipts", "Quarterly", "Millions USD", "Trade"),
+    "ECONOMICS:USWES": ("TV_USWES", "US Weapon Sales Exports", "Monthly", "Millions USD", "Trade"),
 }
 
 

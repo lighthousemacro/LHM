@@ -302,6 +302,16 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
     OCEAN = '#2389BB'
     DUSK = '#FF6723'
 
+    fig.text(0.035, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
+             color=OCEAN, fontweight='bold', va='top')
+    fig.text(0.97, 0.98, datetime.now().strftime('%B %d, %Y'),
+             fontsize=11, color=THEME['muted'], ha='right', va='top')
+
+    bar = fig.add_axes([0.03, 0.955, 0.94, 0.004])
+    bar.axhspan(0, 1, 0, 0.67, color=OCEAN)
+    bar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
+    bar.set_xlim(0, 1); bar.set_ylim(0, 1); bar.axis('off')
+
     # Lighthouse icon (top-left, next to text)
     if os.path.exists(ICON_PATH):
         icon_img = mpimg.imread(ICON_PATH)
@@ -312,16 +322,6 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
         icon_ax = fig.add_axes([0.012, 0.985 - icon_h, icon_w, icon_h])
         icon_ax.imshow(icon_img, aspect='equal')
         icon_ax.axis('off')
-
-    fig.text(0.035, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
-             color=OCEAN, fontweight='bold', va='top')
-    fig.text(0.97, 0.98, datetime.now().strftime('%B %d, %Y'),
-             fontsize=11, color=THEME['muted'], ha='right', va='top')
-
-    bar = fig.add_axes([0.03, 0.955, 0.94, 0.004])
-    bar.axhspan(0, 1, 0, 0.67, color=OCEAN)
-    bar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
-    bar.set_xlim(0, 1); bar.set_ylim(0, 1); bar.axis('off')
 
     bbar = fig.add_axes([0.03, 0.035, 0.94, 0.004])
     bbar.axhspan(0, 1, 0, 0.67, color=OCEAN)
@@ -602,7 +602,13 @@ def chart_04():
     add_last_value_label(ax, exp_yoy, color=THEME['primary'], side='right')
     add_last_value_label(ax, imp_yoy, color=THEME['secondary'], side='right')
     add_recessions(ax, start_date='2000-01-01')
-    ax.legend(loc='upper left', **legend_style())
+
+    # Add recession shading to legend
+    from matplotlib.patches import Patch
+    handles, labels = ax.get_legend_handles_labels()
+    handles.append(Patch(facecolor=THEME['recession'], alpha=THEME['recession_alpha'],
+                         label='NBER Recession'))
+    ax.legend(handles=handles, loc='upper left', **legend_style())
 
     add_annotation_box(ax,
         "Exports rebounding while imports contract.\n"
@@ -653,7 +659,7 @@ def chart_05():
     add_annotation_box(ax,
         "China imports peaked 2018 and are falling.\n"
         "Decoupling is real: 22% → 13% import share.",
-        x=0.30, y=0.92)
+        x=0.92, y=0.92)
 
     brand_fig(fig, 'U.S.-China Trade: The Decoupling',
               subtitle='Import share falling, but the deficit shifted, not eliminated',
@@ -698,7 +704,7 @@ def chart_06():
     add_annotation_box(ax,
         "Ex-petroleum strips oil noise.\n"
         "Consumer goods prices tell you what hits wallets.",
-        x=0.52, y=0.15)
+        x=0.57, y=0.92)
 
     brand_fig(fig, 'Import Price Decomposition',
               subtitle='Where the tariff pressure is actually landing',

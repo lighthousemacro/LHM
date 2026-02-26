@@ -44,6 +44,28 @@ All educational, research, and deck charts follow this format unless explicitly 
 fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94)
 ```
 
+### Lighthouse Icon Implementation
+
+```python
+ICON_PATH = f'{BASE_PATH}/Brand/icon_transparent_128.png'
+
+# In brand_fig(), before the "LIGHTHOUSE MACRO" text:
+if os.path.exists(ICON_PATH):
+    icon_img = mpimg.imread(ICON_PATH)
+    icon_w = 0.018
+    icon_aspect = icon_img.shape[0] / icon_img.shape[1]
+    fig_aspect = fig.get_figwidth() / fig.get_figheight()
+    icon_h = icon_w * icon_aspect * fig_aspect
+    icon_ax = fig.add_axes([0.012, 0.985 - icon_h, icon_w, icon_h])
+    icon_ax.imshow(icon_img, aspect='equal')
+    icon_ax.axis('off')
+```
+
+- Icon file: `Brand/icon_transparent_128.png` (128x290px, RGBA, transparent background)
+- Sized to ~0.018 figure width, aspect-ratio preserved
+- Positioned top-left, vertically centered with "LIGHTHOUSE MACRO" text
+- `os.path.exists` guard so charts still render if icon is missing
+
 ### Accent Bar Implementation
 
 ```python

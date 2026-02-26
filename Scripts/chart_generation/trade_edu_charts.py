@@ -460,7 +460,7 @@ def chart_01():
         f"Trade deficit at ${bal.iloc[-1]:.0f}B.\n"
         f"Narrowing from peak, but driven by\n"
         f"demand destruction, not competitiveness.",
-        x=0.70, y=0.92)
+        x=0.675, y=0.15)
 
     brand_fig(fig, 'U.S. Trade Balance: Goods & Services',
               subtitle='The persistent deficit tells half the story',
@@ -515,7 +515,7 @@ def chart_02():
     add_annotation_box(ax1,
         "Import prices lead CPI goods by 3-6 months.\n"
         "Tariff pass-through is the pipeline right now.",
-        x=0.52, y=0.15)
+        x=0.545, y=0.92)
 
     brand_fig(fig, 'The Inflation Pipeline: Import Prices → CPI Goods',
               subtitle='What you pay at the border shows up at the register',
@@ -557,7 +557,7 @@ def chart_03():
     add_annotation_box(ax,
         "Strong dollar = cheap imports, expensive exports.\n"
         "EM currencies under disproportionate stress.",
-        x=0.52, y=0.15)
+        x=0.52, y=0.92)
 
     brand_fig(fig, 'Trade-Weighted Dollar: The Competitiveness Gauge',
               subtitle='Broad, Advanced Economies, and Emerging Markets',

@@ -658,7 +658,7 @@ def chart_05():
 
     add_annotation_box(ax,
         "China imports peaked 2018 and are falling.\n"
-        "Decoupling is real: 22% → 13% import share.",
+        "Decoupling is real: 22% → under 10% import share.",
         x=0.40, y=0.92)
 
     brand_fig(fig, 'U.S.-China Trade: The Decoupling',

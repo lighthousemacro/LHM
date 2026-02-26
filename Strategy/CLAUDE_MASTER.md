@@ -507,7 +507,7 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 - Right axis is primary. No tick marks.
 - Spine color: Doldrums `#898989` (both themes). Dark theme may use `#1e3350` if contrast needed.
 - Every chart: `border: 4.0pt solid #2389BB`
-- DPI 200, bbox_inches='tight', pad_inches=0.10
+- DPI 200, bbox_inches='tight', pad_inches=0.025
 
 ## Axis Configuration
 

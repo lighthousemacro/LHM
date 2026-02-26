@@ -201,6 +201,9 @@ PILLAR_SERIES = {
 
         # Employment Cost Index
         "COMPHAI",
+
+        # Employment Cost Index (FRED category: Employment_Cost_Index source)
+        "ECIALLCIV", "ECIWAG",
     ],
 
     # ------------------------------------------------------------------

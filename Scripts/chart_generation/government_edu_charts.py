@@ -433,7 +433,7 @@ def chart_01():
     # Historical norm reference (-3%)
     ax.axhline(-3, color=COLORS['doldrums'], linewidth=1.0, linestyle=':',
                alpha=0.6)
-    ax.text(deficit.index[2], -2.5, 'Historical norm (~3% deficit)',
+    ax.text(deficit.index[2], -3.5, 'Historical norm (~3% deficit)',
             fontsize=9, color=COLORS['doldrums'], style='italic')
 
     style_single_ax(ax)
@@ -500,7 +500,7 @@ def chart_02():
         "Term premium is the 'honest signal.'\n"
         "Post-QE suppression is normalizing.\n"
         "Still below what structural deficits demand.",
-        x=0.50, y=0.50)
+        x=0.50, y=0.93)
 
     brand_fig(fig, 'ACM 10-Year Term Premium',
               subtitle='The honest signal of fiscal sustainability',
@@ -605,7 +605,7 @@ def chart_04():
         "Interest as a share of revenue is rising\n"
         "back toward early-1990s peaks.\n"
         "The compounding trap is real.",
-        x=0.52, y=0.92)
+        x=0.52, y=0.25)
 
     brand_fig(fig, 'Federal Interest Expense as % of Revenue',
               subtitle='The compounding trap: higher rates on a larger debt stock',
@@ -688,7 +688,7 @@ def chart_06():
         f"Debt-to-GDP at {debt_gdp.iloc[-1]:.0f}%.\n"
         f"Highest since WWII, but trajectory\n"
         f"is the real concern: 120%+ by 2030.",
-        x=0.35, y=0.55)
+        x=0.52, y=0.93)
 
     brand_fig(fig, 'Federal Debt as % of GDP',
               subtitle='The level matters less than the trajectory',
@@ -820,7 +820,7 @@ def chart_08():
         f"GCI-Gov at {gcigov.iloc[-1]:.2f}.\n"
         "Positive = fiscal stress rising.\n"
         "Synthesizes deficit, debt, interest, term premium.",
-        x=0.35, y=0.92)
+        x=0.35, y=0.93)
 
     brand_fig(fig, 'Government Conditions Index (GCI-Gov)',
               subtitle='Pillar 8 Composite: fiscal stress in a single number',
@@ -867,7 +867,7 @@ def chart_09():
         "Foreign demand for Treasuries peaked\n"
         "around 2014 and has been declining.\n"
         "The marginal buyer is now price-sensitive.",
-        x=0.60, y=0.92)
+        x=0.40, y=0.92)
 
     brand_fig(fig, 'Foreign Holdings as Share of Federal Debt',
               subtitle='The marginal buyer has changed',

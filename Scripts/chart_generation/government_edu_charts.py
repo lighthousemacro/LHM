@@ -878,6 +878,68 @@ def chart_09():
 
 
 # ============================================
+# CHART 10: Receipts vs. Outlays (The Structural Gap) [Figure 10]
+# ============================================
+def chart_10():
+    """Federal receipts vs. outlays showing the structural divergence."""
+    print('\nChart 10: Receipts vs. Outlays...')
+
+    # Monthly Treasury Statement: receipts and outlays in millions -> billions
+    receipts = fetch_fred_level('MTSR133FMS', start='1980-01-01') / 1000.0
+    outlays = fetch_fred_level('MTSO133FMS', start='1980-01-01') / 1000.0
+
+    # Trailing 12-month rolling sums for smoothing
+    r12 = receipts.rolling(12).sum().dropna()
+    o12 = outlays.rolling(12).sum().dropna()
+
+    # Align
+    idx = r12.index.intersection(o12.index)
+    r12 = r12.loc[idx]
+    o12 = o12.loc[idx]
+
+    fig, ax = new_fig()
+
+    ax.plot(r12.index, r12, color=COLORS['starboard'], linewidth=2.5,
+            label=f'Receipts 12M (${r12.iloc[-1]:,.0f}B)')
+    ax.plot(o12.index, o12, color=COLORS['port'], linewidth=2.5,
+            label=f'Outlays 12M (${o12.iloc[-1]:,.0f}B)')
+
+    # Fill the gap
+    ax.fill_between(o12.index, r12, o12,
+                    where=(o12 > r12),
+                    color=COLORS['port'], alpha=0.12,
+                    label='Deficit')
+    ax.fill_between(o12.index, r12, o12,
+                    where=(r12 >= o12),
+                    color=COLORS['starboard'], alpha=0.12,
+                    label='Surplus')
+
+    style_single_ax(ax, fmt='${:,.0f}B')
+    set_xlim_to_data(ax, r12.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    add_last_value_label(ax, r12, color=COLORS['starboard'],
+                         fmt='${:,.0f}B', side='right')
+    add_last_value_label(ax, o12, color=COLORS['port'],
+                         fmt='${:,.0f}B', side='right')
+    add_recessions(ax, start_date='1981-01-01')
+    ax.legend(loc='upper left', **legend_style())
+
+    gap = o12.iloc[-1] - r12.iloc[-1]
+    add_annotation_box(ax,
+        f"The gap: ${gap:,.0f}B in annual deficit.\n"
+        f"Outlays growing faster than receipts.\n"
+        f"The scissors are opening, not closing.",
+        x=0.40, y=0.45)
+
+    brand_fig(fig, 'Federal Receipts vs. Outlays (Trailing 12 Months)',
+              subtitle='The structural gap: spending outpaces revenue',
+              source='Monthly Treasury Statement via FRED',
+              data_date=r12.index[-1])
+
+    return save_fig(fig, 'chart_10_receipts_vs_outlays.png')
+
+
+# ============================================
 # CHART MAP & MAIN
 # ============================================
 CHART_MAP = {
@@ -890,12 +952,13 @@ CHART_MAP = {
     7: chart_07,
     8: chart_08,
     9: chart_09,
+    10: chart_10,
 }
 
 
 def main():
     parser = argparse.ArgumentParser(description='Generate Government educational charts')
-    parser.add_argument('--chart', type=int, help='Chart number to generate (1-9)')
+    parser.add_argument('--chart', type=int, help='Chart number to generate (1-10)')
     parser.add_argument('--theme', default='both', choices=['dark', 'white', 'both'],
                         help='Theme to generate')
     parser.add_argument('--all', action='store_true', help='Generate all charts')

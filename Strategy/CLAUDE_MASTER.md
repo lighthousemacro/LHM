@@ -1,6 +1,6 @@
 # LIGHTHOUSE MACRO — MASTER CONTEXT
 
-**LAST_SYNC:** 2026-02-26
+**LAST_SYNC:** 2026-03-04
 **Version:** 5.0
 **Purpose:** Single source of truth for all AI assistants (Claude, Gemini, ChatGPT)
 

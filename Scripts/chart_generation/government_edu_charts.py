@@ -450,7 +450,7 @@ def chart_01():
         x=0.50, y=0.18)
 
     brand_fig(fig, 'Federal Surplus/Deficit as % of GDP',
-              subtitle='Wartime deficits in peacetime',
+              subtitle='Structural deficits at full employment',
               source='Office of Management and Budget via FRED',
               data_date=deficit.index[-1])
 

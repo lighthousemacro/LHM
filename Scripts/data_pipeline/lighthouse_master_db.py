@@ -436,11 +436,18 @@ FRED_CURATED = {
     "MTSO133FMS": "Federal Outlays Monthly",
     "MTSR133FMS": "Federal Receipts Monthly",
     "FYFSD": "Federal Surplus Deficit Annual",
+    "FYFSGDA188S": "Federal Surplus or Deficit as Pct of GDP",
+    "FYOINT": "Federal Outlays Interest on Debt",
+    "W006RC1Q027SBEA": "Federal Govt Current Expenditures",
     "FGEXPND": "Federal Expenditures",
     "FGRECPT": "Federal Receipts",
     "W068RCQ027SBEA": "Govt Consumption Expenditures",
     "A091RC1Q027SBEA": "Federal Defense Spending",
     "A822RL1Q225SBEA": "Real Govt Spending Growth",
+
+    # Term Premium (ACM Model)
+    "THREEFYTP5": "5Y Term Premium ACM",
+    "THREEFYTP2": "2Y Term Premium ACM",
 
     # Inventories
     "ISRATIO": "Inventory Sales Ratio Total",

@@ -37249,3 +37249,22 @@ MANUAL (copy from Desktop - accessible from phone via iCloud):
   6. ChatGPT         → paste into custom instructions
 
 ========================================
+[2026-03-05 12:45:18] ============================================================
+[2026-03-05 12:45:18] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-03-05 12:45:18] ============================================================
+[2026-03-05 12:45:18] GIT SYNC: Starting...
+[2026-03-05 12:45:19] GIT SYNC: Committed: Daily pipeline sync 2026-03-05 12:45
+[2026-03-05 12:45:21] GIT SYNC: Pushed to origin/main.
+[2026-03-05 12:45:21] CLOUD SYNC: Starting...
+[2026-03-05 12:45:21] CLOUD SYNC [iCloud]: Lighthouse_Master_20260305.db already exists, skipping.
+[2026-03-05 12:45:21] CLOUD SYNC [GDrive]: Lighthouse_Master_20260305.db already exists, skipping.
+[2026-03-05 12:45:21] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(92068): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(92067): error: unexpected end of file
+
+[2026-03-05 12:45:21] CLOUD SYNC [GDrive]: Synced Brand/
+[2026-03-05 12:45:21] CLOUD SYNC [Dropbox]: Lighthouse_Master_20260305.db already exists, skipping.
+[2026-03-05 12:45:21] ----------------------------------------
+[2026-03-05 12:45:21] SYNC SUMMARY:
+[2026-03-05 12:45:21]   GitHub: OK
+[2026-03-05 12:45:21]   Cloud: OK
+[2026-03-05 12:45:21] ============================================================

@@ -35627,3 +35627,43 @@ MANUAL (copy from Desktop - accessible from phone via iCloud):
   6. ChatGPT         → paste into custom instructions
 
 ========================================
+[2026-03-05 01:30:09] ============================================================
+[2026-03-05 01:30:09] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-03-05 01:30:09] ============================================================
+[2026-03-05 01:30:09] GIT SYNC: Starting...
+[2026-03-05 01:30:25] GIT SYNC: Committed: Daily pipeline sync 2026-03-05 01:30
+[2026-03-05 01:30:30] GIT SYNC: Pushed to origin/main.
+[2026-03-05 01:30:30] CLOUD SYNC: Starting...
+[2026-03-05 01:35:41] CLOUD SYNC [iCloud]: Copied Lighthouse_Master_20260305.db
+[2026-03-05 01:36:49] CLOUD SYNC [GDrive]: Copied Lighthouse_Master_20260305.db
+[2026-03-05 01:36:54] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(62845): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(62844): error: unexpected end of file
+
+[2026-03-05 01:36:54] CLOUD SYNC [GDrive]: Synced Brand/
+[2026-03-05 01:38:15] CLOUD SYNC [Dropbox]: Copied Lighthouse_Master_20260305.db
+[2026-03-05 01:38:16] ----------------------------------------
+[2026-03-05 01:38:16] SYNC SUMMARY:
+[2026-03-05 01:38:16]   GitHub: OK
+[2026-03-05 01:38:16]   Cloud: OK
+[2026-03-05 01:38:16] ============================================================
+[2026-03-05 01:45:02] Updated LAST_SYNC to 2026-03-05
+[2026-03-05 01:45:02] Synced to Claude Code: /Users/bob/.claude/CLAUDE.md
+cp: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md: Operation not permitted
+[2026-03-05 01:45:02] Created desktop export: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md
+========================================
+MASTER CONTEXT SYNCED - 2026-03-05 01:45:02
+========================================
+
+LAST_SYNC updated to: 2026-03-05
+
+AUTOMATIC:
+  1. Claude Code:    DONE
+  2. Desktop Export: DONE (~/Desktop/LHM_MASTER_CONTEXT.md)
+
+MANUAL (copy from Desktop - accessible from phone via iCloud):
+  3. Claude.ai/iOS  → paste into custom instructions
+  4. Claude Desktop → paste into custom instructions
+  5. Gemini          → paste into context
+  6. ChatGPT         → paste into custom instructions
+
+========================================

@@ -257,16 +257,25 @@ def fetch_btc(start='2017-01-01'):
 # FIGURE 1: DXY (Inverted) vs BTC/USD
 # =============================================================================
 
+def fetch_dxy(start='2017-06-01'):
+    """Fetch ICE US Dollar Index (DXY) from Yahoo Finance."""
+    dxy = yf.download('DX-Y.NYB', start=start, progress=False)
+    if isinstance(dxy.columns, pd.MultiIndex):
+        dxy = dxy.droplevel(1, axis=1)
+    dxy = dxy[['Close']].rename(columns={'Close': 'DXY'})
+    dxy.index = pd.to_datetime(dxy.index).tz_localize(None)
+    return dxy
+
+
 def fig_01_dxy_vs_btc(theme_mode):
     print(f'\n  [{theme_mode}] Figure 1: DXY (Inverted) vs BTC/USD')
     btc = fetch_btc(start='2017-06-01')
-    dxy = load_fred('DTWEXBGS', start='2017-06-01')
+    dxy = fetch_dxy(start='2017-06-01')
 
-    dxy_d = dxy['DTWEXBGS'].reindex(btc.index, method='ffill').dropna()
-    btc_d = btc['BTC'].reindex(dxy_d.index).dropna()
-    common = dxy_d.index.intersection(btc_d.index)
-    dxy_d = dxy_d.loc[common]
-    btc_d = btc_d.loc[common]
+    # Align to common trading days
+    common = btc.index.intersection(dxy.index)
+    dxy_d = dxy['DXY'].loc[common]
+    btc_d = btc['BTC'].loc[common]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -303,7 +312,7 @@ def fig_01_dxy_vs_btc(theme_mode):
 
     brand_fig(fig, 'Crypto Liquidity Impulse: Tier 1',
               'DXY (Inverted) vs BTC/USD (2018-2026)',
-              'FRED, Yahoo Finance', data_date=common[-1])
+              'Yahoo Finance', data_date=common[-1])
 
     save_fig(fig, 'fig_01_dxy_vs_btc.png', theme_mode)
 

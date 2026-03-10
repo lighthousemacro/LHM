@@ -427,11 +427,11 @@ def fig_02_cli_vs_fwd():
     # Stats box
     box2 = ('42D Fwd Returns:   Avg Ret  Slugging\n'
             ' Q5 (Strongest):      +14.3%    4.56x\n'
-            ' Q4:                   +6.0%    2.17x\n'
-            ' Q3:                   +3.9%    1.56x\n'
-            ' Q2:                   -0.2%    0.97x\n'
-            ' Q1 (Weakest):         -7.8%    0.43x\n\n'
-            f'Q5-Q1: +22.1% (t=15.6, p<0.0001) | n={len(cli_plot):,}')
+            ' Q4:                   +4.8%    2.17x\n'
+            ' Q3:                   +3.4%    1.56x\n'
+            ' Q2:                   -0.0%    0.97x\n'
+            ' Q1 (Weakest):         -7.7%    0.43x\n\n'
+            f'Q5-Q1: +22.0% (t=15.6, p<0.0001) | n={len(cli_plot):,}')
     ax1.text(0.55, 0.03, box2, transform=ax1.transAxes,
              fontsize=9.5, color=THEME['fg'], ha='center', va='bottom',
              family='monospace',
@@ -455,9 +455,9 @@ def fig_03_regime_bars():
     fig, ax = new_fig()
 
     quintiles = ['Q1\n(Weakest)', 'Q2', 'Q3', 'Q4', 'Q5\n(Strongest)']
-    ret_21d = [-4.8, 0.5, 1.0, 2.0, 8.6]
-    ret_42d = [-7.8, -0.2, 3.9, 6.0, 14.3]
-    ret_63d = [-9.8, -2.1, 9.0, 11.1, 17.2]
+    ret_21d = [-4.8, 0.6, 0.9, 1.5, 8.5]
+    ret_42d = [-7.7, -0.0, 3.4, 4.8, 14.3]
+    ret_63d = [-9.9, -2.0, 8.8, 9.6, 17.4]
 
     x = np.arange(len(quintiles))
     width = 0.25
@@ -492,9 +492,9 @@ def fig_03_regime_bars():
     ann_text = ('Weighted composite across 3 liquidity impulse channels:\n'
                 'Dollar Momentum | Reserve Dynamics | Stablecoin Flows\n\n'
                 'Q5-Q1 Spread:                Slugging (Q1 / Q5):\n'
-                '21D: +13.4%  (t = 14.2)      0.45x  /  4.81x\n'
-                '42D: +22.1%  (t = 15.6)      0.43x  /  4.56x\n'
-                '63D: +27.0%  (t = 15.0)      0.39x  /  3.70x\n'
+                '21D: +13.3%  (t = 14.1)      0.45x  /  4.81x\n'
+                '42D: +22.0%  (t = 15.6)      0.43x  /  4.56x\n'
+                '63D: +27.2%  (t = 15.2)      0.39x  /  3.70x\n'
                 'All p < 0.0001             Monotonic at all horizons')
     ax.text(0.52, 0.95, ann_text, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='top',

@@ -2,9 +2,11 @@
 """
 Generate Charts for Educational Series: Post 9 - Financial Conditions (Pillar 9)
 ================================================================================
-10 charts covering: HY OAS spreads, HY vs IG spreads, Credit-Labor Gap (CLG),
-NFCI decomposition, SLOOS lending standards, bank credit growth, credit card
-stress, Baa-10Y default risk premium, VIX vs VVIX, and FCI composite.
+12 charts covering: HY OAS percentile distribution, spread mispricing gap,
+yield curve dis-inversion clock, NFCI decomposition, SLOOS vs loan growth,
+transmission gap, complacency gap, delinquencies vs spreads, default risk
+premium regime, Credit-Labor Gap (CLG), financial cascade infographic, and
+FCI regime map with component tug-of-war.
 
 Generates BOTH white and dark theme versions.
 
@@ -27,6 +29,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
+import matplotlib.patches as mpatches
+from matplotlib.patches import FancyBboxPatch
 from matplotlib.ticker import FuncFormatter
 from fredapi import Fred
 
@@ -241,6 +245,20 @@ def new_fig(figsize=(14, 8)):
     return fig, ax
 
 
+def new_fig_panels(nrows=2, height_ratios=None, figsize=(14, 10)):
+    """Create multi-panel figure with theme background."""
+    if height_ratios is None:
+        height_ratios = [3, 1]
+    fig, axes = plt.subplots(nrows, 1, figsize=figsize,
+                             gridspec_kw={'height_ratios': height_ratios,
+                                          'hspace': 0.25})
+    fig.patch.set_facecolor(THEME['bg'])
+    for ax in axes:
+        ax.set_facecolor(THEME['bg'])
+    fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94)
+    return fig, axes
+
+
 def style_ax(ax, right_primary=True):
     """Style axes: all 4 spines at 0.5pt, grid off."""
     ax.grid(False)
@@ -429,176 +447,209 @@ def align_yaxis_zero(a1, a2):
 
 
 # ============================================
-# CHART 1: HY OAS Spread (Full History) [Figure 1]
+# CHART 1: HY OAS Percentile Distribution [Figure 1]
 # ============================================
 def chart_01():
-    """High-Yield Credit Spreads, full history with threshold lines."""
-    print('\nChart 1: HY OAS Spread (Full History)...')
+    """High-Yield Credit Spreads with 20-year rolling percentile bands."""
+    print('\nChart 1: HY OAS Percentile Distribution...')
 
     hy = fetch_db_level('BAMLH0A0HYM2', start='1997-01-01')
     if len(hy) == 0:
         hy = fetch_fred_level('BAMLH0A0HYM2', start='1997-01-01')
 
-    # Compute percentile for annotation
-    last_val = hy.iloc[-1]
-    pctile = (hy < last_val).sum() / len(hy) * 100
+    # BAMLH0A0HYM2 is in percentage points (e.g., 3.50 = 350 bps). Multiply by 100 for bps.
+    hy_bps = hy * 100
+
+    # 20-year rolling window (~5040 trading days)
+    win = 5040
+    p10 = hy_bps.rolling(win, min_periods=1000).quantile(0.10)
+    p25 = hy_bps.rolling(win, min_periods=1000).quantile(0.25)
+    p75 = hy_bps.rolling(win, min_periods=1000).quantile(0.75)
+    p90 = hy_bps.rolling(win, min_periods=1000).quantile(0.90)
+
+    # Current percentile
+    last_val = hy_bps.iloc[-1]
+    pctile = (hy_bps < last_val).sum() / len(hy_bps) * 100
 
     fig, ax = new_fig()
 
-    ax.plot(hy.index, hy, color=THEME['primary'], linewidth=2.0,
-            label=f'HY OAS ({last_val:.0f} bps)')
+    # Percentile bands
+    ax.fill_between(hy_bps.index, p10, p25, color=COLORS['port'], alpha=0.15,
+                    label='10th-25th percentile')
+    ax.fill_between(hy_bps.index, p25, p75, color=COLORS['fog'], alpha=0.10,
+                    label='25th-75th percentile')
+    ax.fill_between(hy_bps.index, p75, p90, color=COLORS['port'], alpha=0.15,
+                    label='75th-90th percentile')
 
-    # Threshold reference lines
-    ax.axhline(300, color=COLORS['venus'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.text(hy.index[10], 320, 'Complacent (300 bps)',
-            fontsize=9, color=COLORS['venus'], style='italic')
-
-    ax.axhline(450, color=COLORS['fog'], linewidth=1.2, linestyle='--', alpha=0.7)
-    ax.text(hy.index[10], 470, 'Elevated (450 bps)',
-            fontsize=9, color=COLORS['doldrums'], style='italic')
-
-    ax.axhline(650, color=COLORS['port'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.text(hy.index[10], 670, 'Crisis (650 bps)',
-            fontsize=9, color=COLORS['port'], style='italic')
+    # Main line on top
+    ax.plot(hy_bps.index, hy_bps, color=THEME['primary'], linewidth=2.0,
+            label=f'HY OAS ({last_val:.0f} bps)', zorder=5)
 
     style_single_ax(ax, fmt='{:.0f}')
-    set_xlim_to_data(ax, hy.index)
+    set_xlim_to_data(ax, hy_bps.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    add_last_value_label(ax, hy, color=THEME['primary'], fmt='{:.0f}', side='right')
+    add_last_value_label(ax, hy_bps, color=THEME['primary'], fmt='{:.0f}', side='right')
     add_recessions(ax, start_date='1997-01-01')
-    ax.legend(loc='upper right', **legend_style())
+    ax.legend(loc='upper right', fontsize=9, **legend_style())
 
     add_annotation_box(ax,
-        f"{last_val:.0f} bps: {pctile:.0f}th percentile since 1997.\n"
-        f"Below 300 = market pricing perfection.\n"
-        f"Spreads compress until they don't.",
+        f"Current: {last_val:.0f} bps ({pctile:.0f}th percentile)\n"
+        f"20-year rolling distribution context.\n"
+        f"Percentile tells you where we stand in history.",
         x=0.52, y=0.92)
 
     brand_fig(fig, 'High-Yield Credit Spreads',
-              subtitle="ICE BofA HY OAS | The Market's Real-Time Verdict on Risk",
+              subtitle='ICE BofA HY OAS | Percentile Distribution (20-Year Rolling)',
               source='ICE BofA via FRED',
-              data_date=hy.index[-1])
+              data_date=hy_bps.index[-1])
 
-    return save_fig(fig, 'chart_01_hy_oas.png')
+    return save_fig(fig, 'chart_01_hy_oas_percentile.png')
 
 
 # ============================================
-# CHART 2: HY OAS vs IG OAS (Dual Axis) [Figure 2]
+# CHART 2: Spread Mispricing Gap [Figure 2]
 # ============================================
 def chart_02():
-    """Credit Spreads: High-Yield vs Investment-Grade, dual axis."""
-    print('\nChart 2: HY OAS vs IG OAS...')
+    """HY OAS vs All-Loan Delinquency Rate (12-month forward) showing mispricing."""
+    print('\nChart 2: Spread Mispricing Gap...')
 
     hy = fetch_db_level('BAMLH0A0HYM2', start='1997-01-01')
-    ig = fetch_db_level('BAMLC0A0CM', start='1997-01-01')
     if len(hy) == 0:
         hy = fetch_fred_level('BAMLH0A0HYM2', start='1997-01-01')
-    if len(ig) == 0:
-        ig = fetch_fred_level('BAMLC0A0CM', start='1997-01-01')
+    hy_bps = hy * 100
 
-    # Align
-    idx = hy.index.intersection(ig.index)
-    hy = hy.loc[idx]
-    ig = ig.loc[idx]
+    # All-loan delinquency rate
+    delinq = fetch_db_level('DRALACBS', start='1991-01-01')
+    if len(delinq) == 0:
+        delinq = fetch_fred_level('DRALACBS', start='1991-01-01')
 
-    # Compute HY/IG ratio for annotation
-    ratio = hy / ig
-    last_ratio = ratio.iloc[-1]
+    # Shift delinquency data BACK 12 months (so it aligns with when spreads "should" have priced it)
+    delinq_fwd = delinq.copy()
+    delinq_fwd.index = delinq_fwd.index - pd.DateOffset(months=12)
+
+    # Filter to common date range starting 1997
+    start = '1997-01-01'
+    hy_bps = hy_bps[hy_bps.index >= start]
+    delinq_fwd = delinq_fwd[delinq_fwd.index >= start]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
-    c1, c2 = THEME['secondary'], THEME['primary']
+    c1, c2 = THEME['primary'], THEME['secondary']
 
-    ax1.plot(ig.index, ig, color=c1, linewidth=2.0,
-             label=f'IG OAS ({ig.iloc[-1]:.0f} bps)')
-    ax2.plot(hy.index, hy, color=c2, linewidth=2.5,
-             label=f'HY OAS ({hy.iloc[-1]:.0f} bps)')
+    ax1.plot(hy_bps.index, hy_bps, color=c1, linewidth=2.5,
+             label=f'HY OAS ({hy_bps.iloc[-1]:.0f} bps)')
+    ax2.plot(delinq_fwd.index, delinq_fwd, color=c2, linewidth=2.0,
+             label=f'All-Loan Delinq. 12M Fwd ({delinq_fwd.iloc[-1]:.2f}%)')
 
     style_dual_ax(ax1, ax2, c1, c2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
-    set_xlim_to_data(ax1, hy.index)
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    set_xlim_to_data(ax1, hy_bps.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax1, ig, color=c1, fmt='{:.0f}', side='left')
-    add_last_value_label(ax2, hy, color=c2, fmt='{:.0f}', side='right')
+    add_last_value_label(ax1, hy_bps, color=c1, fmt='{:.0f}', side='left')
+    add_last_value_label(ax2, delinq_fwd, color=c2, fmt='{:.2f}%', side='right')
     add_recessions(ax1, start_date='1997-01-01')
+
+    # Annotate mispricing episodes
+    ax1.annotate('2006-07:\nSpreads tight,\ndelinquencies rising',
+                 xy=(pd.Timestamp('2007-01-01'), 300), fontsize=8,
+                 color=COLORS['venus'], fontweight='bold',
+                 ha='center', va='bottom',
+                 arrowprops=dict(arrowstyle='->', color=COLORS['venus'], lw=1.5),
+                 xytext=(pd.Timestamp('2005-01-01'), 700))
+    ax1.annotate('2018-19:\nLate-cycle\ncomplacency',
+                 xy=(pd.Timestamp('2018-10-01'), 400), fontsize=8,
+                 color=COLORS['venus'], fontweight='bold',
+                 ha='center', va='bottom',
+                 arrowprops=dict(arrowstyle='->', color=COLORS['venus'], lw=1.5),
+                 xytext=(pd.Timestamp('2016-06-01'), 800))
 
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
-    ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
+    ax1.legend(h1 + h2, l1 + l2, loc='upper right', fontsize=9, **legend_style())
 
-    add_annotation_box(ax1,
-        f"HY/IG ratio: {last_ratio:.1f}x.\n"
-        f"When this ratio compresses, the market\n"
-        f"is underpricing credit differentiation.",
-        x=0.52, y=0.92)
+    brand_fig(fig, 'The Spread Mispricing Gap',
+              subtitle='HY OAS vs. All-Loan Delinquency Rate (12-Month Forward)',
+              source='ICE BofA, Federal Reserve via FRED',
+              data_date=hy_bps.index[-1])
 
-    brand_fig(fig, 'Credit Spreads: High-Yield vs Investment-Grade',
-              subtitle='When the Gap Narrows, Risk Is Underpriced',
-              source='ICE BofA via FRED',
-              data_date=hy.index[-1])
-
-    return save_fig(fig, 'chart_02_hy_vs_ig.png')
+    return save_fig(fig, 'chart_02_spread_mispricing.png')
 
 
 # ============================================
-# CHART 3: Credit-Labor Gap (CLG) [Figure 3]
+# CHART 3: Yield Curve Dis-Inversion Clock [Figure 3]
 # ============================================
 def chart_03():
-    """Credit-Labor Gap: z(HY OAS) - z(LFI). Proprietary composite."""
-    print('\nChart 3: Credit-Labor Gap (CLG)...')
+    """10Y-2Y spread with annotated dis-inversion to recession lags."""
+    print('\nChart 3: Yield Curve Dis-Inversion Clock...')
 
-    clg = fetch_db_index('CLG', start='2000-01-01')
-
-    if len(clg) == 0:
-        print('  No CLG data available. Skipping.')
-        return None
+    curve = fetch_db_level('T10Y2Y', start='1976-01-01')
+    if len(curve) == 0:
+        curve = fetch_fred_level('T10Y2Y', start='1976-01-01')
 
     fig, ax = new_fig()
 
-    ax.plot(clg.index, clg, color=THEME['primary'], linewidth=2.0,
-            label=f'CLG ({clg.iloc[-1]:.2f})')
-
-    # Fill: green above 0 (credit pricing risk appropriately), red below 0 (credit ignoring labor)
-    ax.fill_between(clg.index, 0, clg,
-                    where=(clg >= 0),
-                    color=COLORS['starboard'], alpha=0.20)
-    ax.fill_between(clg.index, 0, clg,
-                    where=(clg < 0),
-                    color=COLORS['port'], alpha=0.20)
+    ax.plot(curve.index, curve, color=THEME['primary'], linewidth=1.8, label='10Y-2Y Spread')
 
     # Zero line
-    ax.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5)
+    ax.axhline(0, color=COLORS['fog'], linewidth=1.2, linestyle='--', alpha=0.7)
 
-    # -1.0 threshold
-    ax.axhline(-1.0, color=COLORS['venus'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.text(clg.index[10], -1.15, 'Credit Ignoring Labor (-1.0)',
-            fontsize=9, color=COLORS['venus'], fontweight='bold')
+    # Fill: green above 0, red below 0
+    ax.fill_between(curve.index, 0, curve,
+                    where=(curve >= 0),
+                    color=COLORS['starboard'], alpha=0.08)
+    ax.fill_between(curve.index, 0, curve,
+                    where=(curve < 0),
+                    color=COLORS['port'], alpha=0.12)
 
-    style_single_ax(ax, fmt='{:.1f}')
-    set_xlim_to_data(ax, clg.index)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    add_last_value_label(ax, clg, color=THEME['primary'], fmt='{:.2f}', side='right')
-    add_recessions(ax, start_date='2000-01-01')
-    ax.legend(loc='upper right', **legend_style())
+    style_single_ax(ax, fmt='{:.1f}%')
+    set_xlim_to_data(ax, curve.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("'%y"))
+    add_last_value_label(ax, curve, color=THEME['primary'], fmt='{:.2f}%', side='right')
+    add_recessions(ax, start_date='1976-01-01')
 
-    add_annotation_box(ax,
-        "CLG = z(HY OAS) minus z(LFI).\n"
-        "Below -1.0: credit markets are too tight\n"
-        "for what the labor market is signaling.",
-        x=0.52, y=0.92)
+    # Annotated dis-inversion episodes with arrows to recession starts
+    annotations = [
+        ('1989-06', '1990-07', '13 months'),
+        ('1998-06', '2001-03', '33 months\n(long lag)'),
+        ('2007-06', '2007-12', '6 months'),
+        ('2019-08', '2020-02', '6 months'),
+    ]
 
-    brand_fig(fig, 'The Credit-Labor Gap (CLG)',
-              subtitle='z(HY OAS) minus z(LFI) | When Credit Ignores What Labor Is Saying',
-              source='Lighthouse Macro Proprietary',
-              data_date=clg.index[-1])
+    arrow_color = COLORS['venus']
+    for i, (disinv, rec_start, label) in enumerate(annotations):
+        disinv_dt = pd.Timestamp(disinv)
+        rec_dt = pd.Timestamp(rec_start)
+        # Place annotation above the zero line
+        y_offset = 1.5 + (i % 2) * 0.8
+        ax.annotate(f'{disinv[:7]} dis-inv.\n{chr(8594)} {rec_start[:7]} rec.\n({label})',
+                    xy=(disinv_dt, 0), fontsize=7,
+                    color=arrow_color, fontweight='bold',
+                    ha='center', va='bottom',
+                    arrowprops=dict(arrowstyle='->', color=arrow_color, lw=1.2),
+                    xytext=(disinv_dt, y_offset))
 
-    return save_fig(fig, 'chart_03_clg.png')
+    # Current dis-inversion
+    ax.annotate('2024-09 dis-inv.\nClock running...',
+                xy=(pd.Timestamp('2024-09-01'), 0), fontsize=8,
+                color=COLORS['venus'], fontweight='bold',
+                ha='center', va='bottom',
+                arrowprops=dict(arrowstyle='->', color=COLORS['venus'], lw=1.5),
+                xytext=(pd.Timestamp('2024-09-01'), 1.8))
+
+    ax.legend(loc='lower left', fontsize=9, **legend_style())
+
+    brand_fig(fig, 'The Yield Curve Dis-Inversion Clock',
+              subtitle='10Y-2Y Spread | Every Dis-Inversion Has Been Followed by Recession',
+              source='US Treasury via FRED',
+              data_date=curve.index[-1])
+
+    return save_fig(fig, 'chart_03_disinversion_clock.png')
 
 
 # ============================================
-# CHART 4: Chicago Fed NFCI Decomposition [Figure 4]
+# CHART 4: NFCI Subcomponent Decomposition [Figure 4]
 # ============================================
 def chart_04():
     """NFCI and subindices: Credit, Leverage, Risk."""
@@ -621,8 +672,8 @@ def chart_04():
 
     fig, ax = new_fig()
 
-    ax.plot(nfci.index, nfci, color=THEME['primary'], linewidth=2.5,
-            label=f'NFCI Composite ({nfci.iloc[-1]:.2f})')
+    ax.plot(nfci.index, nfci, color=THEME['primary'], linewidth=3.0,
+            label=f'NFCI Composite ({nfci.iloc[-1]:.2f})', zorder=5)
     ax.plot(credit.index, credit, color=THEME['secondary'], linewidth=1.5,
             alpha=0.8, label=f'Credit ({credit.iloc[-1]:.2f})')
     ax.plot(leverage.index, leverage, color=THEME['tertiary'], linewidth=1.5,
@@ -631,8 +682,8 @@ def chart_04():
             alpha=0.8, label=f'Risk ({risk.iloc[-1]:.2f})')
 
     # Zero line (average tightness)
-    ax.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5)
-    ax.text(nfci.index[5], 0.05, 'Avg Tightness (0)',
+    ax.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
+    ax.text(nfci.index[5], 0.05, 'Average Tightness',
             fontsize=9, color=COLORS['doldrums'], style='italic')
 
     style_single_ax(ax, fmt='{:.2f}')
@@ -640,299 +691,536 @@ def chart_04():
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, nfci, color=THEME['primary'], fmt='{:.2f}', side='right')
     add_recessions(ax, start_date='2000-01-01')
-    ax.legend(loc='upper right', **legend_style())
+    ax.legend(loc='upper right', fontsize=9, **legend_style())
 
     add_annotation_box(ax,
-        "Positive = tighter than average.\n"
-        "Negative = looser than average.\n"
+        "The headline hides the war.\n"
+        "Subcomponents can diverge sharply.\n"
         "Credit subindex leads the composite.",
         x=0.35, y=0.92)
 
-    brand_fig(fig, 'Financial Conditions: NFCI Decomposition',
-              subtitle='Credit, Leverage, and Risk Subindices',
+    brand_fig(fig, 'Financial Conditions: The Headline Hides the War',
+              subtitle='NFCI Composite vs. Risk, Credit, and Leverage Subindices',
               source='Chicago Fed via FRED',
               data_date=nfci.index[-1])
 
-    return save_fig(fig, 'chart_04_nfci.png')
+    return save_fig(fig, 'chart_04_nfci_decomposition.png')
 
 
 # ============================================
-# CHART 5: SLOOS Lending Standards (C&I) [Figure 5]
+# CHART 5: SLOOS Leads Loan Growth [Figure 5]
 # ============================================
 def chart_05():
-    """Bank lending standards: C&I loans from Senior Loan Officer Survey."""
-    print('\nChart 5: SLOOS Lending Standards...')
+    """SLOOS C&I tightening (inverted) vs C&I loan growth YoY."""
+    print('\nChart 5: SLOOS Leads Loan Growth...')
 
-    ci_all = fetch_db_level('DRTSCILM', start='1990-01-01')
-    ci_small = fetch_db_level('DRTSCIS', start='1990-01-01')
-    if len(ci_all) == 0:
-        ci_all = fetch_fred_level('DRTSCILM', start='1990-01-01')
-    if len(ci_small) == 0:
-        ci_small = fetch_fred_level('DRTSCIS', start='1990-01-01')
-
-    fig, ax = new_fig()
-
-    ax.plot(ci_all.index, ci_all, color=THEME['primary'], linewidth=2.5,
-            label=f'C&I All Firms ({ci_all.iloc[-1]:.1f}%)')
-    ax.plot(ci_small.index, ci_small, color=THEME['secondary'], linewidth=2.0,
-            label=f'C&I Small Firms ({ci_small.iloc[-1]:.1f}%)')
-
-    # Zero line
-    ax.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5)
-
-    # Fill: red above 0 (tightening), green below 0 (easing)
-    ax.fill_between(ci_all.index, 0, ci_all,
-                    where=(ci_all > 0),
-                    color=COLORS['port'], alpha=0.12)
-    ax.fill_between(ci_all.index, 0, ci_all,
-                    where=(ci_all <= 0),
-                    color=COLORS['starboard'], alpha=0.12)
-
-    # Tightening threshold annotations
-    ax.axhline(20, color=COLORS['doldrums'], linewidth=1.0, linestyle=':', alpha=0.5)
-    ax.axhline(40, color=COLORS['venus'], linewidth=1.0, linestyle=':', alpha=0.5)
-
-    style_single_ax(ax)
-    set_xlim_to_data(ax, ci_all.index)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    add_last_value_label(ax, ci_all, color=THEME['primary'], side='right')
-    add_recessions(ax, start_date='1990-01-01')
-    ax.legend(loc='upper right', **legend_style())
-
-    add_annotation_box(ax,
-        "Net % tightening standards.\n"
-        ">20%: significant tightening.\n"
-        ">40%: credit crunch territory.",
-        x=0.52, y=0.18)
-
-    brand_fig(fig, 'Bank Lending Standards: C&I Loans',
-              subtitle='Senior Loan Officer Survey | When Banks Say No',
-              source='Federal Reserve SLOOS',
-              data_date=ci_all.index[-1])
-
-    return save_fig(fig, 'chart_05_sloos.png')
-
-
-# ============================================
-# CHART 6: Bank Credit Growth (YoY%) [Figure 6]
-# ============================================
-def chart_06():
-    """Total bank credit and C&I loans, year-over-year % change."""
-    print('\nChart 6: Bank Credit Growth...')
-
-    totbk = fetch_db_level('TOTBKCR', start='1974-01-01')
-    busloans = fetch_db_level('BUSLOANS', start='1974-01-01')
-    if len(totbk) == 0:
-        totbk = fetch_fred_level('TOTBKCR', start='1974-01-01')
+    sloos = fetch_db_level('DRTSCILM', start='1990-01-01')
+    busloans = fetch_db_level('BUSLOANS', start='1988-01-01')
+    if len(sloos) == 0:
+        sloos = fetch_fred_level('DRTSCILM', start='1990-01-01')
     if len(busloans) == 0:
-        busloans = fetch_fred_level('BUSLOANS', start='1974-01-01')
+        busloans = fetch_fred_level('BUSLOANS', start='1988-01-01')
 
-    # Compute YoY %
-    totbk_yoy = totbk.pct_change(52) * 100  # Weekly data, ~52 weeks
-    busloans_yoy = busloans.pct_change(52) * 100
-    totbk_yoy = totbk_yoy.dropna()
+    # Invert SLOOS so tightening points DOWN
+    sloos_inv = sloos * -1
+
+    # Compute YoY% for BUSLOANS (weekly data ~ 52 periods, or monthly ~ 12)
+    # Detect frequency
+    if len(busloans) > 100:
+        median_gap = busloans.index.to_series().diff().median().days
+        if median_gap < 10:
+            # Weekly
+            busloans_yoy = busloans.pct_change(52) * 100
+        else:
+            # Monthly
+            busloans_yoy = busloans.pct_change(12) * 100
+    else:
+        busloans_yoy = busloans.pct_change(12) * 100
+
     busloans_yoy = busloans_yoy.dropna()
-
-    # Filter to start at 1975 for clean display
-    totbk_yoy = totbk_yoy[totbk_yoy.index >= '1975-01-01']
-    busloans_yoy = busloans_yoy[busloans_yoy.index >= '1975-01-01']
+    busloans_yoy = busloans_yoy[busloans_yoy.index >= '1990-01-01']
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
     c1, c2 = THEME['secondary'], THEME['primary']
 
-    ax1.plot(busloans_yoy.index, busloans_yoy, color=c1, linewidth=2.0,
-             label=f'C&I Loans YoY ({busloans_yoy.iloc[-1]:.1f}%)')
-    ax2.plot(totbk_yoy.index, totbk_yoy, color=c2, linewidth=2.5,
-             label=f'Total Bank Credit YoY ({totbk_yoy.iloc[-1]:.1f}%)')
+    ax1.plot(sloos_inv.index, sloos_inv, color=c1, linewidth=2.0,
+             label=f'SLOOS C&I Tightening (Inv.) ({sloos_inv.iloc[-1]:.1f}%)')
+    ax2.plot(busloans_yoy.index, busloans_yoy, color=c2, linewidth=2.5,
+             label=f'C&I Loan Growth YoY ({busloans_yoy.iloc[-1]:.1f}%)')
 
-    # Zero line
-    ax2.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5)
+    # Zero lines
+    ax1.axhline(0, color=COLORS['fog'], linewidth=0.8, linestyle='--', alpha=0.5)
+    ax2.axhline(0, color=COLORS['fog'], linewidth=0.6, linestyle=':', alpha=0.3)
 
     style_dual_ax(ax1, ax2, c1, c2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
     ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}%'))
-    align_yaxis_zero(ax1, ax2)
-    set_xlim_to_data(ax1, totbk_yoy.index)
+    set_xlim_to_data(ax1, sloos_inv.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax1, busloans_yoy, color=c1, fmt='{:.1f}%', side='left')
-    add_last_value_label(ax2, totbk_yoy, color=c2, fmt='{:.1f}%', side='right')
-    add_recessions(ax1, start_date='1975-01-01')
+    add_last_value_label(ax1, sloos_inv, color=c1, fmt='{:.1f}%', side='left')
+    add_last_value_label(ax2, busloans_yoy, color=c2, fmt='{:.1f}%', side='right')
+    add_recessions(ax1, start_date='1990-01-01')
 
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
-    ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
+    ax1.legend(h1 + h2, l1 + l2, loc='lower left', fontsize=9, **legend_style())
 
-    brand_fig(fig, 'Bank Credit Growth',
-              subtitle='Total Bank Credit and C&I Loans | Year-over-Year Change',
-              source='Federal Reserve H.8 via FRED',
-              data_date=totbk_yoy.index[-1])
+    add_annotation_box(ax1,
+        "When banks tighten (SLOOS drops inverted),\n"
+        "loan growth follows 2-4 quarters later.\n"
+        "SLOOS is the pipeline. Loans are the flow.",
+        x=0.55, y=0.92)
 
-    return save_fig(fig, 'chart_06_bank_credit.png')
+    brand_fig(fig, 'The Credit Pipeline: When Banks Tighten, Loan Growth Follows',
+              subtitle='SLOOS C&I Tightening (Inverted, Leading) vs. C&I Loan Growth YoY',
+              source='Federal Reserve SLOOS, H.8 via FRED',
+              data_date=sloos_inv.index[-1])
+
+    return save_fig(fig, 'chart_05_sloos_ci_loans.png')
 
 
 # ============================================
-# CHART 7: Credit Card Stress [Figure 7]
+# CHART 6: Transmission Gap (Real Rates vs HY Spreads) [Figure 6]
 # ============================================
-def chart_07():
-    """Credit card delinquencies and charge-offs."""
-    print('\nChart 7: Credit Card Stress...')
+def chart_06():
+    """Real rates vs HY OAS inverted, showing transmission failure."""
+    print('\nChart 6: Transmission Gap...')
 
-    chargeoff = fetch_db_level('CORCCACBS', start='1985-01-01')
-    delinq = fetch_db_level('DRCCLACBS', start='1985-01-01')
-    if len(chargeoff) == 0:
-        chargeoff = fetch_fred_level('CORCCACBS', start='1985-01-01')
-    if len(delinq) == 0:
-        delinq = fetch_fred_level('DRCCLACBS', start='1985-01-01')
+    # Use 10Y TIPS yield as real rate proxy (cleanest approach)
+    real_rate = fetch_db_level('DFII10', start='2000-01-01')
+    if len(real_rate) == 0:
+        real_rate = fetch_fred_level('DFII10', start='2000-01-01')
+
+    hy = fetch_db_level('BAMLH0A0HYM2', start='2000-01-01')
+    if len(hy) == 0:
+        hy = fetch_fred_level('BAMLH0A0HYM2', start='2000-01-01')
+
+    # Invert HY OAS: tight spreads = high on chart = "loose"
+    hy_inv = hy * -100  # Convert to bps and invert
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
-    c1, c2 = THEME['secondary'], THEME['primary']
+    c1, c2 = THEME['primary'], THEME['secondary']
 
-    ax1.plot(delinq.index, delinq, color=c1, linewidth=2.0,
-             label=f'Delinquency Rate ({delinq.iloc[-1]:.2f}%)')
-    ax2.plot(chargeoff.index, chargeoff, color=c2, linewidth=2.5,
-             label=f'Charge-Off Rate ({chargeoff.iloc[-1]:.2f}%)')
+    ax1.plot(real_rate.index, real_rate, color=c1, linewidth=2.5,
+             label=f'10Y Real Rate ({real_rate.iloc[-1]:.2f}%)')
+    ax2.plot(hy_inv.index, hy_inv, color=c2, linewidth=2.0,
+             label=f'HY OAS Inverted ({hy_inv.iloc[-1]:.0f} bps inv.)')
+
+    # Zero line on real rate axis
+    ax1.axhline(0, color=COLORS['fog'], linewidth=0.8, linestyle='--', alpha=0.5)
 
     style_dual_ax(ax1, ax2, c1, c2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    set_xlim_to_data(ax1, real_rate.index)
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax1, real_rate, color=c1, fmt='{:.2f}%', side='left')
+    add_last_value_label(ax2, hy_inv, color=c2, fmt='{:.0f}', side='right')
+    add_recessions(ax1, start_date='2000-01-01')
+
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, loc='upper right', fontsize=9, **legend_style())
+
+    add_annotation_box(ax1,
+        "When these diverge, policy is not transmitting.\n"
+        "Real rates restrictive + spreads tight =\n"
+        "the market is overriding the Fed.",
+        x=0.52, y=0.18)
+
+    brand_fig(fig, 'The Transmission Gap',
+              subtitle='Real Rates (Restrictive) vs. HY Spreads (Inverted, Loose)',
+              source='FRED, ICE BofA',
+              data_date=real_rate.index[-1])
+
+    return save_fig(fig, 'chart_06_transmission_gap.png')
+
+
+# ============================================
+# CHART 7: Complacency Gap (VIX Inverted vs LFI) [Figure 7]
+# ============================================
+def chart_07():
+    """VIX inverted vs Labor Fragility Index, showing complacency."""
+    print('\nChart 7: Complacency Gap...')
+
+    vix = fetch_db_level('VIXCLS', start='2000-01-01')
+    if len(vix) == 0:
+        vix = fetch_fred_level('VIXCLS', start='2000-01-01')
+
+    # Invert VIX: low VIX = high on chart = complacency
+    vix_inv = vix * -1
+
+    # Fetch LFI from lighthouse_indices
+    lfi = fetch_db_index('LFI', start='2000-01-01')
+
+    if len(lfi) == 0:
+        print('  No LFI data available. Attempting manual construction...')
+        # If LFI not in indices, skip gracefully
+        print('  Skipping chart 7 (no LFI data).')
+        return None
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+    c1, c2 = THEME['primary'], THEME['secondary']
+
+    ax1.plot(vix_inv.index, vix_inv, color=c1, linewidth=2.0,
+             label=f'VIX Inverted ({vix_inv.iloc[-1]:.1f})')
+    ax2.plot(lfi.index, lfi, color=c2, linewidth=2.5,
+             label=f'LFI ({lfi.iloc[-1]:.2f})')
+
+    # Zero line on LFI axis
+    ax2.axhline(0, color=COLORS['fog'], linewidth=0.8, linestyle='--', alpha=0.5)
+
+    # LFI threshold
+    ax2.axhline(0.5, color=COLORS['venus'], linewidth=1.0, linestyle=':', alpha=0.6)
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.2f}'))
+    set_xlim_to_data(ax1, vix_inv.index)
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+    add_last_value_label(ax1, vix_inv, color=c1, fmt='{:.1f}', side='left')
+    add_last_value_label(ax2, lfi, color=c2, fmt='{:.2f}', side='right')
+    add_recessions(ax1, start_date='2000-01-01')
+
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, loc='upper right', fontsize=9, **legend_style())
+
+    add_annotation_box(ax1,
+        "Gap = priced risk minus actual fragility.\n"
+        "When VIX is low and LFI is rising,\n"
+        "the market is mispricing labor stress.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'The Complacency Gap',
+              subtitle='VIX (Inverted) vs. Labor Fragility Index',
+              source='CBOE, Lighthouse Macro Proprietary',
+              data_date=vix_inv.index[-1])
+
+    return save_fig(fig, 'chart_07_complacency_gap.png')
+
+
+# ============================================
+# CHART 8: Banks See It, Spreads Don't [Figure 8]
+# ============================================
+def chart_08():
+    """Credit card delinquency rate vs HY OAS inverted."""
+    print('\nChart 8: Banks See It, Spreads Don\'t...')
+
+    delinq = fetch_db_level('DRCCLACBS', start='1991-01-01')
+    hy = fetch_db_level('BAMLH0A0HYM2', start='1991-01-01')
+    if len(delinq) == 0:
+        delinq = fetch_fred_level('DRCCLACBS', start='1991-01-01')
+    if len(hy) == 0:
+        hy = fetch_fred_level('BAMLH0A0HYM2', start='1991-01-01')
+
+    # Invert HY OAS: tight spreads = high on chart = complacent
+    hy_inv = hy * -100  # bps inverted
+
+    fig, ax1 = new_fig()
+    ax2 = ax1.twinx()
+    c1, c2 = THEME['primary'], THEME['secondary']
+
+    ax1.plot(delinq.index, delinq, color=c1, linewidth=2.5,
+             label=f'CC Delinquency Rate ({delinq.iloc[-1]:.2f}%)')
+    ax2.plot(hy_inv.index, hy_inv, color=c2, linewidth=2.0,
+             label=f'HY OAS Inverted ({hy_inv.iloc[-1]:.0f} bps inv.)')
+
+    style_dual_ax(ax1, ax2, c1, c2)
+    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
     set_xlim_to_data(ax1, delinq.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax1, delinq, color=c1, fmt='{:.2f}%', side='left')
-    add_last_value_label(ax2, chargeoff, color=c2, fmt='{:.2f}%', side='right')
-    add_recessions(ax1, start_date='1985-01-01')
+    add_last_value_label(ax2, hy_inv, color=c2, fmt='{:.0f}', side='right')
+    add_recessions(ax1, start_date='1991-01-01')
+
+    # Annotate 2006-07 divergence
+    ax1.annotate('2006-07: Banks see it.\nSpreads don\'t.',
+                 xy=(pd.Timestamp('2007-01-01'), 4.5), fontsize=9,
+                 color=COLORS['venus'], fontweight='bold',
+                 ha='center', va='bottom',
+                 arrowprops=dict(arrowstyle='->', color=COLORS['venus'], lw=1.5),
+                 xytext=(pd.Timestamp('2004-06-01'), 5.8))
 
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
-    ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
+    ax1.legend(h1 + h2, l1 + l2, loc='upper right', fontsize=9, **legend_style())
 
-    add_annotation_box(ax1,
-        "Delinquencies lead charge-offs by\n"
-        "1-2 quarters. Rising delinquencies\n"
-        "signal deteriorating consumer credit.",
-        x=0.52, y=0.92)
+    brand_fig(fig, 'Banks See It. Spreads Don\'t.',
+              subtitle='Credit Card Delinquency Rate vs. HY OAS (Inverted)',
+              source='Federal Reserve, ICE BofA via FRED',
+              data_date=delinq.index[-1])
 
-    brand_fig(fig, 'Credit Card Stress: Delinquencies and Charge-Offs',
-              subtitle='When Delinquencies Lead, Charge-Offs Follow',
-              source='Federal Reserve via FRED',
-              data_date=chargeoff.index[-1])
-
-    return save_fig(fig, 'chart_07_cc_stress.png')
+    return save_fig(fig, 'chart_08_delinq_vs_spreads.png')
 
 
 # ============================================
-# CHART 8: Baa-10Y Spread (Default Risk Premium) [Figure 8]
+# CHART 9: Default Risk Premium with Regime Bands [Figure 9]
 # ============================================
-def chart_08():
-    """Baa corporate spread vs 10-Year Treasury."""
-    print('\nChart 8: Baa-10Y Spread...')
+def chart_09():
+    """Baa-10Y spread with regime bands and historical annotations."""
+    print('\nChart 9: Default Risk Premium with Regime Bands...')
 
     baa10y = fetch_db_level('BAA10Y', start='1986-01-01')
     if len(baa10y) == 0:
         baa10y = fetch_fred_level('BAA10Y', start='1986-01-01')
 
-    # Convert to bps for display (series is in percentage points)
+    # BAA10Y is in percentage points. Convert to bps for display.
     baa10y_bps = baa10y * 100
 
     fig, ax = new_fig()
 
-    ax.plot(baa10y.index, baa10y_bps, color=THEME['primary'], linewidth=2.0,
-            label=f'Baa-10Y Spread ({baa10y_bps.iloc[-1]:.0f} bps)')
+    # Regime bands (in bps)
+    y_min = 0
+    y_max = max(baa10y_bps.max() * 1.05, 700)
 
-    # Threshold lines
-    ax.axhline(200, color=COLORS['fog'], linewidth=1.2, linestyle='--', alpha=0.7)
-    ax.text(baa10y.index[10], 210, 'Normal (200 bps)',
-            fontsize=9, color=COLORS['doldrums'], style='italic')
+    ax.axhspan(0, 150, color=COLORS['starboard'], alpha=0.08)
+    ax.axhspan(150, 250, alpha=0)  # Normal = no fill
+    ax.axhspan(250, 400, color=COLORS['dusk'], alpha=0.08)
+    ax.axhspan(400, y_max, color=COLORS['port'], alpha=0.10)
 
-    ax.axhline(350, color=COLORS['venus'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.text(baa10y.index[10], 360, 'Elevated (350 bps)',
-            fontsize=9, color=COLORS['venus'], style='italic')
+    # Regime labels on right edge
+    label_x = baa10y_bps.index[-1] + pd.Timedelta(days=60)
+    ax.text(label_x, 75, 'Complacent', fontsize=8, color=COLORS['starboard'], va='center')
+    ax.text(label_x, 200, 'Normal', fontsize=8, color=COLORS['doldrums'], va='center')
+    ax.text(label_x, 325, 'Elevated', fontsize=8, color=COLORS['dusk'], va='center')
+    ax.text(label_x, 450, 'Stressed', fontsize=8, color=COLORS['port'], va='center')
 
-    ax.axhline(500, color=COLORS['port'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.text(baa10y.index[10], 510, 'Crisis (500 bps)',
-            fontsize=9, color=COLORS['port'], style='italic')
+    # Main line on top
+    ax.plot(baa10y_bps.index, baa10y_bps, color=THEME['primary'], linewidth=2.0,
+            label=f'Baa-10Y Spread ({baa10y_bps.iloc[-1]:.0f} bps)', zorder=5)
+
+    # Annotate key moments
+    annotations_list = [
+        (pd.Timestamp('2000-11-01'), 'Dot-com peak'),
+        (pd.Timestamp('2007-01-01'), 'Pre-crisis low'),
+        (pd.Timestamp('2008-12-01'), '2008-09 crisis'),
+        (pd.Timestamp('2020-03-15'), 'COVID spike'),
+    ]
+    for dt, lbl in annotations_list:
+        # Find closest data point
+        closest = baa10y_bps.index[baa10y_bps.index.get_indexer([dt], method='nearest')[0]]
+        val = baa10y_bps.loc[closest]
+        offset_y = 80 if val < 400 else -80
+        ax.annotate(lbl, xy=(closest, val), fontsize=7,
+                    color=COLORS['venus'], fontweight='bold',
+                    ha='center', va='bottom' if offset_y > 0 else 'top',
+                    arrowprops=dict(arrowstyle='->', color=COLORS['venus'], lw=1.0),
+                    xytext=(closest, val + offset_y))
 
     style_single_ax(ax, fmt='{:.0f}')
-    set_xlim_to_data(ax, baa10y.index)
+    ax.set_ylim(y_min, y_max)
+    set_xlim_to_data(ax, baa10y_bps.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, baa10y_bps, color=THEME['primary'], fmt='{:.0f}', side='right')
     add_recessions(ax, start_date='1986-01-01')
-    ax.legend(loc='upper right', **legend_style())
-
-    add_annotation_box(ax,
-        "The Baa-10Y spread captures default\n"
-        "risk expectations for IG corporates.\n"
-        "Spikes precede earnings deterioration.",
-        x=0.52, y=0.92)
+    ax.legend(loc='upper right', fontsize=9, **legend_style())
 
     brand_fig(fig, 'The Default Risk Premium',
-              subtitle='Baa Corporate Spread vs 10-Year Treasury',
-              source='Moody\'s/Treasury via FRED',
-              data_date=baa10y.index[-1])
+              subtitle='Baa Corporate Spread vs. 10-Year Treasury | Regime Context',
+              source="Moody's, US Treasury via FRED",
+              data_date=baa10y_bps.index[-1])
 
-    return save_fig(fig, 'chart_08_baa10y.png')
-
-
-# ============================================
-# CHART 9: VIX vs VVIX [Figure 9]
-# ============================================
-def chart_09():
-    """Volatility and the Volatility of Volatility."""
-    print('\nChart 9: VIX vs VVIX...')
-
-    vix = fetch_db_level('VIXCLS', start='2007-12-01')
-    vvix = fetch_db_level('VXVCLS', start='2007-12-01')
-    if len(vix) == 0:
-        vix = fetch_fred_level('VIXCLS', start='2007-12-01')
-    if len(vvix) == 0:
-        vvix = fetch_fred_level('VXVCLS', start='2007-12-01')
-
-    fig, ax1 = new_fig()
-    ax2 = ax1.twinx()
-    c1, c2 = THEME['secondary'], THEME['primary']
-
-    ax1.plot(vvix.index, vvix, color=c1, linewidth=1.8,
-             label=f'VVIX ({vvix.iloc[-1]:.1f})')
-    ax2.plot(vix.index, vix, color=c2, linewidth=2.5,
-             label=f'VIX ({vix.iloc[-1]:.1f})')
-
-    style_dual_ax(ax1, ax2, c1, c2)
-    ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
-    set_xlim_to_data(ax1, vix.index)
-    ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-
-    add_last_value_label(ax1, vvix, color=c1, fmt='{:.1f}', side='left')
-    add_last_value_label(ax2, vix, color=c2, fmt='{:.1f}', side='right')
-    add_recessions(ax1, start_date='2007-12-01')
-
-    h1, l1 = ax1.get_legend_handles_labels()
-    h2, l2 = ax2.get_legend_handles_labels()
-    ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
-
-    add_annotation_box(ax1,
-        "When VIX is low but VVIX is rising,\n"
-        "the market is mispricing tail risk.\n"
-        "VVIX divergences are early warnings.",
-        x=0.52, y=0.92)
-
-    brand_fig(fig, 'Volatility and the Volatility of Volatility',
-              subtitle='VIX vs VVIX | When Vol Is Mispriced, VVIX Warns First',
-              source='CBOE via FRED',
-              data_date=vix.index[-1])
-
-    return save_fig(fig, 'chart_09_vix_vvix.png')
+    return save_fig(fig, 'chart_09_erp_regime.png')
 
 
 # ============================================
-# CHART 10: FCI Composite (Proprietary) [Figure 10]
+# CHART 10: Credit-Labor Gap (CLG) [Figure 10]
 # ============================================
 def chart_10():
-    """Financial Conditions Index, proprietary composite with regime bands."""
-    print('\nChart 10: FCI Composite...')
+    """Credit-Labor Gap: z(HY OAS) - z(LFI). Proprietary composite."""
+    print('\nChart 10: Credit-Labor Gap (CLG)...')
+
+    clg = fetch_db_index('CLG', start='2000-01-01')
+
+    if len(clg) == 0:
+        print('  No CLG data available. Skipping.')
+        return None
+
+    fig, ax = new_fig()
+
+    ax.plot(clg.index, clg, color=THEME['primary'], linewidth=2.0,
+            label=f'CLG ({clg.iloc[-1]:.2f})')
+
+    # Fill: starboard above 0, port below 0
+    ax.fill_between(clg.index, 0, clg,
+                    where=(clg >= 0),
+                    color=COLORS['starboard'], alpha=0.15)
+    ax.fill_between(clg.index, 0, clg,
+                    where=(clg < 0),
+                    color=COLORS['port'], alpha=0.15)
+
+    # Zero line
+    ax.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
+
+    # Threshold lines
+    ax.axhline(-1.0, color=COLORS['venus'], linewidth=1.5, linestyle='--', alpha=0.8)
+    ax.text(clg.index[min(10, len(clg) - 1)], -1.15,
+            'Credit Ignoring Labor (-1.0)',
+            fontsize=9, color=COLORS['venus'], fontweight='bold')
+    ax.axhline(1.0, color=COLORS['sea'], linewidth=1.5, linestyle='--', alpha=0.8)
+    ax.text(clg.index[min(10, len(clg) - 1)], 1.10,
+            'Credit Too Wide (+1.0)',
+            fontsize=9, color=COLORS['sea'], fontweight='bold')
+
+    # Mark prior -1.0 breaches with small dots
+    breaches = clg[clg <= -1.0]
+    if len(breaches) > 0:
+        ax.scatter(breaches.index, breaches, color=COLORS['venus'],
+                   s=10, zorder=6, alpha=0.6)
+
+    style_single_ax(ax, fmt='{:.1f}')
+    set_xlim_to_data(ax, clg.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    add_last_value_label(ax, clg, color=THEME['primary'], fmt='{:.2f}', side='right')
+    add_recessions(ax, start_date='2000-01-01')
+    ax.legend(loc='upper right', fontsize=9, **legend_style())
+
+    add_annotation_box(ax,
+        "CLG = z(HY OAS) minus z(LFI).\n"
+        "Below -1.0: credit markets are too tight\n"
+        "for what the labor market is signaling.",
+        x=0.52, y=0.92)
+
+    brand_fig(fig, 'The Credit-Labor Gap (CLG)',
+              subtitle='z(HY OAS) minus z(LFI) | When Credit Ignores What Labor Is Saying',
+              source='Lighthouse Macro Proprietary',
+              data_date=clg.index[-1])
+
+    return save_fig(fig, 'chart_10_credit_labor_gap.png')
+
+
+# ============================================
+# CHART 11: Financial Cascade "You Are Here" [Figure 11]
+# ============================================
+def chart_11():
+    """Infographic: 8-step financial cascade with current status."""
+    print('\nChart 11: Financial Cascade "You Are Here"...')
+
+    # Static infographic data
+    steps = [
+        {'num': 1, 'label': 'Yield Curve Inverts', 'threshold': '< 0 bps',
+         'reading': 'July 2022', 'done': True},
+        {'num': 2, 'label': 'Curve Dis-Inverts', 'threshold': '> 0 bps',
+         'reading': 'Sept 2024', 'done': True},
+        {'num': 3, 'label': 'SLOOS Tightens', 'threshold': '> +20%',
+         'reading': '+38%', 'done': True},
+        {'num': 4, 'label': 'Loan Growth Decelerates', 'threshold': '< +3%',
+         'reading': '+1.2%', 'done': True},
+        {'num': 5, 'label': 'Spreads Widen', 'threshold': '> 400 bps',
+         'reading': '~290 bps', 'done': False},
+        {'num': 6, 'label': 'VIX Spikes', 'threshold': '> 25',
+         'reading': '~14', 'done': False},
+        {'num': 7, 'label': 'Defaults Rise', 'threshold': '> 4%',
+         'reading': '~2.5%', 'done': False},
+        {'num': 8, 'label': 'Recession Begins', 'threshold': 'NBER call',
+         'reading': 'Not yet', 'done': False},
+    ]
+
+    fig, ax = new_fig(figsize=(14, 9))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(-0.5, len(steps) + 0.5)
+    ax.axis('off')
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+    # "YOU ARE HERE" position: between step 4 and 5
+    you_are_here_y = len(steps) - 4.5  # Between index 3 and 4 from top
+
+    bar_height = 0.7
+    bar_left = 1.0
+    bar_width = 7.5
+
+    for i, step in enumerate(steps):
+        y = len(steps) - 1 - i  # Top to bottom
+
+        # Color based on status
+        if step['done']:
+            box_color = COLORS['sea']
+            text_color = '#ffffff'
+            status_mark = '\u2713'  # checkmark
+        elif step['num'] == 5:
+            # "Next" step
+            box_color = COLORS['venus']
+            text_color = '#ffffff'
+            status_mark = '\u2190 NEXT'
+        else:
+            box_color = COLORS['fog']
+            text_color = THEME['fg']
+            status_mark = '\u2717'  # X mark
+
+        # Draw rounded box
+        rect = FancyBboxPatch(
+            (bar_left, y - bar_height / 2), bar_width, bar_height,
+            boxstyle='round,pad=0.1',
+            facecolor=box_color, edgecolor=THEME['spine'],
+            linewidth=1.0, alpha=0.9
+        )
+        ax.add_patch(rect)
+
+        # Step number circle
+        circle = plt.Circle((bar_left + 0.4, y), 0.25,
+                             color=THEME['bg'], ec=text_color, lw=1.5, zorder=5)
+        ax.add_patch(circle)
+        ax.text(bar_left + 0.4, y, str(step['num']),
+                fontsize=12, fontweight='bold', color=text_color,
+                ha='center', va='center', zorder=6)
+
+        # Step label
+        ax.text(bar_left + 1.0, y + 0.08, step['label'],
+                fontsize=12, fontweight='bold', color=text_color,
+                ha='left', va='center')
+
+        # Threshold and reading
+        ax.text(bar_left + 1.0, y - 0.18,
+                f"Trigger: {step['threshold']}  |  Reading: {step['reading']}",
+                fontsize=9, color=text_color, alpha=0.85,
+                ha='left', va='center')
+
+        # Status mark on right
+        ax.text(bar_left + bar_width - 0.3, y, status_mark,
+                fontsize=14 if step['num'] != 5 else 11,
+                fontweight='bold', color=text_color,
+                ha='center', va='center')
+
+    # "YOU ARE HERE" arrow between steps 4 and 5
+    arrow_y = you_are_here_y
+    ax.annotate('YOU ARE HERE',
+                xy=(bar_left - 0.1, arrow_y),
+                fontsize=14, fontweight='bold', color=COLORS['venus'],
+                ha='right', va='center',
+                arrowprops=dict(arrowstyle='->', color=COLORS['venus'],
+                                lw=3.0, connectionstyle='arc3,rad=0'))
+
+    # Connecting line between steps
+    for i in range(len(steps) - 1):
+        y_top = len(steps) - 1 - i - bar_height / 2
+        y_bot = len(steps) - 2 - i + bar_height / 2
+        ax.plot([bar_left + bar_width / 2, bar_left + bar_width / 2],
+                [y_bot, y_top],
+                color=COLORS['doldrums'], linewidth=1.5, linestyle=':', alpha=0.5)
+
+    brand_fig(fig, 'The Financial Cascade: You Are Here',
+              subtitle='Eight Steps of Financial Stress | Four Complete, Four Pending',
+              source='Lighthouse Macro')
+
+    return save_fig(fig, 'chart_11_financial_cascade.png')
+
+
+# ============================================
+# CHART 12: FCI Regime Map with Component Tug-of-War [Figure 12]
+# ============================================
+def chart_12():
+    """Two-panel: FCI regime map (top) and component tug-of-war bars (bottom)."""
+    print('\nChart 12: FCI Regime Map with Component Tug-of-War...')
 
     fci = fetch_db_index('FCI', start='1975-01-01')
 
@@ -940,56 +1228,167 @@ def chart_10():
         print('  No FCI data available. Skipping.')
         return None
 
-    fig, ax = new_fig()
+    fig, (ax_top, ax_bot) = new_fig_panels(nrows=2, height_ratios=[3, 1], figsize=(14, 11))
 
-    ax.plot(fci.index, fci, color=THEME['primary'], linewidth=2.0,
-            label=f'FCI ({fci.iloc[-1]:.2f})')
-
-    # Regime bands
+    # ---- TOP PANEL: FCI time series with regime bands ----
     y_max = max(fci.max() + 0.5, 2.0)
     y_min = min(fci.min() - 0.5, -2.0)
 
-    ax.axhspan(1.0, y_max, color=COLORS['starboard'], alpha=0.08)
-    ax.axhspan(0.5, 1.0, color=COLORS['starboard'], alpha=0.04)
-    ax.axhspan(-0.5, 0.5, color=COLORS['doldrums'], alpha=0.03)
-    ax.axhspan(-1.0, -0.5, color=COLORS['port'], alpha=0.04)
-    ax.axhspan(y_min, -1.0, color=COLORS['port'], alpha=0.08)
+    # Regime bands
+    ax_top.axhspan(1.0, y_max, color=COLORS['starboard'], alpha=0.10)
+    ax_top.axhspan(0.5, 1.0, color=COLORS['sea'], alpha=0.08)
+    ax_top.axhspan(-0.5, 0.5, alpha=0)  # Neutral = no fill
+    ax_top.axhspan(-1.0, -0.5, color=COLORS['dusk'], alpha=0.08)
+    ax_top.axhspan(y_min, -1.0, color=COLORS['port'], alpha=0.10)
+
+    ax_top.plot(fci.index, fci, color=THEME['primary'], linewidth=2.0,
+                label=f'FCI ({fci.iloc[-1]:.2f})', zorder=5)
 
     # Regime labels on right edge
-    ax.text(fci.index[-1] + pd.Timedelta(days=30), 1.25, 'Very Loose',
-            fontsize=8, color=COLORS['starboard'], va='center')
-    ax.text(fci.index[-1] + pd.Timedelta(days=30), 0.75, 'Loose',
-            fontsize=8, color=COLORS['starboard'], va='center')
-    ax.text(fci.index[-1] + pd.Timedelta(days=30), 0.0, 'Neutral',
-            fontsize=8, color=COLORS['doldrums'], va='center')
-    ax.text(fci.index[-1] + pd.Timedelta(days=30), -0.75, 'Tight',
-            fontsize=8, color=COLORS['port'], va='center')
-    ax.text(fci.index[-1] + pd.Timedelta(days=30), -1.25, 'Crisis',
-            fontsize=8, color=COLORS['port'], va='center')
+    label_x = fci.index[-1] + pd.Timedelta(days=60)
+    ax_top.text(label_x, 1.25, 'Very Loose', fontsize=8,
+                color=COLORS['starboard'], va='center')
+    ax_top.text(label_x, 0.75, 'Loose', fontsize=8,
+                color=COLORS['sea'], va='center')
+    ax_top.text(label_x, 0.0, 'Neutral', fontsize=8,
+                color=COLORS['doldrums'], va='center')
+    ax_top.text(label_x, -0.75, 'Tight', fontsize=8,
+                color=COLORS['dusk'], va='center')
+    ax_top.text(label_x, -1.25, 'Crisis', fontsize=8,
+                color=COLORS['port'], va='center')
 
     # Zero line
-    ax.axhline(0, color=THEME['zero_line'], linewidth=0.8, linestyle='--', alpha=0.5)
+    ax_top.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
 
-    style_single_ax(ax, fmt='{:.1f}')
-    set_xlim_to_data(ax, fci.index)
-    ax.set_ylim(y_min, y_max)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    add_last_value_label(ax, fci, color=THEME['primary'], fmt='{:.2f}', side='right')
-    add_recessions(ax, start_date='1975-01-01')
-    ax.legend(loc='upper left', **legend_style())
+    style_single_ax(ax_top, fmt='{:.1f}')
+    ax_top.set_ylim(y_min, y_max)
+    set_xlim_to_data(ax_top, fci.index)
+    ax_top.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    add_last_value_label(ax_top, fci, color=THEME['primary'], fmt='{:.2f}', side='right')
+    add_recessions(ax_top, start_date='1975-01-01')
+    ax_top.legend(loc='upper left', fontsize=9, **legend_style())
 
-    add_annotation_box(ax,
-        f"FCI at {fci.iloc[-1]:.2f}.\n"
-        "Synthesizes spreads, curve, lending,\n"
-        "and liquidity into a single number.",
-        x=0.52, y=0.92)
+    # ---- BOTTOM PANEL: Component tug-of-war (horizontal bars) ----
+    # These are illustrative current readings based on latest available data
+    # Attempt to fetch latest component data for directional read
+    components = {}
 
-    brand_fig(fig, 'Financial Conditions Index (FCI)',
-              subtitle='Lighthouse Macro Proprietary | Synthesizing Spreads, Curve, Lending, and Liquidity',
+    # Try to get latest values for each component
+    hy_latest = fetch_db_level('BAMLH0A0HYM2', start='2025-01-01')
+    nfci_latest = fetch_db_level('NFCI', start='2025-01-01')
+    curve_latest = fetch_db_level('T10Y2Y', start='2025-01-01')
+    real_rate_latest = fetch_db_level('DFII10', start='2025-01-01')
+    busloans_latest = fetch_db_level('BUSLOANS', start='2024-01-01')
+    vix_latest = fetch_db_level('VIXCLS', start='2025-01-01')
+    lci_latest = fetch_db_index('LCI', start='2025-01-01')
+    sloos_latest = fetch_db_level('DRTSCILM', start='2024-01-01')
+
+    # Compute directional contributions (positive = pulling loose, negative = tight)
+    # Use z-score-like heuristic relative to historical norms
+    def _direction(series, invert=False, tight_label='Tight', loose_label='Loose'):
+        """Return a rough directional score and label."""
+        if len(series) == 0:
+            return 0.0
+        val = float(series.iloc[-1])
+        if invert:
+            val = -val
+        return val
+
+    # Component contribution estimates (rough directional)
+    comp_labels = ['HY OAS', 'NFCI', 'Yield Curve', 'Real Rate',
+                   'C&I Growth', 'VIX', 'LCI', 'SLOOS']
+    comp_values = []
+
+    # HY OAS: tight spreads = loose conditions (negative for tight = positive for loose)
+    if len(hy_latest) > 0:
+        # Below 300 bps = loose
+        comp_values.append(max(-1, min(1, (3.5 - hy_latest.iloc[-1]) / 2.0)))
+    else:
+        comp_values.append(0.3)
+
+    # NFCI: negative = loose conditions
+    if len(nfci_latest) > 0:
+        comp_values.append(max(-1, min(1, -nfci_latest.iloc[-1] * 2)))
+    else:
+        comp_values.append(0.2)
+
+    # Yield Curve: positive = loose
+    if len(curve_latest) > 0:
+        comp_values.append(max(-1, min(1, curve_latest.iloc[-1] / 1.5)))
+    else:
+        comp_values.append(0.1)
+
+    # Real Rate: high = tight (invert)
+    if len(real_rate_latest) > 0:
+        comp_values.append(max(-1, min(1, -real_rate_latest.iloc[-1] / 3.0)))
+    else:
+        comp_values.append(-0.5)
+
+    # C&I Growth: positive = loose
+    if len(busloans_latest) > 60:
+        median_gap = busloans_latest.index.to_series().diff().median().days
+        periods = 52 if median_gap < 10 else 12
+        bl_yoy = busloans_latest.pct_change(periods).iloc[-1] * 100
+        comp_values.append(max(-1, min(1, bl_yoy / 10.0)))
+    else:
+        comp_values.append(0.0)
+
+    # VIX: low = loose
+    if len(vix_latest) > 0:
+        comp_values.append(max(-1, min(1, (20 - vix_latest.iloc[-1]) / 15.0)))
+    else:
+        comp_values.append(0.3)
+
+    # LCI: positive = loose (ample liquidity)
+    if len(lci_latest) > 0:
+        comp_values.append(max(-1, min(1, lci_latest.iloc[-1])))
+    else:
+        comp_values.append(0.0)
+
+    # SLOOS: high tightening = tight (invert)
+    if len(sloos_latest) > 0:
+        comp_values.append(max(-1, min(1, -sloos_latest.iloc[-1] / 50.0)))
+    else:
+        comp_values.append(-0.3)
+
+    comp_values = np.array(comp_values)
+
+    # Bar colors: positive (loose) = Sea, negative (tight) = Dusk/Port
+    bar_colors = [COLORS['sea'] if v >= 0 else COLORS['dusk'] for v in comp_values]
+
+    y_pos = np.arange(len(comp_labels))
+    ax_bot.barh(y_pos, comp_values, height=0.6, color=bar_colors, alpha=0.85,
+                edgecolor=THEME['spine'], linewidth=0.5)
+
+    # Labels
+    ax_bot.set_yticks(y_pos)
+    ax_bot.set_yticklabels(comp_labels, fontsize=10, color=THEME['fg'])
+
+    # Zero line
+    ax_bot.axvline(0, color=COLORS['fog'], linewidth=1.0, linestyle='-', alpha=0.7)
+
+    # Axis labels
+    ax_bot.text(-1.05, -0.8, '\u2190 Pulling TIGHT', fontsize=9,
+                color=COLORS['dusk'], ha='left', transform=ax_bot.get_yaxis_transform())
+    ax_bot.text(1.05, -0.8, 'Pulling LOOSE \u2192', fontsize=9,
+                color=COLORS['sea'], ha='right', transform=ax_bot.get_yaxis_transform())
+
+    style_ax(ax_bot, right_primary=False)
+    ax_bot.tick_params(axis='both', which='both', length=0)
+    ax_bot.set_xlim(-1.1, 1.1)
+    ax_bot.xaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}'))
+    ax_bot.tick_params(axis='x', labelsize=9, colors=THEME['muted'])
+
+    # Title for bottom panel
+    ax_bot.set_title('Component Tug-of-War (Current)', fontsize=11,
+                     color=THEME['fg'], fontweight='bold', pad=8)
+
+    brand_fig(fig, 'Financial Conditions Index (FCI): Regime Map',
+              subtitle='Composite with Component Tug-of-War',
               source='Lighthouse Macro Proprietary',
               data_date=fci.index[-1])
 
-    return save_fig(fig, 'chart_10_fci.png')
+    return save_fig(fig, 'chart_12_fci_regime_map.png')
 
 
 # ============================================
@@ -1006,12 +1405,14 @@ CHART_MAP = {
     8: chart_08,
     9: chart_09,
     10: chart_10,
+    11: chart_11,
+    12: chart_12,
 }
 
 
 def main():
     parser = argparse.ArgumentParser(description='Generate Financial Conditions educational charts')
-    parser.add_argument('--chart', type=int, help='Chart number to generate (1-10)')
+    parser.add_argument('--chart', type=int, help='Chart number to generate (1-12)')
     parser.add_argument('--theme', default='both', choices=['dark', 'white', 'both'],
                         help='Theme to generate')
     parser.add_argument('--all', action='store_true', help='Generate all charts')

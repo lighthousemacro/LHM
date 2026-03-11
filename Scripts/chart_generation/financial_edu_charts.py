@@ -896,7 +896,7 @@ def chart_07():
         "When VVIX rises faster than VIX,\n"
         "dealers are hedging tail risk.\n"
         "The vol market sees something equity doesn't.",
-        x=0.50, y=0.92)
+        x=0.50, y=0.95)
 
     brand_fig(fig, 'The Vol Signal: VIX vs. VVIX',
               subtitle='Equity Implied Volatility vs. Vol-of-Vol | Tail Risk Detection',
@@ -1088,7 +1088,7 @@ def chart_10():
         "Rising ratio = market differentiating quality.\n"
         "When HY widens faster than IG, risk\n"
         "repricing is underway. Spikes precede crises.",
-        x=0.82, y=0.45)
+        x=0.50, y=0.95)
 
     brand_fig(fig, 'Credit Quality Differentiation',
               subtitle='HY OAS / IG OAS Ratio | When the Market Starts Discriminating',
@@ -1284,7 +1284,7 @@ def chart_12():
         "When all three converge above zero,\n"
         "financial stress is broad-based.\n"
         "Divergence = isolated, convergence = systemic.",
-        x=0.50, y=0.12)
+        x=0.50, y=0.95)
 
     brand_fig(fig, 'Financial Stress Convergence',
               subtitle='Three Public Stress Signals Normalized | Baa-10Y, NFCI, VIX',

@@ -299,85 +299,21 @@ def style_single_ax(ax, fmt='{:.1f}%'):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
 
 
-def _find_empty_corner(ax):
+def add_annotation_box(ax, text, x=0.50, y=0.15):
+    """Add takeaway annotation box at specified position.
+
+    Default is bottom-center which avoids data on most time series charts.
+    Each chart caller should pass x,y explicitly based on where the dead space is.
     """
-    Find the chart corner with the least data behind it.
-    Samples 4 candidate positions (top-left, top-right, bottom-left, bottom-right)
-    and picks the one with the fewest data points nearby.
-    Returns (x, y, ha, va) in axes coordinates.
-    """
-    candidates = [
-        (0.25, 0.88, 'center', 'top'),      # top-left
-        (0.75, 0.88, 'center', 'top'),      # top-right
-        (0.25, 0.18, 'center', 'bottom'),   # bottom-left
-        (0.75, 0.18, 'center', 'bottom'),   # bottom-right
-    ]
-
-    xlim = ax.get_xlim()
-    ylim = ax.get_ylim()
-    xrange = xlim[1] - xlim[0]
-    yrange = ylim[1] - ylim[0]
-
-    # Box covers roughly 40% width, 25% height
-    box_w = 0.40 * xrange
-    box_h = 0.25 * yrange
-
-    best = candidates[0]
-    best_count = float('inf')
-
-    for cx, cy, ha, va in candidates:
-        # Convert axes fraction to data coords
-        data_x = xlim[0] + cx * xrange
-        data_y = ylim[0] + cy * yrange
-
-        count = 0
-        for line in ax.get_lines():
-            xd = line.get_xdata()
-            yd = line.get_ydata()
-            if hasattr(xd, '__len__') and len(xd) > 0:
-                try:
-                    xd = np.asarray(xd, dtype=float)
-                    yd = np.asarray(yd, dtype=float)
-                except (ValueError, TypeError):
-                    # Date axes: convert to matplotlib float dates
-                    try:
-                        xd = mdates.date2num(xd)
-                        yd = np.asarray(yd, dtype=float)
-                        data_x_num = xlim[0] + cx * xrange
-                    except Exception:
-                        continue
-                mask = (
-                    (xd > data_x - box_w / 2) & (xd < data_x + box_w / 2) &
-                    (yd > data_y - box_h / 2) & (yd < data_y + box_h / 2)
-                )
-                count += int(np.sum(mask))
-
-        if count < best_count:
-            best_count = count
-            best = (cx, cy, ha, va)
-
-    return best
-
-
-def add_annotation_box(ax, text, x=None, y=None):
-    """Add takeaway annotation box, auto-placed in the emptiest corner."""
-    if x is None or y is None:
-        cx, cy, ha, va = _find_empty_corner(ax)
-        x = cx if x is None else x
-        y = cy if y is None else y
-    else:
-        ha, va = 'center', 'top'
-
     box_fc = '#2389BB'
-    box_alpha = 1.0
     txt_color = '#ffffff'
     ax.text(x, y, text, transform=ax.transAxes,
-            fontsize=11, fontweight='bold', color=txt_color, ha=ha, va=va,
+            fontsize=11, fontweight='bold', color=txt_color, ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
                       facecolor=box_fc, edgecolor='#00BBFF',
                       linewidth=2.0,
-                      alpha=box_alpha))
+                      alpha=1.0))
 
 
 def brand_fig(fig, title, subtitle=None, source=None, data_date=None):

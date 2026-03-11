@@ -44549,3 +44549,30 @@ MANUAL (copy from Desktop - accessible from phone via iCloud):
   6. ChatGPT         → paste into custom instructions
 
 ========================================
+[2026-03-11 05:15:00] ============================================================
+[2026-03-11 05:15:00] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-03-11 05:15:00] ============================================================
+[2026-03-11 05:15:00] GIT SYNC: Starting...
+[2026-03-11 05:15:01] GIT SYNC: Committed: Daily pipeline sync 2026-03-11 05:15
+[2026-03-11 05:15:01] GIT SYNC: Push failed: To https://github.com/BobSheehan23/LHM.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/BobSheehan23/LHM.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+[2026-03-11 05:15:01] CLOUD SYNC: Starting...
+[2026-03-11 05:15:01] CLOUD SYNC [iCloud]: Lighthouse_Master_20260311.db already exists, skipping.
+[2026-03-11 05:15:01] CLOUD SYNC [GDrive]: Lighthouse_Master_20260311.db already exists, skipping.
+[2026-03-11 05:15:01] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(22621): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(22620): error: unexpected end of file
+
+[2026-03-11 05:15:01] CLOUD SYNC [GDrive]: Synced Brand/
+[2026-03-11 05:15:01] CLOUD SYNC [Dropbox]: Lighthouse_Master_20260311.db already exists, skipping.
+[2026-03-11 05:15:01] ----------------------------------------
+[2026-03-11 05:15:01] SYNC SUMMARY:
+[2026-03-11 05:15:01]   GitHub: FAILED
+[2026-03-11 05:15:01]   Cloud: OK
+[2026-03-11 05:15:01] ============================================================

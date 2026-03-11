@@ -530,10 +530,10 @@ def chart_02():
     delinq_fwd = delinq.copy()
     delinq_fwd.index = delinq_fwd.index - pd.DateOffset(months=12)
 
-    # Filter to common date range starting 1997
-    start = '1997-01-01'
-    hy_bps = hy_bps[hy_bps.index >= start]
-    delinq_fwd = delinq_fwd[delinq_fwd.index >= start]
+    # Filter to common date range where both series have data
+    common_start = max(hy_bps.dropna().index.min(), delinq_fwd.dropna().index.min())
+    hy_bps = hy_bps[hy_bps.index >= common_start]
+    delinq_fwd = delinq_fwd[delinq_fwd.index >= common_start]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -743,6 +743,11 @@ def chart_05():
     busloans_yoy = busloans_yoy.dropna()
     busloans_yoy = busloans_yoy[busloans_yoy.index >= '1990-01-01']
 
+    # Start at first date where both series have data
+    common_start = max(sloos_inv.dropna().index.min(), busloans_yoy.dropna().index.min())
+    sloos_inv = sloos_inv[sloos_inv.index >= common_start]
+    busloans_yoy = busloans_yoy[busloans_yoy.index >= common_start]
+
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
     c1, c2 = THEME['secondary'], THEME['primary']
@@ -802,6 +807,11 @@ def chart_06():
 
     # Invert HY OAS: tight spreads = high on chart = "loose"
     hy_inv = hy * -100  # Convert to bps and invert
+
+    # Start at first date where both series have data
+    common_start = max(real_rate.dropna().index.min(), hy_inv.dropna().index.min())
+    real_rate = real_rate[real_rate.index >= common_start]
+    hy_inv = hy_inv[hy_inv.index >= common_start]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -863,8 +873,13 @@ def chart_07():
         return None
 
     # 21-day MA to smooth daily noise
-    vix_smooth = vix.rolling(21, min_periods=5).mean()
-    vvix_smooth = vvix.rolling(21, min_periods=5).mean()
+    vix_smooth = vix.rolling(21, min_periods=5).mean().dropna()
+    vvix_smooth = vvix.rolling(21, min_periods=5).mean().dropna()
+
+    # Start at first date where both smoothed series have data
+    common_start = max(vix_smooth.index.min(), vvix_smooth.index.min())
+    vix_smooth = vix_smooth[vix_smooth.index >= common_start]
+    vvix_smooth = vvix_smooth[vvix_smooth.index >= common_start]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -922,6 +937,11 @@ def chart_08():
 
     # Invert HY OAS: tight spreads = high on chart = complacent
     hy_inv = hy * -100  # bps inverted
+
+    # Start at first date where both series have data
+    common_start = max(delinq.dropna().index.min(), hy_inv.dropna().index.min())
+    delinq = delinq[delinq.index >= common_start]
+    hy_inv = hy_inv[hy_inv.index >= common_start]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()

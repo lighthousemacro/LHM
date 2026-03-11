@@ -367,6 +367,10 @@ def compute_lfi(df: pd.DataFrame) -> pd.Series:
     valid_mask = z_longterm.notna() | z_quits.notna() | hires_quits_ratio.notna()
     lfi = lfi.where(valid_mask)
 
+    # Smooth with 3-month (63 trading day) moving average to reduce noise
+    # Raw z-score composites are choppy at daily frequency
+    lfi = lfi.rolling(63, min_periods=21).mean()
+
     return lfi
 
 
@@ -445,6 +449,9 @@ def compute_clg(df: pd.DataFrame, lfi: pd.Series) -> pd.Series:
     z_lfi = compute_zscore(lfi, window=24)
 
     clg = z_hy_oas - z_lfi
+
+    # Smooth with 3-month (63 trading day) moving average to reduce noise
+    clg = clg.rolling(63, min_periods=21).mean()
 
     return clg
 

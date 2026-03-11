@@ -299,13 +299,80 @@ def style_single_ax(ax, fmt='{:.1f}%'):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+def _find_empty_corner(ax):
+    """
+    Find the chart corner with the least data behind it.
+    Samples 4 candidate positions (top-left, top-right, bottom-left, bottom-right)
+    and picks the one with the fewest data points nearby.
+    Returns (x, y, ha, va) in axes coordinates.
+    """
+    candidates = [
+        (0.25, 0.88, 'center', 'top'),      # top-left
+        (0.75, 0.88, 'center', 'top'),      # top-right
+        (0.25, 0.18, 'center', 'bottom'),   # bottom-left
+        (0.75, 0.18, 'center', 'bottom'),   # bottom-right
+    ]
+
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    xrange = xlim[1] - xlim[0]
+    yrange = ylim[1] - ylim[0]
+
+    # Box covers roughly 40% width, 25% height
+    box_w = 0.40 * xrange
+    box_h = 0.25 * yrange
+
+    best = candidates[0]
+    best_count = float('inf')
+
+    for cx, cy, ha, va in candidates:
+        # Convert axes fraction to data coords
+        data_x = xlim[0] + cx * xrange
+        data_y = ylim[0] + cy * yrange
+
+        count = 0
+        for line in ax.get_lines():
+            xd = line.get_xdata()
+            yd = line.get_ydata()
+            if hasattr(xd, '__len__') and len(xd) > 0:
+                try:
+                    xd = np.asarray(xd, dtype=float)
+                    yd = np.asarray(yd, dtype=float)
+                except (ValueError, TypeError):
+                    # Date axes: convert to matplotlib float dates
+                    try:
+                        xd = mdates.date2num(xd)
+                        yd = np.asarray(yd, dtype=float)
+                        data_x_num = xlim[0] + cx * xrange
+                    except Exception:
+                        continue
+                mask = (
+                    (xd > data_x - box_w / 2) & (xd < data_x + box_w / 2) &
+                    (yd > data_y - box_h / 2) & (yd < data_y + box_h / 2)
+                )
+                count += int(np.sum(mask))
+
+        if count < best_count:
+            best_count = count
+            best = (cx, cy, ha, va)
+
+    return best
+
+
+def add_annotation_box(ax, text, x=None, y=None):
+    """Add takeaway annotation box, auto-placed in the emptiest corner."""
+    if x is None or y is None:
+        cx, cy, ha, va = _find_empty_corner(ax)
+        x = cx if x is None else x
+        y = cy if y is None else y
+    else:
+        ha, va = 'center', 'top'
+
     box_fc = '#2389BB'
     box_alpha = 1.0
     txt_color = '#ffffff'
     ax.text(x, y, text, transform=ax.transAxes,
-            fontsize=11, fontweight='bold', color=txt_color, ha='center', va='top',
+            fontsize=11, fontweight='bold', color=txt_color, ha=ha, va=va,
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
                       facecolor=box_fc, edgecolor='#00BBFF',
@@ -496,7 +563,7 @@ def chart_01():
         f"Current: {last_val:.0f} bps ({pctile:.0f}th percentile)\n"
         f"20-year rolling distribution context.\n"
         f"Percentile tells you where we stand in history.",
-        x=0.52, y=0.92)
+        )
 
     brand_fig(fig, 'High-Yield Credit Spreads',
               subtitle='ICE BofA HY OAS | Percentile Distribution (20-Year Rolling)',
@@ -697,7 +764,7 @@ def chart_04():
         "The headline hides the war.\n"
         "Subcomponents can diverge sharply.\n"
         "Credit subindex leads the composite.",
-        x=0.35, y=0.92)
+        )
 
     brand_fig(fig, 'Financial Conditions: The Headline Hides the War',
               subtitle='NFCI Composite vs. Risk, Credit, and Leverage Subindices',
@@ -771,7 +838,7 @@ def chart_05():
         "When banks tighten (SLOOS drops inverted),\n"
         "loan growth follows 2-4 quarters later.\n"
         "SLOOS is the pipeline. Loans are the flow.",
-        x=0.55, y=0.92)
+        )
 
     brand_fig(fig, 'The Credit Pipeline: When Banks Tighten, Loan Growth Follows',
               subtitle='SLOOS C&I Tightening (Inverted, Leading) vs. C&I Loan Growth YoY',
@@ -830,7 +897,7 @@ def chart_06():
         "When these diverge, policy is not transmitting.\n"
         "Real rates restrictive + spreads tight =\n"
         "the market is overriding the Fed.",
-        x=0.52, y=0.18)
+        )
 
     brand_fig(fig, 'The Transmission Gap',
               subtitle='Real Rates (Restrictive) vs. HY Spreads (Inverted, Loose)',
@@ -896,7 +963,7 @@ def chart_07():
         "Gap = priced risk minus actual fragility.\n"
         "When VIX is low and LFI is rising,\n"
         "the market is mispricing labor stress.",
-        x=0.52, y=0.92)
+        )
 
     brand_fig(fig, 'The Complacency Gap',
               subtitle='VIX (Inverted) vs. Labor Fragility Index',
@@ -1088,7 +1155,7 @@ def chart_10():
         "CLG = z(HY OAS) minus z(LFI).\n"
         "Below -1.0: credit markets are too tight\n"
         "for what the labor market is signaling.",
-        x=0.52, y=0.92)
+        )
 
     brand_fig(fig, 'The Credit-Labor Gap (CLG)',
               subtitle='z(HY OAS) minus z(LFI) | When Credit Ignores What Labor Is Saying',
@@ -1112,13 +1179,13 @@ def chart_11():
         {'num': 2, 'label': 'Curve Dis-Inverts', 'threshold': '> 0 bps',
          'reading': 'Sept 2024', 'done': True},
         {'num': 3, 'label': 'SLOOS Tightens', 'threshold': '> +20%',
-         'reading': 'Peak +38% (Q4 2025)', 'done': True},
+         'reading': 'Peak 50.8% (Q3 2023)', 'done': True},
         {'num': 4, 'label': 'Loan Growth Decelerates', 'threshold': '< +3%',
-         'reading': 'Trough +1.2% (late 2025)', 'done': True},
+         'reading': '+2.9% YoY (improving)', 'done': True},
         {'num': 5, 'label': 'Spreads Widen', 'threshold': '> 400 bps',
          'reading': '319 bps', 'done': False},
         {'num': 6, 'label': 'VIX Spikes', 'threshold': '> 25',
-         'reading': '25.5', 'done': True},
+         'reading': '29.5 (Mar 6)', 'done': True},
         {'num': 7, 'label': 'Defaults Rise', 'threshold': '> 4%',
          'reading': '~2.5%', 'done': False},
         {'num': 8, 'label': 'Recession Begins', 'threshold': 'NBER call',

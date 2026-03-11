@@ -499,7 +499,7 @@ def chart_01():
         f"Current: {last_val:.0f} bps ({pctile:.0f}th percentile)\n"
         f"20-year rolling distribution context.\n"
         f"Percentile tells you where we stand in history.",
-        )
+        x=0.82, y=0.45)
 
     brand_fig(fig, 'High-Yield Credit Spreads',
               subtitle='ICE BofA HY OAS | Percentile Distribution (20-Year Rolling)',
@@ -700,7 +700,7 @@ def chart_04():
         "The headline hides the war.\n"
         "Subcomponents can diverge sharply.\n"
         "Credit subindex leads the composite.",
-        )
+        x=0.55, y=0.12)
 
     brand_fig(fig, 'Financial Conditions: The Headline Hides the War',
               subtitle='NFCI Composite vs. Risk, Credit, and Leverage Subindices',
@@ -774,7 +774,7 @@ def chart_05():
         "When banks tighten (SLOOS drops inverted),\n"
         "loan growth follows 2-4 quarters later.\n"
         "SLOOS is the pipeline. Loans are the flow.",
-        )
+        x=0.82, y=0.12)
 
     brand_fig(fig, 'The Credit Pipeline: When Banks Tighten, Loan Growth Follows',
               subtitle='SLOOS C&I Tightening (Inverted, Leading) vs. C&I Loan Growth YoY',
@@ -833,7 +833,7 @@ def chart_06():
         "When these diverge, policy is not transmitting.\n"
         "Real rates restrictive + spreads tight =\n"
         "the market is overriding the Fed.",
-        )
+        x=0.50, y=0.12)
 
     brand_fig(fig, 'The Transmission Gap',
               subtitle='Real Rates (Restrictive) vs. HY Spreads (Inverted, Loose)',
@@ -854,11 +854,16 @@ def chart_07():
     if len(vix) == 0:
         vix = fetch_fred_level('VIXCLS', start='2000-01-01')
 
+    # Smooth VIX with 63-day (3-month) MA before inverting
+    vix = vix.rolling(63, min_periods=10).mean()
     # Invert VIX: low VIX = high on chart = complacency
     vix_inv = vix * -1
 
-    # Fetch LFI from lighthouse_indices
+    # Fetch LFI from lighthouse_indices (already 63-day smoothed in compute_indices)
+    # Additional 63-day chart smoothing to match VIX smoothing
     lfi = fetch_db_index('LFI', start='2000-01-01')
+    if len(lfi) > 0:
+        lfi = lfi.rolling(63, min_periods=10).mean()
 
     if len(lfi) == 0:
         print('  No LFI data available. Attempting manual construction...')
@@ -899,7 +904,7 @@ def chart_07():
         "Gap = priced risk minus actual fragility.\n"
         "When VIX is low and LFI is rising,\n"
         "the market is mispricing labor stress.",
-        )
+        x=0.50, y=0.12)
 
     brand_fig(fig, 'The Complacency Gap',
               subtitle='VIX (Inverted) vs. Labor Fragility Index',
@@ -1048,18 +1053,21 @@ def chart_10():
         print('  No CLG data available. Skipping.')
         return None
 
+    # Heavy smoothing: 6-month MA to get a clean signal line
+    clg = clg.rolling(126, min_periods=30).mean()
+
     fig, ax = new_fig()
 
     ax.plot(clg.index, clg, color=THEME['primary'], linewidth=2.0,
             label=f'CLG ({clg.iloc[-1]:.2f})')
 
-    # Fill: starboard above 0, port below 0
+    # Fill: starboard above 0, port below 0 (light fill)
     ax.fill_between(clg.index, 0, clg,
                     where=(clg >= 0),
-                    color=COLORS['starboard'], alpha=0.15)
+                    color=COLORS['starboard'], alpha=0.10)
     ax.fill_between(clg.index, 0, clg,
                     where=(clg < 0),
-                    color=COLORS['port'], alpha=0.15)
+                    color=COLORS['port'], alpha=0.10)
 
     # Zero line
     ax.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
@@ -1074,11 +1082,7 @@ def chart_10():
             'Credit Too Wide (+1.0)',
             fontsize=9, color=COLORS['sea'], fontweight='bold')
 
-    # Mark prior -1.0 breaches with small dots
-    breaches = clg[clg <= -1.0]
-    if len(breaches) > 0:
-        ax.scatter(breaches.index, breaches, color=COLORS['venus'],
-                   s=10, zorder=6, alpha=0.6)
+    # No scatter dots - they add noise on smoothed data
 
     style_single_ax(ax, fmt='{:.1f}')
     set_xlim_to_data(ax, clg.index)
@@ -1091,7 +1095,7 @@ def chart_10():
         "CLG = z(HY OAS) minus z(LFI).\n"
         "Below -1.0: credit markets are too tight\n"
         "for what the labor market is signaling.",
-        )
+        x=0.82, y=0.88)
 
     brand_fig(fig, 'The Credit-Labor Gap (CLG)',
               subtitle='z(HY OAS) minus z(LFI) | When Credit Ignores What Labor Is Saying',

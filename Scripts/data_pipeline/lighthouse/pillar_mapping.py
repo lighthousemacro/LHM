@@ -1316,6 +1316,42 @@ PILLAR_SERIES = {
         "BEA_GDP_Components_National_defense",
         "BEA_GDP_Components_Nondefense",
         "BEA_GDP_Components_State_and_local",
+
+        # ===== Mar 2026 TV Money Category Additions =====
+
+        # Treasury Bills
+        "DTB3", "DTB6", "DTB1YR", "TB3MS", "TB4WK",
+        "TREAS10Y",
+
+        # Breakevens Monthly
+        "T5YIEM", "T7YIEM", "T10YIEM", "T20YIEM", "T30YIEM",
+
+        # Term Premium ACM
+        "THREEFF1", "THREEFF2", "THREEFF5", "THREEFF10", "TERMT",
+
+        # Spread Monthly
+        "T10Y3MM",
+
+        # ICE Swap Rates
+        "ICERATES1100EUR10Y", "ICERATES1200EUR30Y", "ICERATES1200EUR5Y",
+        "ICERATES1100EUR20Y",
+        "ICERATES1100USD1Y", "ICERATES1100USD3Y", "ICERATES1100USD4Y",
+        "ICERATES1100USD5Y", "ICERATES1100USD30Y",
+
+        # TIPS / Inflation-Indexed Long-Term
+        "DLTIIT", "IRLTLT01USM156N",
+
+        # Treasury Auction Yields
+        "DTP10J28", "DTP5A23",
+
+        # Federal Debt
+        "FEDDT", "TREASURY",
+
+        # Fiscal (cross-map)
+        "FYFSGDA188S", "FYOINT", "W006RC1Q027SBEA",
+
+        # International Investment Position
+        "IIPUSNETIQ",
     ],
 
     # ------------------------------------------------------------------
@@ -1443,6 +1479,74 @@ PILLAR_SERIES = {
 
         # Interest Rates (FRED category)
         "RMMPCCFCNA",
+
+        # ===== Mar 2026 TV Money Category Additions =====
+
+        # Credit Spreads & Total Return Indices
+        "BAA10Y", "AAA10Y", "BAA10YM", "AAA10YM",
+        "BAAFFM", "AAAFF", "BAAFF",
+        "BAMLHYH0A0HYM2TRIV", "BAMLHYH0A1BBTRIV", "BAMLHYH0A2BTRIV",
+        "BAMLHYH0A3CMTRIV",
+        "BAMLCC0A0CMTRIV", "BAMLCC0A1AAATRIV", "BAMLCC0A2AATRIV",
+        "BAMLCC0A3ATRIV", "BAMLCC0A4BBBTRIV",
+        "BAMLHE00EHYITRIV",
+        "DAAA", "DPRIME", "PRIME",
+
+        # NFCI Subindices
+        "NFCICREDIT", "NFCILEVERAGE", "NFCIRISK",
+
+        # Additional Financial Stress
+        "STLFSI2", "STLFSI3",
+
+        # Bank Lending & Credit
+        "TOTBKCR", "TOTLL", "LOANS", "DPCREDIT",
+
+        # Loan Officer Survey Detail
+        "DRTSCIS", "DRSDCILM",
+
+        # Charge-Off Rates
+        "CORCCACBS", "CORCCT100S",
+
+        # Bank Balance Sheet Weekly (H.8 SBOG)
+        "DPSACBW027SBOG", "TASACBW027SBOG", "CASACBW027SBOG",
+        "CARACBW027SBOG", "TLAACBW027SBOG", "TLAACBM027SBOG",
+        "CCLACBW027SBOG", "TMBACBW027SBOG", "RREACBW027SBOG",
+        "RHEACBW027SBOG", "RHEACBM027SBOG", "ODSACBW027SBOG",
+        "SBCACBW027SBOG", "CASLCBW027SBOG", "CASACBQ158SBOG",
+        "CREACBM027NBOG", "RSBKCRNS",
+
+        # Commercial Paper & TED Spread
+        "DCPF3M", "DCPN3M", "RIFSPPNAAD90NB", "RIFSPPNA2P2D90NB",
+        "IR3TED01USM156N", "CPFF",
+
+        # Volatility Detail
+        "VXVCLS", "GVZCLS", "OVXCLS", "VXOCLS", "VXTYN",
+
+        # Corporate Debt & Balance Sheet
+        "BOGZ1FL073161113Q", "X10AICBBDBT", "QUSPAM770A",
+        "BOGZ1FL072052006Q",
+
+        # Consumer Debt Detail
+        "SUBLPDHMDENQ", "CDCABSHNO", "STDSL",
+
+        # Consumer Credit (cross-map from P5)
+        "REVOLSL", "NONREVSL",
+
+        # Money Market Funds
+        "MMMFFAQ027S", "MMMFTAQ027S",
+        "BOGZ1FL403069330A", "BOGZ1FL403069330Q",
+
+        # Banking Profile
+        "QBPBSTAS",
+
+        # Consumer Loans & MMF
+        "TOTLCA", "RMFSL",
+
+        # Confidence (cross-map)
+        "CSCICP03USM665S", "ABCOMP",
+
+        # Share Prices
+        "SPASTT01USM661N",
     ],
 
     # ------------------------------------------------------------------
@@ -1519,6 +1623,90 @@ PILLAR_SERIES = {
         "ATAIEALLGOB", "ATAIEALLGSRECRELEXFOB",
         "ALSREOB", "ALSRET100",
         "AOCLT100",
+
+        # ===== Mar 2026 TV Money Category Additions =====
+
+        # Fed Policy Rates & Targets
+        "EFFR", "IORB", "OBFR", "SOFR", "DFF",
+        "DFEDTARU", "DFEDTARL", "FEDTARMD", "FEDTARMDLR",
+        "IOER", "IORR",
+
+        # Funding Rate Details
+        "SOFRVOL", "SOFR30DAYAVG", "SOFRINDEX",
+        "EFFRVOL", "OBFRVOL",
+        "TGCRRATE", "SRFTSYD",
+
+        # Fed Balance Sheet (H.4.1 Weekly)
+        "WRESBAL",
+        "WLRRAL", "WRBWFRBL", "WLCFLL", "WLODLL",
+        "WLCFLPCL", "WLCFOCEL",
+        "WSHOSHO", "WSHOTSL", "WSHOBL", "WSHOMCB",
+        "WSHOFADSL", "WSHONBNL", "WSHONBIIL", "WSHOICL",
+        "WFCDA", "TREAST", "WORAL", "WDTGAL",
+        "WLTLECL", "WLAD", "WDFOL", "WGCAL",
+        "WCTCL", "WABPL", "WACL",
+        "WLCFLSCL", "WLCFLSECL", "WLDLCL", "WLDACLC",
+        "WLFN", "WLRRAFOIAL", "WRESCRT", "WSRLL",
+        "WUDSHO", "WUPSHO", "WAOAL",
+        "WCBLSA", "WCPCA", "WCPIL", "WCSL",
+        "WOSDRL", "WPCLC",
+
+        # H.4.1 Detail Series
+        "H41RESPPAAENWW", "H41RESPPAADHNWW", "H41RESPPAABNWW",
+        "H41RESPPAAC2HNWW", "H41RESPPAATAL2HNWW", "H41RESH4ENWW",
+        "RESPPANWW", "RESPPLLOPNWW",
+
+        # RRP/Repo Details
+        "RRPONTSYAWARD", "RRPONTTLD",
+        "RPONTSYD", "RPONTTLD", "RPONMBSD",
+        "WREPO", "REP15", "RREP15",
+
+        # Money Supply
+        "M1SL", "WM1NS", "WM2NS",
+        "M2V", "M1V", "M2REAL", "M1REAL", "M2MSL",
+        "BOGMBASE", "BOGMBASEW", "BOGMBBM",
+        "MBCURRCIR", "CURRCIR", "WCURCIR",
+        "CURRSL", "DEMDEPSL",
+        "AMBNS", "AMBSL", "MBST",
+        "REQRESNS", "WIMFSL", "SBASENS",
+        "WRMFSL",
+
+        # Swap Facility
+        "SWPT",
+
+        # Federal Debt (cross-map)
+        "FEDDT",
+
+        # Domestic Monetary Aggregates (World Bank / OECD)
+        "MDLM",
+        "DDDM01USA156NWDB", "DDSI02USA156NWDB", "DDDI06USA156NWDB",
+        "DDDM03USA156NWDB", "DDEM01USA156NWDB", "DDOM01USA644NWDB",
+
+        # Historical / NBER Money Series
+        "M14062USM027NNBR", "M13009USM156NNBR", "M1329AUSM193NNBR",
+        "M1490AUSM157SNBR", "M13002US35620M156NNBR", "A14187USA163NNBR",
+
+        # OECD Monetary Aggregates
+        "MABMM301USA657S", "MABMM301USM189S", "MANMM101USM189S",
+
+        # Money Velocity & Ratios
+        "MZMV", "MYAGM2USM052S",
+
+        # Discount Rate
+        "INTDSRUSM193N",
+
+        # Treasury Bonds Held by Banks
+        "GDTCBW",
+
+        # Household / Investment (cross-map)
+        "GPSAVE", "GPDIC1", "COMPOUT",
+        "RKNANPUSA666NRUG",
+
+        # Corporate Net Cash Flow
+        "CNCF",
+
+        # Households Total Financial Assets
+        "BOGZ1LM152010005Q",
     ],
 
     # ------------------------------------------------------------------

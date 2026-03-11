@@ -499,7 +499,7 @@ def chart_01():
         f"Current: {last_val:.0f} bps ({pctile:.0f}th percentile)\n"
         f"20-year rolling distribution context.\n"
         f"Percentile tells you where we stand in history.",
-        x=0.82, y=0.45)
+        x=0.82, y=0.57)
 
     brand_fig(fig, 'High-Yield Credit Spreads',
               subtitle='ICE BofA HY OAS | Percentile Distribution (20-Year Rolling)',
@@ -774,7 +774,7 @@ def chart_05():
         "When banks tighten (SLOOS drops inverted),\n"
         "loan growth follows 2-4 quarters later.\n"
         "SLOOS is the pipeline. Loans are the flow.",
-        x=0.82, y=0.12)
+        x=0.82, y=0.10)
 
     brand_fig(fig, 'The Credit Pipeline: When Banks Tighten, Loan Growth Follows',
               subtitle='SLOOS C&I Tightening (Inverted, Leading) vs. C&I Loan Growth YoY',

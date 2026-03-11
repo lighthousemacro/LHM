@@ -499,7 +499,7 @@ def chart_01():
         f"Current: {last_val:.0f} bps ({pctile:.0f}th percentile)\n"
         f"20-year rolling distribution context.\n"
         f"Percentile tells you where we stand in history.",
-        x=0.82, y=0.57)
+        x=0.65, y=0.75)
 
     brand_fig(fig, 'High-Yield Credit Spreads',
               subtitle='ICE BofA HY OAS | Percentile Distribution (20-Year Rolling)',
@@ -700,7 +700,7 @@ def chart_04():
         "The headline hides the war.\n"
         "Subcomponents can diverge sharply.\n"
         "Credit subindex leads the composite.",
-        x=0.55, y=0.12)
+        x=0.82, y=0.08)
 
     brand_fig(fig, 'Financial Conditions: The Headline Hides the War',
               subtitle='NFCI Composite vs. Risk, Credit, and Leverage Subindices',
@@ -774,7 +774,7 @@ def chart_05():
         "When banks tighten (SLOOS drops inverted),\n"
         "loan growth follows 2-4 quarters later.\n"
         "SLOOS is the pipeline. Loans are the flow.",
-        x=0.82, y=0.10)
+        x=0.50, y=0.92)
 
     brand_fig(fig, 'The Credit Pipeline: When Banks Tighten, Loan Growth Follows',
               subtitle='SLOOS C&I Tightening (Inverted, Leading) vs. C&I Loan Growth YoY',
@@ -833,7 +833,7 @@ def chart_06():
         "When these diverge, policy is not transmitting.\n"
         "Real rates restrictive + spreads tight =\n"
         "the market is overriding the Fed.",
-        x=0.50, y=0.12)
+        x=0.22, y=0.12)
 
     brand_fig(fig, 'The Transmission Gap',
               subtitle='Real Rates (Restrictive) vs. HY Spreads (Inverted, Loose)',
@@ -844,74 +844,66 @@ def chart_06():
 
 
 # ============================================
-# CHART 7: Complacency Gap (VIX Inverted vs LFI) [Figure 7]
+# CHART 7: VIX vs VVIX (Vol-of-Vol) [Figure 7]
 # ============================================
 def chart_07():
-    """VIX inverted vs Labor Fragility Index, showing complacency."""
-    print('\nChart 7: Complacency Gap...')
+    """VIX vs VVIX: when vol-of-vol diverges from VIX, tail hedging is underway."""
+    print('\nChart 7: VIX vs VVIX (Vol-of-Vol)...')
 
-    vix = fetch_db_level('VIXCLS', start='2000-01-01')
+    vix = fetch_db_level('VIXCLS', start='2007-01-01')
     if len(vix) == 0:
-        vix = fetch_fred_level('VIXCLS', start='2000-01-01')
+        vix = fetch_fred_level('VIXCLS', start='2007-01-01')
 
-    # Smooth VIX with 63-day (3-month) MA before inverting
-    vix = vix.rolling(63, min_periods=10).mean()
-    # Invert VIX: low VIX = high on chart = complacency
-    vix_inv = vix * -1
+    vvix = fetch_db_level('VXVCLS', start='2007-01-01')
+    if len(vvix) == 0:
+        vvix = fetch_fred_level('VXVCLS', start='2007-01-01')
 
-    # Fetch LFI from lighthouse_indices (already 63-day smoothed in compute_indices)
-    # Additional 63-day chart smoothing to match VIX smoothing
-    lfi = fetch_db_index('LFI', start='2000-01-01')
-    if len(lfi) > 0:
-        lfi = lfi.rolling(63, min_periods=10).mean()
-
-    if len(lfi) == 0:
-        print('  No LFI data available. Attempting manual construction...')
-        # If LFI not in indices, skip gracefully
-        print('  Skipping chart 7 (no LFI data).')
+    if len(vvix) == 0:
+        print('  No VVIX data. Skipping.')
         return None
+
+    # 21-day MA to smooth daily noise
+    vix_smooth = vix.rolling(21, min_periods=5).mean()
+    vvix_smooth = vvix.rolling(21, min_periods=5).mean()
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
     c1, c2 = THEME['primary'], THEME['secondary']
 
-    ax1.plot(vix_inv.index, vix_inv, color=c1, linewidth=2.0,
-             label=f'VIX Inverted ({vix_inv.iloc[-1]:.1f})')
-    ax2.plot(lfi.index, lfi, color=c2, linewidth=2.5,
-             label=f'LFI ({lfi.iloc[-1]:.2f})')
+    ax1.plot(vix_smooth.index, vix_smooth, color=c1, linewidth=2.0,
+             label=f'VIX 21d MA ({vix_smooth.iloc[-1]:.1f})')
+    ax2.plot(vvix_smooth.index, vvix_smooth, color=c2, linewidth=2.5,
+             label=f'VVIX 21d MA ({vvix_smooth.iloc[-1]:.1f})')
 
-    # Zero line on LFI axis
-    ax2.axhline(0, color=COLORS['fog'], linewidth=0.8, linestyle='--', alpha=0.5)
-
-    # LFI threshold
-    ax2.axhline(0.5, color=COLORS['venus'], linewidth=1.0, linestyle=':', alpha=0.6)
+    # VIX = 25 threshold
+    ax1.axhline(25, color=COLORS['venus'], linewidth=1.0, linestyle=':', alpha=0.6)
 
     style_dual_ax(ax1, ax2, c1, c2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
-    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.2f}'))
-    set_xlim_to_data(ax1, vix_inv.index)
+    ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.0f}'))
+    set_xlim_to_data(ax1, vix_smooth.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    add_last_value_label(ax1, vix_inv, color=c1, fmt='{:.1f}', side='left')
-    add_last_value_label(ax2, lfi, color=c2, fmt='{:.2f}', side='right')
-    add_recessions(ax1, start_date='2000-01-01')
+    add_last_value_label(ax1, vix_smooth, color=c1, fmt='{:.1f}', side='left')
+    add_last_value_label(ax2, vvix_smooth, color=c2, fmt='{:.1f}', side='right')
+    add_recessions(ax1, start_date='2007-01-01')
 
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
     ax1.legend(h1 + h2, l1 + l2, loc='upper right', fontsize=9, **legend_style())
 
     add_annotation_box(ax1,
-        "Gap = priced risk minus actual fragility.\n"
-        "When VIX is low and LFI is rising,\n"
-        "the market is mispricing labor stress.",
-        x=0.50, y=0.12)
+        "When VVIX rises faster than VIX,\n"
+        "dealers are hedging tail risk.\n"
+        "The vol market sees something equity doesn't.",
+        x=0.50, y=0.92)
 
-    brand_fig(fig, 'The Complacency Gap',
-              subtitle='VIX (Inverted) vs. Labor Fragility Index',
-              source='CBOE, Lighthouse Macro Proprietary',
-              data_date=vix_inv.index[-1])
+    brand_fig(fig, 'The Vol Signal: VIX vs. VVIX',
+              subtitle='Equity Implied Volatility vs. Vol-of-Vol | Tail Risk Detection',
+              source='CBOE via FRED',
+              data_date=vix_smooth.index[-1])
 
-    return save_fig(fig, 'chart_07_complacency_gap.png')
+    return save_fig(fig, 'chart_07_vix_vvix.png')
 
 
 # ============================================
@@ -1041,68 +1033,69 @@ def chart_09():
 
 
 # ============================================
-# CHART 10: Credit-Labor Gap (CLG) [Figure 10]
+# CHART 10: HY/IG Spread Ratio (Credit Quality Differentiation) [Figure 10]
 # ============================================
 def chart_10():
-    """Credit-Labor Gap: z(HY OAS) - z(LFI). Proprietary composite."""
-    print('\nChart 10: Credit-Labor Gap (CLG)...')
+    """HY/IG OAS ratio: when it rises, the market is differentiating credit quality."""
+    print('\nChart 10: HY/IG Spread Ratio...')
 
-    clg = fetch_db_index('CLG', start='2000-01-01')
+    hy = fetch_db_level('BAMLH0A0HYM2', start='1997-01-01')
+    if len(hy) == 0:
+        hy = fetch_fred_level('BAMLH0A0HYM2', start='1997-01-01')
 
-    if len(clg) == 0:
-        print('  No CLG data available. Skipping.')
-        return None
+    ig = fetch_db_level('BAMLC0A0CM', start='1997-01-01')
+    if len(ig) == 0:
+        ig = fetch_fred_level('BAMLC0A0CM', start='1997-01-01')
 
-    # Heavy smoothing: 6-month MA to get a clean signal line
-    clg = clg.rolling(126, min_periods=30).mean()
+    # Align dates
+    combined = pd.DataFrame({'hy': hy, 'ig': ig}).dropna()
+    ratio = combined['hy'] / combined['ig']
+
+    # 21-day MA for smoothing
+    ratio_smooth = ratio.rolling(21, min_periods=5).mean()
 
     fig, ax = new_fig()
 
-    ax.plot(clg.index, clg, color=THEME['primary'], linewidth=2.0,
-            label=f'CLG ({clg.iloc[-1]:.2f})')
+    ax.plot(ratio_smooth.index, ratio_smooth, color=THEME['primary'], linewidth=2.0,
+            label=f'HY/IG Ratio ({ratio_smooth.iloc[-1]:.1f}x)')
 
-    # Fill: starboard above 0, port below 0 (light fill)
-    ax.fill_between(clg.index, 0, clg,
-                    where=(clg >= 0),
-                    color=COLORS['starboard'], alpha=0.10)
-    ax.fill_between(clg.index, 0, clg,
-                    where=(clg < 0),
-                    color=COLORS['port'], alpha=0.10)
+    # Fill above/below median
+    median_val = ratio_smooth.median()
+    ax.axhline(median_val, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
+    ax.text(ratio_smooth.index[10], median_val + 0.15,
+            f'Median ({median_val:.1f}x)',
+            fontsize=9, color=COLORS['doldrums'])
 
-    # Zero line
-    ax.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
-
-    # Threshold lines
-    ax.axhline(-1.0, color=COLORS['venus'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.text(clg.index[min(10, len(clg) - 1)], -1.15,
-            'Credit Ignoring Labor (-1.0)',
+    # Stress threshold at 5x
+    ax.axhline(5.0, color=COLORS['venus'], linewidth=1.5, linestyle='--', alpha=0.8)
+    ax.text(ratio_smooth.index[10], 5.15,
+            'Stress Threshold (5.0x)',
             fontsize=9, color=COLORS['venus'], fontweight='bold')
-    ax.axhline(1.0, color=COLORS['sea'], linewidth=1.5, linestyle='--', alpha=0.8)
-    ax.text(clg.index[min(10, len(clg) - 1)], 1.10,
-            'Credit Too Wide (+1.0)',
-            fontsize=9, color=COLORS['sea'], fontweight='bold')
 
-    # No scatter dots - they add noise on smoothed data
+    # Fill: port above 5x
+    ax.fill_between(ratio_smooth.index, 5.0, ratio_smooth,
+                    where=(ratio_smooth >= 5.0),
+                    color=COLORS['port'], alpha=0.15)
 
-    style_single_ax(ax, fmt='{:.1f}')
-    set_xlim_to_data(ax, clg.index)
+    style_single_ax(ax, fmt='{:.1f}x')
+    set_xlim_to_data(ax, ratio_smooth.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    add_last_value_label(ax, clg, color=THEME['primary'], fmt='{:.2f}', side='right')
-    add_recessions(ax, start_date='2000-01-01')
+    add_last_value_label(ax, ratio_smooth, color=THEME['primary'], fmt='{:.1f}x', side='right')
+    add_recessions(ax, start_date='1997-01-01')
     ax.legend(loc='upper right', fontsize=9, **legend_style())
 
     add_annotation_box(ax,
-        "CLG = z(HY OAS) minus z(LFI).\n"
-        "Below -1.0: credit markets are too tight\n"
-        "for what the labor market is signaling.",
-        x=0.82, y=0.88)
+        "Rising ratio = market differentiating quality.\n"
+        "When HY widens faster than IG, risk\n"
+        "repricing is underway. Spikes precede crises.",
+        x=0.82, y=0.45)
 
-    brand_fig(fig, 'The Credit-Labor Gap (CLG)',
-              subtitle='z(HY OAS) minus z(LFI) | When Credit Ignores What Labor Is Saying',
-              source='Lighthouse Macro Proprietary',
-              data_date=clg.index[-1])
+    brand_fig(fig, 'Credit Quality Differentiation',
+              subtitle='HY OAS / IG OAS Ratio | When the Market Starts Discriminating',
+              source='ICE BofA via FRED',
+              data_date=ratio_smooth.index[-1])
 
-    return save_fig(fig, 'chart_10_credit_labor_gap.png')
+    return save_fig(fig, 'chart_10_hy_ig_ratio.png')
 
 
 # ============================================
@@ -1223,179 +1216,82 @@ def chart_11():
 
 
 # ============================================
-# CHART 12: FCI Regime Map with Component Tug-of-War [Figure 12]
+# CHART 12: Financial Stress Convergence (3 Public Signals) [Figure 12]
 # ============================================
 def chart_12():
-    """Two-panel: FCI regime map (top) and component tug-of-war bars (bottom)."""
-    print('\nChart 12: FCI Regime Map with Component Tug-of-War...')
+    """Three public stress signals normalized and overlaid: BAA-10Y, NFCI, VIX percentile."""
+    print('\nChart 12: Financial Stress Convergence...')
 
-    fci = fetch_db_index('FCI', start='1975-01-01')
+    # BAA-10Y corporate spread (bps)
+    baa10y = fetch_db_level('BAA10Y', start='1997-01-01')
+    if len(baa10y) == 0:
+        baa10y = fetch_fred_level('BAA10Y', start='1997-01-01')
 
-    if len(fci) == 0:
-        print('  No FCI data available. Skipping.')
-        return None
+    # NFCI
+    nfci = fetch_db_level('NFCI', start='1997-01-01')
+    if len(nfci) == 0:
+        nfci = fetch_fred_level('NFCI', start='1997-01-01')
 
-    fig, (ax_top, ax_bot) = new_fig_panels(nrows=2, height_ratios=[3, 1], figsize=(14, 11))
+    # VIX
+    vix = fetch_db_level('VIXCLS', start='1997-01-01')
+    if len(vix) == 0:
+        vix = fetch_fred_level('VIXCLS', start='1997-01-01')
 
-    # ---- TOP PANEL: FCI time series with regime bands ----
-    y_max = max(fci.max() + 0.5, 2.0)
-    y_min = min(fci.min() - 0.5, -2.0)
+    # Normalize all to z-scores (rolling 5-year window) for comparable scale
+    def rolling_z(s, window=1260):
+        m = s.rolling(window, min_periods=252).mean()
+        sd = s.rolling(window, min_periods=252).std()
+        sd = sd.replace(0, np.nan)
+        return ((s - m) / sd).rolling(63, min_periods=10).mean()
 
-    # Regime bands
-    ax_top.axhspan(1.0, y_max, color=COLORS['starboard'], alpha=0.10)
-    ax_top.axhspan(0.5, 1.0, color=COLORS['sea'], alpha=0.08)
-    ax_top.axhspan(-0.5, 0.5, alpha=0)  # Neutral = no fill
-    ax_top.axhspan(-1.0, -0.5, color=COLORS['dusk'], alpha=0.08)
-    ax_top.axhspan(y_min, -1.0, color=COLORS['port'], alpha=0.10)
+    baa_z = rolling_z(baa10y * 100)  # convert to bps first
+    nfci_z = rolling_z(nfci)
+    vix_z = rolling_z(vix)
 
-    ax_top.plot(fci.index, fci, color=THEME['primary'], linewidth=2.0,
-                label=f'FCI ({fci.iloc[-1]:.2f})', zorder=5)
+    # Trim to common start
+    start = '2000-01-01'
+    baa_z = baa_z[baa_z.index >= start]
+    nfci_z = nfci_z[nfci_z.index >= start]
+    vix_z = vix_z[vix_z.index >= start]
 
-    # Regime labels on right edge
-    label_x = fci.index[-1] + pd.Timedelta(days=60)
-    ax_top.text(label_x, 1.25, 'Very Loose', fontsize=8,
-                color=COLORS['starboard'], va='center')
-    ax_top.text(label_x, 0.75, 'Loose', fontsize=8,
-                color=COLORS['sea'], va='center')
-    ax_top.text(label_x, 0.0, 'Neutral', fontsize=8,
-                color=COLORS['doldrums'], va='center')
-    ax_top.text(label_x, -0.75, 'Tight', fontsize=8,
-                color=COLORS['dusk'], va='center')
-    ax_top.text(label_x, -1.25, 'Crisis', fontsize=8,
-                color=COLORS['port'], va='center')
+    fig, ax = new_fig()
 
-    # Zero line
-    ax_top.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
-
-    style_single_ax(ax_top, fmt='{:.1f}')
-    ax_top.set_ylim(y_min, y_max)
-    set_xlim_to_data(ax_top, fci.index)
-    ax_top.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    add_last_value_label(ax_top, fci, color=THEME['primary'], fmt='{:.2f}', side='right')
-    add_recessions(ax_top, start_date='1975-01-01')
-    ax_top.legend(loc='upper left', fontsize=9, **legend_style())
-
-    # ---- BOTTOM PANEL: Component tug-of-war (horizontal bars) ----
-    # These are illustrative current readings based on latest available data
-    # Attempt to fetch latest component data for directional read
-    components = {}
-
-    # Try to get latest values for each component
-    hy_latest = fetch_db_level('BAMLH0A0HYM2', start='2025-01-01')
-    nfci_latest = fetch_db_level('NFCI', start='2025-01-01')
-    curve_latest = fetch_db_level('T10Y2Y', start='2025-01-01')
-    real_rate_latest = fetch_db_level('DFII10', start='2025-01-01')
-    busloans_latest = fetch_db_level('BUSLOANS', start='2024-01-01')
-    vix_latest = fetch_db_level('VIXCLS', start='2025-01-01')
-    lci_latest = fetch_db_index('LCI', start='2025-01-01')
-    sloos_latest = fetch_db_level('DRTSCILM', start='2024-01-01')
-
-    # Compute directional contributions (positive = pulling loose, negative = tight)
-    # Use z-score-like heuristic relative to historical norms
-    def _direction(series, invert=False, tight_label='Tight', loose_label='Loose'):
-        """Return a rough directional score and label."""
-        if len(series) == 0:
-            return 0.0
-        val = float(series.iloc[-1])
-        if invert:
-            val = -val
-        return val
-
-    # Component contribution estimates (rough directional)
-    comp_labels = ['HY OAS', 'NFCI', 'Yield Curve', 'Real Rate',
-                   'C&I Growth', 'VIX', 'LCI', 'SLOOS']
-    comp_values = []
-
-    # HY OAS: tight spreads = loose conditions (negative for tight = positive for loose)
-    if len(hy_latest) > 0:
-        # Below 300 bps = loose
-        comp_values.append(max(-1, min(1, (3.5 - hy_latest.iloc[-1]) / 2.0)))
-    else:
-        comp_values.append(0.3)
-
-    # NFCI: negative = loose conditions
-    if len(nfci_latest) > 0:
-        comp_values.append(max(-1, min(1, -nfci_latest.iloc[-1] * 2)))
-    else:
-        comp_values.append(0.2)
-
-    # Yield Curve: positive = loose
-    if len(curve_latest) > 0:
-        comp_values.append(max(-1, min(1, curve_latest.iloc[-1] / 1.5)))
-    else:
-        comp_values.append(0.1)
-
-    # Real Rate: high = tight (invert)
-    if len(real_rate_latest) > 0:
-        comp_values.append(max(-1, min(1, -real_rate_latest.iloc[-1] / 3.0)))
-    else:
-        comp_values.append(-0.5)
-
-    # C&I Growth: positive = loose
-    if len(busloans_latest) > 60:
-        median_gap = busloans_latest.index.to_series().diff().median().days
-        periods = 52 if median_gap < 10 else 12
-        bl_yoy = busloans_latest.pct_change(periods).iloc[-1] * 100
-        comp_values.append(max(-1, min(1, bl_yoy / 10.0)))
-    else:
-        comp_values.append(0.0)
-
-    # VIX: low = loose
-    if len(vix_latest) > 0:
-        comp_values.append(max(-1, min(1, (20 - vix_latest.iloc[-1]) / 15.0)))
-    else:
-        comp_values.append(0.3)
-
-    # LCI: positive = loose (ample liquidity)
-    if len(lci_latest) > 0:
-        comp_values.append(max(-1, min(1, lci_latest.iloc[-1])))
-    else:
-        comp_values.append(0.0)
-
-    # SLOOS: high tightening = tight (invert)
-    if len(sloos_latest) > 0:
-        comp_values.append(max(-1, min(1, -sloos_latest.iloc[-1] / 50.0)))
-    else:
-        comp_values.append(-0.3)
-
-    comp_values = np.array(comp_values)
-
-    # Bar colors: positive (loose) = Sea, negative (tight) = Dusk/Port
-    bar_colors = [COLORS['sea'] if v >= 0 else COLORS['dusk'] for v in comp_values]
-
-    y_pos = np.arange(len(comp_labels))
-    ax_bot.barh(y_pos, comp_values, height=0.6, color=bar_colors, alpha=0.85,
-                edgecolor=THEME['spine'], linewidth=0.5)
-
-    # Labels
-    ax_bot.set_yticks(y_pos)
-    ax_bot.set_yticklabels(comp_labels, fontsize=10, color=THEME['fg'])
+    ax.plot(baa_z.index, baa_z, color=COLORS['ocean'], linewidth=2.0,
+            label=f'Baa-10Y Spread (z)', zorder=5)
+    ax.plot(nfci_z.index, nfci_z, color=COLORS['dusk'], linewidth=2.0,
+            label=f'NFCI (z)', zorder=4)
+    ax.plot(vix_z.index, vix_z, color=COLORS['sky'], linewidth=1.5,
+            label=f'VIX (z)', alpha=0.8, zorder=3)
 
     # Zero line
-    ax_bot.axvline(0, color=COLORS['fog'], linewidth=1.0, linestyle='-', alpha=0.7)
+    ax.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
 
-    # Axis labels
-    ax_bot.text(-1.05, -0.8, '\u2190 Pulling TIGHT', fontsize=9,
-                color=COLORS['dusk'], ha='left', transform=ax_bot.get_yaxis_transform())
-    ax_bot.text(1.05, -0.8, 'Pulling LOOSE \u2192', fontsize=9,
-                color=COLORS['sea'], ha='right', transform=ax_bot.get_yaxis_transform())
+    # Stress thresholds
+    ax.axhline(1.5, color=COLORS['venus'], linewidth=1.0, linestyle=':', alpha=0.6)
+    ax.text(baa_z.index[20], 1.6, 'Stress Zone (+1.5σ)',
+            fontsize=9, color=COLORS['venus'], fontweight='bold')
 
-    style_ax(ax_bot, right_primary=False)
-    ax_bot.tick_params(axis='both', which='both', length=0)
-    ax_bot.set_xlim(-1.1, 1.1)
-    ax_bot.xaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}'))
-    ax_bot.tick_params(axis='x', labelsize=9, colors=THEME['muted'])
+    style_single_ax(ax, fmt='{:.1f}σ')
+    set_xlim_to_data(ax, baa_z.index)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    add_recessions(ax, start_date='2000-01-01')
+    ax.legend(loc='upper left', fontsize=9, **legend_style())
 
-    # Title for bottom panel
-    ax_bot.set_title('Component Tug-of-War (Current)', fontsize=11,
-                     color=THEME['fg'], fontweight='bold', pad=8)
+    # Add last value pills for each
+    add_last_value_label(ax, baa_z, color=COLORS['ocean'], fmt='{:.1f}σ', side='right')
 
-    brand_fig(fig, 'Financial Conditions Index (FCI): Regime Map',
-              subtitle='Composite with Component Tug-of-War',
-              source='Lighthouse Macro Proprietary',
-              data_date=fci.index[-1])
+    add_annotation_box(ax,
+        "When all three converge above zero,\n"
+        "financial stress is broad-based.\n"
+        "Divergence = isolated, convergence = systemic.",
+        x=0.50, y=0.12)
 
-    return save_fig(fig, 'chart_12_fci_regime_map.png')
+    brand_fig(fig, 'Financial Stress Convergence',
+              subtitle='Three Public Stress Signals Normalized | Baa-10Y, NFCI, VIX',
+              source='Chicago Fed, CBOE, Moody\'s via FRED',
+              data_date=baa_z.index[-1])
+
+    return save_fig(fig, 'chart_12_stress_convergence.png')
 
 
 # ============================================

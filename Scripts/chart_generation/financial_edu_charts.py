@@ -1112,13 +1112,13 @@ def chart_11():
         {'num': 2, 'label': 'Curve Dis-Inverts', 'threshold': '> 0 bps',
          'reading': 'Sept 2024', 'done': True},
         {'num': 3, 'label': 'SLOOS Tightens', 'threshold': '> +20%',
-         'reading': '+38%', 'done': True},
+         'reading': 'Peak +38% (Q4 2025)', 'done': True},
         {'num': 4, 'label': 'Loan Growth Decelerates', 'threshold': '< +3%',
-         'reading': '+1.2%', 'done': True},
+         'reading': 'Trough +1.2% (late 2025)', 'done': True},
         {'num': 5, 'label': 'Spreads Widen', 'threshold': '> 400 bps',
-         'reading': '~290 bps', 'done': False},
+         'reading': '319 bps', 'done': False},
         {'num': 6, 'label': 'VIX Spikes', 'threshold': '> 25',
-         'reading': '~14', 'done': False},
+         'reading': '25.5', 'done': True},
         {'num': 7, 'label': 'Defaults Rise', 'threshold': '> 4%',
          'reading': '~2.5%', 'done': False},
         {'num': 8, 'label': 'Recession Begins', 'threshold': 'NBER call',
@@ -1209,7 +1209,7 @@ def chart_11():
                 color=COLORS['doldrums'], linewidth=1.5, linestyle=':', alpha=0.5)
 
     brand_fig(fig, 'The Financial Cascade: You Are Here',
-              subtitle='Eight Steps of Financial Stress | Four Complete, Four Pending',
+              subtitle='Eight Steps of Financial Stress | Five Complete, Three Pending',
               source='Lighthouse Macro')
 
     return save_fig(fig, 'chart_11_financial_cascade.png')

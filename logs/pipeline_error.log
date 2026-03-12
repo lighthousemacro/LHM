@@ -11135,3 +11135,174 @@ Crypto total: 427 series, 29,968 observations
 2026-03-12 06:14:16 [INFO]    UNI: 93 observations
 2026-03-12 06:14:18 [INFO]    CRV: 93 observations
 2026-03-12 06:14:20 [WARNING] Rate limited, waiting 60s...
+2026-03-12 06:15:20 [WARNING] Rate limited, waiting 60s...
+2026-03-12 06:16:23 [INFO]    LDO: 93 observations
+2026-03-12 06:16:23 [INFO]    RPL: 93 observations
+2026-03-12 06:16:25 [INFO]    LINK: 93 observations
+2026-03-12 06:16:27 [INFO]    GRT: 93 observations
+2026-03-12 06:16:29 [INFO]    MKR: 93 observations
+2026-03-12 06:16:33 [INFO] Fetching global crypto metrics...
+2026-03-12 06:16:33 [INFO] 
+Crypto total: 426 series, 29,979 observations
+2026-03-12 06:16:38 [INFO] Found 503 S&P 500 constituents
+2026-03-12 06:16:38 [INFO] Fetching prices for 503 tickers...
+2026-03-12 06:16:38 [INFO]    Batch 1/11: 50 tickers
+2026-03-12 06:16:43 [INFO]    Batch 2/11: 50 tickers
+2026-03-12 06:16:44 [ERROR] Failed to get ticker 'BG' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:44 [ERROR] Failed to get ticker 'BSX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:44 [ERROR] Failed to get ticker 'BR' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:44 [ERROR] $BR: possibly delisted; no timezone found
+2026-03-12 06:16:44 [ERROR] Failed to get ticker 'CF' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:44 [ERROR] $CF: possibly delisted; no timezone found
+2026-03-12 06:16:44 [ERROR] Failed to get ticker 'CHRW' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:44 [ERROR] $CHRW: possibly delisted; no timezone found
+2026-03-12 06:16:44 [ERROR] Failed to get ticker 'BKR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:44 [ERROR] $BKR: possibly delisted; no timezone found
+2026-03-12 06:16:44 [ERROR] 
+7 Failed downloads:
+2026-03-12 06:16:44 [ERROR] ['BG']: DNSError('Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-03-12 06:16:44 [ERROR] ['BSX']: DNSError('Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-03-12 06:16:44 [ERROR] ['CNC']: OperationalError('unable to open database file')
+2026-03-12 06:16:44 [ERROR] ['BR', 'CF', 'CHRW', 'BKR']: possibly delisted; no timezone found
+2026-03-12 06:16:46 [INFO]    Batch 3/11: 50 tickers
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'DECK' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $DECK: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'CIEN' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $CIEN: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'CFG' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $CFG: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'CME' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $CME: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'DDOG' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $DDOG: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'DVA' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $DVA: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'CMI' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $CMI: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'CPAY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $CPAY: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'FANG' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $FANG: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'DXCM' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $DXCM: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'COIN' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $COIN: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] Failed to get ticker 'CB' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:46 [ERROR] $CB: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:46 [ERROR] ['DECK', 'CIEN', 'CFG', 'CME', 'DDOG', 'DVA', 'CMI', 'CPAY', 'FANG', 'DXCM', 'COIN', 'CB']: possibly delisted; no timezone found
+2026-03-12 06:16:46 [ERROR] ['CINF', 'COO', 'KO', 'STZ', 'C', 'DVN', 'CVX', 'CRH', 'CTVA', 'DE', 'ED', 'CPRT', 'CSGP', 'DHR', 'DELL', 'DRI', 'CRWD', 'DAL', 'CSCO', 'CVS', 'CTSH', 'COP', 'CLX', 'CCI', 'CEG', 'CSX', 'CAG', 'CMG', 'CTAS', 'CI', 'CMCSA', 'GLW', 'CL', 'CMS', 'COST', 'CTRA', 'FIX', 'CHD']: OperationalError('unable to open database file')
+2026-03-12 06:16:47 [INFO]    Batch 4/11: 50 tickers
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'DTE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $DTE: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'DPZ' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $DPZ: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'DASH' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $DASH: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'FFIV' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $FFIV: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'EXR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $EXR: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'EPAM' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $EPAM: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'ETR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $ETR: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'ESS' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $ESS: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] Failed to get ticker 'EOG' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:47 [ERROR] $EOG: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:47 [ERROR] ['EBAY', 'EXE', 'EMR', 'DLR', 'EQIX', 'DHI', 'D', 'EQR', 'EXPD', 'FICO', 'ERIE', 'XOM', 'DG', 'EIX', 'EFX', 'EL', 'EA', 'FRT', 'FITB', 'FE', 'EXC', 'EVRG', 'DUK', 'ETN', 'EME', 'FAST', 'EW', 'ES', 'DLTR', 'DD', 'EXPE', 'ELV', 'EQT', 'ECL', 'FDS', 'FDX', 'FIS', 'FSLR', 'DOW', 'EG']: OperationalError('unable to open database file')
+2026-03-12 06:16:47 [ERROR] ['DTE', 'DPZ', 'DASH', 'FFIV', 'EXR', 'EPAM', 'ETR', 'ESS', 'EOG']: possibly delisted; no timezone found
+2026-03-12 06:16:47 [ERROR] ['DOV']: TypeError("'NoneType' object is not subscriptable")
+2026-03-12 06:16:48 [INFO]    Batch 5/11: 50 tickers
+2026-03-12 06:16:48 [ERROR] Failed to get ticker 'GNRC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:48 [ERROR] $GNRC: possibly delisted; no timezone found
+2026-03-12 06:16:48 [ERROR] Failed to get ticker 'GM' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:48 [ERROR] $GM: possibly delisted; no timezone found
+2026-03-12 06:16:48 [ERROR] Failed to get ticker 'DOC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:48 [ERROR] $DOC: possibly delisted; no timezone found
+2026-03-12 06:16:48 [ERROR] Failed to get ticker 'HD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:48 [ERROR] $HD: possibly delisted; no timezone found
+2026-03-12 06:16:48 [ERROR] Failed to get ticker 'INCY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:48 [ERROR] $INCY: possibly delisted; no timezone found
+2026-03-12 06:16:48 [ERROR] Failed to get ticker 'GPN' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:48 [ERROR] $GPN: possibly delisted; no timezone found
+2026-03-12 06:16:48 [ERROR] Failed to get ticker 'HSY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-12 06:16:48 [ERROR] $HSY: possibly delisted; no timezone found
+2026-03-12 06:16:48 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:48 [ERROR] ['GE', 'HLT', 'GILD', 'BEN', 'IEX', 'FISV', 'HUBB', 'GRMN', 'HSIC', 'HRL', 'HOLX', 'ITW', 'IDXX', 'FCX', 'GPC', 'HON', 'FOXA', 'HWM', 'F', 'HPE', 'FOX', 'HCA', 'HBAN', 'HPQ', 'IR', 'GD', 'HST', 'HUM', 'HAL', 'HIG', 'GL', 'IT', 'FTNT', 'FTV', 'HII', 'GS', 'IBM', 'HAS', 'GEN', 'GEV', 'GEHC', 'GDDY', 'GIS']: OperationalError('unable to open database file')
+2026-03-12 06:16:48 [ERROR] ['GNRC', 'GM', 'DOC', 'HD', 'INCY', 'GPN', 'HSY']: possibly delisted; no timezone found
+2026-03-12 06:16:49 [INFO]    Batch 6/11: 50 tickers
+2026-03-12 06:16:49 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:49 [ERROR] ['KIM', 'LDOS', 'JBHT', 'IQV', 'LEN', 'JKHY', 'PODD', 'INTC', 'KLAC', 'KMB', 'LOW', 'MPC', 'LYB', 'JBL', 'LIN', 'INVH', 'IRM', 'LYV', 'LMT', 'MRSH', 'KDP', 'LULU', 'KHC', 'ISRG', 'KR', 'JCI', 'ICE', 'LH', 'IP', 'MAR', 'KEY', 'LRCX', 'LHX', 'IBKR', 'LII', 'L', 'KEYS', 'MTB', 'JNJ', 'KMI', 'KKR', 'IVZ', 'LLY', 'LVS', 'KVUE', 'LW', 'JPM', 'INTU', 'J', 'IFF']: OperationalError('unable to open database file')
+2026-03-12 06:16:50 [INFO]    Batch 7/11: 50 tickers
+2026-03-12 06:16:51 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:51 [ERROR] ['MCD', 'NI', 'MRNA', 'NWSA', 'MCO', 'MA', 'MNST', 'NKE', 'MLM', 'MOH', 'NCLH', 'MET', 'NDSN', 'TAP', 'MDLZ', 'MTD', 'NTAP', 'NEE', 'MU', 'MCHP', 'NSC', 'MAS', 'ORLY', 'NFLX', 'META', 'NVDA', 'NRG', 'NXPI', 'MTCH', 'NWS', 'MRK', 'MOS', 'MCK', 'NOC', 'MDT', 'NDAQ', 'ODFL', 'NTRS', 'NUE', 'MPWR', 'MSCI', 'MAA', 'NEM', 'NVR', 'OXY', 'MKC', 'MSI', 'MSFT', 'MGM', 'MS']: OperationalError('unable to open database file')
+2026-03-12 06:16:52 [INFO]    Batch 8/11: 50 tickers
+2026-03-12 06:16:52 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:52 [ERROR] ['PSKY', 'PNR', 'PNW', 'PH', 'PLTR', 'PWR', 'PM', 'RVTY', 'OMC', 'PKG', 'PNC', 'O', 'ON', 'OKE', 'RJF', 'REGN', 'PHM', 'PAYC', 'PSA', 'PCAR', 'RTX', 'ROK', 'PEG', 'RSG', 'RF', 'PTC', 'PANW', 'PCG', 'PYPL', 'PG', 'QCOM', 'POOL', 'ORCL', 'REG', 'PFG', 'PEP', 'PLD', 'DGX', 'PSX', 'OTIS', 'RL', 'RMD', 'PPL', 'PFE', 'PPG', 'PRU', 'PAYX', 'Q', 'HOOD', 'PGR']: OperationalError('unable to open database file')
+2026-03-12 06:16:53 [INFO]    Batch 9/11: 50 tickers
+2026-03-12 06:16:53 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:53 [ERROR] ['SLB', 'TROW', 'RCL', 'SOLV', 'TXN', 'NOW', 'SMCI', 'SNPS', 'TMUS', 'SHW', 'TRGP', 'TKO', 'STT', 'SNDK', 'SWKS', 'SW', 'TMO', 'SBUX', 'SWK', 'CRM', 'SYY', 'TDY', 'TSCO', 'ROL', 'SYF', 'STX', 'TTD', 'SNA', 'TPL', 'STLD', 'TT', 'STE', 'TTWO', 'ROP', 'SO', 'TGT', 'TER', 'SJM', 'SBAC', 'TSLA', 'SPG', 'ROST', 'SYK', 'LUV', 'SRE', 'SPGI', 'TPR', 'TJX', 'TEL', 'TXT']: OperationalError('unable to open database file')
+2026-03-12 06:16:54 [INFO]    Batch 10/11: 50 tickers
+2026-03-12 06:16:54 [ERROR] 
+50 Failed downloads:
+2026-03-12 06:16:54 [ERROR] ['TRMB', 'VRSN', 'YUM', 'WAT', 'WRB', 'URI', 'WSM', 'WMT', 'VTRS', 'TFC', 'WAB', 'WDC', 'VICI', 'V', 'WEC', 'WST', 'GWW', 'WM', 'TRV', 'UNP', 'UNH', 'VZ', 'WY', 'UBER', 'WDAY', 'ULTA', 'TYL', 'XEL', 'VLO', 'UPS', 'XYL', 'VTR', 'TSN', 'VRSK', 'UDR', 'WELL', 'UHS', 'USB', 'TDG', 'WBD', 'WFC', 'VLTO', 'DIS', 'VRTX', 'WMB', 'VST', 'VMC', 'WYNN', 'UAL', 'WTW']: OperationalError('unable to open database file')
+2026-03-12 06:16:55 [INFO]    Batch 11/11: 3 tickers
+2026-03-12 06:16:55 [ERROR] 
+3 Failed downloads:
+2026-03-12 06:16:55 [ERROR] ['ZBH', 'ZTS', 'ZBRA']: OperationalError('unable to open database file')
+2026-03-12 06:16:56 [INFO]    Got prices for 93 stocks, 752 days
+2026-03-12 06:16:56 [INFO] Computing % above MAs...
+2026-03-12 06:16:56 [INFO] Computing A/D line...
+2026-03-12 06:16:56 [INFO] Computing NH-NL...
+2026-03-12 06:16:56 [INFO] Computing McClellan...
+2026-03-12 06:16:56 [INFO] Computing breadth thrust...
+2026-03-12 06:16:56 [INFO] Storing metrics in database...
+2026-03-12 06:16:56 [ERROR] BREADTH failed: unable to open database file
+2026-03-12 06:16:56 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-03-12 06:16:56 [ERROR]   ZHVI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-03-12 06:16:56 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-03-12 06:16:56 [ERROR]   ZORI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zori/Metro_zori_uc_sfrcondomfr_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-03-12 06:16:56 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-03-12 06:16:56 [ERROR] TRADINGVIEW failed: [Errno 24] Too many open files: '/Users/bob/Library/Python/3.14/lib/python/site-packages/websocket/__init__.py'
+2026-03-12 06:16:56 [INFO] Running quality checks on 2397 series...
+2026-03-12 06:16:57 [INFO]    Checked 100 series...
+2026-03-12 06:16:58 [INFO]    Checked 200 series...
+2026-03-12 06:16:58 [INFO]    Checked 300 series...
+2026-03-12 06:16:59 [INFO]    Checked 400 series...
+2026-03-12 06:16:59 [INFO]    Checked 500 series...
+2026-03-12 06:17:00 [INFO]    Checked 600 series...
+2026-03-12 06:17:01 [INFO]    Checked 700 series...
+2026-03-12 06:17:02 [INFO]    Checked 800 series...
+2026-03-12 06:17:04 [INFO]    Checked 900 series...
+2026-03-12 06:17:06 [INFO]    Checked 1000 series...
+2026-03-12 06:17:07 [INFO]    Checked 1100 series...
+2026-03-12 06:17:08 [INFO]    Checked 1200 series...
+2026-03-12 06:17:09 [INFO]    Checked 1300 series...
+2026-03-12 06:17:09 [INFO]    Checked 1400 series...
+2026-03-12 06:17:10 [INFO]    Checked 1500 series...
+2026-03-12 06:17:10 [INFO]    Checked 1600 series...
+2026-03-12 06:17:11 [INFO]    Checked 1700 series...
+2026-03-12 06:17:11 [INFO]    Checked 1800 series...
+2026-03-12 06:17:11 [INFO]    Checked 1900 series...
+2026-03-12 06:17:12 [INFO]    Checked 2000 series...
+2026-03-12 06:17:13 [INFO]    Checked 2100 series...
+2026-03-12 06:17:13 [INFO]    Checked 2200 series...
+2026-03-12 06:17:13 [INFO]    Checked 2300 series...
+2026-03-12 06:17:13 [INFO] 
+--- Quality Summary ---
+2026-03-12 06:17:13 [INFO]    good: 1195
+2026-03-12 06:17:13 [INFO]    stale: 1121
+2026-03-12 06:17:13 [INFO]    insufficient: 52
+2026-03-12 06:17:13 [INFO]    suspect: 19
+2026-03-12 06:17:13 [INFO]    warning: 10
+2026-03-12 06:17:13 [INFO] Quality flags updated in database.

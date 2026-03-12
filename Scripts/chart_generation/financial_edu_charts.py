@@ -299,7 +299,7 @@ def style_single_ax(ax, fmt='{:.1f}%'):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
 
 
-def add_annotation_box(ax, text, x=0.50, y=0.15):
+def add_annotation_box(ax, text, x=0.50, y=0.95):
     """Add takeaway annotation box at specified position.
 
     Default is bottom-center which avoids data on most time series charts.
@@ -476,30 +476,32 @@ def chart_01():
 
     fig, ax = new_fig()
 
-    # Percentile bands
+    # Percentile bands: low spreads = complacent (red), high = priced (green)
     ax.fill_between(hy_bps.index, p10, p25, color=COLORS['port'], alpha=0.15,
-                    label='10th-25th percentile')
+                    label='10th-25th percentile (complacent)')
     ax.fill_between(hy_bps.index, p25, p75, color=COLORS['fog'], alpha=0.10,
                     label='25th-75th percentile')
-    ax.fill_between(hy_bps.index, p75, p90, color=COLORS['port'], alpha=0.15,
-                    label='75th-90th percentile')
+    ax.fill_between(hy_bps.index, p75, p90, color=COLORS['starboard'], alpha=0.15,
+                    label='75th-90th percentile (stressed)')
 
     # Main line on top
     ax.plot(hy_bps.index, hy_bps, color=THEME['primary'], linewidth=2.0,
-            label=f'HY OAS ({last_val:.0f} bps)', zorder=5)
+            label=f'HY OAS ({last_val:.0f} bps)', zorder=1)
 
     style_single_ax(ax, fmt='{:.0f}')
-    set_xlim_to_data(ax, hy_bps.index)
+    # Start at 2001 where percentile bands begin
+    display_start = pd.Timestamp('2001-01-01')
+    set_xlim_to_data(ax, hy_bps[hy_bps.index >= display_start].index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, hy_bps, color=THEME['primary'], fmt='{:.0f}', side='right')
-    add_recessions(ax, start_date='1997-01-01')
+    add_recessions(ax, start_date='2001-01-01')
     ax.legend(loc='upper right', fontsize=9, **legend_style())
 
     add_annotation_box(ax,
         f"Current: {last_val:.0f} bps ({pctile:.0f}th percentile)\n"
         f"20-year rolling distribution context.\n"
         f"Percentile tells you where we stand in history.",
-        x=0.65, y=0.75)
+        x=0.50, y=0.95)
 
     brand_fig(fig, 'High-Yield Credit Spreads',
               subtitle='ICE BofA HY OAS | Percentile Distribution (20-Year Rolling)',
@@ -566,7 +568,7 @@ def chart_02():
                  color=COLORS['venus'], fontweight='bold',
                  ha='center', va='bottom',
                  arrowprops=dict(arrowstyle='->', color=COLORS['venus'], lw=1.5),
-                 xytext=(pd.Timestamp('2016-06-01'), 800))
+                 xytext=(pd.Timestamp('2021-06-01'), 800))
 
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
@@ -686,8 +688,8 @@ def chart_04():
 
     # Zero line (average tightness)
     ax.axhline(0, color=COLORS['fog'], linewidth=1.0, linestyle='--', alpha=0.7)
-    ax.text(nfci.index[5], 0.05, 'Average Tightness',
-            fontsize=9, color=COLORS['doldrums'], style='italic')
+    ax.text(nfci.index[-1], 0.05, 'Average Tightness',
+            fontsize=9, color=COLORS['doldrums'], style='italic', ha='right')
 
     style_single_ax(ax, fmt='{:.2f}')
     set_xlim_to_data(ax, nfci.index)
@@ -700,7 +702,7 @@ def chart_04():
         "The headline hides the war.\n"
         "Subcomponents can diverge sharply.\n"
         "Credit subindex leads the composite.",
-        x=0.82, y=0.08)
+        x=0.50, y=0.95)
 
     brand_fig(fig, 'Financial Conditions: The Headline Hides the War',
               subtitle='NFCI Composite vs. Risk, Credit, and Leverage Subindices',
@@ -779,7 +781,7 @@ def chart_05():
         "When banks tighten (SLOOS drops inverted),\n"
         "loan growth follows 2-4 quarters later.\n"
         "SLOOS is the pipeline. Loans are the flow.",
-        x=0.50, y=0.92)
+        x=0.50, y=0.98)
 
     brand_fig(fig, 'The Credit Pipeline: When Banks Tighten, Loan Growth Follows',
               subtitle='SLOOS C&I Tightening (Inverted, Leading) vs. C&I Loan Growth YoY',
@@ -843,7 +845,7 @@ def chart_06():
         "When these diverge, policy is not transmitting.\n"
         "Real rates restrictive + spreads tight =\n"
         "the market is overriding the Fed.",
-        x=0.22, y=0.12)
+        x=0.50, y=0.05)
 
     brand_fig(fig, 'The Transmission Gap',
               subtitle='Real Rates (Restrictive) vs. HY Spreads (Inverted, Loose)',

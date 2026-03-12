@@ -1022,15 +1022,16 @@ def chart_09():
 
     # Annotate key moments (foreground)
     annotations_list = [
-        (pd.Timestamp('2000-11-01'), 'Dot-com peak', 80),
-        (pd.Timestamp('2007-01-01'), 'Pre-crisis low', 80),
-        (pd.Timestamp('2008-12-01'), '2008-09 crisis', -73),
-        (pd.Timestamp('2020-03-15'), 'COVID spike', -73),
+        (pd.Timestamp('2000-11-01'), 'Dot-com peak'),
+        (pd.Timestamp('2007-01-01'), 'Pre-crisis low'),
+        (pd.Timestamp('2008-12-01'), '2008-09 crisis'),
+        (pd.Timestamp('2020-03-15'), 'COVID spike'),
     ]
-    for dt, lbl, offset_y in annotations_list:
+    for dt, lbl in annotations_list:
         # Find closest data point
         closest = baa10y_bps.index[baa10y_bps.index.get_indexer([dt], method='nearest')[0]]
         val = baa10y_bps.loc[closest]
+        offset_y = 80 if val < 400 else -80
         ax.annotate(lbl, xy=(closest, val), fontsize=7,
                     color=COLORS['venus'], fontweight='bold',
                     ha='center', va='bottom' if offset_y > 0 else 'top',
@@ -1136,10 +1137,10 @@ def chart_11():
          'reading': 'Peak 50.8% (Q3 2023)', 'done': True},
         {'num': 4, 'label': 'Loan Growth Decelerates', 'threshold': '< +3%',
          'reading': '+2.9% YoY (improving)', 'done': True},
-        {'num': 5, 'label': 'VIX Spikes', 'threshold': '> 25',
-         'reading': '29.5 (Mar 6)', 'done': True},
-        {'num': 6, 'label': 'Spreads Widen', 'threshold': '> 400 bps',
+        {'num': 5, 'label': 'Spreads Widen', 'threshold': '> 400 bps',
          'reading': '319 bps', 'done': False},
+        {'num': 6, 'label': 'VIX Spikes', 'threshold': '> 25',
+         'reading': '29.5 (Mar 6)', 'done': True},
         {'num': 7, 'label': 'Defaults Rise', 'threshold': '> 4%',
          'reading': '~2.5%', 'done': False},
         {'num': 8, 'label': 'Recession Begins', 'threshold': 'NBER call',
@@ -1153,8 +1154,8 @@ def chart_11():
     for spine in ax.spines.values():
         spine.set_visible(False)
 
-    # "YOU ARE HERE" position: between step 5 and 6
-    you_are_here_y = len(steps) - 5.5  # Between index 4 and 5 from top
+    # "YOU ARE HERE" position: between step 4 and 5
+    you_are_here_y = len(steps) - 4.5  # Between index 3 and 4 from top
 
     bar_height = 0.7
     bar_left = 1.0
@@ -1165,20 +1166,18 @@ def chart_11():
 
         # Color based on status
         if step['done']:
-            box_color = COLORS['starboard']
+            box_color = COLORS['sea']
             text_color = '#ffffff'
-            num_color = COLORS['starboard']
-            status_mark = '\u2713'
-        elif step['num'] == 6:
+            status_mark = '\u2713'  # checkmark
+        elif step['num'] == 5:
+            # "Next" step
             box_color = COLORS['venus']
             text_color = '#ffffff'
-            num_color = COLORS['venus']
             status_mark = '\u2190 NEXT'
         else:
-            box_color = COLORS['doldrums']
-            text_color = '#ffffff'
-            num_color = COLORS['doldrums']
-            status_mark = '\u2014'  # em dash (pending)
+            box_color = COLORS['fog']
+            text_color = THEME['fg']
+            status_mark = '\u2717'  # X mark
 
         # Draw rounded box
         rect = FancyBboxPatch(
@@ -1189,12 +1188,12 @@ def chart_11():
         )
         ax.add_patch(rect)
 
-        # Step number circle (white fill, colored border, colored number)
+        # Step number circle
         circle = plt.Circle((bar_left + 0.4, y), 0.25,
-                             color='#ffffff', ec=box_color, lw=2.0, zorder=5)
+                             color=THEME['bg'], ec=text_color, lw=1.5, zorder=5)
         ax.add_patch(circle)
         ax.text(bar_left + 0.4, y, str(step['num']),
-                fontsize=12, fontweight='bold', color=num_color,
+                fontsize=12, fontweight='bold', color=text_color,
                 ha='center', va='center', zorder=6)
 
         # Step label
@@ -1214,11 +1213,14 @@ def chart_11():
                 fontweight='bold', color=text_color,
                 ha='center', va='center')
 
-    # "YOU ARE HERE" label between steps 4 and 5
+    # "YOU ARE HERE" arrow between steps 4 and 5
     arrow_y = you_are_here_y
-    ax.text(bar_left - 0.15, arrow_y, 'YOU ARE HERE  \u25B6',
-            fontsize=13, fontweight='bold', color=COLORS['venus'],
-            ha='right', va='center')
+    ax.annotate('YOU ARE HERE',
+                xy=(bar_left - 0.1, arrow_y),
+                fontsize=14, fontweight='bold', color=COLORS['venus'],
+                ha='right', va='center',
+                arrowprops=dict(arrowstyle='->', color=COLORS['venus'],
+                                lw=3.0, connectionstyle='arc3,rad=0'))
 
     # Connecting line between steps
     for i in range(len(steps) - 1):
@@ -1229,7 +1231,7 @@ def chart_11():
                 color=COLORS['doldrums'], linewidth=1.5, linestyle=':', alpha=0.5)
 
     brand_fig(fig, 'The Financial Cascade: You Are Here',
-              subtitle='Eight Steps of Financial Stress | Six Complete, Two Pending',
+              subtitle='Eight Steps of Financial Stress | Five Complete, Three Pending',
               source='Lighthouse Macro')
 
     return save_fig(fig, 'chart_11_financial_cascade.png')

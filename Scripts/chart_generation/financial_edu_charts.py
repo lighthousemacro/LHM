@@ -937,13 +937,13 @@ def chart_08():
     if len(hy) == 0:
         hy = fetch_fred_level('BAMLH0A0HYM2', start='1991-01-01')
 
-    # Invert HY OAS: tight spreads = high on chart = complacent
-    hy_inv = hy * -100  # bps inverted
+    # HY OAS in bps (not inverted — both series rise during stress)
+    hy_bps = hy * 100
 
     # Start at first date where both series have data
-    common_start = max(delinq.dropna().index.min(), hy_inv.dropna().index.min())
+    common_start = max(delinq.dropna().index.min(), hy_bps.dropna().index.min())
     delinq = delinq[delinq.index >= common_start]
-    hy_inv = hy_inv[hy_inv.index >= common_start]
+    hy_bps = hy_bps[hy_bps.index >= common_start]
 
     fig, ax1 = new_fig()
     ax2 = ax1.twinx()
@@ -951,8 +951,8 @@ def chart_08():
 
     ax1.plot(delinq.index, delinq, color=c1, linewidth=2.5,
              label=f'CC Delinquency Rate ({delinq.iloc[-1]:.2f}%)')
-    ax2.plot(hy_inv.index, hy_inv, color=c2, linewidth=2.0,
-             label=f'HY OAS Inverted ({hy_inv.iloc[-1]:.0f} bps inv.)')
+    ax2.plot(hy_bps.index, hy_bps, color=c2, linewidth=2.0,
+             label=f'HY OAS ({hy_bps.iloc[-1]:.0f} bps)')
 
     style_dual_ax(ax1, ax2, c1, c2)
     ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
@@ -961,7 +961,7 @@ def chart_08():
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
     add_last_value_label(ax1, delinq, color=c1, fmt='{:.2f}%', side='left')
-    add_last_value_label(ax2, hy_inv, color=c2, fmt='{:.0f}', side='right')
+    add_last_value_label(ax2, hy_bps, color=c2, fmt='{:.0f}', side='right')
     add_recessions(ax1, start_date='1991-01-01')
 
     # Annotate 2006-07 divergence
@@ -1301,9 +1301,9 @@ def chart_12():
     add_last_value_label(ax, baa_z, color=COLORS['ocean'], fmt='{:.1f}σ', side='right')
 
     add_annotation_box(ax,
-        "When all three converge above zero,\n"
-        "financial stress is broad-based.\n"
-        "Divergence = isolated, convergence = systemic.",
+        "All three below zero: stress is muted.\n"
+        "Watch for convergence above zero.\n"
+        "That is when isolated becomes systemic.",
         x=0.50, y=0.95)
 
     brand_fig(fig, 'Financial Stress Convergence',
@@ -1312,6 +1312,173 @@ def chart_12():
               data_date=baa_z.index[-1])
 
     return save_fig(fig, 'chart_12_stress_convergence.png')
+
+
+# ============================================
+# CHART 13: The BBB Cliff [Figure 13]
+# ============================================
+def chart_13():
+    """BBB share of IG — infographic showing the structural shift."""
+    print('\nChart 13: The BBB Cliff...')
+
+    # BBB share data is from ICE BofA (not on FRED as a time series).
+    # Known data points from industry research:
+    periods = ['Late 1990s', '2007', '2015', '2020', '2025']
+    bbb_pct = [27, 33, 40, 45, 47]
+    other_pct = [73, 67, 60, 55, 53]
+
+    fig, ax = new_fig(figsize=(14, 7))
+
+    x = range(len(periods))
+    bar_width = 0.55
+
+    # Stacked bars: BBB on bottom (Port tint), other IG on top (Ocean)
+    bars_bbb = ax.bar(x, bbb_pct, bar_width, color=COLORS['dusk'],
+                      edgecolor=THEME['spine'], linewidth=0.5, label='BBB-Rated', zorder=3)
+    bars_other = ax.bar(x, other_pct, bar_width, bottom=bbb_pct, color=COLORS['ocean'],
+                        edgecolor=THEME['spine'], linewidth=0.5, label='AAA / AA / A', zorder=3)
+
+    # Value labels on BBB bars
+    for bar, val in zip(bars_bbb, bbb_pct):
+        ax.text(bar.get_x() + bar.get_width() / 2, val / 2,
+                f'{val}%', fontsize=16, fontweight='bold', color='#ffffff',
+                ha='center', va='center', zorder=4)
+
+    # Value labels on other bars
+    for bar, bbb_val, other_val in zip(bars_other, bbb_pct, other_pct):
+        ax.text(bar.get_x() + bar.get_width() / 2, bbb_val + other_val / 2,
+                f'{other_val}%', fontsize=13, fontweight='bold', color='#ffffff',
+                ha='center', va='center', zorder=4)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(periods, fontsize=12, fontweight='bold')
+    ax.set_ylim(0, 105)
+    ax.set_yticks([])
+
+    # Style
+    for spine in ax.spines.values():
+        spine.set_color(THEME['spine'])
+        spine.set_linewidth(0.5)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.set_facecolor(THEME['bg'])
+    fig.set_facecolor(THEME['bg'])
+    ax.tick_params(colors=THEME['fg'], length=0)
+
+    ax.legend(loc='upper right', fontsize=11, **legend_style())
+
+    add_annotation_box(ax,
+        "Nearly half of all 'investment grade' bonds\n"
+        "are one downgrade from junk.\n"
+        "The cliff is structural, not cyclical.",
+        x=0.50, y=0.95)
+
+    brand_fig(fig, 'The BBB Cliff',
+              subtitle='BBB Share of Investment-Grade Universe | The Fallen Angel Risk',
+              source='ICE BofA Index Composition')
+
+    return save_fig(fig, 'chart_13_bbb_cliff.png')
+
+
+# ============================================
+# CHART 14: FCI Component Tug-of-War [Figure 14]
+# ============================================
+def chart_14():
+    """Horizontal diverging bar chart: which components pull loose vs tight."""
+    print('\nChart 14: FCI Component Tug-of-War...')
+
+    # Get latest values for each component
+    nfci = fetch_db_level('NFCI', start='2020-01-01')
+    risk = fetch_db_level('NFCIRISK', start='2020-01-01')
+    credit = fetch_db_level('NFCICREDIT', start='2020-01-01')
+    leverage = fetch_db_level('NFCILEVERAGE', start='2020-01-01')
+
+    # Also get non-NFCI indicators for the tug-of-war
+    # We'll use latest readings to build the bar chart
+    hy = fetch_db_level('BAMLH0A0HYM2', start='2020-01-01')
+    vix = fetch_db_level('VIXCLS', start='2020-01-01')
+    sloos = fetch_db_level('DRTSCILM', start='2020-01-01')
+    baa10y = fetch_db_level('BAA10Y', start='2020-01-01')
+    real_rate = fetch_db_level('DFII10', start='2020-01-01')
+
+    # Compute 5-year z-scores for each (using ~1260 trading days)
+    def zscore_latest(s, window=1260):
+        s = s.dropna()
+        if len(s) < window:
+            window = len(s)
+        mean = s.iloc[-window:].mean()
+        std = s.iloc[-window:].std()
+        if std == 0:
+            return 0
+        return (s.iloc[-1] - mean) / std
+
+    # Components: negative z = loose/supportive, positive z = tight/restrictive
+    # For NFCI subindices: already in the right direction (positive = tight)
+    components = {
+        'NFCI Risk': zscore_latest(risk) if len(risk) > 0 else 0,
+        'NFCI Credit': zscore_latest(credit) if len(credit) > 0 else 0,
+        'NFCI Leverage': zscore_latest(leverage) if len(leverage) > 0 else 0,
+        'HY OAS': zscore_latest(hy) if len(hy) > 0 else 0,
+        'VIX': zscore_latest(vix) if len(vix) > 0 else 0,
+        'Real 10Y Rate': zscore_latest(real_rate) if len(real_rate) > 0 else 0,
+        'SLOOS C&I': zscore_latest(sloos) if len(sloos) > 0 else 0,
+        'Baa-10Y Spread': zscore_latest(baa10y) if len(baa10y) > 0 else 0,
+    }
+
+    labels = list(components.keys())
+    values = list(components.values())
+
+    fig, ax = new_fig(figsize=(14, 7))
+
+    # Color: negative (loose) = Ocean, positive (tight) = Dusk
+    colors = [COLORS['ocean'] if v < 0 else COLORS['dusk'] for v in values]
+
+    bars = ax.barh(labels, values, color=colors, height=0.6, edgecolor=THEME['spine'],
+                   linewidth=0.5, zorder=3)
+
+    # Zero line
+    ax.axvline(0, color=COLORS['fog'], linewidth=1.5, linestyle='-', zorder=2)
+
+    # Value labels on bars
+    for bar, val in zip(bars, values):
+        x_pos = val + 0.05 if val >= 0 else val - 0.05
+        ha = 'left' if val >= 0 else 'right'
+        ax.text(x_pos, bar.get_y() + bar.get_height() / 2,
+                f'{val:+.2f}', fontsize=10, fontweight='bold',
+                color=THEME['fg'], ha=ha, va='center')
+
+    # Add padding so bars + labels fit
+    xlim = ax.get_xlim()
+    pad = max(abs(xlim[0]), abs(xlim[1])) * 0.3
+    ax.set_xlim(xlim[0] - pad, xlim[1] + pad)
+
+    # Labels
+    ax.text(ax.get_xlim()[0] + 0.05, len(labels) - 0.3, '\u2190 LOOSE',
+            fontsize=11, fontweight='bold', color=COLORS['ocean'], va='top')
+    ax.text(ax.get_xlim()[1] - 0.05, len(labels) - 0.3, 'TIGHT \u2192',
+            fontsize=11, fontweight='bold', color=COLORS['dusk'], va='top', ha='right')
+
+    # Style
+    ax.set_yticks(range(len(labels)))
+    ax.set_yticklabels(labels, fontsize=11)
+    ax.tick_params(axis='x', labelsize=10)
+    for spine in ax.spines.values():
+        spine.set_color(THEME['spine'])
+        spine.set_linewidth(0.5)
+    ax.set_facecolor(THEME['bg'])
+    fig.set_facecolor(THEME['bg'])
+    ax.tick_params(colors=THEME['fg'])
+    for label in ax.get_yticklabels():
+        label.set_color(THEME['fg'])
+    fig.subplots_adjust(left=0.18)
+
+    brand_fig(fig, 'The Tug-of-War: What Pulls Loose, What Pulls Tight',
+              subtitle='Financial Conditions Components | Latest Z-Score vs. 5-Year History',
+              source='Chicago Fed, CBOE, Federal Reserve, ICE BofA via FRED',
+              data_date=nfci.index[-1] if len(nfci) > 0 else None)
+
+    return save_fig(fig, 'chart_14_fci_tug_of_war.png')
 
 
 # ============================================
@@ -1330,12 +1497,14 @@ CHART_MAP = {
     10: chart_10,
     11: chart_11,
     12: chart_12,
+    13: chart_13,
+    14: chart_14,
 }
 
 
 def main():
     parser = argparse.ArgumentParser(description='Generate Financial Conditions educational charts')
-    parser.add_argument('--chart', type=int, help='Chart number to generate (1-12)')
+    parser.add_argument('--chart', type=int, help='Chart number to generate (1-14)')
     parser.add_argument('--theme', default='both', choices=['dark', 'white', 'both'],
                         help='Theme to generate')
     parser.add_argument('--all', action='store_true', help='Generate all charts')

@@ -429,3 +429,27 @@ HTML dashboard generated at /Users/bob/Desktop/LHM_Morning_Brief.html
   Generated 12 charts
 Morning brief written to /Users/bob/Desktop/LHM_Morning_Brief.html
 Notification sent: MRI: 0.02 [MID-CYCLE] | MSI: -1.41 [BEARISH] | CTI: NEUTRAL->CAUTIOUS | LDI: HIGH DYNAMISM->HEALTHY
+
+======================================================================
+MORNING BRIEF - 2026-03-13 13:28:21
+======================================================================
+HTML dashboard generated at /Users/bob/Desktop/LHM_Morning_Brief.html
+  Release context: 12 headlines, 12 charts selected
+  WARNING: Chart chart_mri failed: Execution failed on sql '
+        SELECT date, value, status FROM lighthouse_indices
+        WHERE index_id = ? AND date >= ?
+        ORDER BY date
+    ': database is locked
+  WARNING: Chart chart_spx failed: Execution failed on sql '
+        SELECT date, value FROM observations
+        WHERE series_id = ? AND date >= ?
+        ORDER BY date
+    ': database is locked
+  WARNING: Chart chart_yield_curve failed: Execution failed on sql '
+        SELECT date, value FROM observations
+        WHERE series_id = ? AND date >= ?
+        ORDER BY date
+    ': database is locked
+  Generated 9 charts
+Morning brief written to /Users/bob/Desktop/LHM_Morning_Brief.html
+Notification sent: MRI: 0.02 [MID-CYCLE] | MSI: -1.41 [BEARISH] | CTI: NEUTRAL->CAUTIOUS | LDI: HIGH DYNAMISM->HEALTHY

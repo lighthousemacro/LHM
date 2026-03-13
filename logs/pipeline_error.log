@@ -11391,3 +11391,160 @@ Crypto total: 426 series, 29,979 observations
 2026-03-13 13:29:55 [WARNING]    Polygon: HTTP 400
 2026-03-13 13:29:55 [ERROR]    Uniswap: Error - database disk image is malformed
 2026-03-13 13:30:02 [ERROR]    Curve: Error - database disk image is malformed
+2026-03-13 13:30:34 [ERROR]    PancakeSwap: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-03-13 13:30:42 [ERROR]    Raydium: Error - database disk image is malformed
+2026-03-13 13:30:43 [ERROR]    Aerodrome: Error - database disk image is malformed
+2026-03-13 13:30:45 [ERROR]    Aave: Error - database disk image is malformed
+2026-03-13 13:30:45 [WARNING]    Compound: HTTP 400
+2026-03-13 13:30:47 [ERROR]    Morpho: Error - database disk image is malformed
+2026-03-13 13:30:49 [ERROR]    Spark: Error - database disk image is malformed
+2026-03-13 13:30:51 [ERROR]    GMX: Error - database disk image is malformed
+2026-03-13 13:30:53 [ERROR]    dYdX: Error - database disk image is malformed
+2026-03-13 13:30:53 [ERROR]    Hyperliquid: Error - database disk image is malformed
+2026-03-13 13:30:56 [ERROR]    Synthetix: Error - database disk image is malformed
+2026-03-13 13:30:56 [ERROR]    Lido: Error - database disk image is malformed
+2026-03-13 13:30:57 [ERROR]    Rocket Pool: Error - database disk image is malformed
+2026-03-13 13:30:58 [ERROR]    Jito: Error - database disk image is malformed
+2026-03-13 13:30:58 [WARNING]    Marinade: HTTP 400
+2026-03-13 13:31:00 [ERROR]    MakerDAO: Error - database disk image is malformed
+2026-03-13 13:31:29 [ERROR] CRYPTO failed: database disk image is malformed
+2026-03-13 13:31:42 [INFO] Found 503 S&P 500 constituents
+2026-03-13 13:31:43 [INFO] Fetching prices for 503 tickers...
+2026-03-13 13:31:43 [INFO]    Batch 1/11: 50 tickers
+2026-03-13 13:32:10 [INFO]    Batch 2/11: 50 tickers
+2026-03-13 13:32:13 [INFO]    Batch 3/11: 50 tickers
+2026-03-13 13:32:13 [ERROR] Failed to get ticker 'CPRT' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:14 [ERROR] Failed to get ticker 'STZ' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:14 [ERROR] Failed to get ticker 'COO' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:14 [ERROR] $COO: possibly delisted; no timezone found
+2026-03-13 13:32:14 [ERROR] Failed to get ticker 'DXCM' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:14 [ERROR] Failed to get ticker 'CSGP' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:14 [ERROR] Failed to get ticker 'CTVA' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:14 [ERROR] $DXCM: possibly delisted; no timezone found
+2026-03-13 13:32:14 [ERROR] $CSGP: possibly delisted; no timezone found
+2026-03-13 13:32:14 [ERROR] $CTVA: possibly delisted; no timezone found
+2026-03-13 13:32:14 [ERROR] 
+28 Failed downloads:
+2026-03-13 13:32:14 [ERROR] ['DECK', 'CL', 'CMCSA', 'DVN', 'KO', 'CRWD', 'CHD', 'C', 'DRI', 'GLW', 'CMG', 'COP', 'DELL', 'DE', 'CTAS', 'CPAY', 'DDOG', 'COST', 'FIX', 'CFG', 'DAL', 'CIEN']: OperationalError('unable to open database file')
+2026-03-13 13:32:14 [ERROR] ['CPRT']: DNSError('Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-03-13 13:32:14 [ERROR] ['STZ']: DNSError('Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-03-13 13:32:14 [ERROR] ['COO', 'DXCM', 'CSGP', 'CTVA']: possibly delisted; no timezone found
+2026-03-13 13:32:20 [INFO]    Batch 4/11: 50 tickers
+2026-03-13 13:32:20 [ERROR] Failed to get ticker 'EXC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:20 [ERROR] Failed to get ticker 'FSLR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:20 [ERROR] Failed to get ticker 'EPAM' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:20 [ERROR] $EXC: possibly delisted; no timezone found
+2026-03-13 13:32:20 [ERROR] $FSLR: possibly delisted; no timezone found
+2026-03-13 13:32:20 [ERROR] $EPAM: possibly delisted; no timezone found
+2026-03-13 13:32:20 [ERROR] Failed to get ticker 'ES' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:20 [ERROR] $ES: possibly delisted; no timezone found
+2026-03-13 13:32:20 [ERROR] Failed to get ticker 'EMR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:20 [ERROR] $EMR: possibly delisted; no timezone found
+2026-03-13 13:32:21 [ERROR] Failed to get ticker 'DTE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:21 [ERROR] $DTE: possibly delisted; no timezone found
+2026-03-13 13:32:21 [ERROR] Failed to get ticker 'ETN' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:21 [ERROR] $ETN: possibly delisted; no timezone found
+2026-03-13 13:32:21 [ERROR] 
+50 Failed downloads:
+2026-03-13 13:32:21 [ERROR] ['FDS', 'DD', 'EG', 'FIS', 'EQIX', 'EXE', 'ECL', 'DLR', 'EME', 'DG', 'FFIV', 'EL', 'EQT', 'FITB', 'EXPE', 'EFX', 'EBAY', 'DPZ', 'FRT', 'EXPD', 'EXR', 'EIX', 'EA', 'XOM', 'DASH', 'EOG', 'ESS', 'FE', 'EW', 'FICO', 'ERIE', 'EVRG', 'DOV', 'ETR', 'FAST', 'ELV', 'DHI', 'DOW', 'EQR', 'FDX', 'DUK', 'D', 'DLTR']: OperationalError('unable to open database file')
+2026-03-13 13:32:21 [ERROR] ['EXC', 'FSLR', 'EPAM', 'ES', 'EMR', 'DTE', 'ETN']: possibly delisted; no timezone found
+2026-03-13 13:32:22 [INFO]    Batch 5/11: 50 tickers
+2026-03-13 13:32:22 [ERROR] Failed to get ticker 'FISV' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:22 [ERROR] $FISV: possibly delisted; no timezone found
+2026-03-13 13:32:23 [ERROR] Failed to get ticker 'GD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:23 [ERROR] $GD: possibly delisted; no timezone found
+2026-03-13 13:32:23 [ERROR] Failed to get ticker 'GM' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:23 [ERROR] $GM: possibly delisted; no timezone found
+2026-03-13 13:32:23 [ERROR] Failed to get ticker 'GS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:23 [ERROR] $GS: possibly delisted; no timezone found
+2026-03-13 13:32:23 [ERROR] 
+50 Failed downloads:
+2026-03-13 13:32:23 [ERROR] ['HPE', 'HCA', 'IR', 'HSY', 'GE', 'GDDY', 'GL', 'BEN', 'IT', 'FTNT', 'INCY', 'HSIC', 'IBM', 'FTV', 'HON', 'HBAN', 'HAS', 'GIS', 'HWM', 'F', 'GPN', 'GEHC', 'GRMN', 'GEN', 'HIG', 'DOC', 'FOXA', 'IEX', 'GPC', 'HOLX', 'HII', 'IDXX', 'FCX', 'GILD', 'FOX', 'HAL', 'HRL', 'HUBB', 'GEV', 'GNRC', 'HUM', 'HLT', 'HST', 'HD', 'HPQ', 'ITW']: OperationalError('unable to open database file')
+2026-03-13 13:32:23 [ERROR] ['FISV', 'GD', 'GM', 'GS']: possibly delisted; no timezone found
+2026-03-13 13:32:24 [INFO]    Batch 6/11: 50 tickers
+2026-03-13 13:32:24 [ERROR] Failed to get ticker 'IBKR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:24 [ERROR] $IBKR: possibly delisted; no timezone found
+2026-03-13 13:32:24 [ERROR] Failed to get ticker 'JBHT' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:24 [ERROR] $JBHT: possibly delisted; no timezone found
+2026-03-13 13:32:24 [ERROR] Failed to get ticker 'KEYS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:24 [ERROR] $KEYS: possibly delisted; no timezone found
+2026-03-13 13:32:24 [ERROR] Failed to get ticker 'KLAC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:24 [ERROR] $KLAC: possibly delisted; no timezone found
+2026-03-13 13:32:24 [ERROR] 
+50 Failed downloads:
+2026-03-13 13:32:24 [ERROR] ['LYV', 'INTC', 'KVUE', 'KIM', 'INTU', 'LOW', 'IFF', 'KMI', 'LIN', 'LW', 'MRSH', 'MAR', 'LEN', 'L', 'IP', 'LDOS', 'IRM', 'LLY', 'IQV', 'LYB', 'MTB', 'LVS', 'PODD', 'JCI', 'JBL', 'ISRG', 'LH', 'KR', 'JPM', 'LII', 'INVH', 'LHX', 'MPC', 'LULU', 'J', 'JKHY', 'IVZ', 'KKR', 'LRCX', 'KEY', 'KDP', 'LMT', 'KHC', 'KMB', 'ICE', 'JNJ']: OperationalError('unable to open database file')
+2026-03-13 13:32:24 [ERROR] ['IBKR', 'JBHT', 'KEYS', 'KLAC']: possibly delisted; no timezone found
+2026-03-13 13:32:25 [INFO]    Batch 7/11: 50 tickers
+2026-03-13 13:32:25 [ERROR] Failed to get ticker 'MNST' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:25 [ERROR] $MNST: possibly delisted; no timezone found
+2026-03-13 13:32:25 [ERROR] Failed to get ticker 'MRK' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:25 [ERROR] $MRK: possibly delisted; no timezone found
+2026-03-13 13:32:26 [ERROR] Failed to get ticker 'NDAQ' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-13 13:32:26 [ERROR] $NDAQ: possibly delisted; no timezone found
+2026-03-13 13:32:32 [ERROR] 
+50 Failed downloads:
+2026-03-13 13:32:32 [ERROR] ['MU', 'MAA', 'MDT', 'NFLX', 'NWSA', 'MCK', 'MOS', 'NEM', 'MCD', 'MSFT', 'NCLH', 'TAP', 'MRNA', 'NSC', 'NOC', 'NTRS', 'NTAP', 'NUE', 'MLM', 'MSCI', 'ORLY', 'NVDA', 'OXY', 'NXPI', 'MGM', 'MS', 'MDLZ', 'MSI', 'META', 'NWS', 'MOH', 'MA', 'NDSN', 'MTD', 'MTCH', 'MET', 'ODFL', 'MCHP', 'NEE', 'NRG', 'MAS', 'NVR', 'MPWR', 'NKE', 'NI', 'MKC', 'MCO']: OperationalError('unable to open database file')
+2026-03-13 13:32:32 [ERROR] ['MNST', 'MRK', 'NDAQ']: possibly delisted; no timezone found
+2026-03-13 13:32:33 [INFO]    Batch 8/11: 50 tickers
+2026-03-13 13:32:33 [ERROR] 
+50 Failed downloads:
+2026-03-13 13:32:33 [ERROR] ['PH', 'PLTR', 'PWR', 'PNR', 'PG', 'PFE', 'RMD', 'PANW', 'REG', 'PSX', 'PAYX', 'ROK', 'PHM', 'RVTY', 'PYPL', 'REGN', 'HOOD', 'PEP', 'PPG', 'PLD', 'ORCL', 'PEG', 'PFG', 'RL', 'PSKY', 'DGX', 'PM', 'PCAR', 'PNC', 'OMC', 'RJF', 'RSG', 'PKG', 'PPL', 'ON', 'RTX', 'PTC', 'PCG', 'Q', 'PAYC', 'RF', 'POOL', 'PGR', 'PNW', 'PRU', 'QCOM', 'OTIS', 'O', 'PSA', 'OKE']: OperationalError('unable to open database file')
+2026-03-13 13:32:34 [INFO]    Batch 9/11: 50 tickers
+2026-03-13 13:32:35 [ERROR] 
+50 Failed downloads:
+2026-03-13 13:32:35 [ERROR] ['SRE', 'TMO', 'TXN', 'SYK', 'TT', 'TGT', 'TRGP', 'SO', 'TSLA', 'TMUS', 'SLB', 'TPL', 'SNPS', 'TXT', 'TTWO', 'STE', 'ROP', 'TROW', 'SWK', 'TDY', 'TPR', 'SJM', 'STLD', 'TER', 'ROL', 'TEL', 'SBUX', 'SWKS', 'LUV', 'SNA', 'CRM', 'SHW', 'STT', 'SYY', 'SBAC', 'SPGI', 'SPG', 'TKO', 'SMCI', 'NOW', 'RCL', 'TJX', 'SOLV', 'STX', 'SW', 'TTD', 'ROST', 'SNDK', 'TSCO', 'SYF']: OperationalError('unable to open database file')
+2026-03-13 13:32:36 [INFO]    Batch 10/11: 50 tickers
+2026-03-13 13:32:37 [ERROR] 
+50 Failed downloads:
+2026-03-13 13:32:37 [ERROR] ['UBER', 'WBD', 'VRSK', 'TYL', 'TDG', 'WST', 'UNH', 'WSM', 'WRB', 'WMB', 'WELL', 'USB', 'V', 'VLO', 'UAL', 'TSN', 'WY', 'XEL', 'TRMB', 'WDAY', 'VTR', 'GWW', 'WMT', 'ULTA', 'XYL', 'VMC', 'YUM', 'TRV', 'DIS', 'URI', 'UPS', 'WTW', 'VST', 'WAB', 'VRTX', 'WAT', 'WDC', 'UNP', 'VRSN', 'VICI', 'WYNN', 'VLTO', 'VTRS', 'WFC', 'TFC', 'UHS', 'UDR', 'VZ', 'WM', 'WEC']: OperationalError('unable to open database file')
+2026-03-13 13:32:38 [INFO]    Batch 11/11: 3 tickers
+2026-03-13 13:32:38 [ERROR] 
+3 Failed downloads:
+2026-03-13 13:32:38 [ERROR] ['ZBRA', 'ZBH', 'ZTS']: OperationalError('unable to open database file')
+2026-03-13 13:32:39 [INFO]    Got prices for 122 stocks, 753 days
+2026-03-13 13:32:39 [INFO] Computing % above MAs...
+2026-03-13 13:32:40 [INFO] Computing A/D line...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:116: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2026-03-13 13:32:40 [INFO] Computing NH-NL...
+2026-03-13 13:32:40 [INFO] Computing McClellan...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:156: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2026-03-13 13:32:40 [INFO] Computing breadth thrust...
+2026-03-13 13:32:40 [INFO] Storing metrics in database...
+2026-03-13 13:32:41 [ERROR] BREADTH failed: unable to open database file
+2026-03-13 13:32:41 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-03-13 13:32:41 [ERROR]   ZHVI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-03-13 13:32:41 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-03-13 13:32:41 [ERROR]   ZORI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zori/Metro_zori_uc_sfrcondomfr_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-03-13 13:32:41 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-03-13 13:32:41 [ERROR] TRADINGVIEW failed: [Errno 24] Too many open files: '/Users/bob/Library/Python/3.14/lib/python/site-packages/websocket/__init__.py'
+2026-03-13 13:32:43 [INFO] Running quality checks on 2397 series...
+2026-03-13 13:33:08 [INFO]    Checked 100 series...
+2026-03-13 13:33:38 [INFO]    Checked 200 series...
+2026-03-13 13:33:53 [INFO]    Checked 300 series...
+2026-03-13 13:34:05 [INFO]    Checked 400 series...
+2026-03-13 13:34:16 [INFO]    Checked 500 series...
+2026-03-13 13:34:41 [INFO]    Checked 600 series...
+2026-03-13 13:35:05 [INFO]    Checked 700 series...
+2026-03-13 13:35:32 [INFO]    Checked 800 series...
+2026-03-13 13:35:35 [ERROR] Quality checks failed: Execution failed on sql '
+            SELECT date, value FROM observations
+            WHERE series_id = ?
+            ORDER BY date
+        ': database disk image is malformed
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 109, in main
+    run_daily_update(
+    ~~~~~~~~~~~~~~~~^
+        skip_quality=args.quick,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        sources=sources
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 304, in run_daily_update
+    db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed

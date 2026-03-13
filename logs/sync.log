@@ -49963,3 +49963,54 @@ MANUAL (copy from Desktop - accessible from phone via iCloud):
   6. ChatGPT         → paste into custom instructions
 
 ========================================
+[2026-03-13 13:30:07] ============================================================
+[2026-03-13 13:30:07] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-03-13 13:30:07] ============================================================
+[2026-03-13 13:30:07] GIT SYNC: Starting...
+[2026-03-13 13:30:19] GIT SYNC: Committed: Daily pipeline sync 2026-03-13 13:30
+[2026-03-13 13:30:24] GIT SYNC: Push failed: To https://github.com/BobSheehan23/LHM.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/BobSheehan23/LHM.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+[2026-03-13 13:30:24] CLOUD SYNC: Starting...
+[2026-03-13 13:31:34] CLOUD SYNC [iCloud]: Copied Lighthouse_Master_20260313.db
+[2026-03-13 13:31:35] CLOUD SYNC [iCloud]: Removed 2 old backup(s) (>30 days)
+[2026-03-13 13:34:08] CLOUD SYNC [GDrive]: Copied Lighthouse_Master_20260313.db
+[2026-03-13 13:34:11] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(6629): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(6628): error: unexpected end of file
+
+[2026-03-13 13:34:12] CLOUD SYNC [GDrive]: Synced Brand/
+[2026-03-13 13:34:12] CLOUD SYNC [GDrive]: Removed 2 old backup(s) (>30 days)
+[2026-03-13 13:35:25] CLOUD SYNC [Dropbox]: Copied Lighthouse_Master_20260313.db
+[2026-03-13 13:41:10] CLOUD SYNC [Dropbox]: Removed 2 old backup(s) (>30 days)
+[2026-03-13 13:41:11] ----------------------------------------
+[2026-03-13 13:41:11] SYNC SUMMARY:
+[2026-03-13 13:41:11]   GitHub: FAILED
+[2026-03-13 13:41:11]   Cloud: OK
+[2026-03-13 13:41:11] ============================================================
+[2026-03-13 13:45:07] Updated LAST_SYNC to 2026-03-13
+[2026-03-13 13:45:07] Synced to Claude Code: /Users/bob/.claude/CLAUDE.md
+cp: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md: Operation not permitted
+[2026-03-13 13:45:07] Created desktop export: /Users/bob/Desktop/LHM_MASTER_CONTEXT.md
+========================================
+MASTER CONTEXT SYNCED - 2026-03-13 13:45:07
+========================================
+
+LAST_SYNC updated to: 2026-03-13
+
+AUTOMATIC:
+  1. Claude Code:    DONE
+  2. Desktop Export: DONE (~/Desktop/LHM_MASTER_CONTEXT.md)
+
+MANUAL (copy from Desktop - accessible from phone via iCloud):
+  3. Claude.ai/iOS  → paste into custom instructions
+  4. Claude Desktop → paste into custom instructions
+  5. Gemini          → paste into context
+  6. ChatGPT         → paste into custom instructions
+
+========================================

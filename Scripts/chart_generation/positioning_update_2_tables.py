@@ -14,7 +14,7 @@ os.makedirs(OUT_DIR, exist_ok=True)
 # Brand colors
 OCEAN = '#2389BB'
 DUSK = '#FF6723'
-SKY = '#00BBFF'
+SKY = '#23BBFF'
 SEA = '#00BB89'
 VENUS = '#FF2389'
 DOLDRUMS = '#898989'

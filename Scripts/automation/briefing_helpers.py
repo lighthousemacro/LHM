@@ -16,7 +16,7 @@ CRM_DB = Path("/Users/bob/LHM/Data/databases/lhm_contacts.db")
 # Brand colors
 OCEAN = "#2389BB"
 DUSK = "#FF6723"
-SKY = "#00BBFF"
+SKY = "#23BBFF"
 VENUS = "#FF2389"
 SEA = "#00BB89"
 MUTED = "#8b949e"

@@ -52,9 +52,9 @@ def set_theme(mode='white'):
             'fg': '#e6edf3',
             'muted': '#8b949e',
             'spine': '#2a4060',
-            'brand_color': '#00BBFF',
+            'brand_color': '#23BBFF',
             'brand2_color': C['dusk_orange'],
-            'primary': '#00BBFF',
+            'primary': '#23BBFF',
             'subtitle': '#7a8a9e',
             'text_strong': '#e6edf3',
             'text_label': '#c0cad8',
@@ -119,7 +119,7 @@ PALETTE_WHITE = [C['ocean_blue'], C['dusk_orange'], C['hot_magenta'],
                  '#8B5CF6', '#00D4FF', '#F59E0B',
                  '#10B981', '#EF4444', '#6366F1', C['teal_green']]
 
-PALETTE_DARK = ['#00BBFF', '#FF6723', '#FF2389', '#A78BFA',
+PALETTE_DARK = ['#23BBFF', '#FF6723', '#FF2389', '#A78BFA',
                 '#FBBF24', '#34D399', '#00BB89', '#F87171',
                 '#818CF8', '#FB923C']
 
@@ -131,10 +131,10 @@ def clr(name):
     """Get theme-appropriate semantic color."""
     dark_map = {
         'green': '#34D399',
-        'blue': '#00BBFF',
+        'blue': '#23BBFF',
         'orange': '#FF6723',
         'red': '#FF4455',
-        'cyan': '#00BBFF',
+        'cyan': '#23BBFF',
         'magenta': '#FF2389',
         'teal': '#34D399',
     }
@@ -143,7 +143,7 @@ def clr(name):
         'blue': C['ocean_blue'],
         'orange': C['dusk_orange'],
         'red': C['pure_red'],
-        'cyan': '#00BBFF',
+        'cyan': '#23BBFF',
         'magenta': C['dusk_orange'],
         'teal': C['teal_green'],
     }
@@ -162,11 +162,11 @@ SECTOR_COLORS_WHITE = {
 }
 
 SECTOR_COLORS_DARK = {
-    'DeFi - DEX': '#00BBFF',
+    'DeFi - DEX': '#23BBFF',
     'DeFi - Lending': '#00DDAA',
     'DeFi - Derivatives': '#FF2389',
     'Layer 1 (Settlement)': '#FF6723',
-    'Layer 2 (Scaling)': '#00BBFF',
+    'Layer 2 (Scaling)': '#23BBFF',
     'Liquid Staking': '#A78BFA',
     'Infrastructure': '#FBBF24',
     'Uncategorized': '#6a7a8a',

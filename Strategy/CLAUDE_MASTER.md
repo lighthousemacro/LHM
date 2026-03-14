@@ -460,7 +460,7 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 |------|-----|----------|-------|
 | **Ocean** | `#2389BB` | 23+89+BB | Primary brand, headers, borders, chart primary |
 | **Dusk** | `#FF6723` | 23 | Secondary series, accent bar, CTA buttons |
-| **Sky** | `#00BBFF` | BB | Lighter blue for secondary chart lines |
+| **Sky** | `#23BBFF` | BB | Lighter blue for secondary chart lines |
 | **Venus** | `#FF2389` | 23+89 | 2% target lines, critical alerts |
 | **Sea** | `#00BB89` | BB+89 | Tertiary series, on-target regime bands |
 | **Doldrums** | `#898989` | 89+89 | Axis spines, labels, secondary text |

@@ -32,7 +32,7 @@ ICON_PATH = f'{BASE_PATH}/Brand/icon_transparent_128.png'
 COLORS = {
     'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#00BBFF',
+    'sky': '#23BBFF',
     'venus': '#FF2389',
     'sea': '#00BB89',
     'doldrums': '#898989',

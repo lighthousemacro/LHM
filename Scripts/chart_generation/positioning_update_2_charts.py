@@ -31,7 +31,7 @@ THEME = {
     'brand2_color': '#FF6723',
     'primary': '#2389BB',
     'secondary': '#FF6723',
-    'tertiary': '#00BBFF',
+    'tertiary': '#23BBFF',
     'quaternary': '#00BB89',
     'accent': '#FF2389',
     'bullish': '#238923',
@@ -215,7 +215,7 @@ def add_regime_bands(ax, ymin=-3.0, ymax=3.0):
     ax.axhspan(1.0, 1.5, color='#FF6723', alpha=0.20)
     ax.axhspan(0.5, 1.0, color='#FF6723', alpha=0.12)
     ax.axhspan(-0.5, 0.5, color='#00BB89', alpha=0.12)
-    ax.axhspan(ymin, -0.5, color='#00BBFF', alpha=0.12)
+    ax.axhspan(ymin, -0.5, color='#23BBFF', alpha=0.12)
     # Labels
     ax.text(0.98, 2.0, 'CRISIS', transform=ax.get_yaxis_transform(),
             fontsize=9, color='#892323', va='center', ha='right', fontweight='bold', alpha=0.8)
@@ -226,7 +226,7 @@ def add_regime_bands(ax, ymin=-3.0, ymax=3.0):
     ax.text(0.98, 0.0, 'NEUTRAL', transform=ax.get_yaxis_transform(),
             fontsize=9, color='#00BB89', va='center', ha='right', fontweight='bold', alpha=0.8)
     ax.text(0.98, -0.75, 'LOW', transform=ax.get_yaxis_transform(),
-            fontsize=9, color='#00BBFF', va='center', ha='right', fontweight='bold', alpha=0.8)
+            fontsize=9, color='#23BBFF', va='center', ha='right', fontweight='bold', alpha=0.8)
 
 
 def save_fig(fig, name):
@@ -705,14 +705,14 @@ def fig09_lci():
     # Regime bands
     ax.axhspan(-0.5, -3.0, color='#892323', alpha=0.12)
     ax.axhspan(-0.5, 0.5, color='#00BB89', alpha=0.08)
-    ax.axhspan(0.5, 3.0, color='#00BBFF', alpha=0.08)
+    ax.axhspan(0.5, 3.0, color='#23BBFF', alpha=0.08)
 
     ax.text(0.98, -1.0, 'SCARCE', transform=ax.get_yaxis_transform(),
             fontsize=9, color='#892323', va='center', ha='right', fontweight='bold', alpha=0.8)
     ax.text(0.98, 0.0, 'ADEQUATE', transform=ax.get_yaxis_transform(),
             fontsize=9, color='#00BB89', va='center', ha='right', fontweight='bold', alpha=0.8)
     ax.text(0.98, 1.0, 'ABUNDANT', transform=ax.get_yaxis_transform(),
-            fontsize=9, color='#00BBFF', va='center', ha='right', fontweight='bold', alpha=0.8)
+            fontsize=9, color='#23BBFF', va='center', ha='right', fontweight='bold', alpha=0.8)
 
     # -0.5 threshold
     ax.axhline(-0.5, color=THEME['accent'], linewidth=1.5, linestyle='--', alpha=0.7)

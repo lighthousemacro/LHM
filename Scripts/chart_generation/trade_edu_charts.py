@@ -51,7 +51,7 @@ _DATA_CACHE = {}
 COLORS = {
     'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#00BBFF',
+    'sky': '#23BBFF',
     'venus': '#FF2389',
     'sea': '#00BB89',
     'doldrums': '#898989',
@@ -290,7 +290,7 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
             fontsize=11, fontweight='bold', color=txt_color, ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor=box_fc, edgecolor='#00BBFF',
+                      facecolor=box_fc, edgecolor='#23BBFF',
                       linewidth=2.0,
                       alpha=box_alpha))
 
@@ -394,7 +394,7 @@ def legend_style():
     return dict(
         framealpha=0.95,
         facecolor=THEME['legend_bg'],
-        edgecolor='#00BBFF' if THEME['mode'] == 'dark' else THEME['spine'],
+        edgecolor='#23BBFF' if THEME['mode'] == 'dark' else THEME['spine'],
         labelcolor=THEME['legend_fg'],
     )
 

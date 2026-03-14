@@ -16,7 +16,7 @@ from pathlib import Path
 COLORS = {
     'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#00BBFF',
+    'sky': '#23BBFF',
     'sea': '#00BB89',
     'venus': '#FF2389',
     'doldrums': '#898989',
@@ -30,7 +30,7 @@ THEME = {
     'spine': '#1e3350',
     'primary': '#2389BB',
     'secondary': '#FF6723',
-    'tertiary': '#00BBFF',
+    'tertiary': '#23BBFF',
     'accent': '#FF2389',
     'legend_bg': '#0f1f38',
     'legend_fg': '#e6edf3',

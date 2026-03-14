@@ -11,7 +11,7 @@ from pathlib import Path
 COLORS = {
     'ocean': '#2389BB',
     'dusk': '#FF6723',
-    'sky': '#00BBFF',
+    'sky': '#23BBFF',
     'sea': '#00BB89',
     'venus': '#FF2389',
     'doldrums': '#898989',

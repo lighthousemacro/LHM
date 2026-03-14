@@ -18,7 +18,7 @@ import numpy as np
 LIGHTHOUSE_COLORS = {
     'ocean_blue': '#2389BB',      # Primary brand (23+89+BB mnemonic)
     'dusk_orange': '#FF6723',     # Secondary, accent bar, CTAs (23)
-    'electric_cyan': '#00BBFF',   # Tertiary data lines (BB)
+    'electric_cyan': '#23BBFF',   # Tertiary data lines (BB)
     'hot_magenta': '#FF2389',     # Critical alerts, 2% target (23+89)
     'teal_green': '#00BB89',      # Regime bands, on-target (BB+89)
     'neutral_gray': '#898989',    # Spines, labels, structural (89+89)

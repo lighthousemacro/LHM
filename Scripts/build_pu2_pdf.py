@@ -24,7 +24,7 @@ from PIL import Image as PILImage
 # =============================================================================
 OCEAN = HexColor('#2389BB')
 DUSK = HexColor('#FF6723')
-SKY = HexColor('#00BBFF')
+SKY = HexColor('#23BBFF')
 VENUS = HexColor('#FF2389')
 SEA = HexColor('#00BB89')
 DOLDRUMS = HexColor('#898989')

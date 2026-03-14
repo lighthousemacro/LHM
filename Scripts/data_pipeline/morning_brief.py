@@ -320,7 +320,7 @@ def build_brief(conn: sqlite3.Connection, include_charts: bool = True) -> str:
         :root {{
             --ocean: #2389BB;
             --dusk: #FF6723;
-            --sky: #00BBFF;
+            --sky: #23BBFF;
             --venus: #FF2389;
             --sea: #00BB89;
             --doldrums: #898989;

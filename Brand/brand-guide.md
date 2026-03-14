@@ -16,7 +16,7 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 |-------|------|-----|----------|-------|
 | Primary | Ocean | `#2389BB` | 23+89+BB | Anchor: headers, borders, links, chart primary |
 | The Beacon | Dusk | `#FF6723` | 23 | Key insights, CTA buttons, accent bar, callouts |
-| Secondary | Sky | `#00BBFF` | BB | Lighter blue for secondary chart lines |
+| Secondary | Sky | `#23BBFF` | BB | Lighter blue for secondary chart lines |
 | Tertiary | Sea | `#00BB89` | BB+89 | Regime bands, on-target, trend shading |
 | Bullish | Starboard | `#238923` | 23+89 | Bullish regime, professional green |
 | Bearish | Port | `#892323` | 89+23 | Bearish regime, crisis bands |

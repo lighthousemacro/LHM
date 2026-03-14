@@ -329,7 +329,7 @@ ax.axhspan(1.5, 3.0, color='#892323', alpha=0.25)     # Crisis (Port)
 ax.axhspan(1.0, 1.5, color='#FF6723', alpha=0.20)     # High (Dusk)
 ax.axhspan(0.5, 1.0, color='#FF6723', alpha=0.12)     # Elevated (Dusk)
 ax.axhspan(-0.5, 0.5, color='#00BB89', alpha=0.12)    # On target (Sea)
-ax.axhspan(-3.0, -0.5, color='#00BBFF', alpha=0.12)   # Deflationary/Low (Sky)
+ax.axhspan(-3.0, -0.5, color='#23BBFF', alpha=0.12)   # Deflationary/Low (Sky)
 
 # Regime labels — right-aligned inside chart area
 ax.text(0.98, 1.75, 'CRISIS', transform=ax.get_yaxis_transform(),
@@ -387,7 +387,7 @@ ax.legend(loc='upper left', **legend_style())
 |---|---|---|
 | Primary series | Ocean | `#2389BB` |
 | Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#00BBFF` |
+| Tertiary series | Sky | `#23BBFF` |
 | Quaternary series | Sea | `#00BB89` |
 | Accent | Venus | `#FF2389` |
 | Background | White | `#ffffff` |
@@ -402,7 +402,7 @@ ax.legend(loc='upper left', **legend_style())
 |---|---|---|
 | Primary series | Ocean | `#2389BB` |
 | Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#00BBFF` |
+| Tertiary series | Sky | `#23BBFF` |
 | Quaternary series | Sea | `#00BB89` |
 | Accent | Venus | `#FF2389` |
 | Background | Dark Navy | `#0A1628` |
@@ -428,7 +428,7 @@ THEME = {
     'brand2_color': '#FF6723',   # Dusk
     'primary': '#2389BB',        # Ocean
     'secondary': '#FF6723',      # Dusk
-    'tertiary': '#00BBFF',       # Sky
+    'tertiary': '#23BBFF',       # Sky
     'quaternary': '#00BB89',     # Sea
     'accent': '#FF2389',         # Venus
     'bullish': '#238923',        # Starboard
@@ -454,7 +454,7 @@ THEME = {
     'brand2_color': '#FF6723',   # Dusk
     'primary': '#2389BB',        # Ocean
     'secondary': '#FF6723',      # Dusk
-    'tertiary': '#00BBFF',       # Sky
+    'tertiary': '#23BBFF',       # Sky
     'quaternary': '#00BB89',     # Sea
     'accent': '#FF2389',         # Venus
     'bullish': '#238923',        # Starboard
@@ -521,7 +521,7 @@ Output structure:
 |---|---|---|---|
 | **Ocean** | `#2389BB` | 23+89+BB | Primary data, borders, branding |
 | **Dusk** | `#FF6723` | 23 | Secondary series, accent bar, CTAs |
-| **Sky** | `#00BBFF` | BB | Tertiary data lines |
+| **Sky** | `#23BBFF` | BB | Tertiary data lines |
 | **Venus** | `#FF2389` | 23+89 | 2% target lines, critical alerts |
 | **Sea** | `#00BB89` | BB+89 | Regime bands, on-target zones |
 | **Doldrums** | `#898989` | 89+89 | Spines, labels, structural gray |

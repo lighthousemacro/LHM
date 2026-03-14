@@ -357,7 +357,7 @@ ax.legend(loc='upper left', **legend_style())
 |---|---|---|
 | Primary series | Ocean | `#2389BB` |
 | Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#00BBFF` |
+| Tertiary series | Sky | `#23BBFF` |
 | Quaternary series | Sea | `#00BB89` |
 | Accent | Venus | `#FF2389` |
 | Background | White | `#ffffff` |
@@ -372,7 +372,7 @@ ax.legend(loc='upper left', **legend_style())
 |---|---|---|
 | Primary series | Ocean | `#2389BB` |
 | Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#00BBFF` |
+| Tertiary series | Sky | `#23BBFF` |
 | Quaternary series | Sea | `#00BB89` |
 | Accent | Venus | `#FF2389` |
 | Background | Dark Navy | `#0A1628` |
@@ -400,7 +400,7 @@ THEME = {
     'brand2_color': '#FF6723',   # Dusk
     'primary': '#2389BB',        # Ocean
     'secondary': '#FF6723',      # Dusk
-    'tertiary': '#00BBFF',       # Sky
+    'tertiary': '#23BBFF',       # Sky
     'quaternary': '#00BB89',     # Sea
     'accent': '#FF2389',         # Venus
     'bullish': '#238923',        # Starboard
@@ -426,7 +426,7 @@ THEME = {
     'brand2_color': '#FF6723',   # Dusk
     'primary': '#2389BB',        # Ocean
     'secondary': '#FF6723',      # Dusk
-    'tertiary': '#00BBFF',       # Sky
+    'tertiary': '#23BBFF',       # Sky
     'quaternary': '#00BB89',     # Sea
     'accent': '#FF2389',         # Venus
     'bullish': '#238923',        # Starboard
@@ -495,7 +495,7 @@ Every color contains some combination of 23, 89, and BB. Quick Reference:
 |---|---|---|
 | **Ocean** | `#2389BB` | Primary data (white theme), borders, branding |
 | **Dusk** | `#FF6723` | Secondary series, accent bar segment |
-| **Sky** | `#00BBFF` | Primary data (dark theme) |
+| **Sky** | `#23BBFF` | Primary data (dark theme) |
 | **Venus** | `#FF2389` | 2% target lines, critical alerts |
 | **Sea** | `#00BB89` | Tertiary series, on-target regime bands |
 | **Doldrums** | `#898989` | Zero lines |

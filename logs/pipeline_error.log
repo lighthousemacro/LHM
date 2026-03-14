@@ -11548,3 +11548,508 @@ Traceback (most recent call last):
     db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.DatabaseError: database disk image is malformed
+2026-03-14 06:00:06 [INFO] Database initialized: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+2026-03-14 06:00:06 [INFO] --- FRED: Category Discovery ---
+2026-03-14 06:00:06 [INFO]    Employment_Situation...
+2026-03-14 06:00:08 [INFO]    Employment_Situation: 1 series, 164 obs
+2026-03-14 06:00:08 [INFO]    CPI_Urban_Consumers...
+2026-03-14 06:00:08 [INFO]    CPI_Urban_Consumers: 0 series, 0 obs
+2026-03-14 06:00:09 [INFO]    Industrial_Production...
+2026-03-14 06:00:09 [ERROR] Error fetching category Industrial_Production: database disk image is malformed
+2026-03-14 06:00:09 [INFO]    Industrial_Production: 0 series, 0 obs
+2026-03-14 06:00:09 [ERROR] FRED failed: database disk image is malformed
+2026-03-14 06:00:09 [INFO]    BLS 1990-2009...
+2026-03-14 06:00:11 [INFO]    BLS 1990-2009: 6,196 obs
+2026-03-14 06:00:12 [INFO]    BLS 2010-2026...
+2026-03-14 06:00:14 [INFO]    BLS 2010-2026: 5,994 obs
+2026-03-14 06:00:15 [INFO]    BEA GDP_Components...
+2026-03-14 06:00:16 [INFO]    BEA GDP_Components: 2,704 obs
+2026-03-14 06:00:16 [INFO]    BEA Real_GDP_Growth...
+2026-03-14 06:00:17 [INFO]    BEA Real_GDP_Growth: 2,600 obs
+2026-03-14 06:00:17 [INFO]    BEA Personal_Income...
+2026-03-14 06:00:18 [INFO]    BEA Personal_Income: 4,472 obs
+2026-03-14 06:00:19 [INFO]    BEA PCE_Components...
+2026-03-14 06:00:20 [INFO]    BEA PCE_Components: 3,224 obs
+2026-03-14 06:00:20 [INFO]    BEA Corporate_Profits...
+2026-03-14 06:00:21 [INFO]    BEA Corporate_Profits: 5,081 obs
+2026-03-14 06:00:22 [INFO]    BEA GDI...
+2026-03-14 06:00:22 [INFO]    BEA GDI: 2,484 obs
+2026-03-14 06:00:23 [INFO]    BEA Govt_Receipts_Expenditures...
+2026-03-14 06:00:24 [INFO]    BEA Govt_Receipts_Expenditures: 4,462 obs
+2026-03-14 06:00:24 [INFO]    BEA PCE_Price_Index...
+2026-03-14 06:00:25 [INFO]    BEA PCE_Price_Index: 3,224 obs
+2026-03-14 06:00:26 [INFO]    BEA GDP_Price_Index...
+2026-03-14 06:00:30 [INFO]    BEA GDP_Price_Index: 2,496 obs
+2026-03-14 06:00:32 [INFO]    NY Fed from 2018-04-03...
+2026-03-14 06:00:41 [INFO]    NY Fed: 19,870 obs
+2026-03-14 06:00:41 [INFO]    OFR OFR_SOFR...
+2026-03-14 06:00:44 [INFO]    OFR OFR_SOFR: 1,984 obs
+2026-03-14 06:00:45 [INFO]    OFR OFR_EFFR...
+2026-03-14 06:00:45 [INFO]    OFR OFR_EFFR: 2,519 obs
+2026-03-14 06:00:45 [INFO]    OFR OFR_OBFR...
+2026-03-14 06:00:46 [INFO]    OFR OFR_OBFR: 2,519 obs
+2026-03-14 06:00:46 [INFO]    OFR OFR_TGCR...
+2026-03-14 06:00:46 [INFO]    OFR OFR_TGCR: 1,984 obs
+2026-03-14 06:00:46 [INFO]    OFR OFR_BGCR...
+2026-03-14 06:00:47 [INFO]    OFR OFR_BGCR: 1,984 obs
+2026-03-14 06:00:47 [INFO]    OFR MMF_Total_Assets...
+2026-03-14 06:00:47 [INFO]    OFR MMF_Total_Assets: 183 obs
+2026-03-14 06:00:48 [INFO]    OFR MMF_Repo_Total...
+2026-03-14 06:00:48 [INFO]    OFR MMF_Repo_Total: 183 obs
+2026-03-14 06:00:48 [INFO]    OFR MMF_Repo_with_Fed...
+2026-03-14 06:00:48 [INFO]    OFR MMF_Repo_with_Fed: 151 obs
+2026-03-14 06:00:48 [INFO]    OFR MMF_Treasury_Total...
+2026-03-14 06:00:49 [INFO]    OFR MMF_Treasury_Total: 183 obs
+2026-03-14 06:00:49 [INFO]    OFR PD_Repo_Total...
+2026-03-14 06:00:49 [INFO]    OFR PD_Repo_Total: 55 obs
+2026-03-14 06:00:49 [INFO]    OFR PD_ReverseRepo_Total...
+2026-03-14 06:00:50 [INFO]    OFR PD_ReverseRepo_Total: 31 obs
+2026-03-14 06:00:50 [INFO]    OFR PD_Repo_Treasury_Total...
+2026-03-14 06:00:50 [INFO]    OFR PD_Repo_Treasury_Total: 365 obs
+2026-03-14 06:00:51 [INFO]    OFR FSI...
+2026-03-14 06:00:59 [INFO]    OFR FSI: 59,625 obs
+2026-03-14 06:00:59 [INFO] === MARKET DATA FETCH ===
+2026-03-14 06:00:59 [INFO] --- Yahoo Finance (S&P 500) ---
+2026-03-14 06:00:59 [INFO]    Fetching S&P 500 from 2000-01-01...
+2026-03-14 06:01:05 [INFO]    S&P 500: 97,573 observations
+2026-03-14 06:01:05 [INFO] --- Breadth Data ---
+2026-03-14 06:01:05 [INFO]    Breadth data requires premium sources (StockCharts, Bloomberg)
+2026-03-14 06:01:05 [INFO]    Using proxy computations where possible...
+2026-03-14 06:01:05 [INFO] --- Sentiment Data ---
+2026-03-14 06:01:07 [ERROR] VIX metrics error: database disk image is malformed
+2026-03-14 06:01:07 [INFO]    Fetching AAII sentiment...
+2026-03-14 06:01:08 [ERROR] AAII fetch error: database disk image is malformed
+2026-03-14 06:01:08 [INFO]    Fetching NAAIM exposure...
+2026-03-14 06:01:08 [INFO]    NAAIM requires web scraping or direct data agreement
+2026-03-14 06:01:08 [INFO] --- Put/Call Ratio ---
+2026-03-14 06:01:08 [INFO]    Put/Call ratio requires CBOE data feed...
+2026-03-14 06:01:08 [INFO] === MARKET DATA COMPLETE: 15 series, 97,573 obs ===
+2026-03-14 06:01:08 [INFO] 
+--- FREE CRYPTO DATA (DefiLlama + CoinGecko) ---
+2026-03-14 06:01:08 [INFO] Fetching TVL data from DefiLlama...
+2026-03-14 06:01:16 [WARNING]    Sui: HTTP 400
+2026-03-14 06:01:18 [WARNING]    Optimism: HTTP 400
+2026-03-14 06:01:22 [WARNING]    Base: HTTP 400
+2026-03-14 06:01:23 [WARNING]    Polygon: HTTP 400
+2026-03-14 06:01:23 [ERROR]    Uniswap: Error - database disk image is malformed
+2026-03-14 06:01:29 [ERROR]    Curve: Error - database disk image is malformed
+2026-03-14 06:01:58 [ERROR]    PancakeSwap: Error - database disk image is malformed
+2026-03-14 06:02:08 [ERROR]    Raydium: Error - database disk image is malformed
+2026-03-14 06:02:09 [ERROR]    Aerodrome: Error - database disk image is malformed
+2026-03-14 06:02:10 [ERROR]    Aave: Error - database disk image is malformed
+2026-03-14 06:02:17 [WARNING]    Compound: HTTP 400
+2026-03-14 06:02:18 [ERROR]    Morpho: Error - database disk image is malformed
+2026-03-14 06:02:22 [ERROR]    Spark: Error - database disk image is malformed
+2026-03-14 06:02:29 [ERROR]    GMX: Error - database disk image is malformed
+2026-03-14 06:02:30 [ERROR]    dYdX: Error - database disk image is malformed
+2026-03-14 06:02:31 [ERROR]    Hyperliquid: Error - database disk image is malformed
+2026-03-14 06:02:35 [ERROR]    Synthetix: Error - database disk image is malformed
+2026-03-14 06:02:35 [ERROR]    Lido: Error - database disk image is malformed
+2026-03-14 06:02:38 [ERROR]    Rocket Pool: Error - database disk image is malformed
+2026-03-14 06:02:41 [ERROR]    Jito: Error - database disk image is malformed
+2026-03-14 06:02:41 [WARNING]    Marinade: HTTP 400
+2026-03-14 06:02:46 [ERROR]    MakerDAO: Error - database disk image is malformed
+2026-03-14 06:02:47 [ERROR] CRYPTO failed: database disk image is malformed
+2026-03-14 06:02:47 [INFO] Found 503 S&P 500 constituents
+2026-03-14 06:02:47 [INFO] Fetching prices for 503 tickers...
+2026-03-14 06:02:47 [INFO]    Batch 1/11: 50 tickers
+2026-03-14 06:02:50 [INFO]    Batch 2/11: 50 tickers
+2026-03-14 06:02:52 [INFO]    Batch 3/11: 50 tickers
+2026-03-14 06:02:54 [INFO]    Batch 4/11: 50 tickers
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'ETN' reason: Failed to perform, curl: (77) error setting certificate verify locations:  CAfile: /opt/homebrew/lib/python3.14/site-packages/certifi/cacert.pem CApath: none. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'EXPD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'EG' reason: Failed to perform, curl: (77) error setting certificate verify locations:  CAfile: /opt/homebrew/lib/python3.14/site-packages/certifi/cacert.pem CApath: none. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $EG: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'EFX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $EFX: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'DD' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $DD: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'EBAY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $EBAY: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'DASH' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'EXE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $DASH: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] $EXE: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'ES' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $ES: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'FICO' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $FICO: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'DTE' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $DTE: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'DG' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $DG: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'EXR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'FAST' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $FAST: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] $EXR: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'DUK' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $DUK: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'FRT' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $FRT: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'DOW' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $DOW: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] Failed to get ticker 'EQIX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:55 [ERROR] $EQIX: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] 
+46 Failed downloads:
+2026-03-14 06:02:55 [ERROR] ['ETN']: ConnectionError('Failed to perform, curl: (7) Failed to connect to query2.finance.yahoo.com port 443 after 0 ms: Could not connect to server. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-03-14 06:02:55 [ERROR] ['EL', 'FIS', 'EQT', 'EXPE', 'FE', 'EA', 'ELV', 'FITB', 'ECL', 'EPAM', 'EIX', 'FDS', 'FFIV', 'EME', 'ETR', 'DLR', 'EOG', 'ESS', 'EVRG', 'EXC', 'ERIE', 'EQR', 'EW', 'DLTR', 'DHI', 'XOM', 'EMR']: OperationalError('unable to open database file')
+2026-03-14 06:02:55 [ERROR] ['EG', 'EFX', 'DD', 'EBAY', 'DASH', 'EXE', 'ES', 'FICO', 'DTE', 'DG', 'EXR', 'FAST', 'DUK', 'FRT', 'DOW', 'EQIX']: possibly delisted; no timezone found
+2026-03-14 06:02:55 [ERROR] ['EXPD']: DNSError('Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-03-14 06:02:55 [ERROR] ['DOV']: TypeError("'NoneType' object is not subscriptable")
+2026-03-14 06:02:56 [INFO]    Batch 5/11: 50 tickers
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HON' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'GEV' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $GEV: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] $HON: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'INCY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $INCY: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'GPN' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $GPN: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'ITW' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $ITW: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HUBB' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HUBB: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'FTNT' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $FTNT: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'FCX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $FCX: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'GILD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $GILD: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HLT' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HLT: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'IR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $IR: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HAS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HAS: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HAL' reason: Failed to perform, curl: (77) error setting certificate verify locations:  CAfile: /opt/homebrew/lib/python3.14/site-packages/certifi/cacert.pem CApath: none. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HAL: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'GD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $GD: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HBAN' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HBAN: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HPE' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HPE: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'GL' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $GL: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HD: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'HPQ' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $HPQ: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] Failed to get ticker 'IEX' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:56 [ERROR] $IEX: possibly delisted; no timezone found
+2026-03-14 06:02:56 [ERROR] 
+50 Failed downloads:
+2026-03-14 06:02:56 [ERROR] ['HIG', 'HSIC', 'IBM', 'HST', 'IDXX', 'FISV', 'GIS', 'GS', 'GEHC', 'GNRC', 'GRMN', 'HWM', 'HUM', 'IT', 'BEN', 'DOC', 'GM', 'HRL', 'GDDY', 'HOLX', 'GE', 'FOX', 'HII', 'GPC', 'GEN', 'F', 'HSY', 'FTV', 'HCA', 'FOXA']: OperationalError('unable to open database file')
+2026-03-14 06:02:56 [ERROR] ['HON', 'GEV', 'INCY', 'GPN', 'ITW', 'HUBB', 'FTNT', 'FCX', 'GILD', 'HLT', 'IR', 'HAS', 'HAL', 'GD', 'HBAN', 'HPE', 'GL', 'HD', 'HPQ', 'IEX']: possibly delisted; no timezone found
+2026-03-14 06:02:57 [INFO]    Batch 6/11: 50 tickers
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'LMT' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $LMT: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'MAR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $MAR: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'KVUE' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $KVUE: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'KDP' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $KDP: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'LW' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $LW: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'LIN' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $LIN: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'LEN' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $LEN: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'ICE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $ICE: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'LYB' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $LYB: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'PODD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $PODD: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'LVS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $LVS: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'JCI' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $JCI: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'IVZ' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $IVZ: possibly delisted; no timezone found
+2026-03-14 06:02:57 [ERROR] Failed to get ticker 'KEYS' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:57 [ERROR] $KEYS: possibly delisted; no timezone found
+2026-03-14 06:02:58 [ERROR] 
+50 Failed downloads:
+2026-03-14 06:02:58 [ERROR] ['LMT', 'MAR', 'KVUE', 'KDP', 'LW', 'LIN', 'LEN', 'ICE', 'LYB', 'PODD', 'LVS', 'JCI', 'IVZ', 'KEYS']: possibly delisted; no timezone found
+2026-03-14 06:02:58 [ERROR] ['LII', 'J', 'IBKR', 'JBL', 'LDOS', 'MTB', 'JBHT', 'KIM', 'JPM', 'JKHY', 'KLAC', 'KR', 'LOW', 'LYV', 'KHC', 'KKR', 'MPC', 'LULU', 'INTC', 'IP', 'IFF', 'KMB', 'LHX', 'MRSH', 'IRM', 'INTU', 'LLY', 'L', 'IQV', 'KMI', 'INVH', 'LH', 'KEY', 'LRCX', 'JNJ', 'ISRG']: OperationalError('unable to open database file')
+2026-03-14 06:02:59 [INFO]    Batch 7/11: 50 tickers
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'NTRS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $NTRS: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'MAA' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $MAA: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'MRNA' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $MRNA: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'NUE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $NUE: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'NI' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $NI: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'OXY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $OXY: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'MRK' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $MRK: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'NEE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $NEE: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'MDT' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $MDT: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'MOS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $MOS: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'TAP' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $TAP: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'MSI' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $MSI: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] Failed to get ticker 'MA' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:02:59 [ERROR] $MA: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] 
+50 Failed downloads:
+2026-03-14 06:02:59 [ERROR] ['NTRS', 'MAA', 'MRNA', 'NUE', 'NI', 'OXY', 'MRK', 'NEE', 'MDT', 'MOS', 'TAP', 'MSI', 'MA']: possibly delisted; no timezone found
+2026-03-14 06:02:59 [ERROR] ['NVDA', 'NDSN', 'MSCI', 'MDLZ', 'MSFT', 'MAS', 'MNST', 'NWS', 'NRG', 'NXPI', 'MCO', 'MU', 'MGM', 'MPWR', 'NTAP', 'NSC', 'MTD', 'NWSA', 'MKC', 'NFLX', 'MLM', 'MET', 'MCHP', 'NOC', 'NCLH', 'MCK', 'MCD', 'META', 'MTCH', 'MS', 'NEM', 'MOH', 'NKE', 'ODFL', 'ORLY', 'NDAQ', 'NVR']: OperationalError('unable to open database file')
+2026-03-14 06:03:00 [INFO]    Batch 8/11: 50 tickers
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'REGN' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $REGN: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PEG' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PEG: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PNR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PNR: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PFE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PFE: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'OKE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $OKE: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'ROK' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $ROK: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'ON' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $ON: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PPG' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PPG: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'RMD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $RMD: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PLTR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PLTR: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'DGX' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $DGX: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PSX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PSX: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PFG' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PFG: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PEP' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PEP: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'PRU' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $PRU: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] Failed to get ticker 'OMC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:00 [ERROR] $OMC: possibly delisted; no timezone found
+2026-03-14 06:03:00 [ERROR] 
+50 Failed downloads:
+2026-03-14 06:03:00 [ERROR] ['RTX', 'POOL', 'PKG', 'PTC', 'PANW', 'RL', 'HOOD', 'PAYX', 'PCG', 'RSG', 'PAYC', 'ORCL', 'RF', 'PM', 'RVTY', 'PHM', 'OTIS', 'PPL', 'PH', 'PWR', 'Q', 'QCOM', 'REG', 'PG', 'PLD', 'PSA', 'PCAR', 'PNC', 'PNW', 'PSKY', 'O', 'PGR', 'RJF', 'PYPL']: OperationalError('unable to open database file')
+2026-03-14 06:03:00 [ERROR] ['REGN', 'PEG', 'PNR', 'PFE', 'OKE', 'ROK', 'ON', 'PPG', 'RMD', 'PLTR', 'DGX', 'PSX', 'PFG', 'PEP', 'PRU', 'OMC']: possibly delisted; no timezone found
+2026-03-14 06:03:01 [INFO]    Batch 9/11: 50 tickers
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'LUV' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $LUV: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'SNPS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $SNPS: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'TPL' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $TPL: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'SOLV' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $SOLV: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'TTWO' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $TTWO: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'SW' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $SW: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'TPR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $TPR: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'RCL' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $RCL: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'TER' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $TER: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] Failed to get ticker 'ROP' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:01 [ERROR] $ROP: possibly delisted; no timezone found
+2026-03-14 06:03:01 [ERROR] 
+50 Failed downloads:
+2026-03-14 06:03:01 [ERROR] ['TEL', 'SHW', 'TKO', 'SBAC', 'SPG', 'SYK', 'SYF', 'TRGP', 'SYY', 'TXT', 'SMCI', 'SNA', 'SBUX', 'TTD', 'STE', 'STLD', 'TJX', 'TDY', 'SWK', 'SJM', 'ROL', 'TMO', 'TSLA', 'SPGI', 'SNDK', 'STX', 'TSCO', 'STT', 'TGT', 'SWKS', 'TXN', 'ROST', 'TMUS', 'NOW', 'TROW', 'SO', 'TT', 'SRE', 'CRM', 'SLB']: OperationalError('unable to open database file')
+2026-03-14 06:03:01 [ERROR] ['LUV', 'SNPS', 'TPL', 'SOLV', 'TTWO', 'SW', 'TPR', 'RCL', 'TER', 'ROP']: possibly delisted; no timezone found
+2026-03-14 06:03:02 [INFO]    Batch 10/11: 50 tickers
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'VRSK' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $VRSK: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'WMB' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $WMB: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'UBER' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $UBER: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'WEC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $WEC: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'ULTA' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $ULTA: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'WST' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $WST: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'TRMB' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'XEL' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $XEL: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] $TRMB: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'VLTO' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $VLTO: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'UNP' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $UNP: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'VMC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $VMC: possibly delisted; no timezone found
+2026-03-14 06:03:02 [ERROR] Failed to get ticker 'UHS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-14 06:03:02 [ERROR] $UHS: possibly delisted; no timezone found
+2026-03-14 06:03:03 [ERROR] 
+50 Failed downloads:
+2026-03-14 06:03:03 [ERROR] ['VRSK', 'WMB', 'UBER', 'WEC', 'ULTA', 'WST', 'TRMB', 'XEL', 'VLTO', 'UNP', 'VMC', 'UHS']: possibly delisted; no timezone found
+2026-03-14 06:03:03 [ERROR] ['WFC', 'WYNN', 'WY', 'WAB', 'UPS', 'WTW', 'TSN', 'WRB', 'VLO', 'WAT', 'WSM', 'GWW', 'WDAY', 'VTRS', 'URI', 'WBD', 'DIS', 'VRSN', 'TFC', 'UDR', 'VST', 'YUM', 'XYL', 'WM', 'UNH', 'TRV', 'VTR', 'USB', 'TYL', 'VRTX', 'VICI', 'WELL', 'UAL', 'WDC', 'WMT', 'VZ', 'V', 'TDG']: OperationalError('unable to open database file')
+2026-03-14 06:03:04 [INFO]    Batch 11/11: 3 tickers
+2026-03-14 06:03:04 [ERROR] 
+3 Failed downloads:
+2026-03-14 06:03:04 [ERROR] ['ZBRA', 'ZBH', 'ZTS']: OperationalError('unable to open database file')
+2026-03-14 06:03:05 [INFO]    Got prices for 154 stocks, 752 days
+2026-03-14 06:03:05 [INFO] Computing % above MAs...
+2026-03-14 06:03:05 [INFO] Computing A/D line...
+2026-03-14 06:03:05 [INFO] Computing NH-NL...
+2026-03-14 06:03:05 [INFO] Computing McClellan...
+2026-03-14 06:03:05 [INFO] Computing breadth thrust...
+2026-03-14 06:03:05 [INFO] Storing metrics in database...
+2026-03-14 06:03:12 [INFO]    SPX_PCT_ABOVE_20D: 752 observations
+2026-03-14 06:03:13 [INFO]    SPX_PCT_ABOVE_50D: 752 observations
+2026-03-14 06:03:13 [INFO]    SPX_PCT_ABOVE_200D: 752 observations
+2026-03-14 06:03:13 [INFO]    SPX_ADVANCES: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_DECLINES: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_AD_LINE: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_AD_RATIO: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_NEW_HIGHS: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_NEW_LOWS: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_NET_NEW_HIGHS: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_MCCLELLAN_OSC: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_MCCLELLAN_SUM: 752 observations
+2026-03-14 06:03:14 [INFO]    SPX_BREADTH_THRUST: 752 observations
+2026-03-14 06:03:14 [INFO] 
+Breadth total: 13 series, 9,776 observations
+2026-03-14 06:03:14 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-03-14 06:03:24 [INFO]   ZHVI: 21 series, 6,570 observations
+2026-03-14 06:03:24 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-03-14 06:03:26 [INFO]   ZORI: 21 series, 2,773 observations
+2026-03-14 06:03:26 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-03-14 06:03:32 [INFO]     TV_USHMI: 494 observations
+2026-03-14 06:03:33 [INFO]   Fetching ECONOMICS:USPIND -> TV_USPIND...
+2026-03-14 06:03:35 [INFO]     TV_USPIND: 435 observations
+2026-03-14 06:03:36 [INFO]   Fetching ECONOMICS:USMRI -> TV_USMRI...
+2026-03-14 06:03:44 [INFO]     TV_USMRI: 435 observations
+2026-03-14 06:03:45 [INFO]   Fetching ECONOMICS:USPHSIYY -> TV_USPHSIYY...
+2026-03-14 06:03:50 [INFO]     TV_USPHSIYY: 288 observations
+2026-03-14 06:03:51 [INFO]   Fetching ECONOMICS:USPHSIMM -> TV_USPHSIMM...
+2026-03-14 06:03:53 [INFO]     TV_USPHSIMM: 300 observations
+2026-03-14 06:03:55 [INFO]   Fetching ECONOMICS:USCONSTS -> TV_USCONSTS...
+2026-03-14 06:03:58 [INFO]     TV_USCONSTS: 743 observations
+2026-03-14 06:03:59 [INFO]   Fetching ECONOMICS:USPRR -> TV_USPRR...
+2026-03-14 06:04:00 [INFO]     TV_USPRR: 220 observations
+2026-03-14 06:04:01 [INFO]   Fetching ECONOMICS:USAMS -> TV_USAMS...
+2026-03-14 06:04:07 [INFO]     TV_USAMS: 432 observations
+2026-03-14 06:04:08 [INFO]   Fetching ECONOMICS:USEHS -> TV_USEHS...
+2026-03-14 06:04:10 [INFO]     TV_USEHS: 698 observations
+2026-03-14 06:04:11 [INFO]   Fetching ECONOMICS:USMAPL -> TV_USMAPL...
+2026-03-14 06:04:14 [INFO]     TV_USMAPL: 435 observations
+2026-03-14 06:04:15 [INFO]   Fetching ECONOMICS:USMMI -> TV_USMMI...
+2026-03-14 06:04:17 [INFO]     TV_USMMI: 435 observations
+2026-03-14 06:04:18 [INFO]   Fetching ECONOMICS:USMOR -> TV_USMOR...
+2026-03-14 06:04:19 [INFO]     TV_USMOR: 92 observations
+2026-03-14 06:04:21 [INFO]   Fetching ECONOMICS:USISMMP -> TV_USISMMP...
+2026-03-14 06:04:21 [INFO]     TV_USISMMP: 6 observations
+2026-03-14 06:04:22 [INFO]   Fetching ECONOMICS:USBCOI -> TV_USBCOI...
+2026-03-14 06:04:23 [INFO]     TV_USBCOI: 938 observations
+2026-03-14 06:04:24 [INFO]   Fetching ECONOMICS:USMNO -> TV_USMNO...
+2026-03-14 06:04:26 [INFO]     TV_USMNO: 914 observations
+2026-03-14 06:04:27 [INFO]   Fetching ECONOMICS:USMEMP -> TV_USMEMP...
+2026-03-14 06:04:29 [INFO]     TV_USMEMP: 914 observations
+2026-03-14 06:04:30 [INFO]   Fetching ECONOMICS:USMPR -> TV_USMPR...
+2026-03-14 06:04:31 [INFO]     TV_USMPR: 278 observations
+2026-03-14 06:04:32 [INFO]   Fetching ECONOMICS:USNMPMI -> TV_USNMPMI...
+2026-03-14 06:04:53 [WARNING]     TV_USNMPMI: No data returned
+2026-03-14 06:04:54 [INFO]   Fetching ECONOMICS:USNMBA -> TV_USNMBA...
+2026-03-14 06:05:07 [INFO]     TV_USNMBA: 344 observations
+2026-03-14 06:05:08 [INFO]   Fetching ECONOMICS:USNMNO -> TV_USNMNO...
+2026-03-14 06:05:14 [INFO]     TV_USNMNO: 344 observations
+2026-03-14 06:05:15 [INFO]   Fetching ECONOMICS:USNMEMP -> TV_USNMEMP...
+2026-03-14 06:05:17 [INFO]     TV_USNMEMP: 344 observations
+2026-03-14 06:05:18 [INFO]   Fetching ECONOMICS:USNMPR -> TV_USNMPR...
+2026-03-14 06:05:19 [INFO]     TV_USNMPR: 344 observations
+2026-03-14 06:05:20 [INFO]   Fetching ECONOMICS:USRFMI -> TV_USRFMI...
+2026-03-14 06:05:21 [INFO]     TV_USRFMI: 388 observations
+2026-03-14 06:05:22 [INFO]   Fetching ECONOMICS:USKFMI -> TV_USKFMI...
+2026-03-14 06:05:23 [INFO]     TV_USKFMI: 296 observations
+2026-03-14 06:05:24 [INFO]   Fetching ECONOMICS:USLEI -> TV_USLEI...
+2026-03-14 06:05:26 [INFO]     TV_USLEI: 804 observations
+2026-03-14 06:05:27 [INFO]   Fetching ECONOMICS:USBOI -> TV_USBOI...
+2026-03-14 06:05:27 [INFO]     TV_USBOI: 526 observations
+2026-03-14 06:05:29 [INFO]   Fetching ECONOMICS:USFO -> TV_USFO...
+2026-03-14 06:05:29 [INFO]     TV_USFO: 412 observations
+2026-03-14 06:05:30 [INFO]   Fetching ECONOMICS:USBOT -> TV_USBOT...
+2026-03-14 06:05:33 [INFO]     TV_USBOT: 913 observations
+2026-03-14 06:05:34 [INFO]   Fetching ECONOMICS:USCA -> TV_USCA...
+2026-03-14 06:05:35 [INFO]     TV_USCA: 263 observations
+2026-03-14 06:05:36 [INFO]   Fetching ECONOMICS:USGTB -> TV_USGTB...
+2026-03-14 06:05:37 [INFO]     TV_USGTB: 853 observations
+2026-03-14 06:05:38 [INFO]   Fetching ECONOMICS:USIMP -> TV_USIMP...
+2026-03-14 06:05:43 [INFO]     TV_USIMP: 913 observations
+2026-03-14 06:05:44 [INFO]   Fetching ECONOMICS:USEXP -> TV_USEXP...
+2026-03-14 06:05:47 [INFO]     TV_USEXP: 913 observations
+2026-03-14 06:05:48 [INFO]   Fetching ECONOMICS:USCAG -> TV_USCAG...
+2026-03-14 06:05:49 [INFO]     TV_USCAG: 45 observations
+2026-03-14 06:05:50 [INFO]   Fetching ECONOMICS:USCURAG -> TV_USCURAG...
+2026-03-14 06:05:51 [INFO]     TV_USCURAG: 2 observations
+2026-03-14 06:05:52 [INFO]   Fetching ECONOMICS:USCURAS -> TV_USCURAS...
+2026-03-14 06:05:53 [INFO]     TV_USCURAS: 2 observations
+2026-03-14 06:05:54 [INFO]   Fetching ECONOMICS:USTA -> TV_USTA...
+2026-03-14 06:05:55 [INFO]     TV_USTA: 359 observations
+2026-03-14 06:05:56 [INFO]   Fetching ECONOMICS:USCF -> TV_USCF...
+2026-03-14 06:05:57 [INFO]     TV_USCF: 572 observations
+2026-03-14 06:05:58 [INFO]   Fetching ECONOMICS:USTICNLF -> TV_USTICNLF...
+2026-03-14 06:05:59 [INFO]     TV_USTICNLF: 572 observations
+2026-03-14 06:06:00 [INFO]   Fetching ECONOMICS:USFDI -> TV_USFDI...
+2026-03-14 06:06:01 [INFO]     TV_USFDI: 127 observations
+2026-03-14 06:06:02 [INFO]   Fetching ECONOMICS:USED -> TV_USED...
+2026-03-14 06:06:03 [INFO]     TV_USED: 90 observations
+2026-03-14 06:06:04 [INFO]   Fetching ECONOMICS:USTI -> TV_USTI...
+2026-03-14 06:06:04 [INFO]     TV_USTI: 23 observations
+2026-03-14 06:06:05 [INFO]   Fetching ECONOMICS:USTOT -> TV_USTOT...
+2026-03-14 06:06:06 [INFO]     TV_USTOT: 236 observations
+2026-03-14 06:06:07 [INFO]   Fetching ECONOMICS:USCOP -> TV_USCOP...
+2026-03-14 06:06:08 [INFO]     TV_USCOP: 912 observations
+2026-03-14 06:06:09 [INFO]   Fetching ECONOMICS:USWCOP -> TV_USWCOP...
+2026-03-14 06:06:13 [INFO]     TV_USWCOP: 481 observations
+2026-03-14 06:06:14 [INFO]   Fetching ECONOMICS:USOE -> TV_USOE...
+2026-03-14 06:06:16 [INFO]     TV_USOE: 445 observations
+2026-03-14 06:06:17 [INFO]   Fetching ECONOMICS:USGRES -> TV_USGRES...
+2026-03-14 06:06:18 [INFO]     TV_USGRES: 105 observations
+2026-03-14 06:06:19 [INFO]   Fetching ECONOMICS:USTR -> TV_USTR...
+2026-03-14 06:06:21 [INFO]     TV_USTR: 324 observations
+2026-03-14 06:06:22 [INFO]   Fetching ECONOMICS:USWES -> TV_USWES...
+2026-03-14 06:06:23 [INFO]     TV_USWES: 75 observations
+2026-03-14 06:06:25 [INFO] Running quality checks on 2397 series...
+2026-03-14 06:06:26 [INFO]    Checked 100 series...
+2026-03-14 06:06:27 [INFO]    Checked 200 series...
+2026-03-14 06:06:27 [INFO]    Checked 300 series...
+2026-03-14 06:06:28 [INFO]    Checked 400 series...
+2026-03-14 06:06:28 [INFO]    Checked 500 series...
+2026-03-14 06:06:29 [INFO]    Checked 600 series...
+2026-03-14 06:06:29 [INFO]    Checked 700 series...
+2026-03-14 06:06:29 [ERROR] Quality checks failed: Execution failed on sql '
+            SELECT date, value FROM observations
+            WHERE series_id = ?
+            ORDER BY date
+        ': database disk image is malformed
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 109, in main
+    run_daily_update(
+    ~~~~~~~~~~~~~~~~^
+        skip_quality=args.quick,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        sources=sources
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 304, in run_daily_update
+    db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed

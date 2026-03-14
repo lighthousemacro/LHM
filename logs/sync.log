@@ -51385,3 +51385,32 @@ rsync(13569): error: unexpected end of file
 [2026-03-13 20:45:03]   GitHub: FAILED
 [2026-03-13 20:45:03]   Cloud: OK
 [2026-03-13 20:45:03] ============================================================
+[2026-03-13 20:50:47] ============================================================
+[2026-03-13 20:50:47] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-03-13 20:50:47] ============================================================
+[2026-03-13 20:50:47] GIT SYNC: Starting...
+[2026-03-13 20:50:47] GIT SYNC: Committed: Daily pipeline sync 2026-03-13 20:50
+[2026-03-13 20:50:48] GIT SYNC: Push failed: To https://github.com/BobSheehan23/LHM.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/BobSheehan23/LHM.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+[2026-03-13 20:50:48] CLOUD SYNC: Starting...
+[2026-03-13 20:50:48] CLOUD SYNC [iCloud]: Lighthouse_Master_20260313.db already exists, skipping.
+[2026-03-13 20:50:48] CLOUD SYNC [GDrive]: Lighthouse_Master_20260313.db already exists, skipping.
+[2026-03-13 20:50:49] CLOUD SYNC [GDrive]: rsync Strategy failed: rsync(14073): error: CLAUDE_MASTER.md: mmap: Resource deadlock avoided
+rsync(14072): error: unexpected end of file
+
+[2026-03-13 20:50:49] CLOUD SYNC [GDrive]: rsync Brand failed: rsync(14075): error: brand-guide.md: mmap: Resource deadlock avoided
+rsync(14074): error: unexpected end of file
+
+[2026-03-13 20:50:49] CLOUD SYNC [Dropbox]: Lighthouse_Master_20260313.db already exists, skipping.
+[2026-03-13 20:50:49] ----------------------------------------
+[2026-03-13 20:50:49] SYNC SUMMARY:
+[2026-03-13 20:50:49]   GitHub: FAILED
+[2026-03-13 20:50:49]   Cloud: OK
+[2026-03-13 20:50:49] ============================================================

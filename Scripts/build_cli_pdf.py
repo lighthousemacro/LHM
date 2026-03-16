@@ -138,7 +138,7 @@ def build_pdf():
     story.append(Paragraph(
         'A weighted z-score composite measuring how fast global liquidity transmits into crypto. '
         'Positive CLI = expanding liquidity impulse. Negative = contracting. '
-        '"Impulse" (not "Flow") because the indicator measures rate of change (second derivative), not cumulative direction.',
+        '"Impulse" (not "Stock") because the indicator measures rate of change (second derivative), not levels. Impulse is a flow concept: it captures the acceleration of liquidity transmission, not the cumulative position.',
         body))
 
     # --- ARCHITECTURE ---

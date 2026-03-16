@@ -12053,3 +12053,16 @@ Traceback (most recent call last):
     db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.DatabaseError: database disk image is malformed
+2026-03-16 09:29:21 [INFO] Database initialized: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+2026-03-16 09:29:21 [INFO] --- FRED: Category Discovery ---
+2026-03-16 09:29:21 [INFO]    Employment_Situation...
+2026-03-16 09:29:24 [INFO]    Employment_Situation: 0 series, 0 obs
+2026-03-16 09:29:24 [INFO]    CPI_Urban_Consumers...
+2026-03-16 09:29:25 [INFO]    CPI_Urban_Consumers: 0 series, 0 obs
+2026-03-16 09:29:25 [INFO]    Industrial_Production...
+2026-03-16 09:29:27 [ERROR] Error fetching category Industrial_Production: database disk image is malformed
+2026-03-16 09:29:27 [INFO]    Industrial_Production: 0 series, 0 obs
+2026-03-16 09:29:27 [ERROR] FRED failed: database disk image is malformed
+2026-03-16 09:29:27 [INFO]    BLS 1990-2009...
+2026-03-16 09:29:30 [ERROR] BLS Error: database disk image is malformed
+2026-03-16 09:29:31 [INFO]    BLS 2010-2026...

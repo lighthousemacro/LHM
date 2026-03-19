@@ -12251,3 +12251,119 @@ Traceback (most recent call last):
     db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.DatabaseError: database disk image is malformed
+2026-03-19 13:30:13 [INFO] Database initialized: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+2026-03-19 13:30:13 [INFO] --- FRED: Category Discovery ---
+2026-03-19 13:30:13 [INFO]    Employment_Situation...
+2026-03-19 13:30:18 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=DALLSRECRELEXFACBEP&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-03-19 13:30:54 [ERROR] Error fetching category Employment_Situation: database is locked
+2026-03-19 13:30:54 [INFO]    Employment_Situation: 0 series, 0 obs
+2026-03-19 13:31:05 [INFO]    CPI_Urban_Consumers...
+2026-03-19 13:31:27 [INFO]    CPI_Urban_Consumers: 8 series, 130 obs
+2026-03-19 13:31:28 [INFO]    Industrial_Production...
+2026-03-19 13:31:31 [ERROR] Error fetching category Industrial_Production: database disk image is malformed
+2026-03-19 13:31:31 [INFO]    Industrial_Production: 0 series, 0 obs
+2026-03-19 13:31:32 [INFO]    Treasury_Rates...
+2026-03-19 13:32:01 [ERROR] Error fetching category Treasury_Rates: database disk image is malformed
+2026-03-19 13:32:01 [INFO]    Treasury_Rates: 0 series, 0 obs
+2026-03-19 13:32:02 [INFO]    Money_Banking...
+2026-03-19 13:32:02 [INFO]    Money_Banking: 0 series, 0 obs
+2026-03-19 13:32:03 [INFO]    Producer_Price_Index...
+2026-03-19 13:32:03 [INFO]    Producer_Price_Index: 0 series, 0 obs
+2026-03-19 13:32:03 [INFO]    Employment_Cost_Index...
+2026-03-19 13:32:09 [ERROR] Error fetching category Employment_Cost_Index: database disk image is malformed
+2026-03-19 13:32:09 [INFO]    Employment_Cost_Index: 0 series, 0 obs
+2026-03-19 13:32:10 [INFO]    Exchange_Rates...
+2026-03-19 13:32:32 [ERROR] Error fetching category Exchange_Rates: database or disk is full
+2026-03-19 13:32:32 [INFO]    Exchange_Rates: 0 series, 0 obs
+2026-03-19 13:32:32 [INFO]    Regional_Fed_Surveys...
+2026-03-19 13:32:33 [INFO]    Regional_Fed_Surveys: 0 series, 0 obs
+2026-03-19 13:32:34 [INFO]    Housing...
+2026-03-19 13:32:35 [INFO]    Housing: 2 series, 129 obs
+2026-03-19 13:32:36 [INFO]    GDP_National_Accounts...
+2026-03-19 13:33:02 [INFO]    GDP_National_Accounts: 41 series, 11,970 obs
+2026-03-19 13:33:03 [INFO]    Personal_Income...
+2026-03-19 13:33:03 [ERROR] Error fetching category Personal_Income: database disk image is malformed
+2026-03-19 13:33:03 [INFO]    Personal_Income: 0 series, 0 obs
+2026-03-19 13:33:04 [INFO]    Consumer_Credit...
+2026-03-19 13:33:04 [INFO]    Consumer_Credit: 0 series, 0 obs
+2026-03-19 13:33:04 [INFO]    Interest_Rates...
+2026-03-19 13:33:13 [ERROR] Error fetching category Interest_Rates: database or disk is full
+2026-03-19 13:33:13 [INFO]    Interest_Rates: 1 series, 2,869 obs
+2026-03-19 13:33:13 [INFO]    Business_Lending...
+2026-03-19 13:33:16 [ERROR] Error fetching category Business_Lending: database or disk is full
+2026-03-19 13:33:16 [INFO]    Business_Lending: 1 series, 949 obs
+2026-03-19 13:33:17 [INFO] --- FRED: Curated Series ---
+2026-03-19 13:33:17 [ERROR] Error fetching UNRATE: unable to open database file
+2026-03-19 13:33:17 [ERROR] Error fetching U6RATE: unable to open database file
+2026-03-19 13:33:18 [ERROR] Error fetching CIVPART: unable to open database file
+2026-03-19 13:33:18 [ERROR] Error fetching PAYEMS: unable to open database file
+2026-03-19 13:33:18 [ERROR] Error fetching ICSA: unable to open database file
+2026-03-19 13:33:19 [ERROR] Error fetching CCSA: unable to open database file
+2026-03-19 13:33:19 [ERROR] Error fetching JTS1000JOR: unable to open database file
+2026-03-19 13:33:19 [ERROR] Error fetching JTS1000QUR: unable to open database file
+2026-03-19 13:33:43 [ERROR] Error fetching PCEPI: database disk image is malformed
+2026-03-19 13:33:43 [ERROR] Error fetching PCEPILFE: database disk image is malformed
+2026-03-19 13:33:51 [ERROR] Error fetching CUSR0000SASLE: database disk image is malformed
+2026-03-19 13:33:52 [ERROR] Error fetching CUSR0000SASL2RS: database disk image is malformed
+2026-03-19 13:33:52 [ERROR] Error fetching CUSR0000SAC: database disk image is malformed
+2026-03-19 13:33:52 [ERROR] Error fetching CUSR0000SACL1: database disk image is malformed
+2026-03-19 13:33:53 [ERROR] Error fetching CUSR0000SEMD: database disk image is malformed
+2026-03-19 13:33:53 [ERROR] Error fetching CUSR0000SEMC: database disk image is malformed
+2026-03-19 13:33:54 [ERROR] Error fetching CUSR0000SAS2RS: database disk image is malformed
+2026-03-19 13:33:54 [ERROR] Error fetching CPIAPPSL: database disk image is malformed
+2026-03-19 13:33:54 [ERROR] Error fetching CPIUFDSL: database disk image is malformed
+2026-03-19 13:33:55 [ERROR] Error fetching CPIENGSL: database disk image is malformed
+2026-03-19 13:33:55 [ERROR] Error fetching CPIMEDSL: database disk image is malformed
+2026-03-19 13:33:55 [ERROR] Error fetching CUSR0000SACE: database disk image is malformed
+2026-03-19 13:33:56 [ERROR] Error fetching MEDCPIM158SFRBCLE: database disk image is malformed
+2026-03-19 13:33:56 [ERROR] Error fetching CORESTICKM159SFRBATL: database disk image is malformed
+2026-03-19 13:33:57 [ERROR] Error fetching COREFLEXCPIM159SFRBATL: database disk image is malformed
+2026-03-19 13:33:57 [ERROR] Error fetching STICKCPIM157SFRBATL: database disk image is malformed
+2026-03-19 13:33:57 [ERROR] Error fetching FLEXCPIM157SFRBATL: database disk image is malformed
+2026-03-19 13:33:58 [ERROR] Error fetching PCETRIM12M159SFRBDAL: database disk image is malformed
+2026-03-19 13:33:58 [ERROR] Error fetching TRMMEANCPIM159SFRBCLE: database disk image is malformed
+2026-03-19 13:33:59 [ERROR] Error fetching TRMMEANCPIM158SFRBCLE: database disk image is malformed
+2026-03-19 13:33:59 [ERROR] Error fetching CPIRECSL: database disk image is malformed
+2026-03-19 13:34:00 [ERROR] Error fetching CPITRNSL: database or disk is full
+2026-03-19 13:34:01 [ERROR] Error fetching CUUR0000SETD: database disk image is malformed
+2026-03-19 13:34:01 [ERROR] Error fetching CUUR0000SEGC: database disk image is malformed
+2026-03-19 13:34:11 [ERROR] Error fetching PPIFGS: database disk image is malformed
+2026-03-19 13:34:14 [ERROR] Error fetching PPIIDC: database disk image is malformed
+2026-03-19 13:34:15 [ERROR] Error fetching PPIITM: database disk image is malformed
+2026-03-19 13:34:16 [ERROR] Error fetching WPSFD4131: database disk image is malformed
+2026-03-19 13:34:18 [ERROR] Error fetching WPSFD41312: database disk image is malformed
+2026-03-19 13:34:19 [ERROR] Error fetching MICH: database disk image is malformed
+2026-03-19 13:34:19 [ERROR] Error fetching EXPINF1YR: database disk image is malformed
+2026-03-19 13:34:20 [ERROR] Error fetching EXPINF2YR: database disk image is malformed
+2026-03-19 13:34:20 [ERROR] Error fetching EXPINF5YR: database disk image is malformed
+2026-03-19 13:34:20 [ERROR] Error fetching EXPINF10YR: database disk image is malformed
+2026-03-19 13:34:21 [ERROR] Error fetching EXPINF30YR: database disk image is malformed
+2026-03-19 13:34:22 [ERROR] Error fetching INDPRO: database disk image is malformed
+2026-03-19 13:34:23 [ERROR] Error fetching RSAFS: database disk image is malformed
+2026-03-19 13:34:23 [ERROR] Error fetching UMCSENT: database disk image is malformed
+2026-03-19 13:34:24 [ERROR] Error fetching FEDFUNDS: database disk image is malformed
+2026-03-19 13:34:48 [ERROR] Error fetching DGS1: database disk image is malformed
+2026-03-19 13:34:53 [ERROR] Error fetching DGS2: database disk image is malformed
+2026-03-19 13:34:53 [ERROR] Error fetching DGS5: database disk image is malformed
+2026-03-19 13:34:54 [ERROR] Error fetching DGS10: database disk image is malformed
+2026-03-19 13:34:55 [ERROR] Error fetching DGS30: database disk image is malformed
+2026-03-19 13:34:56 [ERROR] Error fetching T10Y2Y: database disk image is malformed
+2026-03-19 13:34:57 [ERROR] Error fetching T10Y3M: database disk image is malformed
+2026-03-19 13:35:03 [ERROR] Error fetching BAMLH0A0HYM2: database disk image is malformed
+2026-03-19 13:35:04 [ERROR] Error fetching BAMLC0A0CM: database disk image is malformed
+2026-03-19 13:35:04 [ERROR] Error fetching M2SL: database disk image is malformed
+2026-03-19 13:35:05 [ERROR] Error fetching WALCL: database disk image is malformed
+2026-03-19 13:35:05 [ERROR] Error fetching RRPONTSYD: database disk image is malformed
+2026-03-19 13:35:06 [ERROR] Error fetching TOTRESNS: database disk image is malformed
+2026-03-19 13:35:06 [ERROR] Error fetching HOUST: database disk image is malformed
+2026-03-19 13:35:07 [ERROR] Error fetching PERMIT: database disk image is malformed
+2026-03-19 13:35:07 [ERROR] Error fetching CSUSHPINSA: database disk image is malformed
+2026-03-19 13:35:07 [ERROR] Error fetching MSPUS: database disk image is malformed
+2026-03-19 13:35:08 [ERROR] Error fetching TOTALSL: database disk image is malformed
+2026-03-19 13:35:08 [ERROR] Error fetching PSAVERT: database disk image is malformed
+2026-03-19 13:35:09 [ERROR] Error fetching TDSP: database disk image is malformed
+2026-03-19 13:35:09 [ERROR] Error fetching GFDEBTN: database disk image is malformed
+2026-03-19 13:35:10 [ERROR] Error fetching GFDEGDQ188S: database disk image is malformed
+2026-03-19 13:35:10 [ERROR] Error fetching DRALACBS: database disk image is malformed
+2026-03-19 13:35:10 [ERROR] Error fetching DRSFRMACBS: database disk image is malformed
+2026-03-19 13:35:11 [ERROR] Error fetching DRCCLACBS: database disk image is malformed

@@ -12711,3 +12711,58 @@ sqlite3.DatabaseError: database disk image is malformed
 2026-03-21 07:06:22 [ERROR] 
 50 Failed downloads:
 2026-03-21 07:06:22 [ERROR] ['RL', 'PANW', 'PYPL', 'PLTR', 'PSX', 'PRU', 'PEP', 'PCAR', 'RJF', 'RVTY', 'PGR', 'PEG', 'PPG', 'PHM', 'ROK', 'PFG', 'PNC', 'QCOM', 'DGX', 'RTX', 'PSKY', 'PM', 'PNW', 'PNR', 'REG', 'PAYC', 'PH', 'POOL', 'PKG', 'HOOD', 'REGN', 'PCG', 'RF', 'PG', 'OKE', 'ORCL', 'PWR', 'O', 'PTC', 'PLD', 'ON', 'Q', 'RSG', 'PSA', 'RMD', 'PAYX', 'OMC', 'PPL', 'OTIS', 'PFE']: OperationalError('unable to open database file')
+2026-03-21 07:06:23 [INFO]    Batch 9/11: 50 tickers
+2026-03-21 07:06:23 [ERROR] 
+50 Failed downloads:
+2026-03-21 07:06:23 [ERROR] ['SBAC', 'SYK', 'ROL', 'TJX', 'ROP', 'SNPS', 'SPG', 'TSLA', 'SYY', 'TPR', 'SWK', 'SRE', 'NOW', 'STT', 'TGT', 'SO', 'SBUX', 'SHW', 'TXN', 'STX', 'TPL', 'TTD', 'SLB', 'TTWO', 'ROST', 'TMUS', 'SWKS', 'TMO', 'STLD', 'TEL', 'TDY', 'SJM', 'TXT', 'SPGI', 'SNA', 'TER', 'TSCO', 'SOLV', 'TT', 'STE', 'RCL', 'TROW', 'SYF', 'TKO', 'LUV', 'SNDK', 'TRGP', 'SW', 'CRM', 'SMCI']: OperationalError('unable to open database file')
+2026-03-21 07:06:24 [INFO]    Batch 10/11: 50 tickers
+2026-03-21 07:06:24 [ERROR] 
+50 Failed downloads:
+2026-03-21 07:06:24 [ERROR] ['URI', 'UHS', 'V', 'ULTA', 'VLO', 'WST', 'WYNN', 'WAT', 'VZ', 'TRV', 'UNH', 'WBD', 'WRB', 'WAB', 'XEL', 'TSN', 'WEC', 'VRSK', 'XYL', 'TRMB', 'TDG', 'VTR', 'WY', 'WMB', 'WFC', 'TYL', 'TFC', 'GWW', 'DIS', 'WDC', 'VICI', 'WELL', 'WSM', 'VRSN', 'WTW', 'USB', 'VRTX', 'UNP', 'WM', 'YUM', 'VLTO', 'UDR', 'VST', 'UAL', 'VMC', 'WDAY', 'UPS', 'UBER', 'WMT', 'VTRS']: OperationalError('unable to open database file')
+2026-03-21 07:06:25 [INFO]    Batch 11/11: 3 tickers
+2026-03-21 07:06:25 [ERROR] 
+3 Failed downloads:
+2026-03-21 07:06:25 [ERROR] ['ZBRA', 'ZBH', 'ZTS']: OperationalError('unable to open database file')
+2026-03-21 07:06:26 [INFO]    Got prices for 187 stocks, 752 days
+2026-03-21 07:06:26 [INFO] Computing % above MAs...
+2026-03-21 07:06:27 [INFO] Computing A/D line...
+2026-03-21 07:06:27 [INFO] Computing NH-NL...
+2026-03-21 07:06:27 [INFO] Computing McClellan...
+2026-03-21 07:06:27 [INFO] Computing breadth thrust...
+2026-03-21 07:06:27 [INFO] Storing metrics in database...
+2026-03-21 07:06:27 [ERROR] BREADTH failed: unable to open database file
+2026-03-21 07:06:27 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-03-21 07:06:27 [ERROR]   ZHVI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-03-21 07:06:27 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-03-21 07:06:27 [ERROR]   ZORI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zori/Metro_zori_uc_sfrcondomfr_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-03-21 07:06:27 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-03-21 07:06:27 [ERROR] TRADINGVIEW failed: [Errno 24] Too many open files: '/Users/bob/Library/Python/3.14/lib/python/site-packages/websocket/__init__.py'
+2026-03-21 07:06:27 [INFO] Running quality checks on 2398 series...
+2026-03-21 07:06:27 [INFO]    Checked 100 series...
+2026-03-21 07:06:28 [INFO]    Checked 200 series...
+2026-03-21 07:06:29 [INFO]    Checked 300 series...
+2026-03-21 07:06:29 [INFO]    Checked 400 series...
+2026-03-21 07:06:30 [INFO]    Checked 500 series...
+2026-03-21 07:06:31 [INFO]    Checked 600 series...
+2026-03-21 07:06:32 [ERROR] Quality checks failed: Execution failed on sql '
+            SELECT date, value FROM observations
+            WHERE series_id = ?
+            ORDER BY date
+        ': database disk image is malformed
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 109, in main
+    run_daily_update(
+    ~~~~~~~~~~~~~~~~^
+        skip_quality=args.quick,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        sources=sources
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 304, in run_daily_update
+    db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed

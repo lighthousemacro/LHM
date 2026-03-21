@@ -480,3 +480,13 @@ HTML dashboard generated at /Users/bob/Desktop/LHM_Morning_Brief.html
   Generated 7 charts
 Morning brief written to /Users/bob/Desktop/LHM_Morning_Brief.html
 Notification sent: MRI: 0.02 [MID-CYCLE] | MSI: -1.41 [BEARISH] | CTI: NEUTRAL->CAUTIOUS | LDI: HIGH DYNAMISM->HEALTHY
+
+======================================================================
+MORNING BRIEF - 2026-03-21 07:41:15
+======================================================================
+HTML dashboard generated at /Users/bob/Desktop/LHM_Morning_Brief.html
+  FRED calendar fetch failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Read timed out. (read timeout=15)
+  Release context: 0 headlines, 5 charts selected
+  Generated 5 charts
+Morning brief written to /Users/bob/Desktop/LHM_Morning_Brief.html
+Notification sent: MRI: 0.02 [MID-CYCLE] | MSI: -1.41 [BEARISH] | CTI: NEUTRAL->CAUTIOUS | LDI: HIGH DYNAMISM->HEALTHY

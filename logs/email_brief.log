@@ -38,3 +38,5 @@
   Brief sent to bob@lighthousemacro.com
 [2026-03-22T07:40:05.512392] OK: LHM Morning Brief - Sunday Mar 22
   Brief sent to bob@lighthousemacro.com
+[2026-03-31T18:50:15.798969] FAILED: LHM Morning Brief - Tuesday Mar 31
+  ERROR: Failed to send: [Errno 8] nodename nor servname provided, or not known

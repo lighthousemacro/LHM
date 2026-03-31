@@ -54,3 +54,14 @@ Traceback (most recent call last):
   File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 88, in get_prior_indices
     cursor = conn.execute(query, (index_id, info["date"]))
 sqlite3.OperationalError: database is locked
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 725, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 717, in main
+    summary = build_notification_summary(conn)
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 639, in build_notification_summary
+    prior = get_prior_indices(conn, current)
+  File "/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py", line 88, in get_prior_indices
+    cursor = conn.execute(query, (index_id, info["date"]))
+sqlite3.OperationalError: database is locked

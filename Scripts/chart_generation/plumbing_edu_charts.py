@@ -993,67 +993,59 @@ def chart_10():
 
 
 # ============================================
-# CHART 11: BGCR-TGCR Spread (GCF-TPR Proxy)
+# CHART 11: SOFR Volume (Repo Market Scale)
 # ============================================
 def chart_11():
-    """BGCR minus TGCR as a proxy for dealer intermediation capacity."""
-    print('\nChart 11: BGCR-TGCR Spread (GCF-TPR Proxy)...')
+    """SOFR transaction volume: the scale of the repo market."""
+    print('\nChart 11: SOFR Volume...')
 
-    bgcr = fetch_db_level('OFR_FNYR-BGCR-A', start='2014-01-01')
-    tgcr = fetch_db_level('OFR_FNYR-TGCR-A', start='2014-01-01')
+    vol = smart_fetch('SOFRVOL', start='2018-04-01')
 
-    # If OFR series are empty, try FRED
-    if len(bgcr) < 10:
-        bgcr = fetch_db_level('NYFED_BGCR', start='2014-01-01')
-    if len(tgcr) < 10:
-        tgcr = smart_fetch('TGCRRATE', start='2014-01-01')
-
-    if len(bgcr) < 10 or len(tgcr) < 10:
-        print('  SKIP: Insufficient BGCR/TGCR data for dealer spread chart.')
+    if len(vol) < 10:
+        print('  SKIP: Insufficient SOFR Volume data.')
         return
 
-    common = bgcr.index.intersection(tgcr.index)
-    if len(common) < 10:
-        print('  SKIP: Insufficient overlapping dates for BGCR-TGCR.')
-        return
-
-    spread = (bgcr.loc[common] - tgcr.loc[common]) * 100  # bps
+    # Already in billions
+    vol_t = vol / 1000  # Convert to trillions
 
     fig, ax = new_fig()
 
-    # Raw spread is very tight, plot it with some transparency
-    ax.bar(spread.index, spread, width=1.5, color=THEME['primary'], alpha=0.4, zorder=2)
-    spread_ma = spread.rolling(20, min_periods=5).mean()
-    ax.plot(spread_ma.index, spread_ma, color=THEME['primary'], linewidth=2.5,
-            label='BGCR \u2212 TGCR 20d MA (bps)', zorder=5)
+    # Light bars for daily, thick MA line for trend
+    ax.fill_between(vol_t.index, 0, vol_t, color=THEME['primary'], alpha=0.25, zorder=2)
+    vol_ma = vol_t.rolling(20, min_periods=5).mean()
+    ax.plot(vol_ma.index, vol_ma, color=THEME['primary'], linewidth=2.5,
+            label=f'SOFR Volume 20d MA (${vol_ma.iloc[-1]:.2f}T)', zorder=5)
 
-    # Zero line
-    ax.axhline(0, color=COLORS['fog'], linestyle='--', linewidth=1.0, zorder=1)
+    # Annotate key milestones
+    annotations = [
+        ('2020-03-15', 'COVID\nLiquidity\nCrisis', 0.85),
+        ('2022-06-01', 'QT\nBegins', 0.80),
+        ('2025-12-01', 'QT\nEnds', 0.75),
+    ]
+    for date_str, label, y_frac in annotations:
+        dt = pd.Timestamp(date_str)
+        if dt <= vol_t.index[-1]:
+            y_pos = ax.get_ylim()[1] * y_frac if ax.get_ylim()[1] > 0 else vol_t.max() * y_frac
+            ax.axvline(dt, color=THEME['muted'], linestyle=':', linewidth=0.8, alpha=0.5)
+            ax.text(dt + pd.Timedelta(days=15), y_pos, label,
+                    fontsize=9, fontweight='bold', color=THEME['muted'], va='top')
 
-    # Shade quarter-end dates
-    for yr in range(2018, 2027):
-        for mo in [3, 6, 9, 12]:
-            qe = pd.Timestamp(f'{yr}-{mo:02d}-28')
-            if qe >= spread.index[0] and qe <= spread.index[-1]:
-                ax.axvspan(qe - pd.Timedelta(days=2), qe + pd.Timedelta(days=2),
-                           color=COLORS['venus'], alpha=0.05, zorder=0)
+    add_annotation_box(ax, 'Repo market has more than tripled since 2018.\n'
+                       'More volume = more intermediation demand on constrained dealer balance sheets.',
+                       x=0.35, y=0.30)
 
-    add_annotation_box(ax, 'Spread near zero = dealers intermediating efficiently.\n'
-                       'Spikes at quarter-ends reflect regulatory window dressing.',
-                       x=0.50, y=0.95)
-
-    style_single_ax(ax, fmt='{:.1f} bps')
-    set_xlim_to_data(ax, spread.index)
+    style_single_ax(ax, fmt='${:.1f}T')
+    set_xlim_to_data(ax, vol_t.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    add_last_value_label(ax, spread_ma.dropna(), color=THEME['primary'],
-                         fmt='{:.1f}', side='right')
-    add_recessions(ax, start_date='2014-01-01')
+    ax.set_ylim(bottom=0)
+    add_last_value_label(ax, vol_t, color=THEME['primary'], fmt='${:.2f}T', side='right')
+    add_recessions(ax, start_date='2018-04-01')
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
-    brand_fig(fig, 'The Dealer Bottleneck',
-              subtitle='Figure 12: BGCR \u2212 TGCR Spread (Dealer Intermediation Proxy)',
-              source='NY Fed, OFR', data_date=spread.index[-1])
-    save_fig(fig, 'P10_11_gcf_tpr_spread.png')
+    brand_fig(fig, 'The Plumbing Got Bigger. The Plumbers Didn\'t.',
+              subtitle='Figure 12: SOFR Transaction Volume (Daily Repo Market Activity)',
+              source='NY Fed', data_date=vol_t.index[-1])
+    save_fig(fig, 'P10_12_sofr_volume.png')
 
 
 # ============================================

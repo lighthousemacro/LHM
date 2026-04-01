@@ -1032,7 +1032,7 @@ def chart_11():
 
     add_annotation_box(ax, 'Repo market has more than tripled since 2018.\n'
                        'More volume = more intermediation demand on constrained dealer balance sheets.',
-                       x=0.35, y=0.30)
+                       x=0.35, y=0.50)
 
     style_single_ax(ax, fmt='${:.1f}T')
     set_xlim_to_data(ax, vol_t.index)

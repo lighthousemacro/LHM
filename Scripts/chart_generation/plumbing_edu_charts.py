@@ -452,7 +452,7 @@ def chart_01():
     # Annotation for the LCLOR band
     add_annotation_box(ax, 'Sep 2024 Fed minutes: reserves approaching\n'
                        '"lowest comfortable level" ($3.0\u20133.25T)',
-                       x=0.65, y=0.25)
+                       x=0.70, y=0.25)
 
     style_single_ax(ax, fmt='${:.1f}T')
     set_xlim_to_data(ax, reserves.index)
@@ -591,7 +591,7 @@ def chart_04():
 
     # +8 bps threshold
     ax.axhline(8, color=COLORS['venus'], linestyle='-', linewidth=1.5, zorder=4)
-    ax.text(spread.index[len(spread)//10], 10, 'Stress Threshold (+8 bps)',
+    ax.text(spread.index[len(spread)//10 + int(len(spread)*0.25)], 10, 'Stress Threshold (+8 bps)',
             fontsize=10, color=COLORS['venus'], fontweight='bold')
 
     # Annotate Sep 2019 spike if visible
@@ -754,7 +754,7 @@ def chart_06():
 
     # Normal operating level reference
     ax.axhline(750, color=COLORS['fog'], linestyle='--', linewidth=1.0, zorder=1)
-    ax.text(tga_b.index[len(tga_b)//3], 780, 'Typical Operating Level (~$750B)',
+    ax.text(tga_b.index[len(tga_b)//3 - int(len(tga_b)*0.20)], 780, 'Typical Operating Level (~$750B)',
             fontsize=9, color=COLORS['doldrums'])
 
     # Debt ceiling annotations
@@ -1021,20 +1021,28 @@ def chart_11():
 
     fig, ax = new_fig()
 
-    ax.plot(spread.index, spread, color=THEME['primary'], linewidth=1.5, alpha=0.5)
+    # Raw spread is very tight, plot it with some transparency
+    ax.bar(spread.index, spread, width=1.5, color=THEME['primary'], alpha=0.4, zorder=2)
     spread_ma = spread.rolling(20, min_periods=5).mean()
-    ax.plot(spread_ma.index, spread_ma, color=THEME['primary'], linewidth=2.0,
-            label='BGCR \u2212 TGCR 20d MA (bps)')
+    ax.plot(spread_ma.index, spread_ma, color=THEME['primary'], linewidth=2.5,
+            label='BGCR \u2212 TGCR 20d MA (bps)', zorder=5)
 
     # Zero line
     ax.axhline(0, color=COLORS['fog'], linestyle='--', linewidth=1.0, zorder=1)
 
-    # +20 bps threshold
-    ax.axhline(20, color=COLORS['venus'], linestyle='--', linewidth=1.5, zorder=4)
-    ax.text(spread.index[len(spread)//4], 21, 'Dealer Stress (+20 bps)',
-            fontsize=10, color=COLORS['venus'], fontweight='bold')
+    # Shade quarter-end dates
+    for yr in range(2018, 2027):
+        for mo in [3, 6, 9, 12]:
+            qe = pd.Timestamp(f'{yr}-{mo:02d}-28')
+            if qe >= spread.index[0] and qe <= spread.index[-1]:
+                ax.axvspan(qe - pd.Timedelta(days=2), qe + pd.Timedelta(days=2),
+                           color=COLORS['venus'], alpha=0.05, zorder=0)
 
-    style_single_ax(ax, fmt='{:.0f}')
+    add_annotation_box(ax, 'Spread near zero = dealers intermediating efficiently.\n'
+                       'Spikes at quarter-ends reflect regulatory window dressing.',
+                       x=0.50, y=0.95)
+
+    style_single_ax(ax, fmt='{:.1f} bps')
     set_xlim_to_data(ax, spread.index)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     add_last_value_label(ax, spread_ma.dropna(), color=THEME['primary'],

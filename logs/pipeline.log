@@ -67381,3 +67381,35 @@ Started: 2026-04-01 19:04:34
 ======================================================================
 UPDATE COMPLETE
 ======================================================================
+======================================================================
+LIGHTHOUSE MACRO - MASTER DATABASE UPDATE
+Database: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+Started: 2026-04-02 06:00:08
+======================================================================
+
+--- FRED ---
+
+--- BLS ---
+
+--- BEA ---
+
+--- NY FED ---
+
+--- OFR ---
+
+--- MARKET DATA (MSI/SPI) ---
+
+--- CRYPTO (DefiLlama + CoinGecko) ---
+
+--- MARKET BREADTH (S&P 500 Components) ---
+
+--- ZILLOW (ZHVI + ZORI) ---
+
+--- TRADINGVIEW (NAHB, MBA, Pending Home Sales) ---
+  Fetching ECONOMICS:USHMI...
+
+--- QUALITY CHECKS ---
+
+======================================================================
+UPDATE COMPLETE
+======================================================================

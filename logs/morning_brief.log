@@ -519,3 +519,12 @@ Morning brief written to /Users/bob/Desktop/LHM_Morning_Brief.html
         ORDER BY date
     ': database is locked
   Generated 11 charts
+
+======================================================================
+MORNING BRIEF - 2026-04-02 07:30:22
+======================================================================
+HTML dashboard generated at /Users/bob/Desktop/LHM_Morning_Brief.html
+  Release context: 8 headlines, 12 charts selected
+  Generated 12 charts
+Morning brief written to /Users/bob/Desktop/LHM_Morning_Brief.html
+Notification sent: MRI: 0.02 [MID-CYCLE] | MSI: -1.41 [BEARISH] | CTI: NEUTRAL->CAUTIOUS | LDI: HIGH DYNAMISM->HEALTHY

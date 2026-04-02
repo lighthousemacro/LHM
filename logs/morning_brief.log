@@ -512,3 +512,10 @@ HTML dashboard generated at /Users/bob/Desktop/LHM_Morning_Brief.html
     ': database is locked
   Generated 11 charts
 Morning brief written to /Users/bob/Desktop/LHM_Morning_Brief.html
+  Release context: 10 headlines, 12 charts selected
+  WARNING: Chart chart_mri failed: Execution failed on sql '
+        SELECT date, value, status FROM lighthouse_indices
+        WHERE index_id = ? AND date >= ?
+        ORDER BY date
+    ': database is locked
+  Generated 11 charts

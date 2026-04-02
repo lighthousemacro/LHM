@@ -13636,3 +13636,73 @@ Breadth total: 13 series, 9,776 observations
 2026-04-01 20:15:18 [ERROR]   WebSocket error for ECONOMICS:USCURAG: [Errno 8] nodename nor servname provided, or not known
 2026-04-01 20:15:18 [WARNING]     TV_USCURAG: No data returned
 2026-04-01 20:15:19 [INFO]   Fetching ECONOMICS:USCURAS -> TV_USCURAS...
+2026-04-01 20:15:19 [ERROR]   WebSocket error for ECONOMICS:USCURAS: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:19 [WARNING]     TV_USCURAS: No data returned
+2026-04-01 20:15:20 [INFO]   Fetching ECONOMICS:USTA -> TV_USTA...
+2026-04-01 20:15:20 [ERROR]   WebSocket error for ECONOMICS:USTA: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:20 [WARNING]     TV_USTA: No data returned
+2026-04-01 20:15:21 [INFO]   Fetching ECONOMICS:USCF -> TV_USCF...
+2026-04-01 20:15:21 [ERROR]   WebSocket error for ECONOMICS:USCF: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:21 [WARNING]     TV_USCF: No data returned
+2026-04-01 20:15:22 [INFO]   Fetching ECONOMICS:USTICNLF -> TV_USTICNLF...
+2026-04-01 20:15:22 [ERROR]   WebSocket error for ECONOMICS:USTICNLF: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:22 [WARNING]     TV_USTICNLF: No data returned
+2026-04-01 20:15:23 [INFO]   Fetching ECONOMICS:USFDI -> TV_USFDI...
+2026-04-01 20:15:23 [ERROR]   WebSocket error for ECONOMICS:USFDI: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:23 [WARNING]     TV_USFDI: No data returned
+2026-04-01 20:15:24 [INFO]   Fetching ECONOMICS:USED -> TV_USED...
+2026-04-01 20:15:24 [ERROR]   WebSocket error for ECONOMICS:USED: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:24 [WARNING]     TV_USED: No data returned
+2026-04-01 20:15:26 [INFO]   Fetching ECONOMICS:USTI -> TV_USTI...
+2026-04-01 20:15:26 [ERROR]   WebSocket error for ECONOMICS:USTI: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:26 [WARNING]     TV_USTI: No data returned
+2026-04-01 20:15:27 [INFO]   Fetching ECONOMICS:USTOT -> TV_USTOT...
+2026-04-01 20:15:27 [ERROR]   WebSocket error for ECONOMICS:USTOT: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:27 [WARNING]     TV_USTOT: No data returned
+2026-04-01 20:15:28 [INFO]   Fetching ECONOMICS:USCOP -> TV_USCOP...
+2026-04-01 20:15:28 [ERROR]   WebSocket error for ECONOMICS:USCOP: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:28 [WARNING]     TV_USCOP: No data returned
+2026-04-01 20:15:29 [INFO]   Fetching ECONOMICS:USWCOP -> TV_USWCOP...
+2026-04-01 20:15:29 [ERROR]   WebSocket error for ECONOMICS:USWCOP: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:29 [WARNING]     TV_USWCOP: No data returned
+2026-04-01 20:15:30 [INFO]   Fetching ECONOMICS:USOE -> TV_USOE...
+2026-04-01 20:15:30 [ERROR]   WebSocket error for ECONOMICS:USOE: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:30 [WARNING]     TV_USOE: No data returned
+2026-04-01 20:15:31 [INFO]   Fetching ECONOMICS:USGRES -> TV_USGRES...
+2026-04-01 20:15:31 [ERROR]   WebSocket error for ECONOMICS:USGRES: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:31 [WARNING]     TV_USGRES: No data returned
+2026-04-01 20:15:32 [INFO]   Fetching ECONOMICS:USTR -> TV_USTR...
+2026-04-01 20:15:32 [ERROR]   WebSocket error for ECONOMICS:USTR: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:32 [WARNING]     TV_USTR: No data returned
+2026-04-01 20:15:34 [INFO]   Fetching ECONOMICS:USWES -> TV_USWES...
+2026-04-01 20:15:34 [ERROR]   WebSocket error for ECONOMICS:USWES: [Errno 8] nodename nor servname provided, or not known
+2026-04-01 20:15:34 [WARNING]     TV_USWES: No data returned
+2026-04-01 20:15:40 [INFO] Running quality checks on 2398 series...
+2026-04-01 20:15:52 [INFO]    Checked 100 series...
+2026-04-01 20:15:53 [INFO]    Checked 200 series...
+2026-04-01 20:15:56 [INFO]    Checked 300 series...
+2026-04-01 20:16:04 [INFO]    Checked 400 series...
+2026-04-01 20:16:06 [INFO]    Checked 500 series...
+2026-04-01 20:16:07 [INFO]    Checked 600 series...
+2026-04-01 20:16:07 [ERROR] Quality checks failed: Execution failed on sql '
+            SELECT date, value FROM observations
+            WHERE series_id = ?
+            ORDER BY date
+        ': database disk image is malformed
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 109, in main
+    run_daily_update(
+    ~~~~~~~~~~~~~~~~^
+        skip_quality=args.quick,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        sources=sources
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 304, in run_daily_update
+    db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed

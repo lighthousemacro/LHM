@@ -8,3 +8,13 @@ Traceback (most recent call last):
     return f.read()
            ~~~~~~^^
 OSError: [Errno 11] Resource deadlock avoided
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/automation/email_brief.py", line 143, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/automation/email_brief.py", line 132, in main
+    html = brief_path.read_text()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 788, in read_text
+    return f.read()
+           ~~~~~~^^
+OSError: [Errno 11] Resource deadlock avoided

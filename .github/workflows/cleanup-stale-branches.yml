@@ -1,0 +1,55 @@
+name: Cleanup Stale Branches
+
+on:
+  schedule:
+    # Run every Sunday at midnight UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Delete stale branches
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const STALE_DAYS = 30;
+            const PROTECTED = new Set(['main', 'master', 'develop']);
+            const cutoff = new Date(Date.now() - STALE_DAYS * 24 * 60 * 60 * 1000);
+
+            const branches = await github.paginate(github.rest.repos.listBranches, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
+
+            for (const branch of branches) {
+              if (PROTECTED.has(branch.name)) continue;
+
+              const { data: commit } = await github.rest.git.getCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: branch.commit.sha,
+              });
+
+              const lastCommitDate = new Date(commit.committer.date);
+              if (lastCommitDate < cutoff) {
+                console.log(`Deleting stale branch: ${branch.name} (last commit: ${commit.committer.date})`);
+                try {
+                  await github.rest.git.deleteRef({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    ref: `heads/${branch.name}`,
+                  });
+                } catch (err) {
+                  if (err.status === 422) {
+                    console.log(`Branch already deleted: ${branch.name}`);
+                  } else {
+                    console.error(`Failed to delete branch ${branch.name}: ${err.message}`);
+                  }
+                }
+              }
+            }

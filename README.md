@@ -267,6 +267,13 @@ This repository is internal to Lighthouse Macro. External contributions are not 
 5. Follow PEP 8 style guidelines
 6. Add type hints and docstrings to all functions
 
+### Branch Management
+
+Branches are **automatically deleted** when their associated pull request is closed (merged or abandoned), via the `delete-branch-on-pr-close` workflow in `.github/workflows/`. This keeps the branch list clean and prevents accumulation of stale AI-agent or feature branches.
+
+- Branch naming: `<type>/<short-description>` (e.g. `feature/fred-ingestion`, `fix/chart-watermark`)
+- There is no need to manually delete branches after closing a PR — the workflow handles it automatically
+
 ---
 
 ## Key Documentation

@@ -14593,3 +14593,191 @@ sqlite3.DatabaseError: database disk image is malformed
 2026-04-08 18:30:07 [ERROR] BLS Error: database disk image is malformed
 2026-04-08 18:30:07 [INFO]    BLS 2010-2026...
 2026-04-08 18:30:12 [WARNING] Attempt 1 failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer')). Retrying in 2s...
+2026-04-08 18:31:11 [INFO]    BLS 2010-2026: 6,019 obs
+2026-04-08 18:31:19 [INFO]    BEA GDP_Components...
+2026-04-08 18:31:25 [INFO]    BEA GDP_Components: 2,704 obs
+2026-04-08 18:31:26 [INFO]    BEA Real_GDP_Growth...
+2026-04-08 18:31:27 [INFO]    BEA Real_GDP_Growth: 2,600 obs
+2026-04-08 18:31:27 [INFO]    BEA Personal_Income...
+2026-04-08 18:31:29 [INFO]    BEA Personal_Income: 4,472 obs
+2026-04-08 18:31:29 [INFO]    BEA PCE_Components...
+2026-04-08 18:31:31 [INFO]    BEA PCE_Components: 3,224 obs
+2026-04-08 18:31:31 [INFO]    BEA Corporate_Profits...
+2026-04-08 18:31:33 [INFO]    BEA Corporate_Profits: 5,081 obs
+2026-04-08 18:31:33 [INFO]    BEA GDI...
+2026-04-08 18:31:34 [INFO]    BEA GDI: 2,484 obs
+2026-04-08 18:31:34 [INFO]    BEA Govt_Receipts_Expenditures...
+2026-04-08 18:31:35 [INFO]    BEA Govt_Receipts_Expenditures: 4,462 obs
+2026-04-08 18:31:35 [INFO]    BEA PCE_Price_Index...
+2026-04-08 18:31:36 [INFO]    BEA PCE_Price_Index: 3,224 obs
+2026-04-08 18:31:37 [INFO]    BEA GDP_Price_Index...
+2026-04-08 18:31:37 [INFO]    BEA GDP_Price_Index: 2,496 obs
+2026-04-08 18:31:38 [INFO]    NY Fed from 2018-04-03...
+2026-04-08 18:31:39 [INFO]    NY Fed: 20,044 obs
+2026-04-08 18:31:39 [INFO]    OFR OFR_SOFR...
+2026-04-08 18:31:42 [INFO]    OFR OFR_SOFR: 2,001 obs
+2026-04-08 18:31:43 [INFO]    OFR OFR_EFFR...
+2026-04-08 18:31:44 [INFO]    OFR OFR_EFFR: 2,537 obs
+2026-04-08 18:31:44 [INFO]    OFR OFR_OBFR...
+2026-04-08 18:31:45 [INFO]    OFR OFR_OBFR: 2,537 obs
+2026-04-08 18:31:45 [INFO]    OFR OFR_TGCR...
+2026-04-08 18:31:45 [INFO]    OFR OFR_TGCR: 2,001 obs
+2026-04-08 18:31:46 [INFO]    OFR OFR_BGCR...
+2026-04-08 18:31:46 [INFO]    OFR OFR_BGCR: 2,001 obs
+2026-04-08 18:31:47 [INFO]    OFR MMF_Total_Assets...
+2026-04-08 18:31:47 [INFO]    OFR MMF_Total_Assets: 184 obs
+2026-04-08 18:31:47 [INFO]    OFR MMF_Repo_Total...
+2026-04-08 18:31:48 [INFO]    OFR MMF_Repo_Total: 184 obs
+2026-04-08 18:31:48 [INFO]    OFR MMF_Repo_with_Fed...
+2026-04-08 18:31:48 [INFO]    OFR MMF_Repo_with_Fed: 152 obs
+2026-04-08 18:31:49 [INFO]    OFR MMF_Treasury_Total...
+2026-04-08 18:31:49 [INFO]    OFR MMF_Treasury_Total: 184 obs
+2026-04-08 18:31:49 [INFO]    OFR PD_Repo_Total...
+2026-04-08 18:31:49 [INFO]    OFR PD_Repo_Total: 55 obs
+2026-04-08 18:31:50 [INFO]    OFR PD_ReverseRepo_Total...
+2026-04-08 18:31:50 [INFO]    OFR PD_ReverseRepo_Total: 31 obs
+2026-04-08 18:31:50 [INFO]    OFR PD_Repo_Treasury_Total...
+2026-04-08 18:31:51 [INFO]    OFR PD_Repo_Treasury_Total: 365 obs
+2026-04-08 18:31:51 [INFO]    OFR FSI...
+2026-04-08 18:36:27 [INFO]    OFR FSI: 59,787 obs
+2026-04-08 18:36:29 [INFO] === MARKET DATA FETCH ===
+2026-04-08 18:36:29 [INFO] --- Yahoo Finance (S&P 500) ---
+2026-04-08 18:36:29 [INFO]    Fetching S&P 500 from 2000-01-01...
+2026-04-08 18:37:27 [INFO]    S&P 500: 97,813 observations
+2026-04-08 18:37:28 [INFO] --- Breadth Data ---
+2026-04-08 18:37:28 [INFO]    Breadth data requires premium sources (StockCharts, Bloomberg)
+2026-04-08 18:37:28 [INFO]    Using proxy computations where possible...
+2026-04-08 18:37:28 [INFO] --- Sentiment Data ---
+2026-04-08 18:37:31 [ERROR] VIX metrics error: database disk image is malformed
+2026-04-08 18:37:31 [INFO]    Fetching AAII sentiment...
+2026-04-08 18:37:36 [ERROR] AAII fetch error: database disk image is malformed
+2026-04-08 18:37:36 [INFO]    Fetching NAAIM exposure...
+2026-04-08 18:37:36 [INFO]    NAAIM requires web scraping or direct data agreement
+2026-04-08 18:37:36 [INFO] --- Put/Call Ratio ---
+2026-04-08 18:37:36 [INFO]    Put/Call ratio requires CBOE data feed...
+2026-04-08 18:37:36 [INFO] === MARKET DATA COMPLETE: 15 series, 97,813 obs ===
+2026-04-08 18:37:36 [INFO] 
+--- FREE CRYPTO DATA (DefiLlama + CoinGecko) ---
+2026-04-08 18:37:36 [INFO] Fetching TVL data from DefiLlama...
+2026-04-08 18:37:41 [WARNING]    Sui: HTTP 400
+2026-04-08 18:37:45 [WARNING]    Optimism: HTTP 400
+2026-04-08 18:37:45 [WARNING]    Base: HTTP 400
+2026-04-08 18:37:46 [WARNING]    Polygon: HTTP 400
+2026-04-08 18:37:46 [ERROR]    Uniswap: Error - database disk image is malformed
+2026-04-08 18:37:52 [ERROR]    Curve: Error - database disk image is malformed
+2026-04-08 18:37:57 [ERROR]    PancakeSwap: Error - database disk image is malformed
+2026-04-08 18:38:00 [ERROR]    Raydium: Error - database disk image is malformed
+2026-04-08 18:38:05 [ERROR]    Aerodrome: Error - database disk image is malformed
+2026-04-08 18:38:06 [ERROR]    Aave: Error - database disk image is malformed
+2026-04-08 18:38:06 [WARNING]    Compound: HTTP 400
+2026-04-08 18:38:06 [ERROR]    Morpho: Error - database disk image is malformed
+2026-04-08 18:38:08 [ERROR]    Spark: Error - database disk image is malformed
+2026-04-08 18:38:09 [ERROR]    GMX: Error - database disk image is malformed
+2026-04-08 18:38:10 [ERROR]    dYdX: Error - database disk image is malformed
+2026-04-08 18:38:11 [ERROR]    Hyperliquid: Error - database disk image is malformed
+2026-04-08 18:38:12 [ERROR]    Synthetix: Error - database disk image is malformed
+2026-04-08 18:38:12 [ERROR]    Lido: Error - database disk image is malformed
+2026-04-08 18:38:13 [ERROR]    Rocket Pool: Error - database disk image is malformed
+2026-04-08 18:38:15 [ERROR]    Jito: Error - database disk image is malformed
+2026-04-08 18:38:15 [WARNING]    Marinade: HTTP 400
+2026-04-08 18:38:17 [ERROR]    MakerDAO: Error - database disk image is malformed
+2026-04-08 18:38:21 [ERROR] CRYPTO failed: database disk image is malformed
+2026-04-08 18:38:29 [INFO] Found 503 S&P 500 constituents
+2026-04-08 18:38:29 [INFO] Fetching prices for 503 tickers...
+2026-04-08 18:38:29 [INFO]    Batch 1/11: 50 tickers
+2026-04-08 18:38:43 [INFO]    Batch 2/11: 50 tickers
+2026-04-08 18:38:45 [INFO]    Batch 3/11: 50 tickers
+2026-04-08 18:38:47 [INFO]    Batch 4/11: 50 tickers
+2026-04-08 18:38:48 [ERROR] 
+19 Failed downloads:
+2026-04-08 18:38:48 [ERROR] ['EXR', 'SATS', 'FICO', 'DASH', 'EQR', 'DOW', 'ELV', 'EL', 'EVRG', 'ECL']: TypeError("'NoneType' object is not subscriptable")
+2026-04-08 18:38:48 [ERROR] ['EPAM', 'FFIV', 'EIX', 'EW', 'EXE', 'EQIX', 'FDS', 'ES', 'FAST']: OperationalError('unable to open database file')
+2026-04-08 18:38:50 [INFO]    Batch 5/11: 50 tickers
+2026-04-08 18:38:50 [ERROR] 
+49 Failed downloads:
+2026-04-08 18:38:50 [ERROR] ['HRL', 'GILD', 'HUM', 'GEV', 'IEX', 'GNRC', 'GRMN', 'GL', 'GPN', 'ITW', 'HSIC', 'GE', 'IT', 'HBAN']: TypeError("'NoneType' object is not subscriptable")
+2026-04-08 18:38:50 [ERROR] ['HUBB', 'IBM', 'HPQ', 'HWM', 'GPC', 'F', 'GD', 'HAS', 'FISV', 'GS', 'IDXX', 'HOLX', 'HON', 'HD', 'GM', 'GEN', 'HPE', 'FTNT', 'HSY', 'FOX', 'BEN', 'HII', 'FSLR', 'GIS', 'HST', 'FOXA', 'FE', 'FCX', 'HIG', 'GDDY', 'HAL', 'DOC', 'HLT', 'GEHC', 'FTV']: OperationalError('unable to open database file')
+2026-04-08 18:38:51 [INFO]    Batch 6/11: 50 tickers
+2026-04-08 18:38:51 [ERROR] Failed to get ticker 'LDOS' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-08 18:38:51 [ERROR] Failed to get ticker 'IQV' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-08 18:38:51 [ERROR] Failed to get ticker 'KDP' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-08 18:38:51 [ERROR] $KDP: possibly delisted; no timezone found
+2026-04-08 18:38:51 [ERROR] Failed to get ticker 'JKHY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-08 18:38:51 [ERROR] $JKHY: possibly delisted; no timezone found
+2026-04-08 18:38:51 [ERROR] Failed to get ticker 'KIM' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-08 18:38:51 [ERROR] $KIM: possibly delisted; no timezone found
+2026-04-08 18:38:51 [ERROR] 
+50 Failed downloads:
+2026-04-08 18:38:51 [ERROR] ['JNJ', 'KMI', 'LRCX']: TypeError("'NoneType' object is not subscriptable")
+2026-04-08 18:38:51 [ERROR] ['LVS', 'LOW', 'KVUE', 'LH', 'LHX', 'MPC', 'PODD', 'INTC', 'IFF', 'LII', 'IRM', 'LIN', 'KLAC', 'IVZ', 'LYV', 'MTB', 'JBL', 'IP', 'KEYS', 'KR', 'IBKR', 'LMT', 'L', 'JBHT', 'KHC', 'LITE', 'IR', 'KEY', 'JCI', 'INTU', 'INVH', 'LULU', 'LYB', 'ISRG', 'JPM', 'KKR', 'INCY', 'LEN', 'ICE', 'LLY', 'J', 'KMB']: OperationalError('unable to open database file')
+2026-04-08 18:38:51 [ERROR] ['LDOS', 'IQV']: DNSError('Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-04-08 18:38:51 [ERROR] ['KDP', 'JKHY', 'KIM']: possibly delisted; no timezone found
+2026-04-08 18:38:52 [INFO]    Batch 7/11: 50 tickers
+2026-04-08 18:38:52 [ERROR] Failed to get ticker 'NCLH' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-08 18:38:52 [ERROR] $NCLH: possibly delisted; no timezone found
+2026-04-08 18:38:52 [ERROR] Failed to get ticker 'NDAQ' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-08 18:38:52 [ERROR] $NDAQ: possibly delisted; no timezone found
+2026-04-08 18:38:53 [ERROR] 
+50 Failed downloads:
+2026-04-08 18:38:53 [ERROR] ['MRK', 'MKC', 'MOS', 'MRNA', 'NFLX', 'NEM', 'MSI', 'NKE', 'NWS', 'NUE', 'MAS', 'MPWR', 'NEE', 'NVR', 'MTD', 'MCHP', 'MA', 'NI', 'NXPI', 'MLM', 'MSFT', 'MDT', 'MET', 'ODFL', 'MRSH', 'NDSN', 'OXY', 'NOC', 'NTRS', 'MSCI', 'MGM', 'TAP', 'MU', 'MCO', 'MS', 'NTAP', 'NSC', 'MDLZ', 'MNST', 'NRG', 'ORLY', 'MAR', 'NVDA', 'MCK', 'NWSA', 'META', 'MAA']: OperationalError('unable to open database file')
+2026-04-08 18:38:53 [ERROR] ['NCLH', 'NDAQ']: possibly delisted; no timezone found
+2026-04-08 18:38:53 [ERROR] ['MCD']: TypeError("'NoneType' object is not subscriptable")
+2026-04-08 18:38:55 [INFO]    Batch 8/11: 50 tickers
+2026-04-08 18:38:55 [ERROR] 
+50 Failed downloads:
+2026-04-08 18:38:55 [ERROR] ['PPG', 'ROK', 'DGX', 'RJF', 'PCG', 'PEG', 'ON', 'PSA', 'PGR', 'ORCL', 'Q', 'RF', 'PG', 'PFG', 'PSKY', 'PFE', 'REG', 'PNC', 'PKG', 'RVTY', 'PLTR', 'PEP', 'PAYX', 'POOL', 'PSX', 'PLD', 'RL', 'RTX', 'PTC', 'PPL', 'PM', 'PHM', 'PWR', 'RSG', 'ROL', 'PYPL', 'REGN', 'HOOD', 'RMD', 'PNW', 'PCAR', 'PNR', 'PANW', 'OKE', 'PH', 'PRU', 'O', 'QCOM', 'OMC', 'OTIS']: OperationalError('unable to open database file')
+2026-04-08 18:38:56 [INFO]    Batch 9/11: 50 tickers
+2026-04-08 18:38:56 [ERROR] 
+50 Failed downloads:
+2026-04-08 18:38:56 [ERROR] ['TMUS', 'SWKS', 'STX', 'SMCI', 'SYY', 'TRGP', 'TDG', 'SO', 'TSCO', 'TDY', 'SLB', 'CRM', 'SYK', 'SYF', 'LUV', 'SHW', 'SW', 'TPR', 'SNA', 'TXN', 'TPL', 'TTWO', 'SPGI', 'TXT', 'SNPS', 'STLD', 'SBAC', 'TKO', 'SOLV', 'STE', 'TSLA', 'TJX', 'SJM', 'SPG', 'TT', 'SNDK', 'NOW', 'ROST', 'STT', 'ROP', 'SBUX', 'TEL', 'TER', 'TGT', 'TROW', 'TTD', 'SRE', 'SWK', 'TMO', 'RCL']: OperationalError('unable to open database file')
+2026-04-08 18:38:57 [INFO]    Batch 10/11: 50 tickers
+2026-04-08 18:38:57 [ERROR] 
+50 Failed downloads:
+2026-04-08 18:38:57 [ERROR] ['VZ', 'TRMB', 'TSN', 'VRT', 'VRTX', 'UPS', 'TRV', 'VLO', 'VRSN', 'WYNN', 'WDC', 'UNH', 'GWW', 'WRB', 'UDR', 'WFC', 'WAB', 'VTR', 'URI', 'UNP', 'VICI', 'VMC', 'VRSK', 'WM', 'WAT', 'WDAY', 'UAL', 'WMB', 'YUM', 'UHS', 'TFC', 'WMT', 'WEC', 'DIS', 'UBER', 'WELL', 'ULTA', 'WY', 'XEL', 'WST', 'WBD', 'XYL', 'TYL', 'VTRS', 'VST', 'WSM', 'USB', 'VLTO', 'WTW', 'V']: OperationalError('unable to open database file')
+2026-04-08 18:38:58 [INFO]    Batch 11/11: 3 tickers
+2026-04-08 18:38:58 [ERROR] 
+3 Failed downloads:
+2026-04-08 18:38:58 [ERROR] ['ZBRA', 'ZBH', 'ZTS']: OperationalError('unable to open database file')
+2026-04-08 18:39:00 [INFO]    Got prices for 182 stocks, 752 days
+2026-04-08 18:39:00 [INFO] Computing % above MAs...
+2026-04-08 18:39:00 [INFO] Computing A/D line...
+2026-04-08 18:39:00 [INFO] Computing NH-NL...
+2026-04-08 18:39:00 [INFO] Computing McClellan...
+2026-04-08 18:39:00 [INFO] Computing breadth thrust...
+2026-04-08 18:39:00 [INFO] Storing metrics in database...
+2026-04-08 18:39:00 [ERROR] BREADTH failed: unable to open database file
+2026-04-08 18:39:00 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-04-08 18:39:00 [ERROR]   ZHVI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-04-08 18:39:00 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-04-08 18:39:00 [ERROR]   ZORI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zori/Metro_zori_uc_sfrcondomfr_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-04-08 18:39:00 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-04-08 18:39:00 [ERROR] TRADINGVIEW failed: [Errno 24] Too many open files: '/Users/bob/Library/Python/3.14/lib/python/site-packages/websocket/__init__.py'
+2026-04-08 18:39:02 [INFO] Running quality checks on 2401 series...
+2026-04-08 18:39:16 [INFO]    Checked 100 series...
+2026-04-08 18:39:37 [INFO]    Checked 200 series...
+2026-04-08 18:39:39 [INFO]    Checked 300 series...
+2026-04-08 18:39:40 [INFO]    Checked 400 series...
+2026-04-08 18:39:40 [INFO]    Checked 500 series...
+2026-04-08 18:39:40 [INFO]    Checked 600 series...
+2026-04-08 18:39:41 [ERROR] Quality checks failed: Execution failed on sql '
+            SELECT date, value FROM observations
+            WHERE series_id = ?
+            ORDER BY date
+        ': database disk image is malformed
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 109, in main
+    run_daily_update(
+    ~~~~~~~~~~~~~~~~^
+        skip_quality=args.quick,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        sources=sources
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 304, in run_daily_update
+    db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed

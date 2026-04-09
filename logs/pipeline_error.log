@@ -14781,3 +14781,251 @@ Traceback (most recent call last):
     db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.DatabaseError: database disk image is malformed
+2026-04-09 06:04:49 [INFO] Database initialized: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+2026-04-09 06:04:49 [INFO] --- FRED: Category Discovery ---
+2026-04-09 06:04:49 [INFO]    Employment_Situation...
+2026-04-09 06:04:50 [INFO]    Employment_Situation: 1 series, 156 obs
+2026-04-09 06:04:51 [INFO]    CPI_Urban_Consumers...
+2026-04-09 06:04:52 [INFO]    CPI_Urban_Consumers: 0 series, 0 obs
+2026-04-09 06:04:53 [INFO]    Industrial_Production...
+2026-04-09 06:04:53 [ERROR] Error fetching category Industrial_Production: database disk image is malformed
+2026-04-09 06:04:53 [INFO]    Industrial_Production: 0 series, 0 obs
+2026-04-09 06:04:53 [ERROR] FRED failed: database disk image is malformed
+2026-04-09 06:04:53 [INFO]    BLS 1990-2009...
+2026-04-09 06:04:55 [ERROR] BLS Error: database disk image is malformed
+2026-04-09 06:04:56 [INFO]    BLS 2010-2026...
+2026-04-09 06:04:59 [INFO]    BLS 2010-2026: 6,019 obs
+2026-04-09 06:05:00 [INFO]    BEA GDP_Components...
+2026-04-09 06:05:01 [INFO]    BEA GDP_Components: 2,704 obs
+2026-04-09 06:05:01 [INFO]    BEA Real_GDP_Growth...
+2026-04-09 06:05:02 [INFO]    BEA Real_GDP_Growth: 2,600 obs
+2026-04-09 06:05:03 [INFO]    BEA Personal_Income...
+2026-04-09 06:05:04 [INFO]    BEA Personal_Income: 4,472 obs
+2026-04-09 06:05:04 [INFO]    BEA PCE_Components...
+2026-04-09 06:05:05 [INFO]    BEA PCE_Components: 3,224 obs
+2026-04-09 06:05:06 [INFO]    BEA Corporate_Profits...
+2026-04-09 06:05:06 [INFO]    BEA Corporate_Profits: 5,081 obs
+2026-04-09 06:05:07 [INFO]    BEA GDI...
+2026-04-09 06:05:08 [INFO]    BEA GDI: 2,484 obs
+2026-04-09 06:05:08 [INFO]    BEA Govt_Receipts_Expenditures...
+2026-04-09 06:05:09 [INFO]    BEA Govt_Receipts_Expenditures: 4,462 obs
+2026-04-09 06:05:10 [INFO]    BEA PCE_Price_Index...
+2026-04-09 06:05:10 [INFO]    BEA PCE_Price_Index: 3,224 obs
+2026-04-09 06:05:11 [INFO]    BEA GDP_Price_Index...
+2026-04-09 06:05:11 [INFO]    BEA GDP_Price_Index: 2,496 obs
+2026-04-09 06:05:12 [INFO]    NY Fed from 2018-04-03...
+2026-04-09 06:05:13 [INFO]    NY Fed: 20,044 obs
+2026-04-09 06:05:13 [INFO]    OFR OFR_SOFR...
+2026-04-09 06:05:14 [INFO]    OFR OFR_SOFR: 2,001 obs
+2026-04-09 06:05:14 [INFO]    OFR OFR_EFFR...
+2026-04-09 06:05:14 [INFO]    OFR OFR_EFFR: 2,537 obs
+2026-04-09 06:05:15 [INFO]    OFR OFR_OBFR...
+2026-04-09 06:05:15 [INFO]    OFR OFR_OBFR: 2,537 obs
+2026-04-09 06:05:15 [INFO]    OFR OFR_TGCR...
+2026-04-09 06:05:15 [INFO]    OFR OFR_TGCR: 2,001 obs
+2026-04-09 06:05:16 [INFO]    OFR OFR_BGCR...
+2026-04-09 06:05:16 [INFO]    OFR OFR_BGCR: 2,001 obs
+2026-04-09 06:05:16 [INFO]    OFR MMF_Total_Assets...
+2026-04-09 06:05:16 [INFO]    OFR MMF_Total_Assets: 184 obs
+2026-04-09 06:05:17 [INFO]    OFR MMF_Repo_Total...
+2026-04-09 06:05:17 [INFO]    OFR MMF_Repo_Total: 184 obs
+2026-04-09 06:05:17 [INFO]    OFR MMF_Repo_with_Fed...
+2026-04-09 06:05:18 [INFO]    OFR MMF_Repo_with_Fed: 152 obs
+2026-04-09 06:05:18 [INFO]    OFR MMF_Treasury_Total...
+2026-04-09 06:05:18 [INFO]    OFR MMF_Treasury_Total: 184 obs
+2026-04-09 06:05:18 [INFO]    OFR PD_Repo_Total...
+2026-04-09 06:05:19 [INFO]    OFR PD_Repo_Total: 55 obs
+2026-04-09 06:05:19 [INFO]    OFR PD_ReverseRepo_Total...
+2026-04-09 06:05:19 [INFO]    OFR PD_ReverseRepo_Total: 31 obs
+2026-04-09 06:05:20 [INFO]    OFR PD_Repo_Treasury_Total...
+2026-04-09 06:05:20 [INFO]    OFR PD_Repo_Treasury_Total: 365 obs
+2026-04-09 06:05:20 [INFO]    OFR FSI...
+2026-04-09 06:05:26 [INFO]    OFR FSI: 59,787 obs
+2026-04-09 06:05:26 [INFO] === MARKET DATA FETCH ===
+2026-04-09 06:05:26 [INFO] --- Yahoo Finance (S&P 500) ---
+2026-04-09 06:05:26 [INFO]    Fetching S&P 500 from 2000-01-01...
+2026-04-09 06:05:31 [INFO]    S&P 500: 97,828 observations
+2026-04-09 06:05:31 [INFO] --- Breadth Data ---
+2026-04-09 06:05:31 [INFO]    Breadth data requires premium sources (StockCharts, Bloomberg)
+2026-04-09 06:05:31 [INFO]    Using proxy computations where possible...
+2026-04-09 06:05:31 [INFO] --- Sentiment Data ---
+2026-04-09 06:05:33 [ERROR] VIX metrics error: database disk image is malformed
+2026-04-09 06:05:33 [INFO]    Fetching AAII sentiment...
+2026-04-09 06:05:34 [ERROR] AAII fetch error: database disk image is malformed
+2026-04-09 06:05:34 [INFO]    Fetching NAAIM exposure...
+2026-04-09 06:05:34 [INFO]    NAAIM requires web scraping or direct data agreement
+2026-04-09 06:05:34 [INFO] --- Put/Call Ratio ---
+2026-04-09 06:05:34 [INFO]    Put/Call ratio requires CBOE data feed...
+2026-04-09 06:05:34 [INFO] === MARKET DATA COMPLETE: 15 series, 97,828 obs ===
+2026-04-09 06:05:34 [INFO] 
+--- FREE CRYPTO DATA (DefiLlama + CoinGecko) ---
+2026-04-09 06:05:34 [INFO] Fetching TVL data from DefiLlama...
+2026-04-09 06:05:44 [WARNING]    Sui: HTTP 400
+2026-04-09 06:05:47 [WARNING]    Optimism: HTTP 400
+2026-04-09 06:05:48 [WARNING]    Base: HTTP 400
+2026-04-09 06:05:48 [WARNING]    Polygon: HTTP 400
+2026-04-09 06:05:48 [ERROR]    Uniswap: Error - database disk image is malformed
+2026-04-09 06:05:55 [ERROR]    Curve: Error - database disk image is malformed
+2026-04-09 06:05:59 [ERROR]    PancakeSwap: Error - database disk image is malformed
+2026-04-09 06:06:02 [ERROR]    Raydium: Error - database disk image is malformed
+2026-04-09 06:06:06 [ERROR]    Aerodrome: Error - database disk image is malformed
+2026-04-09 06:06:07 [ERROR]    Aave: Error - database disk image is malformed
+2026-04-09 06:06:07 [WARNING]    Compound: HTTP 400
+2026-04-09 06:06:08 [ERROR]    Morpho: Error - database disk image is malformed
+2026-04-09 06:06:11 [ERROR]    Spark: Error - database disk image is malformed
+2026-04-09 06:06:13 [ERROR]    GMX: Error - database disk image is malformed
+2026-04-09 06:06:14 [ERROR]    dYdX: Error - database disk image is malformed
+2026-04-09 06:06:14 [ERROR]    Hyperliquid: Error - database disk image is malformed
+2026-04-09 06:06:15 [ERROR]    Synthetix: Error - database disk image is malformed
+2026-04-09 06:06:15 [ERROR]    Lido: Error - database disk image is malformed
+2026-04-09 06:06:16 [ERROR]    Rocket Pool: Error - database disk image is malformed
+2026-04-09 06:06:16 [ERROR]    Jito: Error - database disk image is malformed
+2026-04-09 06:06:16 [WARNING]    Marinade: HTTP 400
+2026-04-09 06:06:18 [ERROR]    MakerDAO: Error - database disk image is malformed
+2026-04-09 06:06:18 [ERROR] CRYPTO failed: database disk image is malformed
+2026-04-09 06:06:19 [INFO] Found 503 S&P 500 constituents
+2026-04-09 06:06:19 [INFO] Fetching prices for 503 tickers...
+2026-04-09 06:06:19 [INFO]    Batch 1/11: 50 tickers
+2026-04-09 06:06:21 [INFO]    Batch 2/11: 50 tickers
+2026-04-09 06:06:24 [INFO]    Batch 3/11: 50 tickers
+2026-04-09 06:06:27 [INFO]    Batch 4/11: 50 tickers
+2026-04-09 06:06:31 [INFO]    Batch 5/11: 50 tickers
+2026-04-09 06:06:33 [INFO]    Batch 6/11: 50 tickers
+2026-04-09 06:06:34 [ERROR] Failed to get ticker 'KR' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:34 [ERROR] Failed to get ticker 'JKHY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:34 [ERROR] Failed to get ticker 'IR' reason: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:34 [ERROR] $IR: possibly delisted; no timezone found
+2026-04-09 06:06:34 [ERROR] 
+31 Failed downloads:
+2026-04-09 06:06:34 [ERROR] ['KEYS', 'INTU', 'ICE', 'LHX', 'JBHT', 'IBKR', 'J', 'LIN', 'INVH', 'KDP', 'LII', 'IVZ', 'IRM', 'MPC', 'IFF', 'INCY', 'IP', 'JPM', 'LYB', 'KLAC', 'MTB', 'LVS', 'KKR', 'KEY', 'LDOS']: OperationalError('unable to open database file')
+2026-04-09 06:06:34 [ERROR] ['L', 'JBL', 'LRCX']: TypeError("'NoneType' object is not subscriptable")
+2026-04-09 06:06:34 [ERROR] ['JKHY']: DNSError('Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-04-09 06:06:34 [ERROR] ['KR']: DNSError('Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-04-09 06:06:34 [ERROR] ['IR']: possibly delisted; no timezone found
+2026-04-09 06:06:35 [INFO]    Batch 7/11: 50 tickers
+2026-04-09 06:06:35 [ERROR] Failed to get ticker 'NCLH' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:35 [ERROR] $NCLH: possibly delisted; no timezone found
+2026-04-09 06:06:35 [ERROR] Failed to get ticker 'MKC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:35 [ERROR] $MKC: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] Failed to get ticker 'MDT' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:36 [ERROR] $MDT: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] Failed to get ticker 'ORLY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:36 [ERROR] $ORLY: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] Failed to get ticker 'MTD' reason: Failed to perform, curl: (77) error setting certificate verify locations:  CAfile: /opt/homebrew/lib/python3.14/site-packages/certifi/cacert.pem CApath: none. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:36 [ERROR] $MTD: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] Failed to get ticker 'MPWR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:36 [ERROR] $MPWR: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] Failed to get ticker 'OXY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:36 [ERROR] $OXY: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] Failed to get ticker 'MCHP' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:36 [ERROR] $MCHP: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] Failed to get ticker 'NWSA' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:36 [ERROR] $NWSA: possibly delisted; no timezone found
+2026-04-09 06:06:36 [ERROR] 
+50 Failed downloads:
+2026-04-09 06:06:36 [ERROR] ['MCD', 'MRK', 'MSFT', 'NVDA']: TypeError("'NoneType' object is not subscriptable")
+2026-04-09 06:06:36 [ERROR] ['MRNA', 'MU', 'MAR', 'NEE', 'MNST', 'NKE', 'NRG', 'NWS', 'TAP', 'META', 'NUE', 'MAS', 'NSC', 'MRSH', 'NVR', 'NDAQ', 'NFLX', 'MLM', 'MA', 'MET', 'MOS', 'NTAP', 'NI', 'NEM', 'MGM', 'NDSN', 'MDLZ', 'MAA', 'MSCI', 'NOC', 'MCK', 'NXPI', 'ODFL', 'MS', 'MCO', 'MSI', 'NTRS']: OperationalError('unable to open database file')
+2026-04-09 06:06:36 [ERROR] ['NCLH', 'MKC', 'MDT', 'ORLY', 'MTD', 'MPWR', 'OXY', 'MCHP', 'NWSA']: possibly delisted; no timezone found
+2026-04-09 06:06:37 [INFO]    Batch 8/11: 50 tickers
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PLTR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PLTR: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PRU' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PRU: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PNW' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PNW: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'RF' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $RF: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PLD' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PLD: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PTC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PTC: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PAYX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PAYX: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PSX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PSX: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'DGX' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $DGX: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PFE' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PFE: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] Failed to get ticker 'PCAR' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:37 [ERROR] $PCAR: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] 
+50 Failed downloads:
+2026-04-09 06:06:37 [ERROR] ['PLTR', 'PRU', 'PNW', 'RF', 'PLD', 'PTC', 'PAYX', 'PSX', 'DGX', 'PFE', 'PCAR']: possibly delisted; no timezone found
+2026-04-09 06:06:37 [ERROR] ['RMD', 'ROL', 'OKE', 'PANW', 'OMC', 'PSKY', 'Q', 'PPL', 'PG', 'RSG', 'HOOD', 'PSA', 'QCOM', 'OTIS', 'PPG', 'PH', 'ON', 'PCG', 'PNC', 'PGR', 'PKG', 'O', 'PHM', 'REG', 'PWR', 'PFG', 'ROK', 'REGN', 'ORCL', 'RVTY', 'PYPL', 'RJF', 'PEG', 'RTX', 'RL', 'PM', 'PNR', 'POOL']: OperationalError('unable to open database file')
+2026-04-09 06:06:37 [ERROR] ['PEP']: TypeError("'NoneType' object is not subscriptable")
+2026-04-09 06:06:38 [INFO]    Batch 9/11: 50 tickers
+2026-04-09 06:06:38 [ERROR] Failed to get ticker 'SMCI' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:38 [ERROR] $SMCI: possibly delisted; no timezone found
+2026-04-09 06:06:38 [ERROR] Failed to get ticker 'TPL' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:38 [ERROR] $TPL: possibly delisted; no timezone found
+2026-04-09 06:06:38 [ERROR] Failed to get ticker 'SBAC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:38 [ERROR] $SBAC: possibly delisted; no timezone found
+2026-04-09 06:06:38 [ERROR] Failed to get ticker 'SO' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:38 [ERROR] $SO: possibly delisted; no timezone found
+2026-04-09 06:06:38 [ERROR] Failed to get ticker 'TEL' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:38 [ERROR] $TEL: possibly delisted; no timezone found
+2026-04-09 06:06:38 [ERROR] Failed to get ticker 'SYY' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:38 [ERROR] $SYY: possibly delisted; no timezone found
+2026-04-09 06:06:38 [ERROR] 
+50 Failed downloads:
+2026-04-09 06:06:38 [ERROR] ['SNPS', 'TXT', 'TMUS', 'LUV', 'TSCO', 'STT', 'SYF', 'TTWO', 'TER', 'TMO', 'SPG', 'SWKS', 'SNDK', 'TSLA', 'NOW', 'CRM', 'SW', 'TGT', 'TTD', 'TDG', 'TJX', 'SWK', 'TXN', 'SOLV', 'SBUX', 'TDY', 'SYK', 'SNA', 'RCL', 'TKO', 'TT', 'TPR', 'ROP', 'SLB', 'SRE', 'SJM', 'STE', 'STX', 'TROW', 'ROST', 'STLD', 'TRGP', 'SHW', 'SPGI']: OperationalError('unable to open database file')
+2026-04-09 06:06:38 [ERROR] ['SMCI', 'TPL', 'SBAC', 'SO', 'TEL', 'SYY']: possibly delisted; no timezone found
+2026-04-09 06:06:39 [INFO]    Batch 10/11: 50 tickers
+2026-04-09 06:06:39 [ERROR] Failed to get ticker 'TFC' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:39 [ERROR] $TFC: possibly delisted; no timezone found
+2026-04-09 06:06:39 [ERROR] Failed to get ticker 'UBER' reason: Failed to perform, curl: (6) getaddrinfo() thread failed to start. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-04-09 06:06:39 [ERROR] $UBER: possibly delisted; no timezone found
+2026-04-09 06:06:39 [ERROR] 
+50 Failed downloads:
+2026-04-09 06:06:39 [ERROR] ['WFC', 'WEC', 'URI', 'UDR', 'TRV', 'UNP', 'VMC', 'WTW', 'VST', 'XEL', 'VLTO', 'USB', 'TRMB', 'UNH', 'WYNN', 'TYL', 'WDAY', 'VLO', 'VRT', 'WM', 'TSN', 'DIS', 'WAB', 'V', 'GWW', 'UAL', 'WBD', 'WY', 'WSM', 'WST', 'VTR', 'WRB', 'UPS', 'ULTA', 'WMT', 'WELL', 'WDC', 'UHS', 'VZ', 'VRSK', 'XYL', 'VRTX', 'WMB', 'YUM', 'VRSN', 'WAT', 'VICI', 'VTRS']: OperationalError('unable to open database file')
+2026-04-09 06:06:39 [ERROR] ['TFC', 'UBER']: possibly delisted; no timezone found
+2026-04-09 06:06:41 [INFO]    Batch 11/11: 3 tickers
+2026-04-09 06:06:41 [ERROR] 
+3 Failed downloads:
+2026-04-09 06:06:41 [ERROR] ['ZBH', 'ZTS', 'ZBRA']: OperationalError('unable to open database file')
+2026-04-09 06:06:42 [INFO]    Got prices for 269 stocks, 752 days
+2026-04-09 06:06:42 [INFO] Computing % above MAs...
+2026-04-09 06:06:42 [INFO] Computing A/D line...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:116: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2026-04-09 06:06:42 [INFO] Computing NH-NL...
+2026-04-09 06:06:42 [INFO] Computing McClellan...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:156: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+2026-04-09 06:06:42 [INFO] Computing breadth thrust...
+2026-04-09 06:06:42 [INFO] Storing metrics in database...
+2026-04-09 06:06:42 [ERROR] BREADTH failed: unable to open database file
+2026-04-09 06:06:42 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-04-09 06:06:42 [ERROR]   ZHVI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-04-09 06:06:42 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-04-09 06:06:42 [ERROR]   ZORI fetch failed: HTTPSConnectionPool(host='files.zillowstatic.com', port=443): Max retries exceeded with url: /research/public_csvs/zori/Metro_zori_uc_sfrcondomfr_sm_sa_month.csv (Caused by NameResolutionError("HTTPSConnection(host='files.zillowstatic.com', port=443): Failed to resolve 'files.zillowstatic.com' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-04-09 06:06:42 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-04-09 06:06:42 [ERROR] TRADINGVIEW failed: [Errno 24] Too many open files: '/Users/bob/Library/Python/3.14/lib/python/site-packages/websocket/__init__.py'
+2026-04-09 06:06:42 [INFO] Running quality checks on 2402 series...
+2026-04-09 06:06:42 [INFO]    Checked 100 series...
+2026-04-09 06:06:43 [INFO]    Checked 200 series...
+2026-04-09 06:06:43 [INFO]    Checked 300 series...
+2026-04-09 06:06:44 [INFO]    Checked 400 series...
+2026-04-09 06:06:44 [INFO]    Checked 500 series...
+2026-04-09 06:06:44 [INFO]    Checked 600 series...
+2026-04-09 06:06:44 [ERROR] Quality checks failed: Execution failed on sql '
+            SELECT date, value FROM observations
+            WHERE series_id = ?
+            ORDER BY date
+        ': database disk image is malformed
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 109, in main
+    run_daily_update(
+    ~~~~~~~~~~~~~~~~^
+        skip_quality=args.quick,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        sources=sources
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 304, in run_daily_update
+    db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed

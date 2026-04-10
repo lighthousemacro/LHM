@@ -560,7 +560,7 @@ def chart_02():
     """Breadth: How Many Soldiers Are Following the Generals?"""
     print('\nChart 2: % Above 50-Day MA...')
 
-    pct50 = fetch_db_level('SPX_PCT_ABOVE_50D', start='2023-08-01')
+    pct50 = fetch_db_level('SPX_PCT_ABOVE_50D', start='2024-01-01')
 
     fig, ax = new_fig()
 

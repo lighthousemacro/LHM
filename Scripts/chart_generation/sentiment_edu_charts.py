@@ -677,8 +677,9 @@ def chart_09():
 
     fig, ax = new_fig()
 
-    # Raw as faint
-    ax.plot(spi.index, spi, color=THEME['primary'], linewidth=0.5, alpha=0.2, zorder=3)
+    # Raw daily in Sky, more visible
+    ax.plot(spi.index, spi, color=COLORS['sky'], linewidth=0.9, alpha=0.55,
+            label='SPI (daily)', zorder=3)
     # Smoothed
     ax.plot(spi_smooth.index, spi_smooth, color=THEME['primary'], linewidth=2.5,
             label='SPI (10d MA)', zorder=5)

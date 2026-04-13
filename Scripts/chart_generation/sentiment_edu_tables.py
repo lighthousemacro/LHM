@@ -145,15 +145,16 @@ def table_current_state():
 
     columns = ['Index', 'Value', 'As Of', 'Regime']
     data = [
-        ['SPI', '+0.45', 'Mar 10', 'Neutral (slight fear lean)'],
-        ['SSD', '-1.28', 'Mar 10', 'Euphoria dominates'],
-        ['MSI', '-1.41', 'Mar 11', 'Structure broken'],
-        ['MRI', '+0.02', 'Mar 11', 'Neutral regime'],
+        ['SPI',  '~-0.3', 'Apr 10', 'Mild complacency (vol winning)'],
+        ['SSD',  '~-0.5', 'Apr 10', 'Neutral, complacency risk rising'],
+        ['MSI',  '~+0.2', 'Apr 10', 'Structure repaired'],
+        ['VIX',  '19.2',  'Apr 10', '-14% vs 50d MA (complacency side)'],
+        ['AAII', '-7.3%', 'Apr 8',  'Bears 43%, 4th week elevated'],
     ]
-    render_table(ax, columns, data, col_widths=[0.14, 0.16, 0.16, 0.54])
+    render_table(ax, columns, data, col_widths=[0.12, 0.14, 0.14, 0.60])
 
     fig.text(0.5, 0.06,
-             'Lighthouse Macro | Data thru Mar 11, 2026 | Pulled Apr 12, 2026',
+             'Lighthouse Macro | AAII week ending Apr 8 | Market data thru Apr 10, 2026',
              fontsize=8, color=COLORS['doldrums'], ha='center', style='italic')
 
     save(fig, 'pillar_12_table_current')

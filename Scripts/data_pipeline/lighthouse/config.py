@@ -206,6 +206,7 @@ FRED_CURATED = {
 
     # Commodities
     "DCOILWTICO": "WTI Crude",
+    "GASREGW": "US Regular Gasoline Retail",
     "DTWEXBGS": "Trade Weighted Dollar",
 
     # Labor Demographics - Labels verified against FRED API 2026-02-16

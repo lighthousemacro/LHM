@@ -600,11 +600,11 @@ Economics, Finance, Macro, Investing, Markets
 
 ## Document Templates (Summary)
 
-- **Beacon:** Banner, Executive Summary, Macro Context, Monetary Dynamics, Market Technicals, Conclusion, Sign-off
-- **Beam:** Logo, Chart Title, 5 Charts, Commentary (750 words)
+- **Beacon:** Banner, Executive Summary, Macro Context, Monetary Dynamics, Market Technicals, Conclusion, Sign-off. Structure is skeleton + mandatory sections (Exec Summary, Framework Synthesis, Invalidation Criteria, Bottom Line), with flexible body analysis sections.
+- **Beam:** **LOCKED 6-section template (April 14, 2026).** Every Beam follows the same six questions in the same order: (1) The Setup, (2) The Data, (3) The Mechanism, (4) What Consensus Is Missing, (5) What Would Change Our Mind, (6) The So-What. Target 700-800 words, 5 charts. Section headers can be rewritten for punch but the question order is fixed. Full spec in `/Users/bob/LHM/Strategy/BEAM_TEMPLATE.md`.
 - **Notes:** Single chart + 150 words (social/Substack Notes)
 - **Chartbook:** Cover, TOC, Sections (Macro, Labor, Monetary, Treasury, Credit, Equity Internals, Cross-Asset, Global/EM), 2-4 charts per page
-- **Horizon:** State of Play, Key Themes, Risk Matrix, Watchlist, Tactical Implications
+- **Horizon:** State of Play, Key Themes, Risk Matrix, Watchlist, Tactical Implications. NO fixed body template, by design — Horizon's monthly thematic work needs flex room.
 
 ---
 

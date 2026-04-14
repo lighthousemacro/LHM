@@ -577,16 +577,21 @@ One post per pillar. 3,000-3,500 words, 8-12 charts each.
 
 Structure: Hook, Core Insight, What to Watch, Indicators (7-9 subsections with charts), Consensus Trap, Where We Are Now, How to Track, Invalidation Criteria, Bottom Line
 
-**Published (5 of 12 as of Feb 16, 2026):**
-1. "Labor: The Source Code" (Jan 27)
-2. "Prices: The Transmission Belt" (Feb 2)
-3. "Growth: The Second Derivative" (Feb 5)
-4. "Consumer: The Last Domino" (Feb 11)
-5. "Housing: The Collateral Engine" (Feb 16)
+**Published (all 12 as of April 14, 2026):**
+1. "Labor: The Source Code" (Jan 27) → `research.lighthousemacro.com/p/labor-the-source-code`
+2. "Prices: The Transmission Belt" (Feb 2) → `/p/prices-the-transmission-belt`
+3. "Growth: The Second Derivative" (Feb 5) → `/p/growth-the-second-derivative`
+4. "Consumer: The Last Domino" (Feb 11) → `/p/consumer-the-last-domino`
+5. "Housing: The Collateral Engine" (Feb 16) → `/p/housing-the-collateral-engine`
+6. "Business: The Forward Commitment" → `/p/business-the-forward-commitment`
+7. "Trade: The Pipeline" → `/p/trade-the-pipeline`
+8. "Government: The Fiscal Overhang" → `/p/government-the-fiscal-overhang`
+9. "Financial: The Cascade" → `/p/financial-the-cascade`
+10. "Plumbing: The Invisible Infrastructure" → `/p/plumbing-the-invisible-infrastructure`
+11. "Market Structure: The Weight of Evidence" (Apr 10) → `/p/market-structure-the-weight-of-evidence`
+12. "Sentiment & Positioning: The Contrarian Edge" → `/p/sentiment-and-positioning-the-contrarian-216` (note: Substack slug collision suffix)
 
-**Remaining:** Business, Trade, Government, Financial, Plumbing, Market Structure, Sentiment
-
-Note: Pillar numbers may not match post numbers (Consumer is Pillar 5 but Post 4).
+Note: Pillar numbers may not match post numbers (Consumer is Pillar 5 but Post 4). Slug pattern is `{pillar}-the-{subtitle}` with a few exceptions noted above.
 
 ## Free vs Paid Content
 

@@ -30,6 +30,25 @@ echo "[$TIMESTAMP] Synced to Claude Code: $CODE_TARGET" >> "$LOG"
 cp "$MASTER" "$DESKTOP_EXPORT"
 echo "[$TIMESTAMP] Created desktop export: $DESKTOP_EXPORT" >> "$LOG"
 
+# Push to GitHub so cloud environments and remote triggers see the latest context.
+# Only commits if CLAUDE_MASTER.md actually changed (other than LAST_SYNC, which changes daily).
+# We only push if there's a real content change to avoid churning the repo every 15 minutes.
+cd /Users/bob/LHM || exit 0
+if git diff --quiet -- Strategy/CLAUDE_MASTER.md; then
+    : # nothing changed, skip
+else
+    # Check if the only change is the LAST_SYNC date line
+    CHANGED_LINES=$(git diff --unified=0 Strategy/CLAUDE_MASTER.md | grep -E '^[+-]' | grep -v '^[+-]\{3\}' | wc -l | tr -d ' ')
+    SYNC_ONLY=$(git diff --unified=0 Strategy/CLAUDE_MASTER.md | grep -E '^[+-]' | grep -v '^[+-]\{3\}' | grep -v 'LAST_SYNC' | wc -l | tr -d ' ')
+    if [ "$SYNC_ONLY" = "0" ]; then
+        echo "[$TIMESTAMP] Only LAST_SYNC changed, skipping commit" >> "$LOG"
+    else
+        git add Strategy/CLAUDE_MASTER.md
+        git commit -m "sync: update CLAUDE_MASTER.md ($TODAY)" >> "$LOG" 2>&1
+        git push origin main >> "$LOG" 2>&1 && echo "[$TIMESTAMP] Pushed to GitHub" >> "$LOG" || echo "[$TIMESTAMP] Push failed (not fatal)" >> "$LOG"
+    fi
+fi
+
 # Summary
 echo "========================================"
 echo "MASTER CONTEXT SYNCED - $TIMESTAMP"

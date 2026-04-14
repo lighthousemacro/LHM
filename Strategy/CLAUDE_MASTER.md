@@ -749,17 +749,98 @@ Note: Custom research / signal databases = institutional-tier work, not included
 
 **Location:** `/Users/bob/LHM/Scripts/sync_claude_context.sh`
 **Alias:** `lhm-sync`
+**Cron:** runs every 15 minutes via user crontab
 
-**What it does:**
+**What it does automatically:**
 1. Updates LAST_SYNC date in this file
 2. Copies to Claude Code: `/Users/bob/.claude/CLAUDE.md`
-3. Creates desktop exports: `~/Desktop/LHM_CLAUDE_CONTEXT.md` and `~/Desktop/LHM_GEMINI_CONTEXT.md`
+3. Creates desktop export: `~/Desktop/LHM_MASTER_CONTEXT.md`
+4. Commits + pushes `Strategy/CLAUDE_MASTER.md` to `github.com/BobSheehan23/LHM` when content changes (skips commits where only LAST_SYNC changed, to avoid churn)
 
-**Manual targets (copy from Desktop):**
-- Claude.ai/iOS: paste into custom instructions
-- Claude Desktop: paste to custom instructions
-- Gemini: paste context
-- ChatGPT: paste into custom instructions
+**Downstream surfaces that auto-pick up context:**
+- **Claude Code local** — reads `~/.claude/CLAUDE.md` on every session start
+- **Claude Code remote-control** — same as local (remote-control dispatches into the local CLI)
+- **Claude Code cloud environments** — clone the LHM repo on each run, so they see whatever was last pushed
+- **Scheduled remote triggers** (Pulse Check, Morning Brief, others) — same mechanism as cloud environments
+- **Memory system** — `~/.claude/projects/-Users-bob/memory/MEMORY.md` + topic files, auto-loaded on every Claude Code session
+- **Skills** — `~/.claude/skills/` auto-loads six LHM skills on every session
+
+**Manual targets (paste from Desktop export):**
+- Claude.ai web / iOS / Android — paste into Profile → Settings → Custom Instructions
+- Claude Desktop — paste into custom instructions
+- Gemini — paste into context
+- ChatGPT — paste into custom instructions
+
+These four need re-pasting only when `CLAUDE_MASTER.md` has meaningful content changes (not daily). Do a batch refresh weekly or whenever a major section changes.
+
+---
+
+# SECTION 15: AUTOMATION & REMOTE WORK
+
+## Claude Code Remote Control
+
+Bob runs `claude remote-control` in a dedicated terminal tab (from `/Users/bob/LHM`) to dispatch Claude Code sessions into his Mac from any Claude.ai surface (web, desktop, mobile).
+
+- **Bridge environment ID:** `env_019dok5DYQfwpL611fsNN6hk` (MacBookAir:LHM:1c24)
+- **Requires:** Mac awake + terminal tab running `claude remote-control`
+- **Full access:** local files, Lighthouse_Master.db, Python env, pipeline — everything
+- **Use case:** work from phone without losing access to the DB and pipeline
+
+When the Mac mini arrives (always-on), the bridge becomes reliable 24/7 and the Morning Brief trigger should be migrated off cloud onto the bridge so it can read the real DB for MRI/LFI/LCI values.
+
+## Cloud Environments
+
+Two cloud environments available for dispatch or scheduling:
+- **LHM:** `env_01GnNcwscshi2BW1uALdMuZc` (anthropic_cloud, LHM-flavored)
+- **Default Cloud Environment:** `env_011CUQkTDVrA7HzeaUfpaRvv` (generic anthropic_cloud)
+
+Cloud environments **cannot** reach `Lighthouse_Master.db`. They can clone the LHM repo on GitHub, so anything committed to the repo is accessible, but the DB file itself is not in git.
+
+## Scheduled Remote Triggers (Cloud Cron)
+
+Two triggers run on cron in the Default Cloud Environment. Manage all triggers at https://claude.ai/code/scheduled.
+
+### Pulse Check — `trig_01Lc4BVhD9Lb9dD2PhFFnSBg`
+- **Cron:** `3 13-23 * * 1-5` (hourly Mon-Fri, 9am-7pm ET, off-minute)
+- **Purpose:** ADHD-friendly triage of last ~90 min of Gmail + Google Calendar
+- **Output:** sent email to bob@lighthousemacro.com with urgency-ranked triage (URGENT / SOON / FYI). Subject line designed for phone lock screen.
+- **Named contacts to flag:** Pascal Hugli, Tania Reif, Christopher King, Tim Pierotti, Michael Nadeau
+- **MCP:** Gmail + Google Calendar
+
+### LHM Morning Brief — `trig_01UnidvkWSLvV8FzWJfy45N1`
+- **Cron:** `27 10 * * 1-5` (6:27am ET weekdays, UTC-4 during EDT)
+- **Purpose:** Daily pre-market brief in Lighthouse voice
+- **Four sections:** overnight market moves → biggest macro news → today's calendar (econ releases + meetings) → urgent inbox
+- **Data sources:** WebFetch/WebSearch (cloud env can't read local DB). Migrate to bridge environment once Mac mini is live.
+- **Voice:** 80% institutional rigor + 20% dry observation, no emdashes, no AI-isms, speaks as "we"
+- **Target length:** 350-450 words, hard max 550
+- **DST note:** when clocks flip to EST, cron needs to shift to `27 11 * * 1-5`
+
+### Killed: old launchd morning brief
+The previous `com.lighthousemacro.morning-brief.plist` + `com.lighthousemacro.email-brief.plist` chain (07:30/07:35 local) was unloaded and deleted on 2026-04-14. Source scripts at `morning_brief.py` and `email_brief.py` are kept as reference for one week, then delete.
+
+## LHM Claude Skills (six installed)
+
+Source bundles at `/Users/bob/LHM/claude skills/` (note the space in the folder name). Installed copies at `~/.claude/skills/` load automatically on every Claude Code session start (local, remote-control, and cloud alike if synced).
+
+| Skill | Purpose |
+|---|---|
+| `chart-god` | Static chart generation for all distribution channels (Twitter, Substack Notes, Beams, Beacons, Chartbooks, PDFs) |
+| `lhm-brand-system` | Branded document generation (PDF, PPTX, DOCX, HTML) using 23/89/BB palette. Bundles brand-guide.md, chart-styling.md, templates.md |
+| `lhm-data-analyst` | Database wizard + SQL savant for Lighthouse_Master.db and pillar sub-DBs |
+| `lhm-macro-scout` | Autonomous research engine combining DB analysis with web search |
+| `lhm-content-engine` | Autonomous content drafter in Bob's voice; consumes scout briefs + calendar specs |
+| `lhm-content-calendar` | Publishing intelligence layer; knows Beacon/Beam/Note/Chartbook/Horizon schedule and macro release calendar |
+
+**Pipeline:** scout (researches) → engine (drafts) → calendar (validates format/timing). lhm-data-analyst is the backbone — other skills delegate DB queries to it rather than writing raw SQL.
+
+**To update a skill:** extract the `.skill` zip from `/Users/bob/LHM/claude skills/`, copy the inner folder into `~/.claude/skills/`, and restart the session. Skills don't hot-reload.
+
+## Local launchd jobs (still running)
+
+- **com.lighthousemacro.pipeline** — data pipeline
+- **com.lighthousemacro.strategy-sync** — docs sync
+- **crontab: sync_claude_context.sh** — every 15 min (updates master context + pushes to GitHub on real changes)
 
 ---
 

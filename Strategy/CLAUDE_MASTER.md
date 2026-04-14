@@ -863,6 +863,6 @@ Source bundles at `/Users/bob/LHM/claude skills/` (note the space in the folder 
 
 **END OF MASTER CONTEXT**
 
-**Version:** 5.0
-**Compiled:** 2026-02-16
+**Version:** 5.1
+**Compiled:** 2026-02-16 (v5.0); 2026-04-14 (v5.1 — added Section 15: Automation & Remote Work, updated Section 14 for git-push sync)
 **Author:** Bob Sheehan, CFA, CMT

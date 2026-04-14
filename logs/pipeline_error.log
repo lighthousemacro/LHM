@@ -15648,3 +15648,205 @@ Traceback (most recent call last):
     db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.DatabaseError: database disk image is malformed
+2026-04-14 06:00:09 [INFO] Database initialized: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+2026-04-14 06:00:09 [INFO] --- FRED: Category Discovery ---
+2026-04-14 06:00:09 [INFO]    Employment_Situation...
+2026-04-14 06:00:12 [INFO]    Employment_Situation: 0 series, 0 obs
+2026-04-14 06:00:12 [INFO]    CPI_Urban_Consumers...
+2026-04-14 06:00:20 [ERROR] Error fetching category CPI_Urban_Consumers: database disk image is malformed
+2026-04-14 06:00:20 [INFO]    CPI_Urban_Consumers: 0 series, 0 obs
+2026-04-14 06:00:20 [INFO]    Industrial_Production...
+2026-04-14 06:00:24 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/category/series?category_id=32262&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json&limit=50&order_by=popularity&sort_order=desc. Retrying in 2s...
+2026-04-14 06:00:29 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=USRECD&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-14 06:00:32 [ERROR] Error fetching category Industrial_Production: database disk image is malformed
+2026-04-14 06:00:32 [INFO]    Industrial_Production: 0 series, 0 obs
+2026-04-14 06:00:32 [ERROR] FRED failed: database disk image is malformed
+2026-04-14 06:00:32 [INFO]    BLS 1990-2009...
+2026-04-14 06:00:33 [ERROR] BLS Error: database disk image is malformed
+2026-04-14 06:00:34 [INFO]    BLS 2010-2026...
+2026-04-14 06:00:36 [INFO]    BLS 2010-2026: 6,025 obs
+2026-04-14 06:00:37 [INFO]    BEA GDP_Components...
+2026-04-14 06:00:38 [INFO]    BEA GDP_Components: 2,704 obs
+2026-04-14 06:00:38 [INFO]    BEA Real_GDP_Growth...
+2026-04-14 06:00:39 [INFO]    BEA Real_GDP_Growth: 2,600 obs
+2026-04-14 06:00:40 [INFO]    BEA Personal_Income...
+2026-04-14 06:00:40 [INFO]    BEA Personal_Income: 4,472 obs
+2026-04-14 06:00:41 [INFO]    BEA PCE_Components...
+2026-04-14 06:00:42 [INFO]    BEA PCE_Components: 3,224 obs
+2026-04-14 06:00:42 [INFO]    BEA Corporate_Profits...
+2026-04-14 06:00:43 [INFO]    BEA Corporate_Profits: 5,096 obs
+2026-04-14 06:00:44 [INFO]    BEA GDI...
+2026-04-14 06:00:44 [INFO]    BEA GDI: 2,496 obs
+2026-04-14 06:00:45 [INFO]    BEA Govt_Receipts_Expenditures...
+2026-04-14 06:00:46 [INFO]    BEA Govt_Receipts_Expenditures: 4,472 obs
+2026-04-14 06:00:46 [INFO]    BEA PCE_Price_Index...
+2026-04-14 06:00:47 [INFO]    BEA PCE_Price_Index: 3,224 obs
+2026-04-14 06:00:48 [INFO]    BEA GDP_Price_Index...
+2026-04-14 06:00:48 [INFO]    BEA GDP_Price_Index: 2,496 obs
+2026-04-14 06:00:49 [INFO]    NY Fed from 2018-04-03...
+2026-04-14 06:00:52 [INFO]    NY Fed: 20,074 obs
+2026-04-14 06:00:52 [INFO]    OFR OFR_SOFR...
+2026-04-14 06:00:53 [INFO]    OFR OFR_SOFR: 2,004 obs
+2026-04-14 06:00:53 [INFO]    OFR OFR_EFFR...
+2026-04-14 06:00:54 [INFO]    OFR OFR_EFFR: 2,540 obs
+2026-04-14 06:00:54 [INFO]    OFR OFR_OBFR...
+2026-04-14 06:00:55 [INFO]    OFR OFR_OBFR: 2,540 obs
+2026-04-14 06:00:55 [INFO]    OFR OFR_TGCR...
+2026-04-14 06:00:56 [INFO]    OFR OFR_TGCR: 2,004 obs
+2026-04-14 06:00:56 [INFO]    OFR OFR_BGCR...
+2026-04-14 06:00:57 [INFO]    OFR OFR_BGCR: 2,004 obs
+2026-04-14 06:00:57 [INFO]    OFR MMF_Total_Assets...
+2026-04-14 06:00:57 [INFO]    OFR MMF_Total_Assets: 184 obs
+2026-04-14 06:00:58 [INFO]    OFR MMF_Repo_Total...
+2026-04-14 06:00:58 [INFO]    OFR MMF_Repo_Total: 184 obs
+2026-04-14 06:00:58 [INFO]    OFR MMF_Repo_with_Fed...
+2026-04-14 06:00:58 [INFO]    OFR MMF_Repo_with_Fed: 152 obs
+2026-04-14 06:00:59 [INFO]    OFR MMF_Treasury_Total...
+2026-04-14 06:00:59 [INFO]    OFR MMF_Treasury_Total: 184 obs
+2026-04-14 06:00:59 [INFO]    OFR PD_Repo_Total...
+2026-04-14 06:01:00 [INFO]    OFR PD_Repo_Total: 55 obs
+2026-04-14 06:01:00 [INFO]    OFR PD_ReverseRepo_Total...
+2026-04-14 06:01:00 [INFO]    OFR PD_ReverseRepo_Total: 31 obs
+2026-04-14 06:01:00 [INFO]    OFR PD_Repo_Treasury_Total...
+2026-04-14 06:01:01 [INFO]    OFR PD_Repo_Treasury_Total: 365 obs
+2026-04-14 06:01:01 [INFO]    OFR FSI...
+2026-04-14 06:01:22 [INFO]    OFR FSI: 59,814 obs
+2026-04-14 06:01:22 [INFO] === MARKET DATA FETCH ===
+2026-04-14 06:01:22 [INFO] --- Yahoo Finance (S&P 500) ---
+2026-04-14 06:01:22 [INFO]    Fetching S&P 500 from 2000-01-01...
+2026-04-14 06:01:31 [INFO]    S&P 500: 97,873 observations
+2026-04-14 06:01:31 [INFO] --- Breadth Data ---
+2026-04-14 06:01:31 [INFO]    Breadth data requires premium sources (StockCharts, Bloomberg)
+2026-04-14 06:01:31 [INFO]    Using proxy computations where possible...
+2026-04-14 06:01:31 [INFO] --- Sentiment Data ---
+2026-04-14 06:01:33 [ERROR] VIX metrics error: database disk image is malformed
+2026-04-14 06:01:33 [INFO]    Fetching AAII sentiment...
+2026-04-14 06:01:33 [ERROR] AAII fetch error: database disk image is malformed
+2026-04-14 06:01:33 [INFO]    Fetching NAAIM exposure...
+2026-04-14 06:01:33 [INFO]    NAAIM requires web scraping or direct data agreement
+2026-04-14 06:01:33 [INFO] --- Put/Call Ratio ---
+2026-04-14 06:01:33 [INFO]    Put/Call ratio requires CBOE data feed...
+2026-04-14 06:01:33 [INFO] === MARKET DATA COMPLETE: 15 series, 97,873 obs ===
+2026-04-14 06:01:33 [INFO] 
+--- FREE CRYPTO DATA (DefiLlama + CoinGecko) ---
+2026-04-14 06:01:33 [INFO] Fetching TVL data from DefiLlama...
+2026-04-14 06:01:41 [WARNING]    Sui: HTTP 400
+2026-04-14 06:01:51 [WARNING]    Optimism: HTTP 400
+2026-04-14 06:01:57 [WARNING]    Base: HTTP 400
+2026-04-14 06:01:58 [WARNING]    Polygon: HTTP 400
+2026-04-14 06:01:58 [ERROR]    Uniswap: Error - database disk image is malformed
+2026-04-14 06:02:04 [ERROR]    Curve: Error - database disk image is malformed
+2026-04-14 06:02:35 [ERROR]    PancakeSwap: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-14 06:02:35 [ERROR]    Raydium: Error - database disk image is malformed
+2026-04-14 06:02:36 [ERROR]    Aerodrome: Error - database disk image is malformed
+2026-04-14 06:02:37 [ERROR]    Aave: Error - database disk image is malformed
+2026-04-14 06:02:37 [WARNING]    Compound: HTTP 400
+2026-04-14 06:02:38 [ERROR]    Morpho: Error - database disk image is malformed
+2026-04-14 06:02:39 [ERROR]    Spark: Error - database disk image is malformed
+2026-04-14 06:02:49 [ERROR]    GMX: Error - database disk image is malformed
+2026-04-14 06:02:51 [ERROR]    dYdX: Error - database disk image is malformed
+2026-04-14 06:02:51 [ERROR]    Hyperliquid: Error - database disk image is malformed
+2026-04-14 06:02:52 [ERROR]    Synthetix: Error - database disk image is malformed
+2026-04-14 06:02:52 [ERROR]    Lido: Error - database disk image is malformed
+2026-04-14 06:02:54 [ERROR]    Rocket Pool: Error - database disk image is malformed
+2026-04-14 06:02:54 [ERROR]    Jito: Error - database disk image is malformed
+2026-04-14 06:02:55 [WARNING]    Marinade: HTTP 400
+2026-04-14 06:02:57 [ERROR]    MakerDAO: Error - database disk image is malformed
+2026-04-14 06:02:58 [ERROR] CRYPTO failed: database disk image is malformed
+2026-04-14 06:02:59 [INFO] Found 503 S&P 500 constituents
+2026-04-14 06:02:59 [INFO] Fetching prices for 503 tickers...
+2026-04-14 06:02:59 [INFO]    Batch 1/11: 50 tickers
+2026-04-14 06:03:01 [INFO]    Batch 2/11: 50 tickers
+2026-04-14 06:03:03 [INFO]    Batch 3/11: 50 tickers
+2026-04-14 06:03:05 [INFO]    Batch 4/11: 50 tickers
+2026-04-14 06:03:08 [INFO]    Batch 5/11: 50 tickers
+2026-04-14 06:03:10 [INFO]    Batch 6/11: 50 tickers
+2026-04-14 06:03:11 [ERROR] 
+45 Failed downloads:
+2026-04-14 06:03:11 [ERROR] ['LMT', 'LDOS', 'JBL', 'INTU', 'J', 'KKR', 'L', 'JCI', 'MTB', 'ICE', 'KMI', 'KIM', 'LLY', 'PODD', 'LEN', 'LHX', 'KEYS', 'LII', 'INVH', 'IR', 'IFF', 'KHC', 'JKHY', 'LRCX', 'LITE']: TypeError("'NoneType' object is not subscriptable")
+2026-04-14 06:03:11 [ERROR] ['IRM', 'KDP', 'KR', 'MPC', 'LVS', 'LH', 'KVUE', 'JBHT', 'IVZ', 'JNJ', 'LULU', 'LOW', 'KEY', 'LIN', 'ISRG', 'LYV', 'INCY', 'IBKR', 'JPM', 'INTC']: OperationalError('unable to open database file')
+2026-04-14 06:03:12 [INFO]    Batch 7/11: 50 tickers
+2026-04-14 06:03:13 [ERROR] 
+49 Failed downloads:
+2026-04-14 06:03:13 [ERROR] ['OXY', 'MAR', 'MRK', 'MCO', 'ODFL', 'MCD', 'NEM', 'MA', 'NXPI', 'NCLH', 'MS', 'NTRS', 'MNST', 'NVR', 'MSCI']: TypeError("'NoneType' object is not subscriptable")
+2026-04-14 06:03:13 [ERROR] ['NSC', 'NEE', 'MLM', 'NTAP', 'MGM', 'NKE', 'NFLX', 'META', 'MPWR', 'MET', 'MOS', 'MCHP', 'MAA', 'NDSN', 'MCK', 'MRNA', 'NVDA', 'NRG', 'NUE', 'MDT', 'MU', 'MSFT', 'MTD', 'MDLZ', 'NWSA', 'MRSH', 'MSI', 'NOC', 'MKC', 'NI', 'ORLY', 'NDAQ', 'MAS', 'NWS']: OperationalError('unable to open database file')
+2026-04-14 06:03:14 [INFO]    Batch 8/11: 50 tickers
+2026-04-14 06:03:14 [ERROR] 
+50 Failed downloads:
+2026-04-14 06:03:14 [ERROR] ['PLD', 'POOL', 'PGR', 'ON', 'PNR', 'REGN', 'PNW', 'PANW', 'PM', 'PLTR', 'DGX', 'PSA', 'RTX', 'RJF', 'PG']: TypeError("'NoneType' object is not subscriptable")
+2026-04-14 06:03:14 [ERROR] ['PYPL', 'PTC', 'Q', 'PFG', 'PHM', 'OMC', 'ROL', 'PFE', 'OKE', 'RVTY', 'REG', 'PSX', 'PNC', 'O', 'QCOM', 'PAYX', 'OTIS', 'PEP', 'RSG', 'ROK', 'PEG', 'PRU', 'RF', 'PCG', 'PCAR', 'PPG', 'RL', 'RMD', 'PSKY', 'PPL', 'PKG', 'PH', 'ORCL', 'HOOD', 'PWR']: OperationalError('unable to open database file')
+2026-04-14 06:03:15 [INFO]    Batch 9/11: 50 tickers
+2026-04-14 06:03:15 [ERROR] 
+50 Failed downloads:
+2026-04-14 06:03:15 [ERROR] ['STX', 'SBUX', 'TTWO', 'SW', 'SO', 'SYF', 'SYK', 'TSCO', 'STLD', 'RCL', 'TXN', 'SRE', 'LUV', 'STE', 'SWK', 'SPGI', 'TMUS', 'TPL', 'CRM', 'TJX', 'SOLV', 'TER', 'SMCI', 'SBAC', 'TKO', 'TXT', 'TROW', 'TPR', 'SPG', 'TDY', 'TRGP', 'SJM', 'SYY', 'TT', 'SNPS', 'SHW', 'TDG', 'TTD', 'TSLA', 'NOW']: OperationalError('unable to open database file')
+2026-04-14 06:03:15 [ERROR] ['TMO', 'SNA', 'SLB', 'STT', 'TEL', 'ROST', 'TGT', 'SNDK', 'ROP', 'SWKS']: TypeError("'NoneType' object is not subscriptable")
+2026-04-14 06:03:16 [INFO]    Batch 10/11: 50 tickers
+2026-04-14 06:03:17 [ERROR] 
+50 Failed downloads:
+2026-04-14 06:03:17 [ERROR] ['UBER', 'USB', 'TRMB', 'XYL', 'WDAY', 'XEL', 'V', 'WTW', 'WSM', 'VRSN', 'YUM']: TypeError("'NoneType' object is not subscriptable")
+2026-04-14 06:03:17 [ERROR] ['GWW', 'UAL', 'DIS', 'URI', 'WY', 'VRT', 'UNH', 'WEC', 'WFC', 'WAB', 'VICI', 'VTRS', 'WYNN', 'VLTO', 'WDC', 'VST', 'WMT', 'WAT', 'TRV', 'UPS', 'TSN', 'VRTX', 'ULTA', 'VTR', 'UDR', 'WELL', 'TYL', 'TFC', 'WRB', 'WST', 'UHS', 'VMC', 'WMB', 'VLO', 'VZ', 'WM', 'WBD', 'UNP', 'VRSK']: OperationalError('unable to open database file')
+2026-04-14 06:03:18 [INFO]    Batch 11/11: 3 tickers
+2026-04-14 06:03:18 [ERROR] 
+3 Failed downloads:
+2026-04-14 06:03:18 [ERROR] ['ZTS', 'ZBH', 'ZBRA']: TypeError("'NoneType' object is not subscriptable")
+2026-04-14 06:03:19 [INFO]    Got prices for 256 stocks, 750 days
+2026-04-14 06:03:19 [INFO] Computing % above MAs...
+2026-04-14 06:03:19 [INFO] Computing A/D line...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:116: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-04-14 06:03:19 [INFO] Computing NH-NL...
+2026-04-14 06:03:20 [INFO] Computing McClellan...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:156: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-04-14 06:03:20 [INFO] Computing breadth thrust...
+2026-04-14 06:03:20 [INFO] Storing metrics in database...
+2026-04-14 06:03:32 [INFO]    SPX_PCT_ABOVE_20D: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_PCT_ABOVE_50D: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_PCT_ABOVE_200D: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_ADVANCES: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_DECLINES: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_AD_LINE: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_AD_RATIO: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_NEW_HIGHS: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_NEW_LOWS: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_NET_NEW_HIGHS: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_MCCLELLAN_OSC: 750 observations
+2026-04-14 06:03:32 [INFO]    SPX_MCCLELLAN_SUM: 750 observations
+2026-04-14 06:03:33 [INFO]    SPX_BREADTH_THRUST: 750 observations
+2026-04-14 06:03:33 [INFO] 
+Breadth total: 13 series, 9,750 observations
+2026-04-14 06:03:33 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-04-14 06:03:33 [ERROR]   ZHVI fetch failed: database disk image is malformed
+2026-04-14 06:03:33 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-04-14 06:03:40 [INFO]   ZORI: 21 series, 2,814 observations
+2026-04-14 06:03:40 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-04-14 06:03:42 [ERROR] TRADINGVIEW failed: database disk image is malformed
+2026-04-14 06:03:42 [INFO] Running quality checks on 2402 series...
+2026-04-14 06:03:42 [INFO]    Checked 100 series...
+2026-04-14 06:03:43 [INFO]    Checked 200 series...
+2026-04-14 06:03:44 [INFO]    Checked 300 series...
+2026-04-14 06:03:44 [INFO]    Checked 400 series...
+2026-04-14 06:03:46 [INFO]    Checked 500 series...
+2026-04-14 06:03:47 [INFO]    Checked 600 series...
+2026-04-14 06:03:47 [ERROR] Quality checks failed: Execution failed on sql '
+            SELECT date, value FROM observations
+            WHERE series_id = ?
+            ORDER BY date
+        ': database disk image is malformed
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 109, in main
+    run_daily_update(
+    ~~~~~~~~~~~~~~~~^
+        skip_quality=args.quick,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+        sources=sources
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 304, in run_daily_update
+    db_total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed

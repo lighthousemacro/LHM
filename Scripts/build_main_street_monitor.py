@@ -126,8 +126,16 @@ def _pill(ax, x, y, text, color):
 def _xlim_from(ax, earliest_start: pd.Timestamp):
     end = pd.Timestamp.today() + pd.DateOffset(months=6)
     ax.set_xlim(earliest_start - pd.DateOffset(months=1), end)
-    locator = mdates.YearLocator(base=1)
-    ax.xaxis.set_major_locator(locator)
+    span_years = (end - earliest_start).days / 365.25
+    if span_years > 25:
+        base = 5
+    elif span_years > 15:
+        base = 3
+    elif span_years > 8:
+        base = 2
+    else:
+        base = 1
+    ax.xaxis.set_major_locator(mdates.YearLocator(base=base))
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
 
 
@@ -144,14 +152,17 @@ def _to_base64(fig) -> str:
     return base64.b64encode(buf.getvalue()).decode("ascii")
 
 
-def _start_date(*series) -> pd.Timestamp:
-    """Latest start among plotted series, clamped to >= 5yr back from max end."""
+def _start_date(*series, max_years: int = 12) -> pd.Timestamp:
+    """Per LHM rule: x-axis starts at latest start date among plotted series,
+    minimum 5yr. Capped at `max_years` for dashboard density."""
     starts = [s.dropna().index.min() for s in series]
     ends = [s.dropna().index.max() for s in series]
-    start = max(starts)
+    latest_start = max(starts)
     max_end = max(ends)
     five_yr = max_end - pd.DateOffset(years=MIN_HISTORY_YEARS)
-    return min(start, five_yr)
+    cap_yr = max_end - pd.DateOffset(years=max_years)
+    candidate = min(latest_start, five_yr)
+    return max(candidate, cap_yr)
 
 
 def _fmt_pct(x, _):
@@ -174,6 +185,7 @@ def chart_spending_pulse():
     ax.plot(rsx_yoy.index, rsx_yoy.values, color=C["dusk"], linewidth=2.2, label="Real Retail Sales YoY")
     _style_ax(ax)
     _xlim_from(ax, start)
+    ax.set_ylim(-12, 12)
     ax.yaxis.set_major_formatter(FuncFormatter(_fmt_pct))
     pce_v, pce_d = latest(pce)
     rsx_v, rsx_d = latest(rsx_yoy)
@@ -217,6 +229,7 @@ def chart_wage_price_squeeze():
     ax.plot(cpi.index, cpi.values, color=C["dusk"], linewidth=2.2, label="CPI YoY")
     _style_ax(ax)
     _xlim_from(ax, start)
+    ax.set_ylim(-4, 10)
     ax.yaxis.set_major_formatter(FuncFormatter(_fmt_pct))
     w_v, w_d = latest(wages)
     c_v, c_d = latest(cpi)
@@ -240,6 +253,7 @@ def chart_rent_stress():
     ax.plot(cpi_rent.index, cpi_rent.values, color=C["ocean"], linewidth=2.2, label="CPI Rent (lease renewals, lagged)")
     _style_ax(ax)
     _xlim_from(ax, start)
+    ax.set_ylim(-2, 18)
     ax.yaxis.set_major_formatter(FuncFormatter(_fmt_pct))
     z_v, z_d = latest(zori)
     r_v, r_d = latest(cpi_rent)
@@ -272,6 +286,8 @@ def chart_credit_balance_sheet():
     ax2.plot(save.index, save.values, color=C["ocean"], linewidth=2.2, label="Saving Rate (LHS)")
     _style_ax(ax)
     _xlim_from(ax, start)
+    ax.set_ylim(1.5, 4.5)
+    ax2.set_ylim(2, 12)
     ax.yaxis.set_major_formatter(FuncFormatter(_fmt_pct))
     ax2.yaxis.set_major_formatter(FuncFormatter(_fmt_pct))
     cc_v, cc_d = latest(cc)
@@ -309,7 +325,7 @@ def chart_main_street_jobs():
     ax.plot(leisure.index, leisure.values, color=C["dusk"], linewidth=2.2, label="Leisure & Hospitality")
     _style_ax(ax)
     _xlim_from(ax, start)
-    ax.set_ylim(-15, 10)
+    ax.set_ylim(-12, 8)
     ax.yaxis.set_major_formatter(FuncFormatter(_fmt_pct))
     r_v, r_d = latest(retail)
     l_v, l_d = latest(leisure)

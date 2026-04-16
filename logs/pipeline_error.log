@@ -15914,3 +15914,17 @@ sqlite3.DatabaseError: database disk image is malformed
 2026-04-16 08:20:42 [ERROR] Error fetching CPIENGSL: unable to open database file
 --- Logging error ---
 2026-04-16 08:22:25 [ERROR] Error fetching CPIMEDSL: database or disk is full
+2026-04-16 08:32:32 [ERROR] Error fetching DGS1: database or disk is full
+2026-04-16 08:32:33 [ERROR] Error fetching DGS2: disk I/O error
+2026-04-16 08:32:34 [ERROR] Error fetching DGS5: disk I/O error
+2026-04-16 08:32:34 [ERROR] Error fetching DGS10: disk I/O error
+2026-04-16 08:32:35 [ERROR] Error fetching DGS30: disk I/O error
+2026-04-16 08:33:54 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=CUSR0000SEFV&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-16 08:34:29 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=PCEND&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-16 08:35:01 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=H41RESPPALDKNWW&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-16 08:35:18 [ERROR] Error fetching DGS3MO: database or disk is full
+2026-04-16 08:35:22 [ERROR] Error fetching DGS6MO: database or disk is full
+2026-04-16 08:35:24 [ERROR] Error fetching T10YFF: database or disk is full
+2026-04-16 08:35:25 [ERROR] Error fetching T5YFF: database or disk is full
+2026-04-16 08:35:41 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=JTSHIL&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-16 08:36:47 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=LNS13023557&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...

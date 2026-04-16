@@ -15859,3 +15859,58 @@ sqlite3.DatabaseError: database disk image is malformed
 2026-04-16 08:07:36 [INFO]    Industrial_Production...
 2026-04-16 08:10:37 [INFO]    Industrial_Production: 6 series, 234,273 obs
 2026-04-16 08:10:38 [INFO]    Treasury_Rates...
+2026-04-16 08:19:02 [INFO]    Treasury_Rates: 17 series, 173,140 obs
+2026-04-16 08:19:02 [INFO]    Money_Banking...
+2026-04-16 08:19:06 [INFO]    Money_Banking: 0 series, 0 obs
+2026-04-16 08:19:06 [INFO]    Producer_Price_Index...
+2026-04-16 08:19:06 [INFO]    Producer_Price_Index: 0 series, 0 obs
+2026-04-16 08:19:07 [INFO]    Employment_Cost_Index...
+2026-04-16 08:19:33 [INFO]    Employment_Cost_Index: 4 series, 2,804 obs
+2026-04-16 08:19:34 [INFO]    Exchange_Rates...
+2026-04-16 08:19:34 [INFO]    Exchange_Rates: 0 series, 0 obs
+2026-04-16 08:19:35 [INFO]    Regional_Fed_Surveys...
+2026-04-16 08:19:37 [INFO]    Regional_Fed_Surveys: 1 series, 281 obs
+2026-04-16 08:19:37 [INFO]    Housing...
+2026-04-16 08:19:39 [INFO]    Housing: 1 series, 117 obs
+2026-04-16 08:19:39 [INFO]    GDP_National_Accounts...
+2026-04-16 08:19:59 [INFO]    GDP_National_Accounts: 4 series, 1,523 obs
+2026-04-16 08:19:59 [INFO]    Personal_Income...
+2026-04-16 08:20:17 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=PCNDGC96&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-16 08:20:22 [ERROR] Error fetching category Personal_Income: unable to open database file
+2026-04-16 08:20:22 [INFO]    Personal_Income: 3 series, 1,198 obs
+2026-04-16 08:20:22 [INFO]    Consumer_Credit...
+2026-04-16 08:20:22 [INFO]    Consumer_Credit: 0 series, 0 obs
+2026-04-16 08:20:23 [INFO]    Interest_Rates...
+2026-04-16 08:20:23 [ERROR] Error fetching category Interest_Rates: unable to open database file
+2026-04-16 08:20:23 [INFO]    Interest_Rates: 0 series, 0 obs
+2026-04-16 08:20:23 [INFO]    Business_Lending...
+2026-04-16 08:20:24 [ERROR] Error fetching category Business_Lending: unable to open database file
+2026-04-16 08:20:24 [INFO]    Business_Lending: 0 series, 0 obs
+2026-04-16 08:20:24 [INFO] --- FRED: Curated Series ---
+2026-04-16 08:20:24 [ERROR] Error fetching UNRATE: unable to open database file
+2026-04-16 08:20:25 [ERROR] Error fetching U6RATE: unable to open database file
+2026-04-16 08:20:25 [ERROR] Error fetching CIVPART: unable to open database file
+2026-04-16 08:20:26 [ERROR] Error fetching PAYEMS: unable to open database file
+2026-04-16 08:20:28 [ERROR] Error fetching ICSA: unable to open database file
+2026-04-16 08:20:29 [ERROR] Error fetching CCSA: unable to open database file
+2026-04-16 08:20:30 [ERROR] Error fetching JTS1000JOR: unable to open database file
+2026-04-16 08:20:31 [ERROR] Error fetching JTS1000QUR: unable to open database file
+2026-04-16 08:20:32 [ERROR] Error fetching JTS1000HIR: unable to open database file
+2026-04-16 08:20:33 [ERROR] Error fetching CPIAUCSL: unable to open database file
+2026-04-16 08:20:33 [ERROR] Error fetching CPILFESL: unable to open database file
+2026-04-16 08:20:34 [ERROR] Error fetching PCEPI: unable to open database file
+2026-04-16 08:20:35 [ERROR] Error fetching PCEPILFE: unable to open database file
+2026-04-16 08:20:36 [ERROR] Error fetching CUSR0000SACL1E: unable to open database file
+2026-04-16 08:20:36 [ERROR] Error fetching CUSR0000SAS: unable to open database file
+2026-04-16 08:20:37 [ERROR] Error fetching CUSR0000SASLE: unable to open database file
+2026-04-16 08:20:37 [ERROR] Error fetching CUSR0000SASL2RS: unable to open database file
+2026-04-16 08:20:37 [ERROR] Error fetching CUSR0000SAC: unable to open database file
+2026-04-16 08:20:38 [ERROR] Error fetching CUSR0000SACL1: unable to open database file
+2026-04-16 08:20:38 [ERROR] Error fetching CUSR0000SEMD: unable to open database file
+2026-04-16 08:20:38 [ERROR] Error fetching CUSR0000SEMC: unable to open database file
+2026-04-16 08:20:39 [ERROR] Error fetching CUSR0000SAS2RS: unable to open database file
+2026-04-16 08:20:39 [ERROR] Error fetching CPIAPPSL: unable to open database file
+2026-04-16 08:20:40 [ERROR] Error fetching CPIUFDSL: unable to open database file
+2026-04-16 08:20:42 [ERROR] Error fetching CPIENGSL: unable to open database file
+--- Logging error ---
+2026-04-16 08:22:25 [ERROR] Error fetching CPIMEDSL: database or disk is full

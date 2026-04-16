@@ -28,6 +28,13 @@ from lhm_chart_template import (
     set_xlim_to_data, brand_fig, save_fig, legend_style,
 )
 
+
+def set_xlim_proportional(ax, start, end, right_frac=0.02):
+    """Zero left pad, right pad = right_frac of the data span."""
+    span = (end - start).days
+    pad = pd.Timedelta(days=max(1, int(span * right_frac)))
+    ax.set_xlim(start, end + pad)
+
 DB_PATH = '/Users/bob/LHM/Data/databases/Lighthouse_Master.db'
 OUT_DIR = '/Users/bob/LHM/Outputs/Beams/2026-04-16'
 WAR_START = pd.Timestamp('2026-02-27')
@@ -100,8 +107,7 @@ def fig1():
 
     style_single_ax(ax, fmt='{:,.0f}')
     add_last_value_label(ax, spx, COLORS['ocean'], fmt='{:,.0f}')
-    ax.set_xlim(spx.index.min(),
-                spx.index.max() + pd.Timedelta(days=15))
+    set_xlim_proportional(ax, spx.index.min(), spx.index.max())
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(
@@ -169,7 +175,7 @@ def fig2(gold_override=None):
     # Tight right-padding: the standard 180-day pad is too much when data ends recent.
     all_end = max(spx.index.max(), ten.index.max(), wti.index.max())
     all_start = max(spx.index.min(), ten.index.min(), wti.index.min())
-    ax.set_xlim(all_start, all_end + pd.Timedelta(days=15))
+    set_xlim_proportional(ax, all_start, all_end)
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(
@@ -197,8 +203,7 @@ def fig3():
     add_recessions(ax, start_date='2018-01-01')
     style_single_ax(ax, fmt='{:.2f}%')
     add_last_value_label(ax, hy, COLORS['ocean'], fmt='{:.2f}%')
-    ax.set_xlim(hy.index.min(),
-                hy.index.max() + pd.Timedelta(days=15))
+    set_xlim_proportional(ax, hy.index.min(), hy.index.max())
     ax.legend(loc='upper right', **legend_style())
 
     brand_fig(
@@ -241,7 +246,7 @@ def fig4():
     add_last_value_label(ax2, spx, COLORS['ocean'], fmt='{:,.0f}', side='right')
     xmin = min(aaii_pct.index.min(), spx.index.min())
     xmax = max(aaii_pct.index.max(), spx.index.max())
-    ax1.set_xlim(xmin, xmax + pd.Timedelta(days=15))
+    set_xlim_proportional(ax1, xmin, xmax)
 
     # Manual legend (combining both axes)
     from matplotlib.patches import Patch
@@ -289,8 +294,7 @@ def fig5():
     style_single_ax(ax, fmt='{:+.1f}%')
     add_last_value_label(ax, joined['nom'], COLORS['ocean'], fmt='{:+.1f}%')
     add_last_value_label(ax, joined['real'], COLORS['dusk'], fmt='{:+.1f}%')
-    ax.set_xlim(joined.index.min(),
-                joined.index.max() + pd.Timedelta(days=15))
+    set_xlim_proportional(ax, joined.index.min(), joined.index.max())
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(

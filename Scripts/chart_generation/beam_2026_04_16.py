@@ -33,6 +33,18 @@ OUT_DIR = '/Users/bob/LHM/Outputs/Beams/2026-04-16'
 WAR_START = pd.Timestamp('2026-02-27')
 WAR_END = pd.Timestamp('2026-04-07')
 
+# Apr 15, 2026 tips pulled from TradingView (pipeline did not yet refresh in time).
+APR15 = pd.Timestamp('2026-04-15')
+TIPS = {
+    'SPX_Close': 7022.96,
+    'VIXCLS': 18.23,
+    'DGS10': 4.27,
+    'DCOILWTICO': 91.96,
+    # No BAMLH0A0HYM2 tip — FRED H.15 BAML series publishes T+1. Use DB latest (Apr 14 = 2.84).
+}
+# AAII survey for week ending Apr 15, 2026 (from aaii.com): Bull 31.7%, Bear 42.8%, spread = -11.1%
+AAII_APR15_SPREAD = -0.111  # as fraction (to match DB schema)
+
 os.makedirs(OUT_DIR, exist_ok=True)
 set_theme('white')
 
@@ -42,21 +54,31 @@ def q(sql, params=()):
         return pd.read_sql_query(sql, con, params=params, parse_dates=['date']).set_index('date').sort_index()
 
 
-def obs(series_id, start='2018-01-01'):
+def obs(series_id, start='2018-01-01', tip=True):
+    """Pull series from DB; optionally append TIPS[series_id] at APR15 if the
+    DB is stale (latest obs < APR15)."""
     df = q(
         "SELECT date, value FROM observations WHERE series_id=? AND date>=? ORDER BY date",
         (series_id, start),
     )
-    return df['value'].dropna()
+    s = df['value'].dropna()
+    if tip and series_id in TIPS and (len(s) == 0 or s.index[-1] < APR15):
+        s = pd.concat([s, pd.Series({APR15: TIPS[series_id]})]).sort_index()
+    return s
 
 
 # -----------------------------------------------------------------------------
 # Figure 1 — SPX + 50d / 200d MAs, war shading
 # -----------------------------------------------------------------------------
 def fig1():
-    spx = obs('SPX_Close', '2025-02-01')
-    ma50 = obs('SPX_50d_MA', '2025-02-01')
-    ma200 = obs('SPX_200d_MA', '2025-02-01')
+    # Pull a long-enough window to compute 200d MA ourselves so the tip
+    # flows through into the moving averages.
+    spx_full = obs('SPX_Close', '2024-01-01')
+    ma50 = spx_full.rolling(50).mean().dropna()
+    ma200 = spx_full.rolling(200).mean().dropna()
+    spx = spx_full.loc['2025-02-01':]
+    ma50 = ma50.loc['2025-02-01':]
+    ma200 = ma200.loc['2025-02-01':]
 
     fig, ax = new_fig(figsize=(14, 7.5))
     ax.plot(spx.index, spx.values, color=COLORS['ocean'], linewidth=3, label='S&P 500')
@@ -78,7 +100,8 @@ def fig1():
 
     style_single_ax(ax, fmt='{:,.0f}')
     add_last_value_label(ax, spx, COLORS['ocean'], fmt='{:,.0f}')
-    set_xlim_to_data(ax, spx.index, ma50.index, ma200.index)
+    ax.set_xlim(spx.index.min() - pd.Timedelta(days=15),
+                spx.index.max() + pd.Timedelta(days=30))
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(
@@ -152,7 +175,10 @@ def fig2(gold_override=None):
     if gold is not None:
         add_last_value_label(ax, 100 * gold / base_gold, COLORS['starboard'], fmt='{:.0f}')
     add_last_value_label(ax, 100 * wti / base_wti, COLORS['venus'], fmt='{:.0f}')
-    set_xlim_to_data(ax, spx.index, ten.index, wti.index)
+    # Tight right-padding: the standard 180-day pad is too much when data ends recent.
+    all_end = max(spx.index.max(), ten.index.max(), wti.index.max())
+    all_start = max(spx.index.min(), ten.index.min(), wti.index.min())
+    ax.set_xlim(all_start - pd.Timedelta(days=15), all_end + pd.Timedelta(days=30))
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(
@@ -180,7 +206,8 @@ def fig3():
     add_recessions(ax, start_date='2018-01-01')
     style_single_ax(ax, fmt='{:.2f}%')
     add_last_value_label(ax, hy, COLORS['ocean'], fmt='{:.2f}%')
-    set_xlim_to_data(ax, hy.index)
+    ax.set_xlim(hy.index.min() - pd.Timedelta(days=30),
+                hy.index.max() + pd.Timedelta(days=60))
     ax.legend(loc='upper right', **legend_style())
 
     brand_fig(
@@ -199,7 +226,10 @@ def fig3():
 # Figure 4 — AAII Bull-Bear with SPX overlay
 # -----------------------------------------------------------------------------
 def fig4():
-    aaii = obs('AAII_Bull_Bear_Spread', '2020-01-01')  # weekly, fraction
+    aaii = obs('AAII_Bull_Bear_Spread', '2020-01-01', tip=False)  # weekly, fraction
+    # Append Apr 15 AAII reading from aaii.com
+    if len(aaii) == 0 or aaii.index[-1] < APR15:
+        aaii = pd.concat([aaii, pd.Series({APR15: AAII_APR15_SPREAD})]).sort_index()
     spx = obs('SPX_Close', '2020-01-01')
 
     fig, ax1 = new_fig(figsize=(14, 7.5))
@@ -218,7 +248,9 @@ def fig4():
     ax2.yaxis.set_major_formatter(plt_comma_fmt())
     add_last_value_label(ax1, aaii_pct, COLORS['venus'], fmt='{:+.1f}%', side='left')
     add_last_value_label(ax2, spx, COLORS['ocean'], fmt='{:,.0f}', side='right')
-    set_xlim_to_data(ax1, aaii_pct.index, spx.index)
+    xmin = min(aaii_pct.index.min(), spx.index.min())
+    xmax = max(aaii_pct.index.max(), spx.index.max())
+    ax1.set_xlim(xmin - pd.Timedelta(days=15), xmax + pd.Timedelta(days=30))
 
     # Manual legend (combining both axes)
     from matplotlib.patches import Patch
@@ -247,16 +279,11 @@ def fig4():
 def fig5():
     # Nominal retail sales (RSXFS = Advance Retail Sales: Retail Trade and Food Services ex-Auto Dealers)
     # CPI Headline YoY for real deflation
-    rsx = obs('RSXFS', '2018-01-01')
-    # Compute YoY
+    rsx = obs('RSXFS', '2016-01-01', tip=False)
     rsx_yoy = (rsx.pct_change(12) * 100).dropna()
 
-    # CPI headline YoY (% change)
-    try:
-        cpi_yoy = obs('CPI_Headline_yoy_pct', '2018-01-01')
-    except Exception:
-        cpi = obs('CPIAUCSL', '2016-01-01')
-        cpi_yoy = (cpi.pct_change(12) * 100).dropna()
+    cpi = obs('CPIAUCSL', '2015-01-01', tip=False)
+    cpi_yoy = (cpi.pct_change(12) * 100).dropna()
 
     # Align and compute real approximation: nominal YoY minus CPI YoY
     joined = pd.concat([rsx_yoy.rename('nom'), cpi_yoy.rename('cpi')], axis=1).dropna()
@@ -271,7 +298,8 @@ def fig5():
     style_single_ax(ax, fmt='{:+.1f}%')
     add_last_value_label(ax, joined['nom'], COLORS['ocean'], fmt='{:+.1f}%')
     add_last_value_label(ax, joined['real'], COLORS['dusk'], fmt='{:+.1f}%')
-    set_xlim_to_data(ax, joined.index)
+    ax.set_xlim(joined.index.min() - pd.Timedelta(days=30),
+                joined.index.max() + pd.Timedelta(days=60))
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(

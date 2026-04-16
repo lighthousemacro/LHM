@@ -100,8 +100,8 @@ def fig1():
 
     style_single_ax(ax, fmt='{:,.0f}')
     add_last_value_label(ax, spx, COLORS['ocean'], fmt='{:,.0f}')
-    ax.set_xlim(spx.index.min() - pd.Timedelta(days=15),
-                spx.index.max() + pd.Timedelta(days=30))
+    ax.set_xlim(spx.index.min(),
+                spx.index.max() + pd.Timedelta(days=15))
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(
@@ -126,19 +126,10 @@ def fig2(gold_override=None):
     ten = obs('DGS10', '2025-12-01')
     wti = obs('DCOILWTICO', '2025-12-01')
 
-    # Gold from DB if available, otherwise user-provided override.
-    gold = None
-    for candidate in ['Gold_PM_Fix', 'GOLDPMGBD228NLBM', 'GOLDAMGBD228NLBM', 'Gold_Close']:
-        try:
-            g = obs(candidate, '2025-12-01')
-            if len(g) > 5:
-                gold = g
-                break
-        except Exception:
-            continue
-    if gold is None and gold_override is not None:
-        gold = pd.Series(gold_override).sort_index()
-        gold.index = pd.to_datetime(gold.index)
+    # Gold from TradingView CSV (TVC_GOLD, 1D).
+    gold_csv = '/Users/bob/LHM/Data/TVC_GOLD, 1D.csv'
+    gdf = pd.read_csv(gold_csv, parse_dates=['time']).set_index('time').sort_index()
+    gold = gdf['close'].loc['2025-12-01':].dropna()
 
     # Find anchor value at/near Feb 27, 2026
     def anchor(s):
@@ -178,14 +169,14 @@ def fig2(gold_override=None):
     # Tight right-padding: the standard 180-day pad is too much when data ends recent.
     all_end = max(spx.index.max(), ten.index.max(), wti.index.max())
     all_start = max(spx.index.min(), ten.index.min(), wti.index.min())
-    ax.set_xlim(all_start - pd.Timedelta(days=15), all_end + pd.Timedelta(days=30))
+    ax.set_xlim(all_start, all_end + pd.Timedelta(days=15))
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(
         fig,
         title='Cross-Asset: Stocks Priced a Ceasefire. Others Didn\'t.',
         subtitle=f'Rebased to 100 at war start (Feb 27, 2026)',
-        source='FRED, LHM' + ('' if gold is not None else ' (Gold omitted — not in DB)'),
+        source='FRED, TradingView (Gold)',
         data_date=spx.index[-1],
     )
     path = os.path.join(OUT_DIR, 'fig2_crossasset_rebased.png')
@@ -206,8 +197,8 @@ def fig3():
     add_recessions(ax, start_date='2018-01-01')
     style_single_ax(ax, fmt='{:.2f}%')
     add_last_value_label(ax, hy, COLORS['ocean'], fmt='{:.2f}%')
-    ax.set_xlim(hy.index.min() - pd.Timedelta(days=30),
-                hy.index.max() + pd.Timedelta(days=60))
+    ax.set_xlim(hy.index.min(),
+                hy.index.max() + pd.Timedelta(days=15))
     ax.legend(loc='upper right', **legend_style())
 
     brand_fig(
@@ -250,7 +241,7 @@ def fig4():
     add_last_value_label(ax2, spx, COLORS['ocean'], fmt='{:,.0f}', side='right')
     xmin = min(aaii_pct.index.min(), spx.index.min())
     xmax = max(aaii_pct.index.max(), spx.index.max())
-    ax1.set_xlim(xmin - pd.Timedelta(days=15), xmax + pd.Timedelta(days=30))
+    ax1.set_xlim(xmin, xmax + pd.Timedelta(days=15))
 
     # Manual legend (combining both axes)
     from matplotlib.patches import Patch
@@ -298,8 +289,8 @@ def fig5():
     style_single_ax(ax, fmt='{:+.1f}%')
     add_last_value_label(ax, joined['nom'], COLORS['ocean'], fmt='{:+.1f}%')
     add_last_value_label(ax, joined['real'], COLORS['dusk'], fmt='{:+.1f}%')
-    ax.set_xlim(joined.index.min() - pd.Timedelta(days=30),
-                joined.index.max() + pd.Timedelta(days=60))
+    ax.set_xlim(joined.index.min(),
+                joined.index.max() + pd.Timedelta(days=15))
     ax.legend(loc='upper left', **legend_style())
 
     brand_fig(

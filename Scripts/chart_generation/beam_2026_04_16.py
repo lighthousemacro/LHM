@@ -88,25 +88,17 @@ def fig1():
     ma200 = ma200.loc['2025-02-01':]
 
     fig, ax = new_fig(figsize=(14, 7.5))
-    ax.plot(spx.index, spx.values, color=COLORS['ocean'], linewidth=3, label='S&P 500')
+    ax.plot(spx.index, spx.values, color=COLORS['doldrums'], linewidth=2.5, label='S&P 500')
     ax.plot(ma50.index, ma50.values, color=COLORS['dusk'], linewidth=2, linestyle='--', label='50d MA')
-    ax.plot(ma200.index, ma200.values, color=COLORS['sea'], linewidth=2, linestyle='--', label='200d MA')
+    ax.plot(ma200.index, ma200.values, color=COLORS['ocean'], linewidth=2, linestyle='--', label='200d MA')
 
     ax.axvspan(WAR_START, WAR_END, color=COLORS['port'], alpha=0.10, zorder=0, label='Iran War')
 
-    # ATH annotation
     last_date = spx.index[-1]
     last_val = spx.iloc[-1]
-    ax.annotate(
-        f'{last_date.strftime("%b %d")}: {last_val:,.0f}',
-        xy=(last_date, last_val),
-        xytext=(-110, -28), textcoords='offset points',
-        fontsize=10, color=COLORS['ocean'], fontweight='bold',
-        arrowprops=dict(arrowstyle='->', color=COLORS['ocean'], lw=1),
-    )
 
     style_single_ax(ax, fmt='{:,.0f}')
-    add_last_value_label(ax, spx, COLORS['ocean'], fmt='{:,.0f}')
+    add_last_value_label(ax, spx, COLORS['doldrums'], fmt='{:,.0f}')
     set_xlim_proportional(ax, spx.index.min(), spx.index.max())
     ax.legend(loc='upper left', **legend_style())
 
@@ -137,51 +129,83 @@ def fig2(gold_override=None):
     gdf = pd.read_csv(gold_csv, parse_dates=['time']).set_index('time').sort_index()
     gold = gdf['close'].loc['2025-12-01':].dropna()
 
-    # Find anchor value at/near Feb 27, 2026
-    def anchor(s):
+    # Anchor all series at the leftmost common start date so everything
+    # begins at 100 and diverges from there.
+    def first_val(s):
         if s is None or len(s) == 0:
             return None
-        idx = s.index.get_indexer([WAR_START], method='nearest')[0]
-        return float(s.iloc[idx])
+        return float(s.iloc[0])
 
-    base_spx = anchor(spx)
-    base_ten = anchor(ten)
-    base_wti = anchor(wti)
-    base_gold = anchor(gold) if gold is not None else None
+    base_spx = first_val(spx)
+    base_ten = first_val(ten)
+    base_wti = first_val(wti)
+    base_gold = first_val(gold) if gold is not None else None
 
-    fig, ax = new_fig(figsize=(14, 7.5))
+    fig, ax1 = new_fig(figsize=(14, 7.5))
+    ax2 = ax1.twinx()
 
-    # Rebased lines
-    ax.plot(spx.index, 100 * spx / base_spx, color=COLORS['ocean'], linewidth=3, label='S&P 500')
-    ax.plot(ten.index, 100 * ten / base_ten, color=COLORS['dusk'], linewidth=2, label='10Y Yield')
+    # LHS: SPX, 10Y, Gold (all moved modestly)
+    spx_r = 100 * spx / base_spx
+    ten_r = 100 * ten / base_ten
+    gold_r = 100 * gold / base_gold if gold is not None else None
+    wti_r = 100 * wti / base_wti
+
+    ax1.plot(spx_r.index, spx_r.values, color=COLORS['ocean'], linewidth=3, label='S&P 500')
+    ax1.plot(ten_r.index, ten_r.values, color=COLORS['dusk'], linewidth=2, label='10Y Yield')
     if gold is not None:
-        ax.plot(gold.index, 100 * gold / base_gold, color=COLORS['starboard'], linewidth=2, label='Gold')
-    ax.plot(wti.index, 100 * wti / base_wti, color=COLORS['venus'], linewidth=2, label='WTI Crude')
+        ax1.plot(gold_r.index, gold_r.values, color=COLORS['sky'], linewidth=2, label='Gold')
 
-    # Ceasefire marker
-    ax.axvline(WAR_END, color=COLORS['doldrums'], linestyle='--', linewidth=1, alpha=0.6)
-    ymin, ymax = ax.get_ylim()
-    ax.text(WAR_END, ymax * 0.98, ' Ceasefire Apr 7', fontsize=9, color=COLORS['doldrums'], va='top')
+    # RHS: WTI (big swing)
+    ax2.plot(wti_r.index, wti_r.values, color=COLORS['sea'], linewidth=2, label='WTI Crude')
 
-    # Reference line at 100
-    ax.axhline(100, color=COLORS['fog'], linestyle='--', linewidth=1, zorder=0)
+    # Symmetric axes around 100 so both scales anchor at the rebase line.
+    # LHS (SPX/10Y/Gold): tight range around 100
+    lhs_series = [spx_r, ten_r] + ([gold_r] if gold is not None else [])
+    lhs_max_dev = max(abs(s.max() - 100) for s in lhs_series) + \
+                  max(abs(s.min() - 100) for s in lhs_series)
+    lhs_half = max(abs(s - 100).max() for s in lhs_series) * 1.15
+    ax1.set_ylim(100 - lhs_half, 100 + lhs_half)
 
-    style_single_ax(ax, fmt='{:.0f}')
-    add_last_value_label(ax, 100 * spx / base_spx, COLORS['ocean'], fmt='{:.0f}')
-    add_last_value_label(ax, 100 * ten / base_ten, COLORS['dusk'], fmt='{:.0f}')
+    # RHS (WTI): wider range, also centered on 100
+    rhs_half = abs(wti_r - 100).max() * 1.15
+    ax2.set_ylim(100 - rhs_half, 100 + rhs_half)
+
+    # War start + ceasefire markers
+    ax1.axvline(WAR_START, color=COLORS['doldrums'], linestyle='--', linewidth=1, alpha=0.6)
+    ax1.axvline(WAR_END, color=COLORS['doldrums'], linestyle='--', linewidth=1, alpha=0.6)
+    ymin, ymax = ax1.get_ylim()
+    ax1.text(WAR_START, ymax - (ymax-ymin)*0.02, ' War starts Feb 27', fontsize=9, color=COLORS['doldrums'], va='top')
+    ax1.text(WAR_END, ymax - (ymax-ymin)*0.02, ' Ceasefire Apr 7', fontsize=9, color=COLORS['doldrums'], va='top')
+
+    # Reference line at 100 (aligned on both axes since both are centered at 100)
+    ax1.axhline(100, color=COLORS['fog'], linestyle='--', linewidth=1, zorder=0)
+
+    style_dual_ax(ax1, ax2, COLORS['ocean'], COLORS['sea'])
+    add_last_value_label(ax1, spx_r, COLORS['ocean'], fmt='{:.0f}', side='left')
+    add_last_value_label(ax1, ten_r, COLORS['dusk'], fmt='{:.0f}', side='left')
     if gold is not None:
-        add_last_value_label(ax, 100 * gold / base_gold, COLORS['starboard'], fmt='{:.0f}')
-    add_last_value_label(ax, 100 * wti / base_wti, COLORS['venus'], fmt='{:.0f}')
-    # Tight right-padding: the standard 180-day pad is too much when data ends recent.
+        add_last_value_label(ax1, gold_r, COLORS['sky'], fmt='{:.0f}', side='left')
+    add_last_value_label(ax2, wti_r, COLORS['sea'], fmt='{:.0f}', side='right')
+
     all_end = max(spx.index.max(), ten.index.max(), wti.index.max())
     all_start = max(spx.index.min(), ten.index.min(), wti.index.min())
-    set_xlim_proportional(ax, all_start, all_end)
-    ax.legend(loc='upper left', **legend_style())
+    set_xlim_proportional(ax1, all_start, all_end)
+
+    # Combined legend
+    from matplotlib.lines import Line2D
+    legend_items = [
+        Line2D([0],[0], color=COLORS['ocean'], linewidth=3, label='S&P 500 (LHS)'),
+        Line2D([0],[0], color=COLORS['dusk'], linewidth=2, label='10Y Yield (LHS)'),
+    ]
+    if gold is not None:
+        legend_items.append(Line2D([0],[0], color=COLORS['sky'], linewidth=2, label='Gold (LHS)'))
+    legend_items.append(Line2D([0],[0], color=COLORS['sea'], linewidth=2, label='WTI Crude (RHS)'))
+    ax1.legend(handles=legend_items, loc='upper left', **legend_style())
 
     brand_fig(
         fig,
         title='Cross-Asset: Stocks Priced a Ceasefire. Others Didn\'t.',
-        subtitle=f'Rebased to 100 at war start (Feb 27, 2026)',
+        subtitle=f'Rebased to 100 at Dec 1, 2025. Ceasefire line marks war end (Apr 7).',
         source='FRED, TradingView (Gold)',
         data_date=spx.index[-1],
     )

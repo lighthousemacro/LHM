@@ -292,7 +292,7 @@ html = f"""<!DOCTYPE html>
   <div class="header-bar"></div>
   <div class="kicker">LIGHTHOUSE MACRO</div>
   <h1>Two Economies: Why the Consumer Can't Quit</h1>
-  <div class="subhead">Three writers asked the same question this spring. Each found one piece of the puzzle. Put them next to each other and it resolves.</div>
+  <div class="subhead">We laid out the framework in January. The conversation has caught up. Here is where the threads connect, with the full chart pack underneath.</div>
   <div class="byline">Bob Sheehan, CFA, CMT &nbsp;·&nbsp; Apr 17, 2026</div>
 </header>
 

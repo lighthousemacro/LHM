@@ -372,7 +372,7 @@ def fig7_employment_by_firm_size():
     latest_date = adp_m['date'].max().strftime('%B %Y')
     add_annotation_box(
         ax,
-        f'Small businesses employ the bottom 80%. They are the weakest.\nLarge firms stable. The BLS headline averages both.',
+        f'Small firms are the only segment hiring. Large firms are cutting.\nComposition: stable headline, deteriorating job quality.',
         x=0.50, y=0.95
     )
 

@@ -676,7 +676,10 @@ if __name__ == '__main__':
     fig2_excess_savings()
     fig3_savings_rate_quintile()
     fig4_subprime_auto_delinquency()
-    fig5_vehicle_repossessions()
+    try:
+        fig5_vehicle_repossessions()
+    except FileNotFoundError as e:
+        print(f'  [5/12] SKIPPED — {e}')
     fig6_delinquency_by_loan_type()
     fig7_employment_by_firm_size()
     fig8_longterm_unemployment()

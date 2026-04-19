@@ -64,7 +64,7 @@ def fig1_wealth_concentration():
     add_annotation_box(
         ax,
         'The top 1% hold more wealth than the entire bottom 50%. By a factor of 12.',
-        x=0.55, y=0.22
+        x=0.55, y=0.42
     )
 
     brand_fig(fig,
@@ -101,13 +101,13 @@ def fig2_excess_savings():
             fontsize=9, color=DOLDRUMS, style='italic', ha='right')
 
     ax.set_ylabel('Cumulative Excess Savings (USD Billions)', fontsize=10, color=DOLDRUMS)
-    ax.set_ylim(-600, 600)
+    ax.set_ylim(-700, 750)
     style_single_ax(ax, fmt='${:+,.0f}B')
 
     add_annotation_box(
         ax,
         'Top 20% still flush. Bottom 80% underwater since mid-2023.\nThis is not a gap. It is two different economies wearing the same headline.',
-        x=0.50, y=0.95
+        x=0.50, y=0.97
     )
 
     brand_fig(fig,
@@ -303,8 +303,8 @@ def fig6_delinquency_by_loan_type():
                 fontsize=12, fontweight='bold', color=OCEAN if v < 300 else PORT)
 
     ax.axhline(0, color=FOG, linestyle='--', linewidth=1.0, zorder=0)
-    ax.text(len(categories) - 0.55, 8, 'Q4 2019 Baseline',
-            fontsize=9, color=DOLDRUMS, style='italic', ha='right')
+    ax.text(-0.45, 8, 'Q4 2019 Baseline',
+            fontsize=9, color=DOLDRUMS, style='italic', ha='left')
 
     ax.set_ylabel('Basis Points Above Q4 2019 Baseline', fontsize=10, color=DOLDRUMS)
     ax.set_ylim(0, max(bps_above) * 1.25)
@@ -342,16 +342,16 @@ def fig7_employment_by_firm_size():
         'Large\n(500+)': ['500+ employees'],
     }
 
-    yoy_vals = []
+    growth_vals = []
     for label, cats in size_map.items():
         subset = adp_m[adp_m['category'].isin(cats)].groupby('date')['NER_SA'].sum().sort_index()
         latest = subset.iloc[-1]
-        yr_ago = subset.iloc[-13]
-        yoy = (latest / yr_ago - 1) * 100
-        yoy_vals.append((label, yoy))
+        three_mo_ago = subset.iloc[-4]
+        ann_3m = ((latest / three_mo_ago) ** 4 - 1) * 100
+        growth_vals.append((label, ann_3m))
 
-    categories = [v[0] for v in yoy_vals]
-    values = [v[1] for v in yoy_vals]
+    categories = [v[0] for v in growth_vals]
+    values = [v[1] for v in growth_vals]
     colors = [PORT if v < 0 else (DOLDRUMS if v < 0.5 else STARBOARD) for v in values]
 
     fig, ax = new_fig(figsize=(14, 7))
@@ -359,16 +359,16 @@ def fig7_employment_by_firm_size():
     bars = ax.bar(categories, values, color=colors, width=0.50,
                   edgecolor='white', linewidth=1.0)
     for bar, v, c in zip(bars, values, colors):
-        offset = 0.04 if v > 0 else -0.04
+        offset = 0.08 if v > 0 else -0.08
         va = 'bottom' if v > 0 else 'top'
         ax.text(bar.get_x() + bar.get_width()/2, v + offset,
                 f'{v:+.2f}%', ha='center', va=va,
                 fontsize=13, fontweight='bold', color=c)
 
     ax.axhline(0, color=FOG, linestyle='--', linewidth=1.0, zorder=0)
-    ax.set_ylabel('YoY Employment Growth (%)', fontsize=10, color=DOLDRUMS)
-    ymin = min(values) * 1.5 if min(values) < 0 else -0.5
-    ymax = max(values) * 1.5 if max(values) > 0 else 0.5
+    ax.set_ylabel('3M Annualized Employment Growth (%)', fontsize=10, color=DOLDRUMS)
+    ymin = min(values) * 1.6 if min(values) < 0 else -1.0
+    ymax = max(values) * 1.6 if max(values) > 0 else 1.0
     ax.set_ylim(ymin, ymax)
     style_single_ax(ax, fmt='{:+.2f}%')
 
@@ -381,7 +381,7 @@ def fig7_employment_by_firm_size():
 
     brand_fig(fig,
               title="Who's Hiring and Who's Cutting: Employment by Firm Size",
-              subtitle=f'Figure 7: YoY employment growth by firm size (ADP NER, {latest_date})',
+              subtitle=f'Figure 7: 3-month annualized employment growth by firm size (ADP NER, {latest_date})',
               source='ADP National Employment Report (real data, downloaded CSV)',
               data_date=adp_m['date'].max())
     save_fig(fig, f'{OUTDIR}/fig7_employment_by_firm_size.png')
@@ -419,7 +419,7 @@ def fig8_longterm_unemployment():
     add_annotation_box(
         ax,
         "Older workers who lose a job often don't find another.\nThat is not a cycle story. It is a structural one.",
-        x=0.55, y=0.18
+        x=0.55, y=0.42
     )
 
     brand_fig(fig,
@@ -527,7 +527,7 @@ def fig10_housing_bifurcation():
     fig.patch.set_facecolor('white')
     ax1.set_facecolor('white')
     ax2.set_facecolor('white')
-    fig.subplots_adjust(top=0.84, bottom=0.12, left=0.07, right=0.96, wspace=0.30)
+    fig.subplots_adjust(top=0.84, bottom=0.22, left=0.07, right=0.96, wspace=0.30)
 
     # Panel A: ZHVI levels indexed
     bot_idx = bot_ts / bot_ts.iloc[0] * 100
@@ -556,10 +556,10 @@ def fig10_housing_bifurcation():
     latest_bot_yoy = bot_yoy.dropna().iloc[-1]
     latest_top_yoy = top_yoy.dropna().iloc[-1]
 
-    fig.text(0.5, 0.06,
+    fig.text(0.5, 0.03,
              f'Bottom tier: {latest_bot_yoy:+.1f}% YoY. Top tier: {latest_top_yoy:+.1f}% YoY.\n'
              'Both tiers now converging after the 2021-2022 divergence.',
-             ha='center', va='top',
+             ha='center', va='bottom',
              fontsize=10, style='italic', fontweight='bold', color='white',
              bbox=dict(boxstyle='round,pad=0.5', facecolor=OCEAN,
                        edgecolor=SKY, linewidth=1.5))

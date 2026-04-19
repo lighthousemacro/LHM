@@ -55,16 +55,15 @@ def fig1_wealth_concentration():
                 f'{v:.1f}%', ha='left', va='center',
                 fontsize=13, fontweight='bold', color=DOLDRUMS)
 
-    ax.set_xlim(0, 78)
-    ax.set_xlabel('Share of Total U.S. Household Net Worth (%)', fontsize=11, color=DOLDRUMS)
+    ax.set_xlim(0, 90)
     style_ax(ax, right_primary=False)
     ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, p: f'{x:.0f}%'))
     ax.tick_params(axis='both', which='both', length=0)
 
     add_annotation_box(
         ax,
-        'The top 1% hold more wealth than the entire bottom 50%. By a factor of 12.',
-        x=0.55, y=0.42
+        'The top 1% hold more wealth than the entire\nbottom 50%. By a factor of 12.',
+        x=0.85, y=0.18
     )
 
     brand_fig(fig,
@@ -101,13 +100,13 @@ def fig2_excess_savings():
             fontsize=9, color=DOLDRUMS, style='italic', ha='right')
 
     ax.set_ylabel('Cumulative Excess Savings (USD Billions)', fontsize=10, color=DOLDRUMS)
-    ax.set_ylim(-700, 750)
+    ax.set_ylim(-700, 800)
     style_single_ax(ax, fmt='${:+,.0f}B')
 
     add_annotation_box(
         ax,
         'Top 20% still flush. Bottom 80% underwater since mid-2023.\nThis is not a gap. It is two different economies wearing the same headline.',
-        x=0.50, y=0.97
+        x=0.50, y=0.92
     )
 
     brand_fig(fig,
@@ -303,8 +302,6 @@ def fig6_delinquency_by_loan_type():
                 fontsize=12, fontweight='bold', color=OCEAN if v < 300 else PORT)
 
     ax.axhline(0, color=FOG, linestyle='--', linewidth=1.0, zorder=0)
-    ax.text(-0.45, 8, 'Q4 2019 Baseline',
-            fontsize=9, color=DOLDRUMS, style='italic', ha='left')
 
     ax.set_ylabel('Basis Points Above Q4 2019 Baseline', fontsize=10, color=DOLDRUMS)
     ax.set_ylim(0, max(bps_above) * 1.25)
@@ -410,8 +407,7 @@ def fig8_longterm_unemployment():
                 f'{v:.1f}%', ha='left', va='center',
                 fontsize=12, fontweight='bold', color=DOLDRUMS)
 
-    ax.set_xlim(0, 35)
-    ax.set_xlabel('Share of Unemployed Out 27+ Weeks (%)', fontsize=10, color=DOLDRUMS)
+    ax.set_xlim(0, 50)
     style_ax(ax, right_primary=False)
     ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, p: f'{x:.0f}%'))
     ax.tick_params(axis='both', which='both', length=0)
@@ -419,7 +415,7 @@ def fig8_longterm_unemployment():
     add_annotation_box(
         ax,
         "Older workers who lose a job often don't find another.\nThat is not a cycle story. It is a structural one.",
-        x=0.55, y=0.42
+        x=0.85, y=0.50
     )
 
     brand_fig(fig,
@@ -527,7 +523,7 @@ def fig10_housing_bifurcation():
     fig.patch.set_facecolor('white')
     ax1.set_facecolor('white')
     ax2.set_facecolor('white')
-    fig.subplots_adjust(top=0.84, bottom=0.22, left=0.07, right=0.96, wspace=0.30)
+    fig.subplots_adjust(top=0.84, bottom=0.18, left=0.07, right=0.96, wspace=0.30)
 
     # Panel A: ZHVI levels indexed
     bot_idx = bot_ts / bot_ts.iloc[0] * 100
@@ -556,10 +552,10 @@ def fig10_housing_bifurcation():
     latest_bot_yoy = bot_yoy.dropna().iloc[-1]
     latest_top_yoy = top_yoy.dropna().iloc[-1]
 
-    fig.text(0.5, 0.03,
+    fig.text(0.5, 0.085,
              f'Bottom tier: {latest_bot_yoy:+.1f}% YoY. Top tier: {latest_top_yoy:+.1f}% YoY.\n'
              'Both tiers now converging after the 2021-2022 divergence.',
-             ha='center', va='bottom',
+             ha='center', va='center',
              fontsize=10, style='italic', fontweight='bold', color='white',
              bbox=dict(boxstyle='round,pad=0.5', facecolor=OCEAN,
                        edgecolor=SKY, linewidth=1.5))

@@ -159,16 +159,15 @@ def style_single_ax(ax, fmt='{:.1f}'):
 # ============================================
 # ANNOTATIONS
 # ============================================
-def add_annotation_box(ax, text, x=0.50, y=0.95):
-    """Bold italic Ocean callout box. Use for takeaway annotations."""
-    box_fc = COLORS['ocean']
-    txt_color = '#ffffff'
+def add_annotation_box(ax, text, x=0.50, y=0.95, ha='center'):
+    """White callout box with Ocean border and Ocean text.
+    Clean, neutral, reads on any background. Larger font."""
     ax.text(x, y, text, transform=ax.transAxes,
-            fontsize=11, fontweight='bold', color=txt_color,
-            ha='center', va='top', style='italic',
+            fontsize=14, fontweight='bold', color=COLORS['ocean'],
+            ha=ha, va='top', style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor=box_fc, edgecolor=COLORS['sky'],
-                      linewidth=2.0, alpha=1.0))
+                      facecolor='#ffffff', edgecolor=COLORS['ocean'],
+                      linewidth=1.5, alpha=1.0))
 
 def add_last_value_label(ax, y_data, color, fmt='{:.1f}', side='right', fontsize=9, pad=0.3):
     """Colored pill label on axis edge. y_data is a Series or list."""

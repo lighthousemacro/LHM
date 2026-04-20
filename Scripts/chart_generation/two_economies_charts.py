@@ -106,15 +106,8 @@ def fig2_excess_savings():
     ax.set_ylim(-700, 800)
     style_single_ax(ax, fmt='${:+,.0f}B')
 
-    # Annotation in top-right corner (right-aligned)
-    ax.text(0.98, 0.97,
-            'Top 20% still flush. Bottom 80% underwater since mid-2023.\nThis is not a gap. It is two different economies wearing the same headline.',
-            transform=ax.transAxes,
-            fontsize=11, fontweight='bold', color='#ffffff',
-            ha='right', va='top', style='italic',
-            bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor=OCEAN, edgecolor='#23BBFF',
-                      linewidth=2.0, alpha=1.0))
+    # Simple 2-bar chart: let the data and figcaption carry the story.
+    # Annotation removed per design rule — boxes only on multi-series/complex charts.
 
     brand_fig(fig,
               title='Excess Pandemic Savings: Who Still Has It',
@@ -199,13 +192,8 @@ def fig4_subprime_auto_delinquency():
     style_single_ax(ax, fmt='{:.1f}%')
     ax.set_ylabel('Delinquency Rate, All Commercial Banks (%)', fontsize=10, color=DOLDRUMS)
 
-    # Annotation moved down from y=0.95 to y=0.75 (down by ~20% in axes fraction)
-    add_annotation_box(
-        ax,
-        f"Current: {df['value'].iloc[-1]:.2f}%. All-commercial-bank auto delinquency from FRED.\n"
-        "Subprime-only (Fitch) hit 6.9% in Jan 2026, the highest on record. Nobody is making a movie about this one.",
-        x=0.50, y=0.75
-    )
+    # Clean time series: pill + GFC line label + figcaption carry the story.
+    # Annotation removed per design rule. Body text handles the subprime detail.
 
     brand_fig(fig,
               title='Auto Loan Delinquency: Stress Below the Headline',
@@ -253,11 +241,7 @@ def fig5_vehicle_repossessions():
     ax.set_xlim(years[0] - 0.7, years[-1] + 0.7)
     ax.tick_params(axis='x', labelsize=9)
 
-    add_annotation_box(
-        ax,
-        f'{repos[-1]:.2f}M repossessions in {years[-1]}. The car is often the last bill people stop paying.',
-        x=0.50, y=0.95
-    )
+    # Simple annual bar chart: numbers on bars + figcaption tell the story.
 
     brand_fig(fig,
               title='Vehicle Repossessions: Back to Post-Crisis Levels',
@@ -422,11 +406,7 @@ def fig8_longterm_unemployment():
     ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, p: f'{x:.0f}%'))
     ax.tick_params(axis='both', which='both', length=0)
 
-    add_annotation_box(
-        ax,
-        "Older workers who lose a job often don't find another.\nThat is not a cycle story. It is a structural one.",
-        x=0.85, y=0.50
-    )
+    # Simple 3-bar horizontal chart: data labels on bars + figcaption carry it.
 
     brand_fig(fig,
               title='Long-Term Unemployment: Concentrated, Not Random',

@@ -216,10 +216,11 @@ def chart2_deliq_by_type():
 # CHART 3 — Subprime Auto: 2008 Peak vs Current
 # =========================================================
 def chart3_subprime_auto_2008_vs_current():
-    # Values from January thread (third-party subprime data — Cox, Fitch, Experian)
+    # Subprime auto, current vs 2008 peak. 60+ DPD updated to Jan 2026 Fitch print (6.9%).
+    # Repo rate and negative equity share from Cox/Experian, consistent with January thread.
     metrics = ['60+ Day\nDelinquency', 'Repossession\nRate', 'Negative\nEquity Share']
     peak_2008 = [5.2, 2.9, 22.0]
-    current = [6.6, 3.8, 24.0]
+    current = [6.9, 3.8, 24.0]
 
     x = np.arange(len(metrics))
     width = 0.36

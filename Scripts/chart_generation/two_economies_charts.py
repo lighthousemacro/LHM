@@ -71,7 +71,7 @@ def fig1_wealth_concentration():
 
     brand_fig(fig,
               title='Who Owns America',
-              subtitle='Figure 1: Share of U.S. household net worth by wealth percentile',
+              subtitle='Share of U.S. household net worth by wealth percentile',
               source='Federal Reserve Distributional Financial Accounts (Q3 2025)',
               data_date='2025-09-30')
     save_fig(fig, f'{OUTDIR}/fig1_wealth_concentration.png')
@@ -111,7 +111,7 @@ def fig2_excess_savings():
 
     brand_fig(fig,
               title='Excess Pandemic Savings: Who Still Has It',
-              subtitle='Figure 2: Cumulative excess savings vs. pre-pandemic trend by income cohort',
+              subtitle='Cumulative excess savings vs. pre-pandemic trend by income cohort',
               source='BEA, Federal Reserve (cohort split modeled, not directly reported)',
               data_date='2025-12-31')
     save_fig(fig, f'{OUTDIR}/fig2_excess_savings.png')
@@ -155,7 +155,7 @@ def fig3_savings_rate_quintile():
 
     brand_fig(fig,
               title='Personal Savings Rate by Income Group',
-              subtitle='Figure 3: Estimated savings rate by cohort vs. BEA aggregate',
+              subtitle='Estimated savings rate by cohort vs. BEA aggregate',
               source='Federal Reserve DFA, academic estimates. BEA PSAVERT = 4.0% (Feb 2026, confirmed from DB)',
               data_date='2026-02-28')
     save_fig(fig, f'{OUTDIR}/fig3_savings_rate_quintile.png')
@@ -167,38 +167,52 @@ def fig3_savings_rate_quintile():
 # Data: REAL from Lighthouse_Master.db
 # =========================================================
 def fig4_subprime_auto_delinquency():
-    conn = sqlite3.connect(DB_PATH)
-    df = pd.read_sql_query(
-        "SELECT date, value FROM observations WHERE series_id='LAUTOSA' ORDER BY date",
-        conn, parse_dates=['date']
-    )
-    conn.close()
-    df = df.dropna().set_index('date')
+    """Subprime share of auto loan originations, NY Fed HHDC Q4 2025 Page 8."""
+    import openpyxl
+    wb = openpyxl.load_workbook('/Users/bob/LHM/HHD_C_Report_2025Q4.xlsx', data_only=True)
+    ws = wb['Page 8 Data']
 
-    fig, ax = new_fig(figsize=(14, 8))
+    dates, sub, near_prime, total = [], [], [], []
+    for r in ws.iter_rows(values_only=True):
+        if r[0] is None or not isinstance(r[0], str) or ':Q' not in r[0]:
+            continue
+        yr2, q = r[0].split(':Q')
+        year = 2000 + int(yr2) if int(yr2) < 50 else 1900 + int(yr2)
+        month = {'1': 3, '2': 6, '3': 9, '4': 12}[q]
+        dates.append(pd.Timestamp(year=year, month=month, day=1))
+        sub.append(float(r[1]))          # <620
+        near_prime.append(float(r[2]))   # 620-659
+        total.append(float(r[7]))        # TOTAL
 
-    ax.plot(df.index, df['value'], color=OCEAN, linewidth=2.6, zorder=3)
+    df = pd.DataFrame({
+        'subprime_pct': [s / t * 100 for s, t in zip(sub, total)],
+        'sub_plus_near_pct': [(s + n) / t * 100 for s, n, t in zip(sub, near_prime, total)],
+    }, index=dates)
 
-    gfc_peak = df.loc['2008':'2011']['value'].max()
-    ax.axhline(gfc_peak, color=VENUS, linestyle='-', linewidth=1.0, zorder=0)
-    # GFC peak label on right side (closer to RHS)
-    ax.text(df.index[int(len(df)*0.92)], gfc_peak + 0.08,
-            f'GFC Peak: {gfc_peak:.2f}%', fontsize=9, color=VENUS,
-            fontweight='bold', style='italic', ha='right')
+    fig, ax = new_fig(figsize=(14, 7.5))
+
+    ax.plot(df.index, df['sub_plus_near_pct'], color=DUSK, linewidth=2.0, zorder=2,
+            label='Subprime + Near-prime (<660)')
+    ax.plot(df.index, df['subprime_pct'], color=OCEAN, linewidth=2.6, zorder=3,
+            label='Subprime (<620 credit score)')
+    ax.fill_between(df.index, 0, df['subprime_pct'], color=OCEAN, alpha=0.08, zorder=1)
 
     add_recessions(ax)
-    add_last_value_label(ax, df['value'], OCEAN, fmt='{:.2f}%', side='right')
+    add_last_value_label(ax, df['subprime_pct'], OCEAN, fmt='{:.1f}%', side='right')
+    add_last_value_label(ax, df['sub_plus_near_pct'], DUSK, fmt='{:.1f}%', side='right')
     set_xlim_to_data(ax, df.index)
-    style_single_ax(ax, fmt='{:.1f}%')
-    ax.set_ylabel('Delinquency Rate, All Commercial Banks (%)', fontsize=10, color=DOLDRUMS)
+    style_single_ax(ax, fmt='{:.0f}%')
+    ax.set_ylabel('Share of Auto Loan Origination Dollars (%)', fontsize=10, color=DOLDRUMS)
+    ax.set_ylim(0, max(df['sub_plus_near_pct']) * 1.2)
 
-    # Clean time series: pill + GFC line label + figcaption carry the story.
-    # Annotation removed per design rule. Body text handles the subprime detail.
+    leg = ax.legend(loc='upper right', frameon=True, framealpha=0.95,
+                    edgecolor=DOLDRUMS, fontsize=9)
+    leg.get_frame().set_linewidth(0.5)
 
     brand_fig(fig,
-              title='Auto Loan Delinquency: Stress Below the Headline',
-              subtitle='Figure 4: Auto loan delinquency rate, all commercial banks (1976-present)',
-              source='Federal Reserve / FRED (LAUTOSA). Subprime-specific 6.9% from Fitch Ratings (Jan 2026).',
+              title='Subprime Auto Loan Originations: The Pipeline',
+              subtitle='Share of quarterly auto loan origination dollars by borrower credit score at origination',
+              source='NY Fed Consumer Credit Panel / Equifax (HHDC Q4 2025, Page 8)',
               data_date=df.index[-1])
     save_fig(fig, f'{OUTDIR}/fig4_subprime_auto_delinquency.png')
     print('  [4/12] fig4_subprime_auto_delinquency.png')
@@ -243,7 +257,7 @@ def fig5_vehicle_repossessions():
 
     brand_fig(fig,
               title='Vehicle Repossessions: Back to Post-Crisis Levels',
-              subtitle=f'Figure 5: Annual U.S. vehicle repossessions ({years[0]}-{years[-1]})',
+              subtitle=f'Annual U.S. vehicle repossessions ({years[0]}-{years[-1]})',
               source='Cox Automotive / Experian (real data, downloaded XLSX)',
               data_date=f'{years[-1]}-12-31')
     save_fig(fig, f'{OUTDIR}/fig5_vehicle_repossessions.png')
@@ -284,7 +298,7 @@ def fig6_delinquency_by_loan_type():
 
     brand_fig(fig,
               title='Delinquency Stress: Every Category Above Pre-COVID Baseline',
-              subtitle='Figure 6: New delinquent balances (30+ DPD) by loan type, Q4 2025 vs. Q4 2019',
+              subtitle='New delinquent balances (30+ DPD) by loan type, Q4 2025 vs. Q4 2019',
               source='NY Fed Consumer Credit Panel / Equifax (real data, HHDC Q4 2025 XLSX)',
               data_date='2025-12-31')
     save_fig(fig, f'{OUTDIR}/fig6_delinquency_by_loan_type.png')
@@ -347,7 +361,7 @@ def fig7_employment_by_firm_size():
 
     brand_fig(fig,
               title="Who's Hiring and Who's Cutting: Employment by Firm Size",
-              subtitle=f'Figure 7: 3-month annualized employment growth by firm size (ADP NER, {latest_date})',
+              subtitle=f'3-month annualized employment growth by firm size (ADP NER, {latest_date})',
               source='ADP National Employment Report (real data, downloaded CSV)',
               data_date=adp_m['date'].max())
     save_fig(fig, f'{OUTDIR}/fig7_employment_by_firm_size.png')
@@ -394,7 +408,7 @@ def fig8_longterm_unemployment():
 
     brand_fig(fig,
               title='Long-Term Unemployment: Climbing Quietly',
-              subtitle=f'Figure 8: Share of unemployed out of work 27+ weeks (2000-present)',
+              subtitle=f'Share of unemployed out of work 27+ weeks (2000-present)',
               source='BLS / FRED (UEMP27OV, UNEMPLOY)',
               data_date=share.index[-1])
     save_fig(fig, f'{OUTDIR}/fig8_longterm_unemployment.png')
@@ -464,7 +478,7 @@ def fig9_retail_bifurcation():
 
     brand_fig(fig,
               title='Two Consumers, Two Trajectories',
-              subtitle='Figure 9: Luxury vs. value retail stock prices indexed to January 2022',
+              subtitle='Luxury vs. value retail stock prices indexed to January 2022',
               source='Yahoo Finance via yfinance (TPR, LVMUY, DG, DLTR monthly close)',
               data_date=luxury_idx.index[-1])
     save_fig(fig, f'{OUTDIR}/fig9_retail_bifurcation.png')
@@ -556,7 +570,7 @@ def fig10_housing_bifurcation():
 
     brand_fig(fig,
               title='The Housing Market Is Also Two Markets',
-              subtitle='Figure 10: Zillow ZHVI by price tier (bottom vs. top tercile)',
+              subtitle='Zillow ZHVI by price tier (bottom vs. top tercile)',
               source='Zillow Research (ZHVI tier CSV, real data)',
               data_date=bot_ts.index[-1])
     save_fig(fig, f'{OUTDIR}/fig10_housing_bifurcation.png')
@@ -606,12 +620,12 @@ def fig11_wealth_transfer():
     add_annotation_box(
         ax,
         '~$2T transfers every year. Most goes to the wealthy.\n55% of Millennials expect some. That changes the spending math.',
-        x=0.55, y=0.75
+        x=0.55, y=0.95
     )
 
     brand_fig(fig,
               title='The Great Wealth Transfer: $2 Trillion a Year and Accelerating',
-              subtitle='Figure 11: Estimated annual generational wealth transfer (2015-2030)',
+              subtitle='Estimated annual generational wealth transfer (2015-2030)',
               source='Cerulli Associates (third-party estimates; 2026-2030 projected)',
               data_date='2025-12-31')
     save_fig(fig, f'{OUTDIR}/fig11_wealth_transfer.png')
@@ -652,7 +666,7 @@ def fig12_downpayment_sources():
 
     brand_fig(fig,
               title='How First-Time Buyers Are Actually Getting Into Homes',
-              subtitle='Figure 12: Share of first-time homebuyers by down payment source',
+              subtitle='Share of first-time homebuyers by down payment source',
               source='Redfin, Zelman & Associates (third-party survey)',
               data_date='2025-12-31')
     save_fig(fig, f'{OUTDIR}/fig12_downpayment_sources.png')

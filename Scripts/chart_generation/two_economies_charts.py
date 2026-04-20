@@ -364,32 +364,39 @@ def fig8_longterm_unemployment():
     # LNS13025701 = 25-54 LTU share = 27.9%
     # Black worker LTU share not directly available via free API; estimated at ~28%
 
+    # Aggregate long-term unemployment share: UEMP27OV / UNEMPLOY * 100
+    conn = sqlite3.connect(DB_PATH)
+    ltu = pd.read_sql_query(
+        "SELECT date, value FROM observations WHERE series_id='UEMP27OV' ORDER BY date",
+        conn, parse_dates=['date']).set_index('date')['value']
+    ue = pd.read_sql_query(
+        "SELECT date, value FROM observations WHERE series_id='UNEMPLOY' ORDER BY date",
+        conn, parse_dates=['date']).set_index('date')['value']
+    conn.close()
+
+    share = (ltu / ue * 100).dropna()
+    share = share.loc['2000-01-01':]
+
     fig, ax = new_fig(figsize=(14, 7))
-    # Extra left margin so long category labels don't spill outside the Ocean border.
-    fig.subplots_adjust(left=0.15)
+    ax.plot(share.index, share.values, color=OCEAN, linewidth=2.6, zorder=3)
 
-    categories = ['Prime-age\n(25-54)', 'Black Workers\n(estimated)', 'Workers 55+']
-    values = [27.9, 28.0, 25.4]
-    colors = [OCEAN, DUSK, PORT]
+    # Threshold line at 22%
+    ax.axhline(22, color=VENUS, linestyle='-', linewidth=1.0, zorder=0)
+    ax.text(share.index[int(len(share) * 0.02)], 22.5,
+            'Structural Fragility Threshold: 22%', fontsize=9, color=VENUS,
+            fontweight='bold', style='italic')
 
-    bars = ax.barh(categories, values, color=colors, edgecolor='white', linewidth=1.0, height=0.55)
-    for bar, v in zip(bars, values):
-        ax.text(v + 0.5, bar.get_y() + bar.get_height()/2,
-                f'{v:.1f}%', ha='left', va='center',
-                fontsize=12, fontweight='bold', color=DOLDRUMS)
-
-    ax.set_xlim(0, 50)
-    style_ax(ax, right_primary=False)
-    ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, p: f'{x:.0f}%'))
-    ax.tick_params(axis='both', which='both', length=0)
-
-    # Simple 3-bar horizontal chart: data labels on bars + figcaption carry it.
+    add_recessions(ax)
+    add_last_value_label(ax, share, OCEAN, fmt='{:.1f}%', side='right')
+    set_xlim_to_data(ax, share.index)
+    style_single_ax(ax, fmt='{:.0f}%')
+    ax.set_ylabel('Long-Term Unemployed Share (%)', fontsize=10, color=DOLDRUMS)
 
     brand_fig(fig,
-              title='Long-Term Unemployment: Concentrated, Not Random',
-              subtitle='Figure 8: Share of unemployed workers out 27+ weeks by demographic (March 2026)',
-              source='BLS CPS (API-sourced, SA). Black worker LTU share estimated.',
-              data_date='2026-03-31')
+              title='Long-Term Unemployment: Climbing Quietly',
+              subtitle=f'Figure 8: Share of unemployed out of work 27+ weeks (2000-present)',
+              source='BLS / FRED (UEMP27OV, UNEMPLOY)',
+              data_date=share.index[-1])
     save_fig(fig, f'{OUTDIR}/fig8_longterm_unemployment.png')
     print('  [8/12] fig8_longterm_unemployment.png')
 

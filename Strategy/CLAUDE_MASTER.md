@@ -428,8 +428,8 @@ Signals we monitor, not rules we obey blindly. At extremes, they demand attentio
 
 ### Sign-Offs
 
-- **New readers:** "Join The Watch."
-- **Existing subscribers (Beacon/Horizon only):** "That's our view from the Watch. Until next time, we'll be sure to keep the light on...."
+- **CTA button (all readers):** "Don't navigate in the dark. Subscribe." (Ocean `#2389BB` button, white italic Montserrat Bold)
+- **Existing subscribers (Beacon/Horizon only):** "That's our view from the Watch. We'll keep the light on..."
 - Don't overuse the formal sign-off. It loses impact.
 
 ### Social Media Promotional Template (Framework-First)

@@ -44,21 +44,20 @@ FOG = COLORS['fog']
 # =========================================================
 def fig1_wealth_concentration():
     fig, ax = new_fig(figsize=(14, 7))
-    # Extra left margin so long category labels ('Top 10% (incl. Top 1%)')
-    # don't spill outside the Ocean border frame.
-    fig.subplots_adjust(left=0.14)
+    fig.subplots_adjust(left=0.16)
 
-    categories = ['Bottom 50%', 'Top 10%\n(incl. Top 1%)', 'Top 1%']
-    values = [2.4, 67.0, 30.2]
-    colors = [DOLDRUMS, OCEAN, PORT]
+    # Mutually exclusive buckets that sum to 100%.
+    categories = ['Bottom 50%', 'Next 40%\n(50th–90th)', 'Top 10%\n(excl. Top 1%)', 'Top 1%']
+    values = [2.4, 30.6, 36.8, 30.2]
+    colors = [DOLDRUMS, SKY, OCEAN, DUSK]
 
     bars = ax.barh(categories, values, color=colors, edgecolor='white', linewidth=1.0, height=0.6)
     for bar, v in zip(bars, values):
-        ax.text(v + 1.2, bar.get_y() + bar.get_height()/2,
+        ax.text(v + 0.8, bar.get_y() + bar.get_height()/2,
                 f'{v:.1f}%', ha='left', va='center',
                 fontsize=13, fontweight='bold', color=DOLDRUMS)
 
-    ax.set_xlim(0, 90)
+    ax.set_xlim(0, 45)
     style_ax(ax, right_primary=False)
     ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, p: f'{x:.0f}%'))
     ax.tick_params(axis='both', which='both', length=0)
@@ -66,7 +65,7 @@ def fig1_wealth_concentration():
     add_annotation_box(
         ax,
         'The top 1% hold more wealth than the entire\nbottom 50%. By a factor of 12.',
-        x=0.75, y=0.18
+        x=0.75, y=0.25
     )
 
     brand_fig(fig,

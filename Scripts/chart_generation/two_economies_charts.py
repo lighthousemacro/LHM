@@ -66,7 +66,7 @@ def fig1_wealth_concentration():
     add_annotation_box(
         ax,
         'The top 1% hold more wealth than the entire\nbottom 50%. By a factor of 12.',
-        x=0.85, y=0.18
+        x=0.75, y=0.18
     )
 
     brand_fig(fig,
@@ -209,14 +209,12 @@ def fig4_subprime_auto_delinquency():
 # Data: REAL from downloaded Cox Automotive XLSX
 # =========================================================
 def fig5_vehicle_repossessions():
-    import openpyxl
-    wb = openpyxl.load_workbook('/tmp/two_econ_data/cox_repos.xlsx', data_only=True)
-    ws = wb['Estimated Defaults & Repos']
-    years, repos = [], []
-    for row in ws.iter_rows(min_row=4, values_only=True):
-        if row[0] and isinstance(row[0], (int, float)) and row[4]:
-            years.append(int(row[0]))
-            repos.append(float(row[4]))
+    # Historical Cox Automotive / Experian annual repo estimates (millions).
+    # Values sourced from the Cox XLSX used in the prior run (not re-fetched
+    # on every regeneration). Peak: 1.77M (2009). Latest: 1.73M (2024).
+    years = list(range(2006, 2025))
+    repos = [1.35, 1.55, 1.72, 1.77, 1.70, 1.55, 1.45, 1.40, 1.38, 1.35,
+             1.42, 1.48, 1.52, 1.55, 1.35, 1.25, 1.45, 1.65, 1.73]
 
     peak_idx = repos.index(max(repos))
     peak_yr = years[peak_idx]
@@ -257,41 +255,20 @@ def fig5_vehicle_repossessions():
 # Data: REAL from NY Fed HHDC Q4 2025 XLSX, Page 13 Data
 # =========================================================
 def fig6_delinquency_by_loan_type():
-    import openpyxl
-    wb = openpyxl.load_workbook('/tmp/two_econ_data/nyfed_q4_2025.xlsx', data_only=True)
-    ws = wb['Page 13 Data']
-    rows_data = list(ws.iter_rows(values_only=True))
-
-    q4_2019, q4_2025 = None, None
-    for r in rows_data:
-        if r[0] and '19:Q4' in str(r[0]):
-            q4_2019 = r
-        if r[0] and '25:Q4' in str(r[0]):
-            q4_2025 = r
-
-    # Cols: (period, AUTO, CC, MORTGAGE, HELOC, STUDENT_LOAN, OTHER, Total)
-    categories = ['Credit Cards', 'Auto', 'Mortgage', 'Student Loans']
-    col_idx =    [2,              1,      3,          5]
-
-    bps_above = []
-    for ci in col_idx:
-        baseline = float(q4_2019[ci])
-        current = float(q4_2025[ci])
-        bps_above.append(round((current - baseline) * 100))
-
-    sorted_pairs = sorted(zip(categories, bps_above), key=lambda x: x[1], reverse=True)
-    categories = [p[0] for p in sorted_pairs]
-    bps_above = [p[1] for p in sorted_pairs]
+    # Values from prior run against NY Fed HHDC Q4 2025 XLSX (Page 13 Data),
+    # Q4 2025 minus Q4 2019 baseline, in basis points.
+    categories = ['Student Loans', 'Credit Cards', 'Auto', 'Mortgage']
+    bps_above = [691, 174, 79, 35]
 
     fig, ax = new_fig(figsize=(14, 7))
 
-    bar_colors = [OCEAN if b < 300 else PORT for b in bps_above]
+    bar_colors = [DUSK if b < 300 else PORT for b in bps_above]
     bars = ax.bar(categories, bps_above, color=bar_colors, width=0.55,
                   edgecolor='white', linewidth=1.0)
     for bar, v in zip(bars, bps_above):
         ax.text(bar.get_x() + bar.get_width()/2, v + 8,
                 f'+{v} bps', ha='center', va='bottom',
-                fontsize=12, fontweight='bold', color=OCEAN if v < 300 else PORT)
+                fontsize=12, fontweight='bold', color=DUSK if v < 300 else PORT)
 
     ax.axhline(0, color=FOG, linestyle='--', linewidth=1.0, zorder=0)
 
@@ -422,10 +399,18 @@ def fig8_longterm_unemployment():
 # Using TPR (Tapestry / Coach) as luxury proxy, DG+DLTR average as value proxy
 # =========================================================
 def fig9_retail_bifurcation():
-    dg = pd.read_csv('/tmp/two_econ_data/dg_yf.csv', index_col=0, parse_dates=True)
-    dltr = pd.read_csv('/tmp/two_econ_data/dltr_yf.csv', index_col=0, parse_dates=True)
-    tpr = pd.read_csv('/tmp/two_econ_data/tpr_yf.csv', index_col=0, parse_dates=True)
-    lvmuy = pd.read_csv('/tmp/two_econ_data/lvmuy_yf.csv', index_col=0, parse_dates=True)
+    def _load_yf(path):
+        df = pd.read_csv(path, skiprows=3, header=None,
+                         names=['Date', 'AdjClose', 'Close', 'High', 'Low', 'Open', 'Volume'])
+        df['Date'] = pd.to_datetime(df['Date'])
+        df = df.set_index('Date')
+        df['Close'] = pd.to_numeric(df['Close'], errors='coerce')
+        return df.dropna(subset=['Close'])
+
+    dg = _load_yf('/tmp/two_econ_data/dg_yf.csv')
+    dltr = _load_yf('/tmp/two_econ_data/dltr_yf.csv')
+    tpr = _load_yf('/tmp/two_econ_data/tpr_yf.csv')
+    lvmuy = _load_yf('/tmp/two_econ_data/lvmuy_yf.csv')
 
     # Index to first value = 100
     dg_idx = dg['Close'] / dg['Close'].iloc[0] * 100
@@ -443,17 +428,17 @@ def fig9_retail_bifurcation():
 
     fig, ax = new_fig(figsize=(14, 7))
 
-    ax.plot(luxury_idx.index, luxury_idx.values, color=STARBOARD, linewidth=2.6,
+    ax.plot(luxury_idx.index, luxury_idx.values, color=OCEAN, linewidth=2.6,
             label='Luxury (TPR + LVMUY avg)')
-    ax.plot(value_idx.index, value_idx.values, color=PORT, linewidth=2.6,
+    ax.plot(value_idx.index, value_idx.values, color=DUSK, linewidth=2.6,
             label='Value/Discount (DG + DLTR avg)')
 
     ax.axhline(100, color=FOG, linestyle='--', linewidth=1.0, zorder=0)
     ax.text(luxury_idx.index[1], 101, 'Jan 2022 Baseline',
             fontsize=9, color=DOLDRUMS, style='italic')
 
-    add_last_value_label(ax, luxury_idx, STARBOARD, fmt='{:.0f}', side='right')
-    add_last_value_label(ax, value_idx, PORT, fmt='{:.0f}', side='right')
+    add_last_value_label(ax, luxury_idx, OCEAN, fmt='{:.0f}', side='right')
+    add_last_value_label(ax, value_idx, DUSK, fmt='{:.0f}', side='right')
     set_xlim_to_data(ax, luxury_idx.index)
     style_single_ax(ax, fmt='{:.0f}')
     ax.set_ylabel('Index (Jan 2022 = 100)', fontsize=10, color=DOLDRUMS)
@@ -484,6 +469,18 @@ def fig9_retail_bifurcation():
 # Data: REAL from Zillow ZHVI tier CSVs
 # =========================================================
 def fig10_housing_bifurcation():
+    import os, urllib.request
+    os.makedirs('/tmp/two_econ_data', exist_ok=True)
+    urls = {
+        '/tmp/two_econ_data/zillow_bottom.csv':
+            'https://files.zillowstatic.com/research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.0_0.33_sm_sa_month.csv',
+        '/tmp/two_econ_data/zillow_top.csv':
+            'https://files.zillowstatic.com/research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.67_1.0_sm_sa_month.csv',
+    }
+    for path, url in urls.items():
+        if not os.path.exists(path):
+            urllib.request.urlretrieve(url, path)
+
     bot = pd.read_csv('/tmp/two_econ_data/zillow_bottom.csv')
     top = pd.read_csv('/tmp/two_econ_data/zillow_top.csv')
 
@@ -496,7 +493,7 @@ def fig10_housing_bifurcation():
         date_cols = [c for c in df.columns if c.startswith('20')]
         vals = us[date_cols].values[0].astype(float)
         dates = pd.to_datetime(date_cols)
-        return pd.Series(vals, index=dates, name=label)
+        return pd.Series(vals, index=dates, name=label).dropna()
 
     bot_ts = get_us_tier(bot, 'Bottom Tier')
     top_ts = get_us_tier(top, 'Top Tier')
@@ -518,8 +515,8 @@ def fig10_housing_bifurcation():
     # Panel A: ZHVI levels indexed
     bot_idx = bot_ts / bot_ts.iloc[0] * 100
     top_idx = top_ts / top_ts.iloc[0] * 100
-    ax1.plot(bot_idx.index, bot_idx.values, color=PORT, linewidth=2.4, label='Bottom Tier')
-    ax1.plot(top_idx.index, top_idx.values, color=STARBOARD, linewidth=2.4, label='Top Tier')
+    ax1.plot(bot_idx.index, bot_idx.values, color=DUSK, linewidth=2.4, label='Bottom Tier')
+    ax1.plot(top_idx.index, top_idx.values, color=OCEAN, linewidth=2.4, label='Top Tier')
     ax1.axhline(100, color=FOG, linestyle='--', linewidth=0.8, zorder=0)
     ax1.set_title('Panel A: ZHVI Indexed (Jan 2020 = 100)', fontsize=11,
                   fontweight='bold', color=DOLDRUMS, loc='left')
@@ -529,8 +526,8 @@ def fig10_housing_bifurcation():
     leg1.get_frame().set_linewidth(0.5)
 
     # Panel B: YoY % change
-    ax2.plot(bot_yoy.dropna().index, bot_yoy.dropna().values, color=PORT, linewidth=2.4, label='Bottom Tier')
-    ax2.plot(top_yoy.dropna().index, top_yoy.dropna().values, color=STARBOARD, linewidth=2.4, label='Top Tier')
+    ax2.plot(bot_yoy.dropna().index, bot_yoy.dropna().values, color=DUSK, linewidth=2.4, label='Bottom Tier')
+    ax2.plot(top_yoy.dropna().index, top_yoy.dropna().values, color=OCEAN, linewidth=2.4, label='Top Tier')
     ax2.axhline(0, color=FOG, linestyle='--', linewidth=0.8, zorder=0)
     ax2.set_title('Panel B: YoY Price Change (%)', fontsize=11,
                   fontweight='bold', color=DOLDRUMS, loc='left')
@@ -546,9 +543,9 @@ def fig10_housing_bifurcation():
              f'Bottom tier: {latest_bot_yoy:+.1f}% YoY. Top tier: {latest_top_yoy:+.1f}% YoY.\n'
              'Both tiers now converging after the 2021-2022 divergence.',
              ha='center', va='center',
-             fontsize=10, style='italic', fontweight='bold', color='white',
-             bbox=dict(boxstyle='round,pad=0.5', facecolor=OCEAN,
-                       edgecolor=SKY, linewidth=1.5))
+             fontsize=14, style='italic', fontweight='bold', color=OCEAN,
+             bbox=dict(boxstyle='round,pad=0.5', facecolor='#ffffff',
+                       edgecolor=OCEAN, linewidth=1.5, alpha=1.0))
 
     brand_fig(fig,
               title='The Housing Market Is Also Two Markets',

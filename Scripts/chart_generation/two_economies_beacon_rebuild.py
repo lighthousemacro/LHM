@@ -104,7 +104,7 @@ def chart1_savings_vs_credit():
         ax1,
         f"Saving rate {psavert.iloc[-1]:.1f}% (vs 8.5% historical avg).\n"
         f"Consumer credit growing {totalsl_yoy.iloc[-1]:+.1f}% YoY — filling the gap.",
-        x=0.28, y=0.95,
+        x=0.98, y=0.95, ha='right',
     )
 
     brand_fig(
@@ -232,6 +232,9 @@ def chart3_subprime_auto_2008_vs_current():
     b2 = ax.bar(x + width / 2, current, width, color=PORT,
                 edgecolor='white', linewidth=1.0, label='Current (2026)')
 
+    ax.set_ylim(0, max(current) * 1.35)
+
+    # Value labels directly on top of bars
     for bar, v in zip(b1, peak_2008):
         ax.text(bar.get_x() + bar.get_width() / 2, v + 0.25,
                 f'{v:.1f}%', ha='center', va='bottom',
@@ -240,14 +243,22 @@ def chart3_subprime_auto_2008_vs_current():
         ax.text(bar.get_x() + bar.get_width() / 2, v + 0.25,
                 f'{v:.1f}%', ha='center', va='bottom',
                 fontsize=11, fontweight='bold', color=PORT)
-        ax.text(bar.get_x() + bar.get_width() / 2, v / 2,
-                'EXCEEDS\n2008', ha='center', va='center',
-                fontsize=9, fontweight='bold', color='white', style='italic')
+
+    # Category label just above the percentage values (spans the pair)
+    for xi, cat, p, c in zip(x, metrics, peak_2008, current):
+        top = max(p, c) + 1.6
+        ax.text(xi, top, cat, ha='center', va='bottom',
+                fontsize=11, fontweight='bold', color=DOLDRUMS)
+
+    # "EXCEEDS 2008" flag just above the Current bar's percentage
+    for bar, v in zip(b2, current):
+        ax.text(bar.get_x() + bar.get_width() / 2, v + 1.6,
+                'EXCEEDS 2008', ha='center', va='bottom',
+                fontsize=9, fontweight='bold', color=PORT, style='italic')
 
     ax.set_xticks(x)
-    ax.set_xticklabels(metrics, fontsize=11, color=DOLDRUMS)
+    ax.set_xticklabels([''] * len(metrics))
     ax.set_ylabel('Percent (%)', fontsize=10, color=DOLDRUMS)
-    ax.set_ylim(0, max(current) * 1.28)
     style_single_ax(ax, fmt='{:.0f}%')
     ax.tick_params(axis='x', which='both', length=0)
 
@@ -501,8 +512,14 @@ def chart7_housing_by_tier():
     ax1.axhline(0, color=FOG, linestyle='--', linewidth=1.0, zorder=0)
 
     ax1.set_xticks(x)
-    ax1.set_xticklabels(tiers, fontsize=11, color=DOLDRUMS)
+    ax1.set_xticklabels([''] * len(tiers))
     ax1.set_ylim(min(yoy) * 1.6, max(yoy) * 2.5)
+
+    # Tier labels above the x-axis (just above zero line)
+    label_y = max(yoy) * 2.5 * 0.05
+    for xi, t in zip(x, tiers):
+        ax1.text(xi, label_y, t, ha='center', va='bottom',
+                 fontsize=11, fontweight='bold', color=DOLDRUMS)
     ax2.set_ylim(0, max(dom) * 1.35)
     ax1.set_ylabel('YoY Price Change (%)', color=OCEAN, fontsize=10)
     ax2.set_ylabel('Days on Market', color=DUSK, fontsize=10)

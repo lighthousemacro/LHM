@@ -161,10 +161,11 @@ def style_single_ax(ax, fmt='{:.1f}'):
 # ============================================
 def add_annotation_box(ax, text, x=0.50, y=0.95, ha='center'):
     """White callout box with Ocean border and Ocean text.
-    Clean, neutral, reads on any background. Larger font."""
+    Clean, neutral, reads on any background. Larger font.
+    High zorder so bars/lines never bleed through."""
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=14, fontweight='bold', color=COLORS['ocean'],
-            ha=ha, va='top', style='italic',
+            ha=ha, va='top', style='italic', zorder=20,
             bbox=dict(boxstyle='round,pad=0.5',
                       facecolor='#ffffff', edgecolor=COLORS['ocean'],
                       linewidth=1.5, alpha=1.0))

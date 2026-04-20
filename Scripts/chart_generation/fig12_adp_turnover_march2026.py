@@ -36,8 +36,8 @@ FOG = COLORS['fog']
 
 def fig12_turnover():
     categories = [
-        'All Private\nEmployers\n(3-yr avg)',
-        'Small Employers\n(<50) — March 2026',
+        'All Private Employers (3-yr avg)',
+        'Small Employers (<50), March 2026',
     ]
     values = [4.7, 3.9]
     colors = [DOLDRUMS, OCEAN]

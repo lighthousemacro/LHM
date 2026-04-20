@@ -17640,3 +17640,4 @@ Breadth total: 13 series, 9,763 observations
 2026-04-20 06:20:41 [WARNING]    Polygon: HTTP 400
 2026-04-20 06:21:11 [ERROR]    Uniswap: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
 2026-04-20 06:21:41 [ERROR]    Curve: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:22:11 [ERROR]    PancakeSwap: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)

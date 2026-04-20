@@ -378,7 +378,7 @@ def chart5_excess_savings_by_quintile():
     add_annotation_box(
         ax,
         "Bottom 80% depleted pandemic windfalls.\nOnly the top 20% remain buffered.",
-        x=0.28, y=0.18,
+        x=0.50, y=0.95,
     )
 
     brand_fig(

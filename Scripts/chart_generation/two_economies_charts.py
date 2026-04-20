@@ -44,6 +44,9 @@ FOG = COLORS['fog']
 # =========================================================
 def fig1_wealth_concentration():
     fig, ax = new_fig(figsize=(14, 7))
+    # Extra left margin so long category labels ('Top 10% (incl. Top 1%)')
+    # don't spill outside the Ocean border frame.
+    fig.subplots_adjust(left=0.14)
 
     categories = ['Bottom 50%', 'Top 10%\n(incl. Top 1%)', 'Top 1%']
     values = [2.4, 67.0, 30.2]
@@ -103,11 +106,15 @@ def fig2_excess_savings():
     ax.set_ylim(-700, 800)
     style_single_ax(ax, fmt='${:+,.0f}B')
 
-    add_annotation_box(
-        ax,
-        'Top 20% still flush. Bottom 80% underwater since mid-2023.\nThis is not a gap. It is two different economies wearing the same headline.',
-        x=0.50, y=0.92
-    )
+    # Annotation in top-right corner (right-aligned)
+    ax.text(0.98, 0.97,
+            'Top 20% still flush. Bottom 80% underwater since mid-2023.\nThis is not a gap. It is two different economies wearing the same headline.',
+            transform=ax.transAxes,
+            fontsize=11, fontweight='bold', color='#ffffff',
+            ha='right', va='top', style='italic',
+            bbox=dict(boxstyle='round,pad=0.5',
+                      facecolor=OCEAN, edgecolor='#23BBFF',
+                      linewidth=2.0, alpha=1.0))
 
     brand_fig(fig,
               title='Excess Pandemic Savings: Who Still Has It',
@@ -178,13 +185,13 @@ def fig4_subprime_auto_delinquency():
     fig, ax = new_fig(figsize=(14, 8))
 
     ax.plot(df.index, df['value'], color=OCEAN, linewidth=2.6, zorder=3)
-    ax.fill_between(df.index, 0, df['value'], color=OCEAN, alpha=0.06, zorder=1)
 
     gfc_peak = df.loc['2008':'2011']['value'].max()
     ax.axhline(gfc_peak, color=VENUS, linestyle='-', linewidth=1.0, zorder=0)
-    ax.text(df.index[int(len(df)*0.05)], gfc_peak + 0.08,
+    # GFC peak label on right side (closer to RHS)
+    ax.text(df.index[int(len(df)*0.92)], gfc_peak + 0.08,
             f'GFC Peak: {gfc_peak:.2f}%', fontsize=9, color=VENUS,
-            fontweight='bold', style='italic')
+            fontweight='bold', style='italic', ha='right')
 
     add_recessions(ax)
     add_last_value_label(ax, df['value'], OCEAN, fmt='{:.2f}%', side='right')
@@ -192,11 +199,12 @@ def fig4_subprime_auto_delinquency():
     style_single_ax(ax, fmt='{:.1f}%')
     ax.set_ylabel('Delinquency Rate, All Commercial Banks (%)', fontsize=10, color=DOLDRUMS)
 
+    # Annotation moved down from y=0.95 to y=0.75 (down by ~20% in axes fraction)
     add_annotation_box(
         ax,
         f"Current: {df['value'].iloc[-1]:.2f}%. All-commercial-bank auto delinquency from FRED.\n"
         "Subprime-only (Fitch) hit 6.9% in Jan 2026, the highest on record. Nobody is making a movie about this one.",
-        x=0.50, y=0.95
+        x=0.50, y=0.75
     )
 
     brand_fig(fig,
@@ -396,6 +404,8 @@ def fig8_longterm_unemployment():
     # Black worker LTU share not directly available via free API; estimated at ~28%
 
     fig, ax = new_fig(figsize=(14, 7))
+    # Extra left margin so long category labels don't spill outside the Ocean border.
+    fig.subplots_adjust(left=0.15)
 
     categories = ['Prime-age\n(25-54)', 'Black Workers\n(estimated)', 'Workers 55+']
     values = [27.9, 28.0, 25.4]

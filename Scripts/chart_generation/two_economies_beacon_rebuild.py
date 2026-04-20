@@ -232,7 +232,7 @@ def chart3_subprime_auto_2008_vs_current():
     b2 = ax.bar(x + width / 2, current, width, color=PORT,
                 edgecolor='white', linewidth=1.0, label='Current (2026)')
 
-    ax.set_ylim(0, max(current) * 1.35)
+    ax.set_ylim(0, max(current) * 1.45)
 
     # Value labels directly on top of bars
     for bar, v in zip(b1, peak_2008):
@@ -246,7 +246,7 @@ def chart3_subprime_auto_2008_vs_current():
 
     # Category label just above the percentage values (spans the pair)
     for xi, cat, p, c in zip(x, metrics, peak_2008, current):
-        top = max(p, c) + 1.6
+        top = max(p, c) + 3.6
         ax.text(xi, top, cat, ha='center', va='bottom',
                 fontsize=11, fontweight='bold', color=DOLDRUMS)
 

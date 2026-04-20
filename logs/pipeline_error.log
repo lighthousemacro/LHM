@@ -17516,3 +17516,9 @@ Breadth total: 13 series, 9,763 observations
 2026-04-20 06:06:23 [ERROR] Error fetching DFII5: database or disk is full
 2026-04-20 06:06:23 [ERROR] Error fetching DFII10: unable to open database file
 2026-04-20 06:06:23 [ERROR] Error fetching T5YIFR: unable to open database file
+2026-04-20 06:11:13 [ERROR] Error fetching DFF: database or disk is full
+2026-04-20 06:14:10 [ERROR] Error fetching BAA10Y: database or disk is full
+2026-04-20 06:14:12 [ERROR] Error fetching AAA10Y: database or disk is full
+2026-04-20 06:14:21 [ERROR] Error fetching AAAFF: database or disk is full
+2026-04-20 06:14:23 [ERROR] Error fetching BAAFF: database or disk is full
+2026-04-20 06:14:31 [ERROR] Error fetching DAAA: database or disk is full

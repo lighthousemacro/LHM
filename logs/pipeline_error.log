@@ -17641,3 +17641,44 @@ Breadth total: 13 series, 9,763 observations
 2026-04-20 06:21:11 [ERROR]    Uniswap: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
 2026-04-20 06:21:41 [ERROR]    Curve: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
 2026-04-20 06:22:11 [ERROR]    PancakeSwap: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:22:41 [ERROR]    Raydium: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:23:11 [ERROR]    Aerodrome: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:23:13 [INFO]    Aave: 2,163 observations
+2026-04-20 06:23:41 [WARNING]    Compound: HTTP 400
+2026-04-20 06:24:14 [ERROR]    Morpho: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:24:45 [ERROR]    Spark: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:24:46 [ERROR]    GMX: Error - database or disk is full
+2026-04-20 06:25:16 [ERROR]    dYdX: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:25:46 [ERROR]    Hyperliquid: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-04-20 06:25:57 [ERROR]    Synthetix: Error - unable to open database file
+2026-04-20 06:25:57 [ERROR]    Lido: Error - unable to open database file
+2026-04-20 06:25:59 [ERROR]    Rocket Pool: Error - database or disk is full
+2026-04-20 06:26:00 [ERROR]    Jito: Error - unable to open database file
+2026-04-20 06:26:02 [WARNING]    Marinade: HTTP 400
+2026-04-20 06:26:08 [ERROR]    MakerDAO: Error - unable to open database file
+2026-04-20 06:26:08 [INFO] Fetching fees/revenue from DefiLlama...
+2026-04-20 06:26:09 [INFO]    Fees/revenue: 0 protocols, 0 observations
+2026-04-20 06:26:09 [INFO] Fetching chain TVL from DefiLlama...
+2026-04-20 06:26:09 [ERROR] Chain TVL error: database or disk is full
+2026-04-20 06:26:09 [INFO] Fetching stablecoin data from DefiLlama...
+2026-04-20 06:26:10 [INFO] Fetching 30d price history from CoinGecko...
+2026-04-20 06:26:11 [ERROR]    BTC: Error - unable to open database file
+2026-04-20 06:26:13 [ERROR]    ETH: Error - unable to open database file
+2026-04-20 06:26:15 [ERROR]    SOL: Error - unable to open database file
+2026-04-20 06:26:17 [ERROR]    AVAX: Error - unable to open database file
+2026-04-20 06:26:19 [ERROR]    NEAR: Error - unable to open database file
+2026-04-20 06:26:21 [WARNING] Rate limited, waiting 60s...
+2026-04-20 06:27:21 [WARNING] Rate limited, waiting 60s...
+2026-04-20 06:28:22 [ERROR]    ARB: Error - unable to open database file
+2026-04-20 06:28:24 [ERROR]    OP: Error - unable to open database file
+2026-04-20 06:28:26 [ERROR]    MATIC: Error - unable to open database file
+2026-04-20 06:28:28 [ERROR]    UNI: Error - unable to open database file
+2026-04-20 06:28:30 [ERROR]    CRV: Error - unable to open database file
+2026-04-20 06:28:32 [WARNING] Rate limited, waiting 60s...
+--- Logging error ---
+2026-04-20 06:29:41 [INFO]    GMX: 93 observations
+2026-04-20 06:29:41 [INFO]    LDO: 93 observations
+2026-04-20 06:29:44 [INFO]    RPL: 93 observations
+2026-04-20 06:29:46 [INFO]    LINK: 93 observations
+2026-04-20 06:29:48 [INFO]    GRT: 93 observations
+2026-04-20 06:29:50 [WARNING] Rate limited, waiting 60s...

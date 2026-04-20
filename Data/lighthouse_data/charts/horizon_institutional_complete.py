@@ -27,7 +27,7 @@ OUTPUT_DIR = Path('/Users/bob/LHM/data/charts/horizon_institutional')
 
 # Lighthouse colors
 COLORS = {
-    'ocean': '#0089D1',
+    'ocean': '#2389BB',
     'dusk': '#FF6723',
     'electric': '#03DDFF',
     'hot': '#FF00F0',

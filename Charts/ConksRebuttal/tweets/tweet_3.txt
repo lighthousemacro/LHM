@@ -1,9 +1,0 @@
-Bitcoin by liquidity quintile:
-
-Q1 (Scarce): +0.85%/mo
-Q2: +7.56%
-Q3: +5.93%
-Q4: +6.95%
-Q5 (Ample): +11.41%
-
-Q5-Q1 Spread: +10.56%/mo (p < 0.0001). "ZERO effect" doesn't survive contact with the data.

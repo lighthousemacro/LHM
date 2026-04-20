@@ -1,9 +1,0 @@
-S&P 500 by liquidity quintile:
-
-Q1 (Scarce): -0.87%/mo
-Q2: +1.04%
-Q3: +1.23%
-Q4: +1.79%
-Q5 (Ample): +1.86%
-
-Q5-Q1 Spread: +2.73%/mo (p < 0.0001). Monotonic. Every step up in liquidity = higher returns.

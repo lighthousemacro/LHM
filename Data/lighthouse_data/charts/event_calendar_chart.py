@@ -22,7 +22,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 COLORS = {
-    'ocean_blue': '#0089D1',
+    'ocean_blue': '#2389BB',
     'dusk_orange': '#FF6723',
     'electric_cyan': '#03DDFF',
     'hot_magenta': '#FF00F0',

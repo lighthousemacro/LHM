@@ -1,7 +1,0 @@
-Returns by liquidity regime:
-
-Scarce (LCI < -0.5): SPX -0.08%/mo, BTC +2.27%/mo
-Neutral: SPX +1.61%/mo, BTC +6.99%/mo
-Ample (LCI > +0.5): SPX +2.51%/mo, BTC +10.33%/mo
-
-Both equities and crypto respond to reserve conditions. Monotonic across regimes.

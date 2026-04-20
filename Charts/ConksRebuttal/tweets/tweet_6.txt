@@ -1,7 +1,0 @@
-Summary of evidence:
-
-Quintile Spread: SPX +2.73%/mo, BTC +10.56%/mo
-Regime Spread: SPX +2.59%/mo, BTC +8.06%/mo
-Extreme Decile: SPX +3.57%/mo, BTC +15.25%/mo
-
-All p-values < 0.0001. That's a 1-in-10,000 chance this is noise. The math is the math.

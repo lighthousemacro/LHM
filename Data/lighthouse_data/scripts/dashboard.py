@@ -17,13 +17,13 @@ COLORS = {
     'grid': '#252525',
     
     # Macro
-    'lci': '#0089D1',       # Ocean Blue
+    'lci': '#2389BB',       # Ocean Blue
     'mri': '#FF3333',       # Signal Red
     
     # Labor (The Jaws)
     'lfi': '#FF5252',       # Fragility (Red/Orange)
     'ldi': '#448AFF',       # Dynamism (Blue)
-    'fill': '#FF0000',      # Warning Fill
+    'fill': '#892323',      # Warning Fill
     
     # Crypto
     'stable': '#00C853',    # Growth Green

@@ -28,7 +28,7 @@ from ..utils.logging import get_logger
 log = get_logger(__name__)
 
 COLORS = {
-    'ocean_blue': '#0089D1',
+    'ocean_blue': '#2389BB',
     'dusk_orange': '#FF6723',
     'electric_cyan': '#03DDFF',
     'hot_magenta': '#FF00F0',
@@ -158,7 +158,7 @@ def create_yield_box(ax, tenor, value, change=None, status='normal'):
         bg_color = '#FF672320'
         text_color = COLORS['dusk_orange']
     else:
-        bg_color = '#0089D120'
+        bg_color = '#2389BB20'
         text_color = COLORS['ocean_blue']
 
     box = FancyBboxPatch((0.05, 0.05), 0.9, 0.9, boxstyle="round,pad=0.02",
@@ -282,7 +282,7 @@ def generate_treasury_dashboard(save=True) -> plt.Figure:
         ax_tp.set_ylim(0, 1)
         ax_tp.axis('off')
 
-        bg = '#0089D120' if tp['value'] > 0 else '#FF672320'
+        bg = '#2389BB20' if tp['value'] > 0 else '#FF672320'
         tc = COLORS['ocean_blue'] if tp['value'] > 0 else COLORS['dusk_orange']
 
         box = FancyBboxPatch((0.02, 0.02), 0.96, 0.96, boxstyle="round,pad=0.02",

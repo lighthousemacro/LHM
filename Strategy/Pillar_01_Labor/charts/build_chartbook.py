@@ -59,9 +59,8 @@ def cover_page(pdf: PdfPages) -> None:
     bar_ax.add_patch(plt.Rectangle((0.667, 0), 0.333, 1, color=DUSK,
                                    transform=bar_ax.transAxes))
 
-    fig.text(0.5, 0.08, "MACRO, ILLUMINATED.", ha="center",
-             fontsize=10, style="italic", color=DOLDRUMS, family="sans-serif",
-             letterspacing=3)
+    fig.text(0.5, 0.08, "M A C R O ,   I L L U M I N A T E D .", ha="center",
+             fontsize=10, style="italic", color=DOLDRUMS, family="sans-serif")
     fig.text(0.5, 0.05, "Bob Sheehan, CFA, CMT  |  bob@lighthousemacro.com  |  @LHMacro",
              ha="center", fontsize=8, color=DOLDRUMS, family="sans-serif")
 

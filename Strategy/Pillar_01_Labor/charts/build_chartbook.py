@@ -46,9 +46,8 @@ def cover_page(pdf: PdfPages) -> None:
     fig.text(0.5, 0.49, PILLAR_SUBTITLE, ha="center",
              fontsize=18, style="italic", color=DOLDRUMS, family="serif")
 
-    fig.text(0.5, 0.30, "CHARTBOOK", ha="center",
-             fontsize=20, fontweight="bold", color=OCEAN, family="sans-serif",
-             letterspacing=4)
+    fig.text(0.5, 0.30, "C H A R T B O O K", ha="center",
+             fontsize=20, fontweight="bold", color=OCEAN, family="sans-serif")
     fig.text(0.5, 0.25, date.today().strftime("%B %d, %Y"), ha="center",
              fontsize=12, color=DOLDRUMS, family="sans-serif")
 

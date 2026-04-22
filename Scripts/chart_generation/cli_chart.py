@@ -320,8 +320,8 @@ def chart_cli(fwd_days=63):
     set_xlim_to_data(ax1, cli_plot.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    # Pills
-    add_last_value_label(ax1, cli_plot, color=c_cli, fmt='{:+.2f}', side='left')
+    # Pills — CLI pill uses full series (current reading); BTC fwd pill uses last available fwd point
+    add_last_value_label(ax1, cli, color=c_cli, fmt='{:+.2f}', side='left')
     add_last_value_label(ax2, btc_plot, color=c_btc, fmt='{:+.0f}%', side='right')
 
     # Legend

@@ -245,13 +245,16 @@ def chart_cli(fwd_days=63):
     btc_price = df['BTC_Price'].dropna()
 
     # Compute FORWARD returns: what BTC did over the NEXT fwd_days from each date
+    # The shift(-fwd_days) strips the last fwd_days rows since future prices don't exist yet.
     btc_fwd = (btc_price.shift(-fwd_days) / btc_price - 1) * 100
     btc_fwd = btc_fwd.dropna()
 
-    # Align
-    common = cli.index.intersection(btc_fwd.index)
-    cli_plot = cli.loc[common]
-    btc_plot = btc_fwd.loc[common]
+    # Plot CLI over its FULL native range (through today). Do NOT trim to btc_fwd's
+    # shortened index — that would place the last-value pill weeks in the past and
+    # disagree with the legend. The BTC forward-return line honestly ends earlier
+    # because forward returns don't exist for the last fwd_days of the sample.
+    cli_plot = cli
+    btc_plot = btc_fwd
 
     # Current values
     last_cli = cli.dropna().iloc[-1]
@@ -320,9 +323,18 @@ def chart_cli(fwd_days=63):
     set_xlim_to_data(ax1, cli_plot.index)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
-    # Pills — CLI pill uses full series (current reading); BTC fwd pill uses last available fwd point
-    add_last_value_label(ax1, cli, color=c_cli, fmt='{:+.2f}', side='left')
+    # Pills — CLI pill uses full series (today's reading); BTC fwd pill uses last available fwd point
+    # (which lands ~fwd_days trading days before today — that's honest, not a bug).
+    add_last_value_label(ax1, cli_plot, color=c_cli, fmt='{:+.2f}', side='left')
     add_last_value_label(ax2, btc_plot, color=c_btc, fmt='{:+.0f}%', side='right')
+
+    # Small note explaining why the BTC forward-return line ends before the CLI line
+    btc_end_str = btc_plot.index[-1].strftime('%b %d, %Y')
+    ax1.text(0.01, 0.03,
+             f'BTC {fwd_days}D forward return ends {btc_end_str}\n(requires {fwd_days} trading days of future price data)',
+             transform=ax1.transAxes,
+             fontsize=8, color=THEME['muted'], ha='left', va='bottom', style='italic',
+             zorder=6)
 
     # Legend
     lines1, labels1 = ax1.get_legend_handles_labels()
@@ -349,7 +361,7 @@ def chart_cli(fwd_days=63):
                      ' Q3:                   +1.0%    1.20x\n'
                      ' Q2:                   +0.5%    1.11x\n'
                      ' Q1 (Weakest):         -4.8%    0.45x\n\n'
-                     f'Q5-Q1: +13.4% (t=14.2, p<0.0001) | n={len(cli_plot):,}')
+                     f'Q5-Q1: +13.4% (t=14.2, p<0.0001) | n={len(btc_plot):,}')
     elif fwd_days == 42:
         box2_text = (f'{fwd_days}D Fwd Returns:   Avg Ret  Slugging\n'
                      ' Q5 (Strongest):      +14.3%    4.50x\n'
@@ -357,7 +369,7 @@ def chart_cli(fwd_days=63):
                      ' Q3:                   +3.9%    1.56x\n'
                      ' Q2:                   -0.2%    0.97x\n'
                      ' Q1 (Weakest):         -7.8%    0.43x\n\n'
-                     f'Q5-Q1: +22.1% (t=15.6, p<0.0001) | n={len(cli_plot):,}')
+                     f'Q5-Q1: +22.1% (t=15.6, p<0.0001) | n={len(btc_plot):,}')
     else:
         box2_text = (f'{fwd_days}D Fwd Returns:   Avg Ret  Slugging\n'
                      ' Q5 (Strongest):      +17.2%    3.70x\n'
@@ -365,7 +377,7 @@ def chart_cli(fwd_days=63):
                      ' Q3:                   +9.0%    2.45x\n'
                      ' Q2:                   -2.1%    0.82x\n'
                      ' Q1 (Weakest):         -9.8%    0.39x\n\n'
-                     f'Q5-Q1: +27.0% (t=15.0, p<0.0001) | n={len(cli_plot):,}')
+                     f'Q5-Q1: +27.0% (t=15.0, p<0.0001) | n={len(btc_plot):,}')
 
     ax1.text(0.55, 0.03, box2_text, transform=ax1.transAxes,
              fontsize=9.5, color=THEME['fg'], ha='center', va='bottom',

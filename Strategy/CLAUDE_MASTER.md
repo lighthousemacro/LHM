@@ -222,27 +222,25 @@ SSD > +1.5: Capitulation low forming. SSD < -1.5: Blow-off top risk.
 
 ## Crypto Liquidity Impulse (CLI)
 
-Three-channel liquidity composite measuring how fast global liquidity transmits into crypto. Four components across three tiers; weights set by Feb 2026 robustness pass (v5) selected on Q5-Q1 spread and cross-horizon monotonicity.
+Three-channel liquidity composite measuring how fast global liquidity transmits into crypto.
 
-**Architecture (3 Channels, 4 Components):**
-- Channel 1 — Macro Tide: Dollar Momentum (DTWEXBGS YoY, inverted)
-- Channel 2 — US Plumbing: Reserve Dynamics (TOTRESNS / WALCL, level) + Reserve Momentum (same ratio, 63D RoC)
-- Channel 3 — Crypto-Native: Capital Rotation (Stablecoin market cap / BTC price ratio, 21D RoC inverted)
+**Architecture (3 Tiers, 8 Components):**
+- Tier 1: Macro Liquidity Tide (40%) — Global M2 Momentum, DXY 63-Day RoC
+- Tier 2: US Plumbing Mechanics (35%) — WALCL, TGA, RRP, SOFR-IORB, HY OAS (inv)
+- Tier 3: Crypto-Native Transmission (25%) — Stablecoin supply momentum, BTC ETF flows (20d), Exchange stablecoin reserves
+
+Leverage Regime Filter applied multiplicatively (perpetual futures funding rates). Captures the ~17% of time when crypto positioning dynamics override macro liquidity.
 
 Positive CLI = expanding liquidity transmission. Negative = contracting.
 
-**Public-facing language (for charts, posts, client decks):** "Weighted composite across 3 liquidity impulse channels: Dollar Momentum, Reserve Dynamics, Stablecoin Flows." Keep the component breakdown and weights internal.
+**Key empirical findings:**
+- Net Liquidity expanding AND dollar weakening: BTC +34.1% next quarter, 84.7% hit rate
+- Both bearish: +0.9%, 41.7% hit rate
+- Q5-Q1 quintile spread: +22.1%, t-stat 15.6
 
-**Key empirical findings (63D forward BTC returns, n=2,858):**
-- Q5-Q1 quintile spread: +27.0%, t-stat 15.0, p<0.0001
-- Monotonic across all 5 quintiles (Q1 -9.8%, Q2 -2.1%, Q3 +9.0%, Q4 +11.1%, Q5 +17.2%)
-- Expand tercile: +15.5% avg, 69% win rate; Contract tercile: -6.4% avg, 38% win rate
+**Disclosure:** Architecture, components, and empirical results are public. Exact weights, z-score methodology, and regime filter calibration are proprietary.
 
-**Data freshness caveat:** TOTRESNS is monthly H.3 with ~6-week release lag, so the Reserves channel carries forward between prints. Dollar, stablecoin, and BTC components are daily.
-
-**Disclosure:** Channels and empirical results are public. Component-level construction, weights, and z-score methodology are proprietary.
-
-**Source of truth:** `/Users/bob/LHM/Scripts/backtest/cli_final.py` builds the composite; `/Users/bob/LHM/Scripts/backtest/cli_chart_data.csv` is the rendered series. The older 5-component base (`cli_backtest.py`) is superseded and kept only as a historical reference.
+**Known drift (flagged 2026-04-22):** The chart pipeline at `/Users/bob/LHM/Scripts/backtest/cli_final.py` renders a 4-component v5 subset (Dollar / TOTRESNS-WALCL ratio + its 63D RoC / Stablecoin-BTC ratio) rather than the published 8-component architecture above. This was a Feb 2026 robustness-test script that became the default chart source by path dependency. The 8-component version outperforms it on the data available when published; the 4-component subset showed a higher Q5-Q1 spread in the Feb pass but excluded M2, Net Liquidity, funding stress, ETF flows, exchange reserves, and the leverage regime filter. Needs a rebuild: reconstruct the published 8-component CLI as the production composite, move `cli_final.py` into an `Archive/` or `_deprecated_` path, and repoint `cli_chart_data.csv` at the rebuilt version.
 
 ## Key Thresholds
 

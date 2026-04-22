@@ -203,6 +203,29 @@ def db_last_observation_date(conn: sqlite3.Connection, series_id: str) -> Option
     return row[0]
 
 
+def db_last_observation_dates_bulk(conn: sqlite3.Connection, series_ids: List[str]) -> Dict[str, Optional[str]]:
+    """
+    Return {series_id: max(date)} for all requested series in a single query.
+    This is the preferred path for the freshness check - one short-lived
+    DB read instead of N round-trips that can each hit a writer-held lock.
+    """
+    if not series_ids:
+        return {}
+    # Chunk to avoid the SQLite variable limit (default 999).
+    out: Dict[str, Optional[str]] = {sid: None for sid in series_ids}
+    CHUNK = 500
+    for i in range(0, len(series_ids), CHUNK):
+        chunk = series_ids[i : i + CHUNK]
+        placeholders = ",".join("?" * len(chunk))
+        sql = (
+            f"SELECT series_id, MAX(date) FROM observations "
+            f"WHERE series_id IN ({placeholders}) GROUP BY series_id"
+        )
+        for sid, max_date in conn.execute(sql, chunk):
+            out[sid] = max_date
+    return out
+
+
 # ==========================================
 # MAIN CHECK
 # ==========================================
@@ -227,27 +250,51 @@ def run_check(dry_run: bool = False, verbose: bool = False) -> Tuple[int, int]:
         logger.error(f"Database missing at {DB_PATH}; aborting.")
         return (0, 0)
 
-    # Long busy_timeout so we coexist with the morning pipeline / 15-min sync.
-    conn = sqlite3.connect(DB_PATH, timeout=60.0)
-    fetcher = FREDFetcher(conn)
-
-    stale_series: List[Tuple[str, str, str]] = []  # (series_id, db_end, fred_end)
-
+    # --- Pass 1: FRED metadata (no DB) ---
+    # Do all the network calls first so we never hold a DB connection
+    # while waiting on FRED.
+    fred_ends: Dict[str, Optional[str]] = {}
     for sid in series_ids:
-        fred_end = fred_observation_end(sid, api_key)
-        db_end = db_last_observation_date(conn, sid)
+        fred_ends[sid] = fred_observation_end(sid, api_key)
+        time.sleep(FETCH_CONFIG.get("rate_limit_delay", 0.1))
+
+    # --- Pass 2: one bulk DB read, with retry on lock ---
+    db_ends: Dict[str, Optional[str]] = {}
+    last_err: Optional[Exception] = None
+    for attempt in range(6):  # ~ up to ~2 min total wait across backoff
+        try:
+            read_conn = sqlite3.connect(DB_PATH, timeout=60.0)
+            try:
+                db_ends = db_last_observation_dates_bulk(read_conn, series_ids)
+            finally:
+                read_conn.close()
+            break
+        except sqlite3.OperationalError as e:
+            last_err = e
+            wait = 2 ** attempt
+            logger.warning(
+                f"DB read attempt {attempt + 1} failed ({e}); waiting {wait}s."
+            )
+            time.sleep(wait)
+    else:
+        logger.error(f"Giving up on DB read: {last_err}")
+        return (0, 0)
+
+    # --- Compare ---
+    stale_series: List[Tuple[str, str, str]] = []  # (series_id, db_end, fred_end)
+    for sid in series_ids:
+        fred_end = fred_ends.get(sid)
+        db_end = db_ends.get(sid)
 
         if fred_end is None:
             if verbose:
                 logger.info(f"  {sid}: no FRED metadata (skipping)")
             continue
         if db_end is None:
-            # Series in config but never fetched. Pull it once.
             stale_series.append((sid, "<missing>", fred_end))
             if verbose:
                 logger.info(f"  {sid}: not in DB yet, FRED has {fred_end}")
             continue
-
         if fred_end > db_end:
             stale_series.append((sid, db_end, fred_end))
             if verbose:
@@ -255,11 +302,8 @@ def run_check(dry_run: bool = False, verbose: bool = False) -> Tuple[int, int]:
         elif verbose:
             logger.info(f"  {sid}: up-to-date (db=fred={db_end})")
 
-        time.sleep(FETCH_CONFIG.get("rate_limit_delay", 0.1))
-
     if not stale_series:
         logger.info("All release-sensitive series are up-to-date. Nothing to fetch.")
-        conn.close()
         return (0, 0)
 
     logger.info(
@@ -273,8 +317,13 @@ def run_check(dry_run: bool = False, verbose: bool = False) -> Tuple[int, int]:
 
     if dry_run:
         logger.info("--dry-run: skipping fetches.")
-        conn.close()
         return (len(stale_series), 0)
+
+    # Open the writer connection now, once we know we have work to do.
+    # Long busy_timeout so we coexist with any late-running pipeline stage
+    # or the 15-minute sync_all.py push.
+    conn = sqlite3.connect(DB_PATH, timeout=60.0)
+    fetcher = FREDFetcher(conn)
 
     # Re-fetch each stale series via the existing FREDFetcher path.
     # This reuses retry/backoff, rate limiting, and the INSERT OR REPLACE

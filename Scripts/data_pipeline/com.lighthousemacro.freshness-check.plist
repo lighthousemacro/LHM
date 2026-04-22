@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    LHM PIPELINE FRESHNESS CHECK
+    ============================
+    Hits FRED metadata (/series) for a short list of release-sensitive
+    series and re-fetches any that are newer than the DB. Additive to the
+    existing 06:00 ET full pipeline - does not replace it.
+
+    Schedule:
+        11:00 ET weekdays (Mon-Fri). This is after:
+          - Census Advance Retail Trade (~08:30 ET)
+          - CPI / PPI / Employment Situation (~08:30 ET)
+          - JOLTS / New Home Sales / Existing Home Sales (~10:00 ET)
+          - Industrial Production (~09:15 ET)
+
+        launchd Hour is interpreted in LOCAL TIME. During US Eastern time
+        (the Mac's zone), the Hour key below resolves to 11:00 ET year-round,
+        so no DST toggling is needed.
+
+    To install:
+        1. cp /Users/bob/LHM/Scripts/data_pipeline/com.lighthousemacro.freshness-check.plist \
+              ~/Library/LaunchAgents/
+        2. launchctl unload ~/Library/LaunchAgents/com.lighthousemacro.freshness-check.plist 2>/dev/null
+        3. launchctl load ~/Library/LaunchAgents/com.lighthousemacro.freshness-check.plist
+
+    To test immediately:
+        launchctl start com.lighthousemacro.freshness-check
+
+    Logs:
+        /Users/bob/LHM/logs/freshness_check.log         (stdout)
+        /Users/bob/LHM/logs/freshness_check_error.log   (stderr)
+        /Users/bob/LHM/logs/pipeline_freshness.log      (script's own log file)
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.lighthousemacro.freshness-check</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/env</string>
+        <string>python3</string>
+        <string>/Users/bob/LHM/Scripts/data_pipeline/check_for_updates.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/bob/LHM/Scripts/data_pipeline</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>/Users/bob/LHM</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <!--
+        Weekdays at 11:00 local time. StartCalendarInterval with an array
+        of dicts = run at each matching moment. Monday=1 ... Friday=5.
+    -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Weekday</key><integer>1</integer>
+            <key>Hour</key><integer>11</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>2</integer>
+            <key>Hour</key><integer>11</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>3</integer>
+            <key>Hour</key><integer>11</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>4</integer>
+            <key>Hour</key><integer>11</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>5</integer>
+            <key>Hour</key><integer>11</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+    </array>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bob/LHM/logs/freshness_check.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/bob/LHM/logs/freshness_check_error.log</string>
+</dict>
+</plist>

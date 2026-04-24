@@ -481,9 +481,9 @@ Output Gap Widens → Goods Disinflation →
 Services Eventually Follow
 ```
 
-**Current Linkage:** Capacity utilization at 77.4% (below 79% average)—slack building. ISM Prices Paid falling. Goods CPI at -1.2% (deflation). Business weakness is **disinflationary**—supports the "last mile" resolution.
+**Transmission mechanics:** Capacity utilization is the cleanest goods-inflation leading indicator. Below 79% (long-term average), pricing power erodes and goods disinflation deepens. ISM Prices Paid (manufacturing) and ISM Services Prices Paid lead the CPI goods and services components respectively by 1-2 months. When both Prices Paid indexes decelerate simultaneously, broad disinflation follows within a quarter.
 
-**Cross-Pillar Signal:** Business weakness (**BCI -0.4**) + falling capacity utilization = goods deflation continues. Services inflation (wage-driven) next to fall as business cuts labor costs.
+**Cross-Pillar Signal:** Business weakness (**BCI < -0.3**) combined with capacity utilization below 79% signals sustained goods disinflation. Services inflation (wage-driven) follows goods down with 2-3 quarter lag as margin pressure forces labor cost cuts. Watch for the ISM Services Prices Paid inflection as the confirmation that the services-inflation transmission is underway.
 
 ---
 

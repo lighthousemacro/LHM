@@ -819,9 +819,9 @@ Import Prices ↑ → PPI Intermediate Goods ↑ →
 PPI Final Demand ↑ → CPI Goods ↑ (3-6 month lag)
 ```
 
-**Current Linkage:** Import prices at +3.8% YoY. PPI Final Demand at +2.6% YoY. CPI Goods at -1.2% YoY (still deflationary but **narrowing**). The tariff-driven import price spike is **transmitting** into the domestic price chain. Goods deflation is ending.
+**Transmission mechanics:** Import prices flow into PPI Intermediate Goods, then PPI Final Demand, then CPI Goods. Each stage adds 1-2 months of lag. Tariff-driven import price spikes have ~70% pass-through to consumer prices over 3-6 months for non-petroleum goods.
 
-**Cross-Pillar Signal:** Import prices (+3.8%) suggest goods CPI deflation (-1.2%) is **temporary**. Watch for goods CPI to flip positive by Q2 2026. This complicates the "last mile" disinflation thesis in PCI. When **Import Price YoY > +3%** AND **CPI Goods YoY is negative**, the pipeline is building pressure that hasn't yet released. We're in that configuration now.
+**Cross-Pillar Signal:** When **Import Price YoY > +3%** AND **CPI Goods YoY is negative**, the pipeline is building pressure that hasn't yet released. This configuration typically resolves through goods CPI re-acceleration within 1-2 quarters, complicating any "last mile" disinflation narrative in PCI.
 
 ---
 

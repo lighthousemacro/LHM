@@ -30,7 +30,7 @@ Sentiment is the **contrarian edge** in the 12-pillar framework for a simple rea
 
 Get the sentiment call right at extremes, and you've identified where liquidity will come from. Miss it, and you're trading with the crowd instead of against them.
 
-**The Extreme Edge:** Sentiment only matters at extremes. In the middle, it's noise. We don't trade sentiment—we use sentiment to size and time trades identified by fundamentals and structure.
+**The Extreme Edge:** Sentiment only matters at extremes. In the middle, it's noise. We don't trade sentiment in isolation. We use sentiment to size and time trades identified by fundamentals and structure.
 
 ---
 
@@ -258,7 +258,7 @@ SSD = z(SPI) + z(MSI)
 | -2.0 to -1.5 | Blow-Off | Euphoria + strong structure | Sell zone |
 | < -2.0 | Extreme Blow-Off | Maximum greed + strong structure | **Maximum sell zone** |
 
-**The SSD Signal:** SSD > +1.5 = the crowd has capitulated while structure is weak—classic bottom formation. SSD < -1.5 = the crowd is euphoric while structure is strong—classic blow-off top formation.
+**The SSD Signal:** SSD > +1.5 means the crowd has capitulated while structure is weak, a classic bottom formation. SSD < -1.5 means the crowd is euphoric while structure is strong, a classic blow-off top formation.
 
 ---
 
@@ -286,7 +286,7 @@ SSD = z(SPI) + z(MSI)
 
 ### Using Sentiment for Sizing (Not Direction)
 
-Sentiment doesn't determine direction—fundamentals and structure do. Sentiment determines *how much* and *when*.
+Sentiment doesn't determine direction. Fundamentals and structure do. Sentiment determines *how much* and *when*.
 
 | **Scenario** | **Fundamental** | **Structure** | **Sentiment** | **Action** |
 |---|---|---|---|---|
@@ -326,7 +326,7 @@ Pillar 12 adds a sentiment requirement to tactical exhaustion trades:
 5. No new lows in last 10 trading days
 
 **Additional Sentiment Requirement:**
-6. **SPI > +1.0** (fear elevated—contrarian edge present)
+6. **SPI > +1.0** (fear elevated, contrarian edge present)
 
 Without elevated fear, there's no contrarian edge to exploit. Don't bottom-fish without sentiment support.
 
@@ -334,7 +334,7 @@ Without elevated fear, there's no contrarian edge to exploit. Don't bottom-fish 
 
 ## Current State Template
 
-**NOTE:** Fill in current values from live data sources. Do not reference any pre-filled values as current—they are outdated.
+**NOTE:** Fill in current values from live data sources. Do not reference any pre-filled values as current.
 
 | **Indicator** | **Current** | **Signal** | **Implication** |
 |---|---|---|---|
@@ -364,4 +364,4 @@ Without elevated fear, there's no contrarian edge to exploit. Don't bottom-fish 
 
 ---
 
-*That's how we read the crowd from the Watch. The market is a voting machine in the short term—and the crowd always votes last.*
+*That's how we read the crowd from the Watch. The market is a voting machine in the short term, and the crowd always votes last.*

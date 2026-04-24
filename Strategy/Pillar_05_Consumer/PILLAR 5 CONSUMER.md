@@ -451,9 +451,9 @@ Profit Margins Squeezed → Cost Cutting ↓ →
 Hiring Freeze → Layoffs → Income ↓ → Spending ↓ (Reinforcing)
 ```
 
-**Current Linkage:** Real PCE at +2.1% YoY (decelerating). Corporate profit growth slowing. S&P 500 earnings revisions turning negative. Hiring already slowing (payrolls +140k vs +200k last year). The transmission is underway.
+**Transmission mechanics:** Consumer spending translates to corporate revenue with a 1-2 quarter lag. Revenue deceleration squeezes profit margins 1-2 quarters after that. Cost cutting then moves through hiring freeze → attrition → layoffs over another 2-4 months. The full loop closes within 3-4 quarters, then feeds back into consumer income through the layoffs channel.
 
-**Cross-Pillar Signal:** When **CCI < -0.3** (consumer fatigued) AND **LFI > +0.8** (labor fragile), recession probability exceeds 65% within 12 months. Current: **CCI -0.39, LFI +0.93**. **Warning threshold engaged.**
+**Cross-Pillar Signal:** When **CCI < -0.3** (consumer fatigued) AND **LFI > +0.8** (labor fragile), recession probability exceeds 65% within 12 months based on 1990-2020 backtests. This is the single most powerful two-pillar cross-check in the Diagnostic Dozen. Monitor the combined state.
 
 ---
 
@@ -467,9 +467,9 @@ Pricing Power ↑ → Inflation ↑
 Consumer Spending ↓ → Demand Falls → Pricing Power ↓ → Inflation ↓
 ```
 
-**Current Linkage:** Consumer spending decelerating (+2.1% real, down from +3.5% in 2024). Goods demand particularly weak (-1.8% durables). This is **disinflationary** for goods prices (already -1.2% CPI). Services inflation stickier (wage-driven).
+**Transmission mechanics:** Goods inflation responds faster than services. When consumer spending decelerates, goods disinflation appears within 1-2 quarters (inventory adjustments, price cuts to move merchandise). Services inflation is wage-linked and persists 2-4 quarters longer. The sequence is predictable: goods CPI rolls over first, core goods goes negative, then shelter disinflation follows (with Owners' Equivalent Rent lagging ~12 months behind market rents), and services ex-shelter comes last because it's tethered to wage growth.
 
-**Cross-Pillar Signal:** Consumer weakness (**CCI -0.39**) supports the "last mile" inflation resolution. If spending cracks further, services inflation will follow goods down. PCI likely to fall from +0.7 to +0.4 over next 6 months if consumer continues to fade.
+**Cross-Pillar Signal:** Consumer weakness (**CCI < -0.3**) supports "last mile" inflation resolution. If spending cracks further, services inflation follows goods down with 2-3 quarter lag. Watch core services ex-shelter YoY (supercore) for the confirmation signal. That's the Fed's preferred gauge and the last component to break.
 
 ---
 
@@ -482,9 +482,9 @@ Consumer Spending Growth → PCE Contribution to GDP →
 GDP Growth → Investment Response → Hiring → Consumer Income (Reinforcing)
 ```
 
-**Current Linkage:** PCE contributing **+1.4 ppts** to GDP (+2.5% total). If consumer slows to +1.5% real, PCE contribution falls to +1.0 ppts. GDP falls to ~2.0%. If consumer stagnates (+0.5%), GDP falls to ~1.0%. Consumer is the margin.
+**Transmission mechanics:** PCE's contribution to GDP is mechanical: real PCE YoY × 0.68 ≈ PCE's contribution to real GDP growth. A 1 ppt change in real PCE translates to roughly 0.7 ppts of GDP. This makes the consumer the dominant swing factor in any cycle. Business investment, government spending, and net exports together account for the other 32%, and they typically amplify rather than offset consumer moves (investment is pro-cyclical, tax receipts fall when incomes fall, imports fall when spending falls).
 
-**Cross-Pillar Signal:** When **CCI < -0.5** (consumer stressed) AND **GCI < -0.5** (growth contracting), recession is confirmed. Current: **CCI -0.39, GCI -0.4**. Close to synchronized weakness.
+**Cross-Pillar Signal:** When **CCI < -0.5** (consumer stressed) AND **GCI < -0.5** (growth contracting), recession is confirmed. The synchronization of these two composites is the most reliable single confirmation in the framework. Both negative, sustained for 2+ quarters, has preceded every post-1990 recession.
 
 ---
 

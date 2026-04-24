@@ -475,9 +475,9 @@ Equity Wealth ↑ → Consumer Spending ↑ → Demand-Pull Inflation
 Equity Wealth ↓ → Consumer Spending ↓ → Disinflationary
 ```
 
-**Current Linkage:** S&P 500 +18% in 2025 created **$8T+ in wealth gains**. This supports consumer spending and **blunts disinflationary pressure**. If equities correct 15-20%, wealth destruction accelerates consumer retrenchment and speeds disinflation.
+**Transmission mechanics:** Equity wealth effects generate spending responses with MPC estimates of 2-4 cents per dollar for financial wealth (vs 5-8 cents for housing wealth, per Case-Quigley-Shiller). A 15% equity drawdown, which represents roughly $8-10T of household wealth destruction at current aggregate market cap levels, would reduce consumer spending by approximately 0.3-0.8 ppts over 2-4 quarters. This is the wealth effect's quantified contribution to the financial-to-inflation channel.
 
-**Cross-Pillar Signal:** Financial conditions are **keeping PCI elevated**. Loose conditions (FCI +0.3) support spending which supports services inflation (3.6%). A financial tightening (FCI → -0.5) would accelerate the "last mile" disinflation.
+**Cross-Pillar Signal:** Loose financial conditions blunt disinflationary pressure via the wealth effect. When **FCI > +0.5** (very loose) and **PCI > +0.5** (elevated inflation), the wealth channel is supporting demand and working against disinflation. Tightening financial conditions would accelerate the "last mile" services inflation resolution.
 
 ---
 
@@ -492,9 +492,9 @@ Financial Conditions Tight → Credit Restricted →
 Investment ↓ → Output ↓ → GDP ↓
 ```
 
-**Current Linkage:** FCI at +0.3 (neutral) while GCI at -0.4 (contraction risk). This divergence means **financial conditions aren't driving the growth weakness**—the weakness is coming from other factors (trade, manufacturing, inventory). Financial conditions are providing **offset**, not causing contraction.
+**Transmission mechanics:** Financial conditions transmit to GDP with 2-4 quarter lag through investment decisions and wealth effects. Tight conditions reduce business capex (~20% of GDP) and suppress consumer spending (68% of GDP via wealth channel). A 0.5-point move in FCI (roughly equivalent to 150 bps of credit spread widening plus moderate equity correction) subtracts approximately 0.5-1 ppt from GDP growth over 4 quarters.
 
-**Cross-Pillar Signal:** If FCI tightens to match GCI (both negative), growth weakness **accelerates**. Financial tightening would be the **catalyst** that tips growth contraction into recession.
+**Cross-Pillar Signal:** FCI-GCI divergence provides early warning. When FCI is loose but GCI is weak, the growth weakness reflects non-financial factors (trade, demographics, structural). If FCI tightens to match GCI weakness, financial tightening compounds the existing growth drag and typically tips mild slowdown into recession.
 
 ---
 

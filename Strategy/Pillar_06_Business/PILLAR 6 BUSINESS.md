@@ -79,7 +79,9 @@ Small businesses are 44% of GDP and 48% of employment. They're also **more rate-
 | **Capex Plans Net %** | <+20% | +20% to +25% | +25% to +30% | >+30% |
 | **Economy Will Improve** | <-30% | -30% to -10% | -10% to +10% | >+10% |
 
-**The NFIB Collapse:** NFIB Optimism at **89.4** (Dec 2025)—lowest since 2012 (debt ceiling crisis). Below 90 for 36 consecutive months. "Economy Will Improve" at **-38%** (net pessimism). Hiring Plans at **+8%** (barely positive). Capex Plans at **+19%** (below threshold). Small business is screaming recession while large cap earnings remain stable. This divergence is late-cycle classic.
+**The NFIB Lead Pattern:** NFIB Optimism below 90 for 6+ consecutive months has preceded every post-1985 recession by 6-12 months. The component mix matters more than the headline: Hiring Plans net percentage below +10%, Capex Plans below +20%, and "Economy Will Improve" below -20% together form the late-cycle configuration. NFIB is the cleanest small-business read available. Small business is 44% of GDP and 48% of employment, more rate-sensitive than large firms, less hedged against cost shocks, and without access to the investment-grade bond market. When small business capitulates, it is typically 3-6 months ahead of large-cap earnings compression.
+
+**Data note:** NFIB is not on FRED. Access via nfib.com monthly reports, or scrape the Small Business Economic Trends PDF released second Tuesday of each month.
 
 ---
 
@@ -117,7 +119,9 @@ Capex orders are commitments to future production capacity. When CEOs order equi
 | **Orders-Shipments Spread** | <-8 ppts | -8 to -3 ppts | -3 to +3 ppts | >+3 ppts |
 | **Bookings/Billings** | <0.90 | 0.90-0.98 | 0.98-1.05 | >1.05 |
 
-**The Capex Retreat:** Core capital goods orders at **-2.8% YoY** (Dec 2025)—negative for first time since 2020. Bookings/billings ratio at **0.94**—backlog shrinking. CEOs are not just pausing investment, they're **cutting**. This precedes earnings disappointments by 2-3 quarters. The forward earnings consensus is too high.
+**The Capex Lead Pattern:** Core capital goods orders (NEWORDER: nondefense ex-aircraft) is the purest forward capex signal. Negative YoY for 3+ consecutive months precedes earnings disappointments by 2-3 quarters because commitment decisions reflect demand forecasts made 6-12 months earlier. The bookings/billings ratio (orders/shipments) below 1.0 means backlog is shrinking, which forward-prices the next production cut.
+
+**Historical benchmark:** In the 2001 recession, core capex orders went negative YoY in Q2 2000, eight months before the recession began. In 2008, they turned negative in Q4 2007, coincident with the official start but well ahead of the earnings collapse. In 2015-16 (manufacturing-only recession), they went negative but services held, and no broad recession followed. The signal has to combine with services-side weakness (Section E) to confirm a broad downturn.
 
 ---
 
@@ -154,13 +158,15 @@ Inventories are the **buffer between production and sales**. When inventories bu
 | **Retail I/S Ratio** | >1.55 | 1.45-1.55 | 1.35-1.45 | <1.35 |
 | **ISM Orders - Inventories** | <-5 | -5 to 0 | 0 to +5 | >+5 |
 
-**The Inventory Overhang:** Total business I/S ratio at **1.41** (Nov 2025)—elevated above 1.38 threshold. Manufacturing I/S at **1.48**—above 1.45 threshold. ISM New Orders minus Inventories at **-2.3**—demand weaker than supply. The setup for **inventory liquidation** is building. When it starts, production cuts follow, and GDP takes a hit.
+**The Inventory Liquidation Cycle:** When I/S ratios exceed trend by more than 0.05, inventory correction becomes a material GDP risk. The mechanism is mechanical: retailers discount to move product, manufacturers cut production schedules, hours are reduced before layoffs begin, and the GDP inventory subtraction takes 1-2 quarters to fully work through. ISM New Orders minus Inventories going below zero is an early warning: demand is weakening relative to supply before inventories peak.
+
+**Historical benchmark:** The 2001 and 2008 recessions both featured pre-recession inventory buildups. I/S ratios peaked 3-6 months before formal recession onset. The 2015-16 manufacturing recession also featured elevated inventories but without broad recession, because services demand held up and allowed controlled liquidation. Watch the I/S ratio in combination with ISM New Orders: both negative for 2+ months is the clean signal.
 
 ---
 
 ### D. MANUFACTURING SURVEYS (The Forward-Looking Pulse)
 
-PMIs and regional Fed surveys capture **business intentions**—what managers plan to do before they do it. Leading by 2-4 months.
+PMIs and regional Fed surveys capture **business intentions**: what managers plan to do before they do it. Leading industrial production by 2-4 months.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -197,7 +203,11 @@ PMIs and regional Fed surveys capture **business intentions**—what managers pl
 | **Philly Fed Index** | <-20 | -20 to -5 | -5 to +10 | >+10 |
 | **Empire State Index** | <-15 | -15 to 0 | 0 to +10 | >+10 |
 
-**The 26-Month Contraction:** ISM Manufacturing at **49.3** (Dec 2025)—below 50 for **26 consecutive months**, longest contraction since 2008-09. New Orders at **48.2** (below 50). Employment at **46.8** (contracting). This isn't a soft patch. This is a **manufacturing recession** that hasn't transmitted to services yet.
+**The Manufacturing Lead Pattern:** ISM Manufacturing below 50 for 6+ consecutive months is a durable manufacturing contraction. Whether it transmits to a broad recession depends on the services side (Section E) and labor fragility (Pillar 1). Manufacturing recessions without broad transmission are common (1995-96, 2015-16). Manufacturing recessions that do transmit to services have preceded every broad US recession since 1970.
+
+**The sub-components:** ISM New Orders below 48 signals demand weakness, Employment below 48 signals hiring pullback ahead of payroll declines, Supplier Deliveries above 50 signals either real supply chain stress or inventory overhang working through. Watch the composite: New Orders minus Inventories < 0 for 2+ months is the cleanest sub-50 confirmation.
+
+**Regional Fed ensemble:** The Philadelphia, New York (Empire State), Dallas, Richmond, and Kansas City Fed manufacturing indexes collectively lead ISM by 1-3 weeks due to earlier release. Philadelphia Fed has the longest continuous history and strongest national correlation. The simple average of the five regional indexes is a useful ISM preview.
 
 ---
 

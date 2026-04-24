@@ -646,10 +646,10 @@ When quits collapse (6-9 months before), credit stress builds (3-6 months before
 - **Durables -1.8% YoY** (discretionary already contracting)
 
 **The Sequence:**
-1. ✅ **Savings depleted** (Complete—Q3 2025)
-2. 🔄 **Credit stress building** (Current—delinquencies rising)
-3. ⏳ **Spending cuts coming** (Next—durables leading, services to follow)
-4. ⏳ **Recession confirmed** (Final—when PCE goes negative)
+1. **Savings depleted** (Stage 1): saving rate falls below pre-pandemic norm, excess savings stock exhausted
+2. **Credit stress building** (Stage 2): delinquencies rising, balance growth outpacing wages, DSR elevated
+3. **Spending cuts** (Stage 3): durables contracting first, services rolling over
+4. **Recession confirmed** (Stage 4): real PCE YoY negative, retail sales contracting
 
 **Cross-Pillar Context:** Consumer fatigue (**CCI -0.39**) + labor fragility (**LFI +0.93**) + growth weakness (**GCI -0.4**) = **MRI +1.1** (HIGH RISK regime).
 

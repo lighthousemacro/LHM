@@ -547,62 +547,69 @@ Consumer Spending ↓ → Private Layoffs
 
 ---
 
-## Current State Assessment (January 2026)
+## Current State Assessment Template
 
-| **Indicator** | **Current** | **Threshold** | **Assessment** |
+*Last Updated: {{DATE}}*
+
+### Primary Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **Deficit/GDP** | {{DEFICIT_GDP}} | {{DEFICIT_GDP_PRIOR}} | {{DEFICIT_DELTA}} | >5% = Elevated | {{DEFICIT_ASSESSMENT}} |
+| **Primary Deficit/GDP** | {{PRIMARY_DEFICIT_GDP}} | {{PRIMARY_DEFICIT_GDP_PRIOR}} | {{PRIMARY_DEFICIT_DELTA}} | >3% = Structural imbalance | {{PRIMARY_DEFICIT_ASSESSMENT}} |
+| **Debt/GDP (Public)** | {{DEBT_GDP}} | {{DEBT_GDP_PRIOR}} | {{DEBT_DELTA}} | >100% = Elevated | {{DEBT_ASSESSMENT}} |
+| **Interest/Outlays** | {{INTEREST_OUTLAYS}} | {{INTEREST_OUTLAYS_PRIOR}} | {{INTEREST_OUTLAYS_DELTA}} | >15% = Crowding out | {{INTEREST_OUTLAYS_ASSESSMENT}} |
+| **Interest/GDP** | {{INTEREST_GDP}} | {{INTEREST_GDP_PRIOR}} | {{INTEREST_GDP_DELTA}} | >3.5% = Elevated burden | {{INTEREST_GDP_ASSESSMENT}} |
+| **Quarterly Net Issuance** | {{QTR_ISSUANCE}} | {{QTR_ISSUANCE_PRIOR}} | {{QTR_ISSUANCE_DELTA}} | >$600B = Heavy supply | {{QTR_ISSUANCE_ASSESSMENT}} |
+| **Term Premium (10Y ACM)** | {{TERM_PREMIUM}} | {{TERM_PREMIUM_PRIOR}} | {{TERM_PREMIUM_DELTA}} | >+50 bps = Repricing active | {{TERM_PREMIUM_ASSESSMENT}} |
+| **Real 10Y Yield (TIPS)** | {{REAL_10Y}} | {{REAL_10Y_PRIOR}} | {{REAL_10Y_DELTA}} | >+2% = Restrictive | {{REAL_10Y_ASSESSMENT}} |
+| **Foreign Holdings %** | {{FOREIGN_PCT}} | {{FOREIGN_PCT_PRIOR}} | {{FOREIGN_DELTA}} | <25% = Domestic stress | {{FOREIGN_ASSESSMENT}} |
+| **Receipts/GDP** | {{RECEIPTS_GDP}} | {{RECEIPTS_GDP_PRIOR}} | {{RECEIPTS_DELTA}} | <17% = Revenue gap | {{RECEIPTS_ASSESSMENT}} |
+| **Fiscal Impulse (ppts GDP)** | {{FISCAL_IMPULSE}} | {{FISCAL_IMPULSE_PRIOR}} | {{FISCAL_IMPULSE_DELTA}} | >+0.5 ppts = Expansionary | {{FISCAL_IMPULSE_ASSESSMENT}} |
+| **WAI (Weighted Avg Rate)** | {{WAI}} | {{WAI_PRIOR}} | {{WAI_DELTA}} | Rising = rollover compounding | {{WAI_ASSESSMENT}} |
+| **10Y-WAI Gap** | {{ROLLOVER_GAP}} | {{ROLLOVER_GAP_PRIOR}} | {{ROLLOVER_GAP_DELTA}} | >+150 bps = Rollover shock | {{ROLLOVER_GAP_ASSESSMENT}} |
+| **Avg Auction Tail (10Y, 3M avg)** | {{AUCTION_TAIL}} | {{AUCTION_TAIL_PRIOR}} | {{AUCTION_TAIL_DELTA}} | >+2 bps = Weak demand | {{AUCTION_TAIL_ASSESSMENT}} |
+| **X-Date Proximity** | {{XDATE}} | {{XDATE_PRIOR}} | {{XDATE_DELTA}} | <90 days = Crisis zone | {{XDATE_ASSESSMENT}} |
+
+### Composites
+
+| **Index** | **Current** | **Prior** | **Regime** | **Signal** |
+|---|---|---|---|---|
+| **GCI-Gov** | {{GCI_GOV}} | {{GCI_GOV_PRIOR}} | {{GCI_GOV_REGIME}} | {{GCI_GOV_SIGNAL}} |
+| **Fiscal-Flow Sub-Composite** | {{FLOW_COMP}} | {{FLOW_COMP_PRIOR}} | {{FLOW_COMP_REGIME}} | {{FLOW_COMP_SIGNAL}} |
+| **Debt-Stock Sub-Composite** | {{STOCK_COMP}} | {{STOCK_COMP_PRIOR}} | {{STOCK_COMP_REGIME}} | {{STOCK_COMP_SIGNAL}} |
+| **Market-Stress Sub-Composite** | {{MARKET_COMP}} | {{MARKET_COMP_PRIOR}} | {{MARKET_COMP_REGIME}} | {{MARKET_COMP_SIGNAL}} |
+| **Stress Stage (1-4)** | {{STRESS_STAGE}} | {{STRESS_STAGE_PRIOR}} | {{STRESS_STAGE_REGIME}} | {{STRESS_STAGE_SIGNAL}} |
+
+### Cross-Pillar Linkages
+
+| **Linkage** | **Current** | **Threshold** | **Status** |
 |---|---|---|---|
-| **Deficit/GDP** | 7.2% | >5% = elevated | 🔴 **Wartime levels** |
-| **Primary Deficit/GDP** | 3.0% | >3% = structural | 🟡 Imbalanced |
-| **Debt/GDP (Public)** | 122% | >100% = elevated | 🔴 **Highest since WWII** |
-| **Interest/Outlays** | 16% | >15% = crowding | 🔴 **Larger than defense** |
-| **Interest/GDP** | 4.1% | >3.5% = elevated | 🔴 **Compounding** |
-| **Quarterly Issuance** | $680B | >$600B = heavy | 🔴 **Supply pressure** |
-| **Term Premium (10Y)** | +25 bps | >+50 bps = repricing | 🟡 **Rising, more to go** |
-| **Foreign Holdings %** | 24% | <25% = stress | 🟡 **Declining** |
-| **Receipts/GDP** | 16.3% | <17% = gap | 🟡 Below average |
-| **X-Date Risk** | Q3 2025 | <90 days = crisis | 🟡 **Approaching** |
-| **GCI-Gov Estimate** | **+1.1** | >+1.0 = high stress | 🔴 **Fiscal Dominance** |
+| **GCI-Gov + PCI (fiscal-inflation)** | {{GOV_PCI}} | Both elevated = sticky inflation | {{GOV_PCI_STATUS}} |
+| **GCI-Gov + LCI (supply-plumbing)** | {{GOV_LCI}} | Heavy issuance + thin cushion = dislocation risk | {{GOV_LCI_STATUS}} |
+| **GCI-Gov + GCI (fiscal-growth)** | {{GOV_GCI}} | High stress + weak growth = austerity recession risk | {{GOV_GCI_STATUS}} |
+| **Term Premium → Credit (duration channel)** | {{TP_CREDIT}} | TP rise >+50 bps = IG/HY reprices | {{TP_CREDIT_STATUS}} |
 
 ### Narrative Synthesis
 
-We've entered **Fiscal Dominance**—the regime where fiscal policy overwhelms monetary policy.
+{{NARRATIVE}}
 
-**The Math:**
-- **$1.9T deficit** (FY2025) at **7.2% of GDP**—wartime levels in peacetime
-- **$1.1T interest expense**—now **larger than defense**, growing 20%+ annually
-- **$28.2T debt** (public) at **122% of GDP**—highest since WWII
-- **$2.1T annual issuance** required—market struggling to absorb
-- **$8.5T maturity wall** in next 12 months—rolling at higher rates
-
-**The Vicious Cycle:**
-1. Deficits require issuance
-2. Issuance overwhelms demand
-3. Term premium rises
-4. Yields rise
-5. Interest expense rises
-6. Deficit widens
-7. Return to Step 1
-
-**The Fed's Dilemma:**
-- Monetary policy **cannot offset** fiscal policy at this scale
-- Every 100 bps of Fed hikes adds **~$280B** to annual interest expense (with lag)
-- The Fed is tightening; the deficit is stimulating
-- **Fiscal policy wins**—it's bigger
-
-**The Honest Signal:**
-- Term premium at **+25 bps**, up from **-50 bps** (Jan 2024)
-- Historical equilibrium: **+100-150 bps**
-- At $2T annual deficits, should be **+150-200 bps**
-- 10Y yield going to **5.5%+** as term premium normalizes
-- This repricing is **inevitable**—only timing uncertain
+**Translation:** {{TRANSLATION}}
 
 **Cross-Pillar Confirmation:**
-- **Growth Pillar:** Fiscal impulse +0.8 ppts—deficit is supporting GDP (for now)
-- **Prices Pillar:** Deficit stimulus fighting Fed tightening—inflation stays sticky
-- **Plumbing Pillar:** Treasury supply draining reserves, stretching dealers
-- **Financial Pillar:** Rising Treasuries repricing all credit
+- **Growth Pillar:** {{GROWTH_CONFIRMATION}}
+- **Prices Pillar:** {{PRICES_CONFIRMATION}}
+- **Plumbing Pillar:** {{PLUMBING_CONFIRMATION}}
+- **Financial Pillar:** {{FINANCIAL_CONFIRMATION}}
+- **Labor Pillar:** {{LABOR_CONFIRMATION}}
 
-**MRI (Macro Risk Index):** Government contributes **+1.1 (GCI-Gov)** to composite—the **largest single contributor** to macro risk. Fiscal Dominance is the 2026 theme.
+**Stress Stage Diagnosis:**
+1. Deficit Expansion: {{STAGE1_STATUS}}
+2. Debt Accumulation: {{STAGE2_STATUS}}
+3. Issuance Stress: {{STAGE3_STATUS}}
+4. Term Premium Repricing: {{STAGE4_STATUS}}
+
+**MRI Contribution:** {{MRI_CONTRIBUTION}}
 
 ---
 

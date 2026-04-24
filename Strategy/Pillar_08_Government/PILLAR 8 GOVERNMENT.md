@@ -118,7 +118,11 @@ The debt stock is the **accumulated deficits** that must be serviced. Debt/GDP t
 | **Foreign Holdings %** | <20% | 20-28% | 28-35% | >35% |
 | **WAM** | <4.5 yrs | 4.5-5.5 yrs | 5.5-6.5 yrs | >6.5 yrs |
 
-**The Debt Wall:** Debt held by public at **$28.2T** (122% of GDP)—highest since WWII. Debt growth at +9.5% YoY. Foreign holdings at **24%** (down from 34% in 2015)—foreigners buying less, domestic buyers must absorb more. WAM at **5.8 years**—not crisis level, but $8.5T matures in next 12 months requiring refinancing at higher rates.
+**The Debt Stock Dynamics:** Debt/GDP above 100% is elevated by post-WWII US standards, though not unprecedented (US debt/GDP peaked ~120% at end of WWII, then declined through decades of nominal GDP growth). The modern concern is different: peacetime debt accumulation during a regime of rising real rates and slower nominal growth eliminates the mechanical "grow your way out" path.
+
+**Foreign holdings trajectory:** Foreign official holdings peaked around 34% of marketable Treasury debt in 2015 and have drifted lower. When foreign demand weakens, domestic buyers must absorb more supply, which either requires higher yields to attract demand or forced absorption by banks and money market funds (which then face reserve constraints, linking to Pillar 10 Plumbing).
+
+**WAM (Weighted Average Maturity):** The duration of outstanding Treasury debt has structural implications. Short WAM means frequent rollover at prevailing rates (rate-sensitive); long WAM locks in current rates but imposes duration risk on holders. The $8-9T of debt maturing in any given 12-month window is the near-term refinancing signal. Rollover at materially higher rates compounds the interest expense problem described in Section C.
 
 ---
 

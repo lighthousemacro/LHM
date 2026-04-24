@@ -379,7 +379,7 @@ Growth = f(Labor, Capital, Productivity). Labor input is the **largest** factor.
 | **Aggregate Hours YoY%** | <0% | 0-2% | >2% |
 | **Avg Weekly Hours** | <34.3 | 34.3-34.5 | >34.5 |
 
-**The Hours Signal:** Aggregate weekly hours peaked in Q3 2022 at **108.5 index level**, now at **107.2** (Dec 2025)—down **-1.2%**. That's **negative** labor input growth. GDP can't expand when total labor input is contracting unless productivity surges (it's not—productivity growth is +1.5%, decent but not miraculous).
+**The Hours Signal:** Aggregate weekly hours (AWHI) captures total labor input (employment × hours × participation). When aggregate hours turn negative YoY, labor input growth is subtracting from potential GDP rather than adding to it. GDP can't expand when labor input contracts unless productivity growth offsets (~1-2% historically; anything higher is rare). See Pillar 1 for full labor diagnostics.
 
 ---
 
@@ -511,7 +511,7 @@ Pricing Power ↓ → Goods Disinflation → Core Inflation Falls
 
 **Current Linkage:** Capacity utilization at **77.4%** (below 79% average) signals **slack building**. Goods deflation already present (-1.2% CPI). Services inflation (3.6%) next to fall as growth weakness spreads.
 
-**Cross-Pillar Signal:** **GCI** and **PCI** typically move together with 2-4 quarter lag. GCI leading lower (-0.4) suggests **PCI will follow** (currently +0.7). Disinflation ahead—but Fed won't cut until it's obvious (6-9 month lag).
+**Cross-Pillar Signal:** GCI and PCI typically move together with 2-4 quarter lag. When GCI weakens first, PCI typically follows with disinflation 1-2 quarters later. The Fed's reaction function tends to lag this transmission by 6-9 months due to the Fed's emphasis on realized inflation over leading indicators.
 
 ---
 
@@ -590,7 +590,7 @@ Growth is exhibiting **classic late-cycle bifurcation**: aggregate data (GDP +2.
 **The (Temporary) Strength:**
 - **Services resilient** (ISM Services 54.1, but decelerating)
 - **Consumer hanging on** (real retail +0.2%, but barely)
-- **Headline GDP propped up** by **inventory builds** (+$75B added +0.8 ppts to Q3 GDP—unsustainable)
+- **Headline GDP propped up** by **inventory builds**, an unsustainable contribution that reverses in 1-2 quarters
 
 **Translation:** Goods recession spreading to services. Classic pattern—manufacturing leads by 6-9 months, services follow. We're **mid-transmission**.
 

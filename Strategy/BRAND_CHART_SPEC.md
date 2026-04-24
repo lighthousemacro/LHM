@@ -183,6 +183,7 @@ The region above the chart data (roughly y=0.89 to y=1.0 in figure coordinates) 
 | Font size | 9 pt |
 | Weight | bold |
 | Position | flush with axis spine, offset 6 px outward |
+| **Right-edge pad** | **6% of plotted span** (via `set_xlim_to_data(..., right_frac=0.06)`) — prevents pill colliding with last data point |
 
 ### Callout boxes
 

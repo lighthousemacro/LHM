@@ -663,32 +663,20 @@ If the following occur, financial conditions are **tightening into crisis**:
 
 ## Conclusion: Financial Conditions as the Transmission Mechanism
 
-Financial conditions aren't just rates. They're the **plumbing that connects Fed policy to the real economy**—and right now, the plumbing is sending **contradictory signals**.
+Financial conditions aren't just rates. They're the **transmission layer** that connects Fed policy to the real economy. And the layer routinely sends contradictory signals across its components.
 
-Markets say "loose." Banks say "tight." Spreads say "complacent." Liquidity says "unbuffered." The composite says "neutral," but the components are **screaming different things**.
+**The Four-Stage Sequence:**
+1. Risk Pricing Inflection (Stage 1): credit spreads widen, equity vol rises
+2. Credit Channel Tightening (Stage 2): SLOOS tightens, loan growth decelerates
+3. Liquidity Stress (Stage 3): funding markets strain, auctions tail, dealers stretch
+4. Transmission Complete (Stage 4): defaults rise, earnings compress, real economy responds
 
-**Current State:**
-- **FCI +0.3** (Neutral Regime, but divergent)
-- **HY OAS 290 bps** (3rd percentile—extreme complacency)
-- **Real 10Y +2.25%** (restrictive)
-- **VIX 14.2** (below average—vol mispriced)
-- **SLOOS +38% tightening** (banks restricting)
-- **LCI -0.8** (unbuffered system)
-- **RRP $85B** (buffer exhausted)
+**The Divergence Problem:** When market-priced signals (spreads, VIX) show loose conditions while bank-channel signals (SLOOS, loan growth) show tight conditions, the reading is unstable. Historical pattern: divergences typically resolve through spread widening to match bank-channel signals, not through bank-channel easing to match spreads. Banks have better borrower-level information than the credit market, and their aggregated judgment often proves correct.
 
-**The Core Thesis:** Credit spreads are **100-150 bps too tight** for the underlying macro reality. When they reprice, they'll reprice **fast** because:
-1. Vol is also mispriced (VIX 14 vs appropriate 18-22)
-2. The liquidity buffer is gone (RRP exhausted)
-3. Banks are already tightening (SLOOS +38%)
+**The Coiled Spring Dynamic:** Tight credit spreads, low equity volatility, and tight IG spreads can compress simultaneously. When they decompress, the moves tend to be abrupt because: (a) short-vol strategies force-cover on vol spikes, (b) credit liquidity is thinner than it appears (systemic hedge fund deleveraging), (c) correlation spikes during stress events flatten portfolio diversification. A 100 bps HY spread widening typically correlates with VIX spiking 8-12 points and equity drawdowns of 5-10%.
 
-**The Catalyst:** Could be anything—a credit event, a labor data shock, a geopolitical surprise. The tinder is dry. The spark can come from anywhere.
+**The Policy Trap:** When the Fed faces simultaneous inflation pressure (PCI elevated) and financial stress (FCI deteriorating), it must choose between fighting inflation and preventing financial stress. In this configuration, the Fed typically prioritizes financial stability because stress is more immediately market-visible. Rate cuts follow. But this creates inflation risk if the stress abates without completing the cycle transmission. Late-cycle Fed decisions are binary; the optionality disappears.
 
-**Cross-Pillar Context:** Financial looseness (**FCI +0.3**) is masking labor fragility (**LFI +0.93**) and growth weakness (**GCI -0.4**). When financial conditions catch down to macro reality, **MRI spikes**. The current MRI of +1.1 could quickly become +1.6 (crisis regime).
+**Cross-Pillar Framework:** Financial conditions are the amplifier of labor, consumer, and business dynamics. Loose conditions delay transmission of cross-pillar stress. Tight conditions accelerate it. Watch for FCI-LFI cross-checks, FCI-CCI via wealth effects, and FCI-BCI via credit channels as the three primary transmission dynamics.
 
-**The Policy Trap:** The Fed can't ease aggressively with inflation at 3.2% (PCI +0.7). But if financial conditions tighten, they'll be forced to choose between **fighting inflation** and **preventing financial stress**. They can't do both. That's the 2026 dilemma.
-
-**That's our view from the Watch. Until next time, we'll be sure to keep the light on....**
-
-*Bob Sheehan, CFA, CMT*
-*Founder & CIO, Lighthouse Macro*
-*January 15, 2026*
+The 2026 theme: financial conditions divergence, credit spread repricing risk, and the policy trap. The spring is coiled. The spark can come from anywhere.

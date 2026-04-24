@@ -117,13 +117,17 @@ The yield curve is the **oldest recession predictor**. Inverted curves have prec
 | **10Y Yield Level** | <3.5% | 3.5-4.0% | **4.0-4.75%** | >4.75% |
 | **Term Premium** | <-50 bps | -50 to +25 bps | **+25 to +100 bps** | >+100 bps |
 
-**The Dis-Inversion Signal:** 10Y-2Y at **+32 bps** (Jan 2026)—dis-inverted after 26 months of inversion (July 2022 - September 2024). The dis-inversion is often the **trigger**, not the inversion itself. Historically, recession begins **6-12 months after** dis-inversion, not during inversion. Clock started September 2024. We're in the window.
+**The Dis-Inversion Signal:** The yield curve typically *inverts* 12-18 months before recession (Fed's preferred 10Y-3M curve leads recession by 6-12 months). But the *dis-inversion* (when the curve returns to positive slope after being inverted) is often the more proximate recession signal. Every post-1970 recession began 6-12 months after the 10Y-2Y dis-inverted from the prior inversion episode.
+
+**Why dis-inversion is the trigger:** Inversion reflects tight monetary policy and restrictive financial conditions. Dis-inversion reflects the market pricing Fed rate cuts in response to weakening economic conditions. The Fed typically cuts when fundamentals have already deteriorated; dis-inversion captures this moment.
+
+**Bull vs bear steepening:** The direction of steepening matters. Bull steepening (front-end rates falling faster than back-end) is the classic recession-response pattern. Bear steepening (back-end rates rising faster than front-end) reflects fiscal risk premium or inflation concerns and has different implications. Distinguish which type of steepening is occurring.
 
 ---
 
 ### C. FINANCIAL CONDITIONS INDICES (The Composite Signal)
 
-Financial Conditions Indices (FCIs) synthesize rates, spreads, equities, and dollar into a single gauge of monetary transmission.
+Financial Conditions Indices (FCIs) synthesize rates, spreads, equities, and dollar into a single gauge of monetary transmission. Multiple FCIs exist (Chicago Fed NFCI, Goldman FCI, Bloomberg FCI, OFR FSI, St. Louis Fed FSI). They frequently diverge; reading the divergences is often more informative than any single composite.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -153,7 +157,9 @@ Financial Conditions Indices (FCIs) synthesize rates, spreads, equities, and dol
 | **St. Louis FSI** | <-0.5 | -0.5 to +0.5 | **+0.5 to +1.5** | >+1.5 |
 | **OFR FSI** | <-0.5 | -0.5 to +1.0 | **+1.0 to +3.0** | >+3.0 |
 
-**The Conditions Puzzle:** Chicago Fed NFCI at **-0.42** (Jan 2026)—**looser than average** despite Fed Funds at 4.25-4.50%. Goldman FCI shows similar loosening. How? Equity wealth effect (+18% S&P 500 in 2025), tight credit spreads (HY 290 bps), and strong dollar offset rate hikes. **Financial conditions are doing the Fed's job... poorly.**
+**FCI-Policy Divergence Pattern:** NFCI below zero (looser than average) while Fed Funds is above 4% reflects a well-documented dynamic: equity wealth effect, tight credit spreads, and accommodative non-rate factors can offset rate hikes in the composite FCI. When this pattern sustains, the Fed's effective restrictiveness is lower than the policy rate suggests. The Fed has explicitly commented on this dynamic, arguing that FCI loosening during Fed tightening undermines monetary transmission.
+
+**Methodology differences across FCIs:** Chicago Fed NFCI weights risk indicators (credit, equity, money market) heavily. Goldman FCI weights rates and exchange rate more. Bloomberg FCI weights money market funding stress. When they diverge, the decomposition reveals which channel is driving conditions. Use multiple FCIs for robustness; don't rely on a single composite.
 
 ---
 

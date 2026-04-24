@@ -690,36 +690,28 @@ Fiscal Dominance is the regime where:
 
 ---
 
-## Conclusion: The $35 Trillion Elephant
+## Conclusion: The Fiscal Overhang
 
-Government isn't policy. It's **$6.5 trillion in annual spending**, **$35 trillion in debt**, and **$2 trillion in annual issuance**. It's the largest borrower on Earth, and it's crowding out everything else.
+Government isn't policy in the abstract. It's trillions in annual spending and tens of trillions in debt. It's the largest borrower on Earth, and it's crowding out everything else through the duration channel.
 
-**Current State:**
-- **GCI-Gov +1.1** (High Stress Regime)
-- **Deficit/GDP 7.2%** (wartime levels)
-- **Interest/Outlays 16%** (larger than defense)
-- **Debt/GDP 122%** (highest since WWII)
-- **Term premium +25 bps** (rising from -50 bps, more to go)
-- **$2.1T annual issuance** (market struggling to absorb)
+**The Four-Stage Sequence:**
+1. Deficit Expansion (Stage 1): structural deficit widens
+2. Debt Accumulation (Stage 2): debt/GDP rises, maturity wall builds
+3. Issuance Stress (Stage 3): auctions tail, dealer take-down rises
+4. Term Premium Repricing (Stage 4): long-end yields reset
 
 **The Fiscal Dominance Reality:**
-- The Fed can hike. Treasury will keep issuing.
-- The Fed can do QT. Treasury issuance will overwhelm.
-- The Fed can talk tough. The deficit will keep stimulating.
-- **Fiscal policy is the dominant force.** Monetary policy is the margin.
+- Monetary policy cannot offset fiscal policy at scale
+- Fed rate hikes raise debt service, compounding the fiscal problem
+- QT while Treasury issues heavily drains reserves (Pillar 10 linkage)
+- Fiscal policy is the dominant force; monetary policy operates at the margin
 
 **The Honest Signal:**
-- Term premium must rise to +150 bps to clear the market
-- 10Y yields going to 5.5%+ is the base case
-- This repricing will affect **all** long-duration assets
-- The repricing has started. It's not done.
+- Term premium must normalize to clear the duration market
+- Historical average is +100-150 bps; suppressed levels are unsustainable
+- Repricing affects all long-duration assets (Treasuries, IG, real estate, dividend equities)
+- The direction is determined; only the speed varies
 
-**Cross-Pillar Context:** Fiscal stress (**GCI-Gov +1.1**) is the **backdrop** for everything else. Labor fragility (**LFI +0.93**) may require rate cuts, but fiscal dynamics keep long rates elevated. Inflation (**PCI +0.7**) stays sticky because deficits keep demand elevated. Growth (**GCI -0.4**) is supported by fiscal impulse—until it isn't.
+**Cross-Pillar Framework:** Fiscal stress is the backdrop. Labor fragility may require rate cuts, but fiscal dynamics keep long rates elevated. Inflation stays sticky when deficits sustain demand. Growth is supported by fiscal impulse until consolidation arrives. The government pillar is where macro, monetary, and market structure converge.
 
-**The 2026 Theme:** Fiscal Dominance. The term premium. The repricing. It's happening now.
-
-**That's our view from the Watch. Until next time, we'll be sure to keep the light on....**
-
-*Bob Sheehan, CFA, CMT*
-*Founder & CIO, Lighthouse Macro*
-*January 15, 2026*
+The 2026 theme: fiscal dominance, term premium repricing, and the duration reset. The repricing has started. It's not done.

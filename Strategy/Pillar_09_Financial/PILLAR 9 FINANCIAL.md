@@ -196,13 +196,17 @@ Bank lending is the **physical transmission** of financial conditions to the rea
 | **SLOOS C&I Tightening (Net %)** | >+40% | +20% to +40% | **-10% to +20%** | <-10% |
 | **SLOOS CRE Tightening (Net %)** | >+50% | +30% to +50% | **0% to +30%** | <0% |
 
-**The Credit Contraction:** C&I loan growth at **+1.2% YoY** (Dec 2025)—barely positive, down from +8% in 2023. SLOOS shows **+38% net tightening** for C&I loans (Q4 2025)—banks are restricting credit despite healthy spreads. The transmission mechanism is **partially broken**. Banks are cautious; companies aren't borrowing; the credit channel is muted.
+**The SLOOS Leading Indicator:** Senior Loan Officer Opinion Survey results on C&I tightening lead actual C&I loan growth by 2-4 quarters. When SLOOS net tightening exceeds +20%, loan growth typically slows meaningfully within 2 quarters. Net tightening above +40% (credit crunch territory) has preceded every post-1990 recession.
+
+**The divergence signal:** SLOOS tightening while credit spreads stay compressed is characteristic of late-cycle mispricing. The bank-channel signal (SLOOS, loan growth) typically leads the market-pricing signal (credit spreads) because banks have access to proprietary borrower data that markets price with a lag. When SLOOS and spreads diverge, bank-channel signals tend to prove correct.
+
+**Small vs large firm bifurcation:** SLOOS separately tracks tightening for large vs small firm C&I lending. Small firms (<250 employees) lose credit access earlier and more severely because they lack public debt market alternatives. Net tightening on small-firm C&I above +40% combined with small-business bankruptcy filings rising is a specific signal of the small-business credit squeeze.
 
 ---
 
 ### E. EQUITY MARKET CONDITIONS (The Wealth Effect Channel)
 
-Equity markets transmit financial conditions through **wealth effects** (consumer spending), **cost of capital** (corporate investment), and **sentiment** (confidence).
+Equity markets transmit financial conditions through three channels: **wealth effects** (consumer spending via Pillar 5), **cost of capital** (corporate investment via Pillar 6), and **sentiment/confidence** (expectations across households and businesses). The S&P 500 is the most widely-tracked benchmark; breadth and sector rotation provide more granular signals than the headline index.
 
 | **Indicator** | **Symbol** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

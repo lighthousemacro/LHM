@@ -547,55 +547,84 @@ Credit Tightening → Limits Cut → Spending Constrained
 
 ---
 
-## Current State Assessment (January 2026)
+## Current State Assessment Template
 
-| **Indicator** | **Current** | **Threshold** | **Assessment** |
+*Last Updated: {{DATE}}*
+
+### Primary Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **HY OAS** | {{HY_OAS}} | {{HY_OAS_PRIOR}} | {{HY_OAS_DELTA}} | <300 bps = Complacent | {{HY_OAS_ASSESSMENT}} |
+| **HY OAS Percentile** | {{HY_PERCENTILE}} | {{HY_PERCENTILE_PRIOR}} | {{HY_PERCENTILE_DELTA}} | <10th = Extreme | {{HY_PERCENTILE_ASSESSMENT}} |
+| **IG OAS** | {{IG_OAS}} | {{IG_OAS_PRIOR}} | {{IG_OAS_DELTA}} | <100 bps = Tight | {{IG_OAS_ASSESSMENT}} |
+| **BBB OAS** | {{BBB_OAS}} | {{BBB_OAS_PRIOR}} | {{BBB_OAS_DELTA}} | >200 bps = Downgrade risk | {{BBB_OAS_ASSESSMENT}} |
+| **CCC-B Spread** | {{CCCB_SPREAD}} | {{CCCB_SPREAD_PRIOR}} | {{CCCB_SPREAD_DELTA}} | <400 bps = Distressed mispriced | {{CCCB_SPREAD_ASSESSMENT}} |
+| **10Y-2Y Spread** | {{CURVE_10Y2Y}} | {{CURVE_10Y2Y_PRIOR}} | {{CURVE_10Y2Y_DELTA}} | <0 bps = Inverted | {{CURVE_10Y2Y_ASSESSMENT}} |
+| **10Y-3M Spread** | {{CURVE_10Y3M}} | {{CURVE_10Y3M_PRIOR}} | {{CURVE_10Y3M_DELTA}} | <0 bps = Fed's preferred inversion | {{CURVE_10Y3M_ASSESSMENT}} |
+| **Chicago Fed NFCI** | {{NFCI}} | {{NFCI_PRIOR}} | {{NFCI_DELTA}} | >0 = Tighter than avg | {{NFCI_ASSESSMENT}} |
+| **Real Fed Funds** | {{REAL_FFR}} | {{REAL_FFR_PRIOR}} | {{REAL_FFR_DELTA}} | >+1.5% = Restrictive | {{REAL_FFR_ASSESSMENT}} |
+| **Real 10Y (TIPS)** | {{REAL_10Y}} | {{REAL_10Y_PRIOR}} | {{REAL_10Y_DELTA}} | >+2% = Headwind | {{REAL_10Y_ASSESSMENT}} |
+| **VIX** | {{VIX}} | {{VIX_PRIOR}} | {{VIX_DELTA}} | <13 = Compression | {{VIX_ASSESSMENT}} |
+| **MOVE Index** | {{MOVE}} | {{MOVE_PRIOR}} | {{MOVE_DELTA}} | >150 = Crisis | {{MOVE_ASSESSMENT}} |
+| **MOVE/VIX Ratio** | {{MOVE_VIX}} | {{MOVE_VIX_PRIOR}} | {{MOVE_VIX_DELTA}} | >6x = Bond vol leading | {{MOVE_VIX_ASSESSMENT}} |
+| **C&I Loan Growth YoY%** | {{CI_LOAN_YOY}} | {{CI_LOAN_YOY_PRIOR}} | {{CI_LOAN_YOY_DELTA}} | <+3% = Weak | {{CI_LOAN_YOY_ASSESSMENT}} |
+| **SLOOS Net Tightening (Large)** | {{SLOOS_LARGE}} | {{SLOOS_LARGE_PRIOR}} | {{SLOOS_LARGE_DELTA}} | >+20% = Tightening | {{SLOOS_LARGE_ASSESSMENT}} |
+| **SLOOS Net Tightening (Small)** | {{SLOOS_SMALL}} | {{SLOOS_SMALL_PRIOR}} | {{SLOOS_SMALL_DELTA}} | >+30% = Squeeze | {{SLOOS_SMALL_ASSESSMENT}} |
+| **Equity Risk Premium** | {{ERP}} | {{ERP_PRIOR}} | {{ERP_DELTA}} | <2.5% = Expensive vs bonds | {{ERP_ASSESSMENT}} |
+| **S&P 500 Forward P/E** | {{SPX_PE}} | {{SPX_PE_PRIOR}} | {{SPX_PE_DELTA}} | >21x = Euphoric | {{SPX_PE_ASSESSMENT}} |
+| **Breadth (% >200DMA)** | {{BREADTH}} | {{BREADTH_PRIOR}} | {{BREADTH_DELTA}} | <40% = Narrow leadership | {{BREADTH_ASSESSMENT}} |
+| **Reserve Balances** | {{RESERVES}} | {{RESERVES_PRIOR}} | {{RESERVES_DELTA}} | <$3.0T = Scarce | {{RESERVES_ASSESSMENT}} |
+| **RRP Balance** | {{RRP}} | {{RRP_PRIOR}} | {{RRP_DELTA}} | <$100B = Exhausted | {{RRP_ASSESSMENT}} |
+| **LCI** | {{LCI}} | {{LCI_PRIOR}} | {{LCI_DELTA}} | <-0.5 = Thin cushion | {{LCI_ASSESSMENT}} |
+
+### Composites
+
+| **Index** | **Current** | **Prior** | **Regime** | **Signal** |
+|---|---|---|---|---|
+| **FCI** | {{FCI}} | {{FCI_PRIOR}} | {{FCI_REGIME}} | {{FCI_SIGNAL}} |
+| **Market-Pricing Sub-Composite** | {{MARKET_COMP}} | {{MARKET_COMP_PRIOR}} | {{MARKET_COMP_REGIME}} | {{MARKET_COMP_SIGNAL}} |
+| **Banking Sub-Composite** | {{BANKING_COMP}} | {{BANKING_COMP_PRIOR}} | {{BANKING_COMP_REGIME}} | {{BANKING_COMP_SIGNAL}} |
+| **Plumbing Sub-Composite** | {{PLUMBING_COMP}} | {{PLUMBING_COMP_PRIOR}} | {{PLUMBING_COMP_REGIME}} | {{PLUMBING_COMP_SIGNAL}} |
+| **Real-Rate Sub-Composite** | {{REALRATE_COMP}} | {{REALRATE_COMP_PRIOR}} | {{REALRATE_COMP_REGIME}} | {{REALRATE_COMP_SIGNAL}} |
+| **Divergence Score** | {{DIVERGENCE}} | {{DIVERGENCE_PRIOR}} | {{DIVERGENCE_REGIME}} | {{DIVERGENCE_SIGNAL}} |
+| **Stress Stage (1-4)** | {{STRESS_STAGE}} | {{STRESS_STAGE_PRIOR}} | {{STRESS_STAGE_REGIME}} | {{STRESS_STAGE_SIGNAL}} |
+
+### Cross-Pillar Linkages
+
+| **Linkage** | **Current** | **Threshold** | **Status** |
 |---|---|---|---|
-| **HY OAS** | 290 bps | <300 = complacent | 🔴 **3rd percentile—mispriced** |
-| **IG OAS** | 95 bps | <100 = tight | 🟡 Very tight |
-| **10Y-2Y Spread** | +32 bps | <0 = inverted | 🟢 Dis-inverted |
-| **NFCI** | -0.42 | >0 = tight | 🟢 Loose |
-| **Real Fed Funds** | +1.15% | >+1.5% = restrictive | 🟡 Moderately restrictive |
-| **Real 10Y** | +2.25% | >+2% = restrictive | 🔴 **Headwind** |
-| **VIX** | 14.2 | >20 = elevated | 🟢 Complacent |
-| **C&I Loan Growth YoY%** | +1.2% | <+3% = weak | 🟡 Barely positive |
-| **SLOOS Tightening** | +38% | >+20% = tightening | 🔴 **Banks restricting** |
-| **Reserve Balances** | $3.25T | <$3.0T = scarce | 🟡 Adequate (declining) |
-| **RRP** | $85B | <$100B = exhausted | 🔴 **Buffer gone** |
-| **LCI** | -0.8 | <-0.5 = thin | 🔴 **Unbuffered system** |
-| **FCI Estimate** | **+0.3** | <-0.5 = tight | 🟡 **Neutral (divergent)** |
+| **FCI + LFI (financial-labor)** | {{FCI_LFI}} | FCI <-0.3 AND LFI >+0.8 = layoff acceleration | {{FCI_LFI_STATUS}} |
+| **FCI + GCI (financial-growth)** | {{FCI_GCI}} | Both negative = recession catalyst | {{FCI_GCI_STATUS}} |
+| **FCI + LCI (market vs plumbing)** | {{FCI_LCI}} | FCI loose + LCI thin = unstable | {{FCI_LCI_STATUS}} |
+| **CLG (Credit-Labor Gap)** | {{CLG}} | <-1.0 = Credit too tight for labor reality OR Credit too loose | {{CLG_STATUS}} |
 
 ### Narrative Synthesis
 
-Financial conditions are exhibiting **unprecedented divergence**—market-based measures say "loose," credit channel measures say "tight."
+{{NARRATIVE}}
 
-**The Loose Signals:**
-- **HY spreads at 290 bps** (3rd percentile since 1997)
-- **VIX at 14.2** (below long-run average)
-- **NFCI at -0.42** (looser than average)
-- **Equities at ATH** (+18% in 2025)
-- **Investment grade spreads at 95 bps** (very tight)
+**Translation:** {{TRANSLATION}}
 
-**The Tight Signals:**
-- **Real 10Y at +2.25%** (175 bps above pre-pandemic average)
-- **SLOOS at +38% tightening** (banks restricting)
-- **C&I loan growth at +1.2%** (barely positive)
-- **RRP exhausted at $85B** (buffer gone)
-- **LCI at -0.8** (unbuffered system)
-
-**Translation:** Markets are **pricing a soft landing perfectly**. Banks are **acting like a recession is coming**. One of them is wrong.
-
-Our view: **Markets are wrong.** With LFI at +0.93 (labor fragility), GCI at -0.4 (growth contraction), and LCI at -0.8 (no liquidity buffer), credit spreads should be **100-150 bps wider**. When the repricing comes, it will be **fast and violent** because vol is also mispriced (VIX 14 vs historical 19).
-
-**The Plumbing Reality:** RRP is **gone**. The $2.5T buffer that absorbed shocks in 2022-2023 is exhausted. Any stress now hits reserves directly. The system is **unbuffered**. This doesn't cause a crisis—but it **amplifies** any crisis that starts elsewhere. The margin for error is zero.
+**Divergence Analysis:**
+- Market-priced signals: {{MARKET_SIGNAL_SUMMARY}}
+- Bank-channel signals: {{BANK_SIGNAL_SUMMARY}}
+- Plumbing signals: {{PLUMBING_SIGNAL_SUMMARY}}
+- Real-rate signals: {{REALRATE_SIGNAL_SUMMARY}}
 
 **Cross-Pillar Confirmation:**
-- **Labor Pillar:** LFI +0.93—spreads should be wider for this fragility
-- **Growth Pillar:** GCI -0.4—conditions should be tighter for this weakness
-- **Prices Pillar:** Loose conditions are **blunting disinflation**
-- **Consumer Pillar:** Wealth effect supporting spending, but credit tightening at margin
+- **Labor Pillar:** {{LABOR_CONFIRMATION}}
+- **Growth Pillar:** {{GROWTH_CONFIRMATION}}
+- **Prices Pillar:** {{PRICES_CONFIRMATION}}
+- **Consumer Pillar:** {{CONSUMER_CONFIRMATION}}
+- **Plumbing Pillar:** {{PLUMBING_CONFIRMATION}}
 
-**MRI (Macro Risk Index):** Financial contributes **+0.3 (FCI)** to composite—neutral. But the **internal divergence** means this reading is unstable. A spread widening from 290 to 400 bps would shift FCI from +0.3 to -0.4, pushing MRI higher. Financial conditions are a **coiled spring**.
+**Stress Stage Diagnosis:**
+1. Risk Pricing Inflection: {{STAGE1_STATUS}}
+2. Credit Channel Tightening: {{STAGE2_STATUS}}
+3. Liquidity Stress: {{STAGE3_STATUS}}
+4. Transmission Complete: {{STAGE4_STATUS}}
+
+**MRI Contribution:** {{MRI_CONTRIBUTION}}
 
 ---
 

@@ -38,6 +38,29 @@ Optimization work (Phases 0-4) applies to layers 1 and 2. The descriptive atlas 
 
 ---
 
+## Known Caveats
+
+Flag these explicitly so a fresh Claude session (or future-Bob) doesn't walk into them blind.
+
+### 1. CLI component-count confusion across artifacts
+Three different numbers have appeared in CLI references:
+- **8 components** — the published March 10 Substack article and `CLAUDE_MASTER.md` Section 3. This is canonical.
+- **4 components** — `cli_final.py` robustness subset (Feb 2026) that became the default chart source by path dependency. This is the drift flagged 2026-04-22.
+- **10 components** — appeared in the March 2026 prompt that generated `MRI_WEIGHT_OPTIMIZATION.md`. Source unclear, possibly prompt bloat or a mid-March revision that didn't land in any persistent doc.
+
+Phase 0 must resolve this to a single truth: the 8-component published architecture. Every downstream doc should be auditable against it.
+
+### 2. `mri_weight_optimization.py` has never been executed
+The script was written in a Claude.ai web session that had no access to `Lighthouse_Master.db`. It was built blind against the context file and the CLI methodology description — structurally sound but unverified against real data. Expect at least one debugging pass on first run:
+- SPX series_id may not match any of the candidates (`SP500`, `SPX`, `GSPC`, `^GSPC`, `SPY`) — the script will print alternatives from `series_meta` if it fails
+- Pillar index sparsity could truncate the aligned dataset severely — check date ranges per pillar before trusting the quintile sort
+- Early-period quintile cuts may fail with `duplicates='drop'` if z-scores cluster; already handled but worth watching
+- SLSQP with 30 restarts on 12 weights is tractable but not instant — budget 5-15 minutes per optimization run
+
+Also: inline comments reference "CLI standard" methodology. The methodology itself (expanding z-scores, quintile sorts, walk-forward) is self-contained and valid. But if a reviewer follows the "CLI standard" reference back to `cli_final.py`, they hit the 4-component drift. Rebuild CLI first (Phase 0) so the audit trail terminates at the right file.
+
+---
+
 ## Phase 0: CLI Rebuild (Template Fix)
 
 **Status:** Blocker. Must happen before Phase 1 methodology citations hold.

@@ -654,33 +654,22 @@ If the following occur, business is **deteriorating beyond slowing into crisis**
 
 ## Conclusion: Business as the Transmission Mechanism
 
-Business activity isn't just corporate earnings—it's the **transmission mechanism** that connects labor markets to consumer spending to GDP growth.
+Business activity isn't just corporate earnings. It's the **transmission mechanism** that connects labor markets to consumer spending to GDP growth.
 
-When CEOs cut capex, they're telling you demand will be weak. When small business collapses while large cap holds, it's late-cycle bifurcation. When manufacturing contracts for 26 months while services expand, the divergence is about to close.
+When CEOs cut capex, they're telling you demand will be weak 6-12 months out. When small business collapses while large cap holds, it's late-cycle bifurcation. When manufacturing contracts for 6+ months while services expand, the divergence is closing one way or the other.
 
-**Current State:**
-- **BCI -0.4** (Slowing Regime)
-- **NFIB 89.4** (12-year low, small business collapsing)
-- **Core capex -2.8% YoY** (CEOs cutting investment)
-- **ISM Manufacturing 49.3** (26-month contraction)
-- **ISM Services 54.1** (still expanding, but divergence)
-- **I/S ratio 1.41** (elevated, liquidation risk)
-- **Margins compressing** (11.2% vs 12.8% peak)
+**The Four-Stage Sequence:**
+1. Sentiment Inflection (Stage 1): NFIB and regional Fed surveys roll over
+2. Capex Retreat (Stage 2): core orders negative, bookings/billings below 1.0
+3. Manufacturing Recession (Stage 3): ISM Mfg below 50, IP negative YoY
+4. Services Transmission (Stage 4): ISM Services breaks 50, earnings recession confirmed
 
-**The Bifurcation:**
-| Segment | Status | Signal |
-|---------|--------|--------|
-| Small business | Collapsing | NFIB 89, credit squeeze |
-| Large cap | Holding | S&P earnings +4% |
-| Manufacturing | Recession | ISM 49, 26 months |
-| Services | Expanding | ISM 54, but slowing |
-| Old economy | Weak | Equipment -1.2% |
-| New economy | Strong | IP/software +3.5% |
+**The Bifurcation Signatures:**
+| Segment | Leading | Lagging |
+|---|---|---|
+| Size | Small business | Large cap |
+| Sector | Manufacturing | Services |
+| Cyclicality | Equipment | IP (software, R&D) |
+| Credit access | Bank-dependent | Bond-market access |
 
-**The Transmission:** Business weakness → Capex cuts → Production cuts → Layoffs → Consumer income decline → Spending contraction → GDP falls. We're in the early stages of this transmission. The divergences are late-cycle. They close in recessions.
-
-**That's our view from the Watch. Until next time, we'll be sure to keep the light on....**
-
-*Bob Sheehan, CFA, CMT*
-*Founder & CIO, Lighthouse Macro*
-*January 15, 2026*
+When these divergences close, the recession is usually already underway. The LFI → BCI → CCI cascade is the cleanest three-pillar recession cross-check. Business is the middle link. Watch it carefully.

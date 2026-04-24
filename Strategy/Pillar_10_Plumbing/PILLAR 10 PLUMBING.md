@@ -988,50 +988,69 @@ The fact that a $2.2B crypto liquidation is newsworthy tells you how sensitive t
 
 ---
 
-## Current State Assessment (February 2026)
+## Current State Assessment Template
+
+*Last Updated: {{DATE}}*
 
 ### Primary Indicators
 
-| **Indicator** | **Current** | **Threshold** | **Assessment** |
-|---|---|---|---|
-| **Reserve Balances** | ~$3.2T | LCLOR ~$3.0-3.2T | At threshold, buffer minimal |
-| **RRP Balance** | **$0B** | <$200B = exhausted | **Exhausted for 14+ months** |
-| **EFFR-IORB Spread** | ~0 bps | >+5 bps = stress | Normal (no acute stress) |
-| **SOFR-IORB Spread** | ~0 bps | >+5 bps = stress | Normal |
-| **TGA Balance** | ~$888B | >$800B = elevated | **Elevated, draining reserves** |
-| **WALCL** | $6.587T | <$6.5T = concerning | Approaching concerning threshold |
-| **Net Liquidity Index** | ~$5.70T | Declining = negative | **Declining, -$300B from peak** |
-| **Dealer Net UST Position** | Elevated | Rising = constrained | Stretched |
-| **LCI (corrected)** | **-2.10** | <-0.5 = scarce | **Scarce regime** |
-
-**Note:** The corrected LCI of -2.10 reflects the non-linear buffer fix. The old linear formula showed +2.63 "Ample" at these same conditions, which was methodologically flawed. See "LCI Methodology Note" section above.
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **Reserve Balances** | {{RESERVES}} | {{RESERVES_PRIOR}} | {{RESERVES_DELTA}} | LCLOR ~$3.0-3.2T = scarcity threshold | {{RESERVES_ASSESSMENT}} |
+| **RRP Balance** | {{RRP}} | {{RRP_PRIOR}} | {{RRP_DELTA}} | <$200B = Exhausted | {{RRP_ASSESSMENT}} |
+| **EFFR-IORB Spread** | {{EFFR_IORB}} | {{EFFR_IORB_PRIOR}} | {{EFFR_IORB_DELTA}} | >+5 bps = Acute funding stress | {{EFFR_IORB_ASSESSMENT}} |
+| **SOFR-IORB Spread** | {{SOFR_IORB}} | {{SOFR_IORB_PRIOR}} | {{SOFR_IORB_DELTA}} | >+5 bps = Repo stress | {{SOFR_IORB_ASSESSMENT}} |
+| **TGA Balance** | {{TGA}} | {{TGA_PRIOR}} | {{TGA_DELTA}} | >$800B = Reserves drainer | {{TGA_ASSESSMENT}} |
+| **WALCL (Fed Total Assets)** | {{WALCL}} | {{WALCL_PRIOR}} | {{WALCL_DELTA}} | Declining = QT active | {{WALCL_ASSESSMENT}} |
+| **Net Liquidity Index** | {{NLI}} | {{NLI_PRIOR}} | {{NLI_DELTA}} | Declining = Risk-asset headwind | {{NLI_ASSESSMENT}} |
+| **Dealer Net UST Position** | {{DEALER_UST}} | {{DEALER_UST_PRIOR}} | {{DEALER_UST_DELTA}} | Rising = Balance sheet constrained | {{DEALER_UST_ASSESSMENT}} |
+| **GCF-TPR Spread** | {{GCF_TPR}} | {{GCF_TPR_PRIOR}} | {{GCF_TPR_DELTA}} | Widening = Repo stress | {{GCF_TPR_ASSESSMENT}} |
+| **EUR-USD Cross-Currency Basis** | {{EUR_USD_BASIS}} | {{EUR_USD_BASIS_PRIOR}} | {{EUR_USD_BASIS_DELTA}} | More negative = Dollar funding stress | {{EUR_USD_BASIS_ASSESSMENT}} |
+| **Treasury Bill % of Marketable** | {{BILLS_PCT}} | {{BILLS_PCT_PRIOR}} | {{BILLS_PCT_DELTA}} | >25% = Front-end funding stress | {{BILLS_PCT_ASSESSMENT}} |
 
 ### Crypto-Liquidity Indicators
 
-| **Indicator** | **Current** | **Threshold** | **Assessment** |
-|---|---|---|---|
-| **BTC-NDX Correlation** | +0.82 | >0.8 = macro-driven | **Pure macro asset currently** |
-| **BTC Funding Rate** | 0.00% | Neutral after negative | Leverage reset complete |
-| **Fear & Greed** | 13/100 | <15 = extreme fear | **Capitulation zone** |
-| **Stablecoin Flows** | Flat | Outflows = risk-off | Stabilizing |
-| **SOPR** | 0.99 | <1.0 = selling at loss | **Capitulation** |
-| **MVRV** | 1.38 | <1.5 = accumulation zone | Fair value |
-| **24h Liquidations** | $583M combined | >$500M = cascade | Elevated forced selling |
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **BTC-NDX Correlation (60d)** | {{BTC_NDX}} | {{BTC_NDX_PRIOR}} | {{BTC_NDX_DELTA}} | >0.8 = Macro-driven | {{BTC_NDX_ASSESSMENT}} |
+| **BTC Funding Rate** | {{BTC_FUNDING}} | {{BTC_FUNDING_PRIOR}} | {{BTC_FUNDING_DELTA}} | Negative = Capitulation; >+0.05% = Euphoria | {{BTC_FUNDING_ASSESSMENT}} |
+| **Crypto Fear & Greed** | {{CRYPTO_FG}} | {{CRYPTO_FG_PRIOR}} | {{CRYPTO_FG_DELTA}} | <20 = Extreme fear; >80 = Extreme greed | {{CRYPTO_FG_ASSESSMENT}} |
+| **Stablecoin Net Flow (7d)** | {{STABLE_FLOW}} | {{STABLE_FLOW_PRIOR}} | {{STABLE_FLOW_DELTA}} | Outflows = Risk-off | {{STABLE_FLOW_ASSESSMENT}} |
+| **SOPR (Spent Output Profit Ratio)** | {{SOPR}} | {{SOPR_PRIOR}} | {{SOPR_DELTA}} | <1.0 = Selling at loss | {{SOPR_ASSESSMENT}} |
+| **MVRV** | {{MVRV}} | {{MVRV_PRIOR}} | {{MVRV_DELTA}} | <1.5 = Accumulation; >3.0 = Euphoria | {{MVRV_ASSESSMENT}} |
+| **24h Liquidations** | {{LIQUIDATIONS}} | {{LIQUIDATIONS_PRIOR}} | {{LIQUIDATIONS_DELTA}} | >$500M = Cascade | {{LIQUIDATIONS_ASSESSMENT}} |
 
-### Composite
+### Composites
 
-| **Index** | **Estimated** | **Regime** | **Signal** |
+| **Index** | **Current** | **Prior** | **Regime** | **Signal** |
+|---|---|---|---|---|
+| **LCI** | {{LCI}} | {{LCI_PRIOR}} | {{LCI_REGIME}} | {{LCI_SIGNAL}} |
+| **Net Liquidity Index** | {{NLI_COMP}} | {{NLI_COMP_PRIOR}} | {{NLI_COMP_REGIME}} | {{NLI_COMP_SIGNAL}} |
+| **CLI (Crypto Liquidity Impulse)** | {{CLI}} | {{CLI_PRIOR}} | {{CLI_REGIME}} | {{CLI_SIGNAL}} |
+| **Stress Stage (1-4)** | {{STRESS_STAGE}} | {{STRESS_STAGE_PRIOR}} | {{STRESS_STAGE_REGIME}} | {{STRESS_STAGE_SIGNAL}} |
+
+### Cross-Pillar Linkages
+
+| **Linkage** | **Current** | **Threshold** | **Status** |
 |---|---|---|---|
-| **LCI** | -0.8 | Scarce | Stress emerging, intervention watch |
-| **Net Liquidity Index** | ~$5.70T | Contracting | Risk-off pressure |
+| **LCI + GCI-Gov (plumbing-fiscal)** | {{LCI_GOV}} | LCI <-0.5 + heavy issuance = dislocation risk | {{LCI_GOV_STATUS}} |
+| **LCI + FCI (plumbing-financial)** | {{LCI_FCI}} | Both stressed = forced intervention risk | {{LCI_FCI_STATUS}} |
+| **LCI + CLI (liquidity transmission)** | {{LCI_CLI}} | LCI direction transmits to crypto with 1-4 week lag | {{LCI_CLI_STATUS}} |
+| **NLI direction → BTC** | {{NLI_BTC}} | NLI declining = crypto headwind | {{NLI_BTC_STATUS}} |
 
 ### Narrative Synthesis
 
-The liquidity picture in January 2026 is straightforward: the system is operating without a safety net. RRP has been exhausted for over a year. QT ended December 1, 2025, but the TGA build ($200B+ increase to ~$888B) is offsetting the relief. Reserves are at or near the LCLOR threshold. Net Liquidity has contracted ~$300B from peak, transmitting directly into risk assets.
+{{NARRATIVE}}
 
-The January crypto drawdown (17-20%) is not an anomaly. It's the expected outcome of the framework. Crypto is the highest-beta expression of liquidity conditions, and conditions just tightened materially with no buffer to absorb the shock. On-chain metrics (SOPR at 0.99, Fear & Greed at 13, MVRV at 1.38) are painting capitulation. The leverage reset (funding rates at 0.00% after a negative period) suggests the forced selling is largely exhausted.
+**Translation:** {{TRANSLATION}}
 
-The question isn't whether the framework works. January proved it does. The question is what happens next: does TGA draw down (releasing reserves, positive impulse), does the Fed restart purchases (structural positive), or does the system continue to tighten (reserves breach LCLOR, funding stress emerges)?
+**Cross-Pillar Confirmation:**
+- **Government Pillar:** {{GOV_CONFIRMATION}}
+- **Financial Pillar:** {{FINANCIAL_CONFIRMATION}}
+- **Crypto / CLI:** {{CLI_CONFIRMATION}}
+- **Market Structure Pillar:** {{STRUCTURE_CONFIRMATION}}
+
+**MRI Contribution:** {{MRI_CONTRIBUTION}}
 
 ---
 

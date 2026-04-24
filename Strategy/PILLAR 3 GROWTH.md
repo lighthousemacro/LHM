@@ -229,7 +229,7 @@ This is one of the most powerful derived signals in the growth toolkit. It measu
 | **ISM New Orders** | <48 | 48-53 | >53 |
 | **Philly Fed Index** | <-10 | -10 to +10 | >+10 |
 
-**The 50-Line Death:** ISM below 50 = contraction. Below 48 for 3+ months = recession historically imminent. ISM Manufacturing has been **below 50 for 26 consecutive months** (through Dec 2025)—longest streak since 2008-09. Services holding at 54.1 (expansion), but **goods-services divergence = late-cycle fragmentation**.
+**The 50-Line Threshold:** ISM below 50 signals contraction. Below 48 for 3+ consecutive months has historically preceded recession. Extended contractions (>6 months) without services transmission (ISM Services holding above 52) often reflect manufacturing-only downturns (1995-96, 2015-16) rather than broad recessions. Goods-services divergence sustained for 6+ months is a late-cycle fragmentation pattern that typically resolves through either services following manufacturing down (recession) or manufacturing reaccelerating (soft landing).
 
 #### PMI Data Source Access (Non-FRED)
 
@@ -247,7 +247,7 @@ This is one of the most powerful derived signals in the growth toolkit. It measu
 
 ### E. RETAIL SALES & CONSUMER SPENDING (The Demand Engine)
 
-Retail sales is **monthly, nominal, and noisy**. But it's the **highest-frequency** gauge of consumer demand—the 68% of GDP that drives everything.
+Retail sales is **monthly, nominal, and noisy**. But it's the **highest-frequency** gauge of consumer demand, the 68% of GDP that drives everything.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -276,7 +276,7 @@ Retail sales is **monthly, nominal, and noisy**. But it's the **highest-frequenc
 | **Real Retail Sales YoY%** | <0% | 0-2% | >2% |
 | **Retail ex-Autos YoY%** | <2.5% | 2.5-5% | >5% |
 
-**The Real Volume Trap:** Nominal retail sales growing +3.5% YoY sounds healthy until you realize core CPI is +3.3%. **Real volume growth = +0.2%**—barely positive. Consumers are spending more to get less. That's not demand strength. That's inflation erosion.
+**The Real Volume Trap:** Nominal retail sales growth can appear healthy when it's tracking inflation rather than volume expansion. Real retail sales (deflated by CPI) separates nominal price effects from actual demand growth. When real retail sales YoY falls toward zero or negative while nominal retail sales appear positive, consumers are spending more dollars to get the same or less stuff. That's not demand strength. That's inflation erosion of purchasing power.
 
 ---
 

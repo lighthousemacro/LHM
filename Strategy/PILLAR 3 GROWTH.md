@@ -541,28 +541,15 @@ Forward P/E Compression → Equity Prices ↓
 
 **Current Linkage:** S&P 500 trading at **21x forward P/E** despite growth fragility (GCI -0.4). Historical pattern: when GCI < -0.5, forward 12M S&P returns average **-5%** vs. **+11%** when GCI > +0.5.
 
-**The Paradox:** Growth weakness is initially **bullish** (Fed cuts expected) but eventually **bearish** (earnings collapse faster than multiples expand). Inflection occurs when **IP turns negative for 3+ months**. We're there now.
+**The Paradox:** Growth weakness is initially **bullish** (Fed cuts expected) but eventually **bearish** (earnings collapse faster than multiples expand). Inflection occurs when IP turns negative for 3+ consecutive months.
 
 ---
 
-## Data Source Summary
-
-| **Category** | **Primary Source** | **Frequency** | **Release Lag** | **FRED Availability** |
-|---|---|---|---|---|
-| **GDP/GDI** | BEA | Quarterly | ~30 days | Same day (GDPC1, GDI, etc.) |
-| **Industrial Production** | Fed | Monthly | ~15 days | Same day (INDPRO, IPMAN, etc.) |
-| **Retail Sales** | Census Bureau | Monthly | ~14 days | Same day (RSXFS, etc.) |
-| **ISM PMIs** | ISM | Monthly | ~1-3 days | Web scrape (not in FRED) |
-| **Durable Goods** | Census Bureau | Monthly | ~26 days | Same day (DGORDER, NEWORDER) |
-| **Housing Starts** | Census Bureau | Monthly | ~17 days | Same day (HOUST, PERMIT) |
-| **Capacity Utilization** | Fed | Monthly | ~15 days | Same day (TCU) |
-| **Regional Fed Surveys** | Regional Feds | Monthly | ~15-20 days | Varies (Philly, Empire in FRED) |
-
-**Critical Timing:** IP and capacity utilization released **mid-month** (~15th), providing **real-time growth pulse** before quarter-end GDP. Use IP as **nowcast** for GDP.
+*Note: Data Source Summary, Current State Assessment, Invalidation Criteria, and Conclusion have been consolidated into their updated versions later in this document (see Sections Q, Integration with Three-Engine Framework (Corrected), Data Source Summary (Expanded), and the final Conclusion).*
 
 ---
 
-## Current State Assessment (January 2026)
+## ~~Current State Assessment (January 2026)~~ (Superseded: see Section Q)
 
 | **Indicator** | **Current** | **Threshold** | **Assessment** |
 |---|---|---|---|

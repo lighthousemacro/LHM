@@ -863,9 +863,9 @@ Auction Tails Widen → Term Premium Rises →
 Borrowing Costs ↑ → Deficit Widens (Reinforcing)
 ```
 
-**Current Linkage:** The fiscal dominance regime (2025-2026) puts enormous pressure on plumbing. Every Treasury auction requires dealer intermediation. When reserves are scarce and dealer balance sheets are constrained, the fiscal pipeline backs up. This is why the term premium (Pillar 8's "honest signal") and plumbing conditions are deeply intertwined.
+**Transmission mechanics:** Fiscal dominance puts persistent pressure on plumbing. Every Treasury auction requires dealer intermediation; when reserves are scarce and dealer balance sheets constrained, the fiscal pipeline backs up. The term premium (Pillar 8's "honest signal") and plumbing conditions are deeply intertwined: market-clearing yields rise when absorption is forced.
 
-**Cross-Pillar Signal:** When **LCI < -0.5** AND **GCI-Gov > +0.5** (elevated fiscal stress), the fiscal-plumbing nexus is under pressure. Treasury issuance into a constrained plumbing system forces higher term premiums, which increases interest expense, which widens deficits, which requires more issuance. This is the fiscal dominance doom loop.
+**Cross-Pillar Signal:** When **LCI < -0.5** AND **GCI-Gov > +0.5** (elevated fiscal stress), the fiscal-plumbing nexus is under pressure. Treasury issuance into a constrained plumbing system forces higher term premiums, which increases interest expense, which widens deficits, which requires more issuance. This is the fiscal dominance doom loop. Resolution requires either fiscal consolidation (politically difficult), Fed balance sheet expansion (potentially inflationary), or term premium absorbing the imbalance.
 
 ---
 
@@ -887,9 +887,9 @@ Scarce Liquidity → Risk Appetite Narrows → Breadth Deteriorates →
 MSI Declines → Structure Diverges from Price
 ```
 
-**Current Linkage:** When LCI is negative, market breadth typically deteriorates as liquidity concentrates in large-cap, high-quality names. This creates the classic Structure-Breadth Divergence (SBD) signal: index prices may hold up (cap-weighted by mega-caps) while breadth (equal-weighted, percent above moving averages) deteriorates.
+**Transmission mechanics:** When liquidity is scarce (LCI < -0.5), market breadth typically deteriorates as risk capital concentrates in large-cap, high-quality names. This creates the classic Structure-Breadth Divergence (SBD): cap-weighted index holds up (driven by mega-caps) while equal-weighted and breadth measures deteriorate. The mechanism is mechanical: less risk capital means less broad participation.
 
-**Cross-Pillar Signal:** When **LCI < -0.5** AND **SBD > +1.0**, the market is showing "generals without soldiers" driven by liquidity concentration. This is a high-confidence distribution signal.
+**Cross-Pillar Signal:** When **LCI < -0.5** AND **SBD > +1.0**, the market is showing "generals without soldiers" driven by liquidity concentration. This is a high-confidence distribution signal. Sustained configurations historically precede broad equity drawdowns by 1-3 quarters.
 
 ---
 

@@ -31,7 +31,14 @@ Federal spending is **23% of GDP**. Federal debt is **120%+ of GDP**. Interest e
 
 Get the fiscal call right, and you've triangulated the bond market. Miss it, and you're fighting the largest borrower on Earth.
 
-**Current State:** Fiscal policy is **structurally expansionary** despite elevated rates. FY2025 deficit tracking **$1.9T** (7.2% of GDP). Interest expense at **$1.1T** (16% of spending, larger than defense). Debt/GDP at **122%**. We're running wartime deficits in peacetime. The bond market vigilantes are waking up—term premium rising from -50 bps to +25 bps. More repricing ahead.
+**The Four Stages of Fiscal Stress:** Fiscal deterioration follows a recognizable sequence. Knowing which stage dominates shapes duration and curve positioning.
+
+1. **Deficit Expansion** (Flow): Structural deficit widens. Receipts lag outlays. Primary balance deteriorates.
+2. **Debt Accumulation** (Stock): Debt/GDP ratio rises. Maturity wall builds. Interest burden compounds.
+3. **Issuance Stress** (Supply): Quarterly refunding expands. Auctions tail. Dealer take-down rises. Bills share of marketable debt grows.
+4. **Term Premium Repricing** (Market Response): 10Y term premium rises from suppressed or negative territory. Curve steepens. Long-end yields reset.
+
+Stage 4 is where fiscal dynamics become market-visible. The repricing can be gradual (years of drift higher) or abrupt (days, as in gilt/mini-budget episodes). Either way, the direction is determined: in a fiscal dominance regime, term premium must normalize higher to clear the duration supply.
 
 ---
 
@@ -39,7 +46,7 @@ Get the fiscal call right, and you've triangulated the bond market. Miss it, and
 
 ### A. DEFICIT & SPENDING (The Flow)
 
-The deficit is the **annual flow** that adds to the debt stock. It determines Treasury issuance requirements and the fiscal impulse to GDP.
+The deficit is the **annual flow** that adds to the debt stock. It determines Treasury issuance requirements and the fiscal impulse to GDP. Track the primary deficit (excluding interest) separately: that's the structural policy stance, unaffected by debt service compounding.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

@@ -835,9 +835,9 @@ Trade Deficit Narrows → Net Exports Adds to GDP (if export-driven)
 Import-Driven Narrowing → Misleading GDP Add (demand weakness)
 ```
 
-**Current Linkage:** Trade deficit narrowing (-$78B from -$95B peak). But it's **import-driven** (demand destruction), not export-driven (competitiveness). Net exports will **add ~+0.2 ppts** to Q4 2025 GDP, but this is **low-quality growth**: shrinking pie, not expanding trade.
+**Transmission mechanics:** Net exports are a direct GDP component. A narrowing trade deficit can mathematically *add* to GDP while reflecting weakness (import-driven narrowing) rather than strength (export-driven narrowing). Always decompose the source: import contraction signals consumer/business weakness, export expansion signals competitiveness. The inventory cycle adds noise: front-loaded imports temporarily boost GDP, then create payback drag.
 
-**Cross-Pillar Signal:** When **TCI < -0.5** AND **GCI < -0.3**, trade weakness is **confirming** (not causing) the growth slowdown. Current: **TCI -0.5, GCI -0.4**. Trade and growth are synchronized. The inventory cycle (Section J) adds nuance: front-loaded imports boosted prior GDP, now the payback is starting.
+**Cross-Pillar Signal:** When **TCI < -0.5** AND **GCI < -0.3**, trade weakness confirms (not causes) the broader growth slowdown. The two pillars are typically synchronized at cyclical turning points because trade is partly demand-driven and partly competitiveness-driven, and both factors weaken together late-cycle.
 
 ---
 

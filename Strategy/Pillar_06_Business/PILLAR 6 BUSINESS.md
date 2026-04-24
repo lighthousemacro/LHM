@@ -497,9 +497,9 @@ Equipment Production ↓ → Industrial Production ↓ →
 GDP Growth ↓
 ```
 
-**Current Linkage:** Core capex orders at -2.8% YoY. Equipment investment at -1.2% QoQ Ann. Business fixed investment contributing ~0 ppts to GDP (Q3 2025). If capex continues to contract, GDP takes a direct hit.
+**Transmission mechanics:** Business fixed investment is 18% of GDP but accounts for roughly 30% of cyclical GDP variance because of its amplitude. A 5% decline in nonresidential fixed investment subtracts ~0.9 ppts from GDP directly. Indirect effects through equipment manufacturing employment and supplier chains amplify this by another 0.3-0.5 ppts. Capex contractions always produce measurable GDP drag within 1-2 quarters.
 
-**Cross-Pillar Signal:** When **BCI < -0.5** (business contraction) AND **GCI < -0.5** (growth contraction), recession confirmed. Current: **BCI -0.4, GCI -0.4**. Close to synchronized weakness.
+**Cross-Pillar Signal:** When **BCI < -0.5** (business contraction) AND **GCI < -0.5** (growth contraction), recession confirmed. Both composites negative sustained for 2+ quarters has preceded every post-1990 recession. The BCI + GCI cross-check complements the CCI + GCI cross-check in Pillar 5, with business typically leading consumer by 1-2 quarters.
 
 ---
 
@@ -513,9 +513,9 @@ Consumer Income ↓ → Consumer Spending ↓ →
 Business Revenue ↓ (Reinforcing)
 ```
 
-**Current Linkage:** S&P 500 margins compressing (11.2% vs 12.8% peak). Earnings revisions turning negative. Cost cutting underway (layoffs announced). This feeds into consumer income with 2-4 quarter lag.
+**Transmission mechanics:** Business profit margin pressure triggers cost-cutting responses that flow directly into consumer income. The sequence: margin compression identified → cost rationalization announced → layoff waves begin (typically 2-3 quarters after margin peak) → unemployment rises → consumer income grows more slowly → spending decelerates. The business-to-consumer transmission lag runs 2-4 quarters, which is why business indicators lead consumer indicators in the Diagnostic Dozen.
 
-**Cross-Pillar Signal:** Business margin compression (**BCI earnings component weak**) precedes consumer stress (**CCI < -0.5**) by 2-4 quarters. Business is the leading indicator, consumer is the lagging confirmation.
+**Cross-Pillar Signal:** Business margin compression (BCI earnings component weak) precedes consumer stress (CCI < -0.5) by 2-4 quarters. Business is the leading indicator, consumer is the lagging confirmation. When BCI and CCI both roll over within 2 quarters of each other, the labor-consumer-business loop is closing and recession is typically imminent.
 
 ---
 
@@ -529,9 +529,9 @@ Credit Tightening → Lending ↓ →
 Business Investment ↓ (Reinforcing)
 ```
 
-**Current Linkage:** SLOOS showing +28% net tightening for large firms, +42% for small firms. C&I loan growth at +1.8% (barely positive). HY spreads at 290 bps (tight but widening). Banks are cautious. The credit channel is tightening—this constrains business activity going forward.
+**Transmission mechanics:** Bank lending standards shift based on observed and anticipated credit losses. When SLOOS shows tightening, it reflects risk managers pulling forward their expectation of business defaults. This tightening mechanically constrains business activity by making new credit more expensive and harder to obtain. Small businesses feel the squeeze most because they lack access to public debt markets. The sequence: SLOOS tightening → C&I loan growth slows 2-4 quarters later → business investment follows 1-2 quarters after → earnings weaken 1-2 quarters after that.
 
-**Cross-Pillar Signal:** Business credit tightening (**SLOOS elevated**) combined with HY spread widening (**>350 bps**) creates negative feedback loop. Monitor for acceleration.
+**Cross-Pillar Signal:** Business credit tightening (SLOOS net tightening above +20%) combined with HY spread widening (>350 bps) creates a negative feedback loop. Monitor for simultaneous acceleration. The Financial Pillar FCI composite captures this dynamic directly. When FCI and BCI both deteriorate together, bank-to-business transmission is active and recession risk accelerates.
 
 ---
 

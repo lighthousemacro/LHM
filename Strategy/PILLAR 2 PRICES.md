@@ -352,7 +352,7 @@ PCI = 0.30 × z(Core_PCE_3M_Ann)
 
 **Component Weighting Rationale:**
 - **Core PCE 3M Ann (30%):** Fed's primary target, most weight
-- **Services ex-Shelter (20%):** "Supercore"—wage-driven persistence
+- **Services ex-Shelter (20%):** "Supercore", wage-driven persistence
 - **Shelter CPI (15%):** Largest single component, lagging but mechanical
 - **Sticky CPI (15%):** Persistence gauge
 - **5Y5Y Forward (10%):** Expectations anchor

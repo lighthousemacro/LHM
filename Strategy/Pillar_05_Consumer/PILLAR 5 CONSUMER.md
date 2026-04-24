@@ -120,7 +120,9 @@ Spending requires income or savings drawdown. When both are depleted, spending s
 | **Real Wage Growth** | <-1% | -1% to +1% | +1% to +2% | >+2% |
 | **Excess Savings Stock** | <$0 | $0-$500B | $500B-$1T | >$1T |
 
-**The Savings Depletion:** Personal saving rate at **4.5%** (Dec 2025)—down from pandemic peak of 32% (April 2020) and pre-pandemic normal of 7.5%. The **excess savings** accumulated during COVID (~$2.1T) are now **fully depleted** as of Q3 2025 (SF Fed estimate). Consumers are no longer spending down savings—they're living paycheck-to-paycheck again. Next stop: credit.
+**The Savings Depletion Sequence:** The personal saving rate is the fuel tank gauge. Pre-pandemic norm sat at ~7.5%. Pandemic stimulus drove it to 32% (April 2020), generating approximately $2.1T of excess savings. That buffer was drawn down through 2022-2025. Once the buffer is exhausted, consumers face a binary choice: cut spending or turn to credit. The saving rate below 5% combined with credit card balance growth above wage growth is the defining "Stage 2" configuration: buffer gone, credit substituting.
+
+**Validation:** San Francisco Fed's excess savings tracker (Abdelrahman & Oliveira) is the authoritative source. Their methodology compares actual saving to the pre-pandemic trend line. When the stock hits zero, the "cushion" phase ends and consumer spending must be supported by either real income growth or additional leverage.
 
 ---
 

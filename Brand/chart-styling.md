@@ -525,3 +525,98 @@ All LHM price analysis uses a three-panel stacked layout:
 1. **Price** (main chart)
 2. **LHM Relative Strength** (indicator pane)
 3. **LHM Z-RoC Momentum** (indicator pane)
+
+### Panel 1: Price
+
+Hollow candle style. Black or dark gray. Up candles hollow, down candles filled.
+
+Timeframe defaults to daily. Typical lookback is 7.5 years, long enough for cycle context without noise compression. Weekly bars only for structural views on assets with 15+ years of history (25+ preferred). Monthly is rare and only after month close.
+
+**Moving averages**, in order of frequency:
+
+| Period | Color | Hex | Frequency |
+|---|---|---|---|
+| 50-day | Dusk | `#FF6723` | Always |
+| 200-day | Ocean | `#2389BB` | Always |
+| 200-week | Sky | `#23BBFF` | Structural views, occasional |
+| 50-week | Venus | `#FF2389` | Rare |
+
+**Support, resistance, trendlines, curves:** Sea `#00BB89`.
+
+Line extension rule: draw just past the actual touch zones, not all the way across the chart. Think of an umbrella, not a flagpole. For 5+ year charts, extend roughly 21 bars on either side of the touch zone. Right edge may extend ~1 month into the future for active levels.
+
+### Panel 2: LHM Relative Strength
+
+Source: `/Users/bob/LHM/Scripts/tradingview/lhm_relative_strength.pine`
+
+Plots `(symbol / benchmark) * 100`. Benchmark auto-detects by asset type, with manual override available.
+
+**Benchmark auto-detect logic:**
+
+| Asset Type | Default Benchmark |
+|---|---|
+| Equities (SPY / IVV / VOO) | RSP (equal-weighted) |
+| Equities (QQQ / QQQM) | QQEW (equal-weighted) |
+| Equities (other) | RUA (Russell 3000) |
+| Crypto | CRYPTOCAP:TOTAL |
+| Forex | TVC:DXY |
+| Commodity futures (GC, SI, CL, NG, HG, PL, PA) | SPGSCI |
+| Rate futures (ZB, ZN, ZF, ZT, TN) | TVC:US10Y |
+
+**Three-state line color:**
+
+| State | Color | Hex | Condition |
+|---|---|---|---|
+| Bullish regime | Starboard | `#238923` | RS > SMA(63) > SMA(252) |
+| Bearish regime | Port | `#892323` | RS < SMA(63) < SMA(252) |
+| Neutral / transitional | Black | — | Anything else |
+
+Linewidth 3 for the RS series. SMAs rendered in muted gray at linewidth 1 so the regime color carries the visual weight.
+
+### Panel 3: LHM Z-RoC Momentum
+
+Source: `/Users/bob/LHM/Scripts/tradingview/lhm_z_roc.pine`
+
+Dual-timeframe momentum composite. Tactical window is 21-day rate of change. Regime window is 63-day. Both z-scored over a 252-day lookback, robust (median / MAD) as default. Final series is a 5-period EMA of the tactical z.
+
+**Three-state line color** (mirrors the RS panel philosophy):
+
+| State | Color | Hex | Condition |
+|---|---|---|---|
+| Long bias | Sky | `#23BBFF` | Tactical z bullish (>0, >signal, rising) AND regime z > 0 |
+| Short bias | Venus | `#FF2389` | Tactical z bearish (<0, <signal, falling) AND regime z < 0 |
+| Neutral | Ocean | `#2389BB` | Everything else (mixed, transitional, against-regime) |
+
+**Reference lines:**
+
+| Line | Color | Style |
+|---|---|---|
+| Zero | Doldrums `#898989` | Dotted |
+| ±2σ | Doldrums `#898989` | Solid, weight 2 |
+| ±1σ | Doldrums 70% | Dashed, toggleable |
+
+**Divergence dots are OFF by default.** The detection logic is built in, but the `Show Divergence Dots?` input defaults to `false`. We turn them on deliberately when we want them, not by default. When enabled:
+
+- Bullish divergence: Sea `#00BB89` upward triangle
+- Bearish divergence: Venus `#FF2389` downward triangle
+- Pivot detection window: 5 bars on either side
+
+### Alerts
+
+Both indicators expose alerts for standard events:
+
+- RS: SMA crosses (fast above/below slow), RS crosses of fast SMA
+- Z-RoC: signal crosses (Z above/below EMA), ±2σ breaches, divergence triggers
+
+Use sparingly. Chart noise is cheaper than alert fatigue.
+
+### Updating Pine Script Indicators
+
+1. Edit the `.pine` file in `/Users/bob/LHM/Scripts/tradingview/`
+2. Copy the full file contents
+3. In TradingView, open the Pine Editor, paste, and save with the existing indicator name
+4. Commit the `.pine` file change to the LHM repo
+
+TradingView does not auto-sync from git. The repo is where we version; TradingView is where we view.
+
+---

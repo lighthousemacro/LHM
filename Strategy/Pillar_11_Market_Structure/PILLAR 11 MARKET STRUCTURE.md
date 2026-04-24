@@ -379,25 +379,109 @@ Pillar 11 directly enforces the Absolute Trading Rules:
 
 ---
 
-## Current State Template
+## Current State Assessment Template
 
-**NOTE:** Fill in current values from live data sources. Do not reference any pre-filled values as current.
+*Last Updated: {{DATE}}*
 
-| **Indicator** | **Current** | **Signal** | **Implication** |
+### Trend Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **Price vs 200d MA (%)** | {{PRICE_200D}} | {{PRICE_200D_PRIOR}} | {{PRICE_200D_DELTA}} | <0% = Below trend | {{PRICE_200D_ASSESSMENT}} |
+| **Price vs 50d MA (%)** | {{PRICE_50D}} | {{PRICE_50D_PRIOR}} | {{PRICE_50D_DELTA}} | <0% = Below intermediate | {{PRICE_50D_ASSESSMENT}} |
+| **Price vs 20d MA (%)** | {{PRICE_20D}} | {{PRICE_20D_PRIOR}} | {{PRICE_20D_DELTA}} | <0% = Short-term weak | {{PRICE_20D_ASSESSMENT}} |
+| **50d vs 200d Spread** | {{MA50_200}} | {{MA50_200_PRIOR}} | {{MA50_200_DELTA}} | <0 = Death cross | {{MA50_200_ASSESSMENT}} |
+| **200d MA Slope** | {{MA200_SLOPE}} | {{MA200_SLOPE_PRIOR}} | {{MA200_SLOPE_DELTA}} | Rising/Falling | {{MA200_SLOPE_ASSESSMENT}} |
+
+### Momentum Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **Z-RoC (63d)** | {{ZROC_63}} | {{ZROC_63_PRIOR}} | {{ZROC_63_DELTA}} | <-1.0 = Broken | {{ZROC_63_ASSESSMENT}} |
+| **Z-RoC (21d)** | {{ZROC_21}} | {{ZROC_21_PRIOR}} | {{ZROC_21_DELTA}} | Regime-dependent | {{ZROC_21_ASSESSMENT}} |
+| **RSI (14d)** | {{RSI_14}} | {{RSI_14_PRIOR}} | {{RSI_14_DELTA}} | >70 strong / <30 weak | {{RSI_14_ASSESSMENT}} |
+| **Trend Extension** | {{EXTENSION}} | {{EXTENSION_PRIOR}} | {{EXTENSION_DELTA}} | >+15% = Overextended | {{EXTENSION_ASSESSMENT}} |
+
+### Breadth Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **% Stocks > 20d MA** | {{BREADTH_20}} | {{BREADTH_20_PRIOR}} | {{BREADTH_20_DELTA}} | <25% = Washed; >80% = Crowded | {{BREADTH_20_ASSESSMENT}} |
+| **% Stocks > 50d MA** | {{BREADTH_50}} | {{BREADTH_50_PRIOR}} | {{BREADTH_50_DELTA}} | <35% = Washed; >85% = Crowded | {{BREADTH_50_ASSESSMENT}} |
+| **% Stocks > 200d MA** | {{BREADTH_200}} | {{BREADTH_200_PRIOR}} | {{BREADTH_200_DELTA}} | <40% = Weak trend | {{BREADTH_200_ASSESSMENT}} |
+| **Net NH-NL (52w, 20d avg)** | {{NHNL_20}} | {{NHNL_20_PRIOR}} | {{NHNL_20_DELTA}} | <-300 = Collapse; >+300 = Thrust | {{NHNL_20_ASSESSMENT}} |
+| **McClellan Summation** | {{MCCLELLAN_SUM}} | {{MCCLELLAN_SUM_PRIOR}} | {{MCCLELLAN_SUM_DELTA}} | <-1000 = Oversold | {{MCCLELLAN_SUM_ASSESSMENT}} |
+
+### Volatility and Options Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **VIX** | {{VIX}} | {{VIX_PRIOR}} | {{VIX_DELTA}} | <13 compressed / >22 elevated | {{VIX_ASSESSMENT}} |
+| **VIX Term Structure (VIX/VIX3M)** | {{VIX_TS}} | {{VIX_TS_PRIOR}} | {{VIX_TS_DELTA}} | >1.0 = Backwardation | {{VIX_TS_ASSESSMENT}} |
+| **SKEW Index** | {{SKEW}} | {{SKEW_PRIOR}} | {{SKEW_DELTA}} | >140 = Tail risk priced | {{SKEW_ASSESSMENT}} |
+| **Put/Call Ratio (10d)** | {{PC_RATIO}} | {{PC_RATIO_PRIOR}} | {{PC_RATIO_DELTA}} | >1.1 = Fear | {{PC_RATIO_ASSESSMENT}} |
+
+### Cross-Asset Structure
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **Russell 2000 vs SPX (YoY)** | {{R2K_SPX}} | {{R2K_SPX_PRIOR}} | {{R2K_SPX_DELTA}} | <-10 ppts = Risk-off rotation | {{R2K_SPX_ASSESSMENT}} |
+| **Equal Weight vs Cap Weight (RSP/SPY)** | {{RSP_SPY}} | {{RSP_SPY_PRIOR}} | {{RSP_SPY_DELTA}} | Falling = Narrow leadership | {{RSP_SPY_ASSESSMENT}} |
+| **Cyclical-Defensive Spread** | {{CYC_DEF}} | {{CYC_DEF_PRIOR}} | {{CYC_DEF_DELTA}} | <-5 ppts = Defensive rotation | {{CYC_DEF_ASSESSMENT}} |
+| **Stock-Bond Correlation (60d)** | {{SB_CORR}} | {{SB_CORR_PRIOR}} | {{SB_CORR_DELTA}} | Positive = Inflation regime | {{SB_CORR_ASSESSMENT}} |
+
+### Composites
+
+| **Index** | **Current** | **Prior** | **Regime** | **Signal** |
+|---|---|---|---|---|
+| **MSI** | {{MSI}} | {{MSI_PRIOR}} | {{MSI_REGIME}} | {{MSI_SIGNAL}} |
+| **SBD (Structure-Breadth Divergence)** | {{SBD}} | {{SBD_PRIOR}} | {{SBD_REGIME}} | {{SBD_SIGNAL}} |
+| **SSD (Sentiment-Structure Divergence)** | {{SSD}} | {{SSD_PRIOR}} | {{SSD_REGIME}} | {{SSD_SIGNAL}} |
+| **Small-Cap MSI** | {{MSI_SMALL}} | {{MSI_SMALL_PRIOR}} | {{MSI_SMALL_REGIME}} | {{MSI_SMALL_SIGNAL}} |
+| **International MSI** | {{MSI_INTL}} | {{MSI_INTL_PRIOR}} | {{MSI_INTL_REGIME}} | {{MSI_INTL_SIGNAL}} |
+| **Cross-Asset Risk Diffusion** | {{XA_DIFFUSION}} | {{XA_DIFFUSION_PRIOR}} | {{XA_DIFFUSION_REGIME}} | {{XA_DIFFUSION_SIGNAL}} |
+
+### Cross-Pillar Linkages
+
+| **Linkage** | **Current** | **Threshold** | **Status** |
 |---|---|---|---|
-| Price vs 200d | [VALUE] | [Above/Below] | [INTERPRETATION] |
-| Price vs 50d | [VALUE] | [Above/Below] | [INTERPRETATION] |
-| Price vs 20d | [VALUE] | [Above/Below] | [INTERPRETATION] |
-| 50d vs 200d | [VALUE] | [Golden/Death/Neutral] | [INTERPRETATION] |
-| 20d vs 50d | [VALUE] | [Above/Below/Crossing] | [INTERPRETATION] |
-| 20d Slope | [VALUE] | [Rising/Flat/Falling] | [INTERPRETATION] |
-| Z-RoC (63d) | [VALUE] | [Strong/Weak/Broken] | [INTERPRETATION] |
-| % > 20d MA | [VALUE] | [Washed/Neutral/Crowded] | [INTERPRETATION] |
-| % > 50d MA | [VALUE] | [Washed/Healthy/Crowded] | [INTERPRETATION] |
-| % > 200d MA | [VALUE] | [Weak/Neutral/Strong] | [INTERPRETATION] |
-| Net NH-NL (20d) | [VALUE] | [Thrust/Normal/Collapse] | [INTERPRETATION] |
-| MSI | [VALUE] | [Regime] | [INTERPRETATION] |
-| SBD | [VALUE] | [Distribution/Aligned/Accumulation] | [INTERPRETATION] |
+| **MSI + LFI (Structure-Labor)** | {{MSI_LFI}} | MSI <-1 AND LFI >+0.8 = Layoff acceleration risk | {{MSI_LFI_STATUS}} |
+| **MSI + HY OAS (Structure-Credit)** | {{MSI_HY}} | MSI <-1 AND HY >400 bps = Wealth-credit compound stress | {{MSI_HY_STATUS}} |
+| **SSD (Sentiment × Structure)** | {{SSD_CROSS}} | >+1.5 = Capitulation; <-1.5 = Blow-off | {{SSD_CROSS_STATUS}} |
+| **MSI + LCI (Structure-Plumbing)** | {{MSI_LCI}} | MSI <-1 AND LCI <-0.5 = Forced intervention risk | {{MSI_LCI_STATUS}} |
+
+### Absolute Rules Status
+
+| **Rule** | **Current Trigger?** | **Implication** |
+|---|---|---|
+| **#1: Price > 200d?** | {{RULE1}} | {{RULE1_IMPLICATION}} |
+| **#2: Death Cross active?** | {{RULE2}} | {{RULE2_IMPLICATION}} |
+| **#3: Relative strength green?** | {{RULE3}} | {{RULE3_IMPLICATION}} |
+| **#4: Z-RoC > -1.0?** | {{RULE4}} | {{RULE4_IMPLICATION}} |
+| **#5: Not extended >15%?** | {{RULE5}} | {{RULE5_IMPLICATION}} |
+
+### Narrative Synthesis
+
+{{NARRATIVE}}
+
+**Translation:** {{TRANSLATION}}
+
+**Structure Regime Diagnosis:**
+- Trend: {{TREND_STATUS}}
+- Momentum: {{MOMENTUM_STATUS}}
+- Breadth: {{BREADTH_STATUS}}
+- Relative Strength: {{RS_STATUS}}
+- Cross-Asset: {{XA_STATUS}}
+- Sentiment Integration: {{SENTIMENT_STATUS}}
+
+**Cross-Pillar Confirmation:**
+- **Financial Pillar:** {{FINANCIAL_CONFIRMATION}}
+- **Sentiment Pillar:** {{SENTIMENT_CONFIRMATION}}
+- **Labor Pillar:** {{LABOR_CONFIRMATION}}
+- **Growth Pillar:** {{GROWTH_CONFIRMATION}}
+- **Plumbing Pillar:** {{PLUMBING_CONFIRMATION}}
+
+**MRI Contribution:** {{MRI_CONTRIBUTION}}
 
 ---
 

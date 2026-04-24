@@ -277,7 +277,16 @@ Credit card data and alternative sources provide **weekly or even daily** spendi
 | **TSA vs 2019** | <95% | 95-105% | >105% |
 | **Restaurant Reservations vs 2019** | <90% | 90-105% | >105% |
 
-**The Spending Slowdown:** Bank of America card data shows spending **+2.8% YoY** (Dec 2025)—still positive but decelerating from +5.2% (Dec 2024). Discretionary categories (electronics, apparel, restaurants) growing slower than staples (groceries, utilities). Consumers are **trading down**, not trading up. The composition shift tells the story.
+**The Composition Signal:** Aggregate card spending growth can stay positive while composition shifts tell a different story. The key divergence is discretionary vs staples growth: when electronics, apparel, and restaurants decelerate faster than groceries and utilities, consumers are trading down. The spread between discretionary-category YoY and staples-category YoY is a leaner signal than the headline card spending number, because it strips out price-level noise and reveals the behavioral shift.
+
+**Category hierarchy in a consumer slowdown:**
+1. **Discretionary big-ticket** (electronics, appliances): First to contract
+2. **Restaurants and travel**: Second wave, 1-2 quarters later
+3. **Apparel**: Contracts with discretionary
+4. **Groceries (nominal)**: Remains positive even in recession (necessity)
+5. **Utilities and rent**: Positive growth throughout (non-discretionary)
+
+Watch the "trade-down winners": Walmart, Costco, dollar stores outperform during consumer stress, while Target, department stores, and mid-tier restaurants underperform.
 
 ---
 

@@ -881,9 +881,9 @@ Foreign Treasury Buying → Rates Suppressed → Dollar Supported
 Trade Deficit Narrows → Less Foreign Inflow → Rates Rise → Dollar Adjusts
 ```
 
-**Current Linkage:** The trade deficit is **funding** the Treasury market. $1T+ annual deficits require $1T+ foreign capital inflows. As the trade deficit narrows (tariff-driven), foreign capital inflows slow, putting **upward pressure on Treasury yields**. TIC data shows Japan and China slowly reducing Treasury holdings, offset by European and sovereign wealth fund buying.
+**Transmission mechanics:** The US trade deficit is the mirror image of foreign capital inflows (capital account surplus). When trade deficit is large, foreign exporters accumulate dollars and recycle them into Treasuries, suppressing rates and supporting the dollar. As the trade deficit narrows (tariff-driven or otherwise), the automatic Treasury demand from trade partners diminishes, putting upward pressure on rates over time.
 
-**Cross-Pillar Signal:** Trade deficit narrowing is **rate-bearish** in the long run. Less trade deficit = less automatic Treasury demand from trade partners. When **Current Account / GDP improves by >1 ppt** AND **TIC Net Flows < $0**, Treasury supply/demand dynamics worsen. This feeds into the Plumbing Pillar's fiscal dominance thesis and the Government Pillar's term premium analysis.
+**Cross-Pillar Signal:** Trade deficit narrowing is structurally rate-bearish over multi-year horizons. When **Current Account / GDP improves by >1 ppt** AND **TIC Net Flows turn negative**, Treasury supply/demand dynamics worsen materially. This feeds Plumbing Pillar fiscal dominance dynamics and Government Pillar term premium analysis.
 
 ---
 

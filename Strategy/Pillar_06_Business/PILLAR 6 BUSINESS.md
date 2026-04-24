@@ -554,51 +554,69 @@ Business Investment ↓ (Reinforcing)
 
 ---
 
-## Current State Assessment (January 2026)
+## Current State Assessment Template
 
-| **Indicator** | **Current** | **Threshold** | **Assessment** |
+*Last Updated: {{DATE}}*
+
+### Primary Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **NFIB Optimism** | {{NFIB_OPTIMISM}} | {{NFIB_OPTIMISM_PRIOR}} | {{NFIB_DELTA}} | <90 = Recessionary | {{NFIB_ASSESSMENT}} |
+| **NFIB Hiring Plans (Net %)** | {{NFIB_HIRING}} | {{NFIB_HIRING_PRIOR}} | {{NFIB_HIRING_DELTA}} | <+10% = Hiring freeze | {{NFIB_HIRING_ASSESSMENT}} |
+| **NFIB Capex Plans (Net %)** | {{NFIB_CAPEX}} | {{NFIB_CAPEX_PRIOR}} | {{NFIB_CAPEX_DELTA}} | <+20% = Investment pullback | {{NFIB_CAPEX_ASSESSMENT}} |
+| **Core Capex Orders YoY%** | {{CAPEX_YOY}} | {{CAPEX_YOY_PRIOR}} | {{CAPEX_DELTA}} | <-3% = Contracting | {{CAPEX_ASSESSMENT}} |
+| **ISM Manufacturing** | {{ISM_MFG}} | {{ISM_MFG_PRIOR}} | {{ISM_MFG_DELTA}} | <48 = Deep contraction | {{ISM_MFG_ASSESSMENT}} |
+| **ISM Mfg New Orders** | {{ISM_NEW_ORDERS}} | {{ISM_NEW_ORDERS_PRIOR}} | {{ISM_NEW_ORDERS_DELTA}} | <48 = Demand weak | {{ISM_NEW_ORDERS_ASSESSMENT}} |
+| **ISM Services** | {{ISM_SVC}} | {{ISM_SVC_PRIOR}} | {{ISM_SVC_DELTA}} | <52 = Weak | {{ISM_SVC_ASSESSMENT}} |
+| **Services-Mfg Spread** | {{SVC_MFG_SPREAD}} | {{SVC_MFG_SPREAD_PRIOR}} | {{SVC_MFG_SPREAD_DELTA}} | >+5 = Late-cycle bifurcation | {{SVC_MFG_SPREAD_ASSESSMENT}} |
+| **Inventory/Sales Ratio** | {{IS_RATIO}} | {{IS_RATIO_PRIOR}} | {{IS_RATIO_DELTA}} | >1.40 = Overstocked | {{IS_RATIO_ASSESSMENT}} |
+| **S&P 500 Earnings YoY%** | {{SPX_EARNINGS}} | {{SPX_EARNINGS_PRIOR}} | {{SPX_EARNINGS_DELTA}} | <0% = Earnings recession | {{SPX_EARNINGS_ASSESSMENT}} |
+| **S&P 500 Net Margin** | {{SPX_MARGIN}} | {{SPX_MARGIN_PRIOR}} | {{SPX_MARGIN_DELTA}} | <11% = Compression | {{SPX_MARGIN_ASSESSMENT}} |
+| **Earnings Revision Ratio** | {{REV_RATIO}} | {{REV_RATIO_PRIOR}} | {{REV_RATIO_DELTA}} | <0.45 = Negative momentum | {{REV_RATIO_ASSESSMENT}} |
+| **SLOOS Net Tightening (Large)** | {{SLOOS_LARGE}} | {{SLOOS_LARGE_PRIOR}} | {{SLOOS_LARGE_DELTA}} | >+20% = Tight | {{SLOOS_LARGE_ASSESSMENT}} |
+| **SLOOS Net Tightening (Small)** | {{SLOOS_SMALL}} | {{SLOOS_SMALL_PRIOR}} | {{SLOOS_SMALL_DELTA}} | >+30% = Small biz squeeze | {{SLOOS_SMALL_ASSESSMENT}} |
+| **HY Spreads (OAS)** | {{HY_OAS}} | {{HY_OAS_PRIOR}} | {{HY_OAS_DELTA}} | >350 bps = Stress | {{HY_OAS_ASSESSMENT}} |
+| **Capacity Utilization** | {{CAPU}} | {{CAPU_PRIOR}} | {{CAPU_DELTA}} | <79% = Slack building | {{CAPU_ASSESSMENT}} |
+
+### Composites
+
+| **Index** | **Current** | **Prior** | **Regime** | **Signal** |
+|---|---|---|---|---|
+| **BCI** | {{BCI}} | {{BCI_PRIOR}} | {{BCI_REGIME}} | {{BCI_SIGNAL}} |
+| **Small-Business BCI** | {{BCI_SMALL}} | {{BCI_SMALL_PRIOR}} | {{BCI_SMALL_REGIME}} | {{BCI_SMALL_SIGNAL}} |
+| **Manufacturing BCI** | {{BCI_MFG}} | {{BCI_MFG_PRIOR}} | {{BCI_MFG_REGIME}} | {{BCI_MFG_SIGNAL}} |
+| **Stress Stage (1-4)** | {{STRESS_STAGE}} | {{STRESS_STAGE_PRIOR}} | {{STRESS_STAGE_REGIME}} | {{STRESS_STAGE_SIGNAL}} |
+
+### Cross-Pillar Linkages
+
+| **Linkage** | **Current** | **Threshold** | **Status** |
 |---|---|---|---|
-| **NFIB Optimism** | 89.4 | <90 = recessionary | 🔴 **Lowest since 2012** |
-| **NFIB Hiring Plans** | +8% | <+10% = hiring freeze | 🟡 Barely positive |
-| **Core Capex Orders YoY%** | -2.8% | <-3% = contraction | 🔴 **Contracting** |
-| **ISM Manufacturing** | 49.3 | <48 = deep contraction | 🟡 **26-month contraction** |
-| **ISM Services** | 54.1 | <52 = weak | 🟢 Still expanding |
-| **Inventory/Sales Ratio** | 1.41 | >1.40 = overstocked | 🟡 **Elevated** |
-| **S&P 500 Earnings YoY%** | +4% | <0% = earnings recession | 🟢 Positive but slowing |
-| **S&P 500 Net Margin** | 11.2% | <11% = compression | 🟡 Compressing |
-| **SLOOS Net Tightening (Large)** | +28% | >+20% = tight | 🟡 **Banks cautious** |
-| **SLOOS Net Tightening (Small)** | +42% | >+30% = squeeze | 🔴 **Small biz squeeze** |
-| **HY Spreads** | 290 bps | >350 bps = stress | 🟢 Tight (but widening) |
-| **BCI Estimate** | **-0.4** | <-0.5 = contraction | 🟡 **Business Slowing** |
+| **BCI + LFI (Business-Labor)** | {{BCI_LFI}} | BCI <-0.3 AND LFI >+0.8 = 65%+ recession probability | {{BCI_LFI_STATUS}} |
+| **BCI + CCI (Business-Consumer)** | {{BCI_CCI}} | Both roll over within 2 qtrs = loop closing | {{BCI_CCI_STATUS}} |
+| **BCI + GCI (Business-Growth sync)** | {{BCI_GCI}} | Both <-0.5 = Recession confirmed | {{BCI_GCI_STATUS}} |
+| **BCI + FCI (Credit transmission)** | {{BCI_FCI}} | Both deteriorating = bank-to-business active | {{BCI_FCI_STATUS}} |
 
 ### Narrative Synthesis
 
-Business activity is in **late-cycle bifurcation**—small vs large, manufacturing vs services, old economy vs new economy.
+{{NARRATIVE}}
 
-**The Collapse:**
-- **Small business sentiment at 12-year low** (NFIB 89.4)—rate-sensitive, credit-constrained, cutting back
-- **Manufacturing in 26-month recession** (ISM 49.3)—longest since 2008-09
-- **Capex orders contracting** (-2.8% YoY)—CEOs cutting future investment
-- **Inventories elevated** (I/S 1.41)—liquidation risk building
-
-**The (Temporary) Strength:**
-- **Large cap earnings positive** (+4% YoY)—big tech, AI holding up
-- **Services still expanding** (ISM 54.1)—80% of economy, but divergence closing
-- **HY spreads still tight** (290 bps)—credit markets not pricing recession
-
-**The Bifurcation:**
-- **Small business dying, large cap surviving**—NFIB 89 vs S&P earnings +4%
-- **Manufacturing collapsing, services holding**—ISM 49 vs 54
-- **Old economy weak, new economy (AI/tech) strong**—equipment -1.2% vs IP +3.5%
-
-**Translation:** The divergences are late-cycle signatures. Manufacturing leads services by 6-9 months. Small business leads large cap by 3-6 months. When the divergences close, it's called a recession.
+**Translation:** {{TRANSLATION}}
 
 **Cross-Pillar Confirmation:**
-- **Labor Pillar:** LFI +0.93 (fragility)—business weakness will flow to payrolls
-- **Consumer Pillar:** CCI -0.3 (fatigued)—business income cuts will hit consumer
-- **Growth Pillar:** GCI -0.4 (contraction risk)—capex drag on GDP
+- **Labor Pillar:** {{LABOR_CONFIRMATION}}
+- **Consumer Pillar:** {{CONSUMER_CONFIRMATION}}
+- **Growth Pillar:** {{GROWTH_CONFIRMATION}}
+- **Financial Pillar:** {{FINANCIAL_CONFIRMATION}}
+- **Prices Pillar:** {{PRICES_CONFIRMATION}}
 
-**MRI (Macro Risk Index):** Business contributes **-0.4 (BCI)** to composite. The business slowdown is the **transmission mechanism**—it's how labor fragility becomes consumer weakness becomes GDP contraction.
+**Stress Stage Diagnosis:**
+1. Sentiment Inflection: {{STAGE1_STATUS}}
+2. Capex Retreat: {{STAGE2_STATUS}}
+3. Manufacturing Recession: {{STAGE3_STATUS}}
+4. Services Transmission: {{STAGE4_STATUS}}
+
+**MRI Contribution:** {{MRI_CONTRIBUTION}}
 
 ---
 

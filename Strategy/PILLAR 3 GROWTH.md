@@ -1474,16 +1474,8 @@ Use early-month data (ISM) to set expectations, mid-month data (IP, retail) to r
 
 Growth isn't GDP. It's the velocity of economic metabolism, the speed at which the system converts inputs (labor, capital, innovation) into outputs (goods, services, income).
 
-The current configuration is classic late-cycle: headline stability masking sectoral fragmentation. GDP at +2.5% looks fine until you realize:
-- Manufacturing has been contracting for 26 months (longest since 2008-09)
-- Business investment is falling (CEOs betting on weaker demand)
-- Labor input is shrinking (hours down -1.2%)
-- Housing is in recession (starts down -8.2%)
-
-Only services (54.1 ISM) and consumers (+0.2% real retail) are holding the line. But they're lagging indicators. When goods collapse, services follow 6-9 months later. We're mid-transmission.
-
 **The Framework Says:**
-- Track GCI for regime classification (-0.4 = Contraction Risk)
+- Track GCI for regime classification
 - Watch the second derivative (momentum breaks precede level breaks)
 - Use real-time trackers (GDPNow, WEI, freight) to nowcast before official releases
 - Monitor goods-services divergence for transmission timing
@@ -1494,14 +1486,17 @@ Only services (54.1 ISM) and consumers (+0.2% real retail) are holding the line.
 - ISM below 50 for 6+ months indicates manufacturing recession
 - Housing starts lead GDP by 12-18 months at cycle peaks
 - Core capex orders lead business investment by 3-6 months
-- Yield curve inversion leads recession by 6-24 months (current lag: 30+ months)
+- Yield curve inversion leads recession by 6-24 months (timing variable)
 
-**Cross-Pillar Context:** Growth weakness (GCI -0.4) + labor fragility (LFI +0.93) + thin liquidity (LCI -0.8) = MRI +1.1 (HIGH RISK regime). The market is priced for soft landing. The growth data is screaming late-cycle stress. One of them is wrong.
+**The Late-Cycle Pattern:** Headline GDP stability masking sectoral fragmentation is the characteristic late-cycle configuration. Manufacturing contracting while services expand is the bifurcation signature. When the goods-services gap closes (via services following goods down), recession is typically confirmed. When it closes in the other direction (manufacturing reaccelerating), soft landing holds.
 
-That's our view from the Watch. Until next time, we'll be sure to keep the light on....
+**Cross-Pillar Framework:** Growth is the macro multiplier. Weakness combined with labor fragility (LFI > +0.8) and thin liquidity (LCI < -0.5) signals broad recession risk. Growth strength with labor slack (LFI < 0) and ample liquidity signals sustainable expansion. The MRI synthesizes these dynamics into a single regime score.
+
+See the Current State Assessment Template (Section Q) for current GCI readings and cross-pillar composites.
 
 *Bob Sheehan, CFA, CMT*
 *Founder & CIO, Lighthouse Macro*
+*Last Updated: February 2026*
 
 ---
 

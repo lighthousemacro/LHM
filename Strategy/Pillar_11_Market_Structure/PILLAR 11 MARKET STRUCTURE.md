@@ -872,6 +872,56 @@ If the following occur simultaneously, the bearish structure thesis is invalidat
 
 ---
 
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Structure Triggers (Confirmation / Recovery)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Price vs 200d MA** | Above with rising slope | {{WATCH_PRICE_200D}} | Primary trend bullish |
+| **50d vs 200d** | Golden cross (50d crosses above 200d) | {{WATCH_GOLDEN_CROSS}} | Regime confirmation |
+| **Z-RoC (63d)** | Above +1.0 sustained | {{WATCH_ZROC_HIGH}} | Strong momentum |
+| **% Stocks > 50d MA** | Breadth thrust (30% to 70% in 10 days) | {{WATCH_THRUST}} | Powerful trend initiation |
+| **% Stocks > 200d MA** | Above 70% sustained | {{WATCH_BREADTH_200_HIGH}} | Broad participation |
+| **Net NH-NL (52w, 20d avg)** | Above +300 for 5+ days | {{WATCH_NHNL_THRUST}} | Leadership expansion |
+| **MSI Composite** | Above +0.5 | {{WATCH_MSI_HIGH}} | Bullish regime |
+| **SBD** | Below 0 (price-breadth aligned) | {{WATCH_SBD_LOW}} | Healthy participation |
+| **SSD** | Above +1.5 (capitulation low) | {{WATCH_SSD_HIGH}} | Highest-conviction long setup |
+| **VIX** | Below 16 sustained | {{WATCH_VIX_LOW}} | Vol regime supportive |
+| **Russell 2000 vs SPX** | R2K outperforming | {{WATCH_R2K_LEAD}} | Risk appetite returning |
+
+### Bearish Structure Triggers (Distribution / Breakdown)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Price vs 200d MA** | Below with recent break (<20 days) | {{WATCH_PRICE_BREAK}} | Trend broken |
+| **50d vs 200d** | Death cross (50d crosses below 200d) | {{WATCH_DEATH_CROSS}} | Bearish regime shift |
+| **Z-RoC (63d)** | Below -1.0 | {{WATCH_ZROC_LOW}} | Momentum broken |
+| **% Stocks > 50d MA** | Below 35% (washed) | {{WATCH_BREADTH_50_LOW}} | Oversold or distribution |
+| **% Stocks > 200d MA** | Below 40% | {{WATCH_BREADTH_200_LOW}} | Trend health deteriorating |
+| **Net NH-NL (52w, 20d avg)** | Below -300 for 3+ days | {{WATCH_NHNL_LOW}} | Breadth collapse |
+| **MSI Composite** | Below -1.0 | {{WATCH_MSI_LOW}} | Structure broken |
+| **SBD** | Above +1.0 | {{WATCH_SBD_HIGH}} | Distribution warning |
+| **SSD** | Below -1.5 (blow-off top) | {{WATCH_SSD_LOW}} | Highest-conviction short setup |
+| **VIX** | Above 25 with backwardation | {{WATCH_VIX_HIGH}} | Vol regime broken |
+| **MOVE/VIX Ratio** | Above 6x | {{WATCH_MOVE_VIX}} | Bond vol leading equity stress |
+| **Russell 2000 vs SPX (3M)** | R2K underperforming by >5% | {{WATCH_R2K_UNDER}} | Risk-off rotation |
+| **Cyclical-Defensive Spread** | <-5 ppts | {{WATCH_CYC_DEF}} | Defensive rotation active |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Mag 7 Concentration Inflection** | Top 5 stocks falling below 22% of SPX | Concentration regime breaking |
+| **Stock-Bond Correlation Regime Change** | 60d correlation crossing zero | Inflation vs deflation regime shift |
+| **CTA Trend Signal Reversal** | Major systematic positioning flip | Mechanical flow regime shift |
+| **Passive Flow Disruption** | Sustained ETF outflows | Structural buyer absence |
+| **Vol Compression / Expansion Regime Break** | VIX sustained outside 12-22 range | Vol regime shift |
+| **Implied Correlation Collapse** | Below 0.25 sustained | High dispersion / stock-picking regime |
+| **Major Sector Leadership Change** | Tech ceding leadership; energy or defensives leading | Cycle phase transition |
+
+---
+
 ## Additional Indicators & External Research
 
 ### The 200-Day Moving Average Rule

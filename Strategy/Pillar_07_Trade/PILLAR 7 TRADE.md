@@ -1050,46 +1050,436 @@ If the following occur, trade is **deteriorating beyond headwind into crisis**:
 
 ---
 
+## Policy & Regulatory Environment
+
+Trade is shaped by tariff policy, trade agreements, sanctions, export controls, and currency policy. This section catalogs the policy channels that flow into trade outcomes.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Tariff Policy** | Effective tariff rate, retaliation, exemptions | Goods inflation, business margins, export demand | 1-2 quarters |
+| **Section 122 Authority** | Statutory limits on tariff use | Tariff escalation/de-escalation pace | Variable |
+| **Section 232 (Steel/Aluminum)** | National security tariffs | Sector-specific protections | 1-2 quarters |
+| **Section 301 (Unfair Trade)** | China-specific tariff authority | Bilateral trade restructuring | Multi-year |
+| **IEEPA Tariff Authority** | Emergency tariff power | Rapid response capability | Days-weeks |
+| **Trade Agreements (USMCA, etc.)** | Free trade frameworks | Bilateral trade flows | Multi-year |
+| **Export Controls (BIS)** | Tech export restrictions | Sectoral exports (semis, AI) | 1-2 quarters |
+| **Sanctions Regime (OFAC)** | Country-specific restrictions | Trade flow rerouting | 1-2 quarters |
+| **CHIPS Act / Industrial Policy** | Domestic capacity subsidies | Reshoring trade dynamics | Multi-year |
+| **CFIUS Reviews** | Inbound investment restrictions | FDI flows | 6-18 months |
+| **Currency Policy (Treasury)** | Currency manipulation labels | Dollar dynamics, trade tensions | Multi-year |
+| **WTO Engagement** | Multilateral dispute resolution | Trade rule enforcement | Multi-year |
+
+### Active Policy Risks (Trade-Specific)
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **Section 122 Expiration / Replacement** | Variable based on resolution | Material to tariff trajectory | Legislative action timing |
+| **Section 301 China Tariff Changes** | Directional based on policy | Bilateral material | Administration policy stance |
+| **Retaliation Escalation (China, EU)** | Bearish exports | Sector-specific | Bilateral negotiations |
+| **Tech Export Control Expansion** | Bearish semi/AI exports | Material for tech sector | BIS actions |
+| **USMCA Renegotiation (2026 review)** | Variable | Material for NA trade | 2026 review timeline |
+| **Sanctions on Major Economies** | Bearish trade flows; bullish energy prices | Material if Russia/Iran/etc. | Geopolitical events |
+| **Currency Manipulator Designation** | Trade tension escalation | Targeted | Treasury Currency Report |
+| **CFIUS Restrictiveness Changes** | Bearish FDI inflows | Material | Administrative rule changes |
+| **GSP / Trade Preferences Renewal** | Variable for EM exports to US | Modest | Legislative timing |
+
+**Structural vs Cyclical:** Tariff regimes (Section 301 China, post-2018) have become structural. Sanctions regimes (Russia post-2022) appear structural. Bilateral trade agreements are structural. Tariff escalation/de-escalation within an existing framework is cyclical.
+
+---
+
+## Demographics & Structural Context
+
+Trade is shaped by demographic forces less directly than other pillars but still meaningfully. Aging populations, productivity differentials, supply chain restructuring, and the energy transition all affect trade trajectories.
+
+### Key Structural Forces
+
+**1. Deglobalization and Reshoring:** Post-2018 trade tensions and post-2020 supply chain disruptions have driven structural reshoring. Manufacturing construction spending (Census) has been elevated since 2022. Friend-shoring shifts trade from low-cost producers (China) to politically-aligned producers (Mexico, Vietnam, India).
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| US Manufacturing Construction | Census | Structurally elevated since 2022 |
+| China Import Share | Census trade data | Declining structurally from ~22% peak |
+| Mexico/Vietnam/India Import Share | Census | Rising as China substitutes |
+| Reshoring Initiative Announcements | Reshoring Initiative | Sustained high since 2020 |
+
+**2. China Demographic Decline:** China's working-age population peaked around 2015 and is in structural decline. This affects China's role as global manufacturing hub: rising labor costs, declining export competitiveness in low-end manufacturing. Long-run, China's trade surplus may compress as domestic consumption rises.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| China Working-Age Population | UN, Chinese stats | Peaked, declining |
+| China Manufacturing Wages | Industry data | Rising structurally |
+| China Trade Surplus / GDP | Chinese stats | Variable; structural compression possible |
+
+**3. US Aging and Trade Composition:** US aging shifts demand toward services (healthcare, leisure), which are less tradable. This structurally reduces import demand for goods relative to overall consumption. Long-run, US trade deficit composition may shift.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| US Goods Imports / Total Imports | Census | Variable; services rising structurally |
+| Services Trade Balance | BEA | Persistent surplus, growing |
+| Healthcare Imports | BEA detail | Rising with aging |
+
+**4. Energy Transition and Trade:** The shift to renewable energy reshapes trade. Critical minerals (copper, lithium, rare earths) become trade-strategic. Oil and gas trade dynamics shift as transition progresses. US becomes structural net energy exporter; China remains net importer.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| US Net Energy Exports | EIA | Net exporter status (recent) |
+| Critical Minerals Trade Concentration | USGS, IEA | High concentration in few countries |
+| Battery Components Trade | Industry data | Growing rapidly |
+
+**5. Currency Reserve System Evolution:** Dollar dominance in trade and reserves remains overwhelming but slowly eroding. BRICS currency initiatives, gold accumulation by central banks, and CIPS (Chinese cross-border payment) growth are structural shifts. Reserve currency status changes slowly but the trajectory matters for trade financing.
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Reshoring Index** | Manufacturing construction YoY / Nominal GDP | Structural shift gauge |
+| **China Substitution Rate** | (China share decline) / (alternate share growth) | Pure rerouting (low) vs total reduction (high) |
+| **Services Trade Surplus / GDP** | Services balance / GDP | US comparative advantage measure |
+| **Energy Trade Balance** | US net energy exports / GDP | Energy transition trade impact |
+| **Dollar Reserve Share** | USD share of global reserves | Reserve currency status indicator |
+
+**Time horizon:** Trade structural forces operate over 5-30 year horizons. Tailwinds for US: services trade surplus, energy export status, friend-shoring. Headwinds: China demographic decline (cuts both ways), reserve currency erosion (slow). Cyclical trade dynamics oscillate around these structural trajectories.
+
+---
+
+## Additional Indicators & External Research
+
+### The Tariff Pass-Through Question
+
+Tariff incidence (who bears the cost) has been studied extensively. Amiti, Redding, and Weinstein (2019, 2020) and Cavallo et al (2021) found that 2018-2019 China tariffs were largely passed through to US consumers and businesses, not absorbed by Chinese exporters. The pass-through rate was 80-100% for many categories.
+
+**Implication:** Tariffs function as a consumption tax. Bottom-quintile households absorb the greatest impact because their consumption basket is more import-intensive (apparel, electronics) and less elastic. Cross-pillar consumer impact estimates (Peterson Institute, Yale Budget Lab) put tariff cost at $800-1,500/household annually for various tariff scenarios.
+
+### Section 122 / Statutory Tariff Limits
+
+Section 122 of the Trade Act of 1974 limits the President's tariff authority to 15% maximum and 150 days duration without Congressional action. Recent SCOTUS rulings have affected the IEEPA tariff authority interpretation. The legal framework around tariff authority has become a key constraint and uncertainty source.
+
+**Watch:** Section 122 expiration triggers force Congressional action or tariff rollback. These dates are knowable in advance and are key trade calendar events.
+
+### The Strong Dollar Doom Loop
+
+A strengthening dollar creates compounding effects: (1) US exports become less competitive, widening trade deficit, (2) EM dollar-denominated debt service costs rise, creating EM stress, (3) commodity prices fall in dollar terms, (4) Fed can stay tight longer because import disinflation does some of the work. This combination creates the "strong dollar doom loop" for EM and commodity producers.
+
+### Container Volume as Real-Time Signal
+
+Container throughput at major US ports (Los Angeles, Long Beach, Houston, Savannah) provides real-time trade flow data. Port of LA Container Volume is published monthly (~15-day lag) and serves as a high-frequency import demand signal. Inventory cycles, holiday season buildup, and tariff frontloading all show up first in container volumes before official trade data.
+
+### Baltic Dry Index
+
+The Baltic Dry Index measures dry bulk shipping rates globally. It leads global manufacturing demand by 2-4 months because shipping capacity adjusts slowly to demand changes. Sustained BDI declines often precede manufacturing PMI weakness; sustained BDI gains often precede manufacturing recovery.
+
+### NY Fed Global Supply Chain Pressure Index (GSCPI)
+
+The GSCPI integrates 27 supply chain stress indicators into a single measure. Readings above +1.0 signal elevated stress; above +2.0 signal acute disruption (post-COVID 2021-2022). The index is a useful single-number gauge but should be cross-referenced with sector-specific data for granularity.
+
+### Dollar Carry and EM Stress
+
+The strong dollar carry trade (borrow in dollars at low US rates, invest in higher-yielding currencies) reverses when dollar strengthens. The reversal creates EM currency stress and capital outflows. EM sovereign and corporate bond yields rise; EM equities fall. This is the "Rey global financial cycle" channel running through trade.
+
+### TIC Data Limitations
+
+Treasury International Capital (TIC) data has several limitations: (1) Reports are based on custodian location, not beneficial ownership (offshore structures distort), (2) Coverage of equity and bond flows is more complete than direct investment, (3) Monthly data is volatile; use 3-6 month moving averages. For structural analysis, IMF Coordinated Portfolio Investment Survey (CPIS) provides annual ownership-based data.
+
+### Currency Manipulation Designation
+
+Treasury's annual Currency Report names countries meeting "manipulation" criteria. The designation has historically had limited direct economic effect but signals trade tension escalation risk. Watch the report for shifts in the watchlist.
+
+---
+
+## External Research Sources
+
+**Government Data:**
+- [BEA International Transactions](https://www.bea.gov/data/intl-trade-investment) - Quarterly current account, BOP detail
+- [Census Bureau Trade Data](https://www.census.gov/foreign-trade/) - Monthly merchandise trade, bilateral
+- [BLS Import/Export Prices](https://www.bls.gov/mxp/) - Monthly import and export price indices
+- [USITC DataWeb](https://dataweb.usitc.gov/) - Tariff data, harmonized commodity codes
+- [Treasury TIC](https://home.treasury.gov/data/treasury-international-capital-tic-system) - Foreign holdings of US assets
+- [USTR (US Trade Representative)](https://ustr.gov/) - Trade agreements, dispute resolution
+- [BIS (Bank for International Settlements)](https://www.bis.org/) - Effective exchange rates, banking statistics
+
+**International Organizations:**
+- [WTO Stats](https://stats.wto.org/) - Global trade and tariff data
+- [UN Comtrade](https://comtradeplus.un.org/) - Global bilateral trade flows
+- [IMF Direction of Trade](https://data.imf.org/?sk=9D6028D4-F14A-464C-A2F2-59B2CD424B85) - Bilateral trade with IMF coverage
+- [OECD Trade Statistics](https://stats.oecd.org/) - Developed economy trade data
+- [World Bank Doing Business](https://www.worldbank.org/) - Trade facilitation indicators
+
+**Real-Time / Alternative Data:**
+- [NY Fed GSCPI](https://www.newyorkfed.org/research/policy/gscpi) - Monthly supply chain stress
+- [Port of LA Container Data](https://www.portoflosangeles.org/business/statistics/container-statistics) - Monthly TEU
+- [Baltic Exchange](https://www.balticexchange.com/) - Dry bulk shipping rates
+- [Cass Information Systems](https://www.cassinfo.com/) - Cass Freight Index
+- [PolicyUncertainty.com](https://www.policyuncertainty.com/trade_uncertainty.html) - Trade policy uncertainty
+- [IMF Real Effective Exchange Rates](https://data.imf.org/) - Multilateral REER
+
+**Think Tanks and Research:**
+- [Peterson Institute (PIIE)](https://www.piie.com/) - Tariff and trade research
+- [Yale Budget Lab](https://budgetlab.yale.edu/) - Tariff incidence estimates
+- [Council on Foreign Relations](https://www.cfr.org/) - Trade policy commentary
+- [Brookings (Hutchins Center)](https://www.brookings.edu/center/hutchins-center-on-fiscal-and-monetary-policy/) - Trade-fiscal interaction
+
+**Industry / Market Data:**
+- [Drewry Shipping Consultants](https://www.drewry.co.uk/) - Container freight rates (subscription)
+- [Freightos Baltic Index](https://fbx.freightos.com/) - Real-time container rates
+- [American Association of Port Authorities](https://www.aapa-ports.org/) - Industry trade data
+
+---
+
+## Reference: Published Analysis
+
+**"Trade: The Pipeline"** (Educational Series, 2026) is the published article version of this pillar. Available at `research.lighthousemacro.com/p/trade-the-pipeline`.
+
+The article covers:
+- Trade as the global margin of adjustment (release valve, transmission belt, financial pipeline)
+- The dollar channel as the primary cross-asset trade transmission
+- Tariff pass-through dynamics and the consumer cost
+- The post-2018 structural shift in the trade regime (deglobalization, reshoring, friend-shoring)
+- The TCI composite architecture and cross-pillar transmission
+- Invalidation criteria for both trade tailwind and crisis scenarios
+
+The article positions trade as the pillar that ties US economic conditions to the global system. Domestic policy choices (tariffs, sanctions, currency stance) propagate globally and reflect back through dollar dynamics, capital flows, and import prices.
+
+---
+
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **TCI** | **Key Signal** | **Outcome** |
+|---|---|---|---|
+| **1985-1987 Plaza Accord** | Negative | Dollar strength → coordinated devaluation | Major dollar reversal; trade balance improvement |
+| **1997-1998 Asian Crisis** | Negative for EM | EM currency collapse, capital outflows | EM recession; US benefited as safe haven |
+| **2002-2004 Dollar Decline** | Positive | Dollar weakness on twin deficits | Mid-2000s commodity boom; EM rally |
+| **2008-2009 GFC** | Sharp negative | Trade collapse 30%+; cross-border bank credit froze | Deep global recession |
+| **2014-2016 Strong Dollar** | Negative | Dollar +20% vs EM; commodity collapse | EM recession; US manufacturing recession (2015-16) |
+| **2018-2019 Trade War** | Negative | Section 301 China tariffs; manufacturing decline | Soft patch; resolved Phase One Deal |
+| **2020 COVID** | Sharp negative | Trade collapse; supply chain rupture | V-shaped recovery on stimulus |
+| **2022 Russia Sanctions** | Variable | Energy trade restructuring; commodity inflation | Energy crisis in Europe |
+| **2025+ Tariff Regime** | Negative | Section 122 cap; broad tariff escalation | Ongoing |
+
+### False Signals
+
+**2014 Dollar Strength:** Dollar surged on US growth divergence, but didn't trigger immediate trade collapse. The 2015-2016 manufacturing recession followed but was contained by services strength. Lesson: dollar strength is necessary but not sufficient for broad trade-driven recession.
+
+**2018-2019 Trade War:** Despite extensive tariff escalation, broad recession didn't occur. Phase One Deal de-escalation plus Fed pivot prevented spillover. Lesson: tariff impacts depend on duration, retaliation, and Fed response function.
+
+### Structural Breaks
+
+**Post-2018 Tariff Regime:** Section 301 China tariffs marked the end of the WTO multilateral trade era. Bilateral managed trade became the new framework. This is structural, not cyclical.
+
+**Post-2020 Supply Chain Restructuring:** COVID experience drove inventory reshoring and supplier diversification. Just-in-time gave way to just-in-case. Higher operating costs but more resilience. Structural shift in business models.
+
+**Post-2022 Sanctions Regime:** Russia sanctions (and the threat of secondary sanctions on China) created persistent trade restructuring. Reserve currency dynamics and commodity flows shifted.
+
+**Post-SCOTUS IEEPA Limits:** Recent rulings on IEEPA tariff authority created legal uncertainty around executive tariff power. Section 122 limits became more binding.
+
+**US Energy Independence:** US shifted from net energy importer to net exporter post-2019. This restructured energy trade dynamics and reduced US sensitivity to global oil shocks.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Use Case** |
+|---|---|---|---|---|
+| **NY Fed GSCPI** | Supply chain stress index | Monthly | Free | Composite supply chain gauge |
+| **Port of LA Container Stats** | TEU monthly volume | Monthly | Free (Socrata) | Real-time import demand |
+| **Baltic Dry Index** | Shipping rates | Daily | Free | Global trade flow leading indicator |
+| **Drewry Container Rate Index** | Container rates | Weekly | Subscription / press | Container shipping pricing |
+| **Freightos Baltic Index** | Container freight rates | Daily | Free summary | Real-time container costs |
+| **Cass Freight Index** | US freight volume + cost | Monthly | Free | Domestic trade flows |
+| **PolicyUncertainty.com** | Trade policy uncertainty | Monthly | Free (FRED EPUTRADE) | Policy regime gauge |
+| **Iacoviello TPU** | Country-level trade uncertainty | Monthly | Free | Bilateral uncertainty |
+| **WTO Stats** | Global trade and tariffs | Monthly/Annual | Free | Multilateral context |
+| **Treasury TIC** | Foreign Treasury holdings | Monthly | Free, 45-day lag | Capital flow signals |
+| **BIS REER** | Effective exchange rates | Monthly | Free | Dollar valuation |
+| **IMF Direction of Trade** | Bilateral flows | Monthly/Quarterly | Free | Bilateral analysis |
+| **EIA Energy Trade** | US energy imports/exports | Weekly/Monthly | Free | Energy trade dynamics |
+| **AAPA Port Statistics** | US port throughput | Monthly | Free | Aggregate port flows |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "The Impact of the 2018 Tariffs on Prices and Welfare" (2019) | Amiti, Redding, Weinstein | China tariffs ~100% passed through to US prices |
+| "Tariff Pass-Through at the Border and at the Store" (2021) | Cavallo et al | Real-time tariff price effects analysis |
+| "The Production Relocation and Price Effects of US Trade Policy" (2020) | Fajgelbaum et al | Tariff effects on production location and prices |
+| "Trade in Value Added" (OECD methodology) | OECD | Value-added trade vs gross trade flows |
+| "The Global Financial Cycle" (Rey 2013) | Hélène Rey | US monetary policy drives global financial cycle |
+| "Dilemma not Trilemma" (Rey 2013) | Hélène Rey | Capital flows constrain monetary independence |
+| "Currency Wars" framework | Various | Competitive devaluation dynamics |
+| "Reserve Currency Status" (various) | Eichengreen, Mehrling | Dollar's role in international system |
+| "China's Demographic Decline" (various) | UN, IMF research | China demographic trajectory implications |
+| "Reshoring and the Global Supply Chain" (various) | McKinsey, BCG, Reshoring Initiative | Post-COVID reshoring patterns |
+| "Sanctions and Economic Statecraft" (various) | Drezner, Hufbauer | Sanctions effectiveness research |
+| Atkeson-Ohanian on PPP | Atkeson & Ohanian | Long-run real exchange rate dynamics |
+| Mussa Puzzle | Mussa | Real exchange rate volatility under floating regimes |
+
+---
+
+## FRED Series Reference Appendix
+
+All FRED series codes referenced in this pillar, organized by category.
+
+### Trade Balance and BOP (Section A, E)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| BOPGSTB | US Trade Balance: Goods and Services | Monthly |
+| BOPGTB | US Trade Balance: Goods | Monthly |
+| BOPTEXP | US Total Exports | Monthly |
+| BOPTIMP | US Total Imports | Monthly |
+| IEABC | Current Account Balance | Quarterly |
+| IEABCG | Current Account: Goods | Quarterly |
+| IEABCS | Current Account: Services | Quarterly |
+| IEABCPI | Current Account: Primary Income | Quarterly |
+| IEABCP | Current Account: Secondary Income | Quarterly |
+
+### Import/Export Prices (Section B)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| IR | Import Price Index, All Imports | Monthly |
+| IQ | Export Price Index | Monthly |
+| IREXPET | Import Price Index ex-Petroleum | Monthly |
+| IR4 | Import Price Index: Foods | Monthly |
+| IR2 | Import Price Index: Industrial Supplies | Monthly |
+| IR1 | Import Price Index: Agricultural | Monthly |
+
+### Dollar Indices (Section C)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DTWEXBGS | Broad US Dollar Index (Trade-Weighted) | Daily |
+| DTWEXAFEGS | Advanced Foreign Economies Dollar Index | Daily |
+| DTWEXEMEGS | Emerging Markets Dollar Index | Daily |
+| RBUSBIS | Real Broad Effective Exchange Rate (BIS) | Monthly |
+| NBUSBIS | Nominal Broad Effective Exchange Rate (BIS) | Monthly |
+| RNUSBIS | Real Narrow Effective Exchange Rate (BIS) | Monthly |
+
+### Bilateral Trade (Section D)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| EXPCH | US Exports to China | Monthly |
+| IMPCH | US Imports from China | Monthly |
+| EXPJP | US Exports to Japan | Monthly |
+| IMPJP | US Imports from Japan | Monthly |
+
+### Supply Chain (Section F)
+
+| **Indicator** | **Source** | **Frequency** |
+|---|---|---|
+| NY Fed GSCPI | NY Fed (web) | Monthly |
+| Container Volume (Port of LA) | Socrata API | Monthly |
+| Baltic Dry Index | Baltic Exchange | Daily |
+| EPUTRADE | PolicyUncertainty.com (FRED) | Monthly |
+
+### Inventories (Section J)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| ISRATIO | Total Business Inventories to Sales Ratio | Monthly |
+| RETAILIRSA | Retail Inventories | Monthly |
+| WHLSLRIRSA | Wholesale Inventories | Monthly |
+
+### Trade Policy and Other
+
+| **Series ID / Source** | **Description** | **Frequency** |
+|---|---|---|
+| EPUTRADE | Trade Policy Uncertainty Index | Monthly |
+| Effective Tariff Rate | USITC DataWeb | Annual + ad hoc |
+| Section 232 / 301 Tariff Schedules | USITC | Event-driven |
+| OECD Trade Statistics | OECD | Various |
+| WTO Tariff Database | WTO | Annual |
+
+### Non-FRED Data Sources
+
+| **Indicator** | **Source** | **Notes** |
+|---|---|---|
+| Container Volume | Port of LA, Socrata API | Monthly, ~15-day lag |
+| GSCPI | NY Fed | Monthly Excel download |
+| Baltic Dry Index | Baltic Exchange | Daily, free with delay |
+| Trade Policy Uncertainty | PolicyUncertainty.com | Monthly + daily for trade-specific |
+| Bilateral Trade Detail | UN Comtrade | Free with registration |
+| Effective Exchange Rates (64 economies) | BIS | Monthly |
+| Tariff Schedules | USITC DataWeb | Event-driven |
+| Cass Freight Index | Cass Information Systems | Monthly, free |
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Trade Triggers (Tailwind / Recovery)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Import Prices YoY%** | Below +2% | {{WATCH_IMPORT_PRICE}} | Tariff absorption or dollar reversal |
+| **Export Volumes YoY%** | Above +3% | {{WATCH_EXPORT_VOL}} | Global demand or competitiveness |
+| **Broad Dollar YoY%** | Below +2% | {{WATCH_DOLLAR_LOW}} | Dollar headwind easing |
+| **Container Volumes YoY%** | Above +5% | {{WATCH_CONTAINER}} | Trade acceleration |
+| **EPUTRADE** | Below 120 | {{WATCH_EPUTRADE_LOW}} | Policy clarity |
+| **TCI Composite** | Above +0.3 | {{WATCH_TCI_HIGH}} | Favorable regime |
+| **GSCPI** | Below 0 | {{WATCH_GSCPI_LOW}} | Supply chains normalized |
+| **Tariff Rollback** | Effective rate falling | {{WATCH_TARIFF_DOWN}} | Trade liberalization |
+
+### Bearish Trade Triggers (Crisis)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Broad Dollar YoY%** | Above +15% | {{WATCH_DOLLAR_HIGH}} | Dollar crisis crushing EM |
+| **EPUTRADE** | Above 300 | {{WATCH_EPUTRADE_HIGH}} | Policy chaos |
+| **TCI Composite** | Below -1.0 | {{WATCH_TCI_LOW}} | Crisis regime |
+| **TIC Net Long-Term Flows** | Negative for 3+ months | {{WATCH_TIC_NEG}} | Capital flight |
+| **Container Volumes YoY%** | Below -10% | {{WATCH_CONTAINER_LOW}} | Trade collapse |
+| **GSCPI** | Above +2.0 | {{WATCH_GSCPI_HIGH}} | Acute supply chain crisis |
+| **Section 122 Replacement** | Higher tariff cap (>10%) | {{WATCH_TARIFF_REGIME}} | Protectionist escalation |
+| **Major Sanctions Event** | Country-specific impact | {{WATCH_SANCTIONS}} | Trade flow disruption |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Section 122 Expiration / Replacement** | Legislative resolution | Tariff regime trajectory |
+| **USMCA 2026 Review** | Renegotiation outcome | NA trade framework |
+| **China Trade Restructuring Pace** | Bilateral deal or escalation | Long-run China-US trade |
+| **EU Trade Tensions** | Bilateral tariff escalation | Atlantic trade regime |
+| **Reserve Currency Diversification** | USD share of reserves declining | Long-run trade financing |
+| **Energy Trade Independence** | US net energy export sustained | Trade balance composition |
+| **AI / Tech Export Controls** | Major BIS rule changes | Sectoral export trajectory |
+
+---
+
 ## Conclusion: Trade as the Global Margin
 
 Trade isn't imports and exports. It's the **global margin of adjustment**: the release valve for domestic imbalances, the transmission belt for prices, the competitive arena for manufacturing, the financial pipeline for capital flows, and the distribution channel that connects global supply to domestic retail.
-
-**Current State:**
-- **TCI -0.5** (Trade Headwind Regime)
-- **DCI -0.7** (Dollar Competitiveness Deteriorating)
-- **TPI +0.8** (Tariff Pass-Through Active)
-- **Import prices +3.8% YoY** (tariff pass-through)
-- **Export volumes -2.1% YoY** (competitiveness drag)
-- **Trade deficit -$78B/month** (narrowing on demand weakness)
-- **Broad dollar +7.2% YoY** (strong dollar headwind)
-- **BIS REER +12% above 10Y avg** (dollar overvalued in real terms)
-- **GSCPI +0.8** (supply chains elevated but stable)
-- **EPUTRADE 187** (trade policy uncertainty elevated)
-- **Current account -3.5% of GDP** (sustainable range)
-- **Effective tariff rate 6.2%** (highest since 1930s)
-- **Section 122 expires July 24, 2026** (key policy catalyst)
-- **Terms of trade -3.5% YoY** (margin headwind, ~65% tariff-driven)
-- **Real retail sales +1.1% YoY** (tariff drag on real spending)
 
 **The Structural Shift:**
 
 | Segment | Old Regime (1990-2020) | New Regime (2025+) |
 |---|---|---|
-| **Tariffs** | ~2% average | ~6%+ and rising (Section 122 cap at 15%) |
-| **China share** | 15-22% of imports | 12% and falling |
+| **Tariffs** | ~2% average | Multi-percent and variable |
+| **China share** | 15-22% of imports | Declining structurally |
 | **Supply chains** | Optimized for cost | Optimized for resilience |
-| **Dollar role** | Exorbitant privilege | Weaponized tool |
+| **Dollar role** | Exorbitant privilege | Increasingly weaponized tool |
 | **Trade growth** | 2x GDP growth | At or below GDP growth |
 | **Policy framework** | WTO multilateral | Bilateral managed trade |
-| **Legal authority** | Executive discretion (IEEPA) | Congressional constraint (post-SCOTUS) |
+| **Legal authority** | Executive discretion (IEEPA) | Congressional constraint |
 | **Capital flows** | Automatic recycling | Active management required |
 
-**The Trade Paradox:** The trade deficit is narrowing, usually bullish, but for the **wrong reason**: import demand destruction, not export competitiveness. Meanwhile, import prices are spiking, inflationary at exactly the moment when the Fed hoped for goods deflation. Trade is complicating every other pillar's thesis.
+**The Trade Paradox:** A narrowing trade deficit is usually bullish, but can be bullish or bearish depending on the source. Import-driven narrowing reflects domestic demand destruction (bearish). Export-driven narrowing reflects competitiveness (bullish). The composition of trade balance changes matters more than the direction.
 
-**Cross-Pillar Context:** Trade headwind (**TCI -0.5**) + labor fragility (**LFI +0.93**) + growth weakness (**GCI -0.4**) + elevated inflation (**PCI +0.7**) = **MRI +1.1** (HIGH RISK regime).
+**The Tariff-Inflation Channel:** Tariff pass-through to consumer prices is largely complete within 6-12 months. Bottom-quintile households absorb the heaviest impact through their import-heavy consumption baskets. Tariffs function as a regressive consumption tax with material macro inflation effects.
 
-The globalization dividend is over. We're not going back to 2019. We're building a new trade architecture: slower, costlier, more resilient, less efficient. The adjustment is priced in over years, not quarters.
+**Cross-Pillar Framework:** Trade headwinds combined with labor fragility (LFI > +0.8) and growth weakness (GCI < -0.3) mark broad late-cycle stress. Trade alone rarely causes recession but reliably amplifies it. The dollar channel is the cleanest cross-asset trade signal, transmitting through to crypto (CLI), EM equity, commodity prices, and US export sector earnings.
 
-**Bob Sheehan, CFA, CMT**
+The globalization dividend of 1990-2020 is over. The new architecture is slower, costlier, more resilient, less efficient. The adjustment is priced in over years, not quarters.
+
+See the Current State Assessment Template above for current TCI readings and cross-pillar composites.
+
+*Bob Sheehan, CFA, CMT*
 *Founder & CIO, Lighthouse Macro*
-*February 26, 2026*
+*Last Updated: April 2026*

@@ -80,7 +80,9 @@ Spending is the output variable: what consumers actually do. Track it at multipl
 | **Durable Goods PCE YoY%** | <-5% | -5% to +2% | +2% to +8% | >+8% |
 | **Services PCE YoY%** | <1% | 1-2% | 2-4% | >4% |
 
-**The Durables Canary:** Durable goods spending is the **most cyclical** PCE component. Consumers defer big-ticket purchases when confidence drops. Durables peaked at +32% YoY (April 2021, post-COVID surge) and are now at **-1.8% YoY** (Dec 2025)—contracting. Services at +2.4% YoY, holding up. Classic late-cycle: discretionary collapses first.
+**The Durables Canary:** Durable goods spending is the **most cyclical** PCE component. Consumers defer big-ticket purchases (cars, appliances, furniture) when confidence drops, so durables contract 2-4 months ahead of nondurables and 4-6 months ahead of services. Watch the goods/services YoY spread: when durables go negative while services remain positive, that's classic late-cycle, discretionary collapsing first. The sequence is predictable. Durables lead down, nondurables follow, services last.
+
+**Historical benchmark:** In the 2008 cycle, real durables peaked in Q2 2007 and turned negative YoY by Q3 2007, five months before NBER's recession start date. In the 2001 cycle, durables peaked in mid-2000 and were negative by early 2001. Both preceded services weakness by multiple quarters.
 
 ---
 

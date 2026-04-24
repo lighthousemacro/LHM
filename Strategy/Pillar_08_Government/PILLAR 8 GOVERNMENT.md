@@ -460,9 +460,9 @@ Transfer Payments → Consumer Income →
 Private Consumption → GDP Growth
 ```
 
-**Current Linkage:** Fiscal impulse at +0.8 ppts. Government contributing +0.4 ppts to GDP. Without fiscal support, GDP would be +2.1% instead of +2.5%. Fiscal policy is **the** support for the soft landing.
+**Transmission mechanics:** Fiscal impulse directly adds to or subtracts from GDP through government consumption and transfer payments. A persistent positive fiscal impulse during expansion signals structural imbalance: the economy is dependent on fiscal support even at positive GDP growth. When fiscal consolidation eventually occurs (via policy choice or market forcing), the GDP drag is typically 0.5 to 1.5 ppts per 2 ppts of GDP consolidation.
 
-**Cross-Pillar Signal:** If fiscal consolidation occurs (deficit cuts, spending restraint), expect **-0.5 to -1.0 ppts** GDP drag. When **GCI-Gov > +1.0** (high stress) AND **GCI < -0.3** (growth weak), fiscal austerity would tip economy into recession.
+**Cross-Pillar Signal:** If fiscal consolidation occurs (deficit cuts, spending restraint), expect measurable GDP drag. When **GCI-Gov > +1.0** (high stress) AND **GCI < -0.3** (growth weak), fiscal austerity risks tipping the economy into recession. This "fiscal cliff" risk is a specific late-cycle scenario.
 
 ---
 
@@ -475,9 +475,9 @@ Deficit Spending → Aggregate Demand ↑ →
 Output Gap Narrows → Inflation Pressure ↑
 ```
 
-**Current Linkage:** 7.2% deficit is stimulative—it's fighting the Fed's restrictive policy. Core PCE stuck at 3.2% partly because fiscal policy is offsetting monetary tightening. The Fed is pushing on a string while Treasury is pulling.
+**Transmission mechanics:** Deficit spending increases aggregate demand by directly funding household transfers, government consumption, and government investment. In a closed economy, this demand pressure filters into prices when capacity is binding. In an open economy, it also flows through imports (widening trade deficit) and can show up in dollar weakness rather than domestic price pressure. The fiscal-to-inflation transmission is strongest in services (domestically produced) and weaker in tradable goods.
 
-**Cross-Pillar Signal:** Fiscal dominance means **monetary policy loses effectiveness**. If **GCI-Gov > +1.0** (high fiscal stress) AND **PCI > +0.5** (elevated inflation), the Fed can't win—inflation stays sticky because deficits keep demand elevated.
+**Cross-Pillar Signal:** Fiscal dominance reduces monetary policy effectiveness. When **GCI-Gov > +1.0** (high fiscal stress) AND **PCI > +0.5** (elevated inflation), the Fed faces the "pushing on a string" problem. Rate hikes raise interest expense (widening the deficit), while fiscal impulse sustains demand. This configuration is what makes the term premium repricing theme so durable.
 
 ---
 

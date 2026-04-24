@@ -317,13 +317,19 @@ The debt ceiling is a **self-inflicted political constraint** that creates artif
 | **TGA Balance** | <$100B | $100-300B | $300-600B | >$600B |
 | **1Y US CDS** | >75 bps | 30-75 bps | 10-30 bps | <10 bps |
 
-**The Current Ceiling:** Debt ceiling reinstated **January 2, 2025** at ~$36.1T. Treasury using extraordinary measures. X-date estimate: **Q3 2025** (July-September range). TGA balance at **$680B** (adequate cushion for now). New administration/Congress must act. History says they wait until the last minute. Markets price stress 30-60 days before X-date.
+**Debt Ceiling Cycle Dynamics:** The debt ceiling binds roughly every 12-24 months when it's in effect (periodic suspensions eliminate the constraint temporarily). The sequence is predictable: ceiling binds → Treasury uses extraordinary measures (accounting maneuvers) for several months → TGA is drawn down → X-date estimate crystallizes → market stress builds in the 30-60 days before X-date → political resolution at the last minute.
+
+**Market pricing of X-date risk:** 1-year US sovereign CDS spreads widen from ~10 bps to 50-75 bps in the 30-60 days before a serious X-date. T-bills maturing around the X-date trade at a yield premium to surrounding tenors (the "debt ceiling kink" in the curve). These are real, repeatable signals that manifest every cycle.
+
+**T-bill dislocations:** Within a 4-week window, T-bills maturing 1-2 weeks after the X-date trade at 50-200 bps higher yields than bills maturing before. This dislocation closes within hours of political resolution. Arbitrage opportunity exists for investors with conviction on resolution and ability to hold through volatility.
+
+**Historical precedents:** 2011 (Standard & Poor's downgrade), 2013 (government shutdown), 2018-19 (shutdown), 2023 (brinkmanship). Each episode saw materially wider spreads, T-bill dislocations, and eventual resolution. Pattern-match, don't panic.
 
 ---
 
 ### H. TERM PREMIUM & MARKET PRICING (The Honest Signal)
 
-The term premium is what investors demand **above expected short rates** to hold long-duration Treasuries. It reflects supply/demand imbalance, inflation uncertainty, and fiscal risk.
+The term premium is what investors demand **above expected short rates** to hold long-duration Treasuries. It reflects supply/demand imbalance, inflation uncertainty, and fiscal risk. The most widely-cited estimate is the Adrian-Crump-Moench (ACM) model from the New York Fed, updated daily.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

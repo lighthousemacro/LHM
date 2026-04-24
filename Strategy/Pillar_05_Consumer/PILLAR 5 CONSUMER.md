@@ -160,13 +160,17 @@ When savings run out, consumers turn to credit. Rising credit = spending maintai
 | **Credit Growth YoY%** | <0% or >12% | 0-3% or 8-12% | 3-6% | 6-8% |
 | **Debt Service Ratio** | >12% | 10-12% | 8-10% | <8% |
 
-**The Credit Card Stress:** Credit card delinquency at **3.0%** (Q3 2025)—highest since 2012, up from 1.5% low (2021). Credit card balances at **$1.17T**—record high. Average credit card APR at **22.8%**—record high. Consumers borrowed to maintain lifestyle as savings depleted. Now the bills are coming due. This is **Stage 2** of consumer stress (Stage 1: savings depletion, Stage 2: credit stress, Stage 3: spending collapse).
+**The Credit Substitution Signal:** Credit card delinquency below 2.5% is expansion-phase normal. The 3.0-3.5% band is "elevated but not crisis." Above 3.5% starts to constrain consumer spending through two channels: (1) direct balance sheet strain forcing reduced discretionary spend, and (2) tightened bank underwriting (lower credit limits, declined applications) that curtails future borrowing capacity.
+
+The Stage 2 fingerprint is specific: credit card balance growth running materially above wage growth (consumers borrowing to maintain lifestyle), rising delinquencies at the bottom quartile of credit score, and Senior Loan Officer survey results showing banks tightening consumer credit standards. Watch for these three together. Any one in isolation is noise.
+
+**Historical benchmark:** In the 2007-2008 cycle, credit card delinquency rose from 3.7% (Q4 2006) to 6.8% (Q2 2009). The inflection point preceded the consumer spending peak by ~4 quarters. In 2001, credit card delinquency inflected up 2 quarters before the recession began.
 
 ---
 
 ### D. CONSUMER CONFIDENCE (The Psychological Driver)
 
-Confidence surveys measure **expectations**—what consumers plan to do, not what they've done. They lead spending by 1-3 months but are noisy and subject to partisanship.
+Confidence surveys measure **expectations**: what consumers plan to do, not what they've done. They lead spending by 1-3 months but are noisy, and since 2016 have become increasingly subject to partisan distortion (UMich especially, where expectations readings now swing 20+ points based on which party controls the White House).
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -197,7 +201,9 @@ Confidence surveys measure **expectations**—what consumers plan to do, not wha
 | **UMich Sentiment** | <65 | 65-80 | 80-100 | >100 |
 | **Expectations-Present Spread** | <-30 | -30 to -15 | -15 to +5 | >+5 |
 
-**The Expectations Collapse:** Conference Board Expectations at **78** (Dec 2025)—below the **80 threshold** that historically precedes recessions. Present Situation at **138**—still robust. The spread is **-60**, signaling that consumers feel okay today but expect deterioration ahead. This divergence has preceded every recession since 1970 by 6-12 months.
+**The Expectations-Present Spread Signal:** Conference Board's Expectations vs Present Situation divergence is the single most reliable leading indicator in the confidence complex. When Expectations drops below 80 while Present Situation remains elevated, the spread compresses to -40 or worse. This pattern (consumers feel fine today but dread tomorrow) has preceded every recession since 1970 by 6-12 months. The mechanism: consumers dial back discretionary commitments (vacation bookings, vehicle orders, home purchases) well before their current spending shows weakness, because those commitments flow from expected future income.
+
+The partisan noise around headline confidence is real, but the Expectations-Present spread is less affected because both components move with partisanship. The differential stays informative even when levels drift with politics.
 
 ---
 

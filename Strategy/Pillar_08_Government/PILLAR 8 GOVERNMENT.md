@@ -415,15 +415,7 @@ GCI-Gov = 0.25 × z(Deficit_GDP)
 | **Dec 2023** | +0.9 | Elevated | Post-COVID normalization stalled |
 | **Dec 2025** | **+1.1** | **High Stress** | **Fiscal Dominance regime** |
 
-**Current Assessment (Dec 2025):** GCI-Gov at **+1.1** places fiscal conditions in "High Stress" regime—not crisis (that's reserved for 10%+ deficits), but unsustainable:
-- **Deficit/GDP at 7.2%** (wartime levels in peacetime)
-- **Interest/Outlays at 16%** (larger than defense)
-- **Debt/GDP at 122%** (highest since WWII)
-- **Term premium at +25 bps** (rising from -50 bps, more to go)
-- **Quarterly issuance at $680B** (supply overwhelming demand)
-- **Foreign holdings at 24%** (declining, domestic must absorb)
-
-This is **Fiscal Dominance**—the regime where fiscal policy overwhelms monetary policy. The Fed can't tighten enough to offset $2T annual deficits.
+**Current reading:** see "Current State Assessment Template" section below for the live GCI-Gov value, component scores, and regime classification.
 
 ---
 

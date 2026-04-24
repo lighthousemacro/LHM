@@ -523,9 +523,9 @@ Transfer Payment Reductions → Household Income ↓ →
 Consumer Spending ↓ → Private Layoffs
 ```
 
-**Current Linkage:** Government employment at **22.9M** (all levels)—steady. Federal transfers at **$4.2T** annually (Social Security, Medicare, Medicaid, UI). Any significant fiscal consolidation would hit both employment and income.
+**Transmission mechanics:** Government employs roughly 15% of US workers across federal, state, and local (22-23 million jobs). Federal transfer payments (Social Security, Medicare, Medicaid, unemployment insurance, SNAP) represent about $4T annually in direct household income. Fiscal consolidation reaches labor through two channels: (1) direct employment cuts at government levels that choose consolidation, (2) reduced transfers that flow through to consumer spending (Pillar 5), which then hits private employment via business revenue (Pillar 6).
 
-**Cross-Pillar Signal:** Fiscal austerity (**deficit cuts > 2% of GDP**) would add **+0.3-0.5** to LFI (labor fragility) through direct and indirect channels. Fiscal health requires labor pain.
+**Cross-Pillar Signal:** Fiscal austerity exceeding 2% of GDP typically adds 0.3-0.5 to LFI (labor fragility) over 4-6 quarters through these channels. Fiscal consolidation that succeeds in reducing debt trajectory requires labor-market pain that forces wage and employment adjustments. The political resistance to this pain is why fiscal consolidation rarely happens outside severe crisis.
 
 ---
 

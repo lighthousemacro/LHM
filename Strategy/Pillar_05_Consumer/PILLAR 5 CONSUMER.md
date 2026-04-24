@@ -238,13 +238,15 @@ The consumer's spending capacity ultimately derives from employment and wages. T
 | **Hours Growth YoY%** | <-1% | -1% to +1% | +1% to +2% | >+2% |
 | **Real AHE YoY%** | <0% | 0-1% | 1-2% | >2% |
 
-**The Income Squeeze:** Aggregate weekly payrolls growing at **+3.8% YoY** nominal, but CPI at 2.8%, so **real aggregate income +1.0% YoY**—barely positive. Average weekly hours at 34.3 (flat), employment growth decelerating (+140k/month vs +200k in 2024), wage growth slowing (3.9% vs 4.5% in 2024). The tailwind is fading.
+**The Aggregate Payrolls Decomposition:** Aggregate weekly payrolls equals employment × hours × wages. Each component can mask weakness in the others. Real aggregate payroll growth below +1% YoY is the recession-warning threshold. Monitor the three components separately: (1) employment growth trend (3M, 6M moving averages), (2) average weekly hours (leads payrolls 2-4 months), (3) wage growth (AHE YoY). When all three decelerate together, the income tailwind is fading and Stage 1 (savings drawdown) is the next pressure release valve.
+
+**Cross-check with Labor Pillar:** When Labor Fragility Index (LFI) rises above +0.8 and aggregate real payroll growth drops below +1%, spending growth follows within 1-2 quarters. This is the core Labor → Income → Consumer transmission.
 
 ---
 
 ### F. HIGH-FREQUENCY SPENDING (The Real-Time Pulse)
 
-Credit card data and alternative sources provide **weekly or even daily** spending reads—essential for nowcasting.
+Credit card data and alternative sources provide **weekly or even daily** spending reads, essential for nowcasting consumer activity in the gap between monthly retail sales and PCE releases.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

@@ -365,6 +365,433 @@ Fed plumbing determines how policy transmits through the banking system. Reserve
 
 ---
 
+## I. CREDIT SPREAD DECOMPOSITION DEEP DIVE (Quality, Sector, and Geographic)
+
+Headline HY OAS and IG OAS are composite measures. Decomposing them by quality tier, sector, and geographic exposure reveals where stress concentrates and often provides early warning that aggregate spreads miss.
+
+### Quality Tier Decomposition
+
+| **Tier** | **Rating Range** | **FRED/ICE Code** | **Typical OAS Range** | **Default Rate (historical avg)** |
+|---|---|---|---|---|
+| **AAA** | AAA | BAMLC0A1CAAA | 40-80 bps | <0.1% |
+| **AA** | AA+ to AA- | BAMLC0A2CAA | 60-110 bps | <0.1% |
+| **A** | A+ to A- | BAMLC0A3CA | 80-150 bps | 0.1-0.2% |
+| **BBB** | BBB+ to BBB- | BAMLC0A4CBBB | 120-220 bps | 0.3-0.5% |
+| **BB** | BB+ to BB- | BAMLH0A1HYBB | 250-400 bps | 1-2% |
+| **B** | B+ to B- | BAMLH0A2HYB | 400-700 bps | 4-6% |
+| **CCC** | CCC+ and below | BAMLH0A3HYC | 800-1500 bps | 15-25% |
+
+### Quality Migration Signal
+
+The spread ratio between adjacent quality tiers is a powerful within-credit signal:
+
+- **BBB/A ratio:** Rising signals investment-grade stress. BBBs are the lowest IG tier; downgrades to HY ("fallen angels") can create forced selling from index-tracking IG funds
+- **BB/BBB ratio:** Measures the IG-to-HY boundary; compression signals late-cycle complacency
+- **B/BB ratio:** Middle-HY quality differentiation; widening signals risk aversion returning to HY
+- **CCC/B ratio:** Within-HY distress differentiation; compression is extreme complacency signal
+
+**Fallen Angel Dynamics:** When a BBB issuer is downgraded to HY, IG-index funds must sell. This mechanical selling creates "fallen angel alpha" opportunities for HY buyers. Fallen angel volume rising sharply indicates deteriorating IG credit quality and forward-downgrade risk.
+
+### Sector Spread Decomposition
+
+Credit spreads vary materially by sector. Sector-specific stress often leads broad HY widening by 1-3 months.
+
+| **Sector** | **Typical Relative OAS vs HY Index** | **Cycle Sensitivity** |
+|---|---|---|
+| **Energy** | -50 to +200 bps (highly variable) | Oil price sensitive |
+| **Technology** | -100 to -50 bps | Secular growth buffers |
+| **Consumer Discretionary** | Around HY average | Consumer cycle sensitive |
+| **Consumer Staples** | -50 to +50 bps | Defensive |
+| **Healthcare** | -50 to 0 bps | Defensive |
+| **Financials** | Around HY average (excl. banks) | Credit-cycle sensitive |
+| **Industrials** | Around HY average | Cyclical |
+| **Real Estate (REITs)** | 0 to +100 bps | Rate-sensitive |
+| **Materials** | -50 to +100 bps | Commodity-linked |
+| **Telecommunications** | -50 to +50 bps | Defensive, cash-flow stable |
+| **Utilities** | -100 to -50 bps | Regulated, defensive |
+
+**Sector-Specific Leading Indicators:**
+
+- **Energy HY spreads** lead broad HY by 2-4 weeks when oil prices move materially
+- **Consumer Discretionary HY spreads** lead consumer confidence inflections by 1-2 months
+- **Real Estate HY spreads** lead commercial real estate distress by 3-6 months
+- **Technology HY spreads** lead tech sector equity corrections by 1-3 weeks
+
+### Emerging Market Sovereign Spreads
+
+EM sovereign credit spreads (J.P. Morgan EMBI Global) provide a global credit signal often leading US HY by 1-3 months. Dollar strength and US financial conditions drive EM credit stress first; broader contagion typically follows.
+
+| **Indicator** | **Source** | **Signal** |
+|---|---|---|
+| **EMBI Global OAS** | J.P. Morgan | Broad EM sovereign stress |
+| **EMBI Investment Grade** | J.P. Morgan | Higher-quality EM |
+| **CEMBI Broad** | J.P. Morgan | EM corporate credit |
+| **JPM GBI-EM** | J.P. Morgan | Local-currency EM sovereign |
+
+### Municipal Bond Spreads
+
+Municipal bond (muni) spreads provide a different lens on state and local fiscal health, often isolated from corporate credit dynamics.
+
+| **Indicator** | **Typical Relationship** | **Signal Content** |
+|---|---|---|
+| **Muni/Treasury Yield Ratio (10Y)** | >90% for high-tax buyers | Muni cheap vs Treasury |
+| **HY Muni OAS** | 200-500 bps | Distressed muni (Puerto Rico, Illinois) |
+| **Muni-Corporate Spread** | Varies by tax status | Tax-adjusted relative value |
+
+### Derived Spread Decomposition Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **BBB/A Ratio** | BBB OAS / A OAS | >1.6x | IG quality stress |
+| **HY/IG Ratio** | HY OAS / IG OAS | <3.0x | Cross-tier compression |
+| **CCC/B Ratio** | CCC OAS / B OAS | <2.0x | Distressed underpriced |
+| **Energy-HY Spread** | Energy sector OAS - HY Index | >+100 bps | Energy-specific stress |
+| **EM-US HY Spread** | EMBI - US HY OAS | >+200 bps | EM leading stress |
+
+---
+
+## J. CURVE DYNAMICS DEEP DIVE (Segments, Steepening, and Carry)
+
+The yield curve is not one indicator; it's a multi-dimensional structure. Different curve segments convey different information, and the *type* of steepening or flattening reveals the underlying drivers.
+
+### Curve Segment Anatomy
+
+```
+FRONT-END          BELLY          LONG-END          ULTRA-LONG
+(0-2Y)            (3-10Y)         (10-30Y)          (30Y+)
+  │                 │                 │                 │
+  │                 │                 │                 │
+Fed Policy        Growth +         Term Premium     Duration risk
+Expectations      Inflation        + Fiscal Risk    concentration
+  │                 │                 │                 │
+  2Y yield         5Y-10Y           10Y-30Y           Long bonds
+  Fed path         Nominal GDP      Supply/demand     LDI strategies
+  proxy            expectations     balance           Pension duration
+```
+
+### Segment-Specific Signals
+
+**Front-End (0-2Y):** Primarily driven by Fed policy path expectations. The 2Y yield minus Fed Funds rate captures market expectations of near-term Fed cuts or hikes. 2Y yield falling below Fed Funds by >50 bps signals the market pricing imminent cuts.
+
+**Belly (3-10Y):** Most sensitive to nominal GDP and inflation expectations. The 5Y yield is often the cleanest growth-plus-inflation proxy because it sits between short policy expectations and long-run fiscal/supply concerns.
+
+**Long-End (10-30Y):** Most sensitive to term premium, fiscal risk, and duration supply (Pillar 8 linkage). The 30Y-10Y spread isolates long-end term premium dynamics: widening 30Y-10Y signals increasing duration risk compensation.
+
+**Ultra-Long:** Specialized demand from pension LDI, insurance liabilities, and long-duration institutional buyers. Relative value vs 30Y signals duration-demand imbalances.
+
+### Bull vs Bear Steepening and Flattening
+
+The *direction* of curve changes matters as much as the shape itself:
+
+| **Pattern** | **Front-End Move** | **Long-End Move** | **Interpretation** |
+|---|---|---|---|
+| **Bull Steepening** | Falling faster | Falling | Recession-response; Fed cuts priced |
+| **Bear Steepening** | Rising less | Rising faster | Fiscal risk; inflation concerns |
+| **Bull Flattening** | Falling | Falling more | Safe-haven; flight to duration |
+| **Bear Flattening** | Rising faster | Rising less | Hawkish Fed; cyclical early |
+
+**The most powerful recession signal:** Bull steepening after prolonged inversion. This pattern reflects the market pricing Fed rate cuts as growth deteriorates, with front-end rates falling faster than long-end rates. This pattern preceded every post-1980 recession.
+
+**Bear steepening in fiscal dominance:** When the curve bear-steepens during periods of persistent large deficits (Pillar 8), the long-end is pricing fiscal risk premium rather than growth expectations. The 2023-2024 period featured episodes of bear steepening correlated with TBAC announcements of increased coupon issuance.
+
+### The Real Yield Curve
+
+TIPS yields form a parallel real yield curve (5Y TIPS, 10Y TIPS, 30Y TIPS). Comparing real vs nominal curves decomposes moves into real-rate vs inflation-expectations changes.
+
+- **Real curve steepening** = long-run growth expectations rising or term premium in real rates
+- **Real curve flattening** = real long-run expectations falling or term premium compression
+- **Breakeven curve** (10Y breakeven minus 5Y breakeven) measures forward inflation expectations
+
+### Carry and Roll-Down
+
+Bond total return has three components: (1) yield income, (2) price change from yield change, (3) "carry and roll" from the bond moving down the yield curve as it ages. In a steep curve, carry-and-roll is positive and substantial; in flat/inverted curves, it's minimal or negative.
+
+**Carry-and-Roll by Tenor (typical expansion-phase):**
+- 2Y: 5-15 bps per month
+- 5Y: 15-30 bps per month
+- 10Y: 20-40 bps per month
+- 30Y: 25-50 bps per month
+
+When the curve is inverted, carry-and-roll goes negative for short tenors, creating headwind for bond strategies that rely on curve carry.
+
+### Derived Curve Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **2Y-Fed Funds Gap** | 2Y Yield - Fed Funds Upper | <-50 bps | Market pricing cuts |
+| **10Y-5Y Spread** | 10Y - 5Y | Rising = bear steepening of long-end |
+| **30Y-10Y Spread** | 30Y - 10Y | Rising = long-end term premium |
+| **Real 10Y vs Real 5Y** | DFII10 - DFII5 | Real curve slope |
+| **5Y5Y Inflation Forward** | T5YIFR | Long-run inflation expectations |
+
+---
+
+## K. BANKING SYSTEM HEALTH (Beyond SLOOS)
+
+Bank balance sheets are where financial conditions become credit transmission. Beyond SLOOS lending standards, a suite of banking health indicators reveals stress before it transmits to the real economy.
+
+### Capital and Liquidity Ratios
+
+| **Ratio** | **Source** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **CET1 Capital Ratio** | Bank filings, FFIEC | Minimum 4.5% + buffers | Regulatory capital strength |
+| **Tier 1 Capital Ratio** | FFIEC | Minimum 6% + buffers | Core capital cushion |
+| **Total Capital Ratio** | FFIEC | Minimum 8% + buffers | Full capital measure |
+| **Leverage Ratio (SLR)** | FFIEC | Minimum 3% (5% for GSIBs) | Balance sheet constraint |
+| **LCR (Liquidity Coverage Ratio)** | FFIEC | Minimum 100% | 30-day liquidity stress |
+| **NSFR (Net Stable Funding Ratio)** | FFIEC | Minimum 100% | 1-year funding stability |
+
+### Net Interest Margin (NIM)
+
+NIM is the spread between lending yields and deposit costs. It's the primary driver of bank profitability and capital generation.
+
+| **Metric** | **Formula** | **Interpretation** |
+|---|---|---|
+| **NIM (Aggregate)** | Interest Income - Interest Expense / Earning Assets | Bank profitability |
+| **NIM Trend (YoY)** | Current - Year Ago | Pressure direction |
+| **Deposit Beta** | Δ Deposit Rate / Δ Fed Funds | Sensitivity to policy rates |
+
+**NIM compression dynamics:** Rising Fed Funds initially compresses NIM as deposit costs rise before loan yields adjust. Over time, loans reprice and NIM recovers. This is the "lag effect" in bank earnings during tightening cycles.
+
+### Deposit Flow Dynamics
+
+Deposit flows are a leading indicator of bank stress. Post-SVB (March 2023), deposit flight risk has been elevated.
+
+| **Indicator** | **Source** | **Signal** |
+|---|---|---|
+| **Total Commercial Bank Deposits** | Fed H.8 | Aggregate deposit level |
+| **Small Bank Deposits** | Fed H.8 | Regional bank specific |
+| **Uninsured Deposit Share** | Call Reports / FDIC | Flight risk exposure |
+| **Deposit Beta (large banks)** | Calculated | Pricing power |
+
+**The SVB lesson:** Silicon Valley Bank's rapid collapse revealed deposit flight speed in the digital banking era. Uninsured deposits above 50% of total deposits combined with duration-mismatched securities portfolios is the stress configuration that led to the 2023 regional bank crisis.
+
+### Commercial Real Estate Exposure
+
+Banks hold approximately $3T of commercial real estate (CRE) loans, concentrated in regional banks. CRE is the highest-risk lending category post-COVID due to office vacancy and remote work dynamics.
+
+| **Indicator** | **Source** | **Signal** |
+|---|---|---|
+| **CRE Loan Delinquency Rate** | Fed H.8, FDIC | Loss expectations |
+| **Office Vacancy Rates** | CoStar, Cushman | Underlying collateral stress |
+| **CMBS Delinquency (CRED iQ, Trepp)** | CRED iQ / Trepp | CMBS-specific stress |
+| **Regional Bank CRE Concentration** | FFIEC Call Reports | Bank-specific exposure |
+
+### Loan Loss Provisioning
+
+Bank loan loss provisions are forward-looking estimates of expected losses. Rising provisions signal bank management anticipation of deteriorating credit quality.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| **Aggregate Loan Loss Provisions** | FFIEC | Forward-loss expectations |
+| **Net Charge-Off Rate** | FDIC | Realized losses |
+| **Allowance for Loan Losses / Loans** | FFIEC | Reserve adequacy |
+
+### Derived Banking Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **CET1 Trend** | Current - Year Ago | <-50 bps | Capital erosion |
+| **Deposit Flight (Small Banks)** | 3M Change in Small Bank Deposits | <-$50B | Regional bank stress |
+| **CRE Delinquency Direction** | 6M Change | >+50 bps | CRE stress accelerating |
+| **Provision Coverage** | Allowance / Annualized Charge-Offs | <1.5x | Under-reserved |
+
+---
+
+## L. ASSET PRICE CHANNELS (Equity Wealth, Housing Wealth, Sector Rotation)
+
+Financial conditions transmit to the real economy through asset price channels. Equity and housing wealth, sector rotation, and currency-credit linkages each carry distinct signals.
+
+### Equity Wealth Effect Channel
+
+Equity wealth effects operate through the household consumption response to stock market changes. Case-Quigley-Shiller estimates: ~2-4 cents per dollar of financial wealth change feeds into spending over 2-4 quarters.
+
+| **Indicator** | **Source** | **Use Case** |
+|---|---|---|
+| **Household Equity Holdings** | Fed Z.1 | Aggregate wealth exposure |
+| **Top-10% Equity Concentration** | Fed DFA | Distributional wealth gauge |
+| **S&P 500 1-Year Change** | Market | Coincident wealth signal |
+| **Wealth-Income Ratio** | Z.1 / BEA | Asset-price-to-income |
+
+### Housing Wealth Effect Channel
+
+Housing wealth elasticity is materially higher than financial wealth: ~5-8 cents per dollar per Carroll-Otsuka-Slacalek. Housing wealth is also more broadly distributed than equity wealth, affecting more households.
+
+| **Indicator** | **Source** | **Use Case** |
+|---|---|---|
+| **Owner Equity in Real Estate** | Fed Z.1 | Aggregate housing wealth |
+| **Case-Shiller Home Price Index** | S&P / Case-Shiller | Nominal home price trend |
+| **Zillow Home Value Index** | Zillow | Alternative nominal measure |
+| **Home Equity Extraction** | Z.1, Fannie/Freddie | Wealth-to-spending conduit |
+
+### Sector Rotation Signals
+
+Within equity markets, sector rotation provides a within-market financial conditions signal. Defensive vs cyclical performance rotates predictably across cycle stages.
+
+| **Rotation Pattern** | **Sectors Favored** | **Cycle Stage** |
+|---|---|---|
+| **Early-cycle** | Consumer Discretionary, Financials, Industrials | Expansion beginning |
+| **Mid-cycle** | Technology, Communication Services, Industrials | Growth acceleration |
+| **Late-cycle** | Energy, Materials, Financials | Inflation, tight policy |
+| **Recession** | Staples, Healthcare, Utilities | Defensive rotation |
+| **Recovery** | Discretionary, Financials, Tech | Return to risk |
+
+### Credit-Equity Relative Value
+
+Credit and equity markets often diverge before major regime changes. Credit typically leads equity in bearish rotations; equity leads credit in bullish rotations.
+
+| **Signal** | **Threshold** | **Interpretation** |
+|---|---|---|
+| **HY OAS Rising + S&P Making Highs** | 50+ bps divergence over 3 months | Credit leading equity weakness |
+| **HY OAS Tight + Equity Volatile** | Compressed spreads, rising vol | Vol priced before credit |
+| **IG Spreads Widening + Equity Stable** | 20+ bps IG widening | High-quality credit stress first |
+
+### Currency-Credit Linkages
+
+US dollar strength/weakness affects financial conditions through multiple channels: (1) EM dollar debt servicing, (2) commodity pricing, (3) foreign earnings of US multinationals, (4) global carry trade dynamics.
+
+| **Indicator** | **Source** | **FCI Impact** |
+|---|---|---|
+| **DXY Dollar Index** | ICE | Broad dollar strength |
+| **EM FX Index (J.P. Morgan EMCI)** | JPM | EM currency stress |
+| **JPY/USD** | Market | Safe-haven yen dynamics |
+| **CNY/USD** | Market | Chinese currency pressure |
+
+### Derived Asset Price Channel Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Wealth/Income Ratio (Household)** | Net Worth / DPI | >8x (historical) | Elevated but sustainable |
+| **Housing/Income Ratio** | Median Home Price / Median Income | >5x | Affordability stress |
+| **Cyclical-Defensive Equity Spread** | Cyclical YoY - Defensive YoY | <-5 ppts | Defensive rotation active |
+| **HY OAS vs S&P 500 (3M)** | Credit spread widening vs equity gains | Divergent | Credit-equity misalignment |
+| **DXY YoY% Change** | Dollar index momentum | >+8% | EM stress building |
+
+---
+
+## M. VOLATILITY COMPLEX DEEP DIVE (Cross-Asset and Regime Analysis)
+
+Volatility analysis goes beyond the VIX. Cross-asset vol relationships, skew, dispersion, and volatility regimes provide a richer signal set.
+
+### The Volatility Complex
+
+| **Indicator** | **Measures** | **Typical Range** |
+|---|---|---|
+| **VIX** | 30-day implied vol on S&P 500 | 10-40 |
+| **VIX9D** | 9-day implied vol | 10-40 (more sensitive) |
+| **VIX3M** | 3-month implied vol | 12-30 |
+| **VIX6M** | 6-month implied vol | 14-28 |
+| **VVIX** | Vol-of-vol (VIX volatility) | 80-150 |
+| **MOVE** | Treasury option vol | 60-160 |
+| **CVIX** | G7 currency vol | 5-15 |
+| **OVX** | Oil vol | 25-60 |
+| **GVZ** | Gold vol | 10-30 |
+| **CDX Credit Vol** | Credit index vol | Variable |
+
+### Skew and Tail Risk
+
+The CBOE SKEW Index measures the perceived probability of a tail event in the S&P 500 over 30 days. Higher SKEW = more tail risk priced into out-of-the-money puts.
+
+| **SKEW Level** | **Interpretation** |
+|---|---|
+| **<115** | Complacent (low tail hedging) |
+| **115-130** | Normal tail risk pricing |
+| **130-145** | Elevated tail hedging |
+| **>145** | Extreme tail risk pricing |
+
+### Vol Term Structure Regimes
+
+| **Regime** | **Structure** | **Signal** |
+|---|---|---|
+| **Contango (normal)** | VIX < VIX3M < VIX6M | Calm conditions, vol sellers profitable |
+| **Flat** | VIX ≈ VIX3M | Transition regime |
+| **Backwardation** | VIX > VIX3M > VIX6M | Acute stress |
+| **Curve Collapse** | VIX spikes toward VIX9D | Imminent event risk |
+
+### Realized vs Implied Vol
+
+The VRP (Variance Risk Premium) is the premium of implied vol over realized vol. It represents compensation for bearing vol risk.
+
+| **VRP** | **Calculation** | **Signal** |
+|---|---|---|
+| **Normal VRP** | VIX - 30D Realized > +3 | Calm, vol sellers compensated |
+| **Compressed VRP** | VIX - 30D Realized < +1 | Realized catching up to implied |
+| **Negative VRP** | VIX < 30D Realized | Stress, realized exceeds implied |
+
+### Dispersion
+
+Dispersion measures single-stock vol vs index vol. Rising dispersion reflects stock-specific risk increasing relative to systematic risk, often seen in late-cycle stock-picking environments.
+
+| **Indicator** | **Calculation** | **Signal** |
+|---|---|---|
+| **Implied Correlation** | 1 - (Index Vol / Constituent Vol) | Falling = rising dispersion |
+| **SDEX (Dispersion Index)** | CBOE index | Stock-specific risk gauge |
+
+### Cross-Asset Vol Signals
+
+| **Relationship** | **Typical Pattern** | **Divergence Signal** |
+|---|---|---|
+| **MOVE leads VIX** | MOVE rises first, VIX follows 1-2 weeks | MOVE up, VIX flat = warning |
+| **VIX vs CDX HY** | Correlated movements | Credit vol rising, VIX flat = credit stress coming |
+| **CVIX vs VIX** | Often correlated via dollar | CVIX up sharp, VIX flat = FX-driven stress |
+| **OVX vs Equity Energy** | Oil vol and XLE correlated | Divergence = structural shifts |
+
+### Derived Volatility Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **VIX Term Structure** | VIX / VIX3M | >1.0 | Backwardation (stress) |
+| **VRP (30D)** | VIX - 30D Realized | <+1 | VRP compression |
+| **MOVE/VIX Ratio** | MOVE / VIX | >6x | Bond vol leading |
+| **SKEW-Implied Tail** | SKEW - 100 | >+30 | Tail hedging elevated |
+| **Implied Correlation (SPX)** | Derived from index vol | <0.30 | High dispersion (stock-picking) |
+
+---
+
+## N. SEGMENTED FINANCIAL CONDITIONS INDEX (FCI by Channel)
+
+The aggregate FCI can be decomposed into sub-composites that isolate different channels. Sub-composite divergences are often where the actionable signal lives.
+
+### FCI Sub-Composites
+
+| **Sub-Composite** | **Key Inputs** | **Measures** |
+|---|---|---|
+| **Market-Pricing** | HY OAS, IG OAS, VIX, Equity ERP | Market-based risk pricing |
+| **Banking Channel** | SLOOS, C&I loan growth, NIM, deposit flows | Bank credit transmission |
+| **Plumbing Channel** | Reserves, RRP, SOFR-IORB, LCI | System liquidity conditions |
+| **Real-Rate Channel** | Real Fed Funds, real 10Y, 5Y5Y forward inflation | Policy restrictiveness |
+| **Asset-Price Channel** | Equity wealth, housing wealth, DXY | Wealth effect transmission |
+
+### Composite Segmented FCI
+
+```
+Segmented_FCI = 0.20 × z(-HY_OAS)                         # Market (inverted)
+              + 0.15 × z(-NFCI)                            # Market composite (inverted)
+              + 0.15 × z(SLOOS_C&I_Tightening)             # Banking
+              + 0.10 × z(-C&I_Loan_Growth_YoY)             # Banking (inverted)
+              + 0.10 × z(-LCI)                             # Plumbing (inverted)
+              + 0.10 × z(Real_Fed_Funds)                   # Real rate
+              + 0.10 × z(VIX)                              # Market vol
+              + 0.05 × z(MOVE)                             # Bond vol
+              + 0.05 × z(-DXY_YoY)                         # Dollar (inverted for asset prices)
+```
+
+**Higher segmented FCI = tighter conditions (note: sign convention opposite of traditional FCIs where loose = positive).**
+
+### Sub-Composite Divergence Patterns
+
+| **Pattern** | **Market** | **Banking** | **Plumbing** | **Real-Rate** | **Diagnosis** |
+|---|---|---|---|---|---|
+| **Unified Loose** | Loose | Loose | Ample | Accommodative | Expansion |
+| **Unified Tight** | Tight | Tight | Scarce | Restrictive | Stress |
+| **Market-Bank Divergence** | Loose | Tight | Variable | Variable | Late-cycle mispricing |
+| **Plumbing-Leading Tight** | Loose | Loose | Scarce | Neutral | Pre-stress signal |
+| **Real-Rate Isolation** | Loose | Loose | Ample | Restrictive | Policy only, transmission blocked |
+
+**Interpretation:** When sub-composites diverge, focus on which channel has typically proven leading historically. Bank-channel signals often lead market-pricing signals by 1-3 months. Plumbing signals often lead by 4-8 weeks when reserves get scarce. Market-pricing signals reflect current positioning, which can stay loose even as underlying stress builds.
+
+---
+
 ## Financial Pillar Composite Index (FCI)
 
 ### Formula

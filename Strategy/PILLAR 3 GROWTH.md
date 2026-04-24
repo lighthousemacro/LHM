@@ -592,7 +592,7 @@ Growth is exhibiting **classic late-cycle bifurcation**: aggregate data (GDP +2.
 - **Consumer hanging on** (real retail +0.2%, but barely)
 - **Headline GDP propped up** by **inventory builds**, an unsustainable contribution that reverses in 1-2 quarters
 
-**Translation:** Goods recession spreading to services. Classic pattern—manufacturing leads by 6-9 months, services follow. We're **mid-transmission**.
+**Translation:** Goods recession spreading to services is the classic pattern: manufacturing leads by 6-9 months, services follow. Mid-transmission periods are where the late-cycle bifurcation (manufacturing weak, services strong) closes one way or the other.
 
 **Cross-Pillar Confirmation:**
 - **Labor Pillar:** LFI +0.93 (fragility), quits 1.9% (pre-recessionary)
@@ -637,7 +637,7 @@ If the following occur, growth weakness is **accelerating beyond contraction ris
 
 ## Conclusion: Growth as the Macro Multiplier
 
-Growth isn't GDP. It's the **velocity of economic metabolism**—the speed at which the system converts inputs (labor, capital, innovation) into outputs (goods, services, income).
+Growth isn't GDP. It's the **velocity of economic metabolism**: the speed at which the system converts inputs (labor, capital, innovation) into outputs (goods, services, income).
 
 The current configuration is classic late-cycle: **headline stability masking sectoral fragmentation**. GDP at +2.5% looks fine until you realize:
 - **Manufacturing has been contracting for 26 months** (longest since 2008-09)

@@ -369,6 +369,320 @@ GDP business investment components show what actually happened: the lagging conf
 
 ---
 
+## I. FIRM SIZE DYNAMICS DEEP DIVE (Small vs Large)
+
+Small firms and large firms respond differently to cycles because of their different financing structures, cost flexibility, and market positions. The size-based bifurcation is often the earliest signal of business cycle stress.
+
+### The Size Hierarchy
+
+```
+LEADING (First to show stress)           LAGGING (Last to show stress)
+─────────────────────────────────────────────────────────────────────────
+Micro-firms (1-9 employees)              Large firms (500+ employees)
+Private mid-market (PE-backed)           Public large cap
+Bank-credit-dependent                    Investment-grade bond access
+Single-location operators                Multi-location, diversified
+Variable-cost dominant                   Fixed-cost dominant
+Cash-flow fragile                        Cash-reserve buffered
+```
+
+### A. Public-Private Dynamics
+
+| **Firm Category** | **Share of Private Employment** | **Primary Indicators** | **Cycle Behavior** |
+|---|---|---|---|
+| **Public Large Cap (S&P 500)** | ~30% | Quarterly earnings, buybacks, hedging | Most resilient; labor hoarding late-cycle |
+| **Public Mid Cap (S&P 400)** | ~15% | Russell 2000 earnings, smaller-firm profit cycles | Cyclically sensitive, bank and public credit access |
+| **Public Small Cap (Russell 2000)** | ~10% | Russell 2000 composite profitability | Highest equity volatility, first to see rating downgrades |
+| **Private Mid-Market** | ~20% | PE-backed firm metrics, direct lender reports | Rate-sensitive; PE buyers pull back early |
+| **Private Small Business** | ~25% | NFIB, BED, small business bankruptcies | Canary cohort; 3-6 months ahead of large cap |
+
+### B. Startup Formation and Business Dynamism
+
+| **Indicator** | **Source** | **Frequency** | **Cycle Role** |
+|---|---|---|---|
+| **Business Applications (EIN filings)** | Census BFS | Weekly | Leading indicator of future formation |
+| **High-Propensity Business Applications** | Census BFS | Weekly | Filters serious business starts |
+| **Business Formation (projected)** | Census BFS | Weekly | 4-8 quarter lead on employment |
+| **Job Creation from New Firms** | BLS BED | Quarterly | Dynamism, 7-month lag |
+| **Job Destruction from Firm Deaths** | BLS BED | Quarterly | Exit rate, 7-month lag |
+| **Net Firm Birth-Death** | BLS BED | Quarterly | Net dynamism |
+
+#### Derived Size Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Small-Large Sentiment Spread** | NFIB Z-score - CEO Confidence Z-score | <-1.0 | Small business stressed, large not yet |
+| **Small-Large Capex Spread** | Small cap capex YoY - Large cap capex YoY | <-5 ppts | Small firms cutting first |
+| **Russell 2000 vs S&P 500 Earnings** | R2K YoY - S&P YoY | <-5 ppts | Size bifurcation active |
+| **Business Application Momentum** | 3M avg - 12M avg | <0 | Formation decelerating |
+| **Private-to-Public Capex Ratio** | Estimated private capex / public capex | <Trend | Private pulling back |
+
+### C. Labor Hoarding vs Cutting
+
+Labor hoarding is when firms retain workers through a demand slowdown to avoid the cost of rehiring. Hoarding is most common at large firms with strong balance sheets; least common at small firms that lack buffer.
+
+| **Firm Size** | **Typical Hoarding Behavior** | **Cycle Implication** |
+|---|---|---|
+| **Large (500+)** | Extended hoarding (2-4 quarters) | Payrolls appear stable even as capex cuts |
+| **Mid-market (100-499)** | Moderate hoarding (1-2 quarters) | Partial retention, hours cuts first |
+| **Small (10-99)** | Limited hoarding (0-1 quarter) | Quick layoffs when revenue drops |
+| **Micro (<10)** | No hoarding | Owner-operator exit path; firm closure |
+
+**Why it matters:** Labor hoarding at large firms explains why headline payrolls can stay positive while small-business employment contracts. The aggregate masks stress concentrated at small firms. Watch the Russell 2000 vs S&P 500 employment growth spread, and the BED small-firm job destruction data, for the underlying read.
+
+---
+
+## J. INDUSTRY/SECTOR DEEP DIVE (Which Sectors Lead, Which Lag)
+
+Business cycles are rarely uniform across sectors. Some industries lead (cyclical inputs, discretionary goods), some lag (defensive services, utilities), and some are counter-cyclical (defense, staples). The industry mix determines both timing and severity of business cycle transmission.
+
+### The Sector Hierarchy
+
+```
+MOST CYCLICAL (Leading down, leading up)          LEAST CYCLICAL
+─────────────────────────────────────────────────────────────────────────
+Semiconductors / Tech Hardware
+Industrials (machinery, materials)
+Consumer Discretionary (autos, retail, travel)
+Transportation (freight, air cargo)
+Financials (banks, asset managers)
+Homebuilders / Building Products
+Chemicals / Basic Materials
+Energy
+Communication Services / Software / Media
+Consumer Staples / Food / Beverages
+Healthcare Services / Pharma
+Utilities
+Defense / Aerospace Government
+─────────────────────────────────────────────────────────────────────────
+```
+
+### Sector-Level Leading Indicators
+
+| **Sector** | **Key Leading Indicator** | **Typical Lead Time** |
+|---|---|---|
+| **Semiconductors** | Book-to-bill ratio (SEMI), inventory days | 6-12 months on broad cycle |
+| **Machinery** | Core capital goods orders (NEWORDER) | 3-6 months on capex |
+| **Autos** | Domestic auto sales (TOTALSA), J.D. Power transaction data | Coincident with consumer durables |
+| **Trucking** | Cass Freight Index, ATA Tonnage Index | 2-4 months on IP |
+| **Chemicals** | Chemical Activity Barometer (American Chemistry Council) | 3-6 months on IP |
+| **Homebuilders** | NAHB HMI, building permits, mortgage applications | 3-6 months on housing starts |
+| **Banks** | SLOOS, NIM trends, C&I loan growth | Coincident |
+| **Retail** | Same-store sales, inventory/sales ratio | Coincident |
+| **Airlines** | TSA throughput, corporate travel indices | Coincident discretionary |
+
+### Industrial Production Components
+
+| **IP Component** | **FRED Code** | **Cycle Sensitivity** |
+|---|---|---|
+| **Total Industrial Production** | INDPRO | Cyclical, follows manufacturing |
+| **Manufacturing IP** | IPMAN | Most cyclical |
+| **Durable Goods Mfg** | IPG3311S / IPDGM | Highest cyclicality |
+| **Nondurable Goods Mfg** | IPNDGM | Moderate cyclicality |
+| **Mining Production** | IPMINE | Commodity-price linked |
+| **Utility Production** | IPUTIL | Weather + baseline demand |
+| **Capacity Utilization (Total)** | TCU | <79% = slack building |
+| **Capacity Utilization (Mfg)** | MCUMFN | <77% = manufacturing slack |
+
+### Derived Industry Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Cyclical-Defensive Spread** | Cyclical sector earnings YoY - Defensive earnings YoY | <0 | Late-cycle rotation |
+| **Semi Book-to-Bill** | New semi orders / shipments | <0.95 | Demand weakening |
+| **Cass Freight YoY%** | Freight volume index | <0% | IP weakness broadening |
+| **Chemical Activity Barometer** | ACC composite | Negative 3M | Broad industrial weakness |
+| **Industrial Diffusion** | % of IP industries with YoY growth | <50% | Manufacturing contraction broad |
+
+**The Semi Canary:** Semiconductor orders (Semi Equipment book-to-bill, SEMI Association) lead the broader business cycle by 6-12 months because semiconductor capex commits to production that serves demand 12-18 months out. Book-to-bill below 0.95 is the warning; below 0.90 signals near-term order cancellation risk. The 2023-2024 tech/AI capex cycle complicates this signal because AI-linked semi demand has decoupled from traditional end-market demand.
+
+---
+
+## K. REGIONAL BUSINESS DYNAMICS (Geographic Divergence)
+
+Regional Fed manufacturing and services surveys provide early reads on sectoral business conditions and show meaningful geographic variation. Aggregate national signals often mask regional divergences that later inform where stress concentrates.
+
+### Regional Fed Survey Coverage
+
+| **Fed District** | **Manufacturing Survey** | **Services Survey** | **Regional Specialty** |
+|---|---|---|---|
+| **New York (Empire State)** | Monthly | Yes (Business Leaders) | Finance, tech, import-heavy |
+| **Philadelphia** | Monthly | Yes (Nonmanufacturing) | Diversified, long history |
+| **Richmond** | Monthly | Yes (Services) | Southeast, defense, tobacco |
+| **Kansas City** | Monthly | Yes (Services) | Plains, agriculture, energy |
+| **Dallas** | Monthly | Yes (Services) | Energy, border trade |
+| **Atlanta** | Yes (implicit in Business Inflation Survey) | Yes (BIE) | Southeast tourism, services |
+| **Chicago (Chicago PMI/MNI)** | Monthly (different provider) | No standalone | Industrial heartland |
+
+### Regional Economic Drivers
+
+| **Region** | **Key States** | **Cyclical Drivers** |
+|---|---|---|
+| **Industrial Midwest** | IL, IN, OH, MI, WI | Auto, heavy machinery, steel |
+| **Sun Belt Growth** | TX, FL, AZ, GA, NC | Construction, services, migration-driven demand |
+| **Energy Belt** | TX, OK, ND, WV, LA | Oil & gas capex, drilling activity |
+| **Tech Coast** | CA, WA, MA | Software, semiconductors, biotech |
+| **Northeast Finance** | NY, NJ, CT | Financial services, advisory |
+| **Agricultural Midwest** | IA, NE, KS, MN | Grain, livestock, food processing |
+
+### Derived Regional Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Regional Fed Average** | Avg of 5 regional Fed mfg indexes | <-5 | Broad manufacturing weakness |
+| **Regional Divergence** | StdDev of Regional Fed indexes | >15 | Uneven conditions |
+| **Energy Belt Spread** | Dallas + KC vs national | <-5 | Oil downturn active |
+| **Industrial Diffusion (regional)** | % of regional surveys <0 | >60% | Broad contraction |
+
+**The Regional Lead:** Philadelphia Fed Manufacturing Index has historically led ISM Manufacturing by 1-2 weeks due to earlier release timing, but the correlation with ISM is ~0.80 so it's an approximate preview. Empire State has higher volatility (smaller sample, NY concentration) but similar directional signal. When all five regional Fed surveys are negative simultaneously for 2+ months, broad manufacturing contraction is confirmed even before ISM reports.
+
+---
+
+## L. CORPORATE BALANCE SHEET (The Capacity to Weather Stress)
+
+Corporate balance sheet health determines how long businesses can sustain adverse conditions before layoffs, capex cuts, or restructuring. Balance sheet indicators lag fundamental business stress but capture accumulated damage.
+
+### Balance Sheet Health Indicators
+
+| **Indicator** | **Source** | **Frequency** | **Cycle Role** |
+|---|---|---|---|
+| **S&P 500 Net Debt/EBITDA** | Compustat / S&P | Quarterly | Leverage gauge |
+| **S&P 500 Interest Coverage** | Compustat | Quarterly | Debt service capacity |
+| **S&P 500 Cash & Equivalents** | Compustat | Quarterly | Liquidity buffer |
+| **Speculative-Grade Default Rate** | S&P / Moody's | Monthly | Default outcome |
+| **IG Corporate Bond Duration** | ICE / Bloomberg | Monthly | Interest-rate exposure |
+| **HY Spread to Treasuries** | ICE / Bloomberg (BAMLH0A0HYM2) | Daily | Real-time credit stress |
+| **Bankruptcy Filings (Chapter 11)** | ABI / Epiq | Monthly | Outcome metric |
+| **Credit Rating Downgrades** | S&P / Moody's | Ongoing | Forward default probability |
+
+### Corporate Debt Maturity Wall
+
+Corporate debt maturity walls represent concentrations of bonds and loans coming due in specific years. When a maturity wall coincides with tight credit conditions, refinancing stress rises. Forward tracking of the 2025-2028 maturity wall has been a particular focus since the 2020-2021 issuance boom created outsized obligations.
+
+| **Metric** | **Data Source** | **Use Case** |
+|---|---|---|
+| **IG Maturity Profile by Year** | Bloomberg / ICE | Refinancing pressure timing |
+| **HY Maturity Wall** | Bloomberg / ICE / Fitch | High-risk refinance concentration |
+| **Leveraged Loan Maturities** | LCD / PitchBook | Floating-rate refinance timing |
+| **CMBS Maturity Wall** | Trepp | Commercial real estate refi stress |
+
+### Capital Return Patterns
+
+The ratio of capital returns (buybacks + dividends) to capex signals where management is prioritizing shareholder return vs reinvestment. Extreme levels in either direction have cyclical implications.
+
+| **Ratio State** | **Capital Allocation Pattern** | **Cycle Implication** |
+|---|---|---|
+| **Buybacks >> Capex** | Shareholder-return priority | Late-cycle confidence or defensive stance |
+| **Buybacks ≈ Capex** | Balanced allocation | Mid-cycle normal |
+| **Capex >> Buybacks** | Growth investment priority | Early to mid-cycle expansion |
+| **Buybacks suspended, Capex cut** | Defensive posture | Stress signal, recession imminent |
+
+### Derived Balance Sheet Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **S&P 500 Net Leverage YoY Δ** | Current Net Debt/EBITDA - Year Ago | >+0.3 turns | Leverage building |
+| **Interest Coverage Trend** | Current ICR - 4Q Avg | <-0.5 turns | Service capacity eroding |
+| **Default Rate Direction** | 3M Δ speculative-grade default | >+0.3 ppts | Stress accelerating |
+| **HY Spread Level** | BAMLH0A0HYM2 OAS | >450 bps | Market pricing stress |
+| **Bankruptcy Filings YoY%** | ABI aggregate YoY | >+20% | Restructuring wave building |
+
+**The Leverage-Coverage Divergence:** Watch for net leverage rising while interest coverage falls. This combination means debt is accumulating faster than earnings can service it, and reflects both cyclical margin compression and structural over-leverage. In late 2006 through 2007, S&P 500 leverage rose while coverage fell, setting up the 2008 credit crisis. Similar patterns appear in late-cycle periods of 2000 and 2019.
+
+---
+
+## M. HIGH-FREQUENCY BUSINESS INDICATORS (Real-Time Pulse)
+
+Business condition data largely arrives monthly or quarterly. Higher-frequency indicators fill the gap between surveys and provide real-time reads on hiring intentions, layoff patterns, and market-based confidence.
+
+### Real-Time Hiring and Layoff Data
+
+| **Indicator** | **Source** | **Frequency** | **Lead vs Official Data** |
+|---|---|---|---|
+| **Indeed Job Postings Index** | Indeed Hiring Lab (FRED: IHLIDXUS) | Daily | Leads JOLTS openings ~6 weeks |
+| **LinkUp Job Openings** | LinkUp | Daily | Alternative postings gauge |
+| **Challenger Job Cut Announcements** | Challenger, Gray & Christmas | Monthly | Leads separations 1-3 months |
+| **WARN Act Layoff Notices** | State labor departments | Weekly | Pre-commitment layoff signal |
+| **Company Earnings Call Layoffs** | Transcript scraping | Quarterly | Management commentary |
+
+### Market-Based Business Confidence
+
+| **Indicator** | **Source** | **Frequency** | **Use Case** |
+|---|---|---|---|
+| **Russell 2000 vs S&P 500 Relative Strength** | Market data | Daily | Small vs large investor sentiment |
+| **HY Spread Level** | ICE (FRED BAMLH0A0HYM2) | Daily | Real-time credit stress |
+| **CCC Spread to BB** | Bloomberg / ICE | Daily | Within-HY quality bifurcation |
+| **Financials XLF vs S&P** | Market | Daily | Credit-conditions proxy |
+| **VIX / MOVE ratio** | Market | Daily | Equity vs rates uncertainty |
+| **Corporate bond issuance volume** | SIFMA / Bloomberg | Weekly | Primary market access |
+
+### IPO and M&A Activity
+
+| **Indicator** | **Source** | **Frequency** | **Cycle Role** |
+|---|---|---|---|
+| **IPO Count (monthly)** | Renaissance Capital / Bloomberg | Monthly | Equity issuance appetite |
+| **IPO Proceeds ($B)** | Renaissance Capital | Monthly | Capital market confidence |
+| **Withdrawn IPOs** | Renaissance Capital | Ongoing | Market-closure signal |
+| **M&A Deal Count** | Refinitiv / Bloomberg | Weekly | Strategic activity |
+| **M&A Deal Value** | Refinitiv | Weekly | Boardroom confidence |
+| **LBO Activity** | PitchBook | Monthly | Leveraged finance availability |
+
+### Real-Time Regime Thresholds
+
+| **Indicator** | **Weak** | **Stable** | **Strong** |
+|---|---|---|---|
+| **Indeed Postings Index** | <90 | 90-105 | >105 |
+| **Challenger Layoffs (monthly)** | >50k | 25-50k | <25k |
+| **HY Spread (OAS)** | >500 bps | 300-500 bps | <300 bps |
+| **Earnings Revisions Ratio** | <0.40 | 0.40-0.55 | >0.55 |
+| **Russell 2000 vs S&P 500 (3M)** | <-5% | -5% to +2% | >+2% |
+| **IPO Activity (3M avg)** | <10 | 10-30 | >30 |
+
+**The Real-Time Bridge:** During the gap between monthly ISM and quarterly SLOOS releases, use: (1) HY spreads daily for credit stress, (2) Indeed postings weekly for hiring demand, (3) Challenger announcements monthly for layoff preview, (4) Russell 2000 / S&P 500 relative strength for the small-large bifurcation pulse. This ecosystem leads official statistics by 2-6 weeks.
+
+---
+
+## N. SEGMENTED BUSINESS CONDITIONS INDEX (BCI by Cohort)
+
+The aggregate BCI can be decomposed into cohort-specific sub-composites to identify where stress is concentrated. This mirrors the Labor Pillar's Segmented LFI and the Consumer Pillar's Segmented CCI.
+
+### BCI Components by Segment
+
+| **Segment** | **Key Inputs** | **Weighting Rationale** |
+|---|---|---|
+| **Small-Business BCI** | NFIB, SLOOS small-firm, BED small-firm deaths | Leading cohort (3-6 months ahead) |
+| **Large-Cap BCI** | S&P earnings, S&P margins, earnings revisions | Lagging cohort; labor hoarding buffer |
+| **Manufacturing BCI** | ISM Mfg composite, regional Feds, IP, capex orders | Goods sector leading |
+| **Services BCI** | ISM Services composite, services employment | Services transmission indicator |
+| **Credit-Constrained BCI** | SLOOS small + HY spreads + bankruptcy filings | Financing-channel specific |
+
+### Composite Segmented BCI
+
+```
+Segmented_BCI = 0.25 × z(-NFIB_Optimism)                    # Inverted
+              + 0.20 × z(-Small_Firm_BED_Destruction)        # Inverted
+              + 0.15 × z(SLOOS_Small_Firm_Tightening)
+              + 0.15 × z(-Russell_2000_Earnings_YoY)         # Inverted
+              + 0.10 × z(-HY_CCC_Spread)                     # Inverted
+              + 0.10 × z(-Regional_Fed_Avg)                  # Inverted
+              + 0.05 × z(Bankruptcy_Filings_YoY)
+```
+
+**Higher Segmented BCI = more fragility concentrated in vulnerable cohorts.**
+
+### Segmented BCI Interpretation
+
+| **Segmented BCI** | **Aggregate BCI** | **Diagnosis** |
+|---|---|---|
+| High, Aggregate Low | Stress concentrated at small firms; large cap holding | Early-stage bifurcation |
+| High, Aggregate High | Broad-based stress; large cap participating | Late-stage cycle |
+| Low, Aggregate Low | Broad-based resilience | Expansion |
+| Low, Aggregate High | Unusual; check data | Rare configuration |
+
+**Interpretation:** When segmented BCI diverges upward from aggregate BCI, weakness is concentrated in vulnerable cohorts (small business, industrial, credit-constrained) but hasn't yet spread to large cap, services, or investment-grade firms. This is the early warning. When they converge (both elevated), the weakness has become broad-based and recession is typically 1-2 quarters away. Track the convergence, not just the levels.
+
+---
+
 ## Business Pillar Composite Index (BCI)
 
 ### Formula

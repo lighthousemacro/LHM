@@ -1261,15 +1261,15 @@ Every five years, BEA conducts a comprehensive revision that can significantly a
 
 ---
 
-## Integration with Three-Engine Framework (Corrected)
+## Integration with Three-Engine Framework
 
 ### Pillar 3 → Pillar 1 (Labor)
 
 Growth determines labor demand through the production function. When output contracts, hiring freezes, then hours cut, then layoffs.
 
-**Current Linkage:** IP contracting (-0.8% YoY) + hours falling (-1.2% YoY) = labor demand weakening. This precedes payroll declines by 2-4 months.
+**Transmission mechanics:** IP contracting combined with aggregate hours falling signals labor demand weakening. This typically precedes payroll declines by 2-4 months. Business employment decisions respond to output changes with lag because of hiring and firing costs.
 
-**Cross-Pillar Signal:** When **GCI < -0.5** (growth contracting) AND **LFI > +0.8** (labor fragile), recession probability exceeds 70% within 12 months. Current: **GCI -0.4, LFI +0.93**. Warning threshold approached.
+**Cross-Pillar Signal:** When **GCI < -0.5** (growth contracting) AND **LFI > +0.8** (labor fragile), recession probability exceeds 70% within 12 months based on post-1990 backtests. This is one of the highest-conviction cross-pillar cross-checks in the framework.
 
 ---
 
@@ -1277,9 +1277,9 @@ Growth determines labor demand through the production function. When output cont
 
 Growth determines inflation through the output gap. Slack building means pricing power fading.
 
-**Current Linkage:** Capacity utilization at 77.4% (below 79% average) signals slack building. Goods deflation already present (-1.2% CPI). Services inflation (3.0%) next to fall as growth weakness spreads.
+**Transmission mechanics:** Capacity utilization below 79% signals slack building. Goods inflation typically responds within 1-2 quarters; services inflation follows with 2-4 quarter lag as labor costs adjust.
 
-**Cross-Pillar Signal:** GCI and PCI typically move together with 2-4 quarter lag. GCI leading lower (-0.4) suggests PCI will follow (currently +0.7). Disinflation ahead.
+**Cross-Pillar Signal:** GCI and PCI typically move together with 2-4 quarter lag. When GCI weakens first, PCI typically follows with disinflation 1-2 quarters later. The Fed's reaction function tends to lag this transmission by 6-9 months due to the Fed's emphasis on realized inflation over leading indicators.
 
 ---
 
@@ -1287,9 +1287,9 @@ Growth determines inflation through the output gap. Slack building means pricing
 
 Growth affects housing through employment, income, and confidence channels.
 
-**Current Linkage:** Housing is already in recession (starts -8.2% YoY). Growth weakness reinforces the housing drag. The wealth effect reversal (falling home equity) feeds back into consumer spending.
+**Transmission mechanics:** Housing is rate-sensitive and income-sensitive. Growth weakness reinforces housing drag through reduced confidence, income, and ultimately the wealth effect reversal (falling home equity feeds back into consumer spending).
 
-**Cross-Pillar Signal:** When both **GCI < -0.3** AND **HCI < -0.5**, the housing-growth feedback loop is active. Both conditions currently met.
+**Cross-Pillar Signal:** When both **GCI < -0.3** AND **HCI < -0.5**, the housing-growth feedback loop is active. Both pillars reinforce one another through consumer wealth and employment channels.
 
 ---
 
@@ -1297,9 +1297,9 @@ Growth affects housing through employment, income, and confidence channels.
 
 Growth drives consumer health through income and employment.
 
-**Current Linkage:** Real income growth is slowing as hours contract and hiring freezes. Consumer spending (real retail +0.2%) is barely positive. The consumer is the last pillar standing.
+**Transmission mechanics:** Real income growth slows as hours contract and hiring freezes. The consumer typically holds longer than other pillars (the "last domino" framing) but eventually rolls over when income stress persists.
 
-**Cross-Pillar Signal:** When **GCI < -0.5** (growth contracting) AND **CCI < -0.3** (consumer weakening), the consumer-growth feedback loop accelerates recession. Current: GCI -0.4, CCI ~-0.2. Approaching danger zone.
+**Cross-Pillar Signal:** When **GCI < -0.5** (growth contracting) AND **CCI < -0.3** (consumer weakening), the consumer-growth feedback loop accelerates recession. Both pillars in stressed territory is the recession-confirming configuration.
 
 ---
 
@@ -1307,9 +1307,9 @@ Growth drives consumer health through income and employment.
 
 Growth drives business confidence and investment decisions.
 
-**Current Linkage:** CEO confidence (core capex orders -2.8% YoY) reflects growth pessimism. When CEOs cut investment, they're betting on future weakness, which becomes self-fulfilling.
+**Transmission mechanics:** CEO confidence and core capex orders reflect growth expectations. When CEOs cut investment, they're betting on future weakness, which becomes self-fulfilling through the business-labor-consumer loop.
 
-**Cross-Pillar Signal:** When **GCI < -0.3** AND **BCI < -0.5** (business confidence collapsed), investment drought accelerates growth contraction.
+**Cross-Pillar Signal:** When **GCI < -0.3** AND **BCI < -0.5** (business confidence collapsed), investment drought accelerates growth contraction. The feedback loop is reinforcing in both directions.
 
 ---
 
@@ -1317,9 +1317,9 @@ Growth drives business confidence and investment decisions.
 
 Growth determines credit quality and default risk.
 
-**Current Linkage:** Growth weakness → revenue declines → earnings misses → credit deterioration → spreads widen. HY spreads currently tight despite growth fragility, suggesting complacency.
+**Transmission mechanics:** Growth weakness flows to revenue declines to earnings misses to credit deterioration to spread widening. Credit markets often lag the growth signal by 1-3 months; credit-growth divergence (tight spreads while growth weakens) is a late-cycle mispricing signal.
 
-**Cross-Pillar Signal:** When **GCI < -0.5** (contraction) AND **HY OAS < 350 bps** (spreads tight), credit markets are mispricing recession risk. Current setup is close to this condition.
+**Cross-Pillar Signal:** When **GCI < -0.5** (contraction) AND **HY OAS < 350 bps** (spreads tight), credit markets are mispricing recession risk. This divergence typically resolves through spread widening, not through growth reacceleration.
 
 ---
 
@@ -1327,9 +1327,9 @@ Growth determines credit quality and default risk.
 
 Growth determines Fed policy response, which determines liquidity.
 
-**Current Linkage:** Growth weakness should prompt Fed easing. But Fed constrained by elevated inflation (PCI +0.7). Rate cuts delayed despite growth softening.
+**Transmission mechanics:** Growth weakness should prompt Fed easing, but the Fed may be constrained by elevated inflation or fiscal-dominance dynamics. Rate cuts are often delayed relative to growth softening because of the Fed's dual-mandate tradeoffs.
 
-**Cross-Pillar Signal:** When **GCI < -0.5** (contraction) AND **LCI < -0.5** (thin cushion), Fed cuts may not transmit effectively. Current: GCI -0.4, LCI -0.8. Transmission impaired.
+**Cross-Pillar Signal:** When **GCI < -0.5** (contraction) AND **LCI < -0.5** (thin cushion), Fed cuts may not transmit effectively even when delivered. Transmission is impaired when liquidity is already thin.
 
 ---
 

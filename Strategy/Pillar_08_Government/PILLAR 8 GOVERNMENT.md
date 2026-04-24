@@ -2,7 +2,7 @@
 
 ## The Fiscal Transmission Chain
 
-Government isn't just policy—it's **$6.5 trillion in annual spending** and **$35 trillion in outstanding debt**. The transmission mechanism operates through cascading fiscal impulses and crowding effects:
+Government isn't just policy. It's roughly **$6.5T in annual spending** and **$35T in outstanding debt**, numbers that continue to grow. The transmission mechanism operates through cascading fiscal impulses and crowding effects:
 
 ```
 Fiscal Policy → Deficit Spending → Treasury Issuance →

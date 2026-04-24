@@ -312,7 +312,7 @@ Business investment is the **most cyclical** GDP component. When CEOs cut capex,
 | **Durable Goods Orders YoY%** | <-3% | -3% to +5% | >+5% |
 | **Capacity Utilization** | <76% | 76-79% | >79% |
 
-**The Core Capital Goods Signal:** Core capital goods orders (nondefense, ex-aircraft) peaked in Q4 2022 at +7.2% YoY. Now at **-2.8% YoY** (Dec 2025)—negative for first time since 2020. CEOs are **cutting future production capacity**. They don't do this for fun. They do this because they expect demand to fall.
+**The Core Capital Goods Signal:** Core capital goods orders (nondefense, ex-aircraft: FRED NEWORDER) is the purest forward capex signal. Negative YoY for 3+ consecutive months indicates CEOs are cutting future production capacity. They don't do this for fun. They do this because they expect demand to weaken. The signal typically leads earnings disappointments by 2-3 quarters and GDP deceleration by 3-6 quarters.
 
 ---
 
@@ -347,7 +347,7 @@ Housing is **15-20% of GDP** (residential investment + consumer spending on hous
 | **Building Permits YoY%** | <-10% | -10% to +5% | >+5% |
 | **New Home Sales** | <500k | 500-700k | >700k |
 
-**The Housing Lead:** Housing starts peak 12-18 months before recession, trough 6-9 months before recovery. Starts peaked at 1.8M (April 2022), now at **1.38M** (Dec 2025)—down **-23% from peak**. Housing has been in recession for **20 months**. Rest of economy catching up.
+**The Housing Lead:** Housing starts historically peak 12-18 months before broad recession and trough 6-9 months before recovery. Sustained declines of 20%+ from cycle peaks, combined with rising months-of-supply and falling builder sentiment (NAHB HMI), form the durable housing recession pattern. Housing typically leads the rest of the economy because the interest-rate transmission hits housing first. See Pillar 4 for full housing diagnostics.
 
 ---
 

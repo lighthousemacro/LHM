@@ -279,7 +279,11 @@ Tax receipts are **cyclically sensitive**. They boom with profits and wages, bus
 | **Corporate Tax YoY%** | <-15% | -15% to 0% | 0% to +10% | >+10% |
 | **Receipts/GDP** | <16% | 16-17% | 17-18.5% | >18.5% |
 
-**The Revenue Gap:** Total receipts at **$4.6T** (FY2025 tracking)—up +3.2% YoY but well below spending growth (+7.8%). Receipts/GDP at **16.3%**—below 17.5% historical average. Corporate taxes volatile (capital gains dependent). The 2017 TCJA provisions expiring 2025 creates policy uncertainty. Extension = higher deficits. Expiration = tax cliff for households.
+**Revenue-Outlay Gap:** When receipts growth lags outlay growth by 3+ ppts for sustained periods, the structural deficit widens mechanically. Receipts/GDP below the 17.5% historical average combined with outlays/GDP above 22% is the modern US structural configuration. Closing that gap requires either revenue increases (tax reform), outlay cuts (entitlement reform, discretionary cuts), or nominal GDP growth outpacing spending growth.
+
+**Corporate receipt volatility:** Corporate income tax receipts are heavily influenced by capital gains realizations, tax-motivated timing, and quarterly estimated payment patterns. A single quarter's corporate receipt swing can be 30-50% without reflecting underlying profit changes. Use corporate tax receipts as a profit-cycle signal only on 12-month trailing averages.
+
+**TCJA expiration dynamics:** The 2017 Tax Cuts and Jobs Act individual provisions expire at end of 2025. Extension preserves the current receipts/GDP ratio at a higher deficit. Expiration raises receipts by roughly 0.5-1% of GDP but creates a household tax cliff. Political outcomes from this expiration directly determine the receipts/GDP baseline for 2026-2035.
 
 ---
 

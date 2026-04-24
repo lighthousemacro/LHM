@@ -46,7 +46,7 @@ By the time Stage 4 arrives, labor cracked at Stage 0 (quits peak), credit stres
 
 ### A. SPENDING FLOWS (The Core Signal)
 
-Spending is the output variable—what consumers actually do. Track it at multiple frequencies and decompositions.
+Spending is the output variable: what consumers actually do. Track it at multiple frequencies and decompositions.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

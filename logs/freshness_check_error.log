@@ -9,3 +9,4 @@
 2026-04-24 12:36:01 [INFO]   UMCSENT: refreshed (+671 obs)
 2026-04-24 12:36:02 [INFO]   MICH: refreshed (+579 obs)
 2026-04-24 12:36:02 [INFO] Freshness check done: 2 series refreshed, 1,250 obs added.
+2026-04-24 16:35:36 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

@@ -2,7 +2,7 @@
 
 ## The Financial Transmission Chain
 
-Financial conditions aren't just rates—they're the **plumbing that connects Fed policy to the real economy**. The transmission mechanism operates through cascading liquidity and credit dynamics:
+Financial conditions aren't just rates. They're the **transmission layer** between Fed policy and the real economy. The mechanism operates through cascading liquidity and credit dynamics:
 
 ```
 Fed Policy Rate → Bank Funding Costs → Credit Availability →

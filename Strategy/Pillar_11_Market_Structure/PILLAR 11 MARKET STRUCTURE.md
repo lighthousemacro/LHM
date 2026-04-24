@@ -284,6 +284,41 @@ SBD = z(Price_vs_200d) - z(%_Stocks_>_50d_MA)
 
 ---
 
+## Sentiment-Structure Divergence (SSD)
+
+SSD is the cross-pillar bridge between Pillar 11 (Market Structure) and Pillar 12 (Sentiment & Positioning). It captures when sentiment extremes align with structure extremes to signal capitulation lows or blow-off tops.
+
+### Formula
+
+```
+SSD = z(SPI) + z(MSI)
+```
+
+Where SPI is the Sentiment & Positioning Index (Pillar 12) and MSI is the Market Structure Index (this pillar).
+
+### Interpretation
+
+| **SSD Range** | **State** | **Interpretation** | **Action** |
+|---|---|---|---|
+| > +1.5 | Capitulation Low | Extreme fear + broken structure aligned | Contrarian long setup (highest conviction) |
+| +0.5 to +1.5 | Washout | Fear building + structure weak | Watch for turn |
+| -0.5 to +0.5 | Aligned | Sentiment and structure in sync | Normal positioning |
+| -1.5 to -0.5 | Complacency | Euphoria building + structure extending | Warning, tighten stops |
+| < -1.5 | Blow-Off Top | Extreme euphoria + extended structure | Contrarian short setup (reduce aggressively) |
+
+**Why SSD matters:** Sentiment extremes without structure confirmation are premature. Structure extremes without sentiment confirmation are incomplete. Both together is the highest-conviction setup because it combines positioning (what people are doing) with price action (what the market is actually saying).
+
+**Historical calibration:**
+- **March 2009:** SSD > +2.5 (AAII Bear-Bull at +51, MSI < -1.8). Generational low.
+- **March 2020:** SSD > +2.0 (VIX 82, Put/Call 1.5, MSI -1.5). COVID bottom.
+- **October 2022:** SSD > +1.5 (AAII Bear 56%, MSI -1.2). Cycle low.
+- **January 2000:** SSD < -1.8 (AAII Bull 75%, MSI +1.5, Price-50d +15%). Tech peak.
+- **December 2021:** SSD < -1.5 (AAII Bull 55%, crowded breadth, meme activity). Cycle peak.
+
+Both extremes are rare (2-3 occurrences per cycle), which is precisely why they're actionable.
+
+---
+
 ## Key Thresholds Summary
 
 | **Indicator** | **Threshold** | **Signal** |

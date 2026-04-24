@@ -165,7 +165,7 @@ Financial Conditions Indices (FCIs) synthesize rates, spreads, equities, and dol
 
 ### D. BANK LENDING & CREDIT GROWTH (The Transmission Channel)
 
-Bank lending is the **physical transmission** of financial conditions to the real economy. When banks lend, policy transmits. When banks tighten, transmission breaks.
+Bank lending is the **physical transmission** of financial conditions to the real economy. When banks lend, policy transmits. When banks tighten, the credit channel contracts and capital-dependent borrowers face higher costs or reduced access. Non-bank lenders (private credit, BDCs) have grown in importance post-2008 but bank lending remains the largest credit channel.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

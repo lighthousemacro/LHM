@@ -237,7 +237,11 @@ Equity markets transmit financial conditions through three channels: **wealth ef
 | **Equity Risk Premium** | >5% | 3.5-5% | **2.5-3.5%** | <2.5% |
 | **Breadth (% Above 200 DMA)** | <30% | 30-50% | **50-70%** | >70% |
 
-**The Valuation Stretch:** S&P 500 at **6,180** (Jan 2026), +18% YoY. Forward P/E at **21x**—above historical average (17x). Equity risk premium at **2.51%** (earnings yield 4.76% - real 10Y 2.25%)—**below historical 4% average**. Equities are **expensive relative to bonds**. Either earnings grow into the multiple, or the multiple compresses.
+**Equity Risk Premium (ERP):** Earnings yield minus real 10Y yield is the standard ERP calculation. Historical average ~4%. ERP below 3% signals equity expensiveness relative to bonds; below 2% is historically high mean-reversion risk. ERP compression during late cycles is common: rising real yields and expanding forward P/E both pressure the ERP lower. Resolution comes via either multiple compression, earnings growth, or bond yields falling.
+
+**The Breadth Divergence Pattern:** When the S&P 500 makes new highs while the equal-weight index lags and %-above-200DMA falls below 50%, narrow leadership is the signature. This pattern preceded the 1972, 1999, 2007, and 2021 market peaks by 3-9 months. Breadth leads price when narrow leadership emerges late-cycle.
+
+**Small vs large equity spread:** Russell 2000 underperforming S&P 500 persistently (by >10 ppts YoY) signals risk-off rotation within equities. Small caps are more bank-credit-dependent and less hedged, so they roll over first when financial conditions deteriorate. Watch R2K/SPX ratio for the within-equity risk signal.
 
 ---
 

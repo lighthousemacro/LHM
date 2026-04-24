@@ -383,7 +383,7 @@ FCI = 0.20 × z(-HY_OAS)                              # Inverted (tight spreads 
 ```
 
 **Component Weighting Rationale:**
-- **HY OAS (20%):** Primary risk pricing signal (inverted—tight = loose)
+- **HY OAS (20%):** Primary risk pricing signal (inverted, since tight spreads = loose conditions)
 - **NFCI (15%):** Composite conditions gauge (inverted)
 - **Yield Curve (15%):** Recession signal and term premium
 - **Real Fed Funds (15%):** Actual policy restrictiveness (inverted)

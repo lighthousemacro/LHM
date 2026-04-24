@@ -10,15 +10,15 @@ Lending Standards → Loan Growth → Business Investment →
 Hiring → Income → Spending → Fed Policy Rate (Reinforcing Loop)
 ```
 
-**The Insight:** The Fed sets the policy rate, but **financial conditions determine whether it matters**. When credit spreads are tight and banks are lending freely, restrictive policy is blunted. When spreads blow out and banks tighten standards, even neutral policy becomes contractionary. The transmission mechanism is the variable—not the rate itself.
+**The Insight:** The Fed sets the policy rate, but **financial conditions determine whether it matters**. When credit spreads are tight and banks are lending freely, restrictive policy is blunted. When spreads blow out and banks tighten standards, even neutral policy becomes contractionary. The transmission mechanism is the variable, not the rate itself.
 
-The beauty of financial data: it's **real-time and market-priced**. Credit spreads don't wait for BLS releases. Yield curves don't care about seasonal adjustments. When financial stress emerges, markets tell you immediately. The lag is in the real economy's response—not in the signal.
+The beauty of financial data: it's **real-time and market-priced**. Credit spreads don't wait for BLS releases. Yield curves don't care about seasonal adjustments. When financial stress emerges, markets tell you immediately. The lag is in the real economy's response, not in the signal.
 
 ---
 
 ## Why Financial Conditions Matter: The Transmission Multiplier
 
-Financial conditions are the **amplifier or dampener** of monetary policy. A 100 bps rate hike can be expansionary (if credit loosens) or recessionary (if credit tightens), depending on financial conditions.
+Financial conditions are the **amplifier or dampener** of monetary policy. A 100 bps rate hike can be effectively neutral (if credit loosens in offset) or significantly contractionary (if credit tightens simultaneously), depending on the full financial conditions picture.
 
 **The Cascade:**
 

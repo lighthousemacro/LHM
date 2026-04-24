@@ -640,15 +640,7 @@ If the following occur, consumer is **deteriorating beyond fatigued into crisis*
 
 The consumer isn't a leading indicator. It's the **68% of GDP that confirms what everything else already said**.
 
-When quits collapse (6-9 months before), credit stress builds (3-6 months before), and confidence craters (1-3 months before), the consumer **eventually** follows. By the time retail sales go negative, the recession is already underway.
-
-**Current State:**
-- **CCI -0.39** (Fatigued Regime)
-- **Real PCE +2.1% YoY** (decelerating, not contracting)
-- **Saving rate 4.5%** (depleted, no buffer)
-- **Credit card delinquency 3.0%** (Stage 2 stress)
-- **CB Expectations 78** (below recession threshold)
-- **Durables -1.8% YoY** (discretionary already contracting)
+When quits collapse (6-9 months before), credit stress builds (3-6 months before), and confidence craters (1-3 months before), the consumer eventually follows. By the time retail sales go negative, the recession is already underway.
 
 **The Sequence:**
 1. **Savings depleted** (Stage 1): saving rate falls below pre-pandemic norm, excess savings stock exhausted
@@ -656,11 +648,11 @@ When quits collapse (6-9 months before), credit stress builds (3-6 months before
 3. **Spending cuts** (Stage 3): durables contracting first, services rolling over
 4. **Recession confirmed** (Stage 4): real PCE YoY negative, retail sales contracting
 
-**Cross-Pillar Context:** Consumer fatigue (**CCI -0.39**) + labor fragility (**LFI +0.93**) + growth weakness (**GCI -0.4**) = **MRI +1.1** (HIGH RISK regime).
+The sequence is the forecast. Stage progression is predictable; only the speed varies.
 
-The consumer hasn't cracked. But the cracks are visible. The wealthy are holding up the aggregate. The median consumer is stressed. When the last domino falls, everyone will see what the labor data said 9 months ago.
+**Cross-Pillar Anchor:** The CCI + LFI cross-check is the framework's most reliable two-pillar recession signal. When both simultaneously exceed their stress thresholds (CCI < -0.3, LFI > +0.8), recession probability exceeds 65% within 12 months based on post-1990 backtests. Neither pillar alone suffices. Both together, sustained for 2+ quarters, is rarely wrong.
 
-**That's our view from the Watch. Until next time, we'll be sure to keep the light on....**
+The wealthy hold up the aggregate throughout most of a cycle. The median consumer is where the turn shows up first. When the last domino falls, everyone will see what the labor data said 9 months ago.
 
 ---
 

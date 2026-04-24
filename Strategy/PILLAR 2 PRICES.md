@@ -1323,6 +1323,138 @@ The Chinese deflation may reverse if tariff policies escalate. Dollar weakness c
 
 ---
 
+## Policy & Regulatory Environment
+
+Inflation is shaped by monetary policy, fiscal policy, trade policy, and energy/regulatory policy. This section catalogs the policy channels that flow into price outcomes, distinct from the Pillar 8 (Government) policy framework.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Monetary Policy (Fed Funds)** | Rate level, forward guidance, dot plots | Demand-side inflation, real rates | 6-18 months |
+| **Fed Balance Sheet (QE/QT)** | Balance sheet size, MBS/UST mix | Term premium, mortgage rates | 6-12 months |
+| **Fiscal Stimulus / Transfers** | Deficit-financed transfers, tax cuts | Demand-pull inflation | 1-4 quarters |
+| **Tariff Policy** | Import tariffs, retaliation | Goods inflation pass-through | 1-2 quarters |
+| **Energy Policy** | Strategic Petroleum Reserve, drilling permits | Energy costs, headline volatility | 1-3 quarters |
+| **OPEC Production Decisions** | Production quotas | Oil prices, headline CPI | 1-2 quarters |
+| **Immigration Policy** | Net migration, labor supply | Wage growth, services inflation | 2-4 quarters |
+| **Healthcare Policy** | ACA subsidies, drug pricing rules | Healthcare CPI | 1-2 years |
+| **Housing Supply Policy** | Zoning, federal housing programs | Shelter costs (long-run) | Multi-year |
+| **Wage and Labor Regulation** | Minimum wage, overtime rules | Services prices via labor costs | 1-2 years |
+| **Climate / ESG Policy** | Carbon pricing, energy mandates | Energy and goods prices | Multi-year |
+
+### Active Policy Risks (Inflation-Specific)
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **Fed Pivot Decisions** | Material directional impact | 50-150 bps of Fed Funds | FOMC dot plots, futures |
+| **Tariff Pass-Through** | Bullish goods CPI | 0.2-1.0% on headline depending on scope | Tariff schedules |
+| **Fiscal Consolidation Risk** | Bearish demand-side inflation | Variable | Legislative action timing |
+| **OPEC Production Cuts** | Bullish energy | $5-20/bbl moves | OPEC meeting decisions |
+| **Immigration Flow Reversal** | Bullish services wage inflation | 20-50 bps on services CPI | Policy implementation |
+| **Drug Pricing Reform** | Bearish healthcare CPI | 10-30 bps on services | CMS rulemaking |
+| **Carbon Pricing Implementation** | Bullish energy and goods | Variable | Federal/state action |
+| **Mortgage Rate Subsidies** | Bullish shelter inflation (demand-side) | Variable | Federal policy proposals |
+| **TCJA Expiration** | Variable on disposable income | ~0.5-1% of GDP | Legislative timing |
+
+**Structural vs Cyclical:** Monetary policy and fiscal policy responses are cyclical. Tariff regimes can be either. Trade policy and immigration policy have become structural since 2018-2020 shifts. Climate/ESG policy is structural (multi-decade).
+
+---
+
+## Demographics & Structural Context
+
+Inflation is anchored by structural forces beyond cyclical demand. Demographics, deglobalization, energy transition, fiscal trajectory, and AI productivity together form the "structural floor" for the post-pandemic inflation regime.
+
+### Key Structural Forces
+
+**1. Demographics and Services Inflation:** Aging population shifts spending toward services (healthcare, leisure, personal services), which are labor-intensive and exhibit lower productivity growth than goods. Healthcare per-capita spending compounds at ~5-6% vs nominal GDP at ~4%. This creates a structural services inflation floor.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Healthcare CPI vs Headline CPI | BLS | Healthcare consistently above |
+| Services Share of PCE | BEA | Rising structurally with aging |
+| Per-Capita Healthcare Spending | CMS | Rising 5-6% annually |
+
+**2. Deglobalization and Goods Inflation:** Post-2018 trade tensions and post-2020 supply chain restructuring have raised the cost of producing tradable goods. Reshoring, friend-shoring, and inventory holding all contribute to higher operating costs that flow into goods prices.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Import Price Index | BLS | Less downward pressure than pre-2020 |
+| Manufacturing Construction Spending | Census | Elevated since 2022 |
+| US Trade Balance with China | Census | Restructuring continues |
+
+**3. Energy Transition Costs:** The shift from fossil fuels to renewables creates a "green inflation" period: renewable infrastructure capex requires energy-intensive materials (copper, lithium, steel) before delivering its deflationary payoff. The transition phase is inflationary; the post-transition state is potentially deflationary.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Critical Minerals Demand | IEA | Rising sharply through 2030 |
+| Power Sector Capex | EIA, utility filings | Multi-decade buildout |
+| Energy Intensity of GDP | EIA | Variable; transition path |
+
+**4. Fiscal Dominance and Inflation:** Persistent fiscal deficits (Pillar 8 linkage) sustain demand at structural levels above what monetary policy alone can offset. Fiscal-driven aggregate demand creates a structural inflation floor higher than the pre-2020 ~2% equilibrium.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Structural Primary Deficit / GDP | CBO | Above zero, structurally |
+| Fiscal Impulse | Hutchins Center | Positive sustained = stimulus |
+
+**5. AI Productivity Question:** AI-driven productivity gains, if material, would be deflationary (more output per unit labor input). Whether these gains materialize and at what magnitude is the central uncertainty in the structural inflation outlook through 2030.
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Structural Inflation Floor** | Sum of demographic, deglobalization, fiscal, energy structural pressures | Equilibrium PCE estimate |
+| **Demographics-Services Inflation Drag** | Services CPI YoY minus core CPI YoY | Aging-driven persistent gap |
+| **Reshoring Cost Premium** | Manufacturing construction / Pre-2020 trend | Onshoring inflation contribution |
+| **Energy Transition Phase** | Critical minerals demand index | Transition cost period gauge |
+
+**Time horizon:** These structural forces operate over decades. They establish that the post-pandemic inflation equilibrium is structurally higher than the pre-pandemic ~2% baseline. The "last mile" of disinflation is structural, not cyclical, which is why services inflation has resisted disinflation despite goods CPI normalizing.
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Disinflation Triggers
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Core PCE YoY%** | Below 2.5% | {{WATCH_CORE_PCE}} | Approaching Fed target |
+| **Supercore (Services ex-Shelter)** | Below 3% | {{WATCH_SUPERCORE}} | Wage transmission easing |
+| **Shelter CPI YoY%** | Below 4% | {{WATCH_SHELTER}} | Lag finally working through |
+| **Wage Growth (ECI)** | Below 4% YoY | {{WATCH_ECI}} | Labor cost pressure easing |
+| **5Y5Y Forward Inflation** | Below 2.3% | {{WATCH_5Y5Y}} | Long-run expectations anchored |
+| **Atlanta Fed Sticky CPI** | Below 3.5% | {{WATCH_STICKY}} | Persistent component improving |
+| **PCI Composite** | Below 0 | {{WATCH_PCI_LOW}} | Inflation regime normalizing |
+| **Trimmed Mean PCE** | Below 2.5% | {{WATCH_TRIMMED}} | Broad-based moderation |
+
+### Bearish Inflation Triggers (Re-Acceleration)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Headline CPI YoY%** | Above 4% | {{WATCH_HEADLINE_HIGH}} | Re-acceleration |
+| **Core PCE YoY%** | Above 3.5% | {{WATCH_CORE_PCE_HIGH}} | Sustained sticky inflation |
+| **Supercore** | Above 4.5% | {{WATCH_SUPERCORE_HIGH}} | Wage spiral risk |
+| **5Y5Y Forward Inflation** | Above 2.6% | {{WATCH_5Y5Y_HIGH}} | Expectations de-anchoring |
+| **Wage Growth (ECI)** | Above 4.5% YoY | {{WATCH_ECI_HIGH}} | Labor cost spiral |
+| **Energy CPI Surge** | Above 10% YoY | {{WATCH_ENERGY}} | Headline shock |
+| **Tariff Pass-Through** | Goods CPI accelerating from negative | {{WATCH_TARIFF}} | Trade war inflation |
+| **PCI Composite** | Above +1.0 | {{WATCH_PCI_HIGH}} | High inflation regime |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **AI Productivity Gains Confirmed** | TFP growth above 2% sustained | Structural disinflation pathway |
+| **Reshoring Plateau** | Manufacturing construction YoY rolling over | Goods inflation pressure easing |
+| **OPEC+ Discipline Break** | Production cuts ending | Energy-driven CPI normalization |
+| **Healthcare Policy Reform** | Drug pricing rule implementation | Medical CPI structural break |
+| **Demographic Transition Acceleration** | 65+ share rising faster | Healthcare/services inflation pressure |
+| **Climate Policy Implementation** | Carbon pricing or major mandates | Energy/goods inflation regime shift |
+| **Fed Inflation Target Change** | Move from 2% to higher target | Structural regime acknowledgment |
+
+---
+
 ## Conclusion: The "Last Mile" is Structural, Not Cyclical
 
 Inflation isn't a number. It's a **regime**. And the regime has changed.

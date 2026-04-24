@@ -2,7 +2,7 @@
 
 ## The Market Structure Transmission Chain
 
-Market structure isn't just price action. It's the mathematical verdict on whether risk is being rewarded. Structure is where all 10 fundamental pillars get priced—it's the market's ruling on labor, liquidity, credit, and everything else.
+Market structure isn't just price action. It's the mathematical verdict on whether risk is being rewarded. Structure is where all 10 fundamental pillars get priced. It's the market's real-time ruling on labor, liquidity, credit, and everything else.
 
 ```
 Trend Integrity → Momentum Confirmation → Breadth Participation →

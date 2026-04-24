@@ -287,7 +287,7 @@ Volatility measures **uncertainty and risk compensation**. Low vol reflects eith
 
 ### G. REAL RATES (The True Policy Stance)
 
-Real rates are the **inflation-adjusted** cost of money. The Fed sets nominal rates; real rates determine actual restrictiveness.
+Real rates are the **inflation-adjusted** cost of money. The Fed sets nominal rates; real rates determine actual restrictiveness. TIPS (Treasury Inflation-Protected Securities) yields are the cleanest market-based measure of real rates, with 5Y and 10Y TIPS being the most liquid reference points.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -316,13 +316,17 @@ Real rates are the **inflation-adjusted** cost of money. The Fed sets nominal ra
 | **Real 10Y** | <0.5% | 0.5-1.5% | **1.5-2.5%** | >2.5% |
 | **5Y5Y Forward** | <2.0% | 2.0-2.3% | **2.3-2.6%** | >2.6% |
 
-**The Real Rate Bite:** Real Fed Funds at **+1.15%** (Fed Funds 4.35% - Core PCE 3.2%)—**restrictive** but not severely so. Real 10Y at **+2.25%** (10Y 4.60% - breakeven 2.35%)—**175 bps above pre-pandemic average**. This is the **headwind** for long-duration assets: housing, growth stocks, crypto. Real rates are doing the work even as financial conditions stay loose.
+**Real Rate Regime Identification:** Real Fed Funds above +1% is restrictive; above +2% is very restrictive. The neutral real rate (r*) is estimated between 0.5-1% per Laubach-Williams and Holston-Laubach-Williams models. Real Fed Funds minus estimated r* gives the effective policy stance.
+
+**Real 10Y vs r*:** The 10-year real yield captures long-run restrictiveness beyond short-term policy. Real 10Y above +2% is materially above the 2010-2019 average (near zero) and provides sustained headwind to long-duration assets: real estate (via cap rates), growth equities (via discount rate), and rate-sensitive cyclicals. The real 10Y matters more for long-horizon asset pricing than the Fed Funds rate.
+
+**Breakeven Inflation as Fed Credibility Gauge:** 5Y5Y forward breakeven inflation (T5YIFR) is the Fed's preferred long-run inflation expectations anchor. Stability in this measure signals anchored expectations. 5Y5Y above 2.5% or below 1.5% reflects de-anchoring risk. The Fed speaks to this measure in policy communications.
 
 ---
 
 ### H. PLUMBING & LIQUIDITY (The System's Circulatory System)
 
-Fed plumbing determines how policy transmits through the banking system. Reserves, RRP, and dealer balance sheets are the pipes.
+Fed plumbing determines how policy transmits through the banking system. Reserves, RRP, dealer balance sheets, and funding market spreads are the pipes. This section overlaps with Pillar 10 (Plumbing) but focuses on the financial conditions channel rather than the plumbing mechanics themselves.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

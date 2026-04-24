@@ -322,7 +322,11 @@ The consumer's ability to spend depends on net worth (assets minus liabilities).
 | **Net Worth / DPI** | <600% | 600-750% | 750-850% | >850% |
 | **Home Equity Share** | <20% | 20-35% | 35-50% | >50% |
 
-**The Wealth Bifurcation:** Aggregate household net worth at **$160T** (Q3 2025)—near record highs. But distribution is severely skewed: top 10% hold 67% of wealth. Bottom 50% have **negative net worth** on average. The "strong consumer" is the wealthy consumer. The median consumer is stressed. Aggregate data masks the bifurcation.
+**The Wealth Bifurcation Problem:** Aggregate household net worth routinely sits near record highs throughout cycles, including late-cycle periods. The problem is distribution. The top 10% hold roughly two-thirds of household wealth. The bottom 50% hold near-zero or negative net worth on average. When media or sell-side commentary cite "strong consumer balance sheet" using aggregate data, they are describing the top decile. The median consumer's balance sheet is tight.
+
+This matters because the **marginal propensity to consume (MPC) is inversely correlated with wealth**. The bottom quintile spends 95%+ of each additional dollar. The top quintile spends 30-40%. Aggregate wealth is held by low-MPC households; aggregate spending is driven by high-MPC households. When bottom-quintile income or credit access tightens, spending drops fast even though aggregate wealth is "fine."
+
+**The Kaplan-Violante HtM framework:** Research by Kaplan, Violante, and Weidner identifies "hand-to-mouth" households (both poor HtM and wealthy HtM who hold wealth in illiquid assets). Roughly 30% of US households are HtM and have MPCs of 15-25 cents per dollar on income shocks versus 5-10 cents for non-HtM. This is why the consumer can appear strong in aggregate right up to the moment it isn't.
 
 ---
 
@@ -402,15 +406,7 @@ CCI = 0.25 × z(Real_PCE_YoY)
 | **Dec 2023** | +0.4 | Neutral | Savings depleting |
 | **Dec 2025** | **-0.3** | **Fatigued** | **Stage 2 stress (credit)** |
 
-**Current Assessment (Feb 2026):** CCI at **-0.39** places the consumer in "Neutral/Fatigued" regime—not collapsing, but running on fumes:
-- **Real PCE at +2.1% YoY** (positive but decelerating)
-- **Saving rate at 4.5%** (below 5.5% stress threshold)
-- **Credit card delinquency at 3.0%** (highest since 2012)
-- **CB Expectations at 78** (below 80 recession threshold)
-- **Real DPI at +1.2% YoY** (barely keeping pace with spending)
-- **Debt service ratio at 10.8%** (elevated but not crisis)
-
-The consumer hasn't cracked yet. But the cracks are visible.
+**Current reading:** see "Current State Assessment Template" section below for the live CCI value, component scores, and regime classification.
 
 ---
 
@@ -479,7 +475,7 @@ Consumer Spending ↓ → Demand Falls → Pricing Power ↓ → Inflation ↓
 
 ### Pillar 5 → Pillar 3 (Growth)
 
-Consumer is **68% of GDP**—the dominant growth driver:
+Consumer is **68% of GDP**, the dominant growth driver:
 
 ```
 Consumer Spending Growth → PCE Contribution to GDP →

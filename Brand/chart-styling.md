@@ -1,8 +1,6 @@
 # Lighthouse Macro — Chart Styling Specification
 
-**Version:** 4.0 (2026 Signature Palette + White Primary)
-**Last Updated:** February 23, 2026
-**Purpose:** Canonical reference for all Lighthouse Macro chart generation. Update this file when standards change.
+**Version:** 4.0 (2026 Signature Palette + White Primary) **Last Updated:** February 23, 2026 **Purpose:** Canonical reference for all Lighthouse Macro chart generation. Update this file when standards change.
 
 ---
 
@@ -18,24 +16,13 @@ All educational, research, and deck charts follow this format unless explicitly 
 
 ### Figure-Level Branding
 
-| Element | Position | Style |
-|---|---|---|
-| **Lighthouse icon** | Top-left corner | 128px PNG, transparent bg, ~0.018 figure width |
-| **LIGHTHOUSE MACRO** | Top-left, right of icon | Ocean `#2389BB`, bold, fontsize 13, x=0.035 |
-| **Date** | Top-right | Muted color, fontsize 11, `%B %d, %Y` format |
-| **Top accent bar** | Below watermarks | Ocean 2/3, Dusk 1/3, height 0.004 |
-| **Bottom accent bar** | Above footer | Mirror of top bar |
-| **MACRO, ILLUMINATED.** | Bottom-right | Ocean `#2389BB`, bold italic, fontsize 13 |
-| **Source line** | Bottom-left | Muted, italic, fontsize 9, format: `Lighthouse Macro | {Source}; mm.dd.yyyy` |
+ElementPositionStyle**Lighthouse icon**Top-left corner128px PNG, transparent bg, \~0.018 figure width**LIGHTHOUSE MACRO**Top-left, right of iconOcean `#2389BB`, bold, fontsize 13, x=0.035**Date**Top-rightMuted color, fontsize 11, `%B %d, %Y` format**Top accent bar**Below watermarksOcean 2/3, Dusk 1/3, height 0.004**Bottom accent bar**Above footerMirror of top bar**MACRO, ILLUMINATED**.Bottom-rightOcean `#2389BB`, bold italic, fontsize 13**Source line**Bottom-leftMuted, italic, fontsize 9, format: \`Lighthouse Macro
 
 **Note:** Branding elements (watermarks, accent bars) always use Ocean/Dusk regardless of theme. They are not theme-driven.
 
 ### Title & Subtitle
 
-| Element | Style |
-|---|---|
-| **Title** | fontsize 15, bold, centered, `y=0.945`, theme foreground color |
-| **Subtitle** | fontsize 14, italic, Ocean `#2389BB` (always Ocean, not theme-driven), centered, `y=0.895` |
+ElementStyle**Title**fontsize 15, bold, centered, `y=0.945`, theme foreground color**Subtitle**fontsize 14, italic, Ocean `#2389BB` (always Ocean, not theme-driven), centered, `y=0.895`
 
 ### Subplot Margins (fig.subplots_adjust)
 
@@ -62,7 +49,7 @@ if os.path.exists(ICON_PATH):
 ```
 
 - Icon file: `Brand/icon_transparent_128.png` (128x290px, RGBA, transparent background)
-- Sized to ~0.018 figure width, aspect-ratio preserved
+- Sized to \~0.018 figure width, aspect-ratio preserved
 - Positioned top-left, vertically centered with "LIGHTHOUSE MACRO" text
 - `os.path.exists` guard so charts still render if icon is missing
 
@@ -88,18 +75,7 @@ bbar.set_xlim(0, 1); bbar.set_ylim(0, 1); bbar.axis('off')
 
 These are the standard helper functions used by all chart scripts. They encapsulate the styling rules below.
 
-| Function | Purpose | Key Parameters |
-|---|---|---|
-| `new_fig(figsize=(14, 8))` | Creates figure with theme background and standard margins | `figsize` |
-| `style_ax(ax, right_primary=True)` | Core spine/grid styling. Sets all 4 spines visible at 0.5pt, grid off, tick colors. `right_primary=True` puts ticks on RHS | `right_primary` |
-| `style_dual_ax(ax1, ax2, c1, c2)` | Full dual-axis styling: calls `style_ax`, colors tick labels to series, applies `%.1f` formatters, kills all tick marks | `c1` (LHS color), `c2` (RHS color) |
-| `style_single_ax(ax)` | Full single-axis styling: calls `style_ax(right_primary=True)`, kills tick marks, applies `%.1f` formatter | None |
-| `set_xlim_to_data(ax, idx)` | Sets x-axis limits with 30-day left and 180-day right padding | `idx` (DatetimeIndex) |
-| `brand_fig(fig, title, subtitle, source)` | Applies all figure-level branding (watermarks, bars, title) | `title`, `subtitle`, `source` |
-| `add_last_value_label(ax, y_data, color, ...)` | Adds colored pill on axis edge | `fmt`, `side`, `fontsize`, `pad` |
-| `add_annotation_box(ax, text, x, y)` | Adds takeaway box in dead space | `x=0.52`, `y=0.92` defaults |
-| `add_recessions(ax, start_date)` | Adds recession shading bands | `start_date` (optional filter) |
-| `legend_style()` | Returns legend kwargs dict | None |
+FunctionPurposeKey Parameters`new_fig(figsize=(14, 8))`Creates figure with theme background and standard margins`figsizestyle_ax(ax, right_primary=True)`Core spine/grid styling. Sets all 4 spines visible at 0.5pt, grid off, tick colors. `right_primary=True` puts ticks on RHS`right_primarystyle_dual_ax(ax1, ax2, c1, c2)`Full dual-axis styling: calls `style_ax`, colors tick labels to series, applies `%.1f` formatters, kills all tick marks`c1` (LHS color), `c2` (RHS color)`style_single_ax(ax)`Full single-axis styling: calls `style_ax(right_primary=True)`, kills tick marks, applies `%.1f` formatterNone`set_xlim_to_data(ax, idx)`Sets x-axis limits with 30-day left and 180-day right padding`idx` (DatetimeIndex)`brand_fig(fig, title, subtitle, source)`Applies all figure-level branding (watermarks, bars, title)`title`, `subtitle`, `sourceadd_last_value_label(ax, y_data, color, ...)`Adds colored pill on axis edge`fmt`, `side`, `fontsize`, `padadd_annotation_box(ax, text, x, y)`Adds takeaway box in dead space`x=0.52`, `y=0.92` defaults`add_recessions(ax, start_date)`Adds recession shading bands`start_date` (optional filter)`legend_style()`Returns legend kwargs dictNone
 
 ---
 
@@ -112,11 +88,13 @@ These are the standard helper functions used by all chart scripts. They encapsul
 - **No rotated y-axis label text** — the pills and colored tick labels tell the story
 
 ### White Theme Spine Color (Primary)
+
 ```python
 'spine': '#898989'   # Doldrums
 ```
 
 ### Dark Theme Spine Color (Optional)
+
 ```python
 'spine': '#1e3350'
 ```
@@ -126,11 +104,13 @@ These are the standard helper functions used by all chart scripts. They encapsul
 ## Dual-Axis Charts
 
 ### Axis Assignment
+
 - **RHS = Primary = Ocean (the "star" series). ALWAYS.**
 - **LHS = Secondary = Dusk. ALWAYS.**
 - Tick labels colored to match their series (Ocean RHS, Dusk LHS)
 
 ### Styling Flow
+
 ```python
 # Option A: Use the helper (handles everything)
 style_dual_ax(ax1, ax2, c1=c_secondary, c2=c_primary)
@@ -151,6 +131,7 @@ ax2.yaxis.set_tick_params(which='both', left=False)
 ```
 
 ### Same-Scale Dual-Axis (Matched Y-Limits)
+
 When both series are in the same units (e.g. both % YoY), match y-limits so scales are identical:
 
 ```python
@@ -164,6 +145,7 @@ ax2.set_ylim(all_min - pad, all_max + pad)
 Use same-scale when series are directly comparable (goods vs services, headline vs core, etc.).
 
 ### Independent-Scale Dual-Axis
+
 When series have different magnitudes or units, compute padding independently per axis:
 
 ```python
@@ -176,6 +158,7 @@ ax2.set_ylim(s2.min() - pad2, s2.max() + pad2)
 Use independent scales for lead/lag comparisons, shifted series, or different unit types.
 
 ### Combined Legend (Dual-Axis)
+
 ```python
 lines1, labels1 = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
@@ -214,14 +197,11 @@ def add_last_value_label(ax, y_data, color, fmt='{:.1f}%', side='right', fontsiz
 ```
 
 ### Parameters
-| Param | Default | When to Override |
-|---|---|---|
-| `fmt` | `'{:.1f}%'` | Use `'{:.2f}'` for z-scores (no %), `'{:.0f}%'` for integer-scale charts |
-| `fontsize` | `9` | Use `7` for cramped multi-pill charts (e.g. 3+ series on one axis) |
-| `pad` | `0.3` | Use `0.2` for smaller pills when space is tight |
-| `side` | `'right'` | Use `'left'` for secondary axis (LHS) on dual-axis charts |
+
+ParamDefaultWhen to Override`fmt'{:.1f}%'`Use `'{:.2f}'` for z-scores (no %), `'{:.0f}%'` for integer-scale charts`fontsize9`Use `7` for cramped multi-pill charts (e.g. 3+ series on one axis)`pad0.3`Use `0.2` for smaller pills when space is tight`side'right'`Use `'left'` for secondary axis (LHS) on dual-axis charts
 
 ### Legend Labels
+
 - Always include last value in legend label: `f'Core PCE ({val:.1f}%)'`
 - Smoothed series should show the smoothed value (not raw) in both legend and pill
 
@@ -240,7 +220,7 @@ This creates breathing room between the end of the data lines and the right spin
 
 ## Data Handling
 
-- **Always `dropna()` before plotting** to prevent line breaks at NaN gaps
+- **Always** `dropna()` **before plotting** to prevent line breaks at NaN gaps
 - FRED data frequently has sporadic NaN values that create orphaned data points
 - **Quarterly data** (e.g. ECI): forward-fill to monthly frequency before plotting
 - **Volatile series:** Smooth with 3-month moving average where appropriate (e.g. UMich expectations, dollar YoY)
@@ -257,30 +237,37 @@ ax.plot(g_plot.index, g_plot, ...)
 ## Reference Lines
 
 ### Zero Line (Fog)
+
 ```python
 ax.axhline(0, color='#D1D1D1', linewidth=0.8, alpha=0.5, linestyle='--')
 ```
+
 Full-width dashed ghost line. Use `#D1D1D1` (Fog) for standard zero lines.
 
 **Note:** Some charts use `THEME['muted']` for the zero line (e.g. composite z-score charts where the zero line should match the axis text). Either is acceptable, but prefer Ref for YoY% charts and theme muted for z-score charts.
 
 ### 2% Target Line (Venus)
+
 ```python
 ax.axhline(2, color='#FF2389', linewidth=1.0, alpha=0.7, linestyle='--')
 ax.text(x, 2.05, '2% Target', color='#FF2389', fontsize=8, ha='left', va='bottom')
 ```
+
 Use on charts where the Fed's 2% target is relevant (inflation measures, PCE, sticky CPI, etc.).
 
 **Label positioning:** Use `ax.get_yaxis_transform()` for x-coordinate when you want labels anchored to the y-axis data value:
+
 ```python
 ax.text(0.02, 2.15, '2% Target', fontsize=8, color='#FF2389',
         alpha=0.7, style='italic', transform=ax.get_yaxis_transform())
 ```
 
 ### 3% Danger Zone (Sea)
+
 ```python
 ax.axhline(3, color='#00BB89', linewidth=1.0, alpha=0.7, linestyle='--')
 ```
+
 Use on expectations charts where 3% is the de-anchoring threshold.
 
 ---
@@ -306,14 +293,10 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
 - **CRITICAL: All annotation text must be dynamic** — use f-strings with live data values. Never hardcode numbers.
 
 ### Position Guidelines
+
 Override `x` and `y` to place the box in the largest empty area:
 
-| Scenario | Suggested Position |
-|---|---|
-| Data heavy on left, empty right-top | `x=0.52, y=0.92` (default) |
-| Data heavy on top, empty bottom | `x=0.52, y=0.12` |
-| Data heavy on right, empty left-top | `x=0.35, y=0.92` |
-| Centered data, empty corners | `x=0.45, y=0.92` |
+ScenarioSuggested PositionData heavy on left, empty right-top`x=0.52, y=0.92` (default)Data heavy on top, empty bottom`x=0.52, y=0.12`Data heavy on right, empty left-top`x=0.35, y=0.92`Centered data, empty corners`x=0.45, y=0.92`
 
 Always verify visually that the box does not overlap data, legend, recession shading, or pills.
 
@@ -339,6 +322,7 @@ ax.text(0.98, 1.75, 'CRISIS', transform=ax.get_yaxis_transform(),
 ```
 
 ### Regime Chart Specifics
+
 - Use `style_single_ax(ax)` (single axis, ticks on RHS)
 - Y-axis formatter: `f'{x:.1f}'` (no % sign for z-scores)
 - Pill format: `fmt='{:.2f}'` (two decimal places, no %)
@@ -383,34 +367,12 @@ ax.legend(loc='upper left', **legend_style())
 **UPDATED (Feb 2026):** Ocean `#2389BB` is PRIMARY for BOTH themes. White theme is primary publication format.
 
 ### White Theme (Primary)
-| Role | Color | Hex |
-|---|---|---|
-| Primary series | Ocean | `#2389BB` |
-| Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#23BBFF` |
-| Quaternary series | Sea | `#00BB89` |
-| Accent | Venus | `#FF2389` |
-| Background | White | `#ffffff` |
-| Foreground text | Dark | `#1a1a1a` |
-| Muted text | Gray | `#555555` |
-| Spine | Doldrums | `#898989` |
-| Legend bg | Light | `#f8f8f8` |
-| Legend fg | Dark | `#1a1a1a` |
+
+RoleColorHexPrimary seriesOcean`#2389BB`Secondary seriesDusk`#FF6723`Tertiary seriesSky`#23BBFF`Quaternary seriesSea`#00BB89`AccentVenus`#FF2389`BackgroundWhite`#ffffff`Foreground textDark`#1a1a1a`Muted textGray`#555555`SpineDoldrums`#898989`Legend bgLight`#f8f8f8`Legend fgDark`#1a1a1a`
 
 ### Dark Theme (Optional)
-| Role | Color | Hex |
-|---|---|---|
-| Primary series | Ocean | `#2389BB` |
-| Secondary series | Dusk | `#FF6723` |
-| Tertiary series | Sky | `#23BBFF` |
-| Quaternary series | Sea | `#00BB89` |
-| Accent | Venus | `#FF2389` |
-| Background | Dark Navy | `#0A1628` |
-| Foreground text | Light | `#e6edf3` |
-| Muted text | Gray | `#8b949e` |
-| Spine | Dark Blue | `#1e3350` |
-| Legend bg | Dark Blue | `#0f1f38` |
-| Legend fg | Light | `#e6edf3` |
+
+RoleColorHexPrimary seriesOcean`#2389BB`Secondary seriesDusk`#FF6723`Tertiary seriesSky`#23BBFF`Quaternary seriesSea`#00BB89`AccentVenus`#FF2389`BackgroundDark Navy`#0A1628`Foreground textLight`#e6edf3`Muted textGray`#8b949e`SpineDark Blue`#1e3350`Legend bgDark Blue`#0f1f38`Legend fgLight`#e6edf3`
 
 ### Full Theme Dictionary
 
@@ -492,7 +454,7 @@ fig.savefig(path, dpi=200, bbox_inches='tight', pad_inches=0.025,
 ```
 
 - **DPI**: 200
-- **No `tight_layout()`** — conflicts with accent bar axes
+- **No** `tight_layout()` — conflicts with accent bar axes
 - Use `bbox_inches='tight'` with `pad_inches=0.025`
 
 ---
@@ -517,28 +479,20 @@ Output structure:
 
 ## Signature 8-Color Palette (Quick Reference)
 
-| Name | Hex | Mnemonic | Usage |
-|---|---|---|---|
-| **Ocean** | `#2389BB` | 23+89+BB | Primary data, borders, branding |
-| **Dusk** | `#FF6723` | 23 | Secondary series, accent bar, CTAs |
-| **Sky** | `#23BBFF` | BB | Tertiary data lines |
-| **Venus** | `#FF2389` | 23+89 | 2% target lines, critical alerts |
-| **Sea** | `#00BB89` | BB+89 | Regime bands, on-target zones |
-| **Doldrums** | `#898989` | 89+89 | Spines, labels, structural gray |
-| **Starboard** | `#238923` | 23+89 | Bullish regime |
-| **Port** | `#892323` | 89+23 | Bearish regime, crisis bands |
-| **Fog** | `#D1D1D1` | D1+D1 | Zero lines, ghost references |
+NameHexMnemonicUsage**Ocean**`#2389BB`23+89+BBPrimary data, borders, branding**Dusk**`#FF6723`23Secondary series, accent bar, CTAs**Sky**`#23BBFF`BBTertiary data lines**Venus**`#FF2389`23+892% target lines, critical alerts**Sea**`#00BB89`BB+89Regime bands, on-target zones**Doldrums**`#898989`89+89Spines, labels, structural gray**Starboard**`#238923`23+89Bullish regime**Port**`#892323`89+23Bearish regime, crisis bands**Fog**`#D1D1D1`D1+D1Zero lines, ghost references
 
 ---
 
 ## Reference Implementation
 
 The canonical implementation of this spec lives in:
+
 ```
 /Users/bob/LHM/Scripts/utilities/lighthouse_chart_style.py
 ```
 
 For the TT research deck implementation:
+
 ```
 /Users/bob/LHM/Scripts/chart_generation/tt_research_charts.py
 ```
@@ -548,13 +502,13 @@ For the TT research deck implementation:
 ## PDF Generation
 
 Branded PDFs follow the style established in:
+
 ```
 /Users/bob/LHM/Scripts/generate_two_books_pdf.py  (canonical PDF style)
 /Users/bob/LHM/Scripts/chart_generation/prices_edu_pdf.py  (educational article PDF)
 ```
 
 Key elements: full-width Ocean/Dusk header bar with white text, matching thin footer bar, Ocean `#2389BB` H1/H2 headings, Ocean table headers with white text, justified body at 10pt. Open PDFs with PDF Expert.
-
 
 ---
 

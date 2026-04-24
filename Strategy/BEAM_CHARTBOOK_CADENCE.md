@@ -199,11 +199,22 @@ Step 3 (later): The full pipeline (scout → select → render → QC → hold-f
 
 ## Rules of thumb
 
-- **Never write Thursday's Beam on Tuesday.** If it needs to be written that far ahead, it's not a Beam, it's a Beacon.
+- **Never write Thursday's Beam on Tuesday.** If it needs to be written that far ahead, it is a Beacon, not a Beam.
 - **The synthesis surfaces, Bob selects.** Never let the model pick the topic autonomously. The framework has taste; the human has judgment.
 - **If the overnight data moves, the Beam moves.** A 6:30am scramble to re-angle is better than publishing a stale read.
-- **The thesis must be invalidate-able.** If we can't write "what would change our mind," we don't publish.
-- **Beams are tactical, Beacons are strategic.** Beams run hot and fast against the news flow. Beacons build the framework. Chartbooks show the framework in action.
+- **The thesis must be invalidate-able.** If we cannot write "what would change our mind," we do not publish.
+- **Beams run hot and fast against the news flow.** Beacons build the framework. Chartbooks show the framework in action.
+
+## Voice rules (carried across all formats)
+
+Non-negotiable for every draft the synthesis feeds to `lhm-content-engine`:
+
+- **No emdashes.** Commas, periods, colons, parentheses, ellipses.
+- **No "Not X, it's Y" construction.** Zero instances per piece. Never as a closer. Rewrite with direct assertion or a complete contrast.
+- **No Two Books language** in public copy until PiTrade is live.
+- **The Beam / The Beacon / The Chartbook / The Horizon** — always with the definite article in reader-facing bylines.
+- **"We" frame** — "we track," "we are seeing." Never "the data shows."
+- **Strong views weakly held.** Every piece has explicit invalidation criteria.
 
 ---
 

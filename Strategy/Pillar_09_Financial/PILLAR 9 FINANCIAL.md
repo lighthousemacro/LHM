@@ -415,19 +415,7 @@ FCI = 0.20 × z(-HY_OAS)                              # Inverted (tight spreads 
 | **Oct 2022** | -0.6 | Tight | SVB stress building |
 | **Dec 2025** | **+0.3** | **Neutral** | **Divergent signals** |
 
-**Current Assessment (Dec 2025):** FCI at **+0.3** places financial conditions in "Neutral" regime—but with **significant internal divergence**:
-- **HY OAS at 290 bps** → Very loose (3rd percentile)
-- **NFCI at -0.42** → Loose (below average)
-- **Real Fed Funds at +1.15%** → Restrictive
-- **LCI at -0.8** → Tight (thin liquidity cushion)
-- **VIX at 14.2** → Loose (below average)
-- **SLOOS +38% tightening** → Tight (banks restricting)
-
-The composite says "neutral," but the **components are screaming different things**. This is unstable. Resolution will come through either:
-1. Spreads widening to match real rate restrictiveness, OR
-2. Fed cutting to match spread looseness
-
-We expect #1.
+**Current reading:** see "Current State Assessment Template" section below for the live FCI value, component scores, and regime classification.
 
 ---
 

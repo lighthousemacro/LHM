@@ -201,7 +201,13 @@ Treasury issuance is the **supply side** of the bond market. When issuance excee
 | **Avg Auction Tail (10Y)** | >3 bps | 1-3 bps | 0-1 bps | Negative |
 | **Bid-to-Cover (10Y)** | <2.3 | 2.3-2.5 | 2.5-2.7 | >2.7 |
 
-**The Issuance Tsunami:** Q1 2026 net borrowing estimate: **$680B**. FY2026 total: **$2.1T**. Bills at 21% of marketable debt (down from 24% peak, Treasury extending duration). Recent 10Y auctions tailing by **2-3 bps** consistently—weak demand. Primary dealer take-down elevated at **18%** (vs 12% historical)—dealers forced to absorb. The market is struggling to digest supply.
+**Auction Metrics as Stress Signals:** Three auction metrics reveal the underlying supply-demand balance before term premium fully reprices.
+
+1. **Auction Tail (stop yield minus when-issued yield):** Positive tail means the auction cleared at a higher yield than pre-auction trading expected. Consistent tails of 2+ bps across multiple 10Y/30Y auctions signal weak demand. The when-issued market is liquid and forward-looking; sustained tails are meaningful stress.
+2. **Bid-to-Cover Ratio:** Total bids divided by amount awarded. Historical averages: 10Y ~2.5x, 30Y ~2.4x. Ratios below 2.3x on benchmark tenors signal demand weakness. Look at trend (current vs 12M avg), not absolute level, because competing issuance can mechanically affect ratios.
+3. **Dealer Take-Down Share:** Primary dealers are required to bid competitively on Treasury auctions. When indirect (foreign) and direct (domestic non-dealer) bidders are weak, dealers absorb the residual. Dealer take-down above 20% vs historical 12-15% indicates forced absorption and typically precedes dealer balance sheet stress.
+
+**Quarterly Refunding Announcement (QRA):** The Treasury Borrowing Advisory Committee (TBAC) recommendation and Treasury's QRA published the first Wednesday of February, May, August, and November set issuance guidance for the coming quarter. Key items: total net borrowing size, coupon vs bill mix (the "bills share"), and any changes to auction sizes by tenor. Shifting toward more bills signals short-term funding preference (often during stress); shifting toward more long-end coupons signals duration extension (often with political/inflation concerns).
 
 ---
 

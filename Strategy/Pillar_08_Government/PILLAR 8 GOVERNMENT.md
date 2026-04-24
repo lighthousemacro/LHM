@@ -1019,6 +1019,131 @@ Fiscal Dominance is the regime where:
 
 ---
 
+## Policy & Regulatory Environment
+
+Pillar 8 is itself the policy pillar. This section specifically catalogs the legislative, regulatory, and administrative levers that flow *into* fiscal outcomes, in contrast to the earlier sections which describe fiscal mechanics.
+
+### Fiscal Policy Levers
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Federal Tax Code** | TCJA provisions, rate brackets, deductions | Receipts/GDP ratio | 2-4 quarters |
+| **Entitlement Reform** | Social Security, Medicare rules | Mandatory outlays trajectory | Multi-year |
+| **Discretionary Appropriations** | Annual spending caps, defense/non-defense split | Outlays/GDP | Annual cycle |
+| **Debt Ceiling** | Statutory limit, suspension, increase | Political risk; X-date mechanics | 0-12 months |
+| **Emergency Supplementals** | Disaster, defense, stimulus bills | Cyclical outlays | 1-4 quarters |
+| **Tax Enforcement** | IRS funding, compliance initiatives | Receipts realization | 1-2 years |
+| **Tariff Policy** | Tariff rates, enforcement | Customs receipts, pass-through inflation | 1-2 quarters |
+| **State/Local Federal Grants** | Federal-state fiscal transfers | State/local budgets | Annual cycle |
+| **Student Loan Policy** | Forgiveness, repayment rules | Receipts (direct), spending (indirect) | Variable |
+| **Healthcare (ACA) Subsidies** | Premium subsidies, extensions | Mandatory outlays | 1-2 quarters |
+
+### Active Fiscal Policy Risks
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **TCJA Individual Expiration** | Revenue rising if expire; deficit rising if extended | ~$4-5T over 10 years | Legislative action 2025 |
+| **Debt Ceiling Binding** | Market volatility, political risk | Binary but material | BPC X-date estimates |
+| **Government Shutdown (CR Failure)** | Short-term GDP drag, market volatility | Modest but recurring | Appropriations calendar |
+| **Entitlement Reform (Social Security)** | Structural deficit reduction if enacted | Multi-trillion | Near-zero near-term; rising after trust fund issues |
+| **Medicare Funding Crisis** | Forced reforms or cuts | Material | Medicare Part A trust fund projections |
+| **Defense Spending Surge** | Discretionary outlays up | $100-200B range | Geopolitical conflicts |
+| **Tax Enforcement Rollback** | Reduced receipts realization | ~$50-100B/year | IRS budget battles |
+| **CHIPS / IRA Expansion** | Discretionary subsidy outlays | Tens of billions | Appropriations |
+
+**Structural vs Cyclical:** Tax code and entitlement rules are structural (regime-defining). Debt ceiling episodes are cyclical political events. Discretionary appropriations are cyclical but within structural constraints. Entitlement trajectories are the most structural and most politically immovable.
+
+---
+
+## Demographics & Structural Context
+
+Fiscal trajectory is primarily determined by demographic forces. The US fiscal outlook cannot be understood without understanding population aging and its effect on mandatory spending.
+
+### Key Structural Forces
+
+**1. Population Aging and Entitlement Spending:** The US population over 65 will grow from ~17% (2024) to ~21% by 2035. Each age-65 cohort becomes eligible for Social Security and Medicare. Mandatory spending grows mechanically with beneficiary population.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| US Population 65+ | Census Bureau | Rising 2010-2050 |
+| Medicare Enrollment | CMS | Rising ~2-3% annually |
+| Social Security Beneficiaries | SSA | Rising ~2-3% annually |
+| Medicare Part A Trust Fund Depletion | CMS Trustees Report | 2031-2033 baseline |
+| Social Security OASI Trust Fund Depletion | SSA Trustees Report | 2033 baseline |
+
+**2. Healthcare Cost Growth:** Healthcare per-capita spending has grown faster than GDP for decades. Medicare per-beneficiary cost compounds at ~5-6% vs nominal GDP growth of ~4%. This structural spread drives Medicare outlays above general spending growth.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Medicare per Capita | CMS | Rising 5-6% annually |
+| Healthcare Inflation vs CPI | BLS | Spread persistent but variable |
+| National Health Expenditure / GDP | CMS | Rising from ~18% toward 20%+ |
+
+**3. Interest Rate and Debt Service Dynamics:** Higher real rates post-2022 interact with accumulated debt to drive interest outlays structurally higher. Rollover at higher rates affects budget outlays with WAM-dependent lag (5-6 years current WAM).
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Weighted Average Interest Rate (WAI) | Treasury | Rising through 2025-2030 rollover |
+| Interest / Outlays | CBO | Rising trajectory in baseline |
+| Interest / GDP | CBO | Rising from ~2% toward 4-5% |
+
+**4. Immigration as Fiscal Variable:** Net immigration affects labor force growth, tax receipts, and mandatory spending. Higher immigration improves fiscal outlook (younger taxpayers); lower immigration worsens it (rising dependency ratio).
+
+**5. Productivity Growth Rate:** Nominal GDP growth (productivity + inflation) is the denominator for debt/GDP dynamics. Structural productivity growth determines whether debt stabilizes naturally or requires active consolidation. Post-2010 productivity has disappointed; AI-driven productivity remains speculative.
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Entitlement Demographic Impulse** | Annual new 65+ beneficiaries × average benefit | Mechanical outlay growth |
+| **Medicare Cost-GDP Spread** | Medicare per-capita growth - nominal GDP growth | Persistent structural pressure |
+| **Interest-Outlay Compounding Rate** | Rollover rate vs WAI spread | Rate of future interest growth |
+| **Demographic Fiscal Impulse** | Net immigration × per-capita fiscal contribution | Countervailing force |
+
+**Time horizon:** These forces operate over decades. The trust fund depletion dates (Medicare Part A ~2031-33, Social Security ~2033) are hard deadlines for policy action. Without reform, mandatory spending crowds out everything else by the mid-2030s.
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Fiscal Triggers (Fiscal Improvement)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Deficit/GDP** | Drops below 5% | {{WATCH_DEFICIT_GDP}} | Significant consolidation |
+| **Primary Balance** | Moves toward surplus | {{WATCH_PRIMARY}} | Structural improvement |
+| **Receipts/GDP** | Above 18% | {{WATCH_RECEIPTS}} | Revenue recovery |
+| **Term Premium** | Below 0 bps | {{WATCH_TP_LOW}} | Market comfortable |
+| **Foreign Holdings %** | Stable above 28% | {{WATCH_FOREIGN}} | Foreign demand returning |
+| **GCI-Gov Composite** | Below +0.5 | {{WATCH_GCI_GOV_LOW}} | Normal regime |
+| **WAI-10Y Gap** | Narrowing | {{WATCH_WAI_GAP}} | Rollover stress reducing |
+
+### Bearish Fiscal Triggers (Fiscal Crisis)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Deficit/GDP** | Above 10% outside recession | {{WATCH_DEFICIT_HIGH}} | Crisis level |
+| **Term Premium (10Y ACM)** | Above +150 bps | {{WATCH_TP_HIGH}} | Fiscal risk fully priced |
+| **10Y Yield** | Sustainably above 6% | {{WATCH_10Y}} | Duration stress |
+| **Auction Failures** | Bid-to-cover <2.0 on benchmarks | {{WATCH_AUCTION}} | Market absorption failure |
+| **1Y US Sovereign CDS** | Above 75 bps | {{WATCH_CDS}} | Debt ceiling stress |
+| **Foreign Holdings %** | Below 20% | {{WATCH_FOREIGN_LOW}} | Buyer strike |
+| **GCI-Gov Composite** | Above +1.5 | {{WATCH_GCI_GOV_HIGH}} | Crisis regime |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **TCJA Individual Expiration Resolution** | Legislative resolution | Structural baseline reset |
+| **Entitlement Reform Commission Formed** | Formal process initiated | First step toward consolidation |
+| **Medicare Part A Trust Fund Depletion** | Within 5 years | Forced reform moment |
+| **Social Security OASI Trust Fund Depletion** | Within 5 years | Forced reform moment |
+| **Credit Rating Downgrade (Moody's, Fitch)** | Additional downgrade from AAA | Market repricing catalyst |
+| **Buyback Program Expansion** | Treasury buyback activity increase | Active debt management signaling |
+| **Fed QE Resumption** | Balance sheet expansion | Policy response to fiscal stress |
+
+---
+
 ## Conclusion: The Fiscal Overhang
 
 Government isn't policy in the abstract. It's trillions in annual spending and tens of trillions in debt. It's the largest borrower on Earth, and it's crowding out everything else through the duration channel.

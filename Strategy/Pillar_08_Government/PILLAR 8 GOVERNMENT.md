@@ -77,7 +77,11 @@ The deficit is the **annual flow** that adds to the debt stock. It determines Tr
 | **Outlays/GDP** | >25% | 22-25% | 19-22% | <19% |
 | **Receipts/GDP** | <16% | 16-17% | 17-19% | >19% |
 
-**The Structural Deficit:** FY2025 deficit tracking **$1.9T** (7.2% of GDP)—**wartime levels in peacetime**. Primary deficit (ex-interest) at **$800B** (3.0% of GDP)—still elevated. Outlays at 23.5% of GDP. Receipts at 16.3% of GDP. The math doesn't balance. It hasn't for 20 years. But the bill is coming due.
+**The Structural Deficit Pattern:** Deficit/GDP above 5% outside recession is a durable warning signal. The US historical baseline is roughly 2-4% of GDP in expansions; above 5% reflects either structural imbalance (receipts too low, outlays too high) or aggressive counter-cyclical policy. Above 7% in an expansion is "wartime levels in peacetime" territory: it implies either coming fiscal consolidation or continued accumulation of debt against rising interest rates.
+
+**Primary deficit vs headline deficit:** The primary balance (receipts minus non-interest outlays) is the meaningful structural signal. Interest expense compounds independent of policy choices, so distinguishing the primary balance isolates the discretionary fiscal stance. Primary deficit above 3% of GDP is elevated; primary surplus is what historical fiscal consolidations have required to stabilize debt ratios.
+
+**Historical benchmark:** The post-WWII US averaged primary surpluses of 1-2% of GDP in most expansions. Post-2008 and post-2020 shifted the structural baseline toward persistent primary deficits. This regime shift matters for bond market pricing because it eliminates the assumption of mean-reversion back to primary surplus.
 
 ---
 

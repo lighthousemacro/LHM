@@ -804,9 +804,9 @@ Factory Jobs ↓ → Wage Pressure in Goods Sector ↓ →
 Services Sector Absorbs Some (lagged) → But Total Hours Worked ↓
 ```
 
-**Current Linkage:** Export volumes at -2.1% YoY. Manufacturing IP at -0.8% YoY. Manufacturing employment at **-0.4% YoY** (37k jobs lost). Trade weakness is contributing to the goods-sector labor stress captured in LFI.
+**Transmission mechanics:** Export volume contraction directly subtracts from manufacturing output. The chain runs: weak export demand → reduced production schedules → cut hours → layoffs in goods-producing sectors. Manufacturing employment is more sensitive to export demand than other sectors because goods producers can scale output bilaterally with foreign demand.
 
-**Cross-Pillar Signal:** When **TCI < -0.5** (trade headwind) AND **LFI > +0.8** (labor fragile), goods-producing sectors face **double pressure**: weak export demand AND structural fragility. Current: **TCI -0.5, LFI +0.93**. Manufacturing is the weak link. Historical precedent: this combination preceded the 2001 and 2008 manufacturing recessions.
+**Cross-Pillar Signal:** When **TCI < -0.5** (trade headwind) AND **LFI > +0.8** (labor fragile), goods-producing sectors face double pressure: weak export demand combined with structural fragility. Historical precedent: this combination preceded the 2001 and 2008 manufacturing recessions.
 
 ---
 

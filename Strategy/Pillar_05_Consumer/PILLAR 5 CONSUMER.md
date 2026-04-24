@@ -998,6 +998,224 @@ The wealthy hold up the aggregate throughout most of a cycle. The median consume
 
 ---
 
+## Additional Indicators & External Research
+
+### The Sahm Rule (Applied to Consumer Context)
+
+The Sahm Rule triggers a recession signal when the 3-month moving average of unemployment rises 0.50 ppts or more from its 12-month low. Triggered in every US recession since 1950; zero false positives since 1970.
+
+For the consumer pillar, Sahm is a confirmation not a leading signal. By the time Sahm triggers, unemployment is already rising, which means labor income has already peaked, which means the consumer has already entered Stage 1-2 (savings drawdown, credit substitution). Watch proximity to Sahm threshold as a late-stage confirmation of where the consumer is in the four-stage sequence.
+
+**Current Sahm Reading:** Monitor at [FRED SAHMREALTIME](https://fred.stlouisfed.org/series/SAHMREALTIME).
+
+### Saving Rate as a Recession Predictor
+
+Saving rate behavior has historically preceded recessions, though the relationship became unstable post-pandemic due to stimulus distortions.
+
+**Pre-2020 pattern:** Saving rate declines steadily through expansions (confidence high, consumers spending future income). Rate inflects upward 6-12 months before recession as consumers retrench ahead of stress. The inflection is the signal; the level is not.
+
+**Post-2020 complication:** The stimulus injected $2.1T of excess savings, which distorted the trend line through 2025. The SF Fed excess savings tracker (Abdelrahman & Oliveira) restored the signal by normalizing against pre-pandemic trend. Once excess savings fully depleted (late 2025 per SF Fed estimates), the traditional saving-rate inflection signal becomes usable again.
+
+**Key level:** Personal saving rate below 5% while real income growth is slowing is the warning configuration. Buffer is gone; consumer is forced into either credit substitution or spending cuts.
+
+### The Expectations-Present Spread
+
+The Conference Board Expectations minus Present Situation spread is the single cleanest leading indicator in the confidence complex. When the spread compresses below -40, recession has followed within 6-12 months in every post-1970 cycle.
+
+The mechanism: consumers assess present conditions based on their own income stability, so Present Situation stays elevated late in cycles. Expectations reflects forward-looking information (layoff announcements, tightening credit, asset price declines) that leads income weakness. The divergence is the signal.
+
+**Threshold:** Below -40 (and falling) is the warning. Below -60 is consistent with imminent recession.
+
+### BNPL as Phantom Debt
+
+Buy Now Pay Later usage creates "phantom debt" because most BNPL providers do not report to traditional credit bureaus (Experian, Equifax, TransUnion) until loans default. This creates two problems:
+
+1. **Credit score underestimation of stress:** A consumer with high BNPL exposure can appear creditworthy in FICO data while carrying significant unsecured obligations.
+2. **Bank underwriting gaps:** Lenders extending credit based on bureau data miss BNPL-driven DTI stress.
+
+**Track:** CFPB and NY Fed aggregate BNPL volume reports. YoY growth above 30% combined with rising default rates on primary credit products indicates bottom-quartile financial desperation.
+
+### Consumer Credit Impulse
+
+Credit impulse (change in the flow of new credit) is a stronger growth predictor than credit stock level. The formula:
+
+```
+Credit Impulse = YoY change in (New Credit / GDP)
+```
+
+A negative credit impulse means the pace of new credit creation is slowing, even if total credit outstanding is still rising. This leads consumer spending by 1-2 quarters because the marginal dollar of spending often comes from marginal credit extension.
+
+**Source:** BIS publishes credit impulse data for major economies. The US series shows clear inflection 2-4 quarters before recessions.
+
+### The Wealth Effect Asymmetry
+
+Wealth effects are not symmetric. Research (Case, Quigley, Shiller; Carroll, Otsuka, Slacalek) finds that:
+
+- **Housing wealth elasticity:** 5-8 cents per dollar of home equity change (long-run)
+- **Financial wealth elasticity:** 2-4 cents per dollar of stock wealth change
+- **Negative wealth elasticities are larger than positive:** losses hurt spending more than equivalent gains help
+
+This matters for cross-pillar signals. When housing prices flatten or decline while stocks also correct, the compound wealth-effect drag on consumer spending is material even without a labor shock. Track Z.1 household net worth quarterly changes with this asymmetry in mind.
+
+### Hand-to-Mouth (HtM) Framework
+
+Kaplan, Violante, and Weidner (2014) identify two HtM categories:
+- **Poor HtM:** Low-income, minimal assets, high MPC (15-25 cents per dollar)
+- **Wealthy HtM:** Significant wealth held in illiquid assets (housing, retirement), near-zero liquid buffer, also high MPC
+
+Combined, roughly 30% of US households are HtM. These are the consumers whose spending responds fastest to income shocks. Aggregate data hides this: the 70% of households with liquid buffers smooth consumption, making aggregate spending appear more stable than it actually is at the margin.
+
+**Implication:** When wage growth decelerates or layoffs concentrate in sectors employing HtM households (retail, hospitality, construction), the spending response is faster and larger than aggregate income decomposition suggests.
+
+### The MPC Timing Gap
+
+Marginal propensity to consume out of transitory income shocks differs significantly across households. Parker, Souleles, Johnson, and McClelland (2013) estimated MPCs out of the 2008 stimulus rebates at 12-30% within three months, rising to 50-90% within six months. This means consumer spending effects from transitory shocks (tax cuts, stimulus, rate cuts) play out over 2-3 quarters, not immediately. When analyzing policy transmission, look 1-3 quarters ahead, not 1 month.
+
+### Shelter Inflation Lag
+
+The Owners' Equivalent Rent (OER) component of CPI lags market rent indices (Apartment List, Zillow Observed Rent Index) by approximately 12 months due to BLS's sampling methodology (6-month lease observation cycle with staggered survey waves).
+
+**Consumer implication:** Consumer spending responds to *current* rent burden, not lagged CPI-reported shelter inflation. When market rents slow (as they did starting mid-2022), the relief to consumer spending capacity appears 6-12 months before the CPI data reflects it. Conversely, when market rents accelerate, CPI shelter remains low for a year while consumers are already under pressure.
+
+### The Labor-to-Consumer Transmission Lag
+
+Research and LHM backtesting show the Labor → Consumer lag operates in two stages:
+
+1. **Hiring freeze → income growth slowdown:** 2-4 months
+2. **Wage deceleration → spending deceleration:** 2-4 months
+
+Combined: 4-8 months from initial labor inflection to spending inflection. This matches the empirical pattern of CCI responding to LFI with roughly two-quarter lag, and is why the LFI → CCI cross-check is so powerful.
+
+---
+
+## External Research Sources
+
+**Federal Reserve Regional Banks:**
+- [New York Fed Survey of Consumer Expectations](https://www.newyorkfed.org/microeconomics/sce) - Monthly household survey: inflation expectations, spending, credit access, labor market expectations
+- [NY Fed Consumer Credit Panel](https://www.newyorkfed.org/microeconomics/hhdc) - Quarterly Household Debt and Credit Report; the authoritative household credit source
+- [SF Fed Excess Savings Tracker](https://www.frbsf.org/research-and-insights/publications/economic-letter/2023/05/data-on-pandemic-era-excess-savings/) - Abdelrahman & Oliveira; the definitive excess savings estimate
+- [Atlanta Fed GDPNow](https://www.atlantafed.org/cqer/research/gdpnow) - Real-time PCE component nowcast
+- [Chicago Fed National Financial Conditions Index](https://www.chicagofed.org/research/data/nfci/current-data) - Includes consumer credit conditions subcomponent
+- [Philadelphia Fed State Coincident Indexes](https://www.philadelphiafed.org/surveys-and-data/regional-economic-analysis/state-coincident-indexes) - Monthly state-level economic conditions
+
+**Government Data Sources:**
+- [BEA Personal Income and Outlays](https://www.bea.gov/data/income-saving/personal-income) - Monthly PCE, DPI, saving rate release
+- [Census Advance Monthly Retail Trade Report](https://www.census.gov/retail/marts/www/marts_current.pdf) - Mid-month retail sales release
+- [BLS Consumer Expenditure Survey](https://www.bls.gov/cex/) - Quarterly by demographic; ~6-month lag
+- [Fed G.19 Consumer Credit](https://www.federalreserve.gov/releases/g19/) - Monthly consumer credit outstanding
+- [Fed Z.1 Financial Accounts](https://www.federalreserve.gov/releases/z1/) - Quarterly household balance sheet (flow of funds)
+- [CFPB BNPL Market Report](https://www.consumerfinance.gov/data-research/research-reports/) - Periodic BNPL scale and performance
+
+**Alternative/Private Data:**
+- [BofA Institute](https://institute.bankofamerica.com/) - Free weekly card spending reports
+- [JPMorgan Chase Institute](https://www.jpmorganchase.com/institute) - Consumer card spending, cash flow research
+- [Visa Spending Momentum Index](https://usa.visa.com/partner-with-us/visa-consulting-analytics/visa-economic-insights.html) - Monthly
+- [Mastercard SpendingPulse](https://www.mastercardservices.com/en/economic-consulting/spendingpulse) - Monthly
+- [Opportunity Insights Economic Tracker](https://tracktherecovery.org/) - ZIP-level spending, employment data
+- [Affirm, Klarna, Afterpay earnings reports](https://www.klarna.com/investor-relations/) - BNPL volume and default rates
+
+**Think Tanks:**
+- [Urban Institute Financial Health](https://www.urban.org/research-area/housing-finance-policy-center) - Household financial health by demographic
+- [Brookings Hamilton Project](https://www.hamiltonproject.org/) - Regular consumer and labor analysis
+
+---
+
+## Reference: Published Analysis
+
+**"Consumer: The Last Domino"** (Educational Series, February 2026) is the published article version of this pillar. Available at `research.lighthousemacro.com/p/consumer-the-last-domino`.
+
+The article covers:
+- The four-stage consumer stress sequence (savings depletion → credit substitution → spending cuts → recession confirmation)
+- The 68% GDP anchor and why consumer weakness is a coincident confirmation, not a leading signal
+- The K-shaped bifurcation pattern and how aggregate data masks it
+- The CCI composite architecture and its Labor-Pillar cross-check
+- Invalidation criteria in both directions
+
+The article treats the consumer as the "last domino": by the time retail sales contract, labor has already told you the story 6-9 months earlier. The rigorous approach is to watch labor (Pillar 1) and credit (Pillar 9) for the leading signals, then use consumer data for confirmation and position-sizing of the spending response.
+
+---
+
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **CCI** | **LFI** | **Key Consumer Signal** | **Outcome** | **Lead Time** |
+|---|---|---|---|---|---|
+| **Late 2006** | +0.3 | +0.6 | Saving rate 3.5%, CC DQ rising, housing cracking | Consumer held through 2007, collapsed 2008 | 12-15 months |
+| **Late 2007** | -0.4 | +1.4 | Credit card DQ 3.7%, discretionary softening | Deep consumer recession confirmed | 0-3 months |
+| **GFC Trough (Q1 2009)** | -1.8 | +2.3 | CC DQ peaked 6.8%, durables -20% YoY | Recession ended June 2009 | Coincident |
+| **Late 2011** | +0.2 | +0.4 | Saving rate normalizing, DQ falling, confidence low | Slow recovery continued | N/A |
+| **Late 2018** | +0.4 | +0.2 | Saving rate 7.5%, labor strong, no credit stress | Consumer robust into 2019; trade war scare only | N/A (false recession scare) |
+| **Feb 2020** | +0.6 | -0.3 | All consumer metrics healthy. No leading signals. | COVID shock (exogenous) | No lead (exogenous) |
+| **Late 2021** | +1.5 | -1.2 | Stimulus surge, saving rate 9%, excess savings $2T | Peak consumer; inflation followed | N/A |
+| **Late 2023** | +0.4 | +0.5 | Saving rate 4%, CC DQ 2.8% (rising), excess savings depleting | Normalization without recession (so far) | Ongoing |
+
+### False Signals
+
+**Late 2022 recession fears:** Multiple consumer sentiment indicators (UMich at 50, lowest since 1952) and yield curve inversions triggered widespread recession calls. Actual consumer spending held up because: (1) excess savings still supported the balance sheet, (2) labor market remained historically tight (LFI still negative), (3) wage growth outpaced inflation briefly in 2023. The UMich reading was a partisan/inflation-concern artifact, not a spending signal. Real PCE held positive throughout. Lesson: confidence alone, without credit stress or labor fragility, is not a reliable recession signal.
+
+**2015-2016 oil shock:** Energy-state consumer stress, rising charge-offs in oil & gas regions, and manufacturing recession did not transmit to national consumer. Bottom-quartile CCI fell, aggregate CCI held. The geographic containment is instructive: regional consumer stress that does not reach 30-50 state diffusion remains idiosyncratic.
+
+### Structural Breaks
+
+**Post-COVID consumer dynamics (2020-present):** Several shifts complicate historical comparisons:
+
+1. **Excess savings stock:** $2.1T of pandemic-era excess savings drove a 4-5 year consumer spending overhang that masked underlying income-spending dynamics. Traditional saving-rate indicators were distorted until the stock fully depleted (late 2025 per SF Fed estimates).
+
+2. **BNPL proliferation:** Buy Now Pay Later has become a meaningful consumer finance channel since 2020, creating phantom debt outside traditional bureau tracking. Credit-score-based consumer health indicators understate stress for BNPL-heavy users.
+
+3. **Remote work and geographic arbitrage:** Consumer spending patterns shifted as remote work enabled migration from expensive coastal metros to lower-cost Sun Belt cities. Traditional metro-level retail signals (NYC, SF) became less representative of aggregate consumer health.
+
+4. **Partisan sentiment distortion:** UMich and Conference Board confidence readings since 2016 increasingly reflect partisan political alignment rather than economic conditions. Cross-checks (Expectations-Present spread, which is less affected; Bloomberg Consumer Comfort; actual card spending) are more reliable than raw confidence levels.
+
+5. **K-shaped wealth distribution:** The top-10% share of wealth has risen to historic levels. Aggregate consumer strength metrics are increasingly reliant on top-quintile spending, which masks bottom-half weakness for longer than in prior cycles.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Lead vs Official Data** |
+|---|---|---|---|---|
+| **BofA Institute** | BofA Spending Pulse | Weekly | Free public reports | Leads retail sales ~3-4 weeks |
+| **JPMorgan Chase Institute** | Consumer Card Insights | Weekly | Free public reports | Leads retail sales ~3-4 weeks |
+| **Visa** | Visa Spending Momentum Index | Monthly | Press release (free) | Leads retail sales ~2 weeks |
+| **Mastercard** | SpendingPulse | Monthly | Press release / subscription | Leads retail sales ~2 weeks |
+| **Redbook** | Johnson Redbook Index | Weekly | Redbook / vendors | Coincident, higher frequency than Census |
+| **TSA** | Checkpoint Volume | Daily | TSA website (free) | Real-time travel demand |
+| **OpenTable** | Reservations YoY vs 2019 | Daily | OpenTable State of Industry | Real-time dining demand |
+| **STR** | Hotel Occupancy | Weekly | STR (subscription) | Weekly lodging demand |
+| **Box Office Mojo** | Domestic Box Office | Weekly | Box Office Mojo (free) | Entertainment spending |
+| **AAA** | Gas Price National Average | Daily | AAA (free) | Real-time commodity pass-through |
+| **EIA** | Gasoline Product Supplied | Weekly | EIA (free) | Driving activity proxy |
+| **Apartment List** | National Rent Estimate | Monthly | Apartment List (free) | Leads CPI OER ~12 months |
+| **Zillow** | Observed Rent Index (ZORI) | Monthly | Zillow Research (free) | Leads CPI OER ~12 months |
+| **Google** | Google Trends (stress keywords) | Daily | Google Trends (free) | Real-time sentiment proxy |
+| **Opportunity Insights** | Economic Tracker | Weekly | tracktherecovery.org (free) | ZIP-level spending, employment |
+| **NY Fed SCE** | Survey of Consumer Expectations | Monthly | NY Fed (free) | Household inflation/spending expectations |
+| **Affirm / Klarna / Afterpay** | BNPL volume / default rates | Quarterly | Earnings releases (free) | Bottom-quartile stress gauge |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "A Theory of the Consumption Function" (1957) | Milton Friedman | Permanent Income Hypothesis: consumption driven by permanent (not current) income; transitory income smoothed |
+| "The Life Cycle Hypothesis" (1954) | Modigliani & Brumberg | Households smooth consumption over life cycle; savings profile peaks in middle age |
+| "A Model of Intertemporal Choice" (1986) | Hall & Mishkin | Consumption responds to permanent but not transitory income shocks; PIH-consistent |
+| "Buffer-Stock Saving" (1997) | Deaton; Carroll | Precautionary savings behavior explains why low-wealth households smooth less |
+| "A Model of the Consumption Response to Fiscal Stimulus" (2013) | Kaplan & Violante | 30% of households are hand-to-mouth; MPCs heterogeneous by wealth category |
+| "Household Debt and the Great Recession" (2011) | Mian & Sufi | High-leverage households drove 2007-2009 consumption collapse; housing wealth channel |
+| "Consumption and the Response to Anticipated Wealth Changes" (2005) | Carroll, Otsuka, Slacalek | Housing wealth elasticity 5-8 cents; financial wealth 2-4 cents |
+| "Consumer Spending and Tax Rebates" (2013) | Parker, Souleles, Johnson, McClelland | 2008 rebate MPCs 12-30% in 3 months, 50-90% in 6 months |
+| "Wealth, the Stock Market, and Macroeconomy" (2001) | Case, Quigley, Shiller | Housing wealth effect larger than stock wealth effect; asymmetric response to gains vs losses |
+| "The Excess Savings of American Households" (2023) | Abdelrahman & Oliveira (SF Fed) | Methodology for measuring pandemic-era excess savings; definitive source |
+| Sahm Rule | Claudia Sahm | 3-month MA unemployment rising 0.50+ ppts from 12-month low signals recession |
+| Expectations-Present Spread | Conference Board / academic tradition | Divergence of future vs current assessments leads recession by 6-12 months |
+| Credit Impulse | BIS research tradition | Change in credit flow (not stock) leads growth by 1-2 quarters |
+
+---
+
 ## FRED Series Reference Appendix
 
 All FRED series codes referenced in this pillar, organized by category. Pipeline source: `Lighthouse_Master.db` via `lighthouse_master_db.py`.

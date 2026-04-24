@@ -1107,3 +1107,356 @@ Financial conditions aren't just rates. They're the **transmission layer** that 
 **Cross-Pillar Framework:** Financial conditions are the amplifier of labor, consumer, and business dynamics. Loose conditions delay transmission of cross-pillar stress. Tight conditions accelerate it. Watch for FCI-LFI cross-checks, FCI-CCI via wealth effects, and FCI-BCI via credit channels as the three primary transmission dynamics.
 
 The 2026 theme: financial conditions divergence, credit spread repricing risk, and the policy trap. The spring is coiled. The spark can come from anywhere.
+
+---
+
+## Additional Indicators & External Research
+
+### Bernanke-Gertler Financial Accelerator
+
+Ben Bernanke and Mark Gertler's financial accelerator framework (1989, 1999) argues that credit market frictions amplify business cycles. During expansions, collateral values rise, balance sheets strengthen, borrowing capacity grows, and credit flows freely. During contractions, the reverse: falling collateral values weaken balance sheets, reduce borrowing capacity, and amplify downturns through a credit contraction channel.
+
+**Application:** The financial accelerator is why credit markets move faster than real economic fundamentals. When the HY market freezes, business investment collapses within quarters because small/mid-market firms lose access to marginal credit. Monitor HY primary market issuance as a real-time indicator of accelerator dynamics.
+
+### Gilchrist-Zakrajsek Excess Bond Premium (EBP)
+
+Simon Gilchrist and Egon Zakrajsek (Fed FEDS 2012) decomposed credit spreads into (a) a default-risk component and (b) an "excess bond premium" (EBP) reflecting investor risk aversion and intermediary balance sheet constraints. EBP is a superior recession predictor than raw spread levels.
+
+**Application:** The Fed publishes the GZ Spread and EBP monthly. EBP above +0.5 standard deviations for 2+ months has historically preceded recessions by 4-6 quarters. The EBP is available at federalreserve.gov/econres/notes/feds-notes/.
+
+### Adrian-Shin Intermediary Asset Pricing
+
+Tobias Adrian and Hyun Song Shin developed a framework where broker-dealer balance sheet capacity drives asset prices. When dealers are well-capitalized and expanding balance sheets, risk assets rally and spreads compress. When dealers pull back, asset prices fall and spreads widen.
+
+**Application:** Track primary dealer Treasury holdings and credit inventory as real-time intermediary capacity measures. Dealers retracting from market-making ahead of earnings or regulatory deadlines has repeatedly preceded liquidity events.
+
+### Minsky Instability Hypothesis
+
+Hyman Minsky's "Financial Instability Hypothesis" argues that stability breeds instability: prolonged calm periods lead to progressive risk-taking (hedge finance → speculative finance → Ponzi finance), culminating in crisis. The "Minsky moment" is when Ponzi-stage leverage is exposed.
+
+**Application:** Extended periods of tight spreads, low vol, and compressed risk premia are Minsky-consistent warning periods. The longer the calm, the more leveraged the subsequent unwind. Post-2008 decade was a notable test case: extended calm, extreme accommodation, followed by 2020 shock and 2022 rate/inflation repricing.
+
+### Credit-to-GDP Gap
+
+The Basel III framework monitors "credit-to-GDP gap" as an early warning of credit cycles. Deviations of private non-financial credit from long-run trend above +10 ppts signal excessive credit expansion. Deviations below -10 ppts signal credit scarcity.
+
+**Application:** The BIS publishes credit-to-GDP gap data quarterly for major economies. US gap declined from 2007 peaks (+15 ppts) to post-2010 trough (-10 ppts), then stabilized near trend. Current gap readings help assess whether credit markets are in expansion or correction phase.
+
+### Shin's Global Financial Cycle
+
+Hyun Song Shin and colleagues (BIS) demonstrate that US financial conditions drive a "global financial cycle" affecting EM capital flows, cross-border bank lending, and EM credit conditions. Dollar strength is the primary channel.
+
+**Application:** When US financial conditions tighten, EM dollar debt servicing stress rises, EM credit spreads widen, and EM capital outflows accelerate. EM financial stress often leads US stress by 1-3 months because EM is the marginal absorber of dollar liquidity.
+
+### Credit Impulse (BIS)
+
+The credit impulse is the change in credit flow as a percentage of GDP. It's a more sensitive cycle indicator than credit stock levels.
+
+```
+Credit Impulse = ΔCredit Flow / GDP
+```
+
+Negative credit impulse means credit growth is slowing on a flow basis, which typically leads real economic deceleration by 2-4 quarters. The BIS publishes credit impulse data for major economies.
+
+### Rey's Dilemma (Global Financial Cycle)
+
+Hélène Rey (2013 Jackson Hole) argues that the "trilemma" of international economics (free capital, fixed FX, independent monetary policy) is actually a "dilemma": in a world of free capital flows, monetary policy is not independent because global financial cycles dominated by US policy constrain all open economies.
+
+**Application:** When the Fed tightens, global financial conditions tighten regardless of other central banks' stances. This is why EM central banks often follow Fed moves even when domestic conditions don't warrant.
+
+### The Bank-Dealer-Hedge Fund Nexus
+
+Modern market-making relies on a chain: customers trade with dealers, dealers hedge through hedge funds (via derivatives), hedge funds hold offsetting risk in various formats. Stress in any link propagates to the others. The 2019 repo spike, 2020 Treasury dysfunction, and 2022 LDI crisis all reflected stress in this nexus.
+
+**Application:** Monitor hedge fund leverage (ASFP data from NY Fed, SEC Form PF aggregates) and dealer positioning (NY Fed Primary Dealer data) as leading indicators of market liquidity risk.
+
+### Non-Bank Financial Intermediation (NBFI)
+
+Since 2008, a substantial portion of credit creation has migrated from banks to non-bank financial intermediaries (private credit, BDCs, hedge funds, mutual funds). FSB tracks NBFI assets globally at ~$240T. The key concern is that NBFI is less regulated and less transparent than banking.
+
+**Application:** Track FSB Global Monitoring Report on NBFI for systemic risk commentary. Private credit AUM growth, BDC underwriting standards, and mutual fund bond holdings provide non-bank credit channel visibility.
+
+### The Yield Curve Dead-Zone
+
+The 2022-2024 period featured an unusual pattern: deep and sustained yield curve inversion without recession. This has led to debate about whether curve signals remain reliable post-QE/QT regime changes. Several hypotheses: (1) QE distorted term premium, obscuring the inversion signal, (2) strong fiscal impulse offset the curve's restrictive signal, (3) the dis-inversion (not inversion) is the true signal, still ahead.
+
+**Practical rule:** Don't abandon the yield curve; decompose it. The 10Y-3M curve (Fed's preferred) and the 18-month forward rate minus current 3M (near-term forward spread) may provide cleaner signals than 10Y-2Y during unusual regime periods.
+
+---
+
+## External Research Sources
+
+**Federal Reserve Resources:**
+- [Chicago Fed NFCI](https://www.chicagofed.org/publications/nfci/index) - Weekly National Financial Conditions Index
+- [Fed Financial Accounts (Z.1)](https://www.federalreserve.gov/releases/z1/) - Quarterly household and corporate balance sheet
+- [Fed H.8 Commercial Bank Credit](https://www.federalreserve.gov/releases/h8/) - Weekly bank credit data
+- [SLOOS](https://www.federalreserve.gov/data/sloos.htm) - Quarterly Senior Loan Officer Opinion Survey
+- [Fed Financial Stability Report](https://www.federalreserve.gov/publications/financial-stability-report.htm) - Semi-annual financial stability assessment
+- [Fed FEDS Working Papers](https://www.federalreserve.gov/econres/feds/index.htm) - Fed research on financial conditions
+- [NY Fed Primary Dealer Data](https://www.newyorkfed.org/markets/desk-operations/primary-dealer-statistics) - Weekly dealer positions
+- [NY Fed Policy Rate Expectations](https://www.newyorkfed.org/markets/primarydealer_survey_questions.html) - Dealer survey on Fed path
+- [St. Louis Fed Financial Stress Index](https://fred.stlouisfed.org/series/STLFSI4) - Weekly stress composite
+- [Kansas City Fed Financial Stress Index](https://www.kansascityfed.org/research/financial-stability-report/) - Monthly stress index
+- [OFR Financial Stress Index](https://www.financialresearch.gov/financial-stress-index/) - Daily OFR stress gauge
+
+**Market Data Sources:**
+- [ICE BofA Bond Indices (FRED)](https://fred.stlouisfed.org/categories/32991) - Daily corporate bond OAS
+- [Chicago Fed EBP (Excess Bond Premium)](https://www.federalreserve.gov/econres/notes/feds-notes/) - Monthly GZ Spread and EBP
+- [CBOE Volatility Indices](https://www.cboe.com/us/options/products/) - VIX, VIX3M, SKEW, VVIX
+- [ICE Credit Indices](https://www.ice.com/indices/fixed-income-indices) - Corporate OAS benchmarks
+
+**International/Global Research:**
+- [BIS Credit Statistics](https://www.bis.org/statistics/totcredit.htm) - Quarterly global credit data
+- [BIS Global Liquidity Indicators](https://www.bis.org/statistics/gli.htm) - Monthly cross-border banking
+- [FSB Global Monitoring Report on NBFI](https://www.fsb.org/work-of-the-fsb/financial-innovation-and-structural-change/non-bank-financial-intermediation/) - Annual non-bank data
+- [IMF Global Financial Stability Report](https://www.imf.org/en/Publications/GFSR) - Semi-annual assessment
+
+**Industry and Market Commentary:**
+- [Goldman Sachs Financial Conditions Index](https://www.gspublishing.com/) - Daily, subscription
+- [Bloomberg Financial Conditions Index](https://www.bloomberg.com/) - Subscription
+- [Moody's Analytics Default Rates](https://www.moodys.com/) - Monthly default data
+- [S&P Global Ratings](https://www.spglobal.com/ratings/) - Rating actions, distressed debt
+- [SIFMA Bond Issuance Data](https://www.sifma.org/resources/research/) - Monthly US bond market data
+
+---
+
+## Reference: Published Analysis
+
+**"Financial: The Cascade"** (Educational Series, 2026) is the published article version of this pillar. Available at `research.lighthousemacro.com/p/financial-the-cascade`.
+
+The article covers:
+- The four-stage financial conditions deterioration sequence
+- Why credit spreads and banking channel signals often diverge, and why bank signals tend to win
+- The financial accelerator mechanism and the EBP as a recession predictor
+- The policy trap dynamics when fiscal stress meets financial stress
+- The unbuffered plumbing amplification dynamic (Pillar 10 linkage)
+- Invalidation criteria for both conditions-stay-loose and crisis scenarios
+
+The article positions financial conditions as the transmission layer: Fed policy matters only to the extent it flows through financial conditions, and the composition of financial conditions (which channels are tight vs loose) determines real economy outcomes.
+
+---
+
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **FCI** | **Key Signal** | **Outcome** | **Lead Time** |
+|---|---|---|---|---|
+| **Sep 1998 (LTCM)** | -0.8 | LTCM near-default, dealer balance sheet stress | Fed cuts Sept-Nov 1998; V-shaped recovery | Weeks-coincident |
+| **Mid 2007** | +0.2 | HY spreads 300 bps, SLOOS beginning to tighten | Subprime stress growing; full GFC 12 months later | 6-12 months |
+| **Sep 2008 (Lehman)** | -2.1 | HY OAS 1500+ bps, bank runs, money market freeze | Deep recession, TARP, QE1 | Coincident |
+| **May 2011** | -0.5 | Euro sovereign stress, bank runs | Operation Twist, OMT | 6 months to resolution |
+| **Aug 2015** | -0.6 | China devaluation, commodity collapse, HY energy | Brief risk-off, Fed hikes delayed | Weeks |
+| **Dec 2018** | -0.7 | Fed tightening into slowdown, HY 500+ bps | Fed pivot Jan 2019; recovery | 3 months |
+| **March 2020 (COVID)** | -1.8 | HY 1100 bps, Treasury market dysfunction | Emergency Fed action; QE infinite; V recovery | Coincident |
+| **Oct-Dec 2022** | -0.4 | UK gilt crisis, Fed 75 bps hikes, HY 500 bps | Soft patch; crypto/tech stress | 1-2 months |
+| **March 2023 (SVB)** | -0.3 | Regional bank runs, deposit flight | Fed emergency lending (BTFP); contained | Coincident |
+
+### False Signals
+
+**Late 2018 "Powell Pivot":** FCI tightened sharply Oct-Dec 2018 as Fed hiked and HY spreads widened to 500+ bps. Expected recession did not materialize because the Fed pivoted in January 2019, financial conditions reversed, and the economy re-accelerated. Lesson: Fed response function matters; FCI tightening can reverse quickly if Fed responds.
+
+**March 2020 "Instant Recovery":** FCI dropped to -1.8 at peak COVID stress, but Fed intervention (emergency rate cuts, unlimited QE, emergency lending facilities) reversed conditions within weeks. Historic example of policy response breaking the transmission mechanism. Lesson: fiscal/monetary response capacity matters for how stress transmits.
+
+**October 2023 Yield Spike:** 10Y yields rose to 5% in Oct 2023, tightening FCI meaningfully. Markets expected recession; instead, fiscal dominance dynamics reversed as Treasury adjusted issuance mix. Lesson: the supply-side of Treasury market matters as much as demand-side for yield dynamics.
+
+### Structural Breaks
+
+**Post-GFC Regulatory Regime:** Dodd-Frank bank capital requirements, Volcker Rule, and Basel III have changed bank-credit provision. Banks are better capitalized but less willing to warehouse inventory. Market-making capacity has declined, amplifying liquidity stress when it occurs.
+
+**Non-Bank Financial Intermediation Growth:** NBFI (private credit, mutual funds, ETFs, hedge funds) has grown substantially post-2008. Credit creation increasingly happens outside banks, making SLOOS a less comprehensive measure. Watch private credit AUM and BDC data alongside traditional bank signals.
+
+**Passive Investing Dominance:** Index funds and ETFs have grown to ~50% of equity AUM. This changes market microstructure: passive flows respond to money flow, not fundamentals. Concentrated top-of-index positions (FAANG/Mag 7) reflect passive flow concentration, complicating breadth signal interpretation.
+
+**Post-SVB Regional Bank Fragility:** March 2023 SVB episode revealed digital-era deposit flight speed. Regional banks must hold more liquid assets; this constrains their lending capacity. SLOOS small-firm credit tightness may be structurally higher going forward.
+
+**Central Bank Balance Sheet Regime:** Fed balance sheet expanded to ~$9T then contracted via QT to ~$7T. This represents a major shift from pre-2008 operating framework. QT has drained RRP but kept reserves ample; any future QT will need to be managed carefully to avoid 2019-style repo stress.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Use Case** |
+|---|---|---|---|---|
+| **Chicago Fed NFCI** | Weekly FCI | Weekly | Free (FRED: NFCI) | Policy-weighted composite |
+| **St. Louis Fed STLFSI4** | Weekly Financial Stress Index | Weekly | Free (FRED) | Stress-focused gauge |
+| **Goldman Sachs FCI** | Daily FCI | Daily | Subscription | Widely-cited FCI |
+| **Bloomberg FCI** | Daily FCI | Daily | Subscription | Alternative daily measure |
+| **OFR Financial Stress Index** | Daily stress gauge | Daily | Free (financialresearch.gov) | Official sector view |
+| **ICE BofA Bond Indices** | Daily OAS by rating | Daily | Free (FRED) | Credit spread benchmarks |
+| **Fed EBP (Gilchrist-Zakrajsek)** | Monthly excess bond premium | Monthly | Free (Fed notes) | Forward-looking credit signal |
+| **FRED H.8** | Weekly bank credit | Weekly | Free | Real-time lending |
+| **FRED H.6** | Weekly money supply | Weekly | Free | Monetary aggregate |
+| **CBOE VIX and family** | Daily volatility | Daily | Free | Equity vol complex |
+| **ICE BAML MOVE Index** | Daily Treasury vol | Daily | Free summary | Bond volatility |
+| **JP Morgan EMBI** | Daily EM sovereign | Daily | Subscription | Global credit signal |
+| **Moody's Default Rates** | Monthly default rates | Monthly | Subscription summary | Realized credit losses |
+| **S&P Distressed Debt** | Monthly distressed share | Monthly | Subscription | Leading default indicator |
+| **CMBS Trepp Data** | CMBS delinquency, loss | Monthly | Subscription | CRE specific stress |
+| **ICI Money Market Fund Data** | Weekly MMF AUM, composition | Weekly | Free (ici.org) | Money market dynamics |
+| **DTCC Derivatives Data** | Daily derivatives activity | Daily | Free summaries | Derivatives leverage |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "Financial Instability Hypothesis" (various, 1970s-1980s) | Hyman Minsky | Stability breeds instability; cycle progression from hedge → speculative → Ponzi |
+| "Agency Costs, Net Worth, and Business Fluctuations" (1989) | Bernanke & Gertler | Financial accelerator: credit frictions amplify cycles |
+| "The Financial Accelerator in a Quantitative Business Cycle Framework" (1999) | Bernanke, Gertler & Gilchrist | Quantitative framework for accelerator dynamics |
+| "Credit Spreads as Predictors of Real-Time Economic Activity" (2012 FEDS) | Gilchrist & Zakrajsek | Excess Bond Premium (EBP) methodology |
+| "Intermediary Asset Pricing" (2014 AEA) | Adrian, Etula, Muir | Broker-dealer balance sheet drives asset prices |
+| "Liquidity and Leverage" (2010) | Adrian & Shin | Book-equity-to-asset ratios drive financial intermediary behavior |
+| "The Global Financial Cycle" (2013 Jackson Hole) | Hélène Rey | US financial conditions drive global financial cycle |
+| "Dilemma not Trilemma" (2013) | Hélène Rey | Monetary policy constrained by global cycle regardless of FX regime |
+| "Safe Assets" (2018) | Gorton | Safe asset demand and financial fragility |
+| "Banking and Macroprudential Policy" (various) | Hyun Song Shin | Bank-dealer-hedge fund nexus, cross-border spillovers |
+| "Credit-to-GDP Gap" (BIS methodology) | Drehmann, Tsatsaronis | Basel III credit cycle early warning indicator |
+| "Net Capital Flows, Global Imbalances" (various) | Caballero, Farhi, Gourinchas | Safe asset demand, persistent global imbalances |
+| "ACM Term Premium" (various) | Adrian, Crump, Moench | Affine term structure model for term premium estimation |
+| Non-Bank Financial Intermediation | FSB research | Post-GFC shift of credit from banks to NBFIs |
+| Yield Curve Predictions | Estrella, Mishkin, Bauer, others | Curve inversion as recession predictor; variations by segment |
+
+---
+
+## FRED Series Reference Appendix
+
+All FRED series codes referenced in this pillar, organized by category.
+
+### Credit Spreads (Section A, I)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| BAMLH0A0HYM2 | ICE BofA US High Yield OAS | Daily |
+| BAMLC0A0CM | ICE BofA US Corporate OAS | Daily |
+| BAMLC0A1CAAA | ICE BofA US AAA Corporate OAS | Daily |
+| BAMLC0A2CAA | ICE BofA US AA Corporate OAS | Daily |
+| BAMLC0A3CA | ICE BofA US A Corporate OAS | Daily |
+| BAMLC0A4CBBB | ICE BofA US BBB Corporate OAS | Daily |
+| BAMLH0A1HYBB | ICE BofA US BB Corporate OAS | Daily |
+| BAMLH0A2HYB | ICE BofA US B Corporate OAS | Daily |
+| BAMLH0A3HYC | ICE BofA US CCC and Below OAS | Daily |
+| BAMLH0A0HYM2EY | ICE BofA US HY Effective Yield | Daily |
+
+### Yield Curve (Sections B, J)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DGS2 | 2-Year Treasury Constant Maturity Rate | Daily |
+| DGS3MO | 3-Month Treasury Constant Maturity Rate | Daily |
+| DGS5 | 5-Year Treasury Constant Maturity Rate | Daily |
+| DGS10 | 10-Year Treasury Constant Maturity Rate | Daily |
+| DGS30 | 30-Year Treasury Constant Maturity Rate | Daily |
+| T10Y2Y | 10-Year minus 2-Year Treasury Spread | Daily |
+| T10Y3M | 10-Year minus 3-Month Treasury Spread | Daily |
+| T5YIE | 5-Year Breakeven Inflation | Daily |
+| T10YIE | 10-Year Breakeven Inflation | Daily |
+| T5YIFR | 5-Year 5-Year Forward Inflation | Daily |
+| DFII5 | 5-Year Treasury Inflation-Indexed Rate | Daily |
+| DFII10 | 10-Year Treasury Inflation-Indexed Rate | Daily |
+| DFII30 | 30-Year Treasury Inflation-Indexed Rate | Daily |
+
+### Financial Conditions Indices (Section C)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| NFCI | Chicago Fed National Financial Conditions Index | Weekly |
+| ANFCI | Chicago Fed Adjusted NFCI | Weekly |
+| STLFSI4 | St. Louis Fed Financial Stress Index | Weekly |
+| NFCICREDIT | NFCI Credit Subindex | Weekly |
+| NFCILEVERAGE | NFCI Leverage Subindex | Weekly |
+| NFCINONFINLEVERAGE | NFCI Nonfinancial Leverage Subindex | Weekly |
+| NFCIRISK | NFCI Risk Subindex | Weekly |
+
+### Bank Lending (Section D, K)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| BUSLOANS | Commercial and Industrial Loans, All Commercial Banks | Weekly |
+| TOTLL | Total Loans and Leases in Bank Credit | Weekly |
+| REALLN | Real Estate Loans, All Commercial Banks | Weekly |
+| CONSUMER | Consumer Loans, All Commercial Banks | Weekly |
+| DPSACBW027SBOG | Deposits, All Commercial Banks | Weekly |
+| USGSEC | Treasury and Agency Securities, All Commercial Banks | Weekly |
+| DRTSCLCC | Net Percentage Tightening Standards: C&I Loans to Large Firms | Quarterly |
+| DRTSCLMSC | Net Percentage Tightening Standards: C&I Loans to Small Firms | Quarterly |
+| DRTSCRE | Net Percentage Tightening Standards: CRE Loans | Quarterly |
+| SUBLPDCLCSNQ | Net Percentage Tightening Standards: Credit Card Loans | Quarterly |
+
+### Equity Markets (Section E, L)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| SP500 | S&P 500 | Daily |
+| NASDAQCOM | NASDAQ Composite | Daily |
+| DJIA | Dow Jones Industrial Average | Daily |
+| WILL5000INDFC | Wilshire 5000 Full Cap Index | Daily |
+
+### Volatility (Section F, M)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| VIXCLS | CBOE Volatility Index (VIX) | Daily |
+| VXNCLS | CBOE NASDAQ-100 Volatility | Daily |
+
+### Fed Funds and Policy Rates (Section G)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DFF | Effective Federal Funds Rate | Daily |
+| DFEDTARU | Federal Funds Target Rate Upper Limit | Daily |
+| DFEDTARL | Federal Funds Target Rate Lower Limit | Daily |
+| IORB | Interest on Reserve Balances | Daily |
+| SOFR | Secured Overnight Financing Rate | Daily |
+| EFFR | Effective Federal Funds Rate | Daily |
+
+### Plumbing and Liquidity (Section H)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| WRBWFRBL | Reserve Balances with Federal Reserve Banks | Weekly |
+| WLCFLPCL | Assets of Federal Reserve Banks | Weekly |
+| WALCL | Total Assets: Federal Reserve | Weekly |
+| RRPONTSYD | Overnight Reverse Repo Facility | Daily |
+| WTREGEN | Treasury General Account Balance | Weekly |
+
+### Dollar and Cross-Asset
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DTWEXBGS | Broad US Dollar Index (Trade-Weighted) | Daily |
+| DTWEXAFEGS | Advanced Foreign Economies Dollar Index | Daily |
+| DTWEXEMEGS | Emerging Markets Dollar Index | Daily |
+| DCOILWTICO | WTI Crude Oil Price | Daily |
+| GOLDAMGBD228NLBM | Gold Fixing Price | Daily |
+
+### Non-FRED Data Sources
+
+| **Indicator** | **Source** | **Notes** |
+|---|---|---|
+| Goldman Sachs FCI | Goldman | Daily, subscription |
+| Bloomberg FCI | Bloomberg | Daily, subscription |
+| OFR Financial Stress Index | OFR | Daily, free from financialresearch.gov |
+| Kansas City Fed Financial Stress Index | KC Fed | Monthly, free |
+| Gilchrist-Zakrajsek EBP | Fed FEDS | Monthly, free (FEDS Notes) |
+| SLOOS Detail by Loan Type | Fed | Quarterly, PDF |
+| VIX Family (VIX3M, VIX9D, VIX6M, VVIX) | CBOE | Daily |
+| SKEW Index | CBOE | Daily |
+| MOVE Index | ICE BofA | Daily (limited free) |
+| Primary Dealer Positions | NY Fed | Weekly |
+| FSB NBFI Monitoring Report | FSB | Annual |
+| BIS Credit Statistics | BIS | Quarterly |
+| EMBI Global, CEMBI, GBI-EM | J.P. Morgan | Daily, subscription |
+| Moody's Default Rates | Moody's | Monthly |
+| S&P Distressed Ratio | S&P Global | Monthly |
+| CMBS Delinquency (Trepp) | Trepp | Monthly |
+| Private Credit AUM | Preqin, PitchBook | Quarterly |
+| ICI Money Market Fund Statistics | ICI | Weekly |
+| CBOE Options Activity | CBOE | Daily |
+
+---
+
+*Bob Sheehan, CFA, CMT*
+*Founder & CIO, Lighthouse Macro*
+*Last Updated: February 2026*

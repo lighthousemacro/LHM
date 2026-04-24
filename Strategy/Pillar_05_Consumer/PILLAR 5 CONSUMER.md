@@ -2,7 +2,7 @@
 
 ## The Consumer Transmission Chain
 
-The consumer isn't a sector—it's **68% of GDP**. The transmission mechanism operates through cascading confidence and credit dynamics:
+The consumer isn't a sector. It's **68% of GDP**. The transmission mechanism operates through cascading confidence and credit dynamics:
 
 ```
 Employment Security → Income Growth → Confidence →
@@ -11,7 +11,7 @@ Corporate Revenue → Hiring Decisions →
 Employment Security (Reinforcing Loop)
 ```
 
-**The Insight:** The consumer is a **lagging indicator pretending to be coincident**. By the time retail sales collapse, labor already cracked 6-9 months prior. The consumer is the last domino—the one that confirms the recession everyone else saw coming.
+**The Insight:** The consumer is a **lagging indicator pretending to be coincident**. By the time retail sales collapse, labor already cracked 6-9 months prior. The consumer is the last domino, the one that confirms the recession everyone else saw coming.
 
 The beauty of consumer data: it's **high frequency** (weekly credit card data, monthly retail sales) but **backward-looking** (spending decisions reflect confidence formed months ago). The consumer tells you where the economy was, not where it's going. For that, watch labor and credit.
 

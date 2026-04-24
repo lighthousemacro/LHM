@@ -361,6 +361,348 @@ MPC = marginal propensity to consume (cents of each additional dollar of income 
 
 ---
 
+## I. INCOME SEGMENTATION DEEP DIVE (Quintile Analysis)
+
+Headlines lie about consumer strength because they report means, not distributions. True consumer analysis requires decomposing the aggregate into income cohorts. This is where stress emerges first, and where the richest leading signals live.
+
+### The Segmentation Hierarchy
+
+Different income cohorts exhibit different cyclical sensitivities:
+
+```
+LEADING (First to show stress)           LAGGING (Last to show stress)
+─────────────────────────────────────────────────────────────────────────
+Bottom Quintile                          Top Quintile
+Gen Z / Young Millennials                Gen X / Boomers
+Renters                                  Homeowners
+Hourly Wage Workers                      Salaried Professionals
+High-DTI Households                      Low-DTI Households
+```
+
+**The Insight:** When bottom-quintile spending and credit metrics deteriorate while top-quintile spending remains positive, you're witnessing the early stages of a consumer turn. By the time top quintile stress appears, recession is already underway.
+
+### A. INCOME QUINTILE SPENDING
+
+Income quintile spending data comes from three primary sources: BLS Consumer Expenditure Survey (quarterly, ~6-month lag), NY Fed Survey of Consumer Expectations (monthly, real-time), and bank card data disaggregated by ZIP code income (BofA, Chase, weekly).
+
+| **Quintile** | **Annual Income Band** | **Share of Spending** | **Wealth Position** | **Cycle Behavior** |
+|---|---|---|---|---|
+| **Top 20%** | >$160k | ~39% | Top 10% holds ~67% of wealth | Resilient; discretionary holds longest |
+| **Fourth 20%** | $100-$160k | ~23% | Home equity concentrated | Trading down mid-cycle |
+| **Middle 20%** | $60-$100k | ~16% | Modest home equity, debt-service sensitive | Discretionary cuts first |
+| **Second 20%** | $30-$60k | ~13% | Minimal wealth, some housing | Broad pullback, staples only |
+| **Bottom 20%** | <$30k | ~9% | Negative median net worth | First to cut; BNPL-dependent |
+
+Income bands shift with wage inflation. Ranges reflect approximate 2024-2025 US cutoffs.
+
+#### Derived Income Distribution Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Top-Bottom Spending Spread** | Q5 YoY - Q1 YoY | >4 ppts | K-shaped divergence |
+| **Bottom-40 Real Spending YoY** | (Q1+Q2)/2 real spend YoY | <0% | Median consumer contracting |
+| **Spending Concentration Index** | Q5 spending share growth YoY | Rising | Top-heavy growth (late-cycle) |
+| **Quintile Delinquency Gap** | Q1 CC DQ - Q5 CC DQ | >3 ppts | Bifurcation widening |
+
+#### Regime Thresholds: Income Quintile Spending
+
+| **Cohort** | **Healthy** | **Neutral** | **Stressed** | **Crisis** |
+|---|---|---|---|---|
+| **Bottom Quintile Real YoY** | >+1% | 0 to +1% | -1% to 0% | <-1% |
+| **Middle Quintile Real YoY** | >+2% | +1% to +2% | 0% to +1% | <0% |
+| **Top Quintile Real YoY** | >+3% | +1.5% to +3% | 0% to +1.5% | <0% |
+| **Top-Bottom Spread** | <2 ppts | 2-4 ppts | 4-6 ppts | >6 ppts |
+
+**The Bifurcation Pattern:** Top-Bottom spending spreads exceeding 4 ppts are characteristic of late-cycle consumer markets. The spread widens further into recession before compressing as the top finally cuts too. Watch the inflection in the top quintile (positive-to-negative YoY) as the final consumer confirmation signal.
+
+### B. AGE COHORT SPENDING
+
+Age-based spending patterns are driven by life-cycle position, wealth accumulation, and housing costs. Different cohorts weather cycles differently.
+
+| **Cohort** | **Age Band** | **Key Financial Drivers** | **Cycle Sensitivity** |
+|---|---|---|---|
+| **Gen Z** | 18-27 | Entry wages, student debt, no home equity | Very high; first to cut |
+| **Younger Millennials** | 28-35 | Career earnings ramp, high rent, childcare | High; housing cost pressure |
+| **Older Millennials** | 36-43 | Peak childcare costs, first homes | High; DTI-constrained |
+| **Gen X** | 44-59 | Dual-income peak, 401(k) accumulation | Moderate; wealth-effect sensitive |
+| **Younger Boomers** | 60-70 | Late-career or early-retired, SS + 401(k) | Moderate; equity-wealth sensitive |
+| **Older Boomers / Silent** | 71+ | Drawing down assets, fixed income | Low; Social Security anchor |
+
+#### Derived Age Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Gen Z-Boomer Spending Spread** | Gen Z YoY - Boomer YoY | <-3 ppts | Young cohort stressed |
+| **Millennial Housing Stress** | Rent-burdened share (>30% income) | >50% | Housing cost trap |
+| **Prime-Working-Age Real YoY** | (28-54) real spend YoY | <+1% | Core economy weak |
+
+**The Millennial Housing Trap:** Millennials (28-43) carry disproportionate housing cost burden because they bought homes late in the 2010s-2020s rate cycle or are still renters in expensive metros. When mortgage rates stay above 6%, their spending capacity is more constrained than aggregate income would suggest. Track the rent-burdened share (households spending >30% of income on housing) as a millennial-specific stress gauge.
+
+### C. HOUSING TENURE SPENDING
+
+Homeowners and renters behave differently through cycles due to wealth-effect asymmetry and rent-versus-mortgage cost structure.
+
+| **Tenure** | **Share of Households** | **Wealth Exposure** | **Cycle Behavior** |
+|---|---|---|---|
+| **Owners with Mortgage** | ~40% | Home equity + stock market | Wealth-effect sensitive; DTI-driven |
+| **Owners Free & Clear** | ~25% | Home equity only | Most resilient |
+| **Renters** | ~35% | No housing wealth | Rent-burden sensitive; fastest to cut |
+
+#### Tenure Metrics
+
+| **Metric** | **Source** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Renter Spending YoY (real)** | NY Fed SCE / ACS | <0% | Renter cohort in contraction |
+| **Rent-Burden Share** | ACS / HUD | >50% (for metro) | Housing cost crisis |
+| **Owner Wealth Effect (home equity ΔYoY × 0.07)** | Z.1 | <0 (contribution to PCE) | Negative wealth effect engaged |
+
+**Housing Wealth Elasticity:** Carroll, Otsuka, and Slacalek estimate long-run MPC out of housing wealth at 5-8 cents per dollar (vs 2-4 cents for financial wealth). This asymmetry matters: when home equity contracts, the spending response from the median homeowner is larger than equivalent stock wealth loss, because more consumers own homes than stocks and the MPC-weighted wealth distribution favors housing.
+
+---
+
+## J. GEOGRAPHIC SEGMENTATION (Where the Stress Concentrates)
+
+National data obscures regional variation. Consumer conditions vary substantially across states and metros, and regional divergence often precedes national turns. Sun Belt growth states behave differently from Rust Belt manufacturing states, which behave differently from coastal tech/finance metros.
+
+### State-Level Consumer Indicators
+
+Multiple state-level consumer data sources exist. None are as clean as FRED headline series, but combined they produce a workable regional picture.
+
+| **Series** | **Source** | **Frequency** | **Geographic Level** |
+|---|---|---|---|
+| **State Retail Sales (estimated)** | BEA + Census | Quarterly | State |
+| **State Personal Income** | BEA | Quarterly (SAGDP/SAINC) | State |
+| **State Unemployment Rate** | BLS LAUS | Monthly | State + Metro |
+| **Credit Card Delinquency by State** | NY Fed Consumer Credit Panel | Quarterly | State |
+| **Auto Delinquency by State** | NY Fed CCP | Quarterly | State |
+| **State Coincident Index** | Philadelphia Fed | Monthly | State |
+| **BofA/JPM Card Spending by Metro** | Banks | Weekly | Metro |
+
+### Regional Consumer Patterns
+
+| **Region** | **Key States** | **Economic Drivers** | **Consumer Cycle Behavior** |
+|---|---|---|---|
+| **Sun Belt Growth** | TX, FL, AZ, GA, NC | Housing, services, migration | High cyclicality; housing-linked |
+| **Rust Belt** | OH, MI, PA, IN | Manufacturing, auto | Goods-linked; first to weaken in industrial cycles |
+| **Coastal Tech** | CA, WA, MA | Tech compensation, equity wealth | Wealth-effect sensitive; equity volatility pass-through |
+| **Northeast Finance** | NY, NJ, CT | Financial services | Financial-conditions sensitive |
+| **Energy Belt** | TX, ND, OK, WV, LA | Oil & gas | Commodity-price linked |
+| **Agricultural Midwest** | IA, NE, KS, MN | Ag commodities, processing | Commodity cycles; slower but deep |
+
+#### Derived Geographic Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **State Consumer Diffusion** | % of states with rising card DQ (3M) | >60% | Broad-based stress |
+| **Regional Divergence** | StdDev of state retail sales YoY | >2 ppts | Uneven conditions |
+| **Sun Belt Migration Spread** | Sun Belt YoY - National YoY | >+2 ppts | Migration-driven outperformance |
+| **Rust Belt Spread** | Rust Belt avg - National | <-1 ppt | Manufacturing-led consumer weakness |
+
+**State Diffusion Thresholds:**
+
+| **Diffusion Level** | **% States Rising DQ** | **Interpretation** |
+|---|---|---|
+| **Localized** | <30% | State-specific issues |
+| **Spreading** | 30-50% | Weakness gaining traction |
+| **Broad-Based** | 50-70% | National downturn underway |
+| **Pervasive** | >70% | Deep consumer recession |
+
+**Historical Pattern:** In the 2008 consumer cycle, credit card delinquency rose in 30 of 50 states by mid-2007, 9-12 months before the national headline. Geographic diffusion is a leading signal because local labor markets, housing markets, and banking conditions vary, so stress appears unevenly before becoming national.
+
+---
+
+## K. CATEGORY DEEP DIVE (What Consumers Are Cutting First)
+
+The composition of spending reveals more than the level. When consumers cut, they cut in a predictable order. Tracking category-level spending provides early confirmation of stress building beneath aggregate growth.
+
+### Category Hierarchy in a Consumer Slowdown
+
+```
+FIRST TO CUT                                         LAST TO CUT
+─────────────────────────────────────────────────────────────────────
+Luxury discretionary (watches, jewelry, high-end restaurants)
+Travel and leisure (airfare, hotels, cruises)
+Durable big-ticket (vehicles, appliances, electronics)
+Mid-tier discretionary (apparel, casual dining)
+Home improvement / furniture
+Entertainment and subscriptions
+Beauty and personal care
+Groceries (volume, composition shifts to value brands)
+Gasoline and utilities (necessity, inelastic)
+Rent / mortgage (contractual, cut last)
+─────────────────────────────────────────────────────────────────────
+```
+
+### Category-Level Indicators
+
+| **Category** | **Primary Indicator** | **Source** | **Cycle Role** |
+|---|---|---|---|
+| **Vehicles** | Total Light Vehicle Sales (TOTALSA) | FRED | Big-ticket leading indicator |
+| **Home Improvement** | Home Depot / Lowe's same-store sales | Company reports | Mid-cycle housing-linked |
+| **Travel** | TSA checkpoint volume vs 2019 | TSA | Real-time discretionary |
+| **Restaurants** | OpenTable reservations, NRA sales | OpenTable, NRA | Discretionary leading |
+| **Apparel** | Retail sales apparel (RSCCAS) | Census | Discretionary coincident |
+| **Electronics** | Retail sales electronics/appliances | Census | Durable discretionary |
+| **Luxury** | LVMH / Richemont / Kering sales | Company reports | Top-quintile health |
+| **Grocery** | Retail sales food/beverage stores | Census | Staples baseline |
+| **Dollar Stores** | Dollar General / Tree same-store sales | Company reports | Trading-down tell |
+| **Subscriptions** | Streaming churn, gym membership churn | Industry reports | Discretionary resilience |
+
+### Derived Category Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Discretionary-Staples Spread** | Discretionary YoY - Staples YoY | <0 ppts | Trading down active |
+| **Luxury-Discount Spread** | Luxury YoY - Discount YoY | <0 ppts | K-shape broken (top cutting too) |
+| **Vehicle Sales Momentum** | 3M Avg - 12M Avg SAAR | <-500k | Big-ticket contraction |
+| **Travel vs 2019 Index** | TSA / 2019 TSA × 100 | <95 | Travel demand weakening |
+| **Restaurant vs Grocery** | Restaurant sales YoY - Grocery YoY | <-2 ppts | Eating-out pullback |
+
+**The Luxury Canary:** Luxury spending is unusual because it tracks top-quintile wealth, not income. Falls in luxury sales lag consumer weakness by 1-3 quarters but are more definitive: when LVMH/Richemont warn on earnings, the top quintile has finally engaged in trading-down behavior. This is typically the final confirmation that the consumer cycle has completed.
+
+**Buy Now Pay Later (BNPL) as a Stress Signal:** BNPL (Affirm, Klarna, Afterpay, Apple Pay Later) volume has become a meaningful stress gauge for bottom-quartile consumers. Rapid BNPL growth alongside credit card delinquency rising indicates "phantom debt" accumulation outside traditional credit bureau tracking. CFPB and NY Fed track BNPL aggregate volume. YoY growth above 30% combined with rising default rates on primary credit products signals bottom-quartile financial desperation.
+
+---
+
+## L. RETAILER SIZE DYNAMICS (Trade-Down Winners and Losers)
+
+Large retailers and small retailers behave differently through consumer cycles. The competitive landscape shifts predictably as consumers respond to stress.
+
+### The Trade-Down Hierarchy
+
+Consumer spending does not disappear during a slowdown. It migrates across retailer tiers:
+
+```
+PREMIUM (lose share in slowdowns)        VALUE (gain share in slowdowns)
+───────────────────────────────────────────────────────────────────────
+Whole Foods, specialty grocers  ────▶  Walmart, Kroger, Aldi
+Target, department stores       ────▶  Walmart, Costco, BJ's
+Casual dining (Chili's, OG)     ────▶  Fast food (McDonald's)
+Specialty apparel               ────▶  Mass merchants, resale
+Prestige beauty                 ────▶  Drugstore beauty, Amazon
+Brand-name grocery              ────▶  Private label
+Home Depot / Lowe's             ────▶  Deferred maintenance, DIY
+Apple / premium electronics     ────▶  Android, used, trade-in
+───────────────────────────────────────────────────────────────────────
+```
+
+### Public Company Retailer Indicators
+
+| **Retailer Category** | **Representative Names** | **Role in Cycle** |
+|---|---|---|
+| **Mass Value** | WMT, COST, BJ | Trade-down winners |
+| **Deep Discount** | DG, DLTR, FIVE | Bottom-quartile barometer |
+| **Mid-Tier Mass** | TGT, KSS, M | Trade-down losers |
+| **Specialty Discretionary** | LULU, RH, WSM | Early cyclical indicators |
+| **Luxury** | LVMH, CPRI, TPR | Top-quintile health |
+| **Off-Price** | TJX, ROST, BURL | Counter-cyclical beneficiaries |
+| **Home Improvement** | HD, LOW | Mid-cycle housing-linked |
+| **Restaurants (QSR)** | MCD, YUM, CMG | Consumer staples-like |
+| **Restaurants (casual)** | DRI, EAT, TXRH | Discretionary coincident |
+
+### Derived Retailer Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Walmart-Target SSS Spread** | WMT SSS YoY - TGT SSS YoY | >+3 ppts | Trade-down active |
+| **Off-Price vs Department Spread** | TJX SSS - department avg | >+5 ppts | Value-seeking accelerating |
+| **Dollar Store SSS** | DG + DLTR SSS YoY | >+5% | Bottom-quartile stress |
+| **Luxury-Discount Spread** | LVMH - WMT SSS | Narrowing | K-shape compressing |
+| **Restaurant Spread** | QSR SSS - Casual SSS | >+2 ppts | Trading down in food |
+
+**The Walmart-Target Signal:** The spread between Walmart and Target same-store sales is one of the cleanest real-time trade-down gauges available. Pre-2022, the two companies had similar SSS growth. When Walmart accelerates while Target decelerates (or contracts), the middle-class consumer is trading down. This signal has preceded retail earnings compression by 1-2 quarters in every recent cycle.
+
+---
+
+## M. HIGH-FREQUENCY INDICATORS (Expanded Real-Time Pulse)
+
+Beyond the indicators in Section F, a broader ecosystem of daily and weekly data allows real-time consumer nowcasting.
+
+### Real-Time Spending Data
+
+| **Indicator** | **Source** | **Frequency** | **Lead vs Official Data** |
+|---|---|---|---|
+| **BofA Spending Pulse** | BofA Institute | Weekly | ~3-4 weeks ahead of retail sales |
+| **Chase Consumer Card Insights** | JPMorgan | Weekly | ~3-4 weeks ahead |
+| **Visa Spending Momentum Index** | Visa | Monthly | ~2 weeks ahead |
+| **Mastercard SpendingPulse** | Mastercard | Monthly | ~2 weeks ahead |
+| **Redbook Retail Sales** | Redbook | Weekly | Coincident |
+| **Johnson Redbook YoY** | Redbook | Weekly | Coincident |
+
+### Travel and Leisure High-Frequency
+
+| **Indicator** | **Source** | **Frequency** | **Use Case** |
+|---|---|---|---|
+| **TSA Checkpoint Volume** | TSA | Daily | Air travel demand |
+| **OpenTable Reservations** | OpenTable | Daily | Dining demand |
+| **STR Hotel Occupancy** | STR | Weekly | Lodging demand |
+| **AAA Gas Prices** | AAA | Daily | Driving cost proxy |
+| **EIA Gasoline Demand** | EIA | Weekly | Driving activity |
+| **Box Office Revenue** | Box Office Mojo | Weekly | Entertainment spending |
+
+### Consumer Behavior Signals
+
+| **Indicator** | **Source** | **Frequency** | **Interpretation** |
+|---|---|---|---|
+| **Google Trends: "coupon", "discount", "payday loan"** | Google | Daily | Real-time financial stress search |
+| **Google Trends: "recession", "layoff"** | Google | Daily | Consumer sentiment proxy |
+| **Amazon Bestseller Price Bands** | Amazon / scraped | Daily | Trading down in e-commerce |
+| **Apartment List Rent Estimates** | Apartment List | Monthly | Real-time rental market |
+| **Zillow Weekly Housing Reports** | Zillow | Weekly | Real-time housing demand |
+
+### Real-Time Regime Thresholds
+
+| **Indicator** | **Weak** | **Stable** | **Strong** |
+|---|---|---|---|
+| **BofA Card Spending YoY%** | <2% | 2-5% | >5% |
+| **Redbook YoY%** | <3% | 3-6% | >6% |
+| **TSA vs 2019** | <95% | 95-105% | >105% |
+| **OpenTable vs 2019** | <90% | 90-105% | >105% |
+| **Box Office Revenue vs 2019** | <75% | 75-100% | >100% |
+
+**The Real-Time Bridge:** During the gap between monthly retail sales and PCE releases, use: (1) weekly bank card data for spending direction, (2) TSA / OpenTable for discretionary demand, (3) Redbook for chain retail momentum, (4) Google Trends for sentiment proxies. This ecosystem provides a consumer nowcast that leads official statistics by 2-4 weeks.
+
+---
+
+## N. SEGMENTED CONSUMER FRAGILITY INDEX (CCI by Cohort)
+
+The aggregate CCI can be decomposed into cohort-specific fragility to identify where stress is concentrated. This mirrors the Labor Pillar's Segmented LFI construction.
+
+### CCI Components by Segment
+
+| **Segment** | **Key Inputs** | **Weighting Rationale** |
+|---|---|---|
+| **Bottom-50 CCI** | Bottom-quintile spend YoY, CC DQ Q1, BNPL volume | First cohort to show stress |
+| **Millennial CCI** | Rent burden, millennial card spend, student debt DSR | Housing-cost-trapped cohort |
+| **Category CCI** | Discretionary-staples spread, trade-down spreads | Behavior-based stress gauge |
+| **Geographic CCI** | State DQ diffusion, regional retail sales spread | Where weakness concentrates |
+
+### Composite Segmented CCI
+
+```
+Segmented_CCI = 0.25 × z(-Bottom40_Real_Spending_YoY)        # Inverted
+              + 0.20 × z(Q1_Credit_Card_DQ)
+              + 0.15 × z(State_Consumer_Diffusion)
+              + 0.15 × z(BNPL_Volume_YoY)
+              + 0.15 × z(-Discretionary_Staples_Spread)       # Inverted
+              + 0.10 × z(Rent_Burdened_Share)
+```
+
+**Higher Segmented CCI = more fragility concentrated in vulnerable cohorts.**
+
+### Segmented CCI Interpretation
+
+| **Segmented CCI** | **Aggregate CCI** | **Diagnosis** |
+|---|---|---|
+| High, Aggregate Low | Stress concentrated in bottom cohorts; top still spending | Early-stage K-shape |
+| High, Aggregate High | Broad-based stress; top finally participating | Late-stage consumer cycle |
+| Low, Aggregate Low | Broad-based resilience | Expansion |
+| Low, Aggregate High | Unusual; check data | Rare configuration |
+
+**Interpretation:** When segmented CCI diverges upward from aggregate CCI, the weakness is concentrated in vulnerable cohorts but hasn't yet spread to the core consumer. This is the early warning. When they converge (both elevated), the weakness has become broad-based and recession is typically 1-2 quarters away. Track the convergence, not just the levels.
+
+---
+
 ## Consumer Pillar Composite Index (CCI)
 
 ### Formula

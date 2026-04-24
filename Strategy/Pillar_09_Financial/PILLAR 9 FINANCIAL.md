@@ -507,9 +507,9 @@ Financial conditions directly determine **mortgage rates and housing demand**:
 Affordability ↓ → Housing Demand ↓ → Prices Stable/Down
 ```
 
-**Current Linkage:** 10Y at 4.60%, mortgage spread at 235 bps, 30Y mortgage at 6.95%. Housing frozen (HCI -0.6) because **rates are too high**. If 10Y falls to 4.0% and spread normalizes to 180 bps, mortgages drop to ~5.8%—enough to unfreeze some demand.
+**Transmission mechanics:** Mortgage rates equal 10Y Treasury yield plus mortgage spread (primary-secondary spread plus MBS OAS). Mortgage spreads compressed pre-2022 and have widened materially post-2022 due to: (1) MBS duration extension as refi optionality increased, (2) reduced Fed MBS purchases during QT, (3) bank reluctance to hold MBS after SVB episode exposed duration risk. Mortgage rates therefore respond to both 10Y Treasury moves and spread dynamics; a 50 bps 10Y decline with stable spreads moves mortgages 50 bps, but spread normalization can add or subtract 50+ bps.
 
-**Cross-Pillar Signal:** Housing thaw requires **FCI loosening** (lower rates, tighter spreads). Current FCI (+0.3) with 10Y at 4.60% keeps housing frozen. Until financial conditions ease, housing stays in stasis.
+**Cross-Pillar Signal:** Housing activity unfreezes when 30Y mortgage rate drops below ~6% combined with HCI above -0.3. Both conditions typically require FCI loosening (lower Treasury yields, tighter mortgage spreads). Until financial conditions ease, housing transaction volumes stay depressed regardless of income or demographic tailwinds.
 
 ---
 
@@ -523,9 +523,9 @@ Credit Available → Credit Card Limits ↑ → Spending Sustained
 Credit Tightening → Limits Cut → Spending Constrained
 ```
 
-**Current Linkage:** Equities at ATH providing wealth support to top quintile. But **credit card rates at 22.8%** (record) and **SLOOS tightening** constraining lower-income consumers. The K-shaped consumer: wealthy supported by markets, stressed squeezed by credit costs.
+**Transmission mechanics:** The consumer has two distinct financial-conditions transmission channels. Top-quintile households (who hold most equity wealth) respond to equity market performance through the wealth effect. Bottom-half households (who rely on credit access and hold minimal equity) respond to credit availability and borrowing rates (credit card APRs, auto loan rates, BNPL terms). Financial tightening affects these cohorts asymmetrically: equity drawdowns hit top quintile; credit tightening hits bottom half.
 
-**Cross-Pillar Signal:** If equities correct 15%+, top-quintile spending slows, and **CCI falls** from -0.3 toward -0.7. Consumer is more exposed to financial conditions than it appears from aggregate data.
+**Cross-Pillar Signal:** Consumer exposure to financial conditions is higher than aggregate data suggests. An equity drawdown exceeding 15% combined with SLOOS consumer-credit tightening above +20% creates simultaneous stress on both consumer cohorts. This configuration accelerates CCI deterioration and cross-pillar recession probability.
 
 ---
 

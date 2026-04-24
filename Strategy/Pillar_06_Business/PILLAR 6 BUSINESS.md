@@ -2,7 +2,7 @@
 
 ## The Business Transmission Chain
 
-Business activity isn't just corporate earnings—it's the **forward bet on demand**. The transmission mechanism operates through cascading investment and hiring decisions:
+Business activity isn't just corporate earnings. It's the **forward bet on demand**. The transmission mechanism operates through cascading investment and hiring decisions:
 
 ```
 CEO Confidence → Capex Plans → Equipment Orders →
@@ -20,7 +20,7 @@ The beauty of business data: surveys capture **intentions**, orders capture **co
 
 ## Why Business Matters: The Investment Multiplier
 
-Business investment is the **most cyclical** GDP component—first to fall in recessions, first to rise in recoveries. It amplifies every cycle.
+Business investment is the **most cyclical** GDP component. First to fall in recessions, first to rise in recoveries. It amplifies every cycle.
 
 **The Cascade:**
 
@@ -32,7 +32,14 @@ Business investment is the **most cyclical** GDP component—first to fall in re
 
 Get the business call right, and you've captured the GDP growth rate 6 months forward. Miss it, and you're surprised by every earnings recession.
 
-**Current State:** Business activity exhibiting **classic late-cycle bifurcation**. Small business sentiment collapsed (NFIB 89.4, lowest since 2012). Large cap earnings holding (+4% YoY). Manufacturing in 26-month contraction. Services still expanding. Capex orders declining. Inventories elevated. CEOs are cautious—they're not hiring, not investing, not expanding. That's the tell.
+**The Four Stages of Business Cycle Deterioration:** Business downturns follow a sequence that mirrors (and partially drives) the consumer stress sequence. Knowing which stage you're in shapes positioning.
+
+1. **Sentiment Inflection** (Leading): NFIB Optimism rolls over, regional Fed surveys turn negative, CEO Confidence falls. Intentions shift before action.
+2. **Capex Retreat** (Leading-Coincident): Core capital goods orders go negative YoY, bookings/billings ratio drops below 1.0, SLOOS shows tightening. The forward commitment is being withdrawn.
+3. **Manufacturing Recession** (Coincident): ISM Manufacturing below 50 for 3+ months, industrial production YoY negative, manufacturing employment contracts. Goods sector leads.
+4. **Services Transmission** (Lagging): ISM Services breaks 50, earnings recession confirmed, services employment rolls over. Late-cycle bifurcation closes.
+
+The bifurcation window (Stage 3 active, Stage 4 pending) is where late-cycle risk concentrates. Small business in collapse while large cap earnings hold, manufacturing in contraction while services expand, old economy weak while tech/AI invests through the cycle. These divergences are signatures of pre-recession stress, not stability. They close when the labor-to-consumer-to-business loop completes.
 
 ---
 

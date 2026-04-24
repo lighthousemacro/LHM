@@ -1262,6 +1262,9 @@ All FRED series codes referenced in this pillar, organized by category. Pipeline
 | **Series ID** | **Description** | **Frequency** |
 |---|---|---|
 | UMCSENT | University of Michigan Consumer Sentiment | Monthly |
+| UMCSENT1 | UMich Consumer Sentiment (alternate code) | Monthly |
+| MICH | UMich Inflation Expectations (1-yr) | Monthly |
+| CSCICP03USM665S | OECD Consumer Confidence (US) - CB proxy | Monthly |
 
 ### Labor Income Proxy (Section E)
 

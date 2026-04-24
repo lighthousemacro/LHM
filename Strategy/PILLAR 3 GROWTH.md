@@ -1333,7 +1333,7 @@ Growth determines Fed policy response, which determines liquidity.
 
 ---
 
-## Data Source Summary (Expanded)
+## Data Source Summary
 
 | **Category** | **Primary Source** | **Frequency** | **Release Day** | **Release Lag** | **FRED Code / Access** |
 |---|---|---|---|---|---|

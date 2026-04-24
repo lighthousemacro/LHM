@@ -2,7 +2,7 @@
 
 ## The Inflation Transmission Chain
 
-Inflation isn't a number—it's a regime. And we've crossed into a new one.
+Inflation isn't a number. It's a regime. And we've crossed into a new one.
 
 The transmission mechanism operates through cascading feedback loops:
 

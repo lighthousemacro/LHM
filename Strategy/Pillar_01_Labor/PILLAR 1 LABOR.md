@@ -2,7 +2,7 @@
 
 ## The Labor Transmission Chain
 
-Labor isn't just employment data. It's the economic genome—the code that determines whether the expansion continues or the system resets. The transmission mechanism operates through cascading flows:
+Labor isn't just employment data. It's the economic genome, the code that determines whether the expansion continues or the system resets. The transmission mechanism operates through cascading flows:
 
 ```
 Worker Confidence → Job-Switching Behavior → Wage Pressure →

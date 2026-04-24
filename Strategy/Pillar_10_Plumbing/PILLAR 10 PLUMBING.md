@@ -842,11 +842,11 @@ Credit Spreads Widen → Issuance Market Freezes →
 Corporate Refinancing Risk
 ```
 
-**Current Linkage:** With $2T+ in annual Treasury issuance competing for dealer balance sheet capacity, any plumbing stress immediately pressures corporate bond market functioning. Dealers can't intermediate both Treasury and corporate markets simultaneously when SLR constraints bind.
+**Transmission mechanics:** Heavy Treasury issuance competes for dealer balance sheet capacity. When SLR constraints bind, dealers cannot intermediate both Treasury and corporate markets simultaneously. The result is widening corporate bid-ask spreads, reduced primary issuance windows, and eventually credit spread widening that reflects market dysfunction rather than fundamental credit deterioration.
 
-**Cross-Pillar Signal:** When **LCI < -0.5** AND **FCI < -0.3** (financial conditions tightening), the credit-plumbing feedback loop is engaged. Credit spreads widen, which tightens financial conditions further, which constrains dealer balance sheets more, which widens spreads more. This is the vicious cycle that turns funding stress into a credit event.
+**Cross-Pillar Signal:** When **LCI < -0.5** AND **FCI < -0.3** (financial conditions tightening), the credit-plumbing feedback loop is engaged. Spread widening tightens financial conditions further, which constrains dealer balance sheets more, which widens spreads more. This is the vicious cycle that turns funding stress into a credit event.
 
-**The CLG Connection:** The Credit-Labor Gap (CLG = z(HY_OAS) - z(LFI)) captures whether credit markets are pricing labor reality. When LCI deteriorates, it can trigger the repricing mechanism: plumbing stress forces wider spreads, closing the CLG gap violently rather than gradually.
+**The CLG Connection:** The Credit-Labor Gap (CLG = z(HY_OAS) - z(LFI)) captures whether credit markets are pricing labor reality. When LCI deteriorates, plumbing stress can force wider spreads, closing the CLG gap violently rather than gradually. The repricing mechanism is mechanical, not opinion-driven.
 
 ---
 

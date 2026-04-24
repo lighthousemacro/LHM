@@ -341,12 +341,12 @@ def save_fig(fig, filename):
     border_color = THEME['primary']
     fig.patches.append(plt.Rectangle(
         (0, 0), 1, 1, transform=fig.transFigure,
-        fill=False, edgecolor=border_color, linewidth=1.5,
+        fill=False, edgecolor=border_color, linewidth=4.0,
         zorder=100, clip_on=False
     ))
 
     filepath = os.path.join(OUTPUT_DIR, filename)
-    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.15,
+    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.025,
                 facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     print(f'  Saved: {filepath}')

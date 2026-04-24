@@ -565,10 +565,20 @@ def chart_04():
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
 
     orders_last = orders.iloc[-1]
-    signal = "cutting" if orders_last < 0 else "expanding"
-    add_annotation_box(ax1,
-        f"Core capex orders at {orders_last:.1f}%: CEOs are {signal}.\nOrders lead investment by 3-6 months.",
-        x=0.60, y=0.15)  # Moved to bottom right
+    orders_6m = orders.iloc[-6] if len(orders) > 6 else orders_last
+    orders_peak_12m = orders.tail(12).max()
+    inv_last = investment.iloc[-1]
+    # Orders lead investment, so read the leader's direction
+    if orders_last < orders_peak_12m - 0.5:
+        annotation = (f"Orders rolling at {orders_last:.1f}% off {orders_peak_12m:.1f}% peak.\n"
+                      f"Investment at {inv_last:.1f}% is the lag catching up.")
+    elif orders_last < 0:
+        annotation = (f"Orders at {orders_last:.1f}%: CEOs are cutting.\n"
+                      f"Investment at {inv_last:.1f}% will follow in 3-6 months.")
+    else:
+        annotation = (f"Orders at {orders_last:.1f}%, investment at {inv_last:.1f}%.\n"
+                      f"Orders lead investment by 3-6 months.")
+    add_annotation_box(ax1, annotation, x=0.60, y=0.15)
 
     brand_fig(fig, 'Core Capital Goods Orders: CEO Confidence',
               subtitle='Orders lead business investment by 3-6 months',

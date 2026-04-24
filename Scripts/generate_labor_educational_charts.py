@@ -128,25 +128,16 @@ print(f"Loaded: {len(df)} rows, {df.index.min().date()} to {df.index.max().date(
 
 
 def add_branding(ax, source='BLS'):
-    """Add watermarks and source line.
-    Top-left: LIGHTHOUSE MACRO
-    Bottom-right: MACRO, ILLUMINATED.
-    Bottom-left: Lighthouse Macro | Data Source; mm.dd.yyyy
+    """DEPRECATED. Canonical brand chrome is now applied figure-level in save_fig.
+    This axis-relative branding was the drift source for Pattern B Labor charts.
+
+    We stash the source string on the axis so save_fig can pick it up for the
+    footer. Returns None; adds no visual elements to the axis.
     """
-    from datetime import datetime
-    date_str = datetime.now().strftime('%m.%d.%Y')
-    # Top-left watermark
-    ax.text(0.01, 1.02, 'LIGHTHOUSE MACRO', transform=ax.transAxes,
-            fontsize=8, color=THEME['brand_color'], ha='left', va='bottom',
-            fontweight='bold', alpha=0.6)
-    # Bottom-right watermark
-    ax.text(0.99, -0.08, 'MACRO, ILLUMINATED.', transform=ax.transAxes,
-            fontsize=8, color=THEME['brand_color'], ha='right', fontweight='bold',
-            alpha=0.6)
-    # Bottom-left source
-    ax.text(0.01, -0.08, f'Lighthouse Macro | {source}; {date_str}',
-            transform=ax.transAxes, fontsize=7, color=THEME['muted'],
-            ha='left', style='italic')
+    try:
+        ax.figure._lhm_source = source
+    except Exception:
+        pass
 
 
 def style_ax(ax, right_primary=True):
@@ -190,19 +181,89 @@ def annotate_current(ax, x, y, fmt='{:.1f}%', color=None):
                           edgecolor=color, alpha=0.95))
 
 
+def _apply_canonical_brand(fig, source=None):
+    """Apply canonical top/bottom brand chrome matching lhm_chart_template.py.
+    Adds: icon, LIGHTHOUSE MACRO top-left, date top-right, top/bottom accent
+    bars at y=0.955/0.035, MACRO, ILLUMINATED. bottom-right, source footer.
+    """
+    from datetime import datetime
+    import matplotlib.image as mpimg
+
+    OCEAN = '#2389BB'
+    DUSK = '#FF6723'
+    ICON_PATH = f'{BASE_PATH}/Brand/icon_transparent_128.png'
+
+    fig.patch.set_facecolor(THEME['bg'])
+
+    # Top-left: LIGHTHOUSE MACRO text
+    fig.text(0.035, 0.98, 'LIGHTHOUSE MACRO', fontsize=13,
+             color=OCEAN, fontweight='bold', va='top')
+
+    # Top-right: date
+    fig.text(0.97, 0.98, datetime.now().strftime('%B %d, %Y'),
+             fontsize=11, color=THEME['muted'], ha='right', va='top')
+
+    # Top accent bar (Ocean 2/3 + Dusk 1/3) at y=0.955
+    bar = fig.add_axes([0.03, 0.955, 0.94, 0.004])
+    bar.axhspan(0, 1, 0, 0.67, color=OCEAN)
+    bar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
+    bar.set_xlim(0, 1); bar.set_ylim(0, 1); bar.axis('off')
+
+    # Icon top-left
+    if os.path.exists(ICON_PATH):
+        icon_img = mpimg.imread(ICON_PATH)
+        icon_w = 0.018
+        icon_aspect = icon_img.shape[0] / icon_img.shape[1]
+        fig_aspect = fig.get_figwidth() / fig.get_figheight()
+        icon_h = icon_w * icon_aspect * fig_aspect
+        icon_ax = fig.add_axes([0.012, 0.985 - icon_h, icon_w, icon_h])
+        icon_ax.imshow(icon_img, aspect='equal')
+        icon_ax.axis('off')
+
+    # Bottom accent bar at y=0.035
+    bbar = fig.add_axes([0.03, 0.035, 0.94, 0.004])
+    bbar.axhspan(0, 1, 0, 0.67, color=OCEAN)
+    bbar.axhspan(0, 1, 0.67, 1.0, color=DUSK)
+    bbar.set_xlim(0, 1); bbar.set_ylim(0, 1); bbar.axis('off')
+
+    # MACRO, ILLUMINATED. bottom-right
+    fig.text(0.97, 0.025, 'MACRO, ILLUMINATED.', fontsize=13,
+             color=OCEAN, ha='right', va='top', style='italic', fontweight='bold')
+
+    # Source footer bottom-left
+    if source is None:
+        source = getattr(fig, '_lhm_source', None)
+    if source:
+        date_str = datetime.now().strftime('%m.%d.%Y')
+        fig.text(0.03, 0.022, f'Lighthouse Macro | {source}; {date_str}',
+                 fontsize=9, color=THEME['muted'],
+                 ha='left', va='top', style='italic')
+
+
 def save_fig(fig, filename):
+    """Canonical save: apply brand chrome + 4pt Ocean border, save at DPI 200."""
     filepath = os.path.join(OUTPUT_DIR, filename)
-    fig.tight_layout()
-    fig.savefig(filepath, dpi=200, bbox_inches='tight', facecolor=THEME['bg'])
+    # Apply brand chrome before drawing border
+    _apply_canonical_brand(fig, source=getattr(fig, '_lhm_source', None))
+    # 4pt Ocean border
+    fig.patches.append(plt.Rectangle(
+        (0, 0), 1, 1, transform=fig.transFigure,
+        fill=False, edgecolor='#2389BB', linewidth=4.0,
+        zorder=100, clip_on=False
+    ))
+    fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.025,
+                facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     print(f"  Saved: {filename}")
     return filepath
 
 
 def new_fig(figsize=(14, 8)):
+    """Canonical figure with reserved margins for top brand band and bottom footer."""
     fig, ax = plt.subplots(figsize=figsize)
     fig.patch.set_facecolor(THEME['bg'])
     ax.set_facecolor(THEME['bg'])
+    fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94)
     return fig, ax
 
 

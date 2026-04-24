@@ -654,7 +654,7 @@ Fiscal Dominance is the regime where:
 1. **Deficits are so large** that monetary policy cannot offset their stimulative effect
 2. **Debt service costs** are so high that rate hikes worsen the fiscal situation
 3. **Treasury supply** is so heavy that it sets long-end yields regardless of Fed policy
-4. **The term premium** must rise to clear the market—this is the "honest signal"
+4. **The term premium** must rise to clear the market. This is the "honest signal"
 
 ### Historical Precedents
 
@@ -664,7 +664,7 @@ Fiscal Dominance is the regime where:
 | **1970s (UK)** | IMF bailout, fiscal crisis | Austerity, Thatcher reforms |
 | **1990s (Japan)** | Debt spiral, deflation | QE, yield curve control, stagnation |
 | **2010s (Euro)** | Sovereign debt crisis | ECB intervention, fiscal rules |
-| **2020s (US)** | COVID debt, structural deficits | **TBD—we're living it** |
+| **2020s (US)** | COVID debt, structural deficits | TBD: we're in the middle of it |
 
 ### The Three Possible Resolutions
 
@@ -686,7 +686,7 @@ Fiscal Dominance is the regime where:
 - **Cost:** Higher borrowing costs, possible recession
 - **Probability:** High (~50%)
 
-**Our Base Case:** Repricing is the most likely near-term resolution. The market is beginning to demand compensation for fiscal risk. Term premium is the honest signal—and it's rising.
+**Our Base Case:** Repricing is the most likely near-term resolution. The market is beginning to demand compensation for fiscal risk. Term premium is the honest signal, and it's rising from suppressed levels toward historical norms.
 
 ---
 

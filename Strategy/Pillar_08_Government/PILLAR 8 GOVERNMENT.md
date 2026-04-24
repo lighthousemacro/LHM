@@ -240,13 +240,17 @@ The fiscal impulse measures how much fiscal policy **adds or subtracts** from GD
 | **Govt GDP Contribution** | <-0.3 ppts | -0.3 to +0.3 | +0.3 to +0.8 | >+0.8 ppts |
 | **Transfer Growth** | <3% | 3-6% | 6-10% | >10% |
 
-**The Persistent Impulse:** Fiscal impulse at **+0.8 ppts** (Q4 2025)—still expansionary despite high rates. Government contributing **+0.4 ppts** to GDP. The deficit isn't just a debt problem—it's actively supporting growth. When (if) fiscal consolidation arrives, GDP takes a hit. The soft landing assumes no fiscal cliff.
+**The Fiscal Impulse Signal:** Fiscal impulse above +0.5 ppts of GDP is expansionary; above +1 ppt is materially stimulative. Persistent positive fiscal impulse during an expansion (outside recession-response periods) is unusual and reflects structural imbalance, not countercyclical stabilization.
+
+**The "fiscal consolidation drag" risk:** When fiscal consolidation eventually arrives (either through political action or forced by rates), GDP takes a mechanical hit. A 2 ppt of GDP consolidation (from 7% to 5% deficit) subtracts roughly 1-1.5 ppts from GDP growth through direct contribution and fiscal multiplier effects. The "soft landing" trajectory assumes no material fiscal consolidation.
+
+**Transfer payment stabilizers:** Social Security, Medicare, and unemployment insurance act as automatic stabilizers, rising during recessions to support incomes. These flows are counter-cyclical by design. In an expansion, transfer growth above 8% YoY reflects demographic pressure (aging population), not cyclical stabilization, and contributes to the structural deficit trajectory.
 
 ---
 
 ### F. RECEIPTS & TAX POLICY (The Revenue Side)
 
-Tax receipts are **cyclically sensitive**—they boom with profits and wages, bust with recessions. Tax policy changes create step-function impacts.
+Tax receipts are **cyclically sensitive**. They boom with profits and wages, bust with recessions. Tax policy changes create step-function impacts, and the cyclicality of corporate receipts specifically provides a useful profit-cycle proxy.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

@@ -361,7 +361,11 @@ GDP business investment components show what actually happened: the lagging conf
 | **Structures Investment QoQ Ann** | <-8% | -8% to 0% | 0% to +5% | >+5% |
 | **Investment/GDP Ratio** | <12% | 12-13% | 13-14% | >14% |
 
-**The Investment Stall:** Nonresidential fixed investment at **+2.1% QoQ Ann** (Q3 2025)—barely positive. Equipment at **-1.2%** (contracting). Structures at **+4.8%** (held up by data center and reshoring). IP at **+3.5%** (software, AI). The composition is shifting: **traditional capex collapsing** while tech/AI investment holds up. This is not broad-based strength.
+**The Investment Composition Signal:** The three components of nonresidential fixed investment (Equipment, Structures, Intellectual Property) move at different cyclical phases. Equipment is the most cyclical and most rate-sensitive. Structures includes commercial buildings and factories, affected by rates but with longer lead times from order to completion. Intellectual Property (software, R&D) is the least cyclical because firms often protect R&D spending during downturns to preserve competitive position.
+
+**Late-cycle composition:** Equipment contracting while Structures and IP remain positive is characteristic of late-cycle bifurcation. When Equipment turns negative while IP remains strong (software and AI capex supporting the headline), it masks traditional-capex weakness. The right read is to track Equipment separately as the cyclical signal, and treat IP as defensive. Structures can be one-off driven by specific themes (data centers, reshoring, CHIPS Act facilities) that don't reflect broad business health.
+
+**Historical benchmark:** In 2001, equipment investment contracted 8 months before GDP turned. In 2008, equipment contracted 6 months before, structures contracted 3 months before, IP held positive throughout. In 2015-16, equipment contracted during the industrial recession but IP and structures kept the aggregate positive.
 
 ---
 
@@ -415,17 +419,7 @@ BCI = 0.20 × z(NFIB_Optimism)
 | **Dec 2023** | +0.3 | Neutral | Normalization |
 | **Dec 2025** | **-0.4** | **Slowing** | **Late-cycle stress** |
 
-**Current Assessment (Dec 2025):** BCI at **-0.4** places business in "Neutral/Slowing" regime—not crisis, but clear deterioration:
-- **NFIB at 89.4** (lowest since 2012, below 90 threshold)
-- **Core capex orders at -2.8% YoY** (contracting)
-- **ISM Manufacturing at 49.3** (26-month contraction)
-- **ISM Services at 54.1** (still expanding, but divergence)
-- **I/S ratio at 1.41** (elevated, liquidation risk)
-- **S&P 500 earnings at +4% YoY** (positive but decelerating)
-- **SLOOS tightening at +28%** (banks cautious)
-- **HY spreads at 290 bps** (tight but widening)
-
-The bifurcation is stark: **small business collapsing**, **large cap holding**. **Manufacturing in recession**, **services expanding**. This is late-cycle—the divergences close as services follow manufacturing down.
+**Current reading:** see "Current State Assessment Template" section below for the live BCI value, component scores, and regime classification.
 
 ---
 

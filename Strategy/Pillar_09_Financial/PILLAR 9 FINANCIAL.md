@@ -76,17 +76,17 @@ Credit spreads measure the **price of risk** beyond the risk-free rate. They're 
 | **BBB OAS** | <130 bps | 130-180 bps | **180-280 bps** | >280 bps |
 | **CCC OAS** | <800 bps | 800-1200 bps | **1200-1800 bps** | >1800 bps |
 
-**The Spread Paradox:** HY OAS at **290 bps** (Jan 2026)—**3rd percentile** since 1997. This is **extreme complacency**. Either:
-1. The economy is fine and spreads are correctly priced, OR
-2. Markets are mispricing risk and a repricing is coming
+**The Spread Percentile Signal:** HY OAS percentiles below the 10th percentile of the 1997-present distribution signal extreme complacency. Historically, this configuration has been followed by one of two outcomes: (a) sustained tight conditions (soft-landing path), or (b) rapid spread widening (cycle transition). The determining factor is cross-pillar: when labor and growth pillars are fragile, tight spreads tend to reprice higher within 2-4 quarters.
 
-With LFI at +0.93 (fragility) and GCI at -0.4 (contraction risk), we lean toward #2. Credit spreads are **100-150 bps too tight** for the underlying macro reality.
+**Credit spreads as a leading indicator:** HY OAS widening by +100 bps over 3 months precedes default rate increases by 6-9 months. The credit market absorbs information before fundamentals print. This is why Gilchrist-Zakrajsek's Excess Bond Premium (EBP) methodology isolates the component of credit spreads not explained by default risk alone as a predictor of real economy outcomes.
+
+**Quality migration within HY:** The CCC-B spread captures within-HY quality premium. Compression below 400 bps signals distressed-debt risk underpricing and typically precedes default rate spikes. The CCC default rate typically runs 3-5x the B default rate, so CCC-B spread should reflect substantial quality differentiation. Compression indicates complacency even within the risky credit tier.
 
 ---
 
 ### B. YIELD CURVE (The Recession Signal)
 
-The yield curve is the **oldest recession predictor**—inverted curves have preceded every recession since 1970. But the signal is in the **shape**, not just the level.
+The yield curve is the **oldest recession predictor**. Inverted curves have preceded every US recession since 1970. But the signal is in the **shape and its changes**, not just the level at a point in time.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

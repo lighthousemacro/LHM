@@ -247,7 +247,7 @@ Equity markets transmit financial conditions through three channels: **wealth ef
 
 ### F. VOLATILITY & RISK METRICS (The Stress Signal)
 
-Volatility measures **uncertainty and fear**. Low vol = complacency. Spiking vol = stress. The structure of volatility (term, skew) tells you more than the level.
+Volatility measures **uncertainty and risk compensation**. Low vol reflects either genuine calm (early cycle) or complacency (late cycle mispricing). Spiking vol reflects stress. The structure of volatility (term, skew, cross-asset) tells you more than the level alone.
 
 | **Indicator** | **Symbol** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -277,11 +277,11 @@ Volatility measures **uncertainty and fear**. Low vol = complacency. Spiking vol
 | **VIX Term Structure** | <0.90 | 0.90-1.0 | **1.0-1.1** | >1.1 |
 | **SKEW** | <115 | 115-130 | **130-145** | >145 |
 
-**The Vol Paradox:** VIX at **14.2** (Jan 2026)—below long-run average (19). MOVE at **98**—normalizing from 2023 highs. Volatility is **low despite macro fragility**. This is either:
-1. Markets correctly pricing a soft landing, OR
-2. Complacency before a volatility spike
+**VIX Compression Patterns:** VIX below 13 is historically rare (below 10th percentile). Sustained compression reflects either genuinely stable underlying conditions or complacency combined with structured product selling pressure (short vol ETFs, put-selling strategies). When compressed vol resolves upward, the move tends to be abrupt and severe because systematic short-vol strategies force-cover on the move.
 
-Given LFI +0.93, GCI -0.4, and HY spreads at 3rd percentile, we see **vol mispricing risk**. When vol spikes, it tends to overshoot.
+**Cross-Asset Vol Relationships:** MOVE (Treasury vol) often leads VIX (equity vol) by 1-2 weeks. Rising MOVE while VIX stays compressed is the early warning. The MOVE/VIX ratio above 6x is unusual and historically precedes equity volatility regime shifts. The ratio dropping back toward 4x typically coincides with VIX normalizing higher.
+
+**Vol Term Structure Signal:** VIX/VIX3M above 1.0 means near-term volatility is pricing higher than medium-term (backwardation), typical of acute stress. Contango (VIX/VIX3M below 1.0) is the normal regime. Backwardation persisting for 5+ trading days signals sustained stress; brief backwardation spikes are common around events.
 
 ---
 

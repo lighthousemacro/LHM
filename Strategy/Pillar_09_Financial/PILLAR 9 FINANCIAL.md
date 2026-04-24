@@ -460,9 +460,9 @@ Credit Tightening → Cost of Capital ↑ →
 Capex Deferred → Hiring Frozen → Payrolls ↓
 ```
 
-**Current Linkage:** SLOOS showing +38% net tightening for C&I loans. C&I loan growth at +1.2% (barely positive). Capex orders at -2.8% YoY. Hiring slowing to +140k/month. The transmission is **underway but incomplete**. Labor hasn't cracked because financial conditions (spreads, equities) remain loose.
+**Transmission mechanics:** Financial conditions affect labor through two channels. First, the direct credit channel: tighter lending standards restrict business borrowing capacity, reducing capex and hiring within 2-4 quarters. Second, the indirect wealth channel: equity market performance affects consumer spending via wealth effects (Pillar 5), which feeds back into business revenue and employment decisions. The first channel typically dominates in credit-constrained environments; the second dominates in wealth-driven cycles.
 
-**Cross-Pillar Signal:** When **FCI < -0.3** (conditions tightening) AND **LFI > +0.8** (labor fragile), layoff acceleration becomes likely. Current: **FCI +0.3, LFI +0.93**. Conditions haven't tightened enough to trigger labor stress—yet.
+**Cross-Pillar Signal:** When **FCI < -0.3** (conditions tightening) AND **LFI > +0.8** (labor fragile), layoff acceleration becomes likely within 2-4 quarters. The FCI-LFI cross-check complements the BCI-LFI and CCI-LFI cross-checks as the full set of labor-transmission signals.
 
 ---
 

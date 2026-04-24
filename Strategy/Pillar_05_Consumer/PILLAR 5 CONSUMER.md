@@ -978,6 +978,142 @@ If the following occur, consumer is **deteriorating beyond fatigued into crisis*
 
 ---
 
+## Policy & Regulatory Environment
+
+Consumer behavior is materially affected by fiscal policy, credit regulation, and specific consumer-protection frameworks. Unlike Pillar 8 (Government), this section focuses on how policy flows *into* consumer conditions, not the policy itself.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Federal Income Tax Policy** | TCJA extensions, brackets, SALT cap | Disposable income, saving rate | 2-4 quarters |
+| **State/Local Tax Policy** | State income tax, property tax caps | Regional consumer spending | 2-4 quarters |
+| **Payroll Tax / Social Security** | Wage base, rates, eligibility | Take-home pay | 1-2 quarters |
+| **Unemployment Insurance** | Benefit levels, extended benefits, eligibility | Automatic stabilizer | Coincident |
+| **SNAP / Food Stamps** | Eligibility, benefit levels | Bottom-quintile consumption | 1-2 months |
+| **Student Loan Policy** | Forbearance, forgiveness, repayment rules | Millennial/Gen Z spending | 1-3 months |
+| **Credit Card Regulation (CFPB)** | Late fee caps, disclosure rules | APR, access to credit | 6-12 months |
+| **BNPL Regulation (CFPB)** | Reporting rules, underwriting standards | Phantom debt visibility | 6-12 months |
+| **Consumer Protection (CFPB)** | Fair lending, servicing standards | Credit availability | Variable |
+| **Minimum Wage Policy** | Federal and state floors | Low-wage income growth | 6-12 months |
+| **Affordable Care Act / Healthcare** | Subsidies, coverage rules | Healthcare affordability | 1-2 quarters |
+| **Tariff Policy** | Import tariffs, retaliation | Goods prices, consumer purchasing power | 1-2 quarters |
+
+### Active Policy Risks (Consumer-Specific)
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **TCJA 2025 Expiration** | Bearish consumer (tax hike) or Bullish deficit (if extended) | ~0.5-1% of GDP in tax | Extension probability via political markets |
+| **Student Loan Repayment Resumption Impact** | Bearish millennial spending | 20-30 bps of PCE | Actual repayment rates (Education Dept) |
+| **SNAP Benefit Changes** | Bearish bottom-quintile consumption | Variable | Farm Bill / budget reconciliation |
+| **CFPB BNPL Rule Impact** | Mixed: more transparency but potentially lower BNPL access | Variable | CFPB rulemaking timeline |
+| **Tariff Pass-Through to Consumer** | Bearish real spending | Depends on pass-through rate | Import price data, CPI |
+| **Minimum Wage Increases** | Bullish bottom-quintile, bearish employers | Varies by jurisdiction | State legislative action |
+| **Healthcare Subsidy Changes** | Variable by income cohort | ~0.3% of GDP at margin | ACA subsidy extension decisions |
+
+**Structural vs Cyclical:** Tax code and entitlement structure are structural (regime-defining, slow-moving). UI benefit levels and emergency programs are cyclical (event-driven, binary). TCJA expiration is a binary 2025-2026 cliff risk with structural implications.
+
+---
+
+## Demographics & Structural Context
+
+Consumer spending is driven by structural forces that operate on multi-year to multi-decade horizons. These set the long-term trajectory independent of cyclical conditions.
+
+### Key Structural Forces
+
+**1. Aging Population:** The US population over 65 grew from ~13% (2010) to ~17% (2024), projected to 21% by 2035 (Census). Aging shifts spending composition: lower goods, higher healthcare, lower housing turnover, higher services. Reduces aggregate MPC (older cohorts spend less of marginal income).
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| US Population 65+ as % of Total | Census Bureau | Rising 2010-2050 |
+| Median Age | Census | Rising from ~38 (2020) |
+| Dependency Ratio | Census | Rising; deteriorating |
+
+**2. Millennial / Gen Z Household Formation:** Millennials (28-43) are peak earning age but delayed household formation, lower homeownership rates than prior generations at same age. Gen Z (18-27) entering workforce. Combined ~50% of workforce, but wealth-per-capita lags.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Millennial Homeownership Rate | Fed, Census | Catching up but below Boomers at same age |
+| Gen Z Labor Force Entry | BLS CPS | Accelerating 2024-2030 |
+| Millennial Median Net Worth | Fed DFA | Still below prior cohorts at same age |
+
+**3. Wealth Concentration:** Top 10% of households hold ~67% of wealth (Fed DFA). Bottom 50% holds <2%. Concentration has increased since 1990 and matters because MPC varies inversely with wealth. Aggregate PCE is increasingly sensitive to top-quintile spending decisions.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Top 10% Wealth Share | Fed DFA | ~67%, slowly rising |
+| Bottom 50% Wealth Share | Fed DFA | <2%, stable-low |
+| Top-Bottom Spending Ratio | BLS CEX / NY Fed SCE | Widening in late cycles |
+
+**4. Credit Card / BNPL Financialization:** Consumer debt to income ratios have shifted as financial products evolved. Student loans grew from ~$500B (2005) to ~$1.7T (2024). Credit card balances hit record highs post-2022. BNPL created a new credit channel largely outside bureau reporting. Consumer financial structure is more complex than pre-2008.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Consumer Debt / DPI | Fed G.19, BEA | Rising; well above 2010s trough |
+| Student Loan Outstanding | Fed G.19 | $1.7T, stable-high |
+| BNPL Volume | CFPB / Affirm-Klarna reports | Structural growth |
+
+**5. Immigration and Labor Supply:** Net immigration affects labor force growth (Pillar 1) and consumer demand (Pillar 5). Policy shifts since 2020 have affected net immigration materially. Both legal and undocumented immigration affect aggregate consumer demand.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Net Immigration (12M trailing) | Census / DHS | Policy-dependent, highly cyclical |
+| Foreign-born Labor Force Share | BLS CPS | ~18% in 2024 |
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Aggregate MPC Drift** | Weighted MPC by cohort share | Falling as population ages |
+| **Wealth-Weighted PCE Sensitivity** | Top-decile wealth Δ × top-decile MPC | Rising as concentration grows |
+| **Millennial Household Formation Gap** | Expected formations - actual | Positive = pent-up demand |
+| **Immigration Demand Contribution** | Net immigration × per-capita PCE | Annual demand tailwind/headwind |
+
+**Time horizon:** These forces operate over years to decades. They don't determine cyclical turning points but they shape the trajectory around which cycles oscillate. Structural tailwinds: Millennial household formation, Gen Z earnings growth. Structural headwinds: aging, wealth concentration (via lower aggregate MPC), credit burden.
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+This section identifies specific thresholds that, when breached, demand attention and potential regime reclassification.
+
+### Bullish Triggers (Consumer Resilience / Recovery)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Personal Saving Rate** | Rises above 6% | {{WATCH_SAVING_RATE}} | Buffer rebuilding; Stage 1 reversal |
+| **Real PCE YoY%** | Accelerates above +3% | {{WATCH_REAL_PCE}} | Broad strength |
+| **CC Delinquency Rate** | Drops below 2.5% | {{WATCH_CC_DELINQ}} | Stage 2 stress fading |
+| **CB Expectations Index** | Rises above 90 | {{WATCH_CB_EXP}} | Confidence returning |
+| **Real DPI YoY%** | Above +2.5% | {{WATCH_REAL_DPI}} | Income growth supports spending |
+| **Retail Sales Control 3M YoY%** | Above +3% | {{WATCH_RETAIL_CTRL}} | High-frequency confirmation |
+| **CCI Composite** | Above +0.5 | {{WATCH_CCI}} | Healthy regime |
+
+### Bearish Triggers (Consumer Stress Acceleration)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Real PCE YoY%** | Turns negative | {{WATCH_REAL_PCE_NEG}} | Stage 3 confirmed |
+| **Personal Saving Rate** | Drops below 3% | {{WATCH_SAVING_RATE_LOW}} | Desperation level |
+| **CC Delinquency Rate** | Exceeds 4.5% | {{WATCH_CC_DELINQ_HIGH}} | Credit crisis threshold |
+| **CB Expectations Index** | Below 65 | {{WATCH_CB_EXP_LOW}} | Deep pessimism |
+| **Retail Sales 3M Avg** | Turns negative | {{WATCH_RETAIL_NEG}} | Demand destruction |
+| **Durable Goods PCE YoY%** | Below -5% | {{WATCH_DURABLES}} | Discretionary cliff |
+| **CCI Composite** | Below -1.0 | {{WATCH_CCI_LOW}} | Crisis regime |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Excess Savings Stock (SF Fed)** | Fully depleted | Stage 1 complete; consumer relies on credit or wages |
+| **Top-Bottom Spending Spread** | >6 ppts persistent | Severe K-shape; bottom stress unrelenting |
+| **BNPL Volume YoY%** | >40% sustained | Phantom debt structural growth |
+| **Student Loan Delinquency Rate** | Normalizes above 10% | Post-forbearance repayment stress |
+| **CFPB BNPL Rule Implementation** | Rule enacted | Credit channel restructuring |
+| **TCJA Expiration Resolution** | Pass or expire | Tax cliff resolution; structural baseline shift |
+
+---
+
 ## Conclusion: The Consumer as the Last Domino
 
 The consumer isn't a leading indicator. It's the **68% of GDP that confirms what everything else already said**.

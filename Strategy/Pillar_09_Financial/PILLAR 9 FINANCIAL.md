@@ -1088,6 +1088,144 @@ If the following occur, financial conditions are **tightening into crisis**:
 
 ---
 
+## Policy & Regulatory Environment
+
+Financial conditions are shaped by monetary policy, bank regulation, and market structure rules. This section catalogs the policy channels that flow into the transmission layer.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Fed Funds Rate Policy** | FOMC decisions, forward guidance | Short-end, full curve | 1-12 months |
+| **Fed Balance Sheet Policy (QE/QT)** | Balance sheet size, MBS/UST composition | Term premium, LCI | Quarterly |
+| **Bank Capital Rules (Basel III/Endgame)** | CET1, Tier 1, SLR requirements | Bank lending capacity | Multi-year |
+| **Liquidity Rules (LCR, NSFR)** | HQLA requirements, funding stability | Bank balance sheet flexibility | Multi-year |
+| **Dodd-Frank Volcker Rule** | Proprietary trading restrictions | Market-making capacity | Structural |
+| **Stress Testing (CCAR / DFAST)** | Annual bank stress tests | Capital distributions | Annual cycle |
+| **BTFP / Emergency Lending** | Bank liquidity backstop | Banking stress absorption | Episode-driven |
+| **MBS Guarantee Policy (GSE reform)** | Agency MBS guarantees | Mortgage spreads (housing linkage) | Structural |
+| **SEC Disclosure Rules** | Reporting requirements | Market transparency | 6-24 months |
+| **CFTC Derivatives Oversight** | Clearing, margining rules | Derivatives leverage | Multi-year |
+| **International Regulatory Coordination** | Basel Committee, FSB | Cross-border capital | Multi-year |
+
+### Active Financial Policy Risks
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **Basel III Endgame Finalization** | Bearish bank lending (higher capital) | ~$100-200B capital impact | Regulatory finalization timing |
+| **Fed Pivot Decisions** | Directional based on outcome | Material to FCI | FOMC dot plots, futures |
+| **Emergency Lending Facility Reactivation** | Contingent on stress | Infinite potential | Stress event triggers |
+| **MMF Reform** | Impacts cash alternatives | Moderate for MMF industry | SEC rulemaking |
+| **Shadow Banking Oversight (FSOC)** | Potential new rules for NBFIs | Variable | FSOC actions |
+| **CRE Regulatory Response** | Potential forbearance or capital relief | Material for regional banks | Banking regulator actions |
+| **Central Clearing Expansion (Treasury)** | SEC central clearing rule | Market structure shift | SEC implementation |
+| **GSIB Surcharge Changes** | Directly affects large bank capital | Variable | Regulatory updates |
+| **Climate-Related Financial Risk Rules** | Disclosure, potentially capital | Bank compliance costs | Multi-year timeline |
+
+**Structural vs Cyclical:** Bank capital rules are structural (multi-year). Monetary policy (Fed Funds path) is cyclical. Emergency lending facilities are episode-driven but structurally reshape the Fed's policy arsenal after deployment.
+
+---
+
+## Demographics & Structural Context
+
+Financial conditions have structural forces distinct from demographic trends. The key structural shifts relate to market structure, regulation, and the growth of non-bank financial intermediation.
+
+### Key Structural Forces
+
+**1. Non-Bank Financial Intermediation (NBFI) Growth:** Post-2008, credit creation has migrated from banks to private credit, BDCs, mutual funds, and hedge funds. FSB estimates NBFI globally at ~$240T. This affects SLOOS comprehensiveness and creates less-regulated credit channels.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Private Credit AUM | Preqin, PitchBook | Rising from ~$1T to ~$2T |
+| BDC AUM | BDC filings | Growing post-2008 |
+| Bank C&I vs Private Credit Mix | SLOOS + PitchBook | Bank share declining |
+
+**2. Passive/Index Investing Dominance:** Index funds and ETFs have grown to approximately 50% of equity AUM. This changes market microstructure, concentration dynamics, and price discovery. Flows drive increasingly from benchmark tracking rather than fundamental analysis.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Passive % of US Equity AUM | ICI, Morningstar | ~50% and rising |
+| Top 10 Stocks / S&P 500 | S&P | Concentration increasing |
+| ETF Flow Concentration | ICI weekly | Concentration in large ETFs |
+
+**3. Regulatory Capital Regime Evolution:** Post-2008 Basel III, stress testing, and Dodd-Frank have materially changed bank behavior. Banks are better-capitalized but less able to warehouse inventory or absorb risk, affecting market liquidity during stress.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Aggregate Bank CET1 Ratio | Fed Y-9C data | Rising since 2008 |
+| GSIB Surcharge Implementation | Federal Reserve | Specific surcharges per bank |
+| Primary Dealer Capital / Inventory | NY Fed | Post-2008 more constrained |
+
+**4. Central Bank Balance Sheet Regime:** Fed balance sheet cycles between QE expansion and QT contraction affect asset prices, liquidity, and financial conditions broadly. Current QT regime is unprecedented in scale.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Fed Total Assets (WALCL) | Fed | Cycles $4T→$9T→$7T→... |
+| Fed MBS vs UST Mix | Fed H.4.1 | Active management of composition |
+| Reserves as % of GDP | Fed | Policy-determined; current ~14% |
+
+**5. Digital Asset and Fintech Integration:** Cryptocurrency, stablecoins, and fintech have created new financial intermediation channels. Stablecoins are the marginal buyer of Treasuries through CLI (Pillar 11 linkage). Tokenization of traditional assets creates new market structure dynamics.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Stablecoin Market Cap | DefiLlama, CoinGecko | Structurally rising |
+| Stablecoin Treasury Holdings | Circle/Tether disclosures | Material Treasury buyer |
+| Digital Asset Regulatory Framework | SEC, CFTC | Evolving |
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Bank vs NBFI Credit Share** | Bank C&I growth vs private credit growth | Bank channel relative decline |
+| **Concentration-Adjusted Breadth** | Cap-weighted vs equal-weight performance | Passive flow distortion |
+| **Fed Balance Sheet Cycle Phase** | QE, QT, or transitional state | Current policy regime |
+| **Stablecoin-Financial Integration** | Stablecoin MC / Total US bank deposits | Alternative liquidity channel |
+
+**Time horizon:** These forces operate over 5-15 year structural horizons. They don't create cyclical turning points but shape the regime within which cycles unfold. Post-2008 regulation structurally changed liquidity provision; passive dominance changed flow dynamics; NBFI growth changed credit channels.
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Triggers (Financial Conditions Loosening)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **HY OAS** | Stable below 350 bps | {{WATCH_HY_OAS}} | Risk appetite intact |
+| **SLOOS Net Tightening (C&I Large)** | Below +10% | {{WATCH_SLOOS_LARGE}} | Credit easing |
+| **C&I Loan Growth YoY%** | Above +5% | {{WATCH_CI_GROWTH}} | Credit flowing |
+| **VIX** | Below 18 | {{WATCH_VIX_LOW}} | Vol suppressed |
+| **10Y-2Y Spread** | Above +75 bps | {{WATCH_CURVE}} | Healthy curve |
+| **Reserve Balances** | Above $3.5T | {{WATCH_RESERVES}} | Ample liquidity |
+| **FCI Composite** | Above +0.3 | {{WATCH_FCI_HIGH}} | Conditions loose |
+
+### Bearish Triggers (Financial Stress)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **HY OAS** | Above 500 bps | {{WATCH_HY_HIGH}} | Risk repricing active |
+| **VIX** | Above 30 | {{WATCH_VIX_HIGH}} | Fear spike |
+| **NFCI** | Above +0.5 | {{WATCH_NFCI_HIGH}} | Tightening confirmed |
+| **SLOOS Net Tightening (C&I)** | Above +50% | {{WATCH_SLOOS_HIGH}} | Credit crunch |
+| **10Y-2Y** | Bear-steepens >+100 bps | {{WATCH_BEAR_STEEP}} | Fiscal/inflation stress |
+| **SOFR-IORB Spread** | Above +20 bps | {{WATCH_SOFR}} | Funding stress |
+| **FCI Composite** | Below -0.7 | {{WATCH_FCI_LOW}} | Crisis regime |
+| **CCC-B Spread** | Compresses below 400 bps | {{WATCH_CCCB}} | Distressed underpriced |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Basel Endgame Finalization** | Rule implementation | Bank lending capacity changes |
+| **Fed QT End Announcement** | FOMC statement change | Reserves stabilize; RRP dynamics shift |
+| **BTFP Reactivation** | Emergency facility deployment | Banking stress confirmed |
+| **Regional Bank Crisis Indicator** | Named bank failure or stress | SVB-like event risk |
+| **CRE Delinquency >5%** | Commercial real estate stress | Regional bank transmission |
+| **Private Credit Default Wave** | Default rates rising materially | NBFI channel stress |
+| **Major Credit Downgrade Wave** | IG-to-HY migration pickup | Fallen angel volumes |
+
+---
+
 ## Conclusion: Financial Conditions as the Transmission Mechanism
 
 Financial conditions aren't just rates. They're the **transmission layer** that connects Fed policy to the real economy. And the layer routinely sends contradictory signals across its components.

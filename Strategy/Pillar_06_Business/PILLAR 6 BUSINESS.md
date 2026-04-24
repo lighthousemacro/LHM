@@ -241,13 +241,15 @@ Services are 80% of GDP and employment. Manufacturing gets the headlines, but se
 | **ISM Services New Orders** | <50 | 50-53 | 53-58 | >58 |
 | **ISM Services Employment** | <48 | 48-52 | 52-55 | >55 |
 
-**The Services Divergence:** ISM Services at **54.1** (Dec 2025)—still expanding. New Orders at **55.2**—healthy. Employment at **52.3**—stable. The **services-manufacturing spread** is +4.8—widest since 2022. This divergence is **classic late-cycle**: manufacturing leads down by 6-9 months, services follows. We're mid-transmission.
+**The Services-Manufacturing Divergence:** A services-manufacturing PMI spread above +5 points (services higher) is characteristic of late-cycle mid-transmission, when manufacturing has already rolled over but services haven't yet. The divergence historically closes within 2-4 quarters, either through services rolling over (recession scenario) or manufacturing reaccelerating (soft landing scenario). Watch the services sub-components, especially New Orders and Employment, as the confirmation signals. When services New Orders drops below 52 and Employment below 50, services transmission has begun.
+
+**ISM vs S&P Global Services:** S&P Global (formerly Markit) produces a separate services PMI that often diverges from ISM by 2-5 points. Methodology differences: S&P Global samples more small-to-mid firms; ISM samples larger enterprises with greater international exposure. In late-cycle periods, cross-check both for signal robustness.
 
 ---
 
 ### F. CORPORATE PROFITS & MARGINS (The Bottom Line)
 
-Profits are the ultimate outcome—what's left after revenue, costs, and interest. Margin compression precedes layoffs and capex cuts.
+Profits are the ultimate outcome: what's left after revenue, costs, and interest. Margin compression precedes layoffs and capex cuts, typically by 2-4 quarters.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

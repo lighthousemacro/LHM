@@ -468,7 +468,7 @@ Private Consumption → GDP Growth
 
 ### Pillar 8 → Pillar 2 (Prices)
 
-Deficit spending is **demand stimulus**—it can be inflationary:
+Deficit spending is **demand stimulus** and can be inflationary:
 
 ```
 Deficit Spending → Aggregate Demand ↑ →

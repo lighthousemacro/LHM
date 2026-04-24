@@ -2,7 +2,7 @@
 
 ## The Growth Transmission Chain
 
-Growth isn't GDP. It's the **velocity of economic metabolism**—the speed at which labor, capital, and innovation combine to produce output. The transmission mechanism operates through cascading amplifications:
+Growth isn't GDP. It's the **velocity of economic metabolism**: the speed at which labor, capital, and innovation combine to produce output. The transmission mechanism operates through cascading amplifications:
 
 ```
 Demand Shock → Production Response → Inventory Adjustment → 
@@ -10,7 +10,7 @@ Capital Investment → Hiring Decisions → Income Growth →
 Demand Shock (Reinforcing Loop)
 ```
 
-**The Insight:** Growth is a **second derivative** phenomenon. What matters isn't the level—it's the *change in the rate of change*. When industrial production *decelerates* from +3.5% to +1.2%, that's not \"still growing.\" That's a **momentum break** that precedes recession by 6-9 months.
+**The Insight:** Growth is a **second derivative** phenomenon. What matters isn't the level. It's the *change in the rate of change*. When industrial production *decelerates* from +3.5% to +1.2%, that's not \"still growing.\" That's a **momentum break** that precedes recession by 6-9 months.
 
 The beauty of growth data: it exposes the gap between what CEOs say (forward guidance) and what they actually do (production cuts, inventory liquidation, capex deferrals). Surveys lie. Hard data doesn't.
 
@@ -33,7 +33,7 @@ Growth sits at the **nexus** of all economic flows. It's simultaneously:
 
 Get the growth call right, and you've triangulated 60% of the asset allocation decision. Miss it, and you're trading yesterday's narrative while tomorrow unfolds.
 
-**Current State:** Growth exhibiting classic late-cycle characteristics: headline GDP stable (~2.5%) but composition deteriorating (inventory overhang, goods production contracting, services slowing). This is the danger zone—the gap between aggregate data (stable) and sectoral reality (fragmenting).
+**The Composition Trap:** Late-cycle growth often shows stable headline GDP masking deteriorating composition: inventory overhang, goods production contracting, services slowing. The gap between aggregate data (appears stable) and sectoral reality (fragmenting) is where consensus misses the turn. Composition analysis, not headline tracking, is the signal.
 
 ---
 

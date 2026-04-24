@@ -358,7 +358,13 @@ The term premium is what investors demand **above expected short rates** to hold
 | **Real 10Y Yield** | <0% | 0-1.5% | 1.5-2.5% | >2.5% |
 | **10Y-2Y Spread** | <-50 bps | -50 to +50 bps | +50 to +150 bps | >+150 bps |
 
-**The Repricing Underway:** 10Y term premium at **+25 bps** (Jan 2026)—up from **-50 bps** (Jan 2024). The market is **finally** pricing fiscal risk. But we're nowhere near equilibrium. Historical average term premium: **+100-150 bps**. At $2T annual deficits, we should be **+150 bps or higher**. The repricing has started. It's not done. 10Y yields going to **5.5%+** is the base case as term premium normalizes.
+**Term Premium Normalization Dynamics:** Historical term premium averages run roughly +100-150 bps across the post-war period (ACM estimates and comparable models). During the 2010s, unprecedented QE and tight global savings glut suppressed the term premium to near-zero and often negative levels. This suppression was unsustainable but persistent for a decade.
+
+**The fiscal dominance repricing case:** When Treasury issuance sustainably exceeds organic demand (after accounting for Fed holdings, foreign official, and domestic private demand), term premium must rise to clear the market. The clearing level depends on the supply overhang, inflation expectations, and the marginal buyer's required return. Post-2023 research and market pricing suggest a return toward 100-150 bps historical average is the likely equilibrium absent policy response (renewed QE, fiscal consolidation).
+
+**What the 5Y5Y tells you:** The 5-year forward 5-year rate (5Y5Y) strips out near-term cyclical noise and focuses on long-run rate expectations. Rising 5Y5Y with rising term premium signals the market is repricing long-run equilibrium rates higher. Rising 5Y5Y with stable term premium signals inflation/nominal GDP expectations are rising. Decomposing the 10Y move into expected short rates (5Y5Y approximation) and term premium is the cleanest analytical decomposition available.
+
+**Cross-asset implications:** Term premium normalization reprices all long-duration assets. Investment-grade corporate bonds, high-quality dividend equities, real estate, and infrastructure investments are all sensitive to the risk-free long rate. A 50 bps term premium rise roughly translates to 5-8% duration drawdown on long Treasuries and materially impacts equity sector rotation (away from rate-sensitive, toward cyclical).
 
 ---
 

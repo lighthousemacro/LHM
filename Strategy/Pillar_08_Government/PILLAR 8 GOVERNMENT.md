@@ -213,7 +213,7 @@ Treasury issuance is the **supply side** of the bond market. When issuance excee
 
 ### E. FISCAL IMPULSE (The GDP Impact)
 
-The fiscal impulse measures how much fiscal policy **adds or subtracts** from GDP growth. Positive impulse = expansionary. Negative = contractionary.
+The fiscal impulse measures how much fiscal policy **adds or subtracts** from GDP growth. Positive impulse = expansionary. Negative = contractionary. The Brookings Hutchins Center fiscal impulse is the standard reference; CBO produces cyclically-adjusted deficit annually for the same purpose.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

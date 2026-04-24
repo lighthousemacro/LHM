@@ -128,7 +128,7 @@ The debt stock is the **accumulated deficits** that must be serviced. Debt/GDP t
 
 ### C. INTEREST EXPENSE (The Compounding Problem)
 
-Interest expense is the **fastest-growing spending category**. As rates stay elevated and debt grows, interest crowds out discretionary spending.
+Interest expense is the **fastest-growing spending category** in the federal budget. As rates stay elevated and debt grows, interest crowds out discretionary spending and drives the vicious cycle in which higher rates widen the deficit, requiring more issuance, which pressures rates higher.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

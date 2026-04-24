@@ -896,9 +896,9 @@ Dollar Weakening → Global Liquidity Expanding →
 Risk Assets Re-Rate → Crypto Inflows → BTC/ETH Rally
 ```
 
-**Current Linkage:** Dollar Z-RoC is the single strongest macro predictor of crypto returns in our empirical work. When Net Liquidity is expanding AND the dollar is weakening, BTC has averaged +34.1% next quarter (84.7% hit rate). When both are bearish: +0.9% (41.7% hit rate).
+**Transmission mechanics:** Dollar Z-RoC is the single strongest macro predictor of crypto returns in LHM's empirical work. The mechanism: weak dollar = expanding global liquidity = risk-asset re-rating, with crypto benefiting disproportionately because of its high-beta liquidity sensitivity. Empirical pattern: when Net Liquidity is expanding AND the dollar is weakening, BTC has averaged +34.1% next quarter with 84.7% hit rate. When both are bearish, +0.9% with 41.7% hit rate.
 
-**Cross-Pillar Signal:** DCI improvement (dollar weakening + export recovery + ToT improving) is the trade signal that matters most for crypto positioning. Trade headwinds keeping the dollar strong = crypto headwind. Section 122 expiry scenarios have direct DCI implications.
+**Cross-Pillar Signal:** DCI improvement (dollar weakening + export recovery + ToT improving) is the trade signal that matters most for crypto positioning. Trade headwinds keeping the dollar strong is a structural crypto headwind. Tariff regime shifts (Section 122-style policy events) have direct DCI implications.
 
 ---
 

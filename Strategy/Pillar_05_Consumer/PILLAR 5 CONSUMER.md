@@ -514,43 +514,64 @@ Consumer Credit Availability ↓ → Spending ↓ (Reinforcing)
 
 ---
 
-## Current State Assessment (January 2026)
+## Current State Assessment Template
 
-| **Indicator** | **Current** | **Threshold** | **Assessment** |
+*Last Updated: {{DATE}}*
+
+### Primary Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **Real PCE YoY%** | {{REAL_PCE_YOY}} | {{REAL_PCE_YOY_PRIOR}} | {{REAL_PCE_DELTA}} | <1.5% = Stagnation | {{REAL_PCE_ASSESSMENT}} |
+| **Real PCE Momentum (3M - 12M)** | {{PCE_MOMENTUM}} | {{PCE_MOMENTUM_PRIOR}} | {{PCE_MOMENTUM_DELTA}} | <-1 ppt = Decelerating | {{PCE_MOMENTUM_ASSESSMENT}} |
+| **Personal Saving Rate** | {{SAVING_RATE}} | {{SAVING_RATE_PRIOR}} | {{SAVING_RATE_DELTA}} | <5.0% = Depleted | {{SAVING_RATE_ASSESSMENT}} |
+| **Real DPI YoY%** | {{REAL_DPI_YOY}} | {{REAL_DPI_YOY_PRIOR}} | {{REAL_DPI_DELTA}} | <1.5% = Squeezed | {{REAL_DPI_ASSESSMENT}} |
+| **Credit Card Delinquency** | {{CC_DELINQ}} | {{CC_DELINQ_PRIOR}} | {{CC_DELINQ_DELTA}} | >3.5% = Stressed | {{CC_DELINQ_ASSESSMENT}} |
+| **Debt Service Ratio** | {{DSR}} | {{DSR_PRIOR}} | {{DSR_DELTA}} | >11% = Stretched | {{DSR_ASSESSMENT}} |
+| **CB Expectations** | {{CB_EXPECTATIONS}} | {{CB_EXPECTATIONS_PRIOR}} | {{CB_EXPECTATIONS_DELTA}} | <80 = Recession signal | {{CB_EXPECTATIONS_ASSESSMENT}} |
+| **UMich Sentiment** | {{UMICH}} | {{UMICH_PRIOR}} | {{UMICH_DELTA}} | <70 = Weak | {{UMICH_ASSESSMENT}} |
+| **Real Retail Sales YoY%** | {{REAL_RETAIL_YOY}} | {{REAL_RETAIL_YOY_PRIOR}} | {{REAL_RETAIL_DELTA}} | <0% = Contraction | {{REAL_RETAIL_ASSESSMENT}} |
+| **Durable Goods PCE YoY%** | {{DURABLES_YOY}} | {{DURABLES_YOY_PRIOR}} | {{DURABLES_DELTA}} | <-5% = Discretionary collapse | {{DURABLES_ASSESSMENT}} |
+| **Card Spending YoY%** | {{CARD_SPEND_YOY}} | {{CARD_SPEND_YOY_PRIOR}} | {{CARD_SPEND_DELTA}} | <2% = Weak | {{CARD_SPEND_ASSESSMENT}} |
+| **Luxury/Discount Ratio** | {{LUX_DISC_RATIO}} | {{LUX_DISC_RATIO_PRIOR}} | {{LUX_DISC_DELTA}} | <0.8 = Trading down | {{LUX_DISC_ASSESSMENT}} |
+
+### Composites
+
+| **Index** | **Current** | **Prior** | **Regime** | **Signal** |
+|---|---|---|---|---|
+| **CCI** | {{CCI}} | {{CCI_PRIOR}} | {{CCI_REGIME}} | {{CCI_SIGNAL}} |
+| **Segmented CCI (Bottom 50%)** | {{CCI_BOTTOM50}} | {{CCI_BOTTOM50_PRIOR}} | {{CCI_BOTTOM50_REGIME}} | {{CCI_BOTTOM50_SIGNAL}} |
+| **Stress Stage (1-4)** | {{STRESS_STAGE}} | {{STRESS_STAGE_PRIOR}} | {{STRESS_STAGE_REGIME}} | {{STRESS_STAGE_SIGNAL}} |
+
+### Cross-Pillar Linkages
+
+| **Linkage** | **Current** | **Threshold** | **Status** |
 |---|---|---|---|
-| **Real PCE YoY%** | +2.1% | <1.5% = stagnation | 🟡 Decelerating |
-| **Personal Saving Rate** | 4.5% | <5.0% = depleted | 🔴 **Below normal** |
-| **Credit Card Delinquency** | 3.0% | >3.5% = stressed | 🟡 **Elevated** |
-| **CB Expectations** | 78 | <80 = recession signal | 🔴 **Below threshold** |
-| **CB Present Situation** | 138 | <120 = weak | 🟢 Still strong |
-| **Real DPI YoY%** | +1.2% | <1.5% = squeezed | 🟡 Barely positive |
-| **Debt Service Ratio** | 10.8% | >11% = stretched | 🟡 Elevated |
-| **Card Spending YoY%** | +2.8% | <2% = weak | 🟡 Slowing |
-| **Real Retail Sales YoY%** | +0.2% | <0% = contraction | 🟡 Barely positive |
-| **CCI Estimate** | **-0.39** | <-0.5 = stressed | 🟡 **Consumer Fatigued** |
+| **CCI + LFI (Labor-Consumer)** | {{CCI_LFI}} | CCI <-0.3 AND LFI >+0.8 = 65%+ recession probability | {{CCI_LFI_STATUS}} |
+| **CCI + GCI (Growth sync)** | {{CCI_GCI}} | Both <-0.5 = Recession confirmed | {{CCI_GCI_STATUS}} |
+| **Consumer → PCI transmission** | {{CCI_PCI}} | CCI weakness → services disinflation 3-6 mo | {{CCI_PCI_STATUS}} |
+| **Wealth effect (net worth Δ × CCI)** | {{WEALTH_EFFECT}} | Negative wealth Δ + CCI <0 = spending cut catalyst | {{WEALTH_EFFECT_STATUS}} |
 
 ### Narrative Synthesis
 
-The consumer is in **Stage 2 of the stress sequence**: savings depleted, credit stress building, spending maintained but decelerating.
+{{NARRATIVE}}
 
-**Stage 1 (Complete):** Excess savings exhausted. $2.1T accumulated during COVID now fully drawn. Saving rate at 4.5% vs 7.5% pre-pandemic normal. No more buffer.
-
-**Stage 2 (Current):** Credit substitution. Credit card balances at record $1.17T. Delinquencies at 3.0% (highest since 2012). APR at 22.8% (record). Consumers borrowing at record rates to maintain spending. Unsustainable.
-
-**Stage 3 (Coming):** Spending cuts. When credit dries up or becomes unaffordable, spending contracts. Durables already contracting (-1.8% YoY). Services next. Real PCE going from +2.1% toward +1.0% or negative.
-
-**The Bifurcation:**
-- **Top quintile** (20% of population, 40% of spending): Flush with equity wealth, low debt, spending +4% YoY
-- **Bottom three quintiles** (60% of population, 45% of spending): Stressed, trading down, spending flat to negative in real terms
-- **Aggregate masks reality:** +2.1% headline is the wealthy carrying the economy
+**Translation:** {{TRANSLATION}}
 
 **Cross-Pillar Confirmation:**
-- **Labor Pillar:** LFI +0.93 (fragility)—income growth will slow further
-- **Prices Pillar:** Consumer weakness is disinflationary—supports "last mile" resolution
-- **Housing Pillar:** No wealth effect support (frozen market, prices flat)
-- **Growth Pillar:** PCE contributing +1.4 ppts to GDP—if consumer slows, GDP slows
+- **Labor Pillar:** {{LABOR_CONFIRMATION}}
+- **Prices Pillar:** {{PRICES_CONFIRMATION}}
+- **Housing Pillar:** {{HOUSING_CONFIRMATION}}
+- **Growth Pillar:** {{GROWTH_CONFIRMATION}}
+- **Financial Pillar:** {{FINANCIAL_CONFIRMATION}}
 
-**MRI (Macro Risk Index):** Consumer contributes **-0.3 (CCI)** to composite. Not crisis, but **fragility building**. The consumer is the last domino—it doesn't fall first, but when it falls, it confirms what labor/growth already signaled.
+**Stress Stage Diagnosis:**
+1. Savings depleted: {{STAGE1_STATUS}}
+2. Credit stress building: {{STAGE2_STATUS}}
+3. Spending cuts: {{STAGE3_STATUS}}
+4. Recession confirmed: {{STAGE4_STATUS}}
+
+**MRI Contribution:** {{MRI_CONTRIBUTION}}
 
 ---
 

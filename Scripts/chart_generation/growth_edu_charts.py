@@ -568,10 +568,16 @@ def chart_04():
     orders_6m = orders.iloc[-6] if len(orders) > 6 else orders_last
     orders_peak_12m = orders.tail(12).max()
     inv_last = investment.iloc[-1]
-    # Orders lead investment, so read the leader's direction
-    if orders_last < orders_peak_12m - 0.5:
+    inv_6m = investment.iloc[-6] if len(investment) > 6 else inv_last
+    orders_rolling = orders_last < orders_peak_12m - 0.5
+    inv_rising = inv_last > inv_6m
+    if orders_rolling and inv_rising:
+        annotation = (f"Orders rolling at {orders_last:.1f}% off the {orders_peak_12m:.1f}% peak.\n"
+                      f"Investment at {inv_last:.1f}% still riding last year's orders.\n"
+                      f"Convergence lower has to come.")
+    elif orders_rolling:
         annotation = (f"Orders rolling at {orders_last:.1f}% off {orders_peak_12m:.1f}% peak.\n"
-                      f"Investment at {inv_last:.1f}% is the lag catching up.")
+                      f"Investment at {inv_last:.1f}% following lower.")
     elif orders_last < 0:
         annotation = (f"Orders at {orders_last:.1f}%: CEOs are cutting.\n"
                       f"Investment at {inv_last:.1f}% will follow in 3-6 months.")

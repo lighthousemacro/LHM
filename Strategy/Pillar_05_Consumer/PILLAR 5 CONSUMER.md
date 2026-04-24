@@ -1284,18 +1284,71 @@ All FRED series codes referenced in this pillar, organized by category. Pipeline
 | TDSP | Household Debt Service Payments as Percent of DPI | Quarterly |
 | FODSP | Household Financial Obligations as Percent of DPI (discontinued) | Quarterly |
 
+### Category Deep Dive (Section K)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| TOTALSA | Total Vehicle Sales (SAAR) | Monthly |
+| ALTSALES | Light Weight Vehicle Sales | Monthly |
+| DAUTOSAAR | Domestic Auto Sales | Monthly |
+| RSAFS | Advance Retail Sales (headline) | Monthly |
+| RSFHFS | Retail Sales: Furniture and Home Furnishings | Monthly |
+| RSEAS | Retail Sales: Electronics and Appliance Stores | Monthly |
+| RSCCAS | Retail Sales: Clothing and Clothing Accessories | Monthly |
+| RSDBS | Retail Sales: Food Services and Drinking Places | Monthly |
+| RSFSXMV | Retail Sales ex-Motor Vehicles and Parts | Monthly |
+| RSDSELD | Retail Sales: Department Stores | Monthly |
+| RSSGHBMS | Retail Sales: Sporting Goods, Hobby, Book, Music Stores | Monthly |
+
+### Segmentation and Regional Indicators (Sections I, J)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| CUUR0000SEHA | CPI: Rent of Primary Residence (rent burden tracking) | Monthly |
+| CUUR0000SEHC | CPI: Owners' Equivalent Rent | Monthly |
+| LES1252881600Q | Median Usual Weekly Earnings (real) | Quarterly |
+| DSPI | Disposable Personal Income by state (BEA releases; FRED has many per-state codes) | Quarterly |
+| [STATE]UR | State Unemployment Rate (per state code: CAUR, TXUR, etc.) | Monthly |
+| SMU[STATE][SECTOR] | State/sector employment combinations | Monthly |
+
+### High-Frequency (Section M)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DCOILWTICO | WTI Crude Oil Price (gasoline pass-through) | Daily |
+| GASREGCOVW | Retail Gas Price (AAA-equivalent via EIA) | Weekly |
+| PPICMM | PPI Commodities (input cost to consumer goods) | Monthly |
+
 ### Non-FRED Data Sources
 
 | **Indicator** | **Source** | **Notes** |
 |---|---|---|
-| Conference Board Consumer Confidence | Conference Board | Not on FRED; web scrape or subscription |
-| Auto Loan Delinquency Rate | NY Fed Consumer Credit Panel | Not on FRED by loan type; quarterly SCE reports |
+| Conference Board Consumer Confidence | Conference Board | Not on FRED; web scrape or subscription. Proxy via OECD CSCICP03USM665S |
+| Conference Board Present Situation / Expectations | Conference Board | Not on FRED; key for expectations-present spread |
+| Auto Loan Delinquency Rate (by type) | NY Fed Consumer Credit Panel | Quarterly Household Debt and Credit Report |
+| Auto Loan DQ (90+) | NY Fed CCP | Quarterly |
+| Mortgage Delinquency (by vintage/state) | NY Fed CCP, MBA National Delinquency Survey | Quarterly |
+| Student Loan Delinquency | NY Fed CCP | Quarterly (distorted by forbearance through 2024) |
 | Retail Sales Control Group | Census Bureau | No clean FRED series ID; derived from Census advance retail report |
-| Bank of America Card Spending | BofA Research | Proprietary, weekly |
-| Chase Card Spending | JPMorgan | Proprietary, weekly |
-| Redbook Retail Sales | Redbook Research | Weekly, available via some data vendors |
-| Credit Card Balances | NY Fed Quarterly Report on Household Debt | Quarterly |
-| OECD Consumer Confidence (US proxy) | FRED: CSCICP03USM665S | Monthly, can proxy for Conference Board when needed |
+| Bank of America Card Spending | BofA Institute | Free weekly reports |
+| Chase Card Spending | JPMorgan Chase Institute | Free weekly reports |
+| Visa Spending Momentum Index | Visa | Monthly press release |
+| Mastercard SpendingPulse | Mastercard | Monthly press release |
+| Redbook Retail Sales | Redbook Research | Weekly, available via data vendors |
+| Credit Card Balances (aggregate) | NY Fed Quarterly Report on Household Debt | Quarterly |
+| BNPL Volume / Default | CFPB, Affirm/Klarna/Afterpay reports | Quarterly, irregular |
+| TSA Checkpoint Volume | TSA | Daily, free public data |
+| OpenTable Reservations (vs 2019) | OpenTable State of Industry | Daily |
+| STR Hotel Occupancy | STR | Weekly (subscription) |
+| Apartment List Rent Estimate | Apartment List | Monthly, free |
+| Zillow Observed Rent Index (ZORI) | Zillow Research | Monthly, free |
+| Google Trends (stress keywords) | Google | Daily, free |
+| Opportunity Insights Economic Tracker | Harvard / OI | ZIP-level, weekly, free |
+| NY Fed Survey of Consumer Expectations | NY Fed | Monthly, free |
+| BLS Consumer Expenditure Survey (by quintile) | BLS | Quarterly, ~6-month lag |
+| Philadelphia Fed State Coincident Indexes | Philadelphia Fed | Monthly, free |
+| SF Fed Excess Savings Tracker | SF Fed | Monthly update, free |
+| Atlanta Fed GDPNow PCE decomposition | Atlanta Fed | Continuous during quarter |
 
 ---
 

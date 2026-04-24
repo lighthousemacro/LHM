@@ -368,6 +368,335 @@ The term premium is what investors demand **above expected short rates** to hold
 
 ---
 
+## I. DEFICIT COMPOSITION DEEP DIVE (Cyclical vs Structural, Mandatory vs Discretionary)
+
+Headline deficit numbers obscure the drivers. To understand the sustainability path, decompose outlays into mandatory vs discretionary, and decompose the deficit into cyclical vs structural components.
+
+### Mandatory vs Discretionary Spending
+
+```
+TOTAL FEDERAL OUTLAYS
+├── MANDATORY (~60-65% of outlays, rising trajectory)
+│   ├── Social Security (~25% of outlays)
+│   ├── Medicare (~15% of outlays)
+│   ├── Medicaid + CHIP (~10% of outlays)
+│   ├── Income Security / SNAP / UI (~8% of outlays)
+│   └── Other mandatory (veterans benefits, federal retirement, etc.)
+├── DISCRETIONARY (~25-30% of outlays, falling share)
+│   ├── Defense Discretionary (~15% of outlays)
+│   └── Non-Defense Discretionary (~15% of outlays)
+└── NET INTEREST (~12-17% of outlays, rising rapidly)
+```
+
+**The Composition Problem:** Mandatory spending grows with demographics and formula-driven entitlements. Discretionary is subject to annual appropriations and is the only spending category available for political cuts. Net interest compounds with debt and rates. The math: discretionary is shrinking as a share while mandatory and interest grow. Fiscal consolidation through discretionary cuts alone cannot close the structural gap. Real consolidation requires entitlement reform (politically toxic) or tax reform (also politically toxic) or inflation (erodes debt in real terms).
+
+### Cyclical vs Structural Deficit
+
+The cyclical deficit rises and falls with the business cycle (transfer payments to unemployed, lower tax receipts in recession). The structural deficit reflects policy choices independent of cyclical conditions and is the meaningful measure of fiscal stance.
+
+| **Component** | **Definition** | **Measurement** |
+|---|---|---|
+| **Cyclical Deficit** | Portion driven by output gap | CBO cyclically-adjusted methodology |
+| **Structural Deficit** | Deficit at full employment | Total Deficit - Cyclical Deficit |
+| **Primary Deficit** | Excludes interest expense | Deficit - Net Interest |
+| **Structural Primary** | Full employment, ex-interest | Structural deficit minus interest |
+
+**Key benchmark:** Structural primary deficit above 2% of GDP means the government is running an underlying deficit even at full employment, even excluding debt service. This is the clearest signal of unsustainable fiscal policy.
+
+### The Entitlement Trajectory
+
+Social Security, Medicare, and Medicaid spending grow with three factors: (1) beneficiary population (demographics), (2) per-capita benefit levels (indexed to wages, prices), and (3) utilization (healthcare intensity, longevity). Each is structurally rising.
+
+| **Entitlement** | **Driver** | **10-year trajectory** |
+|---|---|---|
+| **Social Security** | Aging population + wage indexing | ~5-6% annual nominal growth |
+| **Medicare** | Aging + healthcare inflation | ~7-9% annual nominal growth |
+| **Medicaid** | Enrollment + healthcare inflation | ~6-8% annual nominal growth |
+| **Interest** | Debt × Rate | Compounding, cycle-dependent |
+
+**CBO Long-Term Outlook:** The biannual CBO long-term outlook projects entitlement and interest growth under current-law assumptions. The trajectory (published via cbo.gov) shows mandatory plus interest crowding out discretionary spending by the 2030s without policy change.
+
+### Derived Composition Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Mandatory + Interest Share** | (Mandatory + Interest) / Outlays | >80% | Discretionary crowd-out severe |
+| **Discretionary / GDP** | Discretionary Outlays / GDP | <6% | Historically low discretionary |
+| **Structural Primary Deficit / GDP** | CBO cyclically-adjusted primary | >2% | Unsustainable at full employment |
+| **Entitlement Growth Spread** | Entitlement YoY - Nominal GDP YoY | >+2 ppts | Unsustainable trajectory |
+
+---
+
+## J. DEBT HOLDER COMPOSITION (Who Owns the Debt Determines Price Sensitivity)
+
+Who holds Treasury debt matters as much as how much debt exists. Different holder categories have different price sensitivities, different return requirements, and different responses to shocks.
+
+### The Holder Breakdown
+
+| **Holder Category** | **Share of Public Debt** | **Price Sensitivity** | **Cycle Behavior** |
+|---|---|---|---|
+| **Federal Reserve** | ~15-25% (varies with QE/QT) | None (mandate-driven) | QE/QT cycles |
+| **Foreign Official (central banks)** | ~15-20% | Low (reserve management) | Structural; slow shifts |
+| **Foreign Private** | ~8-12% | High (yield-seeking) | Return-driven, cyclical |
+| **US Banks (commercial)** | ~5-10% | High (HQLA, carry) | Reserve management |
+| **Money Market Funds** | ~15-20% | Very low (cash alternative) | Flight-to-safety flows |
+| **Pension Funds & Insurance** | ~8-12% | Low (duration-matching) | Liability-driven |
+| **Mutual Funds + ETFs** | ~12-18% | High (benchmark-tracking) | Flow-driven |
+| **Households (direct + indirect)** | ~8-12% | Very high | Savings rate dependent |
+| **State & Local Governments** | ~3-5% | Low (reserve holdings) | Structural |
+
+Shares approximate and shift with cycle; Treasury publishes detailed monthly breakdown.
+
+### Marginal Buyer Analysis
+
+The *marginal* buyer determines price at any given moment. In recent years, the marginal buyer has shifted.
+
+- **2010-2019:** Fed was marginal buyer (QE1/2/3), suppressing term premium
+- **2022-2024:** Private sector absorbed large issuance during QT; money market funds and household direct Treasury holdings grew
+- **2024-onward:** Term premium repricing reflects shift toward price-sensitive marginal buyers
+
+**Foreign Official Holdings Dynamics:** Chinese holdings peaked around 2013 and have declined steadily. Japanese holdings are the largest foreign official holder and remain relatively stable. Middle East sovereign wealth funds and other emerging-market holdings have grown. Foreign official buyers are not yield-sensitive; they hold Treasuries for reserve management. Shifts in composition matter less than total level.
+
+**Foreign Private (yield-seeking) Holdings:** These are price-sensitive buyers who allocate to Treasuries based on relative yield vs other sovereign bonds and hedging costs. Post-2022, rising hedging costs (via cross-currency basis swaps) materially reduced foreign private demand for Treasuries because yield minus hedging cost compressed. Watch the USD-JPY and USD-EUR hedged yield spreads as real-time indicators of foreign private demand.
+
+**Household Demand Surge:** During 2022-2024, retail investors purchased unprecedented amounts of Treasuries directly via TreasuryDirect (I-bonds, short-term bills). This demand has supplemented institutional demand but is return-sensitive. If yields decline materially, retail demand can fall off.
+
+### Derived Holder Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Foreign Official Share** | Foreign Official / Public Debt | <15% | Structural foreign retreat |
+| **Foreign Private Change (6M)** | Net change in TIC data | <-$100B | Price-sensitive selling |
+| **MMF Treasury Share** | MMF Treasuries / Total MMF | >30% | Flight-to-safety active |
+| **Household Direct Holdings YoY** | TreasuryDirect growth | >+$100B | Retail absorption working |
+| **Fed Holdings Change** | Fed balance sheet runoff | >$80B/mo | Active QT pressure |
+
+---
+
+## K. TREASURY AUCTION MECHANICS DEEP DIVE (Reading the Auction Tape)
+
+Treasury auctions are the most transparent large-scale capital markets events in the world. Each auction provides real-time data on supply absorption. Reading the tape well gives a 1-3 day lead on term premium moves.
+
+### Auction Calendar and Tenor Patterns
+
+| **Tenor** | **Auction Frequency** | **Avg Size ($B)** | **Market Role** |
+|---|---|---|---|
+| **4-week bills** | Weekly | 80-100 | Money market rate-setting |
+| **13-week bills** | Weekly | 80-100 | Short-term risk-free rate |
+| **26-week bills** | Weekly | 60-80 | 6-month horizon |
+| **52-week bills** | Monthly | 50-60 | 1-year horizon |
+| **2-year notes** | Monthly | 60-70 | Front-end Fed expectations |
+| **3-year notes** | Monthly | 55-65 | Fed path proxy |
+| **5-year notes** | Monthly | 55-65 | Belly of curve |
+| **7-year notes** | Monthly | 40-50 | Duration workhorse |
+| **10-year notes** | Monthly | 40-45 | Benchmark long rate |
+| **20-year bonds** | Monthly | 15-20 | Duration supply (2020+) |
+| **30-year bonds** | Monthly | 25-30 | Ultra-long duration |
+| **5-year TIPS** | Quarterly | 20-25 | Inflation breakeven benchmark |
+| **10-year TIPS** | Quarterly | 20-25 | Real rate benchmark |
+| **30-year TIPS** | Semi-annual | 9-12 | Long real rate |
+| **FRN (2-year)** | Quarterly | 25-30 | Floating-rate short-duration |
+
+### The Three Auction Metrics (Detail)
+
+**1. Stop Yield vs When-Issued (Tail):**
+- When-issued market trades pre-auction based on dealer and investor positioning
+- Stop yield is the highest yield accepted (auction clearing rate)
+- Tail = Stop yield - When-issued yield at auction close
+- Tail > 0: auction stopped weaker than pre-auction pricing (demand weaker than expected)
+- Tail < 0 ("stopped through"): auction stopped stronger than expected
+- Consistent tailing of 1-3 bps across a tenor's recent auctions is a durable weak-demand signal
+
+**2. Bid-to-Cover Ratio:**
+- Total competitive bids / amount awarded
+- Historical averages by tenor: 10Y ~2.5x, 30Y ~2.4x, 2Y ~2.7x
+- Changes matter more than levels
+- 3M avg bid-to-cover falling by 0.2+ is demand deterioration
+
+**3. Dealer Take-Down Share:**
+- Primary dealers bid in all auctions and absorb residual after indirect/direct
+- Historical: dealers take 12-18% of auction
+- >22% dealer take-down = forced absorption, balance sheet strain
+- Dealer take-down > 30% = near-failure conditions, crisis signal
+
+### The "Indirect" and "Direct" Bidder Signals
+
+- **Indirect bidders:** Foreign central banks, other sovereign entities (proxy for foreign official demand)
+- **Direct bidders:** Non-dealer domestic entities (pensions, insurers, asset managers)
+- Indirect share falling from 60-70% to 50%+: foreign demand weakening
+- Direct share rising: domestic private sector absorbing (positive or negative depending on context)
+
+### Off-the-Run vs On-the-Run
+
+Newly issued Treasuries ("on-the-run") trade at a liquidity premium vs seasoned ("off-the-run") issues of similar maturity. The on-off spread typically runs 3-10 bps. Widening on-off spreads signal liquidity stress. During the March 2020 Treasury dysfunction, on-off spreads widened to 50+ bps, signaling severe market dysfunction that eventually required Fed intervention.
+
+### Derived Auction Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **3M Avg 10Y Tail** | Trailing 3-month tail | >+1.5 bps | Demand deterioration |
+| **Bid-to-Cover Z-Score** | Current vs 12M avg | <-1.0 | Unusual weakness |
+| **Dealer Take-Down 3M Avg** | Trailing dealer absorption | >20% | Balance sheet strain |
+| **Indirect Share 3M Change** | Current - 3M ago | <-5 ppts | Foreign retreat |
+| **On-Off Spread** | On-the-run - Off-the-run | >15 bps | Liquidity stress |
+
+---
+
+## L. MATURITY PROFILE & REFINANCING WALL (Duration Supply Management)
+
+The maturity profile of outstanding Treasury debt determines refinancing risk. Bills (short duration) roll frequently; long-end coupons (20Y, 30Y) lock in rates for decades. The mix affects both Treasury funding costs and market absorption dynamics.
+
+### Current Maturity Structure
+
+| **Maturity Bucket** | **Share of Marketable Debt** | **Refinancing Implication** |
+|---|---|---|
+| **Bills (<1Y)** | 15-22% | Rolls frequently; rate-sensitive |
+| **Notes 2-5Y** | 30-35% | Medium-term refinancing risk |
+| **Notes 7-10Y** | 20-25% | Long-duration supply |
+| **Bonds 20-30Y** | 15-20% | Long-dated, locked-in rates |
+| **TIPS** | 7-10% | Inflation-indexed, different demand |
+| **FRNs** | 2-3% | Floating-rate, minimal duration |
+
+**Weighted Average Maturity (WAM):** Treasury's WAM has trended from ~4 years in 2010 to ~5.5-6 years currently, reflecting deliberate duration extension. Longer WAM reduces refinancing risk but extends duration to the market, requiring either more term premium or more aggressive duration buyers.
+
+### The TBAC Recommendations
+
+The Treasury Borrowing Advisory Committee (TBAC) is a panel of bank, dealer, and investor representatives that advises Treasury on issuance strategy quarterly. TBAC recommendations are published via minutes and shape the Quarterly Refunding Announcement. Key TBAC inputs:
+
+- Recommended bills vs coupon share
+- Tenor mix within coupons
+- Bond issuance (20Y, 30Y) sizes
+- TIPS sizing
+- Buyback program suggestions
+
+**Where to watch TBAC:** Treasury publishes TBAC presentations and minutes at treasury.gov. These documents reveal dealer community sentiment on duration absorption capacity and help predict the next QRA.
+
+### The Refinancing Wall
+
+The "maturity wall" is the concentration of debt coming due in specific years. Large maturity concentrations combined with higher prevailing rates create refinancing stress.
+
+| **Timeframe** | **Typical Rolling Volume** | **Monitoring** |
+|---|---|---|
+| **Next 12 months** | $6-9T rolling | Weekly Treasury operations |
+| **2-3 years ahead** | $5-7T/year cumulative | Quarterly TBAC |
+| **5+ years ahead** | Gradual declining | Long-term CBO projections |
+
+### Buyback Program
+
+In 2024, Treasury introduced a buyback program targeting off-the-run, less liquid securities. Buybacks reduce supply in specific cusips and improve market functioning. The program is relatively small (few billion per operation) but represents active Treasury market management that parallels Fed market operations.
+
+### Derived Maturity Metrics
+
+| **Metric** | **Formula** | **Threshold** | **Signal** |
+|---|---|---|---|
+| **Bills Share of Marketable** | Bills / Total Marketable | >25% | Short-term funding preference |
+| **WAM Trend (YoY)** | Current WAM - Year Ago | <-6 months | Duration shortening |
+| **Next-12M Rollover Volume** | Sum of maturities in 12 months | >$9T | Heavy rollover window |
+| **Refinancing Rate Gap** | 10Y yield - Maturing coupon rate | >+200 bps | Rollover cost shock |
+
+---
+
+## M. FISCAL POLICY CYCLE & POLITICAL ECONOMY (The Timing of Policy)
+
+Fiscal policy is political. Understanding the political calendar, appropriations process, and policy cycle provides context that pure numerical analysis misses.
+
+### The Federal Fiscal Calendar
+
+| **Month** | **Event** | **Significance** |
+|---|---|---|
+| **January** | CBO Budget and Economic Outlook released | Official baseline for year ahead |
+| **February** | Administration's Budget Request | Political agenda vs CBO baseline |
+| **February** | Q1 QRA (Quarterly Refunding Announcement) | Next quarter's issuance guidance |
+| **March-April** | Congressional budget resolution | Framework for appropriations |
+| **May** | Q2 QRA | Issuance guidance |
+| **July** | CBO mid-year update | Revised projections |
+| **August** | Q3 QRA | Issuance guidance |
+| **September 30** | Fiscal year ends; appropriations deadline | CR or shutdown risk |
+| **October 1** | New fiscal year begins | Spending authority resets |
+| **November** | Q4 QRA | Issuance guidance |
+| **December** | Year-end tax and spending reconciliation | Year-end political bargaining |
+
+### Continuing Resolutions and Shutdowns
+
+When Congress fails to pass appropriations bills by October 1, a continuing resolution (CR) extends prior-year funding. Failure to pass a CR causes a government shutdown. Shutdowns have direct economic effects (delayed federal payments, furloughed workers) and indirect effects (business uncertainty, Treasury market stress during extended shutdowns).
+
+**Historical shutdowns:** 1995-96 (21 days), 2013 (16 days), 2018-19 (35 days, longest). Each episode had modest direct GDP drag (~0.1-0.2 ppts per week) and market volatility that reversed on resolution.
+
+### Election-Cycle Fiscal Patterns
+
+Fiscal policy exhibits election-cycle patterns: stimulus in election years (tax cuts, spending increases), restraint in off-years (budget deals, reform proposals). The pattern is asymmetric: stimulus is common, meaningful restraint is rare.
+
+**Mid-term election years:** Typically less fiscal action than presidential years (political polarization lower stakes).
+
+**Presidential election years:** Tax cuts and spending initiatives are common. Fiscal impulse often positive regardless of cyclical conditions.
+
+**Post-election (new administration):** Major fiscal legislation (tax reform, infrastructure, healthcare) typically attempted in first 2 years. Results depend on congressional majorities.
+
+### CBO Scoring of Major Legislation
+
+The Congressional Budget Office provides cost estimates ("scores") of major legislation. CBO scoring shapes political debate and directly affects Treasury issuance guidance. Key CBO documents:
+
+- **Budget and Economic Outlook:** Baseline projections (January, updated summer)
+- **Cost Estimates:** Bill-specific fiscal impact (as legislation moves)
+- **Long-Term Budget Outlook:** 30-year projections (biennial)
+- **Alternative Fiscal Scenarios:** Policy-change sensitivity analysis
+
+Watch CBO's projections for shifts in baseline deficit trajectory, which directly inform Treasury borrowing expectations.
+
+### Derived Political Economy Metrics
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| **Shutdown Probability (prediction markets)** | PredictIt, Polymarket | >30% = elevated risk |
+| **CBO Baseline Revision (YoY)** | CBO projections | Widening deficit projections |
+| **Partisan Control Mix** | Congressional composition | Unified = more fiscal action possible |
+| **Appropriations Progress** | Congressional calendar | Late September = CR risk |
+| **Fiscal Commission Activity** | News flow | Indicates reform attempts |
+
+---
+
+## N. SEGMENTED GOVERNMENT CONDITIONS INDEX (GCI-Gov by Dimension)
+
+The aggregate GCI-Gov can be decomposed into sub-composites that isolate different aspects of fiscal stress. Different sub-composites may diverge, providing early warning of which dimension is driving overall stress.
+
+### GCI-Gov Sub-Composites
+
+| **Sub-Composite** | **Key Inputs** | **Measures** |
+|---|---|---|
+| **Flow Sub-Composite** | Deficit/GDP, Primary Deficit/GDP, Receipts YoY, Outlays YoY | Annual fiscal flow |
+| **Stock Sub-Composite** | Debt/GDP, WAM, Interest/Outlays, Refinancing Volume | Accumulated debt burden |
+| **Market-Stress Sub-Composite** | Term Premium, Auction Tails, Bid-to-Cover, Dealer Take-Down | Real-time market absorption |
+| **Political-Risk Sub-Composite** | X-Date proximity, Shutdown probability, 1Y CDS, Partisan gridlock | Manufactured crisis risk |
+| **Demand-Side Sub-Composite** | Foreign Holdings %, Fed Holdings %, MMF Treasury share | Who's absorbing supply |
+
+### Composite Segmented GCI-Gov
+
+```
+Segmented_GCI_Gov = 0.25 × z(Deficit_GDP)                  # Flow
+                  + 0.20 × z(Interest_Outlays)              # Stock
+                  + 0.15 × z(Term_Premium_ACM)              # Market
+                  + 0.10 × z(3M_Avg_Auction_Tail)           # Market
+                  + 0.10 × z(-Foreign_Official_Share)       # Demand (inverted)
+                  + 0.10 × z(Dealer_Takedown_3M)            # Market
+                  + 0.05 × z(Debt_Ceiling_Risk_Score)       # Political
+                  + 0.05 × z(-WAM_YoY_Change)               # Stock (inverted for shortening)
+```
+
+**Higher segmented GCI-Gov = more multi-dimensional stress.**
+
+### Segmented vs Aggregate Interpretation
+
+| **Segmented GCI-Gov** | **Aggregate GCI-Gov** | **Diagnosis** |
+|---|---|---|
+| High, Aggregate Low | Specific dimension stressed (e.g., issuance, political) | Localized stress |
+| High, Aggregate High | Broad-based multi-dimensional stress | Systemic fiscal dominance |
+| Low, Aggregate Low | Sustainable trajectory | Healthy fiscal regime |
+| Low, Aggregate High | Unusual; check for single large driver | Rare configuration |
+
+**Interpretation:** Watch the sub-composites for early warnings. Market-stress sub-composite rising while stock and flow sub-composites are stable indicates temporary supply-demand imbalance (often resolved by Treasury adjustments, Fed commentary, or market repricing). All sub-composites rising together is fiscal dominance.
+
+---
+
 ## Government Pillar Composite Index (GCI-Gov)
 
 ### Formula

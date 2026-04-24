@@ -289,7 +289,7 @@ Tax receipts are **cyclically sensitive**. They boom with profits and wages, bus
 
 ### G. DEBT CEILING & POLITICAL RISK (The Manufactured Crisis)
 
-The debt ceiling is a **self-inflicted wound**—a political constraint that creates artificial crisis risk. X-date dynamics matter for markets.
+The debt ceiling is a **self-inflicted political constraint** that creates artificial crisis risk. The statutory limit requires congressional action to raise or suspend; when it binds, Treasury exhausts extraordinary measures and faces a default "X-date." Market stress around X-dates is recurring, even though every episode has resolved through last-minute political action.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

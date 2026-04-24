@@ -1084,6 +1084,274 @@ If the following occur, housing is deteriorating beyond frozen into crisis:
 
 ---
 
+## Policy & Regulatory Environment
+
+Housing is heavily shaped by mortgage finance policy, GSE regulation, zoning rules, and tax policy. This section catalogs the policy channels that flow into housing outcomes.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Mortgage Rate Policy (Fed)** | Fed Funds, Fed MBS holdings | Mortgage rates via Treasury and MBS | 1-3 quarters |
+| **GSE Reform (Fannie/Freddie)** | Conforming loan limits, guarantee fees | Mortgage availability and pricing | 1-3 years |
+| **FHA Loan Programs** | LTV ratios, down payment assistance | First-time buyer access | 6-12 months |
+| **VA Loan Policy** | Eligibility, funding fees | Veteran homeownership | 6-12 months |
+| **Mortgage Interest Deduction (Tax)** | TCJA cap on MID | Itemizer-buyer demand | 6-12 months |
+| **SALT Deduction Cap** | TCJA $10K cap | High-tax state housing demand | 6-12 months |
+| **State / Local Zoning** | Density rules, permitting timelines | Supply elasticity | Multi-year |
+| **Federal Housing Programs** | Section 8, public housing, LIHTC | Affordable housing supply | Multi-year |
+| **Property Tax Caps** | State-level limits | Affordability and price elasticity | Multi-year |
+| **Rent Control / Regulation** | State and city policies | Rental market dynamics | Multi-year |
+| **Housing Permit Reform** | Federal and local fast-track | Supply addition speed | Multi-year |
+| **Climate / Insurance Regulation** | Flood/fire insurance, building codes | High-risk area housing | 1-5 years |
+
+### Active Policy Risks (Housing-Specific)
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **Fed Rate Path** | Material directional impact on mortgage rates | 50-150 bps | FOMC dot plots, futures |
+| **GSE Conforming Loan Limit** | Adjusts annually with home prices | Marginal but cumulative | FHFA announcements |
+| **TCJA MID/SALT Expiration** | Mixed: pre-2017 rules return, varies by region | Material in high-tax states | Legislative action |
+| **First-Time Buyer Tax Credits** | Bullish demand if enacted | 5-10% demand boost | Federal proposals |
+| **Mortgage Rate Subsidies** | Bullish demand at margin | Variable | Federal proposals |
+| **Zoning Reform (State Level)** | Bullish supply (slow); CA, NY, TX leading | Multi-year | State legislation |
+| **Property Insurance Crisis (CA, FL)** | Bearish high-risk-area housing | Material in specific markets | Insurance regulator actions |
+| **Rent Control Expansion** | Bearish landlord investment | Variable by jurisdiction | State/local actions |
+| **Affordable Housing Funding** | Bullish low-income housing supply | Multi-year | Appropriations |
+
+**Structural vs Cyclical:** Mortgage rates respond cyclically to Fed policy. Zoning, GSE structure, and tax incentives are structural (multi-year). Insurance market dislocations in climate-exposed areas are an emerging structural force.
+
+---
+
+## Demographics & Structural Context
+
+Housing is uniquely demographic. Household formation drives demand; demographic cohort positions drive turnover; aging affects mobility and inventory.
+
+### Key Structural Forces
+
+**1. Millennial Household Formation:** Millennials (28-43) are the largest US generation and are entering peak homebuying age. Delayed household formation (vs prior generations) creates a multi-year demand backlog.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Millennial Household Formation Rate | Census | Catching up but below historical norms at age |
+| First-Time Buyer Share | NAR | Variable; generally declining |
+| Age at First Home Purchase | NAR | Rising materially since 2010 |
+
+**2. Boomer Aging in Place:** Boomers (60-78) are aging in place rather than downsizing. Reduces existing-home turnover and limits inventory. The "lock-in" effect from low pre-2022 mortgages amplifies this dynamic.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Existing Home Sales | NAR | Structurally lower since 2022 |
+| Median Age of Home Sellers | NAR | Rising |
+| Mortgage Rate Lock-In Effect | Fed research | Material since 2022 rate spike |
+
+**3. Geographic Migration Patterns:** Post-2020 remote work enabled migration from coastal metros to Sun Belt cities. This regional reallocation has reshaped housing demand: coastal weakness, Sun Belt strength, then post-2024 partial reversal as RTO mandates rose.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Sun Belt Population Growth | Census | Sustained but moderating |
+| Coastal Metro Outmigration | Census ACS | Variable post-2024 |
+| Domestic Migration Rates | Census | Declining structurally despite COVID spike |
+
+**4. Household Size Trends:** Household size has been declining structurally for decades (more single-person households). This increases housing demand per capita: more units needed for the same population.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Average Household Size | Census | Declining structurally |
+| Single-Person Household Share | Census | Rising structurally |
+
+**5. Housing Supply Constraints:** Multi-decade underbuilding (post-2008 housing collapse) has left structural housing shortage. Estimated 3-5 million unit shortfall vs household formation. Zoning constraints prevent rapid catch-up.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Housing Starts vs Household Formation | Census, Fed estimates | Persistent shortfall since 2008 |
+| Months of Supply | NAR | Structurally tight |
+| Permit-to-Start Conversion Rate | Census | Variable by region |
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Formation-Construction Gap** | Annual household formations - housing starts | Persistent positive = shortage |
+| **Lock-In Index** | % mortgages below 4% rate | Inventory drag from rate differential |
+| **Affordability Index** | Median home price / Median income | Multi-decade trend |
+| **Demographic Demand Trajectory** | Millennial age cohort × homeownership rate | Forward demand projection |
+
+**Time horizon:** Housing demographic forces operate over decades. Tailwinds: Millennial formation backlog, household size decline. Headwinds: aging-in-place lock-in, supply constraints, affordability deterioration. The structural shortage means housing prices may have a higher floor than cyclical analysis suggests, but cyclical conditions can still drive 10-30% drawdowns from peaks.
+
+---
+
+## Additional Indicators & External Research
+
+### The Mortgage Spread Dynamic
+
+Mortgage rates equal the 10-year Treasury yield plus the mortgage spread (primary-secondary spread + MBS OAS). Mortgage spreads compressed pre-2022 (~1.5-2.0%) but have widened to 2.5-3.0% post-2022 due to: (1) MBS duration extension as refi optionality dropped, (2) reduced Fed MBS purchases, (3) bank reluctance to hold MBS post-SVB.
+
+**Practical application:** A 50 bps Treasury rally with stable spreads moves mortgages 50 bps. A 50 bps spread normalization (without Treasury moves) can also move mortgages 50 bps. Track both Treasury yields and primary-secondary spreads to assess mortgage rate trajectory.
+
+### NAHB HMI Lead Pattern
+
+The NAHB Housing Market Index leads housing starts by 3-6 months. Builder sentiment captures buyer traffic, current sales, and 6-month outlook. Readings below 50 signal contraction; below 30 signal severe stress.
+
+**Pattern:** NAHB HMI inflections (peak or trough) typically precede housing starts inflections by one quarter. Combine with mortgage rate level and pending home sales for the cleanest housing cycle read.
+
+### Pending Home Sales as Lead
+
+Pending home sales (NAR) reflect contracts signed but not yet closed. They lead existing home sales by 1-2 months. Persistent declines in pending sales signal deteriorating buyer demand even before closings reflect it.
+
+### Zillow / Redfin / Realtor.com Real-Time Data
+
+Private sector real-time housing data (Zillow ZHVI, Redfin weekly market data, Realtor.com inventory) provides 4-6 week leads on official NAR data. These sources track active listings, price reductions, and time on market in real-time.
+
+### Months of Supply Equilibrium
+
+The months-of-supply (MOS) metric divides existing inventory by current sales pace. Historically, MOS of 5-6 months represents balanced market. Above 6 months signals buyer's market (price weakness); below 4 months signals seller's market (price strength).
+
+### Case-Shiller vs Zillow vs FHFA
+
+Three primary home price indices exist:
+- **Case-Shiller (S&P / CoreLogic):** Tier-cities focus, repeat-sales methodology, lagging by 2 months
+- **Zillow ZHVI:** Broader geographic coverage, AVM-based, monthly with 1-month lag
+- **FHFA House Price Index:** Conforming-only mortgages, monthly with 2-month lag
+
+Each has strengths; cross-reference for robust price signals. Case-Shiller is the financial markets benchmark; Zillow has broader coverage; FHFA captures conforming mortgage market specifically.
+
+### Wealth Effect Asymmetry
+
+Housing wealth elasticity (5-8 cents per dollar) is materially higher than financial wealth elasticity (2-4 cents). Negative wealth effects also exceed positive in magnitude. A 10% home price decline generates larger spending response than a 10% home price gain.
+
+### The Builder Inventory Cycle
+
+Builder inventories peaked in 2008 and 2022. The 2022 cycle showed builders adjusting more quickly than 2007-2008 due to lessons learned. Large public builders (DHI, LEN, PHM, NVR) are more disciplined than 2008-era builders, reducing tail risk of broad-based supply overhang.
+
+---
+
+## External Research Sources
+
+**Government Data Sources:**
+- [Census Bureau Construction Statistics](https://www.census.gov/construction/) - Housing starts, permits, completions, sales
+- [Census American Community Survey](https://www.census.gov/programs-surveys/acs) - Demographics, household formation
+- [HUD User](https://www.huduser.gov/portal/home.html) - Federal housing data
+- [Federal Reserve Z.1 Financial Accounts](https://www.federalreserve.gov/releases/z1/) - Household balance sheet, home equity
+- [Fed Senior Loan Officer Survey (SLOOS)](https://www.federalreserve.gov/data/sloos.htm) - Mortgage credit standards (Pillar 9 linkage)
+
+**Industry Data Sources:**
+- [National Association of REALTORS (NAR)](https://www.nar.realtor/research-and-statistics) - Existing home sales, pending, prices
+- [NAHB](https://www.nahb.org/news-and-economics/housing-economics) - Builder sentiment HMI, multifamily index
+- [Mortgage Bankers Association (MBA)](https://www.mba.org/news-and-research) - Mortgage applications, refi index, delinquency
+- [Freddie Mac PMMS](https://www.freddiemac.com/pmms) - Weekly mortgage rate survey
+- [Fannie Mae Economic & Strategic Research](https://www.fanniemae.com/research-and-insights/economic-strategic-research) - Forecasts, Refinance Application-Level Index (RALI)
+- [S&P CoreLogic Case-Shiller](https://www.spglobal.com/spdji/en/index-family/indicators/sp-corelogic-case-shiller/) - Home price indices
+- [FHFA House Price Index](https://www.fhfa.gov/DataTools/Downloads) - Conforming mortgage HPI
+
+**Real-Time / Alternative Data:**
+- [Zillow Research](https://www.zillow.com/research/) - ZHVI, ZORI rent index, weekly data
+- [Redfin Data Center](https://www.redfin.com/news/data-center/) - Weekly market data, active listings, price reductions
+- [Realtor.com Research](https://www.realtor.com/research/) - Market trends, inventory, listing data
+- [Apartment List](https://www.apartmentlist.com/research) - National rent index
+- [CoStar / CoreLogic](https://www.costar.com/) - CRE and residential analytics
+- [Black Knight Mortgage Monitor](https://www.blackknightinc.com/data-reports/) - Servicing data, equity, defaults
+
+**Academic Research:**
+- [SSRN Housing Finance papers](https://www.ssrn.com/) - Academic real estate research
+- [NBER Real Estate](https://www.nber.org/) - Working papers
+- [Urban Institute Housing Finance Policy Center](https://www.urban.org/policy-centers/housing-finance-policy-center) - Policy analysis
+
+---
+
+## Reference: Published Analysis
+
+**"Housing: The Collateral Engine"** (Educational Series, February 2026) is the published article version of this pillar. Available at `research.lighthousemacro.com/p/housing-the-collateral-engine`.
+
+The article covers:
+- Housing as the wealth effect multiplier (housing wealth elasticity 5-8 cents vs financial wealth 2-4 cents)
+- The transmission chain from mortgage rates to affordability to demand to prices to wealth to spending to credit
+- The 2022-present housing recession dynamics (rate-driven freeze, lock-in effect, supply shortage)
+- The HCI composite index as the master signal
+- The cross-pillar housing cycle: leading consumer (1-3 quarters) and labor (6-9 months)
+- Invalidation criteria for both bull and bear cases
+
+The article positions housing as the "collateral engine" of the economy: housing wealth backs household balance sheets, drives consumer spending behavior, and shapes credit availability. Understanding housing requires understanding both the supply-demand fundamentals and the financial conditions that flow through mortgage markets.
+
+---
+
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **HCI** | **Key Signal** | **Outcome** |
+|---|---|---|---|
+| **2005-2006 Peak** | Elevated | Starts peaked, prices peaking, builder sentiment topping | Multi-year housing crash beginning |
+| **2007-2008 Collapse** | Deeply negative | Starts down 50%+, prices falling, NAHB collapsed | GFC; recession 2008-2009 |
+| **2009-2011 Trough** | Negative | Starts at record lows, price declines bottoming | Slow recovery began 2012 |
+| **2012-2018 Recovery** | Rising | Starts recovering, prices appreciating | Sustained expansion |
+| **2020-2021 Boom** | Elevated | Pandemic-driven demand surge, prices accelerating | Inventory shortage; affordability deteriorating |
+| **2022-Present Freeze** | Negative | Rate spike froze transactions, starts weakening | Ongoing housing recession |
+
+### False Signals
+
+**2018-2019 Housing Slowdown:** Housing starts and sales weakened with Fed tightening cycle, but Powell pivot in January 2019 reversed conditions. Housing held up without broad recession because Fed reaccommodation was rapid.
+
+**2015-2016 Housing Strength Amid Manufacturing Weakness:** Housing remained robust during the manufacturing/oil-driven 2015-2016 industrial recession because Fed kept rates low and consumer credit was healthy. Demonstrates that housing can decouple from goods-sector weakness.
+
+**Late 2009 Cash for Clunkers / Tax Credit Surge:** First-time homebuyer tax credit drove temporary 2009 surge in starts and sales. Activity collapsed when credit expired, showing policy-driven cyclical noise that wasn't structural recovery.
+
+### Structural Breaks
+
+**Post-2008 Builder Discipline:** Major public homebuilders (DHI, LEN, PHM, NVR) shifted toward "build-to-order" rather than speculative inventory. This reduces tail risk of 2008-style supply overhang but limits supply elasticity in upturns.
+
+**Post-2020 Remote Work Migration:** Pandemic-driven migration from coastal metros to Sun Belt reshaped regional housing demand. Some reversal post-2024 RTO but structural shift remains.
+
+**Mortgage Rate Lock-In Effect (2022-Present):** ~75% of US mortgages have rates below 5%, while market rates are 6-7%. This rate differential creates structural inventory drag as homeowners refuse to sell. New phenomenon since 2022.
+
+**MBS Spread Widening (2022-Present):** Mortgage spreads have widened from ~1.5% pre-2022 to ~2.5-3.0% post-2022. Structural changes in MBS demand (less Fed buying, less bank holding) have raised mortgage rates relative to Treasury yields.
+
+**Climate Insurance Crisis (Post-2020):** Property insurance markets in California, Florida, and other high-risk states have entered crisis (insurer withdrawals, premium spikes). This creates regional housing market dislocations distinct from cyclical conditions.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Use Case** |
+|---|---|---|---|---|
+| **Zillow Research** | ZHVI Home Value Index | Monthly | Free | National + metro home prices |
+| **Zillow Research** | ZORI Rent Index | Monthly | Free | Real-time rental market |
+| **Redfin Data Center** | Weekly market data | Weekly | Free | Active listings, price reductions |
+| **Realtor.com** | Inventory and time-on-market | Weekly | Free | Real-time market dynamics |
+| **MBA** | Weekly Mortgage Applications Index | Weekly | Subscription / press | Real-time demand |
+| **Freddie Mac PMMS** | Weekly mortgage rate survey | Weekly | Free | Mortgage rate benchmark |
+| **NAHB HMI** | Builder Sentiment Index | Monthly | Free summary | Leading housing starts |
+| **NAR Pending Home Sales** | Monthly | Monthly | Free | Leads existing sales |
+| **Black Knight** | Mortgage Monitor | Monthly | Free reports | Servicing data, equity |
+| **Apartment List** | National Rent Index | Monthly | Free | Rental market trends |
+| **CoStar / CoreLogic** | CRE and residential | Various | Subscription | Granular analytics |
+| **Lumber Futures** | CME LBR | Daily | Free | Building cost input |
+| **ITB / XHB Homebuilder ETFs** | Daily | Free | Real-time builder sentiment proxy |
+| **REZ / VNQ Residential REIT ETFs** | Daily | Free | Multifamily/REIT pulse |
+| **Mortgage Servicer Reports** | Major servicer monthly data | Monthly | Various | Delinquency real-time |
+| **AAA Vacation Rental Data** | Monthly | Various | Vacation home demand |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "House Prices and the Macroeconomy" (2007) | Mishkin | Wealth effect channel; housing as collateral |
+| "Wealth, the Stock Market, and Macroeconomy" (2001) | Case, Quigley, Shiller | Housing wealth effect 5-8 cents vs financial 2-4 cents |
+| "Household Debt and the Great Recession" (2011) | Mian & Sufi | Housing debt amplification of 2008-09 recession |
+| "House of Debt" (2014) | Mian & Sufi | Housing wealth distribution and consumption |
+| "The Great Mortgaging" (2014) | Jordà, Schularick, Taylor | Mortgage credit's growth in modern economies |
+| "Housing Wealth and Consumption" (Carroll, Otsuka, Slacalek) | Carroll et al | Housing wealth elasticities |
+| "The Determinants of House Prices" (various) | Glaeser, Himmelberg, Mayer | Supply elasticity, demand fundamentals |
+| "Lock-In Effect of Mortgage Rates" (2024) | Fed research | 2022-present mortgage rate lock-in effects |
+| "Mortgage Spread Dynamics" (various) | Fed FEDS notes | Post-2022 mortgage spread widening analysis |
+| "Demographic Demand for Housing" (various) | Demographic researchers | Cohort-based housing demand projections |
+| Case-Shiller Index methodology | S&P / Case-Shiller | Repeat-sales home price methodology |
+| "Housing Markets and the Macroeconomy" (2014) | Davis & Van Nieuwerburgh | Comprehensive housing-macro framework |
+
+---
+
 ## FRED Series Reference Appendix
 
 All FRED series codes referenced in this pillar, organized by category. Pipeline source: `Lighthouse_Master.db` via `lighthouse_master_db.py`.

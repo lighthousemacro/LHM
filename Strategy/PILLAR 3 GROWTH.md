@@ -174,13 +174,13 @@ Industrial Production (IP) is **monthly**, **hard data**, and **leading**. It tr
 | **Capacity Utilization** | <76% | 76-79% | >79% |
 | **IP Durable Goods YoY%** | <-3% | -3% to +3% | >+3% |
 
-**The Durable Goods Canary:** Durable goods IP is the **most cyclical** component. Peaks 6-9 months before recession, troughs 3-6 months before recovery. Current: **-1.8% YoY** (Dec 2025)—first negative reading since 2020. Manufacturing recession underway.
+**The Durable Goods Canary:** Durable goods IP is the **most cyclical** component. Peaks 6-9 months before recession, troughs 3-6 months before recovery. Negative YoY readings outside of external shocks (like COVID) have historically signaled manufacturing recession underway. Watch the durables vs nondurables spread for the clearest cyclical read.
 
 ---
 
 ### D. PURCHASING MANAGERS' INDICES (The Forward-Looking Surveys)
 
-PMIs are **leading indicators** because they survey what managers *plan* to do, not what they've done. But they're **soft data**—subject to sentiment, not reality.
+PMIs are **leading indicators** because they survey what managers *plan* to do, not what they've done. But they're **soft data**, subject to sentiment rather than realized activity.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

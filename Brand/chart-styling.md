@@ -534,16 +534,11 @@ Timeframe defaults to daily. Typical lookback is 7.5 years, long enough for cycl
 
 **Moving averages**, in order of frequency:
 
-| Period | Color | Hex | Frequency |
-|---|---|---|---|
-| 50-day | Dusk | `#FF6723` | Always |
-| 200-day | Ocean | `#2389BB` | Always |
-| 200-week | Sky | `#23BBFF` | Structural views, occasional |
-| 50-week | Venus | `#FF2389` | Rare |
+PeriodColorHexFrequency50-dayDusk`#FF6723`Always200-dayOcean`#2389BB`Always200-weekSky`#23BBFF`Structural views, occasional50-weekVenus`#FF2389`Rare
 
 **Support, resistance, trendlines, curves:** Sea `#00BB89`.
 
-Line extension rule: draw just past the actual touch zones, not all the way across the chart. Think of an umbrella, not a flagpole. For 5+ year charts, extend roughly 21 bars on either side of the touch zone. Right edge may extend ~1 month into the future for active levels.
+Line extension rule: draw just past the actual touch zones, not all the way across the chart. Think of an umbrella, not a flagpole. For 5+ year charts, extend roughly 21 bars on either side of the touch zone. Right edge may extend \~1 month into the future for active levels.
 
 ### Panel 2: LHM Relative Strength
 
@@ -553,23 +548,11 @@ Plots `(symbol / benchmark) * 100`. Benchmark auto-detects by asset type, with m
 
 **Benchmark auto-detect logic:**
 
-| Asset Type | Default Benchmark |
-|---|---|
-| Equities (SPY / IVV / VOO) | RSP (equal-weighted) |
-| Equities (QQQ / QQQM) | QQEW (equal-weighted) |
-| Equities (other) | RUA (Russell 3000) |
-| Crypto | CRYPTOCAP:TOTAL |
-| Forex | TVC:DXY |
-| Commodity futures (GC, SI, CL, NG, HG, PL, PA) | SPGSCI |
-| Rate futures (ZB, ZN, ZF, ZT, TN) | TVC:US10Y |
+Asset TypeDefault BenchmarkEquities (SPY / IVV / VOO)RSP (equal-weighted)Equities (QQQ / QQQM)QQEW (equal-weighted)Equities (other)RUA (Russell 3000)CryptoCRYPTOCAP:TOTALForexTVC:DXYCommodity futures (GC, SI, CL, NG, HG, PL, PA)SPGSCIRate futures (ZB, ZN, ZF, ZT, TN)TVC:US10Y
 
 **Three-state line color:**
 
-| State | Color | Hex | Condition |
-|---|---|---|---|
-| Bullish regime | Starboard | `#238923` | RS > SMA(63) > SMA(252) |
-| Bearish regime | Port | `#892323` | RS < SMA(63) < SMA(252) |
-| Neutral / transitional | Black | — | Anything else |
+StateColorHexConditionBullish regimeStarboard`#238923`RS &gt; SMA(63) &gt; SMA(252)Bearish regimePort`#892323`RS &lt; SMA(63) &lt; SMA(252)Neutral / transitionalBlack—Anything else
 
 Linewidth 3 for the RS series. SMAs rendered in muted gray at linewidth 1 so the regime color carries the visual weight.
 

@@ -1229,7 +1229,11 @@ def main():
             if chart_num not in CHART_MAP:
                 print(f'Chart {chart_num} not implemented yet.')
                 continue
-            CHART_MAP[chart_num]()
+            try:
+                CHART_MAP[chart_num]()
+            except Exception as e:
+                print(f'  Error generating chart {chart_num}: {e}')
+                continue
 
     print('\nDone.')
 

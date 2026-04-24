@@ -433,9 +433,9 @@ LEADING                           COINCIDENT                  LAGGING
 **1. Labor deteriorates** (quits fall, claims rise) → 6-9 months later → **Income growth slows**
 **2. Income slows + savings depleted** → 1-3 months later → **Credit usage spikes**
 **3. Credit stress builds** (delinquencies rise) → 3-6 months later → **Spending cuts begin**
-**4. Spending contracts** → 1-2 quarters later → **Corporate revenues fall → Layoffs → Reinforcing loop**
+**4. Spending contracts** → 1-2 quarters later → **Corporate revenues fall, layoffs resume, reinforcing loop closes**
 
-We're currently between Steps 2 and 3. Savings depleted. Credit stress emerging. Spending hasn't cracked yet.
+**Where we are now:** see the Stress Stage indicator in the Current State Assessment Template.
 
 ---
 

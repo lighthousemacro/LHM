@@ -310,7 +310,11 @@ def main():
     args = ap.parse_args()
 
     if args.cmd == 'one':
-        r = wrap_for_chartbook(args.src, args.commentary, args.out, strict=args.strict)
+        try:
+            r = wrap_for_chartbook(args.src, args.commentary, args.out, strict=args.strict)
+        except ValueError as e:
+            print(f'ERROR: {e}', file=sys.stderr)
+            sys.exit(1)
         if not r['voice_ok']:
             print('Voice violations:', file=sys.stderr)
             for v in r['voice_violations']:

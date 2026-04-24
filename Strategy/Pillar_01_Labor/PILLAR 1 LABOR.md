@@ -12,7 +12,7 @@ Profit Margins → Hiring Decisions → Worker Confidence
 
 **The Insight:** This isn't a linear chain. It's a feedback loop. And the loop is breaking.
 
-When workers stop quitting, they're not being prudent. They're seeing something management hasn't admitted yet. The quits rate is the economy's truth serum—it strips away the narrative and exposes the underlying fragility. Six to nine months before the unemployment rate rises, quits collapse. Every. Single. Time.
+When workers stop quitting, they're not being prudent. They're seeing something management hasn't admitted yet. The quits rate is the economy's truth serum. It strips away the narrative and exposes the underlying fragility. Six to nine months before the unemployment rate rises, quits collapse. Every. Single. Time.
 
 The beauty of labor data: it doesn't lie. You can massage GDP with inventory builds. You can engineer earnings with buybacks. But you can't fake the quits rate. Workers vote with their feet, and the ballots are already counted.
 
@@ -97,7 +97,7 @@ The signal is convergence. When multiple indicators flash simultaneously, that's
 
 ### A. EMPLOYMENT FLOWS (The Core Signal)
 
-The stock of employment (payrolls, unemployment rate) is a lagging indicator by level, but direction changes (troughs/peaks) often lead. The **flows** tell you where we're going. This subsection tracks the churn—hires, quits, layoffs, openings—that precedes the headline data.
+The stock of employment (payrolls, unemployment rate) is a lagging indicator by level, but direction changes (troughs/peaks) often lead. The **flows** tell you where we're going. This subsection tracks the churn (hires, quits, layoffs, openings) that precedes the headline data.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -146,7 +146,7 @@ In the GFC, quits peaked around 2.3% in late 2005 and declined for over two year
 
 ### B. WAGE DYNAMICS (The Inflation Transmission Belt)
 
-Wages are sticky. They accelerate during expansions and decelerate slowly during downturns. This stickiness creates the "last mile" inflation problem—services inflation (driven by wages) resists disinflation even as goods prices collapse.
+Wages are sticky. They accelerate during expansions and decelerate slowly during downturns. This stickiness creates the "last mile" inflation problem: services inflation (driven by wages) resists disinflation even as goods prices collapse.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|
@@ -221,7 +221,7 @@ Labor supply determines the economy's speed limit. Participation rates, demograp
 | **Part-Time Econ Reasons (millions)** | <4.0M | 4.0-5.0M | >5.0M |
 | **CLF Growth YoY%** | <0% | 0-1.0% | >1.0% |
 
-**The Prime-Age Puzzle:** Prime-age (25-54) LFPR peaked at 83.5% (Feb 2020), collapsed to 80.4% (April 2020), recovered to 83.9% (July 2023)—**above pre-pandemic**—but has since plateaued. The demographic tailwind is fading. Boomers retiring, immigration restrictive, birth rates falling. The supply constraint is structural, not cyclical.
+**The Prime-Age Puzzle:** Prime-age (25-54) LFPR peaked at 83.5% (Feb 2020), collapsed to 80.4% (April 2020), recovered to 83.9% (July 2023), above pre-pandemic levels, but has since plateaued. The demographic tailwind is fading. Boomers retiring, immigration restrictive, birth rates falling. The supply constraint is structural, not cyclical.
 
 ---
 

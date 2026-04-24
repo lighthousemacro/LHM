@@ -10,7 +10,7 @@ Price Rise → Confidence → Overexposure →
 Complacency → Forced Selling → Fear (Cycle)
 ```
 
-**The Insight:** Sentiment is a contrarian indicator. Extreme fear = buy. Extreme greed = sell. The crowd isn't wrong because they're stupid—they're wrong because they're late. By the time everyone is bullish, they've already bought. By the time everyone is bearish, they've already sold. The marginal buyer/seller is always on the other side of consensus.
+**The Insight:** Sentiment is a contrarian indicator at extremes. Extreme fear = buy. Extreme greed = sell. The crowd isn't wrong because they're stupid. They're wrong because they're late. By the time everyone is bullish, they've already bought. By the time everyone is bearish, they've already sold. The marginal buyer/seller is always on the other side of consensus.
 
 The beauty of sentiment data: it tells you who's left. When NAAIM shows managers 100%+ invested, who's left to buy? When AAII shows -30% bull-bear, who's left to sell? The answer determines price.
 

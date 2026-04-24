@@ -23,15 +23,22 @@ Personal Consumption Expenditures (PCE) is the **largest GDP component by far**.
 
 **The Cascade:**
 
-**1. Consumer → GDP:** PCE is 68% of output (coincident)
-**2. Consumer → Corporate Earnings:** Revenue = consumer spending (1-2 quarter lag)
+**1. Consumer → GDP:** PCE is ~68% of output (coincident)
+**2. Consumer → Corporate Earnings:** Revenue tracks consumer spending (1-2 quarter lag)
 **3. Consumer → Labor:** Hiring follows sales (2-4 month lag)
 **4. Consumer → Credit:** Spending drives loan demand (coincident)
 **5. Consumer → Inflation:** Demand-pull inflation from excess spending (3-6 month lag)
 
 Get the consumer call right, and you've anchored your GDP forecast. Miss it, and you're guessing at 68% of the economy.
 
-**Current State:** The consumer is exhibiting **exhaustion without collapse**. Spending growing +2.1% real YoY but decelerating. Savings rate depleted to 4.5% (pre-pandemic: 7.5%). Credit card delinquencies at 3.0% (highest since 2012). This isn't strength. This is a consumer running on fumes, spending down savings and racking up debt to maintain lifestyle. That works until it doesn't.
+**The Stages of Consumer Stress:** Consumer deterioration follows a predictable four-stage sequence. Knowing which stage you're in determines positioning.
+
+1. **Savings Depletion** (Leading): Excess buffers drawn down. Saving rate falls below pre-pandemic norm. Flush-phase behavior fades.
+2. **Credit Substitution** (Leading-Coincident): Revolving credit balances rise. Credit card delinquencies turn up. Debt service ratio stretches.
+3. **Spending Cuts** (Coincident): Durables contract first, then services. Real PCE growth slows, turns negative. Trading-down accelerates.
+4. **Recession Confirmed** (Lagging): Retail sales contract YoY. Corporate revenues miss. Layoffs feed back into further income contraction (the reinforcing loop closes).
+
+By the time Stage 4 arrives, labor cracked at Stage 0 (quits peak), credit stress appeared in Stage 1-2, and the recession was already 6-9 months old. The consumer is the confirmation, not the signal. The signal came from labor.
 
 ---
 

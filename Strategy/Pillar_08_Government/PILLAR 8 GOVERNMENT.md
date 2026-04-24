@@ -491,9 +491,9 @@ Reserves Drain → Dealer Balance Sheets Stretch →
 Repo Rates Rise → Financial Conditions Tighten
 ```
 
-**Current Linkage:** $2T+ annual issuance must be absorbed by private sector (Fed in QT). This drains reserves, stretches dealer balance sheets, and tightens plumbing. LCI at -0.8 partly because Treasury supply is crowding out.
+**Transmission mechanics:** Treasury issuance must be absorbed by reserves, bank balance sheets, money market funds, foreign official holders, or the Fed. In a QT regime, the Fed is a net seller, so private sector must absorb all net supply plus Fed runoff. This mechanism drains reserves (via bank deposit flows to MMFs), stretches dealer balance sheets (via underwriting of coupon auctions), and tightens the plumbing pillar. Persistent heavy issuance during QT is the combination that historically creates plumbing stress.
 
-**Cross-Pillar Signal:** When **GCI-Gov > +1.0** (heavy issuance) AND **LCI < -0.5** (thin liquidity cushion), plumbing stress emerges. The system can't absorb Treasury supply without dislocations.
+**Cross-Pillar Signal:** When **GCI-Gov > +1.0** (heavy issuance) AND **LCI < -0.5** (thin liquidity cushion), plumbing stress emerges. The 2019 repo blow-up occurred in this configuration (Treasury issuance rising while reserves had been drained below LCLOR). Watch for similar configurations as warnings of potential dislocation.
 
 ---
 
@@ -507,9 +507,9 @@ Corporate Bond Yields ↑ → Credit Spreads (may widen) →
 Corporate Borrowing Cost ↑ → Investment ↓
 ```
 
-**Current Linkage:** 10Y at 4.60% sets floor. IG corporate yields at 5.5%. HY at 7.5%. Every 50 bps rise in Treasuries flows through to corporate borrowing costs. Fiscal risk is repriced into all credit.
+**Transmission mechanics:** The Treasury yield curve is the risk-free benchmark that sets the discount rate for all credit. Corporate yields equal Treasury yields plus credit spread. When Treasury yields rise due to term premium repricing, corporate yields rise mechanically even if credit spreads are unchanged. This is the fiscal-to-credit transmission channel: rising Treasury yields directly pressure corporate refinancing costs, which compresses margins (Pillar 6) and eventually widens credit spreads as deteriorating business conditions are repriced.
 
-**Cross-Pillar Signal:** When **term premium rises > +50 bps**, expect corporate bond issuance to slow, M&A to pause, and leveraged borrowers to face stress. Fiscal risk becomes corporate risk.
+**Cross-Pillar Signal:** When term premium rises by >50 bps, expect corporate bond issuance to slow, M&A activity to pause, and leveraged borrowers (HY, leveraged loans) to face refinancing stress. Fiscal risk becomes corporate risk through the duration channel. Monitor HY spreads and IG spreads for whether the stress stays contained or broadens.
 
 ---
 

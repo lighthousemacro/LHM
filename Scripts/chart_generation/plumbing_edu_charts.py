@@ -462,7 +462,7 @@ def chart_01():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'The Buffer Is Thinner Than You Think',
-              subtitle='Figure 1: Bank Reserves vs. LCLOR Estimate',
+              subtitle='Bank Reserves vs. LCLOR Estimate',
               source='Federal Reserve H.4.1', data_date=reserves.index[-1])
     save_fig(fig, 'P10_01_reserves_vs_lclor.png')
 
@@ -512,7 +512,7 @@ def chart_02():
     add_recessions(ax, start_date='2013-01-01')
 
     brand_fig(fig, 'The Spent Buffer: $2.5 Trillion, Gone',
-              subtitle='Figure 2: ON RRP Facility Usage',
+              subtitle='ON RRP Facility Usage',
               source='NY Fed', data_date=rrp_t.index[-1])
     save_fig(fig, 'P10_02_rrp_rise_and_fall.png')
 
@@ -558,7 +558,7 @@ def chart_03():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'The Canary in the Funding Mine',
-              subtitle='Figure 3: EFFR \u2212 IORB Spread',
+              subtitle='EFFR \u2212 IORB Spread',
               source='Federal Reserve', data_date=spread.index[-1])
     save_fig(fig, 'P10_03_effr_iorb_spread.png')
 
@@ -615,7 +615,7 @@ def chart_04():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'September 2019 Started Here',
-              subtitle='Figure 4: SOFR \u2212 IORB Spread',
+              subtitle='SOFR \u2212 IORB Spread',
               source='NY Fed, Federal Reserve', data_date=spread.index[-1])
     save_fig(fig, 'P10_04_sofr_iorb_spread.png')
 
@@ -663,7 +663,7 @@ def chart_04b():
                        x=0.50, y=0.20)
 
     brand_fig(fig, 'When Secured Costs More Than Unsecured',
-              subtitle='Figure 5: SOFR \u2212 EFFR Spread (Dealer Capacity Barometer)',
+              subtitle='SOFR \u2212 EFFR Spread (Dealer Capacity Barometer)',
               source='NY Fed, Federal Reserve', data_date=spread.index[-1])
     save_fig(fig, 'P10_04b_sofr_effr_spread.png')
 
@@ -731,7 +731,7 @@ def chart_05():
     ax.legend(loc='upper left', fontsize=9, **legend_style())
 
     brand_fig(fig, "QT's Quiet Drain",
-              subtitle='Figure 6: Fed Balance Sheet Composition',
+              subtitle='Fed Balance Sheet Composition',
               source='Federal Reserve H.4.1', data_date=common[-1])
     save_fig(fig, 'P10_05_fed_balance_sheet.png')
 
@@ -784,7 +784,7 @@ def chart_06():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, "The Treasury's Checking Account",
-              subtitle='Figure 7: Treasury General Account (TGA)',
+              subtitle='Treasury General Account (TGA)',
               source='Federal Reserve', data_date=tga_b.index[-1])
     save_fig(fig, 'P10_06_tga_balance.png')
 
@@ -828,7 +828,7 @@ def chart_07():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'Where the Money Went: RRP to Money Markets',
-              subtitle='Figure 8: Money Market Fund Total Assets',
+              subtitle='Money Market Fund Total Assets',
               source=source_label, data_date=mmf_t.index[-1])
     save_fig(fig, 'P10_07_mmf_assets.png')
 
@@ -881,7 +881,7 @@ def chart_08():
     ax.legend(loc='upper left', fontsize=9, **legend_style())
 
     brand_fig(fig, "Third-Party Validation: Funding Stress Is Quiet... For Now",
-              subtitle='Figure 9: OFR Financial Stress Index (Funding Component)',
+              subtitle='OFR Financial Stress Index (Funding Component)',
               source='OFR', data_date=fsi_fund.index[-1])
     save_fig(fig, 'P10_08_ofr_fsi_funding.png')
 
@@ -921,7 +921,7 @@ def chart_09():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'Unsecured Funding: The Next Signal',
-              subtitle='Figure 10: 3-Month Financial Commercial Paper Spread vs EFFR',
+              subtitle='3-Month Financial Commercial Paper Spread vs EFFR',
               source='Federal Reserve', data_date=spread.index[-1])
     save_fig(fig, 'P10_09_cp_spreads.png')
 
@@ -987,7 +987,7 @@ def chart_10():
 
     data_date = max(net_liq.index[-1], spx.index[-1]) if len(spx) > 0 else net_liq.index[-1]
     brand_fig(fig, 'The Net Liquidity Equation',
-              subtitle='Figure 11: Net Liquidity (Fed BS \u2212 TGA \u2212 RRP) vs S&P 500',
+              subtitle='Net Liquidity (Fed BS \u2212 TGA \u2212 RRP) vs S&P 500',
               source='Federal Reserve, Yahoo Finance', data_date=data_date)
     save_fig(fig, 'P10_10_net_liquidity.png')
 
@@ -1043,7 +1043,7 @@ def chart_11():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'The Plumbing Got Bigger. The Plumbers Didn\'t.',
-              subtitle='Figure 12: SOFR Transaction Volume (Daily Repo Market Activity)',
+              subtitle='SOFR Transaction Volume (Daily Repo Market Activity)',
               source='NY Fed', data_date=vol_t.index[-1])
     save_fig(fig, 'P10_12_sofr_volume.png')
 

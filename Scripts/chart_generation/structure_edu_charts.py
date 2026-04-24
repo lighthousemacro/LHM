@@ -547,7 +547,7 @@ def chart_01():
     add_recessions(ax, start_date='2022-01-01')
 
     brand_fig(fig, 'Z-RoC: Momentum Is the Early Warning System',
-              subtitle='Figure 1: 63-Day Standardized Rate of Change, S&P 500',
+              subtitle='63-Day Standardized Rate of Change, S&P 500',
               source='S&P 500, Lighthouse Macro calculations',
               data_date=z_roc.index[-1])
     save_fig(fig, 'pillar_11_fig_01.png')
@@ -590,7 +590,7 @@ def chart_02():
     add_last_value_label(ax, pct50, color=THEME['primary'], fmt='{:.0f}%', side='right')
 
     brand_fig(fig, 'Breadth: How Many Soldiers Are Following the Generals?',
-              subtitle='Figure 2: % of S&P 500 Stocks Above 50-Day Moving Average',
+              subtitle='% of S&P 500 Stocks Above 50-Day Moving Average',
               source='S&P 500 components, Lighthouse Macro calculations',
               data_date=pct50.index[-1])
     save_fig(fig, 'pillar_11_fig_02.png')
@@ -652,7 +652,7 @@ def chart_03():
     add_recessions(ax, start_date='2020-01-01')
 
     brand_fig(fig, 'MSI: The Structural Verdict',
-              subtitle='Figure 3: Market Structure Index Composite',
+              subtitle='Market Structure Index Composite',
               source='S&P 500, Lighthouse Macro calculations',
               data_date=msi.index[-1])
     save_fig(fig, 'pillar_11_fig_03.png')
@@ -725,7 +725,7 @@ def chart_04():
     ax.legend(loc='lower left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'The Primary Trend: Reclaimed, Not Confirmed',
-              subtitle='Figure 4: S&P 500 with 50-Day and 200-Day Moving Averages',
+              subtitle='S&P 500 with 50-Day and 200-Day Moving Averages',
               source='S&P 500',
               data_date=spx_p.index[-1])
     save_fig(fig, 'pillar_11_fig_04.png')
@@ -764,7 +764,7 @@ def chart_05():
     add_last_value_label(ax, slope_p, color=THEME['primary'], fmt='{:.1f}', side='right')
 
     brand_fig(fig, 'Slope: Reclaim Doesn\'t Equal Inflection',
-              subtitle='Figure 5: Daily Change in S&P 500 50-Day Moving Average',
+              subtitle='Daily Change in S&P 500 50-Day Moving Average',
               source='S&P 500, Lighthouse Macro calculations',
               data_date=slope_p.index[-1])
     save_fig(fig, 'pillar_11_fig_05.png')
@@ -815,7 +815,7 @@ def chart_06():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'Momentum: The Regime Classifier',
-              subtitle='Figure 6: Dual-Timeframe Z-Rate of Change, S&P 500',
+              subtitle='Dual-Timeframe Z-Rate of Change, S&P 500',
               source='S&P 500, Lighthouse Macro calculations',
               data_date=z63.index[-1])
     save_fig(fig, 'pillar_11_fig_06.png')
@@ -873,7 +873,7 @@ def chart_07():
     add_last_value_label(ax, pct50, color=THEME['primary'], fmt='{:.0f}%', side='right')
 
     brand_fig(fig, 'Breadth Thrust Watch: The Signal That Matters Most',
-              subtitle='Figure 7: % of S&P 500 Above 50-Day MA with Thrust Thresholds',
+              subtitle='% of S&P 500 Above 50-Day MA with Thrust Thresholds',
               source='S&P 500 components, Lighthouse Macro calculations',
               data_date=pct50.index[-1])
     save_fig(fig, 'pillar_11_fig_07.png')
@@ -909,7 +909,7 @@ def chart_08():
     add_recessions(ax, start_date='2022-01-01')
 
     brand_fig(fig, 'Long-Term Health: The Majority Rules',
-              subtitle='Figure 8: % of S&P 500 Stocks Above 200-Day Moving Average',
+              subtitle='% of S&P 500 Stocks Above 200-Day Moving Average',
               source='S&P 500 components, Lighthouse Macro calculations',
               data_date=pct200.index[-1])
     save_fig(fig, 'pillar_11_fig_08.png')
@@ -951,7 +951,7 @@ def chart_09():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'New Highs vs. New Lows: Where\'s the Damage?',
-              subtitle='Figure 9: S&P 500 Net New 52-Week Highs (Raw + 20-Day MA)',
+              subtitle='S&P 500 Net New 52-Week Highs (Raw + 20-Day MA)',
               source='S&P 500 components, Lighthouse Macro calculations',
               data_date=nh_nl.index[-1])
     save_fig(fig, 'pillar_11_fig_09.png')
@@ -991,7 +991,7 @@ def chart_10():
                fontsize=10, **legend_style())
 
     brand_fig(fig, 'The Advance-Decline Line: Distribution Detector',
-              subtitle='Figure 10: Cumulative A/D Line (RHS) vs S&P 500 (LHS)',
+              subtitle='Cumulative A/D Line (RHS) vs S&P 500 (LHS)',
               source='S&P 500 components, Lighthouse Macro calculations',
               data_date=max(ad_line.index[-1], spx.index[-1]))
     save_fig(fig, 'pillar_11_fig_10.png')
@@ -1053,7 +1053,7 @@ def chart_11():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'Structure-Breadth Divergence: Are the Generals Alone?',
-              subtitle='Figure 11: SBD = z(Price vs 200d) minus z(% Above 50d MA)',
+              subtitle='SBD = z(Price vs 200d) minus z(% Above 50d MA)',
               source='S&P 500, Lighthouse Macro calculations',
               data_date=sbd.index[-1])
     save_fig(fig, 'pillar_11_fig_11.png')
@@ -1157,7 +1157,7 @@ def chart_12():
     data_date = max(latest_dates) if latest_dates else datetime.now()
 
     brand_fig(fig, 'Where We Stand: The Structural Dashboard',
-              subtitle='Figure 12: Trend, Momentum, Breadth, Volatility',
+              subtitle='Trend, Momentum, Breadth, Volatility',
               source='S&P 500, CBOE, Lighthouse Macro calculations',
               data_date=data_date)
     save_fig(fig, 'pillar_11_fig_12.png')

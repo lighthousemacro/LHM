@@ -320,9 +320,10 @@ def chart_1_quits_vs_unemployment():
         spine.set_color(THEME['spine'])
     set_xlim_to_data(ax1, subset.index)
 
-    # Callout with current values
-    last_q = subset['JOLTS_Quits_Rate'].iloc[-1]
-    last_u = subset['Unemployment_Rate'].iloc[-1]
+    # Callout with current values \u2014 use each series' individual latest reading
+    # (JOLTS lags UE by one month, so joint-dropna undersells UE freshness)
+    last_q = df['JOLTS_Quits_Rate'].dropna().iloc[-1]
+    last_u = df['Unemployment_Rate'].dropna().iloc[-1]
     ax2.text(0.98, 0.03,
              f'Quits: {last_q:.1f}% (down from 3.0% peak)\n'
              f'Unemployment: {last_u:.1f}%\n\n'

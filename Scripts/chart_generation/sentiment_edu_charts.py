@@ -335,7 +335,7 @@ def chart_01():
     add_recessions(ax)
 
     brand_fig(fig, 'AAII Bull-Bear Spread: The Retail Truth Serum',
-              subtitle='Figure 1: Weekly Bull-Bear Spread Since 1987',
+              subtitle='Weekly Bull-Bear Spread Since 1987',
               source='AAII', data_date=spread.index[-1])
     save_fig(fig, 'pillar_12_fig_01.png')
 
@@ -371,7 +371,7 @@ def chart_02():
     ax.legend(loc='upper right', fontsize=10, **legend_style())
 
     brand_fig(fig, 'AAII Sentiment Components: The Crowd\'s Composition',
-              subtitle='Figure 2: Bullish, Bearish, and Neutral Readings',
+              subtitle='Bullish, Bearish, and Neutral Readings',
               source='AAII', data_date=df.index[-1])
     save_fig(fig, 'pillar_12_fig_02.png')
 
@@ -422,7 +422,7 @@ def chart_03():
     add_recessions(ax, start_date=plot_start)
 
     brand_fig(fig, 'VIX vs. 50-Day Moving Average: Fear in Context',
-              subtitle='Figure 3: The Deviation from Recent Norms Matters More Than the Level',
+              subtitle='The Deviation from Recent Norms Matters More Than the Level',
               source='CBOE', data_date=vix_p.index[-1])
     save_fig(fig, 'pillar_12_fig_03.png')
 
@@ -462,7 +462,7 @@ def chart_04():
     add_last_value_label(ax, ratio, color=THEME['primary'], fmt='{:.2f}', side='right')
 
     brand_fig(fig, 'VIX Term Structure: Stress Detection',
-              subtitle='Figure 4: VIX / VIX3M Ratio. Above 1.0 = Backwardation = Acute Stress',
+              subtitle='VIX / VIX3M Ratio. Above 1.0 = Backwardation = Acute Stress',
               source='CBOE', data_date=ratio.index[-1])
     save_fig(fig, 'pillar_12_fig_04.png')
 
@@ -504,7 +504,7 @@ def chart_05():
                fontsize=10, **legend_style())
 
     brand_fig(fig, 'AAII Bears vs. S&P 500: Fear Creates Opportunity',
-              subtitle='Figure 5: Extreme Bearish Readings Have Preceded Rallies',
+              subtitle='Extreme Bearish Readings Have Preceded Rallies',
               source='AAII, S&P 500', data_date=max(bears.index[-1], spx.index[-1]))
     save_fig(fig, 'pillar_12_fig_05.png')
 
@@ -552,7 +552,7 @@ def chart_06():
     add_last_value_label(ax, vix_dev, color=THEME['primary'], fmt='{:.0f}%', side='right')
 
     brand_fig(fig, 'VIX Deviation from 50-Day MA: Regime Detection',
-              subtitle='Figure 6: % Above/Below 50-Day Moving Average',
+              subtitle='% Above/Below 50-Day Moving Average',
               source='CBOE, Lighthouse Macro calculations', data_date=vix_dev.index[-1])
     save_fig(fig, 'pillar_12_fig_06.png')
 
@@ -597,7 +597,7 @@ def chart_07():
     add_recessions(ax1)
 
     brand_fig(fig, 'Money Market Fund Assets: The Cash Mountain',
-              subtitle='Figure 7: Record Cash Levels = Fear + Future Buying Power',
+              subtitle='Record Cash Levels = Fear + Future Buying Power',
               source='ICI, Federal Reserve', data_date=mmf_t.index[-1])
     save_fig(fig, 'pillar_12_fig_07.png')
 
@@ -659,7 +659,7 @@ def chart_08():
     add_recessions(ax1)
 
     brand_fig(fig, 'Sentiment & Positioning Index: The Contrarian Signal',
-              subtitle='Figure 8: SPI Composite vs S&P 500',
+              subtitle='SPI Composite vs S&P 500',
               source='AAII, CBOE, Lighthouse Macro calculations',
               data_date=spi_smooth.index[-1])
     save_fig(fig, 'pillar_12_fig_08.png')
@@ -710,7 +710,7 @@ def chart_09():
     ax.legend(loc='upper left', fontsize=10, **legend_style())
 
     brand_fig(fig, 'SPI: Recent Sentiment Regimes',
-              subtitle='Figure 9: Sentiment & Positioning Index (Zoomed)',
+              subtitle='Sentiment & Positioning Index (Zoomed)',
               source='AAII, CBOE, Lighthouse Macro calculations',
               data_date=spi_smooth.index[-1])
     save_fig(fig, 'pillar_12_fig_09.png')
@@ -774,7 +774,7 @@ def chart_10():
     add_recessions(ax1)
 
     brand_fig(fig, 'Sentiment-Structure Divergence: When Fear Meets Structure',
-              subtitle='Figure 10: SSD vs S&P 500. Extremes Mark Turning Points.',
+              subtitle='SSD vs S&P 500. Extremes Mark Turning Points.',
               source='Lighthouse Macro calculations',
               data_date=ssd_smooth.index[-1])
     save_fig(fig, 'pillar_12_fig_10.png')

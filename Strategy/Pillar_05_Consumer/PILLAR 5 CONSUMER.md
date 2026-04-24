@@ -330,29 +330,34 @@ This matters because the **marginal propensity to consume (MPC) is inversely cor
 
 ---
 
-### H. CONSUMER SEGMENTS (The Distributional Reality)
+### H. CONSUMER SEGMENTS (The Distributional Overview)
 
-Not all consumers are equal. Income quintiles, age cohorts, and asset ownership create vastly different spending capacities.
+Not all consumers are equal. Income quintiles, age cohorts, and asset ownership create vastly different spending capacities. This section is the quick taxonomy. For granular segmentation with regime thresholds and derived metrics, see Section I.
 
-| **Segment** | **Characteristics** | **Current State** | **Spending Signal** |
+| **Segment** | **Characteristics** | **Typical MPC** | **Cycle Behavior** |
 |---|---|---|---|
-| **Top Quintile (>$150k income)** | Stock-heavy wealth, low debt burden | Strong (+4% spending YoY) | Holding up economy |
-| **Middle Quintiles ($50-$150k)** | Home equity wealth, some debt | Stretched (+1% spending YoY) | Trading down |
-| **Bottom Quintile (<$50k)** | No wealth buffer, high debt/income | Stressed (-1% real spending YoY) | Cutting back |
-| **Millennials (28-43)** | Peak earning years, high housing costs | Mixed (+2% spending YoY) | Housing cost pressure |
-| **Gen Z (18-27)** | Entry-level wages, high student debt | Stressed (+0% real spending YoY) | Paycheck-to-paycheck |
-| **Boomers (60-78)** | Retiring, drawing down assets | Stable (+2% spending YoY) | Social Security anchor |
+| **Top Quintile (>$150k income)** | Stock-heavy wealth, low debt burden | 0.30-0.40 | Most resilient; late to cut, first to resume |
+| **Upper-Middle ($100-$150k)** | Home equity wealth, moderate debt | 0.45-0.55 | Trading down early, cutting travel/dining |
+| **Middle ($50-$100k)** | Some home equity, debt-service sensitive | 0.55-0.70 | Discretionary cuts first, staples held |
+| **Bottom Two Quintiles (<$50k)** | Minimal buffer, high debt/income ratio | 0.80-0.95 | First to cut, broadest stress signals |
+| **Gen Z (18-27)** | Entry-level wages, high student debt | 0.75-0.90 | Paycheck-to-paycheck baseline; BNPL-heavy |
+| **Millennials (28-43)** | Peak earning, high housing/childcare costs | 0.60-0.75 | Housing cost pressure concentrated here |
+| **Gen X (44-59)** | Dual-income peak, 401(k) accumulation | 0.50-0.65 | Home equity exposure, retirement anxiety |
+| **Boomers (60-78)** | Retired or near-retired, drawing down assets | 0.35-0.50 | Social Security anchor; equity-wealth sensitive |
+
+MPC = marginal propensity to consume (cents of each additional dollar of income spent, not saved).
 
 #### Segment-Specific Metrics
 
 | **Metric** | **Formula** | **Threshold** | **Signal** |
 |---|---|---|---|
-| **Bottom 50% Real Spending YoY%** | Segment-specific | <0% | Broad-based stress |
+| **Bottom 50% Real Spending YoY%** | Segment-specific (NY Fed SCE, BofA) | <0% | Broad-based stress |
 | **Prime-Age Spending Growth** | 25-54 cohort YoY | <1% | Core economy weak |
-| **Luxury/Discount Spending Ratio** | Luxury category / Discount category | <0.8 | Trading down |
-| **Buy Now Pay Later Usage** | BNPL volume YoY | >30% | Credit desperation |
+| **Luxury/Discount Spending Ratio** | Luxury category / Discount category | <0.8 | Trading down underway |
+| **Buy Now Pay Later Usage** | BNPL volume YoY | >30% | Credit desperation in bottom quartile |
+| **Top-Bottom Spending Spread** | Top quintile YoY - Bottom quintile YoY | >4 ppts | K-shaped cycle confirmed |
 
-**The K-Shaped Consumer:** The top quintile is spending +4% YoY on travel, dining, luxury. The bottom quintile is cutting groceries. The **aggregate** +2.1% real PCE masks this bifurcation. Watch segment-level data and the "trading down" phenomenon (Walmart gains, Target loses) for the true consumer picture.
+**The K-Shaped Consumer:** During late-cycle fragility, the top quintile often spends +3-4% YoY on travel, dining, and luxury while the bottom quintile cuts real spending. Aggregate PCE can remain positive even as the bottom half contracts, because the top half accounts for ~40% of spending despite being 20% of the population. Watch the "trading-down" tell: Walmart, Costco, and dollar stores gaining share while Target, department stores, and mid-tier casual dining lose. Aggregate data can mislead for 2-3 quarters before the top breaks too.
 
 ---
 

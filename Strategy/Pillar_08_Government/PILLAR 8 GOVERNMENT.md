@@ -158,13 +158,17 @@ Interest expense is the **fastest-growing spending category** in the federal bud
 | **Interest/GDP** | >5% | 3.5-5% | 2-3.5% | <2% |
 | **Weighted Avg Interest Rate** | >4% | 3-4% | 2-3% | <2% |
 
-**The Interest Explosion:** Net interest at **$1.1T** (FY2025 tracking)—**larger than defense spending** for first time ever. Interest/outlays at **16%** (up from 8% in 2021). Interest/receipts at **20%**. Weighted average interest rate at **3.3%**, but 10Y at 4.6%—every dollar of rollover costs more. At current trajectory, interest hits **$1.5T by 2027** (CBO baseline). This is the compounding trap.
+**The Interest Compounding Trap:** When interest/outlays exceeds 15%, interest payments begin meaningfully crowding out discretionary spending. When interest exceeds defense spending (historically the largest discretionary category), the fiscal politics shift as policymakers confront a debt-service line item growing faster than almost any other obligation.
+
+**The rollover math:** Weighted Average Interest Rate (WAI) lags the marginal rate of new issuance by the WAM. If WAM is 5-6 years and 10Y yields are 150+ bps above WAI, every dollar rolled over increases the blended cost. The gap between WAI and current 10Y yields is the "rollover cost" embedded in the maturity wall. Closing that gap through rollover takes years but is mechanical.
+
+**CBO baseline projections:** The Congressional Budget Office publishes 10-year interest expense projections biannually (January and summer updates). These projections are the official baseline and frequently understate rate risk because they use consensus rate forecasts rather than modeling distributions. Use CBO projections as a floor, not a ceiling, on interest expense trajectory.
 
 ---
 
 ### D. TREASURY ISSUANCE & AUCTIONS (The Supply Pressure)
 
-Treasury issuance is the **supply side** of the bond market. When issuance exceeds demand, prices fall (yields rise). Auction metrics reveal stress.
+Treasury issuance is the **supply side** of the bond market. When issuance exceeds demand, prices fall (yields rise). Auction metrics reveal stress before term premium fully reprices.
 
 | **Indicator** | **Source** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

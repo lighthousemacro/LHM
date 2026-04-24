@@ -70,7 +70,7 @@ GDP is the headline, but it's **lagging, revised, and politically manipulated**.
 | **Real GDP YoY** | <0% | 0-1.0% | 1.0-2.5% | >2.5% |
 | **GDI-GDP Spread** | >2% | 1-2% | 0-1% | <0% |
 
-**The GDI-GDP Divergence:** When GDP (expenditure side) exceeds GDI (income side) by >1.5%, income is weakening faster than spending—unsustainable. Historically precedes recession by 2-4 quarters. Current reading: **+0.8%** (elevated but not crisis).
+**The GDI-GDP Divergence:** When GDP (expenditure side) exceeds GDI (income side) by >1.5%, income is weakening faster than spending, an unsustainable configuration. This divergence has historically preceded recessions by 2-4 quarters. Large revisions to either series often later show that the divergence was a signal that recession was imminent; the BEA typically revises both series closer to the income-side reading.
 
 ---
 
@@ -111,7 +111,7 @@ Headline GDP masks critical composition shifts. Components tell you **what's dri
 | **Inventory Change (Level)** | <-$50B | -$50B to +$50B | >+$50B |
 | **Residential Investment QoQ Ann** | <-5% | -5% to +5% | >+5% |
 
-**The Inventory Signal:** Inventory builds add to GDP but are **temporary** and **reversible**. If GDP growth is driven by inventory accumulation (+$100B), that growth evaporates when inventories stabilize. Watch for **inventory liquidation** (negative change)—precedes recession by 1-2 quarters.
+**The Inventory Signal:** Inventory builds add to GDP but are **temporary** and **reversible**. If GDP growth is driven by inventory accumulation, that growth evaporates when inventories stabilize. Watch for **inventory liquidation** (negative change in private inventories), which historically precedes recession by 1-2 quarters.
 
 **Current Observation:** Q3 2025 GDP +2.8% QoQ Ann, but **+$75B inventory build** contributed **+0.8 ppts**. Stripping inventories: **true final sales growth = 2.0%** (materially weaker).
 
@@ -143,7 +143,7 @@ Beyond the GDP inventory component (CBI), the Real Manufacturing & Trade Invento
 
 ### C. INDUSTRIAL PRODUCTION (The Real-Time Proxy)
 
-Industrial Production (IP) is **monthly**, **hard data**, and **leading**. It tracks actual factory output—no survey fluff, no seasonal adjustment games (well, less).
+Industrial Production (IP) is **monthly**, **hard data**, and **leading**. It tracks actual factory output, not survey-based estimates of sentiment or intentions.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

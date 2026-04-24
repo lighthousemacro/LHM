@@ -366,7 +366,7 @@ Employers cut hours before headcount. It's cheaper, reversible, and doesn't dama
 | **Aggregate Hours YoY%** | >+2% | 0% to +2% | **<0%** |
 | **Unit Labor Costs YoY%** | <2% | 2-4% | >4% |
 
-**The Manufacturing Hours Canary:** Manufacturing weekly hours are a leading indicator. Employers don't cut hours for fun—they cut hours when demand disappears. This precedes layoffs by 2-3 months. Watch for declines from cycle peaks.
+**The Manufacturing Hours Canary:** Manufacturing weekly hours are a leading indicator. Employers don't cut hours for fun. They cut hours when demand disappears. This precedes layoffs by 2-3 months. Watch for declines from cycle peaks.
 
 ---
 
@@ -487,7 +487,7 @@ Note: Temp Help is technically within Professional & Business Services but track
 | **Private-Government Spread** | Private YoY - Government YoY | <-2 ppts | Gov't propping up headline |
 | **Cyclical-Defensive Spread** | (Mfg + Construction) YoY - (Healthcare + Gov't) YoY | <-4 ppts | Late-cycle rotation |
 
-**Late-Cycle Pattern:** Manufacturing employment declining YoY while services remain positive is classic late-cycle divergence—goods economy weakening first, services holding temporarily.
+**Late-Cycle Pattern:** Manufacturing employment declining YoY while services remain positive is classic late-cycle divergence: goods economy weakening first, services holding temporarily.
 
 ---
 
@@ -1016,7 +1016,7 @@ LEADING (Level)                 COINCIDENT (Level)      LAGGING (Level)
 │                               │                       │
 ─────────────────────────────────────────────────────────────────────────────
 
-DIRECTION CHANGES (Peaks/Troughs) — All Lead Recession:
+DIRECTION CHANGES (Peaks/Troughs), All Lead Recession:
 - Unemployment Rate trough: 4-13 months lead
 - LT Unemployed Share trough: 3-13 months lead
 - Quits Rate peak: 1-22 months lead
@@ -1082,7 +1082,7 @@ Aggregate Hours Contract → Output Contracts (2-4 month lag)
 GDP Growth Slows
 ```
 
-**Current Linkage:** Aggregate weekly hours **-1.2% YoY** = negative labor input growth. GDP can't expand when the primary factor is contracting (unless productivity surges—it's not).
+**Transmission mechanics:** Aggregate weekly hours YoY captures total labor input. When aggregate hours contract, GDP contribution from the labor factor turns negative unless offset by productivity growth (which typically does not surge late-cycle). This is the cleanest real-time signal that labor is subtracting from growth rather than adding to it.
 
 **Cross-Pillar Signal:** When **LPI < -0.5** (labor softening) AND **GCI < -0.3** (growth contracting), recession probability exceeds 70% within 12 months.
 
@@ -1126,7 +1126,7 @@ Credit Card Delinquencies ↑ → Auto Delinquencies ↑ → Mortgage Delinquenc
 
 **Current Linkage:** LFI at +0.93 (elevated fragility) precedes credit stress by 3-6 months. Credit card delinquencies already rising (3.0%, above pre-pandemic 2.5%). The transmission is underway.
 
-**Cross-Pillar Signal:** CLG (Credit-Labor Gap) = z(HY_OAS) - z(LFI). When CLG < -1.0, credit spreads are too tight given labor fragility. Credit markets ignoring labor reality. This gap closes—violently—when consensus catches up.
+**Cross-Pillar Signal:** CLG (Credit-Labor Gap) = z(HY_OAS) - z(LFI). When CLG < -1.0, credit spreads are too tight given labor fragility, meaning credit markets are ignoring labor reality. This gap typically closes violently when consensus catches up, producing rapid spread widening alongside labor deterioration.
 
 ---
 

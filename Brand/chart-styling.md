@@ -554,3 +554,20 @@ Branded PDFs follow the style established in:
 ```
 
 Key elements: full-width Ocean/Dusk header bar with white text, matching thin footer bar, Ocean `#2389BB` H1/H2 headings, Ocean table headers with white text, justified body at 10pt. Open PDFs with PDF Expert.
+
+
+---
+
+## TradingView Charts
+
+The same 23/89/BB palette and brand logic that governs matplotlib output governs our TradingView charts. Styling is not a separate system. It is the same specification, implemented in Pine Script and TradingView's native controls.
+
+Pine Script source for all LHM indicators lives in `/Users/bob/LHM/Scripts/tradingview/`. TradingView is the deployment target. The repo is the source of truth. Update the `.pine` files here, then paste into the TradingView editor.
+
+### Standard Layout: 3-Panel Stack
+
+All LHM price analysis uses a three-panel stacked layout:
+
+1. **Price** (main chart)
+2. **LHM Relative Strength** (indicator pane)
+3. **LHM Z-RoC Momentum** (indicator pane)

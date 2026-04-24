@@ -1408,6 +1408,137 @@ Use early-month data (ISM) to set expectations, mid-month data (IP, retail) to r
 
 ---
 
+## Policy & Regulatory Environment
+
+Growth is shaped by fiscal policy, monetary policy, trade policy, and industrial policy. This section maps the policy channels that flow into growth outcomes.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Monetary Policy** | Fed Funds rate, QE/QT, forward guidance | Financial conditions, investment, housing | 6-18 months |
+| **Fiscal Policy** | Deficit trajectory, appropriations, automatic stabilizers | Government GDP contribution, consumer income | 1-4 quarters |
+| **Tariff Policy** | Import tariffs, retaliation, exemptions | Business investment, input costs, trade balance | 1-2 quarters |
+| **Industrial Policy (CHIPS/IRA)** | Tax credits, direct grants, permitting | Structures investment, sector capex | Multi-year |
+| **Immigration Policy** | Net migration, visa caps | Labor supply, aggregate demand | 1-4 quarters |
+| **Regulatory Policy** | Permitting timelines, sector-specific rules | Investment execution speed | Multi-year |
+| **Infrastructure Spending** | Federal highway bill, clean energy | Construction, materials demand | 1-3 years |
+| **Emergency Fiscal Response** | Disaster relief, countercyclical programs | Transfer payments | 1-2 quarters |
+| **Tax Code Structure** | Corporate rate, depreciation, pass-through | Business investment | 1-4 quarters |
+
+### Active Policy Risks
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **TCJA Expiration Outcome** | Variable depending on resolution | ~0.5-1% of GDP | Legislative action timing |
+| **Tariff Pass-Through** | Bearish growth (higher input costs) | 20-40 bps of GDP | Tariff schedules |
+| **CHIPS / IRA Grant Distribution** | Bullish structures capex | Multi-billion, multi-year | Grant disbursement timing |
+| **Fed Policy Path** | Directional based on cuts/hikes | Material for FCI and growth | FOMC dot plots, futures |
+| **Immigration Flow Reversal** | Bearish labor supply, consumer demand | 10-20 bps of GDP | Policy implementation |
+| **Government Shutdown** | Bearish Q-over-Q GDP briefly | 10-20 bps per week of shutdown | Appropriations calendar |
+| **Infrastructure Bill Extension** | Bullish multi-year capex | Multi-hundred billion | Political alignment |
+
+**Structural vs Cyclical:** Industrial policy (CHIPS, IRA) is structural (multi-year subsidy regimes). Monetary and fiscal policy are cyclical (respond to conditions). Tariff policy can be either; sustained tariff regimes (China trade war) become structural.
+
+---
+
+## Demographics & Structural Context
+
+Growth is bounded by structural forces: labor supply, productivity, demographics, and capital stock. Cyclical growth oscillates around a structural trajectory set by these forces.
+
+### Key Structural Forces
+
+**1. Labor Supply Growth:** US labor force growth decelerated from ~1.5% annually (2000s) to ~0.5% annually (2010s-present). Demographic headwind from boomer retirements is partially offset by immigration and prime-age participation. Structural labor force growth sets the first half of potential GDP (GDP = labor × productivity).
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Labor Force Growth (annualized) | BLS | Structurally lower post-2010 |
+| Prime-Age LFPR | BLS CPS | Policy and demographic |
+| Net Immigration | Census / DHS | Policy-dependent; highly variable |
+
+**2. Productivity Growth:** Productivity (output per hour) has averaged ~1-2% since 2010, below the ~2.5% post-WWII historical average. AI-driven productivity gains are speculative but potentially material through 2030. Productivity determines the second half of potential GDP.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Nonfarm Business Productivity (OPHNFB) | BLS | ~1-2% since 2010 |
+| TFP (Total Factor Productivity) | BLS, Fed | Structurally subdued |
+| Capital Intensity | BLS | Rising with AI capex |
+
+**3. Capital Stock and Investment:** Long-run growth requires capital accumulation. Structures, equipment, and IP capital stock have grown unevenly post-2008. CHIPS/IRA stimulus drives structures specifically; AI drives IP. Equipment investment has been lagging.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Nonresidential Fixed Investment / GDP | BEA | ~13-14%, structurally stable |
+| Capital-Labor Ratio | BLS | Rising but sector-concentrated |
+| Depreciation Rate | BEA | Structurally rising (tech assets shorter-lived) |
+
+**4. Technology and AI Impact:** Post-ChatGPT (late 2022), AI capex and potential productivity gains have become material structural forces. Hyperscaler capex projected ~$300B+ by 2025. If AI productivity gains materialize, potential GDP trajectory shifts higher.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| AI Capex as % of S&P Total | Bloomberg estimates | Accelerating |
+| Software Investment Share of GDP | BEA | Rising structurally |
+| AI Productivity Measurement | Academic research | Early-stage, not confirmed |
+
+**5. Deglobalization and Reshoring:** Post-2018 trade tensions and post-COVID supply chain experience have restructured trade patterns. Reshoring and friend-shoring drive structures investment but raise operating costs. Net effect on potential GDP: modestly negative (lower productivity) but more resilient.
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Potential GDP Growth Rate** | Labor Force Growth + Productivity Growth | Long-run GDP ceiling |
+| **Output Gap** | Actual GDP - Potential GDP | Cyclical position within structural trend |
+| **AI Productivity Premium** | Total Factor Productivity vs pre-2022 trend | AI gains materializing or not |
+| **Labor-Productivity Mix** | Contribution decomposition | Which factor is driving growth |
+
+**Time horizon:** These forces operate over 5-30 year horizons. They set the trajectory but don't determine cycle timing. Tailwinds: AI productivity, CHIPS/IRA capex, demographic support from immigration. Headwinds: aging, deglobalization operating costs, capital-intensity tradeoffs.
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Growth Triggers (Acceleration)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Industrial Production YoY%** | Turns positive (>+0.5%) | {{WATCH_IP}} | Manufacturing recovery |
+| **ISM Manufacturing** | Above 52 | {{WATCH_ISM_MFG}} | Expansion confirmed |
+| **ISM Services** | Above 55 | {{WATCH_ISM_SVC}} | Services strength |
+| **Core Capex Orders YoY%** | Positive (+3%+) | {{WATCH_CAPEX}} | Investment cycle recovery |
+| **Real Retail Sales YoY%** | Above +2% | {{WATCH_RETAIL}} | Consumer demand solid |
+| **Aggregate Hours YoY%** | Above +1.5% | {{WATCH_HOURS}} | Labor input expanding |
+| **Housing Starts YoY%** | Positive (+5%+) | {{WATCH_HOUSING_STARTS}} | Housing thaw |
+| **GCI Composite** | Above +0.3 | {{WATCH_GCI}} | Neutral-to-expansion regime |
+| **Atlanta Fed GDPNow** | Above +2.5% | {{WATCH_GDPNOW}} | Q-over-Q strength |
+
+### Bearish Growth Triggers (Recession Confirmation)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Real GDP** | Negative for 2 consecutive quarters | {{WATCH_GDP_NEG}} | Technical recession |
+| **Industrial Production YoY%** | Below -2% | {{WATCH_IP_LOW}} | Severe contraction |
+| **ISM Manufacturing** | Below 45 | {{WATCH_ISM_MFG_LOW}} | Deep contraction |
+| **ISM Services** | Below 50 | {{WATCH_ISM_SVC_LOW}} | Services transmission |
+| **Payrolls 3M Avg** | Negative | {{WATCH_PAYROLLS}} | Broad labor weakness |
+| **Unemployment Rate** | Above 4.5% and rising | {{WATCH_UNEMP}} | Historical recession threshold |
+| **GCI Composite** | Below -1.0 | {{WATCH_GCI_LOW}} | Recession regime |
+| **Aggregate Hours YoY%** | Below -1% | {{WATCH_HOURS_LOW}} | Labor input contraction |
+| **GDP-GDI Gap** | >1.5 ppts | {{WATCH_GDP_GDI}} | Income-expenditure divergence |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Yield Curve Dis-Inversion** | Sustained positive 10Y-2Y after inversion | Recession typically 6-12 months later |
+| **AI Productivity Confirmation** | TFP growth above 2% sustained | Structural potential GDP shift higher |
+| **Manufacturing Construction Peak** | YoY growth turning negative | End of reshoring tailwind |
+| **Immigration Flow Reversal** | Net negative sustained | Labor supply shock |
+| **Housing Cycle Inflection** | Starts bottoming after 20%+ decline | Early recovery signal |
+| **CHIPS / IRA Grant Disbursement Peak** | Timeline completion | End of structures tailwind |
+| **Yield Curve Re-Inversion** | Second inversion event | Further rate tightening required |
+
+---
+
 ## Conclusion: Growth as the Macro Multiplier
 
 Growth isn't GDP. It's the velocity of economic metabolism, the speed at which the system converts inputs (labor, capital, innovation) into outputs (goods, services, income).

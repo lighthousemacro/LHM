@@ -11,15 +11,15 @@ Growth Impact → Tax Receipts →
 Deficit (Reinforcing Loop)
 ```
 
-**The Insight:** We've entered **Fiscal Dominance**—the regime where fiscal policy overwhelms monetary policy. The Fed can hike all it wants, but if Treasury is issuing $2T+ annually, the supply of duration crushes bond prices regardless. The term premium is the honest signal. It must reprice.
+**The Insight:** We've entered **Fiscal Dominance**: the regime where fiscal policy overwhelms monetary policy. The Fed can hike all it wants, but if Treasury is issuing $2T+ annually, the supply of duration pressures bond prices regardless. The term premium is the honest signal. It must reprice to clear the market.
 
-The beauty of fiscal data: it's **knowable in advance**. Unlike earnings or inflation, we know the deficit trajectory. We know the debt ceiling. We know the maturity schedule. The only uncertainty is whether markets price it correctly. They rarely do.
+The beauty of fiscal data: it's **knowable in advance**. Unlike earnings or inflation, we know the deficit trajectory via CBO. We know the debt ceiling schedule. We know the maturity wall. The only uncertainty is whether markets price it correctly. They rarely do, and late.
 
 ---
 
 ## Why Government Matters: The Fiscal Gorilla
 
-Federal spending is **23% of GDP**. Federal debt is **120% of GDP**. Interest expense is the **fastest-growing budget item**. Government has become the marginal price-setter in fixed income markets.
+Federal spending is **23% of GDP**. Federal debt is **120%+ of GDP**. Interest expense is the **fastest-growing budget item**. Government has become the marginal price-setter in fixed income markets.
 
 **The Cascade:**
 

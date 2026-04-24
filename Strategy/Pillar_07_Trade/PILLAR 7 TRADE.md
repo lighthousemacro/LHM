@@ -947,80 +947,70 @@ Risk Assets Re-Rate → Crypto Inflows → BTC/ETH Rally
 
 ---
 
-## Current State Assessment (February 2026)
+## Current State Assessment Template
 
-| **Indicator** | **Current** | **Threshold** | **Assessment** |
+*Last Updated: {{DATE}}*
+
+### Primary Indicators
+
+| **Indicator** | **Current** | **Prior** | **Δ** | **Threshold** | **Assessment** |
+|---|---|---|---|---|---|
+| **Trade Balance (monthly $B)** | {{TRADE_BAL}} | {{TRADE_BAL_PRIOR}} | {{TRADE_BAL_DELTA}} | >-$85B = Improving | {{TRADE_BAL_ASSESSMENT}} |
+| **Trade Balance / GDP** | {{TRADE_BAL_GDP}} | {{TRADE_BAL_GDP_PRIOR}} | {{TRADE_BAL_GDP_DELTA}} | <-4% = Unsustainable | {{TRADE_BAL_GDP_ASSESSMENT}} |
+| **Import Price YoY%** | {{IMPORT_PRICE}} | {{IMPORT_PRICE_PRIOR}} | {{IMPORT_PRICE_DELTA}} | >+3% = Inflationary | {{IMPORT_PRICE_ASSESSMENT}} |
+| **Import ex-Petro YoY%** | {{IMPORT_XP}} | {{IMPORT_XP_PRIOR}} | {{IMPORT_XP_DELTA}} | >+2% = Core import inflation | {{IMPORT_XP_ASSESSMENT}} |
+| **Export Volume YoY%** | {{EXPORT_VOL}} | {{EXPORT_VOL_PRIOR}} | {{EXPORT_VOL_DELTA}} | <0% = Weak | {{EXPORT_VOL_ASSESSMENT}} |
+| **Container Volume YoY%** | {{CONTAINER}} | {{CONTAINER_PRIOR}} | {{CONTAINER_DELTA}} | <-5% = Contracting | {{CONTAINER_ASSESSMENT}} |
+| **Broad Dollar YoY%** | {{DOLLAR_YOY}} | {{DOLLAR_YOY_PRIOR}} | {{DOLLAR_YOY_DELTA}} | >+5% = Headwind | {{DOLLAR_YOY_ASSESSMENT}} |
+| **BIS REER vs 10Y Avg** | {{REER}} | {{REER_PRIOR}} | {{REER_DELTA}} | >+10% = Overvalued | {{REER_ASSESSMENT}} |
+| **NY Fed GSCPI** | {{GSCPI}} | {{GSCPI_PRIOR}} | {{GSCPI_DELTA}} | >+1.0 = Supply chain stress | {{GSCPI_ASSESSMENT}} |
+| **EPU Trade Index** | {{EPUTRADE}} | {{EPUTRADE_PRIOR}} | {{EPUTRADE_DELTA}} | >150 = Elevated policy uncertainty | {{EPUTRADE_ASSESSMENT}} |
+| **China Import Share** | {{CHINA_SHARE}} | {{CHINA_SHARE_PRIOR}} | {{CHINA_SHARE_DELTA}} | <14% = Decoupling active | {{CHINA_SHARE_ASSESSMENT}} |
+| **Current Account / GDP** | {{CA_GDP}} | {{CA_GDP_PRIOR}} | {{CA_GDP_DELTA}} | <-4% = Unsustainable | {{CA_GDP_ASSESSMENT}} |
+| **Effective Tariff Rate** | {{TARIFF}} | {{TARIFF_PRIOR}} | {{TARIFF_DELTA}} | >4% = Protectionist regime | {{TARIFF_ASSESSMENT}} |
+| **TIC Net Long-Term Flows** | {{TIC}} | {{TIC_PRIOR}} | {{TIC_DELTA}} | <0 = Capital flight risk | {{TIC_ASSESSMENT}} |
+| **Real Retail Sales YoY%** | {{REAL_RETAIL}} | {{REAL_RETAIL_PRIOR}} | {{REAL_RETAIL_DELTA}} | <0% = Contraction | {{REAL_RETAIL_ASSESSMENT}} |
+| **Terms of Trade YoY%** | {{TOT}} | {{TOT_PRIOR}} | {{TOT_DELTA}} | <-3% = Deteriorating | {{TOT_ASSESSMENT}} |
+
+### Composites
+
+| **Index** | **Current** | **Prior** | **Regime** | **Signal** |
+|---|---|---|---|---|
+| **TCI** | {{TCI}} | {{TCI_PRIOR}} | {{TCI_REGIME}} | {{TCI_SIGNAL}} |
+| **DCI (Dollar Competitiveness)** | {{DCI}} | {{DCI_PRIOR}} | {{DCI_REGIME}} | {{DCI_SIGNAL}} |
+| **TPI (Tariff Pass-Through)** | {{TPI}} | {{TPI_PRIOR}} | {{TPI_REGIME}} | {{TPI_SIGNAL}} |
+
+### Cross-Pillar Linkages
+
+| **Linkage** | **Current** | **Threshold** | **Status** |
 |---|---|---|---|
-| **Trade Balance** | -$78B | >-$85B = improving | Narrowing (demand destruction) |
-| **Trade Balance / GDP** | -3.2% | >-4% = sustainable | Manageable |
-| **Import Price YoY%** | +3.8% | >+3% = inflationary | **Tariff pass-through** |
-| **Import ex-Petro YoY%** | +2.9% | >+2% = core inflation | **Core import inflation** |
-| **Export Volume YoY%** | -2.1% | <0% = weak | **Retaliatory drag** |
-| **Container Volume YoY%** | -4.2% | <-5% = contracting | Weak (post-front-loading) |
-| **Broad Dollar YoY%** | +7.2% | >+5% = headwind | **Strong dollar drag** |
-| **BIS REER vs 10Y Avg** | +12% | >+10% = overvalued | **Dollar overvalued** |
-| **NY Fed GSCPI** | +0.8 | >+1.0 = stress | Elevated |
-| **EPUTRADE** | 187 | >150 = elevated | Elevated |
-| **China Import Share** | 12.8% | <14% = decoupling | Diversifying |
-| **Current Account / GDP** | -3.5% | >-4% = sustainable | Manageable |
-| **Effective Tariff Rate** | 6.2% | >4% = protectionist | **Protectionist regime** |
-| **Section 122 Days Remaining** | ~148 days | <90 = cliff approaching | Monitoring |
-| **TIC Net Long-Term Flows** | +$32B/mo (avg) | >$0 = sustainable | Positive (European/ME offset) |
-| **Real Retail Sales YoY%** | +1.1% | >+1% = positive | Barely positive |
-| **Terms of Trade YoY%** | -3.5% | <-3% = deteriorating | **Margin headwind** |
-| **TCI Estimate** | **-0.5** | <-0.5 = headwind | **Trade Headwind** |
-| **DCI Estimate** | **-0.7** | <-0.5 = deteriorating | **Competitiveness declining** |
-| **TPI Estimate** | **+0.8** | >+0.5 = active pass-through | **Tariffs transmitting** |
+| **TCI + PCI (trade-inflation)** | {{TCI_PCI}} | Tariff pass-through raising goods inflation | {{TCI_PCI_STATUS}} |
+| **TCI + GCI (trade-growth)** | {{TCI_GCI}} | Export weakness + strong dollar = growth drag | {{TCI_GCI_STATUS}} |
+| **Dollar + CLI (trade-crypto)** | {{DOLLAR_CLI}} | Strong dollar = crypto liquidity headwind | {{DOLLAR_CLI_STATUS}} |
+| **Trade Balance + BCI (trade-business)** | {{TRADE_BCI}} | Terms of trade compression → margin pressure | {{TRADE_BCI_STATUS}} |
 
 ### Narrative Synthesis
 
-**The Tariff Effect:**
-- Average tariff rate at **6.2%** (highest since 1930s Smoot-Hawley)
-- Import prices at **+3.8% YoY** (tariff pass-through, not commodity-driven)
-- Goods deflation (-1.2% CPI) is **ending**. Watch for goods CPI to flip positive by Q2 2026.
-- Consumer impact: ~$1,200/year higher prices per household
-- EPUTRADE at **187**, elevated but below 2019 trade war peaks
-- **Section 122 expiry July 24** is the key risk event for H2 2026
+{{NARRATIVE}}
 
-**The Dollar Effect:**
-- Broad dollar at **+7.2% YoY**, BIS REER **+12% above 10Y average**
-- Export volumes at **-2.1% YoY**: retaliatory tariffs + strong dollar double hit
-- Manufacturing IP at **-0.8% YoY**: trade weakness flowing into production
-- EM stress building: dollar-denominated debt service costs rising
-- Dollar Z-RoC elevated but not extreme: reversal signal not yet triggered
+**Translation:** {{TRANSLATION}}
 
-**The Decoupling Effect:**
-- China import share at **12.8%** (down from 22% in 2017)
-- Mexico, Vietnam, India absorbing displaced trade
-- Supply chains longer, more complex, less efficient
-- Resilience gained, cost efficiency lost
-- China-Vietnam substitution rate at 0.7: rerouting, not reducing
-
-**The Capital Flow Effect:**
-- Current account at **-3.5% of GDP**, sustainable range
-- Primary income still positive (~$60B/quarter): U.S. outearns foreigners on assets
-- Japan and China slowly reducing Treasury holdings
-- TIC flows remain positive overall (European and Middle Eastern offsets)
-- TV_USTICNLF at +$32B/mo: no capital flight, but marginal buyer shifting
-
-**The Retail Distribution Effect:**
-- Real retail sales at **+1.1% YoY**: barely positive
-- Import-sensitive categories (electronics, clothing) showing price increases with volume declines
-- E-commerce penetration at **16.8%**: online channel partially absorbing tariff costs through competition
-- Wholesale inventories building ahead of Section 122 expiry: front-loading behavior
-
-**Translation:** Trade is a **persistent headwind**, not a crisis. Tariffs are inflationary. Strong dollar is contractionary for manufacturing. Decoupling is real but costly. Capital flows are adjusting but not disrupted. The globalization tailwind of 1990-2020 is **gone**. We're in managed trade now.
+**Regime Diagnosis:**
+- Tariff effect: {{TARIFF_EFFECT}}
+- Dollar effect: {{DOLLAR_EFFECT}}
+- Decoupling effect: {{DECOUPLING_EFFECT}}
+- Capital flow effect: {{CAPITAL_FLOW_EFFECT}}
+- Retail distribution effect: {{RETAIL_EFFECT}}
 
 **Cross-Pillar Confirmation:**
-- **Prices Pillar:** Import prices (+3.8%) threatening goods disinflation narrative
-- **Growth Pillar:** Export weakness contributing to manufacturing recession
-- **Labor Pillar:** Manufacturing jobs down 37k YoY, trade a contributing factor
-- **Consumer Pillar:** Tariff pass-through reducing real purchasing power
-- **Business Pillar:** Terms of trade deterioration compressing margins, BCI -0.6
-- **Plumbing Pillar:** Trade deficit narrowing = less automatic Treasury demand
-- **CLI:** Strong dollar = crypto headwind via liquidity channel
+- **Prices Pillar:** {{PRICES_CONFIRMATION}}
+- **Growth Pillar:** {{GROWTH_CONFIRMATION}}
+- **Labor Pillar:** {{LABOR_CONFIRMATION}}
+- **Consumer Pillar:** {{CONSUMER_CONFIRMATION}}
+- **Business Pillar:** {{BUSINESS_CONFIRMATION}}
+- **Plumbing Pillar:** {{PLUMBING_CONFIRMATION}}
 
-**MRI (Macro Risk Index):** Trade contributes **TCI = -0.5** to the composite via the 0.05 weight. Trade headwinds are **chronic**, not acute. They grind on margins and competitiveness rather than triggering systemic events. The TCI contribution to MRI: 0.05 x (-(-0.5)) = +0.025. Small in isolation but confirming when combined with other engines.
+**MRI Contribution:** {{MRI_CONTRIBUTION}}
 
 ---
 

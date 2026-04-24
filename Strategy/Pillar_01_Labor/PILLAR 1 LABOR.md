@@ -1470,6 +1470,144 @@ Measures the breadth of job gains across industries. Different from state diffus
 
 ---
 
+## Policy & Regulatory Environment
+
+Labor market outcomes are shaped by immigration policy, labor law, minimum wage legislation, unionization rules, and unemployment insurance. This section catalogs the policy channels that flow into labor outcomes.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Immigration Policy** | Net migration, H-1B caps, visa processing | Labor supply, especially services and tech | 1-4 quarters |
+| **Federal Minimum Wage** | Statutory floor | Low-wage income, employment effects | 6-12 months |
+| **State Minimum Wage** | State/local floors | Regional low-wage dynamics | 6-12 months |
+| **Unemployment Insurance** | Benefit levels, extended benefits, eligibility | Countercyclical stabilizer, reservation wage | Coincident |
+| **Labor Law (NLRB)** | Union certification, organizing rules | Unionization rate, wage negotiations | Multi-year |
+| **Worker Classification (DOL)** | Independent contractor vs employee rules | Gig economy structure, labor costs | 1-2 years |
+| **Overtime Rules (DOL)** | Salary thresholds for exempt status | Labor costs for salaried workers | 1-2 years |
+| **FMLA / Paid Leave** | Federal and state paid leave mandates | Labor costs, participation | 2-5 years |
+| **Worker Visa Programs** | H-1B, H-2A, H-2B, OPT | Sector-specific labor supply | 1-2 years |
+| **Retirement Age / Social Security** | Claiming age, benefit formulas | 55+ LFPR, workforce composition | 5-20 years |
+
+### Active Policy Risks (Labor-Specific)
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **Immigration Policy Tightening** | Bearish labor supply, bullish wage pressure | ~20-30 bps of prime-age LFPR | Administration policy actions |
+| **Federal Minimum Wage Increase** | Bullish bottom-quartile income; bearish low-wage employment | Variable | Legislative action |
+| **State Minimum Wage Waves** | Regional effects on low-wage sectors | State-specific | State legislative action |
+| **NLRB Rule Changes** | Directional based on administration | Variable | Ongoing rulemaking |
+| **Worker Classification Ruling** | Potential gig-economy disruption | Sector-specific | DOL actions, court rulings |
+| **H-1B Cap / Processing Changes** | Bearish tech/services labor | Material for specific sectors | Administrative rules |
+| **UI Benefit Extensions** | Countercyclical in recession | Large scale only in downturns | Legislative response |
+| **Paid Leave Federal Mandate** | Bullish retention; bearish labor costs | Multi-year phase-in if enacted | Political alignment |
+| **Social Security Reform** | Variable; shifts retirement incentives | Multi-year | Trust fund exhaustion timeline |
+
+**Structural vs Cyclical:** Immigration and social insurance frameworks are structural (regime-defining). UI benefit extensions are cyclical (countercyclical response to recessions). Minimum wage changes are binary events but have multi-year structural effects once enacted.
+
+---
+
+## Demographics & Structural Context
+
+Labor is demographically determined at its deepest level. Cohort sizes, participation rates, and education levels set the ceiling; cyclical dynamics oscillate around that ceiling.
+
+### Key Structural Forces
+
+**1. Boomer Retirement Wave:** The baby boomer cohort (born 1946-1964) is retiring at peak rate through 2030. Roughly 10,000+ Americans reach age 65 daily. This creates persistent labor supply drag, especially in fields where older workers are concentrated (healthcare, skilled trades, corporate management).
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Boomers Aging Into 65+ | Census | Peak daily flow through 2030 |
+| Average Retirement Age | BLS, SSA | Rising slightly |
+| Early Retirement Wave (55+ LFPR) | BLS | COVID accelerated; partially persistent |
+
+**2. Prime-Age Participation Structure:** Prime-age (25-54) LFPR peaked at 83.5% (Feb 2020), recovered to 83.9% (July 2023), and has plateaued. Men's prime-age LFPR exhibits long-term secular decline; women's exhibits long-term secular increase. These trends predate any individual cycle.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Prime-Age LFPR (Men) | BLS CPS | Long-term declining from ~95% (1960s) |
+| Prime-Age LFPR (Women) | BLS CPS | Long-term rising, plateaued ~77% |
+| 55+ LFPR | BLS CPS | Pre-COVID uptrend reversed |
+
+**3. Immigration and Net Migration:** Net immigration is the primary offsetting force to demographic labor force drag. Legal and undocumented immigration combined contributes 0.3-0.8 ppts annually to labor force growth. Policy changes since 2020 have made this variable highly cyclical.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Net Immigration (12M trailing) | DHS, Census | Policy-dependent, highly variable |
+| Foreign-Born Labor Force Share | BLS CPS | ~18% of total, rising |
+| Unauthorized Immigration Estimate | Pew, Academic | Estimate-dependent |
+
+**4. Educational Attainment:** US workforce educational attainment has risen structurally. Bachelor's+ share of labor force has grown from ~28% (2000) to ~45% (2024). This shifts labor demand toward higher-wage, higher-productivity jobs.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| Bachelor's+ Share of LF | BLS CPS | Rising steadily |
+| College Wage Premium | Fed research | Plateaued but still substantial |
+| Skill-Biased Technical Change | Academic | Long-run structural trend |
+
+**5. Geographic Mobility:** US interstate and inter-metro migration has declined structurally. Americans move less than they used to. This reduces labor market efficiency and amplifies regional divergences.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Interstate Migration Rate | Census ACS | Declining secular trend |
+| Job-Related Relocations | Challenger data | Declining |
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Demographic Labor Force Growth** | Aging + participation changes + immigration | Potential LF growth rate |
+| **Skills-Education Alignment** | Educational attainment vs job requirements | Structural mismatch gauge |
+| **Geographic Labor Market Efficiency** | Migration rate × regional wage dispersion | Slack mobility measure |
+| **Net Immigration Contribution** | Foreign-born LF growth / total LF growth | Migration's share of labor supply |
+
+**Time horizon:** Demographic forces operate over decades. They shape the labor supply curve against which all cyclical labor dynamics play out. Tailwinds: educational attainment, women's LFPR gains (peaked but elevated). Headwinds: boomer retirements, declining geographic mobility, immigration policy volatility.
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Labor Triggers (Resilience or Recovery)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Quits Rate** | Above 2.5% sustained | {{WATCH_QUITS}} | Worker confidence returning |
+| **Hires/Quits Ratio** | Above 2.5 | {{WATCH_HQ_RATIO}} | Demand stronger than churn |
+| **LT Unemployed Share** | Below 18% | {{WATCH_LT_UNEMP}} | Structural healing |
+| **Temp Help YoY%** | Positive | {{WATCH_TEMP}} | Flexible labor demand |
+| **Initial Claims 4-wk MA** | Below 220k | {{WATCH_CLAIMS}} | Labor stress fading |
+| **Mfg Weekly Hours** | Above 41.0 | {{WATCH_MFG_HOURS}} | Production intensifying |
+| **Job-Hopper Premium** | Above 1.5 ppts | {{WATCH_JOB_HOP}} | Healthy labor mobility |
+| **LPI Composite** | Above +0.5 | {{WATCH_LPI}} | Labor regime bullish |
+| **LFI Composite** | Below 0 | {{WATCH_LFI_LOW}} | Fragility dissipating |
+
+### Bearish Labor Triggers (Recession)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Quits Rate** | Below 1.7% | {{WATCH_QUITS_LOW}} | Workers paralyzed |
+| **Initial Claims 4-wk MA** | Above 300k for 4+ weeks | {{WATCH_CLAIMS_HIGH}} | Acute stress |
+| **Temp Help YoY%** | Below -10% | {{WATCH_TEMP_LOW}} | Cascading layoffs |
+| **Unemployment Rate** | Above 4.5% and rising | {{WATCH_UNEMP}} | Historical recession threshold |
+| **Payrolls 3M Average** | Negative | {{WATCH_PAYROLLS_NEG}} | Job losses confirmed |
+| **LFI Composite** | Above +1.5 | {{WATCH_LFI_HIGH}} | Severe fragility |
+| **LPI Composite** | Below -1.0 | {{WATCH_LPI_LOW}} | Contraction regime |
+| **LT Unemployed Share Direction** | Rising from trough | {{WATCH_LT_DIRECTION}} | Duration risk rising |
+| **Sahm Rule Trigger** | 3M MA unemp 0.50+ ppts above 12M low | {{WATCH_SAHM}} | Recession historically confirmed |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Immigration Policy Shift** | Material net migration change | Labor supply regime shift |
+| **Federal Minimum Wage Hike** | Legislative passage | Low-wage labor restructuring |
+| **Prime-Age LFPR Trend Break** | Break from 82-84% range | Structural participation shift |
+| **55+ LFPR Trend Reversal** | Return toward pre-COVID trend | Boomer retirement pace |
+| **Temp Help Signal Rehabilitation** | Returns to pre-2022 lead pattern | Indicator reliability restored |
+| **Labor Hoarding Break** | Small-firm employment contracts sharply | Hoarding regime ending |
+
+---
+
 ## Conclusion: Labor is the Engine
 
 Labor isn't a sector. It's the economy itself, measured in real-time.

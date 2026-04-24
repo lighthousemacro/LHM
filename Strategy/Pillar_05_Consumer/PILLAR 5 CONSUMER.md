@@ -498,9 +498,9 @@ Housing Demand ↑ → Home Sales ↑ → Home Prices ↑ →
 Wealth Effect ↑ → Consumer Spending ↑ (Reinforcing)
 ```
 
-**Current Linkage:** CB Expectations at 78 (weak), UMich Buying Conditions (homes) at historic lows due to rates/prices. Housing demand frozen. No wealth effect support (prices flat, equity locked).
+**Transmission mechanics:** Housing demand is rate-sensitive and confidence-sensitive. The wealth effect operates in both directions: rising home prices lift consumer spending (home equity extraction, confidence channel), and falling prices depress spending. Historical estimates put the housing wealth elasticity at roughly 5-8 cents per dollar of home equity change, materially higher than the financial wealth elasticity of 2-4 cents. This is because housing wealth is more broadly distributed than financial wealth (more HtM households hold home equity than stocks).
 
-**Cross-Pillar Signal:** Consumer confidence must recover before housing thaws. When **CCI > +0.3** AND mortgage rates < 6%, housing transactions normalize. Currently: **CCI -0.39**, rates 6.95%. No thaw catalyst.
+**Cross-Pillar Signal:** Housing transactions normalize when **CCI > +0.3** AND mortgage rates < 6%. Both conditions must hold. Rates alone (without confidence) don't catalyze a thaw because buyers read declining rates as a recession signal, not a buying opportunity. Confidence alone (without rates) doesn't help because affordability math still fails.
 
 ---
 
@@ -514,9 +514,9 @@ Bank Capital Impairment → Credit Tightening →
 Consumer Credit Availability ↓ → Spending ↓ (Reinforcing)
 ```
 
-**Current Linkage:** Credit card delinquency at 3.0% (elevated but not crisis). Bank reserves adequate. No systemic credit crunch yet. But if delinquencies hit 4.5%+, regional bank stress emerges (concentrated consumer lending portfolios).
+**Transmission mechanics:** Credit card and auto loan delinquencies hit bank P&L through two channels: (1) direct loan loss provisions (charge-offs flow through income statement), and (2) tightened underwriting standards as risk management responds to rising losses. The second channel is more consequential for the consumer because it constrains future borrowing capacity just as the buffer is most needed. Regional banks are more exposed than money-centers to consumer and small business lending, which is why consumer stress shows up in regional bank stock performance and deposit behavior before money-center bank earnings.
 
-**Cross-Pillar Signal:** Consumer credit stress (**CCI < -0.5**) combined with bank stress (**credit spreads widening**) creates negative feedback loop. Monitor for simultaneous deterioration.
+**Cross-Pillar Signal:** Consumer credit stress (**CCI < -0.5**) combined with bank stress (**credit spreads widening, SLOOS tightening**) creates a negative feedback loop. Monitor for simultaneous deterioration. The Senior Loan Officer Opinion Survey (SLOOS) consumer credit standards net tightening result above +15% is a reliable confirmation signal.
 
 ---
 

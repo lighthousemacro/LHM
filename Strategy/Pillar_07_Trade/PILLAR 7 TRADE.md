@@ -850,9 +850,9 @@ Tariffs ↑ → Import Prices ↑ → Retail Prices ↑ →
 Real Purchasing Power ↓ → Consumer Spending ↓ (2-4 month lag)
 ```
 
-**Current Linkage:** Tariff pass-through estimated at ~$1,200/year per household (Peterson Institute). Real disposable income growth at **+1.1% YoY**, partially offset by rising goods prices. Import-dependent categories (electronics, apparel, toys) showing the most price pressure.
+**Transmission mechanics:** Tariff pass-through to consumer prices typically runs 50-80% over 6-12 months. Peterson Institute and similar research estimates a 10% tariff increase across imports raises consumer prices by ~$800-1,200 per household annually. Import-dependent categories (electronics, apparel, toys) show the largest price pressure; durable goods sectors with lower import intensity show less.
 
-**Cross-Pillar Signal:** When **Import Price YoY > +5%** AND **CCI < -0.3**, tariffs are biting the consumer. Current: Import prices at +3.8% (approaching but not yet >+5%), CCI at -0.3. The consumer is absorbing tariff costs so far, but the margin for error is thin. The domestic distribution channel (Section I) shows which categories are passing through costs vs absorbing margins.
+**Cross-Pillar Signal:** When **Import Price YoY > +5%** AND **CCI < -0.3**, tariffs are biting the consumer materially. Bottom-quintile households absorb the greatest impact because their consumption basket is more import-intensive (apparel, electronics) and less elastic (lower substitutability).
 
 ---
 
@@ -865,9 +865,9 @@ Import Costs ↑ → Input Prices ↑ → Margin Compression →
 Capex Reduction → Hiring Freeze → Growth Slowdown
 ```
 
-**Current Linkage:** Terms of trade deteriorating at -3.5% YoY. Manufacturing margins under pressure. Multinational earnings revisions negative (strong dollar + tariff costs). BCI at -0.6 partly reflects trade-driven margin compression.
+**Transmission mechanics:** Terms of trade deterioration (export prices falling vs import prices rising) compresses margins for trade-exposed businesses. Multinationals face dollar headwinds in addition to tariff cost pass-through. Small businesses bear the heaviest impact because they lack currency hedging, global diversification of supply chains, and pricing power that large multinationals can deploy.
 
-**Cross-Pillar Signal:** When **TCI < -0.5** AND **BCI < -0.5**, the trade-to-business transmission chain is active. Margin pressure from trade is converting into business investment pullback. Small businesses (NFIB) are hit hardest because they lack hedging, global diversification, and pricing power that large multinationals have.
+**Cross-Pillar Signal:** When **TCI < -0.5** AND **BCI < -0.5**, the trade-to-business transmission chain is fully active. Margin pressure from trade converts into business investment pullback within 1-2 quarters and hiring freezes within another quarter.
 
 ---
 

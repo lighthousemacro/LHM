@@ -1044,3 +1044,302 @@ Government isn't policy in the abstract. It's trillions in annual spending and t
 **Cross-Pillar Framework:** Fiscal stress is the backdrop. Labor fragility may require rate cuts, but fiscal dynamics keep long rates elevated. Inflation stays sticky when deficits sustain demand. Growth is supported by fiscal impulse until consolidation arrives. The government pillar is where macro, monetary, and market structure converge.
 
 The 2026 theme: fiscal dominance, term premium repricing, and the duration reset. The repricing has started. It's not done.
+
+---
+
+## Additional Indicators & External Research
+
+### Sargent-Wallace Unpleasant Arithmetic
+
+Thomas Sargent and Neil Wallace's 1981 paper "Some Unpleasant Monetarist Arithmetic" established the theoretical foundation for fiscal dominance. The core argument: when fiscal deficits are persistently large, eventually monetary policy must accommodate (either through seigniorage or through inflation), regardless of central bank preferences. The arithmetic is "unpleasant" because it shows the central bank can delay but not prevent the inflationary consequence of fiscal dominance.
+
+**Application:** When structural primary deficits exceed r-g (real interest rate minus real growth rate), debt/GDP rises regardless of cycle. If r-g > 0 and structural primary deficit > 2% of GDP, fiscal trajectory is unsustainable without either: (a) fiscal consolidation, (b) financial repression, or (c) inflation.
+
+### Blanchard's r-g Framework
+
+Olivier Blanchard (2019 AEA Presidential Address) argued that when r<g (interest rates below growth rates), government can sustain deficits without triggering unsustainable debt dynamics. This framework justified aggressive fiscal policy during the 2010s when r<g held.
+
+**The reversal:** Post-2022, real rates have risen materially (10-year real TIPS yield from negative to ~+2% range). If r>g on a sustained basis, the Blanchard framework reverses and fiscal constraints bind. This regime change is the fundamental driver of the fiscal dominance repricing theme.
+
+### Reinhart-Rogoff 90% Threshold
+
+Carmen Reinhart and Kenneth Rogoff's "This Time Is Different" (2009) and subsequent work argued that debt/GDP above 90% correlates with materially slower economic growth. The empirical claim has been contested (Herndon-Ash-Pollin 2013 pointed out calculation errors), but the qualitative point remains: high debt loads eventually matter, even if the exact threshold is debated.
+
+**Modern interpretation:** There's no bright-line threshold at which fiscal stress crystallizes. Different countries with different institutions can sustain different debt/GDP levels (Japan at 250%+, US historically at 120%+). But higher debt/GDP reduces fiscal flexibility and increases sensitivity to rate moves.
+
+### Cochrane's Fiscal Theory of the Price Level
+
+John Cochrane's fiscal theory of the price level (FTPL) argues that the price level adjusts to equalize the real value of government debt with the expected present value of real primary surpluses. In this framework, inflation is fundamentally fiscal, not monetary.
+
+**Application:** FTPL predicts that persistent fiscal deficits combined with suppressed monetary response will eventually produce inflation through the price level adjustment channel. This framework offers a different lens on post-2020 inflation than the traditional demand/supply/monetary view.
+
+### Financial Repression Mechanisms
+
+Financial repression is policy that keeps real interest rates below market-clearing levels, eroding real debt burdens over time. Historical financial repression examples:
+
+- **US 1945-1970s:** Fed pegged Treasury rates; high inflation eroded real debt
+- **UK 1945-1970s:** Similar pattern
+- **Japan 1990s-present:** Yield curve control, negative deposit rates
+
+**Mechanism:** Real rates < growth rates mean debt/GDP falls mechanically even without primary surpluses. Savers subsidize the government through low real returns.
+
+**Modern feasibility:** US financial repression would require Fed yield curve control (suppressing long rates) combined with persistent inflation. The Fed has moved toward this in 2010s ZIRP era but has since normalized. Renewed repression would require policy pivot.
+
+### The Bond Vigilante Question
+
+"Bond vigilantes" force discipline on fiscal authorities by selling bonds and demanding higher yields when fiscal policy becomes unsustainable. The term gained prominence in 1980s-1990s when Clinton administration acknowledged bond market power. Post-2008, the absence of vigilante behavior despite persistent deficits generated complacency.
+
+**Modern vigilante signs:** Term premium rising, foreign official retreat, weak auctions, steepening curve despite weak growth. These are the vigilante signals. They are active, just in slow motion.
+
+### Currency Crisis vs Fiscal Crisis
+
+Fiscal crises in reserve-currency countries (US, Euro area, Japan, UK) differ from fiscal crises in emerging markets. Reserve-currency issuers borrow in their own currency and face inflation/devaluation risk rather than default risk. EM sovereigns borrowing in hard currency face classic default risk.
+
+**US implication:** A US fiscal crisis manifests as currency weakness and inflation, not hard default. Technical default via debt ceiling is a manufactured political crisis, not a true fiscal crisis.
+
+### The Ricardian Equivalence Debate
+
+Robert Barro's Ricardian equivalence argues that rational households save in anticipation of future tax increases needed to pay current deficits, so fiscal deficits don't stimulate demand. Empirical evidence shows Ricardian equivalence holds only weakly; fiscal multipliers are typically 0.3-1.5 depending on conditions (higher at zero lower bound, lower at full employment).
+
+**Practical implication:** Fiscal consolidation has real GDP consequences because Ricardian equivalence is weak. The fiscal impulse/GDP relationship is real, not neutralized by rational expectations.
+
+### MMT Critiques and Counter-Critiques
+
+Modern Monetary Theory argues that monetary sovereign governments (USA, UK, Japan) face no hard budget constraint because they can print currency. Inflation, not default, is the binding constraint. MMT proponents advocate more aggressive fiscal policy.
+
+**Mainstream counter:** MMT conflates short-run and long-run constraints. In the short run, fiscal monetization creates inflation. In the long run, loss of central bank credibility creates hyperinflation. The 2020-2022 inflation episode is often cited as empirical challenge to naive MMT applications.
+
+### Sovereign CDS Pricing
+
+Credit default swaps on sovereign debt price default probability (though sovereign CDS has peculiarities: CDS triggers on technical events, not fundamental default risk for reserve currencies). US 1-year CDS widening from ~10 bps to 50+ bps during debt ceiling episodes is the classic market signal of political risk.
+
+**Interpretation:** Sovereign CDS is not a measure of true default risk for reserve currencies. It's a measure of technical event risk (debt ceiling, restructuring) and liquidity/counterparty stress in CDS markets themselves.
+
+---
+
+## External Research Sources
+
+**Government Data Sources:**
+- [Treasury Monthly Statement (MTS)](https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/) - Monthly deficit, outlays, receipts
+- [Treasury Direct](https://www.treasurydirect.gov/) - Auction data, issuance calendar, debt to the penny
+- [Quarterly Refunding Announcement](https://home.treasury.gov/data/investor-class-auction-allotments/quarterly-refunding) - Issuance guidance, first Wednesday of Feb/May/Aug/Nov
+- [Treasury Borrowing Advisory Committee (TBAC)](https://home.treasury.gov/policy-issues/financing-the-government/quarterly-refunding/treasury-borrowing-advisory-committee) - Dealer/investor panel recommendations
+- [TIC Data (Treasury International Capital)](https://home.treasury.gov/data/treasury-international-capital-tic-system) - Monthly foreign holdings
+- [OMB Budget](https://www.whitehouse.gov/omb/budget/) - Annual administration budget
+- [Congressional Budget Office (CBO)](https://www.cbo.gov/) - Baseline projections, cost estimates, long-term outlook
+
+**Fed Resources:**
+- [NY Fed ACM Term Premium](https://www.newyorkfed.org/research/data_indicators/term-premia-tabs) - Daily 10Y term premium estimate
+- [Fed H.4.1](https://www.federalreserve.gov/releases/h41/) - Weekly Fed balance sheet, Treasury holdings
+- [SOMA (System Open Market Account)](https://www.newyorkfed.org/markets/open-market-operations) - Fed's Treasury portfolio detail
+- [TGA Balance](https://fred.stlouisfed.org/series/WTREGEN) - Daily Treasury General Account cash balance
+
+**Think Tanks and Non-Governmental:**
+- [Peter G. Peterson Foundation](https://www.pgpf.org/) - Fiscal sustainability analysis
+- [Hutchins Center on Fiscal and Monetary Policy (Brookings)](https://www.brookings.edu/center/hutchins-center-on-fiscal-and-monetary-policy/) - Fiscal impulse, policy analysis
+- [Committee for a Responsible Federal Budget (CRFB)](https://www.crfb.org/) - Fiscal watchdog
+- [Tax Policy Center](https://www.taxpolicycenter.org/) - Tax policy analysis
+- [Bipartisan Policy Center Debt Limit](https://bipartisanpolicy.org/projects/debt-limit/) - X-date estimates
+
+**Rating Agencies:**
+- [Fitch Ratings US Sovereign](https://www.fitchratings.com/issuers/united-states-of-america-80442131) - Sovereign credit analysis
+- [Moody's Sovereign Analysis](https://www.moodys.com/) - Sovereign ratings and commentary
+- [S&P Global Sovereign](https://www.spglobal.com/ratings/en/sector/governments) - Sovereign ratings
+
+**Academic/Research:**
+- [Federal Reserve Board Discussion Papers (FEDS)](https://www.federalreserve.gov/econres/feds/index.htm) - Fed staff research on fiscal/monetary
+- [NBER Working Papers (Public Finance)](https://www.nber.org/programs-projects/programs-working-groups/public-economics) - Academic fiscal research
+- [Brookings Papers on Economic Activity](https://www.brookings.edu/wp-content/events/) - Fiscal-monetary analysis
+
+---
+
+## Reference: Published Analysis
+
+**"Government: The Fiscal Overhang"** (Educational Series, 2026) is the published article version of this pillar. Available at `research.lighthousemacro.com/p/government-the-fiscal-overhang`.
+
+The article covers:
+- The fiscal dominance regime and why it matters for bond markets
+- The four-stage fiscal stress sequence (deficit expansion → debt accumulation → issuance stress → term premium repricing)
+- Why term premium is the "honest signal" that cannot be suppressed indefinitely
+- The interest-rate compounding trap (rates up → deficit widens → more issuance → rates up)
+- The three possible resolutions (consolidation, financial repression, market repricing)
+- Invalidation criteria for both fiscal improvement and fiscal crisis scenarios
+
+The article positions government as the macro backdrop: fiscal dynamics set the duration risk premium, which repricing flows through to all long-duration assets. Understanding fiscal dominance is essential for bond, credit, real estate, and dividend-equity positioning.
+
+---
+
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **GCI-Gov** | **Deficit/GDP** | **Key Features** | **Outcome** |
+|---|---|---|---|---|
+| **1940s US War Debt** | Off-scale high | 20%+ at peak | Debt/GDP 120%, Fed peg | Financial repression + inflation eroded real debt over 30 years |
+| **1980s Reagan Deficits** | +0.8 | 5-6% | Tax cuts + defense buildup, term premium rose | Peso/EM crises but US held; Clinton consolidation followed |
+| **1993 Bond Vigilantes** | +0.5 | 4% | 10Y rose 200+ bps on deficit concerns | Clinton fiscal consolidation; deficit eliminated by 2000 |
+| **2008-09 GFC** | +1.8 | 10% peak | Crisis response; TARP, ARRA | Fed QE absorbed issuance; deficits narrowed 2011-14 |
+| **2011 S&P Downgrade** | +1.2 | 8% | Debt ceiling crisis; first US downgrade | Markets dismissed; rates fell; credit rating mattered less than thought |
+| **2018-19 Trump Tax Cuts** | +0.6 | 4-5% | TCJA, rising deficits at full employment | No immediate market response; structural deficit embedded |
+| **2020-21 COVID Stimulus** | +2.3 | 15% (FY2020), 12% (FY2021) | CARES Act, ARP, unprecedented peacetime deficit | Inflation surge 2021-2022; term premium eventually repriced higher |
+| **2022 UK Mini-Budget Crisis** | UK-specific | ~6% planned | Unfunded tax cuts triggered gilt crisis | Forced policy reversal in 3 days; cautionary tale |
+
+### False Signals
+
+**Early 2010s QE Era:** Persistent deficits (6-10% of GDP during recovery) did not produce bond market revolt. Fed QE absorbed supply, term premium stayed compressed, yields stayed low. The apparent lesson "fiscal dominance doesn't matter" was misleading: it mattered, but the repricing was delayed by QE.
+
+**2011 Debt Ceiling Crisis:** S&P downgrade of US from AAA was expected to trigger Treasury selling; instead, yields fell on flight to quality. The episode showed that in a global financial crisis, the US dollar and Treasury market remain the default safe haven regardless of domestic fiscal concerns. True US fiscal crisis would likely require simultaneous currency weakness, not just rating changes.
+
+**2015-2016 "Taper Tantrum" Sequel:** Expectations of QT-driven yield spikes proved premature. The Fed's measured approach prevented material Treasury dysfunction. Timing of term premium normalization is difficult; direction is more predictable than timing.
+
+### Structural Breaks
+
+**Post-GFC Fiscal Regime:** Structural deficit shifted higher post-2008 (4-5% baseline) and higher still post-COVID (6-7% baseline). This regime change reflects demographic pressures (entitlement growth), permanent tax cuts (TCJA partially permanent), and political difficulty of consolidation.
+
+**End of r<g Era:** 2010-2021 real rates below growth rates supported Blanchard framework. Post-2022 real rates at ~+2% mean r>g in many scenarios, eliminating the "free lunch" that sustained aggressive fiscal policy.
+
+**Foreign Official Retreat:** Chinese holdings have declined from ~$1.3T to ~$700-800B over a decade. Japanese holdings stable but aging demographics pressure BOJ policy. Foreign official demand less reliable as structural buyer of Treasuries.
+
+**QE Normalization:** Fed's balance sheet reached ~$9T at 2022 peak; QT has reduced to ~$7.4T by 2024-2025. The Fed is no longer the marginal Treasury buyer in most scenarios, shifting absorption to private sector at market-clearing yields.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Use Case** |
+|---|---|---|---|---|
+| **Treasury Direct** | Auction results | Per auction | Free | Real-time demand signals |
+| **NY Fed** | ACM Term Premium | Daily | Free | Duration risk compensation |
+| **Fed H.4.1** | SOMA holdings | Weekly | Free | Fed balance sheet |
+| **FRED** | WTREGEN (TGA balance) | Daily | Free | Treasury cash position |
+| **CBO** | Monthly Budget Review | Monthly | Free | Deficit tracking |
+| **Treasury** | Monthly Statement (MTS) | Monthly | Free, 8 business days | Receipts, outlays detail |
+| **Treasury** | Daily Treasury Statement | Daily | Free | Cash flow, issuance settlements |
+| **TIC Data** | Foreign holdings detail | Monthly | Free, 45-day lag | Foreign demand |
+| **Bipartisan Policy Center** | X-date estimates | Periodic during debt ceiling | Free | Political risk timing |
+| **Peter G. Peterson Foundation** | Fiscal charts and trackers | Ongoing | Free | Baseline fiscal analysis |
+| **Hutchins Center Brookings** | Fiscal Impulse Measure | Quarterly | Free | Academic-grade GDP contribution |
+| **ICE / Bloomberg** | 1Y US Sovereign CDS | Daily | Subscription | Technical default pricing |
+| **Prediction Markets** | Shutdown probability, debt ceiling | Real-time | Various | Political risk real-time |
+| **PredictIt / Polymarket** | Policy event probabilities | Real-time | Free | Political odds |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "Some Unpleasant Monetarist Arithmetic" (1981) | Sargent & Wallace | Persistent fiscal deficits eventually force monetary accommodation |
+| "Public Debt and Low Interest Rates" (2019 AEA) | Olivier Blanchard | When r<g, deficits sustainable; debt dynamics less alarming |
+| "This Time Is Different" (2009); "Growth in a Time of Debt" (2010) | Reinhart & Rogoff | Historical patterns of sovereign debt crises; 90% debt/GDP threshold debate |
+| "The Fiscal Theory of the Price Level" (various) | John Cochrane | Inflation determined by expected real value of government debt |
+| "Are Government Bonds Net Wealth?" (1974) | Robert Barro | Ricardian equivalence: rational households offset deficits with saving |
+| "A Theory of the Price Level" (various) | Leeper, Sims, Woodford | Monetary-fiscal policy interaction frameworks |
+| "The Return of Fiscal Policy" (various, post-2008) | Various | Modern fiscal policy re-emergence in post-ZLB world |
+| "Modern Monetary Theory" (various) | Warren Mosler, Stephanie Kelton | Monetary sovereign governments unconstrained by financing |
+| "Fiscal Dominance" (various) | Various researchers | When fiscal policy overwhelms monetary policy effectiveness |
+| "The Financial Accelerator and the Flight to Quality" | Bernanke & Gertler | Credit frictions amplify cycles; flight to quality effects |
+| "Debt Maturity Structure" | Treasury research | Optimal debt maturity given rollover risk and duration supply |
+| Adrian-Crump-Moench term premium model | NY Fed researchers | Affine term structure model; widely-used term premium estimate |
+| "Kim-Wright Model" | Fed staff | Alternative term premium estimation |
+| "Large-Scale Asset Purchases" literature | Various Fed research | QE effects on term premium, yields, financial conditions |
+
+---
+
+## FRED Series Reference Appendix
+
+All FRED series codes referenced in this pillar, organized by category.
+
+### Deficit and Spending (Sections A, E, F)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| FYFSD | Federal Surplus or Deficit | Annual |
+| MTSO | Federal Monthly Treasury Outlays | Monthly |
+| MTSR | Federal Monthly Treasury Receipts | Monthly |
+| M318501Q027NBEA | Federal Government Net Saving (NIPA) | Quarterly |
+| W068RCQ027SBEA | Federal Government Net Lending/Borrowing | Quarterly |
+| FGEXPND | Federal Government: Current Expenditures | Quarterly |
+| FGRECPT | Federal Government: Current Receipts | Quarterly |
+| GEXPND | Government Total Expenditures | Quarterly |
+| GRECPT | Government Total Receipts | Quarterly |
+
+### Debt Stock (Section B)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| GFDEBTN | Federal Debt: Total Public Debt | Quarterly |
+| FYGFDPUN | Federal Debt Held by the Public | Quarterly |
+| FDHBFRBN | Federal Debt Held by Federal Reserve Banks | Weekly |
+| FDHBFIN | Federal Debt Held by Foreign and International Investors | Quarterly |
+| GFDEGDQ188S | Federal Debt: Total Public / GDP | Quarterly |
+| HBFRGDQ188S | Federal Debt Held by Federal Reserve / GDP | Quarterly |
+
+### Interest Expense (Section C)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| A091RC1Q027SBEA | Federal Government Interest Payments (NIPA) | Quarterly |
+| FYOINT | Federal Interest Outlays (Treasury) | Annual |
+
+### Treasury Yields and Term Premium (Section H)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DGS10 | 10-Year Treasury Constant Maturity Rate | Daily |
+| DGS2 | 2-Year Treasury Constant Maturity Rate | Daily |
+| DGS30 | 30-Year Treasury Constant Maturity Rate | Daily |
+| DGS3MO | 3-Month Treasury Constant Maturity Rate | Daily |
+| DGS1 | 1-Year Treasury Constant Maturity Rate | Daily |
+| DGS5 | 5-Year Treasury Constant Maturity Rate | Daily |
+| DGS7 | 7-Year Treasury Constant Maturity Rate | Daily |
+| DGS20 | 20-Year Treasury Constant Maturity Rate | Daily |
+| DFII10 | 10-Year Treasury Inflation-Indexed Rate | Daily |
+| DFII5 | 5-Year Treasury Inflation-Indexed Rate | Daily |
+| DFII30 | 30-Year Treasury Inflation-Indexed Rate | Daily |
+| T10Y2Y | 10Y-2Y Treasury Spread | Daily |
+| T10Y3M | 10Y-3M Treasury Spread | Daily |
+| T10YIE | 10-Year Breakeven Inflation | Daily |
+| T5YIE | 5-Year Breakeven Inflation | Daily |
+| T5YIFR | 5-Year Forward 5-Year Rate (5Y5Y) | Daily |
+
+### Treasury Operations (Sections D, G)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| WTREGEN | Treasury General Account Balance | Weekly |
+| WDTGAL | Treasury Deposits at Federal Reserve Banks | Weekly |
+| WALCL | Total Assets: Federal Reserve (context) | Weekly |
+
+### Government Consumption (GDP Contribution)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| GCEC1 | Government Consumption Expenditures and Gross Investment, Real | Quarterly |
+| A955RC1Q027SBEA | Federal Government Consumption Expenditures and Gross Investment | Quarterly |
+| SLCE | State and Local Government Consumption Expenditures | Quarterly |
+
+### Non-FRED Data Sources
+
+| **Indicator** | **Source** | **Notes** |
+|---|---|---|
+| Monthly Treasury Statement (MTS) | Treasury | Detailed receipts/outlays; ~8 business day lag |
+| Quarterly Refunding Announcements | Treasury | First Wednesday of Feb/May/Aug/Nov |
+| TBAC Minutes and Presentations | Treasury | Quarterly recommendations on debt management |
+| Auction Results (stop yield, tail, B/C, bidder detail) | TreasuryDirect | Per auction, immediate |
+| Primary Dealer Positions and Transactions | NY Fed | Weekly (H.4.2 / PD statistics) |
+| TIC Data (foreign holdings) | Treasury | Monthly, 45-day lag |
+| CBO Budget and Economic Outlook | CBO | Annual January + summer update |
+| CBO Long-Term Budget Outlook | CBO | Biennial |
+| CBO Cost Estimates | CBO | Per legislation |
+| ACM Term Premium | NY Fed | Daily estimates (not in FRED) |
+| Kim-Wright Term Premium | Fed | Alternative daily estimate |
+| Fiscal Impulse (Hutchins Measure) | Brookings | Quarterly |
+| 1Y US Sovereign CDS | ICE / Bloomberg | Daily, subscription |
+| Debt Ceiling X-Date Estimates | BPC, Treasury | Periodic during debt ceiling episodes |
+
+---
+
+*Bob Sheehan, CFA, CMT*
+*Founder & CIO, Lighthouse Macro*
+*Last Updated: February 2026*

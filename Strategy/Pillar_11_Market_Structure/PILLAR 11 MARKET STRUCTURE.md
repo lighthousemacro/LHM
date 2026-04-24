@@ -30,7 +30,7 @@ Market structure is the **final arbiter** in the 12-pillar framework for a simpl
 
 Get the structure call right, and you've triangulated when to act. Miss it, and you're trading ideas instead of reality.
 
-**The Divergence Edge:** When structure diverges from fundamentals, one of them is wrong. Structure is usually right earlier. When breadth collapses while price holds (SBD > +1.0), the generals are advancing without soldiers—distribution is underway. When breadth improves while price languishes (SBD < -1.0), accumulation is underway.
+**The Divergence Edge:** When structure diverges from fundamentals, one of them is wrong. Structure is usually right earlier. When breadth collapses while price holds (SBD > +1.0), the generals are advancing without soldiers and distribution is underway. When breadth improves while price languishes (SBD < -1.0), accumulation is underway.
 
 ---
 
@@ -85,7 +85,7 @@ Trend is the primary filter. Everything else is subordinate to trend. If price i
 
 ### B. MOMENTUM COMPONENTS (The Confirmation)
 
-Momentum confirms whether trend moves are sustainable or exhausted. Z-scored rate of change (Z-RoC) is the primary metric—it normalizes momentum relative to recent history.
+Momentum confirms whether trend moves are sustainable or exhausted. Z-scored rate of change (Z-RoC) is the primary metric because it normalizes momentum relative to recent history, making cross-asset and cross-regime comparisons meaningful.
 
 | **Indicator** | **Source** | **Frequency** | **Interpretation** |
 |---|---|---|---|
@@ -183,7 +183,7 @@ Breadth tells you whether the market is healthy or hollow. A rising index with n
 
 **The Breadth Truth:** When % stocks > 50d MA collapses below 35%, selling is exhausted. When it exceeds 85%, buying is exhausted. Trade against the crowd at extremes.
 
-**The 20d Thrust Signal:** When % stocks > 20d MA surges from below 30% to above 70% within 10 trading days, it signals a breadth thrust—one of the most reliable indicators of a new bull leg. These thrusts are rare (2-3 per year) but powerful.
+**The 20d Thrust Signal:** When % stocks > 20d MA surges from below 30% to above 70% within 10 trading days, it signals a breadth thrust, one of the most reliable indicators of a new bull leg. These thrusts are rare (2-3 per year) but powerful.
 
 ---
 

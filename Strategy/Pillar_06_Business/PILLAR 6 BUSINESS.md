@@ -281,7 +281,11 @@ Profits are the ultimate outcome: what's left after revenue, costs, and interest
 | **Earnings Revision Ratio** | <0.40 | 0.40-0.50 | 0.50-0.60 | >0.60 |
 | **Corporate Profits/GDP** | <9% | 9-10% | 10-11% | >11% |
 
-**The Margin Squeeze:** S&P 500 net margin at **11.2%** (Q3 2025)—down from 12.8% peak (2021). Revenue growing +3.5% YoY but earnings only +4% YoY—margin compression underway. Unit labor costs up +2.8% vs productivity +1.5%—labor costs eating into margins. Earnings revisions turning negative (ratio at 0.47). The profit cycle is turning.
+**The Margin Compression Signal:** When revenue growth exceeds earnings growth (revenue-earnings gap positive by +3 ppts or more) for 2+ consecutive quarters, margin compression is structural and cost-cutting becomes likely. The driver is typically unit labor costs rising faster than productivity (ULC YoY minus OPHNFB YoY > +2 ppts). Once this configuration appears, layoff announcements typically follow by 2-4 quarters as management protects margins.
+
+**The Earnings Revisions Ratio:** The ratio of upward to total analyst revisions (Refinitiv, FactSet, Bloomberg compile this) is the highest-frequency forward-earnings signal available. Ratio below 0.45 for 3+ months confirms negative momentum in analyst expectations. This often leads reported earnings disappointments by 1-2 quarters. Combine with ISM Manufacturing new orders for a robust profit-cycle read.
+
+**The Corporate Profits/GDP Ratio:** NIPA corporate profits divided by GDP is a stationary series that mean-reverts. Peaks around 11-12% of GDP; troughs around 6-8% during recessions. Watch the direction change from a cycle peak, not the level. Levels above 10% sustained for 2+ years historically precede recessions because they invite labor-cost rebalancing (rising wage share) and policy responses (tax reform, antitrust).
 
 ---
 
@@ -319,13 +323,17 @@ Business credit conditions determine whether companies can fund capex, inventori
 | **C&I Loan Growth YoY%** | <-5% | -5% to +3% | +3% to +8% | >+8% |
 | **HY OAS** | >600 bps | 400-600 bps | 300-400 bps | <300 bps |
 
-**The Credit Squeeze:** SLOOS net tightening at **+28%** for large firms, **+42%** for small firms (Q4 2025). C&I loan growth at **+1.8% YoY**—barely positive. HY spreads at **290 bps**—tight but starting to widen. Banks are cautious. Small businesses are being squeezed out. Large caps can access bond markets, small caps cannot. Bifurcation.
+**The SLOOS Lead Pattern:** The Senior Loan Officer Opinion Survey is quarterly, Fed-administered, and released 2 weeks after each FOMC meeting. Net tightening in C&I standards (% tightening minus % easing) is the cleanest forward credit signal available. Net tightening above +20% for large firms, +30% for small firms, is the late-cycle configuration. The signal leads C&I loan growth by 2-4 quarters because tightened underwriting takes time to show in stock data.
+
+**The Small-Large Credit Bifurcation:** Small firms (<250 employees) rely disproportionately on bank credit, while large firms access the investment-grade bond market directly. In late cycles, the spread between small-firm and large-firm SLOOS tightening widens as banks preserve capital and shift toward larger, better-collateralized borrowers. Small-firm tightening above +40% combined with small-business bankruptcy filings rising is a specific signal of small-business squeeze.
+
+**HY Spread Integration:** High-yield OAS is a real-time market proxy for business credit stress. Tight spreads (below 300 bps) can coexist with tightening bank standards in early-cycle periods, but persistent divergence is unstable. Either spreads widen to reflect bank-level caution, or SLOOS loosens. Watch for spread widening combined with tightening SLOOS as the "credit reversal" signal that historically precedes earnings downgrades by 2-3 quarters.
 
 ---
 
 ### H. BUSINESS INVESTMENT GDP (The Realized Commitment)
 
-GDP business investment components show what actually happened—the lagging confirmation of forward-looking order data.
+GDP business investment components show what actually happened: the lagging confirmation of forward-looking order data.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

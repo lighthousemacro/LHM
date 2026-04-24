@@ -30,7 +30,14 @@ Financial conditions are the **amplifier or dampener** of monetary policy. A 100
 
 Get the financial conditions call right, and you've triangulated the **effective** monetary stance. Miss it, and you're watching the Fed Funds rate while the economy responds to something else entirely.
 
-**Current State:** Financial conditions exhibiting **unusual divergence**. Fed Funds at 4.25-4.50% (restrictive), but equity markets at all-time highs, HY spreads near historic tights (290 bps), and the yield curve dis-inverted. Financial conditions are **looser than the policy rate suggests**. Either markets are wrong, or the Fed's grip is weaker than assumed.
+**The Four Stages of Financial Stress:** Financial conditions deterioration follows a recognizable sequence. Knowing which stage dominates shapes risk-asset positioning.
+
+1. **Risk Pricing Inflection** (Leading): Credit spreads widen from compressed levels. Equity volatility rises from suppressed levels. The market starts demanding risk compensation.
+2. **Credit Channel Tightening** (Leading-Coincident): Bank lending standards tighten (SLOOS). Loan growth decelerates. C&I credit becomes scarcer for small/mid borrowers first.
+3. **Liquidity Stress** (Coincident): Funding markets show stress (SOFR-IORB spread, repo rates). Dealer balance sheets stretch. Treasury auctions tail.
+4. **Transmission Complete** (Lagging): Default rates rise. Bankruptcy filings accelerate. Bank earnings compress. Real economy responds.
+
+The divergence window (when spreads stay tight while SLOOS tightens) is characteristic of late-cycle mispricing. When the divergence closes, it typically closes through spread widening, not credit easing. The unbuffered plumbing environment (Pillar 10) amplifies any stress that emerges.
 
 ---
 

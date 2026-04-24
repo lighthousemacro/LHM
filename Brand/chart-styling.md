@@ -564,19 +564,11 @@ Dual-timeframe momentum composite. Tactical window is 21-day rate of change. Reg
 
 **Three-state line color** (mirrors the RS panel philosophy):
 
-| State | Color | Hex | Condition |
-|---|---|---|---|
-| Long bias | Sky | `#23BBFF` | Tactical z bullish (>0, >signal, rising) AND regime z > 0 |
-| Short bias | Venus | `#FF2389` | Tactical z bearish (<0, <signal, falling) AND regime z < 0 |
-| Neutral | Ocean | `#2389BB` | Everything else (mixed, transitional, against-regime) |
+StateColorHexConditionLong biasSky`#23BBFF`Tactical z bullish (&gt;0, &gt;signal, rising) AND regime z &gt; 0Short biasVenus`#FF2389`Tactical z bearish (&lt;0, &lt;signal, falling) AND regime z &lt; 0NeutralOcean`#2389BB`Everything else (mixed, transitional, against-regime)
 
 **Reference lines:**
 
-| Line | Color | Style |
-|---|---|---|
-| Zero | Doldrums `#898989` | Dotted |
-| ±2σ | Doldrums `#898989` | Solid, weight 2 |
-| ±1σ | Doldrums 70% | Dashed, toggleable |
+LineColorStyleZeroDoldrums `#898989`Dotted±2σDoldrums `#898989`Solid, weight 2±1σDoldrums 70%Dashed, toggleable
 
 **Divergence dots are OFF by default.** The detection logic is built in, but the `Show Divergence Dots?` input defaults to `false`. We turn them on deliberately when we want them, not by default. When enabled:
 

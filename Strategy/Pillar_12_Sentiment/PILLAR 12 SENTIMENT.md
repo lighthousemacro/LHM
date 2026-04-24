@@ -904,6 +904,59 @@ If the following occur simultaneously, the bearish contrarian sentiment thesis i
 
 ---
 
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Sentiment Triggers (Capitulation / Contrarian Long)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **AAII Bull-Bear Spread** | Below -20% | {{WATCH_AAII_LOW}} | Retail capitulation |
+| **AAII Bulls %** | Below 25% | {{WATCH_AAII_BULLS_LOW}} | Extreme retail fear |
+| **NAAIM Exposure** | Below 25% | {{WATCH_NAAIM_LOW}} | Manager capitulation |
+| **CB Consumer Confidence** | Below 75 | {{WATCH_CB_LOW}} | Consumer fear extreme |
+| **CNN Fear & Greed Index** | Below 20 | {{WATCH_FG_LOW}} | Composite extreme fear |
+| **Put/Call Ratio (10d avg)** | Above 1.1 | {{WATCH_PC_HIGH}} | Hedging demand surge |
+| **VIX** | Above 30 | {{WATCH_VIX_HIGH}} | Fear spike |
+| **VIX Term Structure (VIX/VIX3M)** | Backwardation (>1.0) | {{WATCH_VIX_BACK}} | Acute stress |
+| **Equity Outflows (4-wk)** | Above $50B | {{WATCH_OUTFLOWS}} | Capitulation flows |
+| **MMF Assets** | Rising rapidly to record | {{WATCH_MMF_HIGH}} | Dry powder building |
+| **SPI Composite** | Above +1.5 | {{WATCH_SPI_HIGH}} | Extreme fear regime |
+| **SSD Composite** | Above +1.5 | {{WATCH_SSD_HIGH}} | Capitulation low setup |
+| **BofA GFMS Cash Level** | Above 5.5% | {{WATCH_GFMS_HIGH}} | Institutional fear |
+
+### Bearish Sentiment Triggers (Euphoria / Contrarian Short)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **AAII Bull-Bear Spread** | Above +30% | {{WATCH_AAII_HIGH}} | Retail euphoria extreme |
+| **NAAIM Exposure** | Above 100% | {{WATCH_NAAIM_HIGH}} | Managers fully levered long |
+| **II Bulls %** | Above 55% | {{WATCH_II_HIGH}} | Newsletter complacency |
+| **CNN Fear & Greed Index** | Above 80 | {{WATCH_FG_HIGH}} | Composite extreme greed |
+| **Put/Call Ratio (10d avg)** | Below 0.7 | {{WATCH_PC_LOW}} | Complacency extreme |
+| **VIX** | Below 13 sustained | {{WATCH_VIX_LOW}} | Compression mispricing |
+| **VIX Term Structure** | Steep contango (<0.85) | {{WATCH_VIX_CONT}} | Vol-selling complacency |
+| **Equity Inflows (4-wk)** | Above $50B | {{WATCH_INFLOWS}} | Euphoria flows |
+| **MMF Assets** | Falling rapidly | {{WATCH_MMF_LOW}} | Dry powder deployed |
+| **Margin Debt YoY Growth** | Above +30% | {{WATCH_MARGIN_HIGH}} | Speculative leverage |
+| **SPI Composite** | Below -1.0 | {{WATCH_SPI_LOW}} | Euphoria regime |
+| **SSD Composite** | Below -1.5 | {{WATCH_SSD_LOW}} | Blow-off top setup |
+| **BofA GFMS Cash Level** | Below 3.5% | {{WATCH_GFMS_LOW}} | Institutional FOMO |
+| **Retail Activity Surge** | WSB mentions, 0DTE volume spikes | {{WATCH_RETAIL_SURGE}} | Speculation regime active |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Sentiment Survey Reliability Break** | Surveys diverging from positioning data | Methodology adjustment needed |
+| **Social Media Sentiment Dominance** | WSB / Twitter signals overwhelming traditional | Information regime shift |
+| **0DTE Options Share Inflection** | Above 50% of SPX options volume | Intraday regime shift |
+| **Crypto Sentiment Decoupling** | BTC sentiment uncorrelated from equity sentiment | Asset class regime change |
+| **Systematic Strategy Positioning Flip** | CTA / risk parity major reversal | Mechanical flow regime |
+| **Major Retail Platform Disruption** | Robinhood / IBKR access changes | Retail flow regime |
+| **CFTC / FINRA Reporting Changes** | Data infrastructure shift | Indicator continuity break |
+
+---
+
 ## Additional Indicators & External Research
 
 ### The AAII Bull-Bear Anomaly

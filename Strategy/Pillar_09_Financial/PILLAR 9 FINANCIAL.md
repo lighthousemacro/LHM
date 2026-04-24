@@ -357,7 +357,11 @@ Fed plumbing determines how policy transmits through the banking system. Reserve
 | **SOFR-IORB Spread** | >+15 bps | +5 to +15 bps | **-5 to +5 bps** | <-5 bps |
 | **LCI** | <-1.0 | -1.0 to -0.3 | **-0.3 to +0.5** | >+0.5 |
 
-**The Liquidity Reality:** Reserve balances at **$3.25T** (Jan 2026)—above scarcity threshold but **declining** as QT continues. RRP at **$85B**—effectively **exhausted** (down from $2.5T peak in Dec 2022). The liquidity buffer is **gone**. Any shock now hits reserves directly. This is the **unbuffered system** we've warned about. LCI at **-0.8**—thin cushion regime.
+**The Unbuffered Plumbing Dynamic:** RRP (Reverse Repo Facility) peaked above $2T in late 2022 as excess money market liquidity accumulated. Drawdown through 2023-2024 reflects Treasury bill issuance absorbing the excess. When RRP is substantially exhausted and reserves are near the ample threshold (~$3T), the system loses its buffer against liquidity shocks.
+
+**Why the buffer matters:** In a buffered system, Treasury issuance, banking demand shifts, and Fed operations can be absorbed through RRP drainage without affecting bank reserves. In an unbuffered system, any shock hits reserves directly, and bank balance sheets must contract lending or the Fed must intervene. The 2019 repo spike occurred in a partially-buffered system; an unbuffered version would have been more severe.
+
+**LCI (Liquidity Cushion Index):** Pillar 10's composite captures this dynamic. Cross-reference LCI readings alongside FCI for a complete financial conditions picture. When FCI shows loose market-based conditions but LCI is deeply negative, the system is mispriced: tight spreads cannot persist if a liquidity shock depletes reserves.
 
 ---
 

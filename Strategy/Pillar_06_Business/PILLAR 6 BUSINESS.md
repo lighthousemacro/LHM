@@ -966,6 +966,137 @@ If the following occur, business is **deteriorating beyond slowing into crisis**
 
 ---
 
+## Policy & Regulatory Environment
+
+Business activity is materially shaped by tax, trade, regulatory, and antitrust policy. This section catalogs the policy channels that flow into business conditions, independent of the policy pillar itself (Pillar 8).
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Corporate Tax Rates** | Federal rate, deductions, bonus depreciation | After-tax earnings, capex incentives | 2-4 quarters |
+| **TCJA 2025 Expiration** | Pass-through deductions, bonus depreciation | Small business taxation, capex incentives | 2-4 quarters |
+| **CHIPS Act / IRA** | Semiconductor and green energy subsidies | Structures investment, sector capex | Multi-year |
+| **Tariff Policy** | Import tariffs, retaliation, exemptions | Input costs, supply chains, margins | 1-2 quarters |
+| **Antitrust Enforcement (DOJ/FTC)** | M&A approval, monopoly challenges | M&A activity, industry structure | Variable |
+| **SEC Disclosure Rules** | Reporting requirements, climate disclosure | Compliance costs, capital market access | 6-12 months |
+| **Labor Policy (NLRB, DOL)** | Overtime rules, classification, minimum wage | Labor costs, margins | 6-12 months |
+| **Immigration Policy** | H-1B caps, visa processing | Labor supply, especially tech/services | 1-4 quarters |
+| **Environmental Regulation (EPA)** | Emissions rules, permitting | Sector-specific capex | Multi-year |
+| **Financial Regulation (Basel, Dodd-Frank)** | Bank capital, liquidity rules | Credit availability (Pillar 9 linkage) | Multi-year |
+| **FTC Merger Review** | M&A approvals | Corporate activity, concentration | 3-12 months |
+| **Federal Contracting Policy** | Defense spending, government procurement | Sector revenue (defense, services) | 6-12 months |
+
+### Active Policy Risks (Business-Specific)
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **TCJA Business Provisions Expiration** | Bearish capex (bonus depreciation), small biz | Variable | Legislative action in 2025-2026 |
+| **Tariff Pass-Through** | Bearish margins, bullish domestic producers | Varies by industry | Tariff schedules, retaliation |
+| **CHIPS Act Implementation** | Bullish semi/domestic chip capex | Multi-year structural | Grant disbursements |
+| **IRA Clean Energy Tax Credits** | Bullish green capex, solar, EV | Multi-year structural | Subsidy stability |
+| **Antitrust Actions (Big Tech)** | Bearish for named targets | Company-specific | DOJ/FTC enforcement trends |
+| **H-1B Visa Restrictions** | Bearish tech labor supply | Sector-specific | Policy announcements |
+| **Bank Capital Rule Changes (Basel Endgame)** | Mixed: higher capital = slower growth | ~$100-200B reserves | Regulatory finalization |
+| **Climate Disclosure (SEC)** | Compliance costs, especially for emitters | Variable by sector | Rule implementation timeline |
+| **Corporate Tax Rate Debate** | Directional based on proposals | Material to earnings | Political alignment |
+
+**Structural vs Cyclical:** Corporate tax code is structural (multi-year). Tariffs are frequently cyclical but can become structural (China trade war). CHIPS/IRA are structural subsidy regimes with multi-year capex impact. Antitrust enforcement cycles with administrations.
+
+---
+
+## Demographics & Structural Context
+
+Business activity has several structural forces that shape the long-term trajectory, though less directly demographic than Consumer or Labor pillars.
+
+### Key Structural Forces
+
+**1. Aging Workforce and Labor Supply:** Business faces a demographically constrained labor market. US labor force growth decelerated to ~0.5% annually post-2010 from ~1.5% in 2000s. Aging of baby boomers continues through 2030. This creates persistent wage pressure and explains labor hoarding behavior.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Labor Force Growth (annualized) | BLS | Structurally lower post-2010 |
+| Prime-Age Participation Rate | BLS CPS | Policy and demographic |
+| Immigration Contribution to LF Growth | BLS / DHS | Policy-dependent variable |
+
+**2. Tech and AI Capex Cycle:** AI and cloud infrastructure have created a multi-year capex cycle distinct from traditional industrial capex. Hyperscaler capex (Amazon, Microsoft, Google, Meta) has risen from ~$100B (2020) to projected $300B+ by 2025. This reshapes the IP component of business investment.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Hyperscaler Capex | Company reports | Structurally rising through 2025 |
+| Software CapEx Share | BEA GDP | Rising since 2015 |
+| AI Capex as % of S&P Total | Bloomberg estimates | Accelerating post-ChatGPT |
+
+**3. Reshoring and CHIPS Act:** Post-COVID supply chain concerns and geopolitical tensions have driven reshoring and "friend-shoring" capex. Semiconductor fabs, battery plants, and pharmaceutical manufacturing are being onshored. This supports structures investment independent of cyclical conditions.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Manufacturing Construction Spending | Census | Elevated since 2022 |
+| CHIPS Act Announced Fabs | CHIPS Office | Multi-year buildout |
+| Reshoring Announcements | Reshoring Initiative | Accelerated since 2020 |
+
+**4. Corporate Concentration:** Post-2000, US corporate concentration has increased materially. Herfindahl-Hirschman Index across industries has risen; top firms capture more profits and market share. This affects cyclical dynamics: large firms can hoard labor longer; small firms are more exposed.
+
+| **Metric** | **Source** | **Signal** |
+|---|---|---|
+| S&P 500 Share of Total US Earnings | S&P / Fed | Rising since 2000 |
+| Top 10 Stocks as % of SPX | S&P | Near all-time highs |
+| Small vs Large Firm Earnings Growth | Russell 2000 vs S&P 500 | Small firms structurally lagging |
+
+**5. Deglobalization and Supply Chain Restructuring:** Post-2018 trade tensions and post-2020 COVID experience have restructured supply chains. More inventory holding, more nearshoring, higher operating costs but better resilience. Structural shift in business operating models.
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Labor-Hoarding Premium** | Large-firm employment growth - small-firm employment growth | Wider = labor hoarding active |
+| **AI Capex Concentration** | Hyperscaler capex / Total S&P 500 capex | Rising = narrow capex cycle |
+| **Reshoring Index** | Manufacturing construction YoY / Nominal GDP | Measures structural capex shift |
+| **Small-Large Earnings Gap** | Russell 2000 vs S&P 500 earnings YoY | Structurally negative post-2010 |
+
+**Time horizon:** These forces operate over multi-year to multi-decade horizons. They shape the level and composition of business activity but don't determine cyclical timing. Tailwinds: tech/AI capex, reshoring. Headwinds: aging workforce, corporate concentration penalizing small firms, deglobalization raising operating costs.
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Triggers (Business Reacceleration)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **NFIB Optimism Index** | Rises above 95 | {{WATCH_NFIB}} | Small business recovery |
+| **Core Capex Orders YoY%** | Turns positive (+3%+) | {{WATCH_CAPEX}} | Investment cycle recovery |
+| **ISM Manufacturing** | Above 52 | {{WATCH_ISM_MFG}} | Expansion confirmed |
+| **ISM Services** | Above 55 | {{WATCH_ISM_SVC}} | Services strength |
+| **SLOOS Net Tightening** | Below +10% | {{WATCH_SLOOS}} | Credit loosening |
+| **S&P 500 Earnings YoY%** | Above +10% | {{WATCH_SPX_EPS}} | Earnings re-acceleration |
+| **BCI Composite** | Above +0.5 | {{WATCH_BCI}} | Expansion regime |
+
+### Bearish Triggers (Business Collapse)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **NFIB Optimism Index** | Below 85 | {{WATCH_NFIB_LOW}} | Depression sentiment |
+| **ISM Manufacturing** | Below 45 | {{WATCH_ISM_MFG_LOW}} | Deep manufacturing contraction |
+| **ISM Services** | Below 50 | {{WATCH_ISM_SVC_LOW}} | Services transmission active |
+| **S&P 500 Earnings YoY%** | Turns negative | {{WATCH_SPX_EPS_NEG}} | Earnings recession |
+| **HY Spreads** | Above 500 bps | {{WATCH_HY}} | Credit stress |
+| **SLOOS Net Tightening (Small)** | Above +50% | {{WATCH_SLOOS_SMALL}} | Small biz credit crunch |
+| **BCI Composite** | Below -1.0 | {{WATCH_BCI_LOW}} | Crisis regime |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **Hyperscaler Capex Plateau** | YoY growth <10% sustained | AI investment cycle maturing |
+| **TCJA Bonus Depreciation Expiration** | Rule changes | Capex policy cliff |
+| **Major M&A Blocked (Antitrust)** | Ongoing pattern | Corporate activity constrained |
+| **Immigration Flow Reversal** | Net negative | Labor supply shock for services |
+| **Basel Endgame Finalization** | Rule implementation | Credit channel restructuring |
+| **CHIPS Act Grants Fully Distributed** | Timeline completion | End of structures tailwind |
+
+---
+
 ## Conclusion: Business as the Transmission Mechanism
 
 Business activity isn't just corporate earnings. It's the **transmission mechanism** that connects labor markets to consumer spending to GDP growth.

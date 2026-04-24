@@ -465,9 +465,9 @@ Capex Cuts → Employment Growth ↓ →
 Layoffs → Unemployment ↑ → Consumer Income ↓
 ```
 
-**Current Linkage:** NFIB Hiring Plans at +8% (barely positive). ISM Employment at 46.8 (manufacturing shedding). Small business drives 48% of employment—when NFIB collapses, payrolls follow 3-6 months later.
+**Transmission mechanics:** Business hiring decisions respond to demand expectations, not current demand. NFIB Hiring Plans leads actual payroll growth by 2-4 months because when small business owners intend to hire, they typically act on that intention within a quarter. The reverse is also true: when hiring plans drop below +10%, payroll growth decelerates within 2-4 months, and absolute payroll declines follow within another 2-3 months if hiring plans stay weak. ISM Manufacturing Employment serves the same function for manufacturing payrolls specifically.
 
-**Cross-Pillar Signal:** When **BCI < -0.3** (business slowing) AND **LFI > +0.8** (labor fragile), recession probability exceeds 65% within 12 months. Current: **BCI -0.4, LFI +0.93**. **Warning threshold engaged.**
+**Cross-Pillar Signal:** When **BCI < -0.3** (business slowing) AND **LFI > +0.8** (labor fragile), recession probability exceeds 65% within 12 months based on post-1990 backtests. This is the "business-to-labor" cross-check, complementing the CCI + LFI cross-check in Pillar 5. The three-way intersection (BCI + LFI + CCI all stressed) has preceded every broad US recession since 1990.
 
 ---
 

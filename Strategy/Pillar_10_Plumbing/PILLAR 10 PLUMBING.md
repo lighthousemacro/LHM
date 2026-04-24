@@ -823,9 +823,9 @@ Inflation May Persist Even If Data Warrants More Tightening →
 Policy Trap
 ```
 
-**Current Linkage:** LCI at approximately -0.8 (scarce) means the Fed has limited room to tighten further even if inflation reaccelerates. The plumbing constraint effectively puts a ceiling on how restrictive policy can become.
+**Transmission mechanics:** Scarce liquidity (LCI < -0.5) limits the Fed's ability to maintain or extend tight policy without triggering funding stress. The Fed's reaction function becomes constrained: inflation-driven tightening risks breaking plumbing, while easing risks de-anchoring inflation expectations. This is the policy trap dynamic.
 
-**Cross-Pillar Signal:** When **LCI < -0.5** (scarce) AND **PCI > +0.5** (elevated inflation), the Fed is trapped. It cannot ease (inflation too high) and cannot tighten (plumbing too fragile). This is the defining macro tension of early 2026.
+**Cross-Pillar Signal:** When **LCI < -0.5** (scarce) AND **PCI > +0.5** (elevated inflation), the Fed is trapped. It cannot ease (inflation too high) and cannot tighten (plumbing too fragile). This configuration tends to resolve through either Fed-tolerated higher inflation or forced plumbing intervention (SRF expansion, QE restart).
 
 ---
 

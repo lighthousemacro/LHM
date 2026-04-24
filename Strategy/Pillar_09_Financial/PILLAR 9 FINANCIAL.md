@@ -45,7 +45,7 @@ The divergence window (when spreads stay tight while SLOOS tightens) is characte
 
 ### A. CREDIT SPREADS (The Risk Pricing Signal)
 
-Credit spreads measure the **price of risk** beyond the risk-free rate. They're the market's real-time assessment of default probability and liquidity.
+Credit spreads measure the **price of risk** beyond the risk-free rate. They're the market's real-time assessment of default probability, liquidity, and risk appetite. The ICE BofA OAS series (BAMLH0A0HYM2 for HY, BAMLC0A0CM for IG) are the standard US corporate credit benchmarks, updated daily.
 
 | **Indicator** | **FRED Code** | **Frequency** | **Lead/Lag** | **Interpretation** |
 |---|---|---|---|---|

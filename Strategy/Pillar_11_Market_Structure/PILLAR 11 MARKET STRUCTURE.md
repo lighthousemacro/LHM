@@ -280,7 +280,7 @@ SBD = z(Price_vs_200d) - z(%_Stocks_>_50d_MA)
 | -1.5 to -0.5 | Accumulation | Price weak, breadth improving | Watch for turn |
 | < -1.5 | Extreme Accumulation | Capitulation, breadth diverging up | Contrarian buy zone |
 
-**The SBD Signal:** When SBD > +1.0, the market is hollow—a small number of stocks carrying the index. When SBD < -1.0, the market is healthy under the surface despite weak headlines.
+**The SBD Signal:** When SBD > +1.0, the market is hollow: a small number of stocks are carrying the index. When SBD < -1.0, the market is healthy under the surface despite weak headlines.
 
 ---
 
@@ -332,8 +332,8 @@ Pillar 11 directly enforces the Absolute Trading Rules:
 
 ### When MSI Diverges from Fundamentals
 
-- **Fundamentals weak, MSI strong:** Structure likely wrong—follow fundamentals
-- **Fundamentals strong, MSI weak:** Distribution underway—respect structure
+- **Fundamentals weak, MSI strong:** Structure likely wrong; follow fundamentals
+- **Fundamentals strong, MSI weak:** Distribution underway; respect structure
 - **Fundamentals neutral, MSI extreme:** Follow structure as tiebreaker
 
 ### Using SBD for Timing
@@ -346,7 +346,7 @@ Pillar 11 directly enforces the Absolute Trading Rules:
 
 ## Current State Template
 
-**NOTE:** Fill in current values from live data sources. Do not reference any pre-filled values as current—they are outdated.
+**NOTE:** Fill in current values from live data sources. Do not reference any pre-filled values as current.
 
 | **Indicator** | **Current** | **Signal** | **Implication** |
 |---|---|---|---|
@@ -366,4 +366,4 @@ Pillar 11 directly enforces the Absolute Trading Rules:
 
 ---
 
-*That's how we read the structure from the Watch. The market doesn't lie—it just speaks in breadth and momentum.*
+*That's how we read the structure from the Watch. The market doesn't lie. It just speaks in breadth and momentum.*

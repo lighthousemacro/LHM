@@ -198,13 +198,16 @@ def add_recessions(ax, start_date=None):
                    alpha=THEME['recession_alpha'], zorder=0)
 
 def set_xlim_to_data(ax, *indices):
-    """X-axis range with 30-day left, 180-day right padding.
-    Uses LATEST start across all indices (for series that begin at different dates)."""
+    """X-axis range with 30-day left pad, 2.5% right pad.
+    Last data point sits at 97.5% of the chart-area width so the right-spine pill
+    sits flush in the margin. Uses LATEST start across all indices
+    (for series that begin at different dates)."""
     start = max(idx.min() for idx in indices)
     end = max(idx.max() for idx in indices)
     padding_left = pd.Timedelta(days=30)
-    padding_right = pd.Timedelta(days=180)
-    ax.set_xlim(start - padding_left, end + padding_right)
+    span = end - (start - padding_left)
+    right_pad = pd.Timedelta(seconds=span.total_seconds() * (0.025 / 0.975))
+    ax.set_xlim(start - padding_left, end + right_pad)
 
 def legend_style():
     """Legend styling dict for ax.legend(**legend_style())."""

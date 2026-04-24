@@ -1137,6 +1137,230 @@ If the following conditions are met, liquidity stress is **escalating beyond sca
 
 ---
 
+## Policy & Regulatory Environment
+
+Plumbing is shaped by Fed monetary operations, banking capital and liquidity rules, Treasury debt management, and emergency lending facilities. This section catalogs the policy channels.
+
+### Policy Impact Map
+
+| **Policy Area** | **Key Variables** | **Impact Channel** | **Lead Time** |
+|---|---|---|---|
+| **Fed Funds / IORB Setting** | FOMC decisions, IORB level | Reserve demand, repo rates | Immediate |
+| **Fed Balance Sheet (QE/QT)** | Pace of runoff, MBS/UST mix | Reserves trajectory | Quarterly |
+| **Standing Repo Facility (SRF)** | Counterparties, rate, daily limit | Acute funding stress backstop | Immediate when invoked |
+| **RRP Facility (Reverse Repo)** | Rate, counterparty access | Money market floor | Daily |
+| **Discount Window** | Lending terms, stigma | Crisis liquidity backstop | Immediate when used |
+| **Emergency Lending (13(3))** | Activation, terms (BTFP-style) | Banking system support | Days from declaration |
+| **Bank Capital Rules (SLR)** | Treasury exemption, leverage ratio | Dealer balance sheet capacity | Multi-year |
+| **Bank Capital Rules (Basel)** | CET1, LCR, NSFR | Bank lending and liquidity capacity | Multi-year |
+| **Treasury Debt Management** | Bills vs coupons, buyback program | Maturity profile, refi pressure | Quarterly (QRA) |
+| **Treasury Cash Management (TGA)** | Cash balance target | Reserve drain/release | Daily |
+| **Stablecoin Regulation (GENIUS Act)** | Reserve composition, issuance rules | T-bill demand, regulated channel | Multi-year structural |
+| **CBDC Development** | Digital dollar architecture | Future plumbing structure | Multi-year |
+
+### Active Plumbing Policy Risks
+
+| **Risk** | **Direction** | **Magnitude** | **Probability Proxy** |
+|---|---|---|---|
+| **QT Pace Adjustment** | Bullish liquidity if slowed; bearish if accelerated | Material | Fed communications |
+| **QT End Date** | Bullish liquidity at announcement | Material | FOMC dot plots, minutes |
+| **QE Restart** | Bullish liquidity, potentially inflationary | Very large | Stress event triggered |
+| **SRF Counterparty Expansion** | Bullish liquidity (broader stress backstop) | Modest | Fed announcement |
+| **SLR Treasury Exemption** | Bullish dealer capacity | Material for market function | Fed/Treasury action |
+| **Basel Endgame Implementation** | Bearish bank lending capacity | Material | Regulatory finalization |
+| **TGA Drawdown Plan** | Bullish reserves | Variable | Treasury announcements |
+| **Stablecoin Regulatory Clarity** | Bullish stablecoin growth | Material long-term | Legislative action |
+| **CBDC Pilot Decisions** | Multi-year structural | Variable | Fed research and policy |
+
+**Structural vs Cyclical:** Bank capital rules (Basel, SLR) are structural. Fed balance sheet operations (QE/QT) are cyclical but can become structural at limits. Stablecoin regulation is becoming structural. Emergency facilities are episode-driven but reshape policy arsenal.
+
+---
+
+## Demographics & Structural Context
+
+Plumbing has structural forces distinct from typical demographic drivers. The key shifts relate to financial market structure, regulatory regime, banking system architecture, and the rise of non-bank intermediation.
+
+### Key Structural Forces
+
+**1. Post-2008 Banking Regulatory Regime:** Basel III, Dodd-Frank, and SLR rules have changed bank balance sheet behavior. Banks are better capitalized but less willing to warehouse Treasury inventory or absorb shocks. This structurally constrains plumbing flexibility during stress events.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Aggregate Bank CET1 Ratio | Fed Y-9C | Rising since 2008 |
+| Primary Dealer Treasury Inventory | NY Fed | Constrained vs pre-2008 norms |
+| Bank-to-Dealer Capital Linkages | Fed analytics | Tighter post-Volcker |
+
+**2. Money Market Fund Dominance:** MMFs have grown to ~$6T post-2020, driven by yield seeking after Fed tightening. MMFs concentrate Treasury demand into short tenors and use the RRP facility as an alternative to direct Treasury holdings. This has reshaped Treasury bill demand dynamics.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Total MMF AUM | ICI | Rising structurally post-2022 |
+| MMF RRP Usage Pattern | NY Fed | Variable with rate environment |
+| Government MMF vs Prime MMF Mix | ICI | Government-dominated post-2016 reform |
+
+**3. Stablecoin-Treasury Architecture:** Stablecoin issuers (Circle, Tether, others) now hold material T-bill positions. The GENIUS Act formalizes this structural linkage. Stablecoin growth creates a parallel demand channel for short-duration Treasury debt.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Stablecoin Aggregate Market Cap | DefiLlama | Rising structurally |
+| Stablecoin T-Bill Holdings | Circle, Tether disclosures | Material and rising |
+| Crypto-Treasury Bidirectional Flow | Various | Growing structural channel |
+
+**4. Non-Bank Financial Intermediation Growth:** Hedge funds, private credit, and shadow banks have grown post-2008. Their leverage and funding patterns affect plumbing during stress (LDI 2022, basis trades). FSB tracks NBFI globally; the channel matters because non-bank stress can transmit through repo and Treasury markets.
+
+| **Metric** | **Source** | **Trajectory** |
+|---|---|---|
+| Hedge Fund Treasury Basis Trade | OFR research | Material exposure |
+| Private Credit AUM | Preqin, PitchBook | Rising rapidly |
+| Cash Bond - Futures Basis | Bloomberg | Tracking measure |
+
+**5. Fed Operating Framework Evolution:** Post-2008 ample reserves regime is structurally different from pre-2008 scarce reserves regime. The Fed manages monetary policy via IORB rather than open market operations as the binding floor. This changes how plumbing stress manifests: not in EFFR breaking from target, but in spreads (EFFR-IORB, SOFR-IORB) and dealer constraints.
+
+### Derived Structural Metrics
+
+| **Metric** | **Formula** | **Implication** |
+|---|---|---|
+| **Reserve Demand Curve Slope** | Funding rates response to reserve changes | Steeper = more LCLOR-binding |
+| **Dealer Balance Sheet Utilization** | Primary dealer Treasury holdings / capacity | Constraint indicator |
+| **MMF-RRP Substitution** | RRP usage / MMF AUM | Cash alternative dynamics |
+| **Stablecoin-Treasury Intensity** | Stablecoin T-bill share / Total T-bill outstanding | Crypto-Treasury linkage |
+
+**Time horizon:** These structural forces operate over 5-15 year horizons. Tailwinds for plumbing function: regulatory clarity, Fed operational refinements, GENIUS Act stablecoin framework. Headwinds: Basel Endgame potentially constraining bank capacity, NBFI growth outpacing oversight, structural Treasury issuance growth.
+
+---
+
+## Reference: Published Analysis
+
+**"Plumbing: The Invisible Infrastructure"** (Educational Series, 2026) is the published article version of this pillar. Available at `research.lighthousemacro.com/p/plumbing-the-invisible-infrastructure`.
+
+The article covers:
+- The seven-stage liquidity transmission framework (Fed → reserves → dealers → repo → financial conditions → asset prices → real economy)
+- The LCI composite as the cleanest plumbing health gauge
+- The unbuffered system dynamic (RRP exhaustion + reserve scarcity)
+- The crypto-liquidity nexus and the GENIUS Act stablecoin-Treasury channel
+- Statistical validation (p < 0.0001 across multiple test methods)
+- The October 2025 vs February 2026 paradox: how a smaller shock had outsized impact in an unbuffered system
+
+The article positions plumbing as the invisible infrastructure that becomes visible only when it breaks. The framework's core insight: liquidity transmits mechanically through observable chains. Watching plumbing provides early warning of stress that eventually shows up in asset prices.
+
+---
+
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **LCI Pre-Event** | **Trigger** | **Outcome** |
+|---|---|---|---|
+| **2008-2009 GFC** | Severely negative | Lehman bankruptcy; counterparty fear | Massive QE1; emergency lending; system stabilized |
+| **2010-2011 European Sovereign** | Negative | Euro periphery crisis | Operation Twist; OMT (ECB); contained |
+| **September 2019 Repo Spike** | Negative | Quarter-end balance sheet + Treasury settlement | SOFR spiked 5x; Fed bill purchases; resolved in days |
+| **March 2020 COVID** | Severely negative | COVID shock; Treasury market dysfunction | Unlimited QE; emergency lending; V-shaped recovery |
+| **March 2023 SVB** | Negative | Regional bank deposit run | BTFP facility; emergency lending; contained |
+| **Late 2023-2024 RRP Drawdown** | Improving (RRP draining) | Bills issuance absorbed RRP cash | Smooth absorption; no acute stress |
+| **2024-2025 RRP Exhaustion** | Negative | RRP fully exhausted | Reserves entered scarcity zone; vulnerability rising |
+
+### False Signals
+
+**Pre-September 2019:** Many plumbing indicators were elevated but didn't trigger broad stress. The repo spike was localized and brief. Lesson: not every plumbing tightening becomes a crisis; specific triggers matter (quarter-end, Treasury settlement, dealer constraints aligning).
+
+**2018 QT Concerns:** Many predicted QT would break funding markets. Reality: it took until late 2019 for stress to materialize. Lesson: plumbing stress builds gradually then breaks suddenly. The buildup phase can persist for years.
+
+### Structural Breaks
+
+**Post-2008 Ample Reserves Regime:** Fed shifted from corridor system (scarce reserves, EFFR managed via OMO) to floor system (ample reserves, IORB sets floor). Plumbing dynamics fundamentally changed. Pre-2008 stress patterns don't directly map.
+
+**Post-COVID Money Market Fund Growth:** MMFs grew to $6T post-2020. RRP became their main short-duration tool. The relationship between RRP and reserves changed permanently.
+
+**Post-March 2023 Regional Bank Fragility:** BTFP and discount window stigma reduction changed banking liquidity dynamics. Banks more willing to use Fed facilities (still some stigma).
+
+**Stablecoin-Treasury Integration:** Stablecoins as marginal Treasury bill buyers is a post-2020 phenomenon. GENIUS Act formalized the channel. Future stablecoin policy will reshape Treasury demand structure.
+
+**SLR Constraints (Post-2014):** Supplementary Leverage Ratio constraints made dealers' Treasury intermediation costly. Periodic discussions about Treasury exemption persist. Each iteration of SLR rules affects plumbing capacity.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Use Case** |
+|---|---|---|---|---|
+| **NY Fed Desk Operations** | RRP, SRF, repo operations | Daily | Free | Real-time plumbing operations |
+| **Fed H.4.1** | Balance sheet, reserves, TGA | Weekly | Free | Aggregate liquidity gauge |
+| **NY Fed SOFR Data** | SOFR rates and volumes | Daily | Free | Repo benchmark |
+| **NY Fed Primary Dealer Statistics** | Dealer positions and transactions | Weekly | Free | Dealer capacity gauge |
+| **Treasury TGA Daily** | Cash balance | Daily | Free | Reserve drain/release dynamics |
+| **CME Treasury Futures Basis** | Cash-futures basis | Daily | Free | Hedge fund basis trade indicator |
+| **DTCC Treasury Repo Data** | Triparty repo volumes | Daily | Free | Repo market depth |
+| **OFR Repo Indicator** | Repo Stress Index | Daily | Free | Composite stress measure |
+| **DefiLlama Stablecoins** | Stablecoin market cap, flows | Daily | Free | Crypto-Treasury channel |
+| **Coinglass** | Crypto funding rates, liquidations | Real-time | Free | Crypto leverage gauge |
+| **Glassnode** | On-chain BTC metrics (SOPR, MVRV) | Daily | Free / subscription | BTC positioning signals |
+| **Tether / Circle Disclosures** | Stablecoin reserve composition | Monthly / Quarterly | Free | T-bill demand from crypto |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "Repo Runs: Evidence from the Tri-Party Repo Market" (2014) | Copeland, Martin, Walker | Repo market dynamics during 2008 |
+| "Passthrough Efficiency in the Fed's New Monetary Policy Setting" (2016) | Duffie & Krishnamurthy | Ample reserves regime mechanics |
+| "Stressed, Not Frozen: The Federal Funds Market in the Financial Crisis" (2011) | Afonso, Kovner, Schoar | Fed funds market during crisis |
+| "Get Ready, Get Set, Go: The Fed's Operational Framework" (2023) | Logan (Dallas Fed) | LCLOR estimation; reserve demand |
+| "The Federal Funds Market and the Federal Reserve's Implementation of Monetary Policy" | Various Fed staff | Floor system mechanics |
+| "Unconventional Monetary Policy: A Stocktake" (Various) | Bernanke, Yellen, Powell speeches | QE/QT framework |
+| "Intermediary Asset Pricing" (2014 AEA) | Adrian, Etula, Muir | Dealer balance sheets and asset prices |
+| "Liquidity and Leverage" (2010) | Adrian & Shin | Pro-cyclical leverage dynamics |
+| "Treasury Market Resilience" (Various FEDS notes) | Fed staff | Post-2020 Treasury market structure |
+| "September 2019 Repo Stress" (Various) | NY Fed researchers | September 2019 repo episode analysis |
+| "March 2020 Treasury Dysfunction" (Various) | NY Fed, BIS | COVID Treasury market dysfunction |
+| "The Fed's Standing Repo Facility" (Various) | Fed staff | SRF design and use |
+| "Stablecoins and Financial Stability" (Various) | BIS, FSB, Treasury | Stablecoin systemic dynamics |
+
+---
+
+## Watchlist: Key Levels & Early Warning Signals
+
+### Bullish Plumbing Triggers (Relief / Improvement)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **TGA Drawdown** | Below $700B sustained | {{WATCH_TGA_LOW}} | Reserve injection underway |
+| **RRP Refill** | Above $200B | {{WATCH_RRP_HIGH}} | Buffer rebuilding |
+| **Reserve Balances** | Above $3.5T | {{WATCH_RESERVES_HIGH}} | Ample regime restored |
+| **Fed QE Restart** | Balance sheet expanding | {{WATCH_FED_BS_UP}} | Active accommodation |
+| **SOFR-IORB Spread** | Stable below +5 bps | {{WATCH_SOFR_IORB}} | Funding markets calm |
+| **LCI Composite** | Above -0.3 | {{WATCH_LCI_HIGH}} | Plumbing health improving |
+| **SLR Treasury Exemption** | Adopted | {{WATCH_SLR_EXEMPT}} | Dealer capacity expansion |
+
+### Bearish Plumbing Triggers (Stress)
+
+| **Signal** | **Threshold** | **Current Status** | **Significance** |
+|---|---|---|---|
+| **Reserve Balances Below LCLOR** | Below ~$3.0T | {{WATCH_RESERVES_LOW}} | Scarcity threshold breached |
+| **EFFR-IORB Spread** | Above +5 bps | {{WATCH_EFFR_IORB_HIGH}} | Acute funding stress |
+| **SOFR-IORB Spread** | Above +10 bps | {{WATCH_SOFR_IORB_HIGH}} | Repo dysfunction |
+| **TGA Above $900B** | Sustained | {{WATCH_TGA_HIGH}} | Severe reserve drainage |
+| **Net Liquidity Index** | Declining $200B+ over quarter | {{WATCH_NLI_DOWN}} | Risk-asset transmission active |
+| **WALCL Below Threshold** | Below $6.5T | {{WATCH_WALCL_LOW}} | QT or balance sheet runoff |
+| **Dealer Balance Sheet Strain** | Treasury holdings stretched | {{WATCH_DEALER}} | Intermediation capacity binding |
+| **EUR-USD Cross-Currency Basis** | More negative than -50 bps | {{WATCH_BASIS}} | Dollar funding stress |
+| **LCI Composite** | Below -1.0 | {{WATCH_LCI_LOW}} | Crisis plumbing regime |
+| **SRF Usage** | Material activation | {{WATCH_SRF}} | Stress backstop in use |
+
+### Structural Shift Signals
+
+| **Signal** | **Threshold** | **Significance** |
+|---|---|---|
+| **QT End / QE Restart** | Fed announcement | Plumbing regime shift |
+| **GENIUS Act Implementation** | Stablecoin rules finalized | Crypto-Treasury structural channel |
+| **Basel Endgame Finalization** | Rule implementation | Bank lending capacity changes |
+| **CBDC Pilot Decisions** | Fed policy announcement | Long-run plumbing architecture |
+| **Treasury Buyback Program Expansion** | Active management increase | Liquidity management evolution |
+| **Stablecoin T-Bill Holdings Surge** | Material structural growth | Treasury demand channel |
+| **Major Crypto Stress Event** | Stablecoin breaking, exchange failure | Crypto-Treasury channel disruption |
+
+---
+
 ## External Research Sources
 
 **Federal Reserve:**
@@ -1145,10 +1369,17 @@ If the following conditions are met, liquidity stress is **escalating beyond sca
 - [NY Fed SOFR Data](https://www.newyorkfed.org/markets/reference-rates/sofr) - Daily SOFR rates and volumes
 - [NY Fed Primary Dealer Statistics](https://www.newyorkfed.org/markets/primarydealer_stat.html) - Weekly dealer positions
 - [Fed Financial Accounts (Z.1)](https://www.federalreserve.gov/releases/z1/) - Quarterly flow of funds
+- [Dallas Fed Liquidity Research](https://www.dallasfed.org/research) - Logan speeches on reserve demand and LCLOR
 
 **Treasury:**
 - [TreasuryDirect Auction Results](https://www.treasurydirect.gov/auctions/auction-query/results/) - Auction-by-auction data
 - [Treasury Monthly Statement](https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/) - TGA, receipts, outlays
+- [TreasuryDirect Daily Statement](https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/) - Daily TGA data
+
+**International:**
+- [BIS Quarterly Reviews](https://www.bis.org/publ/qtrpdf/index.htm) - Cross-border banking, liquidity
+- [FSB Global Monitoring of NBFI](https://www.fsb.org/) - Non-bank financial intermediation
+- [IMF Global Financial Stability Report](https://www.imf.org/en/Publications/GFSR) - Semi-annual assessment
 
 **Academic/Research:**
 - Copeland, Martin, & Walker (2014). "Repo Runs: Evidence from the Tri-Party Repo Market." Journal of Finance.
@@ -1161,6 +1392,11 @@ If the following conditions are met, liquidity stress is **escalating beyond sca
 - [Circle Attestation Reports](https://www.circle.com/en/usdc) - USDC reserve composition
 - [DefiLlama Stablecoins](https://defillama.com/stablecoins) - Real-time stablecoin market caps and flows
 - [Coinglass](https://www.coinglass.com/) - Crypto derivatives, funding rates, liquidation data
+- [Glassnode](https://glassnode.com/) - On-chain BTC analytics
+
+**Industry Research:**
+- [OFR Financial Stress Index](https://www.financialresearch.gov/financial-stress-index/) - Daily stress composite
+- [Federal Reserve Bank Working Papers](https://www.federalreserve.gov/econres/feds/index.htm) - FEDS notes on liquidity
 
 ---
 
@@ -1168,17 +1404,22 @@ If the following conditions are met, liquidity stress is **escalating beyond sca
 
 Plumbing isn't glamorous. It doesn't make headlines until it breaks. But it's the infrastructure that everything else runs on.
 
-The core insight is mechanical, not theoretical. Liquidity transmits through a specific chain: Fed balance sheet to reserves to dealer balance sheets to repo markets to financial conditions to asset prices. Each link is observable, measurable, and predictable. The statistical evidence is overwhelming: p < 0.0001 across every test method, 2.59% monthly SPX return spread between ample and scarce regimes, 8.06% for BTC.
+The core insight is mechanical, not theoretical. Liquidity transmits through a specific chain: Fed balance sheet → reserves → dealer balance sheets → repo markets → financial conditions → asset prices. Each link is observable, measurable, and predictable. The statistical evidence is overwhelming: p < 0.0001 across every test method, with material monthly return spreads between ample and scarce regimes for both equities and crypto.
 
-The current configuration (January 2026) is the most fragile since March 2023. RRP is exhausted. Reserves are at the LCLOR threshold. TGA is elevated and draining reserves further. Net Liquidity has contracted $300B with no buffer to absorb it. QT has ended, but the damage is structural: the system went from $2.5T in surplus cash (RRP peak) to zero in two years.
+**The Unbuffered Configuration:** When RRP is exhausted, reserves at LCLOR threshold, and TGA elevated, the system loses its buffer. Any shock transmits directly to risk assets without absorption capacity. This is the fragile configuration: not crisis itself, but vulnerability to crisis from any direction.
 
-The crypto-liquidity nexus adds a new dimension. Stablecoins now hold ~$201B in T-bills, creating a bidirectional linkage between crypto and Treasury markets that didn't exist five years ago. The GENIUS Act formalized this connection. The January 2026 crypto drawdown demonstrated the transmission in real-time: liquidity contraction, forced deleveraging, cascading liquidations, capitulation-level on-chain metrics.
+**The Crypto-Liquidity Nexus:** Stablecoins as material T-bill holders create bidirectional crypto-Treasury linkage that didn't exist a decade ago. The GENIUS Act formalizes the structural channel. Crypto becomes the highest-beta expression of plumbing conditions because it's the most-leveraged, most-volatile asset class with direct stablecoin/Treasury wiring.
 
-What matters now: the trajectory. If TGA draws down (reserve injection), the system stabilizes. If the Fed coordinates with Treasury to ease conditions, the relief could be substantial. If neither happens and reserves breach LCLOR, we get September 2019 again, except this time without a $2.5T RRP buffer to cushion the landing.
+**The Resolution Paths:** TGA drawdown releases reserves (mechanical positive). Fed coordination with Treasury can ease conditions. QE restart structurally boosts liquidity. Reserves breach below LCLOR triggers funding stress requiring intervention. Each path has different probability, and the actual trajectory depends on policy decisions during the unbuffered window.
+
+**Cross-Pillar Framework:** Plumbing stress amplifies labor (Pillar 1), credit (Pillar 9), fiscal (Pillar 8), and structure (Pillar 11) dynamics. When LCI is negative and other pillars are stressed, the framework's recession probability rises materially. We watch plumbing because it's the leading edge of broader macro stress.
 
 We watch the plumbing so we see the stress before it shows up in asset prices. That's the edge.
+
+See the Current State Assessment Template above for current LCI readings and cross-pillar composites.
 
 ---
 
 *Bob Sheehan, CFA, CMT*
 *Founder & CIO, Lighthouse Macro*
+*Last Updated: April 2026*

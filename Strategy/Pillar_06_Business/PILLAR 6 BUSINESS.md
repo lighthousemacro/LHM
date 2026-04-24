@@ -987,3 +987,332 @@ When CEOs cut capex, they're telling you demand will be weak 6-12 months out. Wh
 | Credit access | Bank-dependent | Bond-market access |
 
 When these divergences close, the recession is usually already underway. The LFI → BCI → CCI cascade is the cleanest three-pillar recession cross-check. Business is the middle link. Watch it carefully.
+
+---
+
+## Additional Indicators & External Research
+
+### The 50-Break on ISM Manufacturing
+
+ISM Manufacturing below 50 for 6+ consecutive months is a durable manufacturing contraction. But the signal's recession-predictive power depends on whether it transmits to services (ISM Services) and confirms through labor (Pillar 1).
+
+**Historical track record of sub-50 manufacturing:**
+- **1990-1991:** Mfg contraction transmitted to services and recession
+- **2001:** Mfg contraction preceded broad recession
+- **2008:** Mfg contraction transmitted to services and deep recession
+- **2015-2016:** Mfg contraction without broad recession (services held)
+- **2019-2020:** Mfg contraction preceded COVID shock; relationship complicated by exogenous event
+
+The cleanest signal is manufacturing contraction combined with services PMI below 52 and HY spreads above 400 bps. All three together have preceded every post-1990 broad recession.
+
+### The Capex-Cash Flow Divergence
+
+Fazzari, Hubbard, and Petersen (1988) established that capex is most sensitive to internal cash flow for credit-constrained firms. Large firms with retained earnings or public debt access can smooth capex through cycles; small firms cannot. This asymmetry explains why small-firm capex leads the cycle by 3-6 months.
+
+**Practical application:** Watch the divergence between S&P 500 capex (more resilient) and Russell 2000 capex (more cyclical). When both contract, broad business investment recession is confirmed. When only Russell 2000 contracts, small-firm-specific stress.
+
+### The Q Theory of Investment
+
+Tobin's Q (market value of firm / replacement cost of assets) drives the economic rationale for capex. When Q > 1, new capex is value-creating; when Q < 1, firms should return capital rather than invest. Aggregate US Q has ranged from ~0.7 (troughs) to ~1.8 (peaks) historically.
+
+**Practical application:** Rising equity valuations combined with falling capex suggests firms prefer buybacks to new investment despite high Q. This is defensive capital allocation and signals management concern about demand. The buyback-to-capex ratio rising while earnings are still growing is a subtle late-cycle signal.
+
+### The Accelerator Model
+
+Business investment responds to *changes* in demand, not demand levels. A steady 3% sales growth environment can generate stable capex. A slowdown from 3% to 1% generates capex cuts even though sales are still growing. This nonlinearity is why capex is so cyclical.
+
+**Practical application:** Track sales growth *acceleration* (3M change in YoY growth rate), not just level. Deceleration of +2 ppts in sales growth typically produces -5 to -10 ppts change in capex growth within 2 quarters.
+
+### The Bankruptcy Lag
+
+Chapter 11 filings lag business stress by 2-4 quarters because firms exhaust alternatives (equity raises, asset sales, debt restructuring) before filing. Bankruptcy data is therefore a confirmation signal, not a leading signal. But the direction matters: YoY bankruptcy filings rising by 20%+ confirms that firms have exhausted buffers.
+
+**Aggregate and regional views:** ABI tracks total filings monthly. S&P Global tracks large-company bankruptcies (>$50M in liabilities) with more detail. Regional variation in filings often precedes regional economic stress.
+
+### The Supplier Deliveries Paradox
+
+ISM Supplier Deliveries measures the time to receive ordered materials, with higher numbers (>50) meaning slower deliveries. Counter-intuitively, rising deliveries can mean either (a) supply chain stress (real problem) or (b) inventory overhang working through (demand weakness). Interpretation requires cross-check with New Orders.
+
+**The rule:** Supplier Deliveries rising + New Orders rising = supply chain stress (real bottleneck). Supplier Deliveries rising + New Orders falling = demand weakness working through. Watch both together, never in isolation.
+
+### CEO Confidence and Capex
+
+The Conference Board CEO Confidence Survey and the Duke CFO Global Business Outlook provide top-down management sentiment. Lead capex commitments by 1-3 quarters. CEO Confidence below 50 (reading of "below neutral") for 2+ consecutive quarters historically precedes broad capex contractions.
+
+**Practical application:** CEO Confidence rolling over while NFIB is still elevated is the early warning that large-firm management is detecting demand weakness before small-firm owners. When both are rolling over, the signal is confirmed across firm size.
+
+### ISM vs S&P Global PMI Divergences
+
+ISM and S&P Global (Markit) both publish monthly PMIs, and they can diverge materially due to methodology differences. ISM samples larger enterprises with more international exposure; S&P Global samples more small and mid-sized firms. Persistent divergence (>5 points) signals either size-based or sector-based differential stress.
+
+**Rule of thumb:** When S&P Global < ISM (smaller firms weaker), small-firm stress is active. When ISM < S&P Global (larger firms weaker), international or large-firm-specific stress dominates. In late 2023-2024, S&P Global ran below ISM consistently, indicating small-firm stress.
+
+### The Buyback-Capex Ratio
+
+S&P 500 buybacks divided by capex is a capital allocation gauge. Ratio above 1.0 means firms are returning more capital than they're reinvesting, which historically correlates with late-cycle positioning (defensive management stance). Ratio below 0.5 typically coincides with early-cycle expansion (growth investment priority).
+
+**Pre-recession pattern:** Buyback-to-capex ratios typically peak 2-4 quarters before recessions, then collapse as firms suspend buybacks to preserve cash. The collapse is coincident with the recession, not leading.
+
+---
+
+## External Research Sources
+
+**Federal Reserve Resources:**
+- [Senior Loan Officer Opinion Survey (SLOOS)](https://www.federalreserve.gov/data/sloos.htm) - Quarterly, released 2 weeks after FOMC
+- [Beige Book](https://www.federalreserve.gov/monetarypolicy/beigebook.htm) - Qualitative business conditions by district, 8 times/year
+- [G.17 Industrial Production](https://www.federalreserve.gov/releases/g17/) - Monthly IP and capacity utilization
+- [H.8 Assets and Liabilities of Commercial Banks](https://www.federalreserve.gov/releases/h8/) - Weekly C&I loan data
+- [Empire State Manufacturing Survey (NY Fed)](https://www.newyorkfed.org/survey/empire/empiresurvey_overview) - Monthly
+- [Philadelphia Fed Manufacturing Business Outlook](https://www.philadelphiafed.org/surveys-and-data/regional-economic-analysis/manufacturing-business-outlook-survey) - Monthly
+- [Richmond Fed Manufacturing Survey](https://www.richmondfed.org/research/regional_economy/surveys_of_business_conditions) - Monthly
+- [Kansas City Fed Manufacturing Survey](https://www.kansascityfed.org/surveys/mfg-survey/) - Monthly
+- [Dallas Fed Texas Manufacturing Outlook](https://www.dallasfed.org/research/surveys/tmos) - Monthly
+- [Atlanta Fed Business Inflation Expectations](https://www.atlantafed.org/research/inflationproject/bie) - Monthly
+
+**Survey and Industry Data:**
+- [NFIB Small Business Economic Trends](https://www.nfib.com/surveys/small-business-economic-trends/) - Monthly, second Tuesday
+- [ISM Manufacturing PMI](https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/) - Monthly, 1st business day
+- [ISM Services PMI](https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/services/) - Monthly, 3rd business day
+- [S&P Global PMI](https://www.pmi.spglobal.com/) - Manufacturing and Services; flash + final
+- [Conference Board CEO Confidence](https://www.conference-board.org/topics/ceo-confidence) - Quarterly
+- [Duke CFO Global Business Outlook](https://cfosurvey.fuqua.duke.edu/) - Quarterly
+- [Chicago PMI (MNI)](https://www.ism-chicago.org/) - Monthly
+
+**Government Business Statistics:**
+- [Census Advance Manufacturers' Durable Goods Orders](https://www.census.gov/manufacturing/m3/) - Monthly M3
+- [Census Business Formation Statistics](https://www.census.gov/econ/bfs/) - Weekly EIN applications
+- [BLS Business Employment Dynamics](https://www.bls.gov/bdm/) - Quarterly firm-size dynamics, 7-month lag
+- [BLS Productivity and Costs](https://www.bls.gov/productivity/) - Quarterly ULC
+- [BEA Corporate Profits (NIPA Table 6)](https://www.bea.gov/data/income-saving/corporate-profits) - Quarterly
+
+**Private Business Data:**
+- [Renaissance Capital IPO Data](https://www.renaissancecapital.com/IPO-Data) - Monthly IPO activity
+- [Cass Freight Index](https://www.cassinfo.com/freight-audit-payment/cass-transportation-indexes/cass-freight-index) - Monthly freight volume and expenditures
+- [ATA Truck Tonnage Index](https://www.trucking.org/press-releases) - Monthly trucking activity
+- [American Chemistry Council Chemical Activity Barometer](https://www.americanchemistry.com/chemistry-in-america/data-industry-statistics/chemical-activity-barometer) - Monthly
+- [Semi Equipment Book-to-Bill](https://www.semi.org/en/products-services/market-data) - Monthly semiconductor leading indicator
+- [ABI/Epiq Bankruptcy Statistics](https://www.abi.org/newsroom/bankruptcy-statistics) - Monthly filings
+- [Challenger Job Cut Report](https://www.challengergray.com/challenger-reports/) - Monthly
+- [Indeed Hiring Lab](https://www.hiringlab.org/) - Daily job postings
+
+---
+
+## Reference: Published Analysis
+
+**"Business: The Forward Commitment"** (Educational Series, 2026) is the published article version of this pillar. Available at `research.lighthousemacro.com/p/business-the-forward-commitment`.
+
+The article covers:
+- The four-stage business cycle deterioration sequence (sentiment → capex → manufacturing → services)
+- Why business investment is the most cyclical GDP component and how it transmits to labor and consumer
+- The small-large bifurcation pattern and why small business leads large cap by 3-6 months
+- The BCI composite architecture and its LFI/CCI cross-checks
+- The "forward commitment" framing: capex orders reflect demand expectations from 6-12 months prior
+- Invalidation criteria in both directions
+
+The article positions business as the middle link in the labor → business → consumer → growth transmission chain. Business is where labor fragility becomes consumer weakness; where management decisions translate macro conditions into micro outcomes (hiring, firing, investment, restructuring).
+
+---
+
+## Historical Validation
+
+### Pattern Recognition
+
+| **Episode** | **BCI** | **Key Business Signal** | **Outcome** | **Lead Time** |
+|---|---|---|---|---|
+| **Late 2006** | +0.1 | NFIB softening, ISM near 50, small business credit tightening | Earnings peaked Q3 2007; recession Dec 2007 | 9-12 months |
+| **Late 2007** | -0.6 | ISM <49, core capex negative, HY spreads widening, buyback-capex ratio rising | Deep earnings recession confirmed by Q1 2008 | 2-4 months |
+| **Mid 2009** | -1.8 | ISM 33, capex -20% YoY, inventory liquidation peaked | Recovery began mid-2009 | Coincident with trough |
+| **Late 2011** | +0.2 | European crisis scare, NFIB dipped but services held | Mild industrial slowdown, no broad recession | N/A |
+| **Late 2015** | -0.3 | Industrial recession: ISM <49, energy capex collapse, manufacturing employment negative | Manufacturing-only downturn; services held; no broad recession | N/A (false broad signal) |
+| **Late 2018** | +0.4 | Mfg slowing, NFIB still elevated, tariff uncertainty | Soft patch; recovered through 2019 | N/A (false signal) |
+| **Feb 2020** | +0.6 | All business metrics healthy pre-shock | COVID shock (exogenous); BCI collapsed post-shock | No lead (exogenous) |
+| **Late 2021** | +1.2 | Peak capex, NFIB elevated, buyback-capex ratio rising, record IPO activity | Peak cycle; inflation followed | N/A |
+| **Late 2023** | +0.3 | NFIB weak, mfg contraction, services strong | Normalization without recession (so far) | Ongoing |
+
+### False Signals
+
+**2015-2016 Industrial Recession:** ISM Manufacturing below 50 for 6 months, core capex negative, manufacturing employment contracting. Did not transmit to a broad recession because: (1) services remained robust (ISM Services >55), (2) labor markets remained tight (LFI negative), (3) oil price shock was a one-off rather than demand weakness. The cross-pillar cross-check (BCI + LFI + CCI) remained mostly positive. Lesson: manufacturing contraction without services transmission and without labor fragility is not a broad recession signal.
+
+**2018-2019 Trade War Scare:** NFIB softened, manufacturing weakened, core capex flatlined. Did not transmit to broad recession. The drivers (tariff uncertainty, Fed policy tightening) reversed, and business conditions recovered through 2019. This episode illustrates that NFIB alone is not sufficient. Cross-check against ISM Services and labor indicators.
+
+**1995-1996 Mid-Cycle Slowdown:** ISM dipped to 45.7 and stayed below 50 for 7 months. No recession followed because the Fed's preemptive rate cuts in 1995 supported services and consumer demand. Manufacturing slowdowns in the absence of broader labor and consumer weakness rarely produce recessions.
+
+### Structural Breaks
+
+**Post-COVID Business Dynamics (2020-present):** Several shifts complicate historical comparisons:
+
+1. **Labor hoarding extension:** Corporate memory of 2021-2022 hiring difficulties has extended large-firm hoarding behavior beyond historical norms. Payrolls may stay positive longer into deterioration than previous cycles suggest.
+
+2. **AI and semiconductor decoupling:** Traditional IP vs Equipment cyclicality patterns complicated by AI capex boom. Semi orders and IP investment may hold through a cycle because of AI demand even as traditional equipment contracts.
+
+3. **Reshoring and CHIPS Act:** Structures investment (factories, data centers) supported by policy initiatives regardless of cyclical conditions. The historical structures-cyclicality relationship is weakened.
+
+4. **NFIB partisanship:** Post-2016, NFIB readings exhibit some partisan bias similar to consumer confidence. Component analysis (Hiring Plans, Capex Plans, "Economy Will Improve") is more reliable than headline Optimism.
+
+5. **Private credit growth:** Direct lending and private credit have replaced some traditional bank C&I lending. SLOOS coverage is less comprehensive; private credit indicators (PitchBook, Cliffwater) supplement the public view.
+
+6. **Buyback dominance:** Post-2018 tax changes extended the buyback-capex ratio structurally higher. Historical buyback-capex thresholds shift accordingly.
+
+---
+
+## Alternative & High-Frequency Data
+
+| **Source** | **Indicator** | **Frequency** | **Access** | **Lead vs Official Data** |
+|---|---|---|---|---|
+| **Indeed Hiring Lab** | Job Postings Index (IHLIDXUS) | Daily | FRED (free) | Leads JOLTS openings ~6 weeks |
+| **Challenger** | Job Cut Announcements | Monthly | Press release (free) | Leads separations 1-3 months |
+| **Cass Information Systems** | Cass Freight Index | Monthly | Cass (free) | Leads IP 2-4 months |
+| **American Chemistry Council** | Chemical Activity Barometer | Monthly | ACC (free) | Leads IP 3-6 months |
+| **Semi Equipment** | Book-to-Bill Ratio | Monthly | SEMI (subscription summary free) | Leads semi capex 6-12 months |
+| **Renaissance Capital** | IPO Activity | Monthly / continuous | Renaissance (free summaries) | Equity market issuance sentiment |
+| **PitchBook** | Private M&A, LBO activity | Continuous | PitchBook (subscription) | Leveraged finance activity |
+| **ABI / Epiq** | Bankruptcy Filings | Monthly | ABI (free) | Lagging confirmation |
+| **ATA** | Truck Tonnage Index | Monthly | ATA (free) | Coincident IP proxy |
+| **LinkUp** | Job Openings | Daily | LinkUp (subscription) | Alternative to Indeed |
+| **S&P Global** | PMI (Manufacturing + Services) | Monthly | S&P Global (free flash; subscription final) | Coincident with ISM; alternative methodology |
+| **Federal Reserve Beige Book** | Qualitative district commentary | 8x/year | Fed (free) | Qualitative leading indicator |
+| **Duke CFO Survey** | CFO Global Business Outlook | Quarterly | Duke (free) | Leads capex by 1-2 quarters |
+| **Conference Board CEO Confidence** | CEO Confidence Index | Quarterly | Conference Board (subscription) | Leads capex by 1-3 quarters |
+| **ICE / Bloomberg** | HY CCC Spread | Daily | Bloomberg (subscription) | Within-HY quality stress |
+| **FactSet / Refinitiv** | Earnings Revision Ratio | Weekly | Subscription | Leads reported earnings 1-2 quarters |
+
+---
+
+## Academic & Research Foundation
+
+| **Paper/Framework** | **Author(s)** | **Key Insight** |
+|---|---|---|
+| "A General Equilibrium Approach to Monetary Theory" (1969) | James Tobin | Q theory of investment: capex rational when market value > replacement cost |
+| "Optimal Capital Accumulation and Corporate Value Maximization" (1969) | Dale Jorgenson | Neoclassical investment theory: capex responds to user cost of capital |
+| "Accelerator Investment Model" (1917, refined 1950s) | John Clark; Paul Samuelson | Investment responds to changes in demand, not levels |
+| "Financing Constraints and Corporate Investment" (1988) | Fazzari, Hubbard, Petersen | Small firms' capex more sensitive to internal cash flow |
+| "Time to Build and Aggregate Fluctuations" (1982) | Kydland & Prescott | Investment lead times explain capex-output lags |
+| "Rational Capital Budgeting in an Irrational World" (1996) | Jeremy Stein | Behavioral explanation for smooth investment behavior |
+| "The Cyclical Behavior of Inventory Investment" (1983) | Blinder | Inventory liquidation amplifies GDP cycles |
+| "Business Cycle Dating" (ongoing) | NBER Business Cycle Dating Committee | The authoritative US recession dating source |
+| "Purchasing Managers' Index as Predictors" | Various (ISM research tradition) | PMI sub-components' differential predictive power |
+| "Small Business Employment" (various) | BLS BED research | Small-firm employment dynamics in US cycles |
+| "Corporate Debt and Default" | Gertler & Gilchrist; Bernanke-Gertler-Gilchrist | Financial accelerator: credit frictions amplify cycles |
+
+---
+
+## FRED Series Reference Appendix
+
+All FRED series codes referenced in this pillar, organized by category. Pipeline source: `Lighthouse_Master.db` via `lighthouse_master_db.py`.
+
+### Capital Expenditure and Orders (Section B)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| DGORDER | Manufacturers' New Orders: Durable Goods | Monthly |
+| NEWORDER | New Orders: Nondefense Capital Goods ex-Aircraft (Core Capex) | Monthly |
+| AMDMUO | Manufacturers' Unfilled Orders: Durable Goods | Monthly |
+| AMDMNO | Manufacturers' New Orders: Nondefense Capital Goods | Monthly |
+| AMDMDE | Manufacturers' New Orders: Defense Capital Goods | Monthly |
+| A36SNO | Manufacturers' New Orders: Computers and Electronics | Monthly |
+| M3330S | Machinery Orders | Monthly |
+
+### Inventories (Section C)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| BUSINV | Total Business Inventories | Monthly |
+| ISRATIO | Total Business Inventories to Sales Ratio | Monthly |
+| MNFCTRIRSA | Manufacturers' Inventories | Monthly |
+| MNFCTRIMSA | Manufacturers' Inventories to Sales Ratio | Monthly |
+| RETAILIRSA | Retailers' Inventories | Monthly |
+| RETAILIMSA | Retailers' Inventories to Sales Ratio | Monthly |
+| WHLSLRIRSA | Merchant Wholesalers' Inventories | Monthly |
+| WHLSLRIMSA | Merchant Wholesalers' Inventories to Sales Ratio | Monthly |
+| CBI | Change in Private Inventories (GDP component) | Quarterly |
+
+### Industrial Production (Section J)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| INDPRO | Industrial Production: Total Index | Monthly |
+| IPMAN | Industrial Production: Manufacturing | Monthly |
+| IPDGM | Industrial Production: Durable Goods Manufacturing | Monthly |
+| IPNDGM | Industrial Production: Nondurable Goods Manufacturing | Monthly |
+| IPMINE | Industrial Production: Mining | Monthly |
+| IPUTIL | Industrial Production: Utilities | Monthly |
+| TCU | Capacity Utilization: Total Industry | Monthly |
+| MCUMFN | Capacity Utilization: Manufacturing | Monthly |
+
+### Corporate Profits and Investment (Sections F, H)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| CP | Corporate Profits After Tax | Quarterly |
+| PNFI | Private Nonresidential Fixed Investment | Quarterly |
+| Y033RC1Q027SBEA | Private Nonresidential Fixed Investment: Equipment | Quarterly |
+| B009RC1Q027SBEA | Private Nonresidential Fixed Investment: Structures | Quarterly |
+| Y001RC1Q027SBEA | Private Nonresidential Fixed Investment: Intellectual Property | Quarterly |
+| ULCNFB | Nonfarm Business Sector: Unit Labor Costs | Quarterly |
+| OPHNFB | Nonfarm Business Sector: Output Per Hour | Quarterly |
+| COMPNFB | Nonfarm Business Sector: Compensation Per Hour | Quarterly |
+
+### Business Credit (Section G)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| BUSLOANS | Commercial and Industrial Loans, All Commercial Banks | Weekly |
+| TOTLL | Total Loans and Leases in Bank Credit | Weekly |
+| BAMLH0A0HYM2 | ICE BofA US High Yield OAS | Daily |
+| BAMLC0A4CBBB | ICE BofA US Corporate BBB OAS | Daily |
+| BAMLC0A3CA | ICE BofA US Corporate A OAS | Daily |
+| DRBLACBS | Delinquency Rate on Business Loans, All Commercial Banks | Quarterly |
+| DRTSCLCC | Net Percentage of Banks Tightening Standards for C&I Loans to Large Firms | Quarterly |
+| DRTSCLMSC | Net Percentage of Banks Tightening Standards for C&I Loans to Small Firms | Quarterly |
+
+### Regional Fed Surveys (Section K)
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| GACDISA066MSFRBPHI | Philadelphia Fed Manufacturing Index (Current Activity) | Monthly |
+| GACDFSA066MSFRBNY | Empire State Manufacturing General Business Conditions | Monthly |
+| RICHFEDMFG | Richmond Fed Manufacturing Composite | Monthly |
+| MANEMPKS | Kansas City Fed Manufacturing Composite | Monthly |
+| DALLASFEDMFG | Dallas Fed Texas Manufacturing Outlook (General Business Activity) | Monthly |
+
+### Alternative Data on FRED
+
+| **Series ID** | **Description** | **Frequency** |
+|---|---|---|
+| IHLIDXUS | Indeed Job Postings Index: US | Daily |
+| NEWHOME | Total Vehicle Sales (TOTALSA context) | Monthly |
+| TOTALSA | Total Vehicle Sales (SAAR) | Monthly |
+| MNFCTRSMSA | Manufacturers' Total Sales | Monthly |
+| RSAFS | Advance Retail Sales: Retail and Food Services | Monthly |
+
+### Non-FRED Data Sources
+
+| **Indicator** | **Source** | **Notes** |
+|---|---|---|
+| NFIB Small Business Optimism | NFIB | Monthly release, second Tuesday. Web scrape (PDF) |
+| NFIB Components (Hiring, Capex, Sales Expectations) | NFIB | Monthly; same PDF |
+| ISM Manufacturing PMI composite and sub-indexes | ISM | Monthly, first business day. Web/subscription |
+| ISM Services PMI composite and sub-indexes | ISM | Monthly, third business day. Web/subscription |
+| S&P Global PMI (Manufacturing and Services) | S&P Global | Flash mid-month, final start of following month |
+| Chicago PMI (MNI) | MNI | Monthly, last business day |
+| Conference Board CEO Confidence | Conference Board | Quarterly, subscription |
+| Duke CFO Global Business Outlook | Duke Fuqua | Quarterly, free |
+| S&P 500 Earnings (operating) | S&P / FactSet | Quarterly, earnings season |
+| S&P 500 Margins | Compustat / FactSet | Quarterly, proprietary |
+| Earnings Revisions Ratio | FactSet / Refinitiv / Bloomberg | Weekly, subscription |
+| Cass Freight Index | Cass Information | Monthly, free |
+| ATA Truck Tonnage Index | American Trucking Associations | Monthly, free summary |
+| Chemical Activity Barometer | American Chemistry Council | Monthly, free |
+| Semi Equipment Book-to-Bill | SEMI | Monthly, summary free |
+| Challenger Job Cut Announcements | Challenger Gray & Christmas | Monthly, press release (free) |
+| IPO Activity | Renaissance Capital | Monthly, free |
+| Bankruptcy Filings | ABI / Epiq | Monthly, free |
+| SLOOS (Senior Loan Officer Opinion Survey) | Federal Reserve | Quarterly, 2 weeks after FOMC, free PDF |
+| Business Employment Dynamics (BED) | BLS | Quarterly, 7-month lag, free |
+| Business Formation Statistics | Census | Weekly, free |
+
+---
+
+*Bob Sheehan, CFA, CMT*
+*Founder & CIO, Lighthouse Macro*
+*Last Updated: February 2026*

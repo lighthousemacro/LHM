@@ -45,6 +45,7 @@ OUT_DIR = REPO / "Outputs" / "Substack_Dashboard"
 SNAP_ROOT = REPO / "Data" / "substack_snapshots"
 KPI_HISTORY = SNAP_ROOT / "kpi_history.csv"
 RESUBBED_FILE = SNAP_ROOT / "resubbed_emails.txt"  # one email per line, '#' for comments
+OVERRIDES_FILE = SNAP_ROOT / "overrides.json"  # live-number overrides when CSVs lag
 LOG_DIR = REPO / "logs"
 ICON = REPO / "Brand" / "icon_transparent_128.png"
 
@@ -277,6 +278,7 @@ def compute_kpis(data: dict) -> dict:
         d7 = subs[subs["date"] >= subs["date"].max() - pd.Timedelta(days=7)]
         d30 = subs[subs["date"] >= subs["date"].max() - pd.Timedelta(days=30)]
         kpi["paid_subs"] = safe_int(last.get("paid"))
+        kpi["paid_subs_as_of"] = last["date"].strftime("%Y-%m-%d") if pd.notna(last.get("date")) else None
         kpi["free_trials"] = safe_int(last.get("free_trials"))
         kpi["comps"] = safe_int(last.get("comps"))
         kpi["gifts"] = safe_int(last.get("gifts"))
@@ -287,7 +289,9 @@ def compute_kpis(data: dict) -> dict:
 
     if emails_df is not None and len(emails_df):
         last_emails = safe_int(emails_df.iloc[-1]["emails"])
+        last_emails_date = emails_df.iloc[-1]["date"]
         kpi["total_subs"] = last_emails  # email list = free + paid
+        kpi["total_subs_as_of"] = last_emails_date.strftime("%Y-%m-%d") if pd.notna(last_emails_date) else None
         d7 = emails_df[emails_df["date"] >= emails_df["date"].max() - pd.Timedelta(days=7)]
         d30 = emails_df[emails_df["date"] >= emails_df["date"].max() - pd.Timedelta(days=30)]
         if len(d7) >= 2:
@@ -296,6 +300,45 @@ def compute_kpis(data: dict) -> dict:
             kpi["total_subs_30d"] = last_emails - safe_int(d30.iloc[0]["emails"])
         if kpi.get("paid_subs") is not None:
             kpi["free_subs"] = last_emails - kpi["paid_subs"]
+
+    # Apply manual overrides for figures that the CSV lags behind on.
+    # Substack ships these CSVs only when Bob exports them; in between, the
+    # live Substack admin shows different (current) numbers. Override file
+    # lets him pin the live figure with a date stamp.
+    overrides = _load_overrides()
+    if overrides:
+        if "total_subs" in overrides:
+            o = overrides["total_subs"]
+            o_value = safe_int(o.get("value"))
+            o_date = o.get("as_of")
+            csv_date = kpi.get("total_subs_as_of")
+            # Use override if it's newer than the CSV
+            if o_value is not None and o_date and (csv_date is None or o_date > csv_date):
+                csv_value = kpi.get("total_subs")
+                kpi["total_subs"] = o_value
+                kpi["total_subs_as_of"] = o_date
+                kpi["total_subs_source"] = "override"
+                kpi["total_subs_csv_value"] = csv_value
+                # Recompute deltas using CSV history if we have it
+                if emails_df is not None and len(emails_df) and csv_value is not None:
+                    em_d7 = emails_df[emails_df["date"] >= emails_df["date"].max() - pd.Timedelta(days=7)]
+                    em_d30 = emails_df[emails_df["date"] >= emails_df["date"].max() - pd.Timedelta(days=30)]
+                    if len(em_d7) >= 2:
+                        kpi["total_subs_7d"] = o_value - safe_int(em_d7.iloc[0]["emails"])
+                    if len(em_d30) >= 2:
+                        kpi["total_subs_30d"] = o_value - safe_int(em_d30.iloc[0]["emails"])
+                if kpi.get("paid_subs") is not None:
+                    kpi["free_subs"] = o_value - kpi["paid_subs"]
+        if "paid_subs" in overrides:
+            o = overrides["paid_subs"]
+            o_value = safe_int(o.get("value"))
+            o_date = o.get("as_of")
+            if o_value is not None:
+                kpi["paid_subs"] = o_value
+                kpi["paid_subs_as_of"] = o_date
+                kpi["paid_subs_source"] = "override"
+                if kpi.get("total_subs") is not None:
+                    kpi["free_subs"] = kpi["total_subs"] - o_value
 
     arr = data.get("arr")
     if arr is not None and len(arr):
@@ -597,13 +640,16 @@ def takeaways_growth(A: dict) -> list[str]:
             f"{top['category']} is the dominant acquisition channel: "
             f"{int(top['unique_visitors']):,} visitors, {int(top['new_subscribers'])} new subs, "
             f"${int(top['new_revenue']):,} new revenue. "
-            f"Substack-internal flow (Notes, recommendations, cross-promo) is doing what off-platform usually doesn't."
+            f"That's not a clean win. It means most of the growth happens on a platform we don't own."
         )
         rev_share = A.get("revenue_share_substack")
         if rev_share and rev_share > 0.5:
             out.append(
                 f"{rev_share*100:.0f}% of new revenue comes through Substack-native sources. "
-                f"That's a concentration risk and a leverage point. If Notes recommendations dry up, paid acquisition dries up with it."
+                f"This is a real risk, not a feature. Substack can throttle Notes recommendations, "
+                f"change the algorithm, or de-prioritize the publication tomorrow. "
+                f"The audience is rented, not owned. Off-Substack acquisition (own domain, search, social, podcasts) "
+                f"is the moat. Right now, that channel is small."
             )
     if A.get("best_conv_category") and A.get("worst_conv_category"):
         b = A["best_conv_category"]
@@ -1208,17 +1254,36 @@ def kpi_card(label: str, value: str, delta: Optional[str] = None,
 
 def _build_kpi_tiles(kpi: dict) -> list[str]:
     tiles: list[str] = []
+
+    def _stamp(date_str: Optional[str], is_override: bool) -> str:
+        if not date_str:
+            return ""
+        if is_override:
+            return f"<span title='Manual override'>📌 as of {date_str}</span>"
+        return f"as of {date_str}"
+
+    total_sub_parts = []
+    if kpi.get("total_subs_7d") is not None:
+        total_sub_parts.append(f"{_fmt_signed(kpi.get('total_subs_7d'))} last 7d")
+    if kpi.get("total_subs_as_of"):
+        total_sub_parts.append(_stamp(kpi.get("total_subs_as_of"), kpi.get("total_subs_source") == "override"))
     tiles.append(kpi_card(
         "Total list", _fmt_int(kpi.get("total_subs")),
         delta=_fmt_signed(kpi.get("total_subs_30d")) + " /30d" if kpi.get("total_subs_30d") is not None else None,
         delta_dir="up" if (kpi.get("total_subs_30d") or 0) > 0 else "down" if (kpi.get("total_subs_30d") or 0) < 0 else "neutral",
-        sub=f"{_fmt_signed(kpi.get('total_subs_7d'))} last 7d" if kpi.get("total_subs_7d") is not None else None,
+        sub=" · ".join(total_sub_parts) if total_sub_parts else None,
     ))
+    paid_sub_parts = []
+    if kpi.get("paid_subs_7d") is not None:
+        paid_sub_parts.append(f"{_fmt_signed(kpi.get('paid_subs_7d'))} last 7d")
+    paid_sub_parts.append(f"Comps {_fmt_int(kpi.get('comps'))}")
+    if kpi.get("paid_subs_as_of"):
+        paid_sub_parts.append(_stamp(kpi.get("paid_subs_as_of"), kpi.get("paid_subs_source") == "override"))
     tiles.append(kpi_card(
         "Paid subscribers", _fmt_int(kpi.get("paid_subs")),
         delta=_fmt_signed(kpi.get("paid_subs_30d")) + " /30d" if kpi.get("paid_subs_30d") is not None else None,
         delta_dir="up" if (kpi.get("paid_subs_30d") or 0) > 0 else "down" if (kpi.get("paid_subs_30d") or 0) < 0 else "neutral",
-        sub=f"{_fmt_signed(kpi.get('paid_subs_7d'))} last 7d · Comps {_fmt_int(kpi.get('comps'))}" if kpi.get("paid_subs_7d") is not None else None,
+        sub=" · ".join(paid_sub_parts),
     ))
     tiles.append(kpi_card(
         "Free subscribers", _fmt_int(kpi.get("free_subs")),
@@ -1762,6 +1827,24 @@ def _load_resubbed_emails() -> set[str]:
             continue
         out.add(line.lower())
     return out
+
+
+def _load_overrides() -> dict:
+    """Read OVERRIDES_FILE for live figures Bob has confirmed manually.
+    Schema:
+        {
+          "total_subs": {"value": 738, "as_of": "2026-04-28", "note": "..."},
+          "paid_subs":  {"value": 17,  "as_of": "2026-04-28"}
+        }
+    Used when the Substack CSV exports lag the live admin numbers.
+    """
+    if not OVERRIDES_FILE.exists():
+        return {}
+    try:
+        return json.loads(OVERRIDES_FILE.read_text(encoding="utf-8"))
+    except Exception as exc:
+        log.warning("could not parse overrides file %s: %s", OVERRIDES_FILE, exc)
+        return {}
 
 
 def table_unsubs(unsubs: pd.DataFrame) -> str:

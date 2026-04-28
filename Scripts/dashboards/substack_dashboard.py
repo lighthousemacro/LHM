@@ -267,22 +267,34 @@ def compute_kpis(data: dict) -> dict:
     today = datetime.now(timezone.utc).date()
     kpi: dict = {"as_of": today.isoformat()}
 
+    # Subscribers CSV tracks PAID-tier rows (paid, comps, gifts, free trials).
+    # Free subscribers come from the emails list (one row per day with list size).
     subs = data.get("subscribers")
+    emails_df = data.get("emails")
     if subs is not None and len(subs):
         last = subs.iloc[-1]
         d7 = subs[subs["date"] >= subs["date"].max() - pd.Timedelta(days=7)]
         d30 = subs[subs["date"] >= subs["date"].max() - pd.Timedelta(days=30)]
-        kpi["total_subs"] = safe_int(last.get("total_subscribers"))
         kpi["paid_subs"] = safe_int(last.get("paid"))
         kpi["free_trials"] = safe_int(last.get("free_trials"))
         kpi["comps"] = safe_int(last.get("comps"))
         kpi["gifts"] = safe_int(last.get("gifts"))
         if len(d7) >= 2:
-            kpi["total_subs_7d"] = safe_int(last.get("total_subscribers")) - safe_int(d7.iloc[0].get("total_subscribers"))
             kpi["paid_subs_7d"]  = safe_int(last.get("paid")) - safe_int(d7.iloc[0].get("paid"))
         if len(d30) >= 2:
-            kpi["total_subs_30d"] = safe_int(last.get("total_subscribers")) - safe_int(d30.iloc[0].get("total_subscribers"))
-            kpi["paid_subs_30d"]  = safe_int(last.get("paid")) - safe_int(d30.iloc[0].get("paid"))
+            kpi["paid_subs_30d"] = safe_int(last.get("paid")) - safe_int(d30.iloc[0].get("paid"))
+
+    if emails_df is not None and len(emails_df):
+        last_emails = safe_int(emails_df.iloc[-1]["emails"])
+        kpi["total_subs"] = last_emails  # email list = free + paid
+        d7 = emails_df[emails_df["date"] >= emails_df["date"].max() - pd.Timedelta(days=7)]
+        d30 = emails_df[emails_df["date"] >= emails_df["date"].max() - pd.Timedelta(days=30)]
+        if len(d7) >= 2:
+            kpi["total_subs_7d"] = last_emails - safe_int(d7.iloc[0]["emails"])
+        if len(d30) >= 2:
+            kpi["total_subs_30d"] = last_emails - safe_int(d30.iloc[0]["emails"])
+        if kpi.get("paid_subs") is not None:
+            kpi["free_subs"] = last_emails - kpi["paid_subs"]
 
     arr = data.get("arr")
     if arr is not None and len(arr):
@@ -345,6 +357,444 @@ def append_kpi_history(kpi: dict, stamp: str) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Derived analysis — the inputs for written takeaways
+# ---------------------------------------------------------------------------
+
+def classify_post(row) -> str:
+    """Classify a post as Beam / Beacon / Note / Horizon / Chartbook / Other."""
+    tags = _s(row.get("tags")) if hasattr(row, "get") else ""
+    title = _s(row.get("title")) if hasattr(row, "get") else ""
+    blob = (tags + " " + title).lower()
+    for kind in ["beam", "beacon", "horizon", "chartbook"]:
+        if kind in blob:
+            return kind.title()
+    if "note" in tags.lower():
+        return "Note"
+    return "Other"
+
+
+def analyze(data: dict, kpi: dict) -> dict:
+    """Compute derived metrics that drive panel charts and written takeaways."""
+    A: dict = {}
+
+    # ---- Growth sources: who's actually converting ----
+    gs = data.get("growth_sources")
+    if gs is not None and len(gs):
+        cat = (gs.groupby("category", as_index=False)
+                 [["unique_visitors", "new_subscribers", "new_revenue"]].sum()
+                 .sort_values("new_subscribers", ascending=False))
+        cat["conv_visitor_to_sub"] = (cat["new_subscribers"] / cat["unique_visitors"]).replace([np.inf, -np.inf], 0).fillna(0)
+        cat["revenue_per_visitor"] = (cat["new_revenue"] / cat["unique_visitors"]).replace([np.inf, -np.inf], 0).fillna(0)
+        A["growth_by_category"] = cat
+        # Top sources
+        src = (gs.groupby("source", as_index=False)
+                 [["unique_visitors", "new_subscribers", "new_revenue"]].sum()
+                 .sort_values("new_subscribers", ascending=False).head(12))
+        A["growth_top_sources"] = src
+        # Headline numbers
+        A["total_visitors"] = int(cat["unique_visitors"].sum())
+        A["total_new_subs_period"] = int(cat["new_subscribers"].sum())
+        A["total_new_revenue_period"] = float(cat["new_revenue"].sum())
+        if A["total_visitors"]:
+            A["overall_visitor_to_sub"] = A["total_new_subs_period"] / A["total_visitors"]
+        # Best converting category (min 50 visitors so 1 sub on tiny base doesn't win)
+        big = cat[cat["unique_visitors"] >= 50]
+        if len(big):
+            A["best_conv_category"] = big.sort_values("conv_visitor_to_sub", ascending=False).iloc[0].to_dict()
+            A["worst_conv_category"] = big.sort_values("conv_visitor_to_sub", ascending=True).iloc[0].to_dict()
+        # Revenue concentration
+        A["revenue_share_substack"] = (
+            float(cat[cat["category"] == "Substack"]["new_revenue"].sum())
+            / max(A["total_new_revenue_period"], 1)
+        ) if A.get("total_new_revenue_period") else 0.0
+
+    # ---- Traffic sources: where reads come from ----
+    ts = data.get("traffic_sources")
+    if ts is not None and len(ts):
+        df = ts.copy()
+        df["free_signup"] = pd.to_numeric(df["free_signup"], errors="coerce")
+        df["subscribed"] = pd.to_numeric(df["subscribed"], errors="coerce")
+        df["views"] = pd.to_numeric(df["views"], errors="coerce")
+        df["users"] = pd.to_numeric(df["users"], errors="coerce")
+        df["sub_per_visitor"] = (df["free_signup"].fillna(0) / df["users"].replace(0, np.nan))
+        A["traffic_sources"] = df
+        cat = df.groupby("source_category", as_index=False)[["views", "users", "free_signup", "subscribed"]].sum()
+        A["traffic_by_category"] = cat.sort_values("views", ascending=False)
+
+    # ---- Email post performance: by type and audience ----
+    es = data.get("email_stats")
+    if es is not None and len(es):
+        df = es.copy()
+        df["type"] = df.apply(classify_post, axis=1)
+        df["section"] = df["section_name"].fillna("untagged")
+        # By post type
+        by_type = (df.groupby("type")
+                     .agg(posts=("title", "count"),
+                          avg_views=("views", "mean"),
+                          avg_open=("open_rate", "mean"),
+                          avg_ctr=("click_through_rate", "mean"),
+                          avg_eng=("engagement_rate", "mean"),
+                          total_signups=("signups", "sum"),
+                          total_subs=("subscribes", "sum"),
+                          total_value=("estimated_value", "sum"))
+                     .reset_index())
+        A["posts_by_type"] = by_type
+        # By audience
+        by_aud = (df.groupby("audience")
+                    .agg(posts=("title", "count"),
+                         avg_views=("views", "mean"),
+                         avg_open=("open_rate", "mean"),
+                         total_signups=("signups", "sum"),
+                         total_value=("estimated_value", "sum"))
+                    .reset_index())
+        A["posts_by_audience"] = by_aud
+        # Top performers
+        A["top_posts_signups"] = df.sort_values("signups", ascending=False).head(8)
+        A["top_posts_value"] = df.sort_values("estimated_value", ascending=False).head(8)
+        # Free → paid attribution: posts where subscribes > 0
+        A["paid_converting_posts"] = df[df["subscribes"] > 0].sort_values("subscribes", ascending=False)
+        # Open / CTR aggregates
+        A["all_open_mean"] = float(df["open_rate"].mean())
+        A["paid_open_mean"] = float(df[df["audience"] == "only_paid"]["open_rate"].mean()) if (df["audience"] == "only_paid").any() else None
+        A["everyone_open_mean"] = float(df[df["audience"] == "everyone"]["open_rate"].mean()) if (df["audience"] == "everyone").any() else None
+
+    # ---- Funnel: visitor → free → paid ----
+    pg = data.get("paid_subscriber_growth")
+    if pg is not None and len(pg):
+        last30 = pg.tail(30)
+        A["pg_new_paid"] = int(last30.get("new_paid", pd.Series([0])).sum())
+        A["pg_upgrades"] = int(last30.get("upgrades", pd.Series([0])).sum())
+        A["pg_trials"] = int(last30.get("trials_started", pd.Series([0])).sum())
+        A["pg_cancels_init"] = int(last30.get("cancellations_initiated", pd.Series([0])).sum())
+        A["pg_cancels_final"] = int(last30.get("cancellations_finalized", pd.Series([0])).sum())
+        A["pg_total_in"] = A["pg_new_paid"] + A["pg_upgrades"]
+        A["pg_net"] = A["pg_total_in"] - A["pg_cancels_final"]
+        # Upgrade dominance: fraction of new paid coming from upgrades vs direct
+        denom = A["pg_total_in"]
+        A["upgrade_share"] = (A["pg_upgrades"] / denom) if denom else None
+
+    # ---- Audience composition ----
+    loc = data.get("audience_location")
+    if loc is not None and len(loc):
+        df = loc.copy()
+        total = df["free_signups"].sum()
+        df["pct"] = df["free_signups"] / total * 100 if total else 0
+        A["audience_total"] = int(total)
+        A["audience_top"] = df.sort_values("free_signups", ascending=False).head(10)
+        # US share
+        us = df[df["location"].str.upper() == "US"]
+        A["us_share"] = float(us["pct"].sum()) if len(us) else None
+        # Geographic concentration: HHI on shares
+        shares = (df["free_signups"] / total).fillna(0) if total else pd.Series([0])
+        A["geo_hhi"] = float((shares ** 2).sum() * 10000)  # 0-10000 scale
+        A["country_count"] = int((df["free_signups"] > 0).sum())
+
+    # ---- Engagement: 30d vs 60d trend ----
+    if es is not None and len(es):
+        d = es.copy()
+        cutoff_30 = pd.Timestamp.utcnow() - pd.Timedelta(days=30)
+        cutoff_60 = pd.Timestamp.utcnow() - pd.Timedelta(days=60)
+        last30 = d[d["post_date"] >= cutoff_30]
+        prev30 = d[(d["post_date"] >= cutoff_60) & (d["post_date"] < cutoff_30)]
+        A["open_rate_30d"] = float(last30["open_rate"].mean()) if len(last30) else None
+        A["open_rate_prev30"] = float(prev30["open_rate"].mean()) if len(prev30) else None
+        A["ctr_30d"] = float(last30["click_through_rate"].mean()) if len(last30) else None
+        A["ctr_prev30"] = float(prev30["click_through_rate"].mean()) if len(prev30) else None
+        A["posts_30d"] = int(len(last30))
+        A["posts_prev30"] = int(len(prev30))
+
+    # ---- Followers vs email list relationship ----
+    fol = data.get("followers")
+    em = data.get("emails")
+    if fol is not None and em is not None and len(fol) and len(em):
+        latest_fol = int(fol.iloc[-1]["followers"])
+        latest_em = int(em.iloc[-1]["emails"])
+        A["follower_email_ratio"] = latest_fol / latest_em if latest_em else None
+        # 30d growth comparison
+        fol_30 = fol[fol["date"] >= fol["date"].max() - pd.Timedelta(days=30)]
+        em_30 = em[em["date"] >= em["date"].max() - pd.Timedelta(days=30)]
+        if len(fol_30) >= 2 and len(em_30) >= 2:
+            A["fol_growth_30d"] = int(latest_fol - int(fol_30.iloc[0]["followers"]))
+            A["em_growth_30d"] = int(latest_em - int(em_30.iloc[0]["emails"]))
+
+    # ---- ARR per paid sub (implied annualized rate) ----
+    if kpi.get("arr") and kpi.get("paid_subs"):
+        A["arr_per_paid"] = kpi["arr"] / kpi["paid_subs"]
+
+    return A
+
+
+# ---------------------------------------------------------------------------
+# Written takeaways — data-driven, LHM voice
+# ---------------------------------------------------------------------------
+
+def _arrow(x: Optional[float]) -> str:
+    if x is None:
+        return ""
+    if x > 0:
+        return "↑"
+    if x < 0:
+        return "↓"
+    return "→"
+
+
+def takeaways_overview(kpi: dict, A: dict) -> list[str]:
+    out = []
+    total = kpi.get("total_subs")
+    paid = kpi.get("paid_subs")
+    free = kpi.get("free_subs")
+    arr = kpi.get("arr")
+    if total and paid is not None:
+        paid_pct = paid / total * 100
+        out.append(
+            f"List sits at {total:,} subscribers, {paid:,} paid ({paid_pct:.1f}%). "
+            f"The free base is doing the heavy lifting on reach. The paid book is what gets monetized."
+        )
+    if kpi.get("paid_subs_30d") is not None and kpi.get("paid_subs_30d") > 0:
+        prev = paid - kpi["paid_subs_30d"]
+        lift = (kpi["paid_subs_30d"] / max(prev, 1)) * 100
+        out.append(
+            f"Paid subs added {kpi['paid_subs_30d']} in 30 days, a {lift:.0f}% lift off a base of {prev}. "
+            f"Small absolute numbers, large percentage moves. Don't overweight a single week."
+        )
+    if arr and kpi.get("arr_30d_change"):
+        out.append(
+            f"ARR ${arr:,.0f}, up ${kpi['arr_30d_change']:,.0f} in 30 days. "
+            f"Implied per-paid run-rate is ${A.get('arr_per_paid', 0):,.0f}/year, "
+            f"sitting between the $50/mo ($600) and $500/yr price points as the founding-member rates dilute the average."
+        )
+    if kpi.get("views_30d") and kpi.get("views_30d_chg_pct") is not None:
+        chg = kpi["views_30d_chg_pct"]
+        verb = "doubled" if chg > 90 else "jumped" if chg > 25 else "drifted" if abs(chg) < 5 else "softened"
+        out.append(
+            f"30-day views {verb} ({chg:+.0f}% vs prior 30d), {kpi['views_30d']:,} total. "
+            f"Reach is expanding faster than paid. The funnel has volume; conversion is the constraint."
+        )
+    op = kpi.get("avg_open_rate_30d")
+    if op:
+        bench = "well above" if op > 0.40 else "above" if op > 0.30 else "in line with" if op > 0.20 else "below"
+        out.append(
+            f"30-day open rate {op*100:.1f}% is {bench} typical macro newsletter benchmarks (~25-35%). "
+            f"Engagement signal is healthy. The acquisition signal is the part to watch."
+        )
+    return out
+
+
+def takeaways_growth(A: dict) -> list[str]:
+    out = []
+    cat = A.get("growth_by_category")
+    if cat is not None and len(cat):
+        top = cat.iloc[0]
+        out.append(
+            f"{top['category']} is the dominant acquisition channel: "
+            f"{int(top['unique_visitors']):,} visitors, {int(top['new_subscribers'])} new subs, "
+            f"${int(top['new_revenue']):,} new revenue. "
+            f"Substack-internal flow (Notes, recommendations, cross-promo) is doing what off-platform usually doesn't."
+        )
+        rev_share = A.get("revenue_share_substack")
+        if rev_share and rev_share > 0.5:
+            out.append(
+                f"{rev_share*100:.0f}% of new revenue comes through Substack-native sources. "
+                f"That's a concentration risk and a leverage point. If Notes recommendations dry up, paid acquisition dries up with it."
+            )
+    if A.get("best_conv_category") and A.get("worst_conv_category"):
+        b = A["best_conv_category"]
+        w = A["worst_conv_category"]
+        out.append(
+            f"Best converting category: {b['category']} at "
+            f"{b['conv_visitor_to_sub']*100:.1f}% visitor→sub. "
+            f"Weakest: {w['category']} at {w['conv_visitor_to_sub']*100:.1f}%. "
+            f"The gap between channels is wider than the gap between posts."
+        )
+    if A.get("overall_visitor_to_sub"):
+        out.append(
+            f"Overall visitor-to-sub conversion runs {A['overall_visitor_to_sub']*100:.1f}%. "
+            f"Industry rule of thumb for paid newsletters is 1-3% on cold traffic. "
+            f"Anything in or above that range means top-of-funnel is fine and the bottleneck is further down."
+        )
+    src = A.get("growth_top_sources")
+    if src is not None and len(src):
+        notes_rows = src[src["source"].str.contains("Notes", na=False)]
+        if len(notes_rows):
+            n_visitors = int(notes_rows["unique_visitors"].sum())
+            n_subs = int(notes_rows["new_subscribers"].sum())
+            n_rev = int(notes_rows["new_revenue"].sum())
+            out.append(
+                f"Notes drives {n_visitors:,} visitors and {n_subs} new subs, but only "
+                f"${n_rev:,} in attributed revenue. Notes is a top-of-funnel engine, not a monetization engine. "
+                f"That's not a bug. It's the design."
+            )
+    return out
+
+
+def takeaways_engagement(kpi: dict, A: dict) -> list[str]:
+    out = []
+    op30 = A.get("open_rate_30d")
+    op60 = A.get("open_rate_prev30")
+    if op30 is not None and op60 is not None and op60 > 0:
+        delta = (op30 - op60) * 100
+        direction = "improved" if delta > 1 else "softened" if delta < -1 else "held flat at"
+        if direction == "held flat at":
+            out.append(f"Open rate held flat at {op30*100:.1f}% across the last two 30-day windows.")
+        else:
+            out.append(
+                f"Open rate {direction} {abs(delta):.1f}pp ({op60*100:.1f}% → {op30*100:.1f}%) "
+                f"between the prior 30 days and the most recent 30. "
+                f"Small base, but the trajectory is the right one."
+            )
+    paid_o = A.get("paid_open_mean")
+    every_o = A.get("everyone_open_mean")
+    if paid_o and every_o:
+        gap = (paid_o - every_o) * 100
+        out.append(
+            f"Paid-only posts open at {paid_o*100:.1f}% vs {every_o*100:.1f}% on everyone-posts ({gap:+.1f}pp). "
+            f"Paid subs are more engaged than the broader list, which is what you'd want. "
+            f"It also means paid-only posts reach a smaller absolute audience: that's the price of segmentation."
+        )
+    by_type = A.get("posts_by_type")
+    if by_type is not None and len(by_type):
+        # Find the type with most posts (excluding 'Other' if dominant)
+        non_other = by_type[by_type["type"] != "Other"]
+        if len(non_other):
+            best_eng = non_other.sort_values("avg_eng", ascending=False).iloc[0]
+            out.append(
+                f"By post type, {best_eng['type']} leads on engagement at "
+                f"{best_eng['avg_eng']*100:.1f}% (n={int(best_eng['posts'])}). "
+                f"Sample sizes are still small. Treat as directional, not definitive."
+            )
+    ctr30 = A.get("ctr_30d")
+    if ctr30:
+        verdict = "strong" if ctr30 > 0.04 else "fine" if ctr30 > 0.02 else "soft"
+        out.append(
+            f"30-day CTR sits at {ctr30*100:.2f}%, which is {verdict} for a research newsletter. "
+            f"CTR is the truer engagement signal. Opens can be inflated by image pixels and prefetching."
+        )
+    return out
+
+
+def takeaways_funnel(kpi: dict, A: dict) -> list[str]:
+    out = []
+    total_in = A.get("pg_total_in")
+    upgrades = A.get("pg_upgrades")
+    new_paid = A.get("pg_new_paid")
+    cancels = A.get("pg_cancels_final")
+    if total_in is not None:
+        out.append(
+            f"Last 30 days: {total_in} paid additions ({new_paid} new direct + {upgrades} upgrades), "
+            f"{cancels} cancellations finalized. Net {A.get('pg_net', 0):+d}. "
+            f"The book is growing through conversion, not new acquisition."
+        )
+    if A.get("upgrade_share") is not None:
+        share = A["upgrade_share"] * 100
+        out.append(
+            f"Upgrades account for {share:.0f}% of paid additions. "
+            f"Free→paid is the dominant path. Direct paid sign-ups are rare. "
+            f"The implication: keep growing the free list and the paid conversion will follow on its own clock."
+        )
+    if A.get("pg_trials") is not None:
+        trials = A["pg_trials"]
+        if trials > 0:
+            out.append(
+                f"{trials} free trial{'s' if trials != 1 else ''} started in the last 30 days. "
+                f"Small but real. Trials are a different beast than direct paid sign-ups: they signal interest with optionality."
+            )
+    if cancels and total_in:
+        churn_rate = cancels / max(kpi.get("paid_subs", 1) - total_in + cancels, 1) * 100
+        out.append(
+            f"Implied 30-day churn on the prior paid base: {churn_rate:.1f}%. "
+            f"On a sub-20 paid book, every cancel is 5%+ of the base. "
+            f"Don't read trend into single events; do read the reason buckets."
+        )
+    if kpi.get("total_subs") and kpi.get("paid_subs"):
+        free_to_paid_ratio = kpi["paid_subs"] / kpi["total_subs"] * 100
+        out.append(
+            f"Free→paid penetration is {free_to_paid_ratio:.1f}%. "
+            f"Industry benchmark for macro/finance newsletters is 2-5% over time. "
+            f"At {free_to_paid_ratio:.1f}%, there's headroom in both directions: bigger free list and higher conversion."
+        )
+    return out
+
+
+def takeaways_content(A: dict) -> list[str]:
+    out = []
+    by_aud = A.get("posts_by_audience")
+    if by_aud is not None and len(by_aud):
+        every = by_aud[by_aud["audience"] == "everyone"]
+        paid = by_aud[by_aud["audience"] == "only_paid"]
+        if len(every) and len(paid):
+            ev = every.iloc[0]
+            pa = paid.iloc[0]
+            out.append(
+                f"Everyone-posts ({int(ev['posts'])}) average {int(ev['avg_views'])} views; "
+                f"paid-only ({int(pa['posts'])}) average {int(pa['avg_views'])}. "
+                f"Reach gap is roughly {ev['avg_views']/max(pa['avg_views'],1):.1f}x. "
+                f"Paid-only posts can't reach the cold list by design. That gap isn't a problem; it's the paywall working."
+            )
+    by_type = A.get("posts_by_type")
+    if by_type is not None and len(by_type):
+        # Most signups by type
+        by_type_v = by_type[by_type["total_signups"] > 0].sort_values("total_signups", ascending=False)
+        if len(by_type_v):
+            t = by_type_v.iloc[0]
+            out.append(
+                f"{t['type']} posts drove {int(t['total_signups'])} signups across {int(t['posts'])} posts "
+                f"(${int(t['total_value']):,} attributed value). "
+                f"That's the format pulling the most acquisition weight right now."
+            )
+    paid_conv = A.get("paid_converting_posts")
+    if paid_conv is not None and len(paid_conv):
+        out.append(
+            f"{len(paid_conv)} posts in the email-stats window directly drove paid conversions. "
+            f"The rest are reach plays, brand plays, or audience-warming. Both functions matter. "
+            f"Don't let conversion attribution dictate every editorial choice."
+        )
+        top_conv = paid_conv.head(3)
+        titles = [_s(t)[:50] for t in top_conv["title"].tolist()]
+        out.append(
+            f"Top converting titles: {' · '.join(titles)}. "
+            f"Pattern in the survivor set: definitive claims, specific numbers, named regimes."
+        )
+    return out
+
+
+def takeaways_audience(kpi: dict, A: dict) -> list[str]:
+    out = []
+    if A.get("us_share") is not None:
+        out.append(
+            f"US share of free signups: {A['us_share']:.1f}%. "
+            f"International tail is real ({A.get('country_count', 0)} countries represented in the signup mix). "
+            f"For an institutional macro audience, that international weight is a feature."
+        )
+    if A.get("geo_hhi") is not None:
+        hhi = A["geo_hhi"]
+        verdict = "highly concentrated" if hhi > 4000 else "moderately concentrated" if hhi > 2500 else "diversified"
+        out.append(
+            f"Geographic HHI on signup share: {hhi:,.0f} ({verdict}). "
+            f"Reference points: HHI under 1500 is competitive, 2500+ is concentrated. "
+            f"A US-heavy macro newsletter scoring 'concentrated' is the expected outcome, not a flag."
+        )
+    if A.get("follower_email_ratio") is not None:
+        ratio = A["follower_email_ratio"]
+        out.append(
+            f"Follower-to-email ratio is {ratio:.2f}x. "
+            f"Followers are a Substack profile metric, broader than the email list. "
+            f"A ratio above 1.0 means there's a discoverable surface area not yet captured as email."
+        )
+    if A.get("fol_growth_30d") is not None and A.get("em_growth_30d") is not None:
+        fg = A["fol_growth_30d"]
+        eg = A["em_growth_30d"]
+        if eg > 0:
+            faster = "Followers" if fg > eg else "Email subs"
+            slower = "Email subs" if fg > eg else "Followers"
+            out.append(
+                f"30-day growth: {fg:+d} followers, {eg:+d} emails. "
+                f"{faster} growing faster than {slower.lower()}. "
+                f"Healthy sign that profile-level brand recognition is pacing or outpacing email capture."
+            )
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Chart helpers — LHM brand
 # ---------------------------------------------------------------------------
 
@@ -367,11 +817,13 @@ def _save_to_b64(fig) -> str:
     return base64.b64encode(buf.getvalue()).decode("ascii")
 
 
-def chart_subscribers(subs: pd.DataFrame) -> str:
+def chart_subscribers(subs: pd.DataFrame, emails: Optional[pd.DataFrame] = None) -> str:
     df = subs[subs["date"] >= subs["date"].max() - pd.Timedelta(days=180)].copy()
     fig, ax = plt.subplots(figsize=(9, 3.6), facecolor="white")
-    ax.fill_between(df["date"], 0, df["total_subscribers"], color=OCEAN, alpha=0.10)
-    ax.plot(df["date"], df["total_subscribers"], color=OCEAN, linewidth=2.8, label="Total")
+    if emails is not None and len(emails):
+        em = emails[emails["date"] >= emails["date"].max() - pd.Timedelta(days=180)].copy()
+        ax.fill_between(em["date"], 0, em["emails"], color=OCEAN, alpha=0.10)
+        ax.plot(em["date"], em["emails"], color=OCEAN, linewidth=2.8, label="Total list (free + paid)")
     if "paid" in df.columns:
         ax.plot(df["date"], df["paid"], color=DUSK, linewidth=2.4, label="Paid")
     _style_axes(ax)
@@ -379,7 +831,9 @@ def chart_subscribers(subs: pd.DataFrame) -> str:
     ax.legend(loc="upper left", frameon=False, fontsize=9)
     ax.xaxis.set_major_locator(mdates.MonthLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%b"))
-    ax.set_xlim(df["date"].min(), df["date"].max() + pd.Timedelta(days=2))
+    xmin = df["date"].min() if emails is None else min(df["date"].min(), em["date"].min())
+    xmax = df["date"].max() if emails is None else max(df["date"].max(), em["date"].max())
+    ax.set_xlim(xmin, xmax + pd.Timedelta(days=2))
     return _save_to_b64(fig)
 
 
@@ -488,6 +942,205 @@ def chart_email_engagement(es: pd.DataFrame) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Analysis-panel charts
+# ---------------------------------------------------------------------------
+
+def chart_source_funnel(A: dict) -> str:
+    """Visitor → free signup → paid sub conversion by category, dual-axis."""
+    cat = A.get("growth_by_category")
+    if cat is None or cat.empty:
+        return ""
+    df = cat.sort_values("unique_visitors", ascending=True).copy()
+    fig, ax = plt.subplots(figsize=(9, max(3.0, 0.5 * len(df) + 1.0)), facecolor="white")
+    y = np.arange(len(df))
+    ax.barh(y, df["unique_visitors"], color=OCEAN, alpha=0.55, label="Unique visitors")
+    ax.barh(y, df["new_subscribers"] * 20, color=DUSK, alpha=0.85,
+            label="New subs (×20 for visibility)")
+    ax.set_yticks(y)
+    ax.set_yticklabels(df["category"])
+    _style_axes(ax)
+    ax.yaxis.tick_left()
+    ax.yaxis.set_label_position("left")
+    ax.set_title("Acquisition funnel by category — visitors vs new subs",
+                 color=OCEAN, fontsize=11, fontweight="bold", loc="left")
+    ax.legend(loc="lower right", frameon=False, fontsize=9)
+    # Annotate conversion rate
+    for i, row in enumerate(df.itertuples()):
+        rate = row.conv_visitor_to_sub * 100
+        ax.text(row.unique_visitors * 1.02, i, f"  {rate:.1f}% conv",
+                va="center", fontsize=9, color=DOLDRUMS)
+    return _save_to_b64(fig)
+
+
+def chart_revenue_by_source(A: dict) -> str:
+    """Where the money is coming from."""
+    cat = A.get("growth_by_category")
+    if cat is None or cat.empty:
+        return ""
+    df = cat[cat["new_revenue"] > 0].sort_values("new_revenue", ascending=True)
+    if df.empty:
+        return ""
+    fig, ax = plt.subplots(figsize=(9, max(2.6, 0.55 * len(df) + 0.6)), facecolor="white")
+    colors = [OCEAN, DUSK, SEA, SKY, VENUS][:len(df)]
+    ax.barh(df["category"], df["new_revenue"], color=colors)
+    _style_axes(ax)
+    ax.yaxis.tick_left()
+    ax.yaxis.set_label_position("left")
+    ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+    ax.set_title("New revenue by acquisition category",
+                 color=OCEAN, fontsize=11, fontweight="bold", loc="left")
+    for i, (_, row) in enumerate(df.iterrows()):
+        share = row["new_revenue"] / df["new_revenue"].sum() * 100
+        ax.text(row["new_revenue"] * 1.02, i, f"  {share:.0f}%",
+                va="center", fontsize=9, color=DOLDRUMS)
+    return _save_to_b64(fig)
+
+
+def chart_post_type_performance(A: dict) -> str:
+    """Avg views (x) vs avg engagement (y), bubble sized by post count."""
+    by_type = A.get("posts_by_type")
+    if by_type is None or by_type.empty:
+        return ""
+    df = by_type.copy()
+    fig, ax = plt.subplots(figsize=(9, 4.0), facecolor="white")
+    color_map = {"Beam": DUSK, "Beacon": OCEAN, "Note": SKY, "Horizon": VENUS,
+                 "Chartbook": SEA, "Other": DOLDRUMS}
+    for _, row in df.iterrows():
+        c = color_map.get(row["type"], DOLDRUMS)
+        size = max(80, min(800, row["posts"] * 60))
+        ax.scatter(row["avg_views"], row["avg_eng"] * 100, s=size, color=c,
+                   alpha=0.7, edgecolors="white", linewidth=2)
+        ax.annotate(f"{row['type']} (n={int(row['posts'])})",
+                    (row["avg_views"], row["avg_eng"] * 100),
+                    xytext=(8, 6), textcoords="offset points",
+                    fontsize=10, color=c, fontweight="bold")
+    _style_axes(ax)
+    ax.set_xlabel("Avg views", color=DOLDRUMS, fontsize=10)
+    ax.set_ylabel("Avg engagement %", color=DOLDRUMS, fontsize=10)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.1f}%"))
+    ax.set_title("Post type performance — reach vs engagement",
+                 color=OCEAN, fontsize=11, fontweight="bold", loc="left")
+    return _save_to_b64(fig)
+
+
+def chart_audience_split(A: dict, kpi: dict) -> str:
+    """Stacked horizontal bars: views and signups by audience segment."""
+    by_aud = A.get("posts_by_audience")
+    if by_aud is None or by_aud.empty:
+        return ""
+    df = by_aud.copy()
+    fig, axes = plt.subplots(1, 2, figsize=(9, 3.0), facecolor="white")
+    ax1, ax2 = axes
+    df_sorted = df.sort_values("avg_views", ascending=True)
+    ax1.barh(df_sorted["audience"], df_sorted["avg_views"], color=OCEAN)
+    _style_axes(ax1)
+    ax1.yaxis.tick_left()
+    ax1.yaxis.set_label_position("left")
+    ax1.set_title("Avg views per post", color=OCEAN, fontsize=10,
+                  fontweight="bold", loc="left")
+    df_sorted2 = df.sort_values("total_signups", ascending=True)
+    ax2.barh(df_sorted2["audience"], df_sorted2["total_signups"], color=DUSK)
+    _style_axes(ax2)
+    ax2.yaxis.tick_left()
+    ax2.yaxis.set_label_position("left")
+    ax2.set_title("Total signups", color=OCEAN, fontsize=10,
+                  fontweight="bold", loc="left")
+    fig.tight_layout()
+    return _save_to_b64(fig)
+
+
+def chart_funnel_waterfall(A: dict, kpi: dict) -> str:
+    """Last-30d paid subscriber waterfall: starting → +new → +upgrades → -cancels → ending."""
+    if A.get("pg_total_in") is None:
+        return ""
+    starting = (kpi.get("paid_subs", 0) or 0) - (A.get("pg_total_in", 0) - A.get("pg_cancels_final", 0))
+    new = A.get("pg_new_paid", 0)
+    up = A.get("pg_upgrades", 0)
+    cancels = -A.get("pg_cancels_final", 0)
+    ending = kpi.get("paid_subs", 0) or 0
+    labels = ["Starting", "New paid", "Upgrades", "Cancels", "Ending"]
+    values = [starting, new, up, cancels, ending]
+    colors = [DOLDRUMS, STARBOARD, SEA, PORT, OCEAN]
+    fig, ax = plt.subplots(figsize=(9, 3.4), facecolor="white")
+    cumulative = [starting]
+    for v in [new, up, cancels]:
+        cumulative.append(cumulative[-1] + v)
+    cumulative.append(ending)
+    # Draw bars
+    for i, (label, value, color) in enumerate(zip(labels, values, colors)):
+        if i == 0 or i == len(labels) - 1:
+            ax.bar(i, value, color=color, width=0.6)
+            ax.text(i, value + 0.3, str(int(value)), ha="center", fontsize=10,
+                    color=color, fontweight="bold")
+        else:
+            base = cumulative[i - 1]
+            top = base + value
+            ax.bar(i, value, bottom=base, color=color, width=0.6)
+            sign = "+" if value >= 0 else ""
+            ax.text(i, max(base, top) + 0.3, f"{sign}{int(value)}", ha="center",
+                    fontsize=10, color=color, fontweight="bold")
+    ax.set_xticks(range(len(labels)))
+    ax.set_xticklabels(labels, fontsize=10)
+    _style_axes(ax)
+    ax.set_title("Paid subscriber waterfall — last 30d",
+                 color=OCEAN, fontsize=11, fontweight="bold", loc="left")
+    return _save_to_b64(fig)
+
+
+def chart_free_paid_composition(subs: pd.DataFrame, emails: pd.DataFrame) -> str:
+    """Stacked area: free vs paid over time."""
+    if subs is None or emails is None or len(subs) == 0 or len(emails) == 0:
+        return ""
+    em = emails[emails["date"] >= emails["date"].max() - pd.Timedelta(days=180)].copy()
+    sb = subs[subs["date"] >= subs["date"].max() - pd.Timedelta(days=180)].copy()
+    merged = pd.merge(em, sb[["date", "paid", "comps"]], on="date", how="left").ffill().fillna(0)
+    merged["paid_total"] = merged["paid"] + merged["comps"]
+    merged["free"] = (merged["emails"] - merged["paid_total"]).clip(lower=0)
+    fig, ax = plt.subplots(figsize=(9, 3.4), facecolor="white")
+    ax.fill_between(merged["date"], 0, merged["free"], color=OCEAN, alpha=0.3, label="Free")
+    ax.fill_between(merged["date"], merged["free"], merged["free"] + merged["paid_total"],
+                    color=DUSK, alpha=0.8, label="Paid + Comps")
+    ax.plot(merged["date"], merged["free"] + merged["paid_total"], color=OCEAN, linewidth=2)
+    _style_axes(ax)
+    ax.set_title("Subscriber composition — free vs paid (last 180d)",
+                 color=OCEAN, fontsize=11, fontweight="bold", loc="left")
+    ax.legend(loc="upper left", frameon=False, fontsize=9)
+    ax.xaxis.set_major_locator(mdates.MonthLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b"))
+    return _save_to_b64(fig)
+
+
+def chart_engagement_trend(es: pd.DataFrame) -> str:
+    """Open rate and CTR rolling means over time."""
+    if es is None or es.empty:
+        return ""
+    df = es.dropna(subset=["post_date"]).sort_values("post_date").copy()
+    if len(df) < 3:
+        return ""
+    df["open_pct"] = df["open_rate"] * 100
+    df["ctr_pct"] = df["click_through_rate"] * 100
+    df["open_ma"] = df["open_pct"].rolling(5, min_periods=2).mean()
+    df["ctr_ma"] = df["ctr_pct"].rolling(5, min_periods=2).mean()
+    fig, ax = plt.subplots(figsize=(9, 3.4), facecolor="white")
+    ax.scatter(df["post_date"], df["open_pct"], color=OCEAN, alpha=0.35, s=30, label="Open rate (per post)")
+    ax.plot(df["post_date"], df["open_ma"], color=OCEAN, linewidth=2.6, label="Open 5-post MA")
+    ax2 = ax.twinx()
+    ax2.scatter(df["post_date"], df["ctr_pct"], color=DUSK, alpha=0.35, s=30)
+    ax2.plot(df["post_date"], df["ctr_ma"], color=DUSK, linewidth=2.6, label="CTR 5-post MA")
+    _style_axes(ax)
+    ax2.tick_params(axis="y", colors=DUSK, labelsize=9, length=0)
+    ax2.yaxis.tick_left()
+    ax2.yaxis.set_label_position("left")
+    for s in ax2.spines.values():
+        s.set_visible(False)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.0f}%"))
+    ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.1f}%"))
+    ax.set_title("Engagement trend — open rate (Ocean, RHS) and CTR (Dusk, LHS)",
+                 color=OCEAN, fontsize=11, fontweight="bold", loc="left")
+    return _save_to_b64(fig)
+
+
+# ---------------------------------------------------------------------------
 # HTML rendering
 # ---------------------------------------------------------------------------
 
@@ -541,15 +1194,10 @@ def kpi_card(label: str, value: str, delta: Optional[str] = None,
     """
 
 
-def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
-                missing: list[str]) -> str:
-    icon_b64 = _icon_b64()
-    icon_img = f'<img class="icon" src="data:image/png;base64,{icon_b64}" alt="LHM" />' if icon_b64 else ""
-
-    # KPI tiles
+def _build_kpi_tiles(kpi: dict) -> list[str]:
     tiles: list[str] = []
     tiles.append(kpi_card(
-        "Total subscribers", _fmt_int(kpi.get("total_subs")),
+        "Total list", _fmt_int(kpi.get("total_subs")),
         delta=_fmt_signed(kpi.get("total_subs_30d")) + " /30d" if kpi.get("total_subs_30d") is not None else None,
         delta_dir="up" if (kpi.get("total_subs_30d") or 0) > 0 else "down" if (kpi.get("total_subs_30d") or 0) < 0 else "neutral",
         sub=f"{_fmt_signed(kpi.get('total_subs_7d'))} last 7d" if kpi.get("total_subs_7d") is not None else None,
@@ -558,7 +1206,11 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
         "Paid subscribers", _fmt_int(kpi.get("paid_subs")),
         delta=_fmt_signed(kpi.get("paid_subs_30d")) + " /30d" if kpi.get("paid_subs_30d") is not None else None,
         delta_dir="up" if (kpi.get("paid_subs_30d") or 0) > 0 else "down" if (kpi.get("paid_subs_30d") or 0) < 0 else "neutral",
-        sub=f"{_fmt_signed(kpi.get('paid_subs_7d'))} last 7d" if kpi.get("paid_subs_7d") is not None else None,
+        sub=f"{_fmt_signed(kpi.get('paid_subs_7d'))} last 7d · Comps {_fmt_int(kpi.get('comps'))}" if kpi.get("paid_subs_7d") is not None else None,
+    ))
+    tiles.append(kpi_card(
+        "Free subscribers", _fmt_int(kpi.get("free_subs")),
+        sub="Email list minus paid",
     ))
     tiles.append(kpi_card(
         "ARR", _fmt_money(kpi.get("arr")),
@@ -581,40 +1233,54 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
         "Open rate (30d)", _fmt_pct(kpi.get("avg_open_rate_30d")),
         sub=f"CTR {_fmt_pct(kpi.get('avg_ctr_30d'))}",
     ))
+    net_paid_30d = None
+    if kpi.get("new_paid_30d") is not None and kpi.get("cancels_finalized_30d") is not None:
+        net_paid_30d = kpi["new_paid_30d"] + (kpi.get("upgrades_30d") or 0) - kpi["cancels_finalized_30d"]
     tiles.append(kpi_card(
-        "New paid (30d)", _fmt_int(kpi.get("new_paid_30d")),
-        sub=f"Upgrades {_fmt_int(kpi.get('upgrades_30d'))} · Trials {_fmt_int(kpi.get('trials_started_30d'))}",
+        "Paid flow (30d)", _fmt_signed(net_paid_30d) if net_paid_30d is not None else _fmt_int(kpi.get("new_paid_30d")),
+        delta_dir="up" if (net_paid_30d or 0) > 0 else "down" if (net_paid_30d or 0) < 0 else "neutral",
+        sub=f"+{_fmt_int(kpi.get('new_paid_30d'))} new · +{_fmt_int(kpi.get('upgrades_30d'))} upgrades · -{_fmt_int(kpi.get('cancels_finalized_30d'))} cancels",
     ))
-    tiles.append(kpi_card(
-        "Cancels (30d)", _fmt_int(kpi.get("cancels_finalized_30d")),
-        delta_dir="down" if (kpi.get("cancels_finalized_30d") or 0) > 0 else "neutral",
-    ))
+    return tiles
 
-    def chart_block(title: str, b64: str) -> str:
-        if not b64:
-            return ""
-        return f'<section class="chart-block"><h3>{title}</h3><img src="data:image/png;base64,{b64}" /></section>'
 
-    chart_html = "\n".join([
-        chart_block("Subscribers", charts.get("subscribers", "")),
-        chart_block("Annual recurring revenue", charts.get("arr", "")),
-        chart_block("Daily traffic", charts.get("traffic", "")),
-        chart_block("Paid subscriber flow", charts.get("paid_growth", "")),
-        chart_block("Email engagement", charts.get("email_engagement", "")),
-        chart_block("Traffic sources", charts.get("traffic_sources", "")),
-        chart_block("Growth sources", charts.get("growth_sources", "")),
-        chart_block("Audience location", charts.get("audience_location", "")),
-    ])
+def _chart_block(title: str, b64: str) -> str:
+    if not b64:
+        return ""
+    return f'<section class="chart-block"><h3>{title}</h3><img src="data:image/png;base64,{b64}" /></section>'
+
+
+def _takeaways_block(title: str, bullets: list[str]) -> str:
+    if not bullets:
+        return ""
+    items = "".join(f"<li>{b}</li>" for b in bullets)
+    return f"""
+    <section class="takeaways">
+      <h3>{title}</h3>
+      <ul>{items}</ul>
+    </section>
+    """
+
+
+def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
+                missing: list[str], analysis: dict, takeaways: dict) -> str:
+    icon_b64 = _icon_b64()
+    icon_img = f'<img class="icon" src="data:image/png;base64,{icon_b64}" alt="LHM" />' if icon_b64 else ""
+
+    tiles = _build_kpi_tiles(kpi)
+    chart_block = _chart_block
 
     top_posts_html = tables.get("top_posts", "")
     recent_posts_html = tables.get("recent_posts", "")
     unsubs_html = tables.get("unsubs", "")
+    growth_sources_table = tables.get("growth_sources", "")
+    traffic_sources_table = tables.get("traffic_sources", "")
 
     missing_html = ""
     if missing:
         missing_html = f"""
         <div class="warning">
-          Missing CSV inputs: {", ".join(missing)} — sections that depend on these will be blank.
+          Missing CSV inputs: {", ".join(missing)}. Sections that depend on these will be blank.
         </div>
         """
 
@@ -848,6 +1514,18 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
 # Tables
 # ---------------------------------------------------------------------------
 
+def _s(v) -> str:
+    """Stringify any cell, returning '' for NaN/None."""
+    if v is None:
+        return ""
+    try:
+        if pd.isna(v):
+            return ""
+    except (TypeError, ValueError):
+        pass
+    return str(v)
+
+
 def table_top_posts(es: pd.DataFrame) -> str:
     if es is None or es.empty:
         return "<p style='color:#898989;font-size:12px'>No email stats available.</p>"
@@ -858,7 +1536,7 @@ def table_top_posts(es: pd.DataFrame) -> str:
     df = df.sort_values("views", ascending=False).head(10)
     rows = []
     for _, r in df.iterrows():
-        title = (r.get("title") or "").replace("<", "&lt;").replace(">", "&gt;")
+        title = _s(r.get("title")).replace("<", "&lt;").replace(">", "&gt;")
         date = r["post_date"].strftime("%Y-%m-%d") if pd.notna(r["post_date"]) else "—"
         views = _fmt_int(r.get("views"))
         opens = _fmt_pct(r.get("open_rate"))
@@ -884,9 +1562,9 @@ def table_recent_posts(es: pd.DataFrame) -> str:
     df = es.head(10).copy()
     rows = []
     for _, r in df.iterrows():
-        title = (r.get("title") or "").replace("<", "&lt;").replace(">", "&gt;")
+        title = _s(r.get("title")).replace("<", "&lt;").replace(">", "&gt;")
         date = r["post_date"].strftime("%Y-%m-%d") if pd.notna(r["post_date"]) else "—"
-        section = r.get("section_name") or r.get("audience") or ""
+        section = _s(r.get("section_name")) or _s(r.get("audience")) or ""
         views = _fmt_int(r.get("views"))
         opens = _fmt_pct(r.get("open_rate"))
         signups = _fmt_int(r.get("signups"))
@@ -915,9 +1593,9 @@ def table_unsubs(unsubs: pd.DataFrame) -> str:
     rows = []
     for _, r in df.iterrows():
         when = r["unsubscribed_at"].strftime("%Y-%m-%d") if "unsubscribed_at" in df.columns and pd.notna(r["unsubscribed_at"]) else "—"
-        email = (r.get("email") or "").replace("<", "&lt;")
-        bucket = r.get("cancel_reason_bucket") or ""
-        feedback = (r.get("feedback") or "").replace("<", "&lt;").replace(">", "&gt;")
+        email = _s(r.get("email")).replace("<", "&lt;")
+        bucket = _s(r.get("cancel_reason_bucket"))
+        feedback = _s(r.get("feedback")).replace("<", "&lt;").replace(">", "&gt;")
         rows.append(f"<tr><td>{when}</td><td>{email}</td><td>{bucket}</td><td>{feedback}</td></tr>")
     return ("<table><thead><tr>"
             "<th>When</th><th>Email</th><th>Reason</th><th>Feedback</th>"
@@ -965,7 +1643,7 @@ def run() -> Path:
     append_kpi_history(kpi, stamp)
 
     charts: dict = {}
-    if "subscribers" in data:        charts["subscribers"] = chart_subscribers(data["subscribers"])
+    if "subscribers" in data:        charts["subscribers"] = chart_subscribers(data["subscribers"], data.get("emails"))
     if "arr" in data:                charts["arr"] = chart_arr(data["arr"])
     if "traffic" in data:            charts["traffic"] = chart_traffic(data["traffic"])
     if "traffic_sources" in data:    charts["traffic_sources"] = chart_traffic_sources(data["traffic_sources"])

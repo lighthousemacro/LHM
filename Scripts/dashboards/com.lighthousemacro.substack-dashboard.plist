@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    LHM SUBSTACK DASHBOARD
+    ======================
+    Reads the latest Substack CSV exports from ~/Downloads/, archives them
+    under Data/substack_snapshots/, computes KPIs, and writes a self-contained
+    HTML dashboard to Outputs/Substack_Dashboard/dashboard_latest.html.
+
+    Schedule:
+        04:30 and 16:30 local time, every day. Dashboard refreshes twice
+        a day so the morning view shows yesterday's overnight email
+        engagement and the afternoon view catches same-day post stats.
+
+    Local time = ET on Bob's Mac. No DST toggling needed.
+
+    To install:
+        cp /Users/bob/LHM/Scripts/dashboards/com.lighthousemacro.substack-dashboard.plist \
+           ~/Library/LaunchAgents/
+        launchctl unload ~/Library/LaunchAgents/com.lighthousemacro.substack-dashboard.plist 2>/dev/null
+        launchctl load ~/Library/LaunchAgents/com.lighthousemacro.substack-dashboard.plist
+
+    To run immediately:
+        launchctl start com.lighthousemacro.substack-dashboard
+
+    Logs:
+        /Users/bob/LHM/logs/substack_dashboard.log          (stdout)
+        /Users/bob/LHM/logs/substack_dashboard_error.log    (stderr)
+        /Users/bob/LHM/logs/substack_dashboard.log          (script's own logger appends here too)
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.lighthousemacro.substack-dashboard</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/bob/LHM/.venv/bin/python</string>
+        <string>/Users/bob/LHM/Scripts/dashboards/substack_dashboard.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/bob/LHM</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>/Users/bob/LHM</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>4</integer><key>Minute</key><integer>30</integer></dict>
+        <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>30</integer></dict>
+    </array>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bob/LHM/logs/substack_dashboard_stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/bob/LHM/logs/substack_dashboard_stderr.log</string>
+</dict>
+</plist>

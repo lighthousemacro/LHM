@@ -97,3 +97,103 @@
 2026-04-28 18:49:54,555 [INFO] loaded traffic_sources: 44 rows
 2026-04-28 18:49:54,831 [INFO] loaded unsubscribes: 5 rows
 2026-04-28 18:50:11,223 [INFO] wrote /Users/bob/LHM/Outputs/Substack_Dashboard/dashboard_latest.html (512 KB)
+2026-04-28 19:01:51,909 [INFO] picked arr: lighthousemacro_arr_2026-04-26.csv
+2026-04-28 19:01:51,910 [INFO] picked audience_location: lighthousemacro_audience_location_2026-04-26 (1).csv
+2026-04-28 19:01:51,910 [INFO] picked email_stats: lighthousemacro_email_stats_2026-04-26.csv
+2026-04-28 19:01:51,911 [INFO] picked emails: lighthousemacro_emails_2026-04-20.csv
+2026-04-28 19:01:51,911 [INFO] picked followers: lighthousemacro_followers_2026-04-22.csv
+2026-04-28 19:01:51,911 [INFO] picked growth_sources: lighthousemacro_growth_sources_2026-04-26 (2).csv
+2026-04-28 19:01:51,911 [INFO] picked paid_subscriber_growth: lighthousemacro_paid_subscriber_growth_2026-04-22.csv
+2026-04-28 19:01:51,911 [INFO] picked subscribers: lighthousemacro_subscribers_2026-04-22.csv
+2026-04-28 19:01:51,911 [INFO] picked traffic: lighthousemacro_traffic_2026-04-26.csv
+2026-04-28 19:01:51,911 [INFO] picked traffic_sources: lighthousemacro_traffic_sources_2026-04-26.csv
+2026-04-28 19:01:51,911 [INFO] picked unsubscribes: lighthousemacro_unsubscribes_2026-04-26.csv
+2026-04-28 19:01:51,911 [WARNING] missing CSV types: free_subscriber_growth
+2026-04-28 19:01:51,926 [INFO] archived 11 CSVs to /Users/bob/LHM/Data/substack_snapshots/2026-04-28_1901
+2026-04-28 19:01:51,943 [INFO] loaded arr: 233 rows
+2026-04-28 19:01:51,944 [INFO] loaded audience_location: 65 rows
+2026-04-28 19:01:51,947 [INFO] loaded email_stats: 49 rows
+2026-04-28 19:01:51,949 [INFO] loaded emails: 1659 rows
+2026-04-28 19:01:51,951 [INFO] loaded followers: 1460 rows
+2026-04-28 19:01:51,954 [INFO] loaded growth_sources: 228 rows
+2026-04-28 19:01:51,955 [INFO] loaded paid_subscriber_growth: 31 rows
+2026-04-28 19:01:51,957 [INFO] loaded subscribers: 1661 rows
+2026-04-28 19:01:51,958 [INFO] loaded traffic: 89 rows
+2026-04-28 19:01:51,959 [INFO] loaded traffic_sources: 44 rows
+2026-04-28 19:01:51,961 [INFO] loaded unsubscribes: 5 rows
+2026-04-28 19:01:53,074 [INFO] wrote /Users/bob/LHM/Outputs/Substack_Dashboard/dashboard_latest.html (886 KB)
+2026-04-28 19:03:22,873 [INFO] picked arr: lighthousemacro_arr_2026-04-26.csv
+2026-04-28 19:03:22,874 [INFO] picked audience_location: lighthousemacro_audience_location_2026-04-26 (1).csv
+2026-04-28 19:03:22,874 [INFO] picked email_stats: lighthousemacro_email_stats_2026-04-26.csv
+2026-04-28 19:03:22,874 [INFO] picked emails: lighthousemacro_emails_2026-04-20.csv
+2026-04-28 19:03:22,874 [INFO] picked followers: lighthousemacro_followers_2026-04-22.csv
+2026-04-28 19:03:22,874 [INFO] picked growth_sources: lighthousemacro_growth_sources_2026-04-26 (2).csv
+2026-04-28 19:03:22,874 [INFO] picked paid_subscriber_growth: lighthousemacro_paid_subscriber_growth_2026-04-22.csv
+2026-04-28 19:03:22,874 [INFO] picked subscribers: lighthousemacro_subscribers_2026-04-22.csv
+2026-04-28 19:03:22,874 [INFO] picked traffic: lighthousemacro_traffic_2026-04-26.csv
+2026-04-28 19:03:22,874 [INFO] picked traffic_sources: lighthousemacro_traffic_sources_2026-04-26.csv
+2026-04-28 19:03:22,874 [INFO] picked unsubscribes: lighthousemacro_unsubscribes_2026-04-26.csv
+2026-04-28 19:03:22,874 [WARNING] missing CSV types: free_subscriber_growth
+2026-04-28 19:03:22,883 [INFO] archived 11 CSVs to /Users/bob/LHM/Data/substack_snapshots/2026-04-28_1903
+2026-04-28 19:03:22,902 [INFO] loaded arr: 233 rows
+2026-04-28 19:03:22,902 [INFO] loaded audience_location: 65 rows
+2026-04-28 19:03:22,907 [INFO] loaded email_stats: 49 rows
+2026-04-28 19:03:22,908 [INFO] loaded emails: 1659 rows
+2026-04-28 19:03:22,910 [INFO] loaded followers: 1460 rows
+2026-04-28 19:03:22,913 [INFO] loaded growth_sources: 228 rows
+2026-04-28 19:03:22,914 [INFO] loaded paid_subscriber_growth: 31 rows
+2026-04-28 19:03:22,917 [INFO] loaded subscribers: 1661 rows
+2026-04-28 19:03:22,918 [INFO] loaded traffic: 89 rows
+2026-04-28 19:03:22,919 [INFO] loaded traffic_sources: 44 rows
+2026-04-28 19:03:22,921 [INFO] loaded unsubscribes: 5 rows
+2026-04-28 19:03:24,033 [INFO] wrote /Users/bob/LHM/Outputs/Substack_Dashboard/dashboard_latest.html (887 KB)
+2026-04-28 19:04:52,854 [INFO] picked arr: lighthousemacro_arr_2026-04-26.csv
+2026-04-28 19:04:52,944 [INFO] picked audience_location: lighthousemacro_audience_location_2026-04-26 (1).csv
+2026-04-28 19:04:52,945 [INFO] picked email_stats: lighthousemacro_email_stats_2026-04-26.csv
+2026-04-28 19:04:52,945 [INFO] picked emails: lighthousemacro_emails_2026-04-20.csv
+2026-04-28 19:04:52,945 [INFO] picked followers: lighthousemacro_followers_2026-04-22.csv
+2026-04-28 19:04:52,945 [INFO] picked growth_sources: lighthousemacro_growth_sources_2026-04-26 (2).csv
+2026-04-28 19:04:52,946 [INFO] picked paid_subscriber_growth: lighthousemacro_paid_subscriber_growth_2026-04-22.csv
+2026-04-28 19:04:52,946 [INFO] picked subscribers: lighthousemacro_subscribers_2026-04-22.csv
+2026-04-28 19:04:52,946 [INFO] picked traffic: lighthousemacro_traffic_2026-04-26.csv
+2026-04-28 19:04:52,946 [INFO] picked traffic_sources: lighthousemacro_traffic_sources_2026-04-26.csv
+2026-04-28 19:04:52,946 [INFO] picked unsubscribes: lighthousemacro_unsubscribes_2026-04-26.csv
+2026-04-28 19:04:52,946 [WARNING] missing CSV types: free_subscriber_growth
+2026-04-28 19:04:53,406 [INFO] archived 11 CSVs to /Users/bob/LHM/Data/substack_snapshots/2026-04-28_1904
+2026-04-28 19:04:55,019 [INFO] loaded arr: 233 rows
+2026-04-28 19:04:55,060 [INFO] loaded audience_location: 65 rows
+2026-04-28 19:04:55,177 [INFO] loaded email_stats: 49 rows
+2026-04-28 19:04:55,183 [INFO] loaded emails: 1659 rows
+2026-04-28 19:04:55,190 [INFO] loaded followers: 1460 rows
+2026-04-28 19:04:55,254 [INFO] loaded growth_sources: 228 rows
+2026-04-28 19:04:55,258 [INFO] loaded paid_subscriber_growth: 31 rows
+2026-04-28 19:04:55,360 [INFO] loaded subscribers: 1661 rows
+2026-04-28 19:04:55,366 [INFO] loaded traffic: 89 rows
+2026-04-28 19:04:55,369 [INFO] loaded traffic_sources: 44 rows
+2026-04-28 19:04:55,506 [INFO] loaded unsubscribes: 5 rows
+2026-04-28 19:05:02,807 [INFO] wrote /Users/bob/LHM/Outputs/Substack_Dashboard/dashboard_latest.html (887 KB)
+2026-04-28 19:14:11,253 [INFO] picked arr: lighthousemacro_arr_2026-04-26.csv
+2026-04-28 19:14:11,253 [INFO] picked audience_location: lighthousemacro_audience_location_2026-04-26 (1).csv
+2026-04-28 19:14:11,253 [INFO] picked email_stats: lighthousemacro_email_stats_2026-04-26.csv
+2026-04-28 19:14:11,254 [INFO] picked emails: lighthousemacro_emails_2026-04-20.csv
+2026-04-28 19:14:11,254 [INFO] picked followers: lighthousemacro_followers_2026-04-22.csv
+2026-04-28 19:14:11,254 [INFO] picked growth_sources: lighthousemacro_growth_sources_2026-04-26 (2).csv
+2026-04-28 19:14:11,254 [INFO] picked paid_subscriber_growth: lighthousemacro_paid_subscriber_growth_2026-04-22.csv
+2026-04-28 19:14:11,254 [INFO] picked subscribers: lighthousemacro_subscribers_2026-04-22.csv
+2026-04-28 19:14:11,254 [INFO] picked traffic: lighthousemacro_traffic_2026-04-26.csv
+2026-04-28 19:14:11,254 [INFO] picked traffic_sources: lighthousemacro_traffic_sources_2026-04-26.csv
+2026-04-28 19:14:11,254 [INFO] picked unsubscribes: lighthousemacro_unsubscribes_2026-04-26.csv
+2026-04-28 19:14:11,254 [WARNING] missing CSV types: free_subscriber_growth
+2026-04-28 19:14:11,261 [INFO] archived 11 CSVs to /Users/bob/LHM/Data/substack_snapshots/2026-04-28_1914
+2026-04-28 19:14:11,279 [INFO] loaded arr: 233 rows
+2026-04-28 19:14:11,280 [INFO] loaded audience_location: 65 rows
+2026-04-28 19:14:11,284 [INFO] loaded email_stats: 49 rows
+2026-04-28 19:14:11,285 [INFO] loaded emails: 1659 rows
+2026-04-28 19:14:11,287 [INFO] loaded followers: 1460 rows
+2026-04-28 19:14:11,290 [INFO] loaded growth_sources: 228 rows
+2026-04-28 19:14:11,291 [INFO] loaded paid_subscriber_growth: 31 rows
+2026-04-28 19:14:11,295 [INFO] loaded subscribers: 1661 rows
+2026-04-28 19:14:11,297 [INFO] loaded traffic: 89 rows
+2026-04-28 19:14:11,297 [INFO] loaded traffic_sources: 44 rows
+2026-04-28 19:14:11,299 [INFO] loaded unsubscribes: 5 rows
+2026-04-28 19:14:12,359 [INFO] wrote /Users/bob/LHM/Outputs/Substack_Dashboard/dashboard_latest.html (888 KB)

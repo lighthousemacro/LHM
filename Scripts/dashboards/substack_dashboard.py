@@ -44,6 +44,7 @@ DOWNLOADS = Path.home() / "Downloads"
 OUT_DIR = REPO / "Outputs" / "Substack_Dashboard"
 SNAP_ROOT = REPO / "Data" / "substack_snapshots"
 KPI_HISTORY = SNAP_ROOT / "kpi_history.csv"
+RESUBBED_FILE = SNAP_ROOT / "resubbed_emails.txt"  # one email per line, '#' for comments
 LOG_DIR = REPO / "logs"
 ICON = REPO / "Brand" / "icon_transparent_128.png"
 
@@ -387,10 +388,16 @@ def analyze(data: dict, kpi: dict) -> dict:
         cat["revenue_per_visitor"] = (cat["new_revenue"] / cat["unique_visitors"]).replace([np.inf, -np.inf], 0).fillna(0)
         A["growth_by_category"] = cat
         # Top sources
-        src = (gs.groupby("source", as_index=False)
-                 [["unique_visitors", "new_subscribers", "new_revenue"]].sum()
-                 .sort_values("new_subscribers", ascending=False).head(12))
-        A["growth_top_sources"] = src
+        src_all = (gs.groupby("source", as_index=False)
+                     [["unique_visitors", "new_subscribers", "new_revenue"]].sum()
+                     .sort_values("new_subscribers", ascending=False))
+        A["growth_top_sources"] = src_all.head(12)
+        # Notes-specific aggregation across all the named-Notes rows
+        notes_rows = src_all[src_all["source"].str.contains("Notes", na=False, regex=False)]
+        if len(notes_rows):
+            A["notes_subs"] = int(notes_rows["new_subscribers"].sum())
+            A["notes_revenue"] = int(notes_rows["new_revenue"].sum())
+            A["notes_post_count"] = int(len(notes_rows))
         # Headline numbers
         A["total_visitors"] = int(cat["unique_visitors"].sum())
         A["total_new_subs_period"] = int(cat["new_subscribers"].sum())
@@ -558,10 +565,11 @@ def takeaways_overview(kpi: dict, A: dict) -> list[str]:
             f"Small absolute numbers, large percentage moves. Don't overweight a single week."
         )
     if arr and kpi.get("arr_30d_change"):
+        per_paid = A.get('arr_per_paid', 0)
         out.append(
             f"ARR ${arr:,.0f}, up ${kpi['arr_30d_change']:,.0f} in 30 days. "
-            f"Implied per-paid run-rate is ${A.get('arr_per_paid', 0):,.0f}/year, "
-            f"sitting between the $50/mo ($600) and $500/yr price points as the founding-member rates dilute the average."
+            f"Implied per-paid run-rate is ${per_paid:,.0f}/year, below the $500/yr list price because founding-member "
+            f"rates ($300-$400/yr locked for life) and Substack's per-month pricing on monthly subs dilute the average."
         )
     if kpi.get("views_30d") and kpi.get("views_30d_chg_pct") is not None:
         chg = kpi["views_30d_chg_pct"]
@@ -612,18 +620,15 @@ def takeaways_growth(A: dict) -> list[str]:
             f"Industry rule of thumb for paid newsletters is 1-3% on cold traffic. "
             f"Anything in or above that range means top-of-funnel is fine and the bottleneck is further down."
         )
-    src = A.get("growth_top_sources")
-    if src is not None and len(src):
-        notes_rows = src[src["source"].str.contains("Notes", na=False)]
-        if len(notes_rows):
-            n_visitors = int(notes_rows["unique_visitors"].sum())
-            n_subs = int(notes_rows["new_subscribers"].sum())
-            n_rev = int(notes_rows["new_revenue"].sum())
-            out.append(
-                f"Notes drives {n_visitors:,} visitors and {n_subs} new subs, but only "
-                f"${n_rev:,} in attributed revenue. Notes is a top-of-funnel engine, not a monetization engine. "
-                f"That's not a bug. It's the design."
-            )
+    if A.get("notes_subs"):
+        n_subs = A["notes_subs"]
+        n_rev = A.get("notes_revenue", 0)
+        n_count = A.get("notes_post_count", 0)
+        out.append(
+            f"Notes drives {n_subs} new subs across {n_count} attributed Notes posts, ${n_rev:,} in revenue. "
+            f"Substack records 0 visitors for Notes because attribution is in-app, not web-traffic. "
+            f"Notes is a top-of-funnel engine, not a monetization engine. That's not a bug. It's the design."
+        )
     return out
 
 
@@ -633,14 +638,21 @@ def takeaways_engagement(kpi: dict, A: dict) -> list[str]:
     op60 = A.get("open_rate_prev30")
     if op30 is not None and op60 is not None and op60 > 0:
         delta = (op30 - op60) * 100
-        direction = "improved" if delta > 1 else "softened" if delta < -1 else "held flat at"
-        if direction == "held flat at":
-            out.append(f"Open rate held flat at {op30*100:.1f}% across the last two 30-day windows.")
+        if abs(delta) < 1:
+            out.append(
+                f"Open rate held flat at {op30*100:.1f}% across the last two 30-day windows. "
+                f"Stability at this level is the floor, not the ceiling."
+            )
+        elif delta > 0:
+            out.append(
+                f"Open rate improved {delta:.1f}pp ({op60*100:.1f}% to {op30*100:.1f}%) "
+                f"between the prior 30 days and the most recent 30. List quality is moving the right way."
+            )
         else:
             out.append(
-                f"Open rate {direction} {abs(delta):.1f}pp ({op60*100:.1f}% → {op30*100:.1f}%) "
+                f"Open rate softened {abs(delta):.1f}pp ({op60*100:.1f}% to {op30*100:.1f}%) "
                 f"between the prior 30 days and the most recent 30. "
-                f"Small base, but the trajectory is the right one."
+                f"Common when the list grows faster than engagement; new free subs need time to warm up."
             )
     paid_o = A.get("paid_open_mean")
     every_o = A.get("everyone_open_mean")
@@ -1337,13 +1349,54 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
     main {{
       max-width: 1280px;
       margin: 0 auto;
-      padding: 28px 32px 60px 32px;
+      padding: 0 32px 60px 32px;
+    }}
+    nav.tabs {{
+      display: flex;
+      gap: 4px;
+      background: white;
+      border-bottom: 1px solid #e5ecf2;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      overflow-x: auto;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }}
+    nav.tabs button {{
+      background: transparent;
+      border: none;
+      padding: 16px 20px 14px 20px;
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--doldrums);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }}
+    nav.tabs button:hover {{ color: var(--ocean); }}
+    nav.tabs button.active {{
+      color: var(--ocean);
+      border-bottom-color: var(--dusk);
+    }}
+    .panel {{ display: none; padding-top: 28px; }}
+    .panel.active {{ display: block; }}
+    .panel-intro {{
+      font-size: 13px;
+      color: var(--doldrums);
+      margin-bottom: 18px;
+      max-width: 800px;
+      line-height: 1.5;
     }}
     .kpi-grid {{
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }}
     .kpi {{
       background: white;
@@ -1412,6 +1465,35 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
     }}
     td.num {{ text-align: right; font-variant-numeric: tabular-nums; font-family: 'Source Code Pro', monospace; }}
     .chart-block table {{ margin-top: 4px; }}
+    .takeaways {{
+      background: linear-gradient(135deg, #f8fbfd 0%, #eef5fa 100%);
+      border: 1px solid #d4e3ed;
+      border-left: 4px solid var(--dusk);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }}
+    .takeaways h3 {{
+      color: var(--ocean);
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin: 0 0 10px 0;
+    }}
+    .takeaways ul {{
+      margin: 0;
+      padding-left: 20px;
+    }}
+    .takeaways li {{
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+      color: #1a2332;
+    }}
+    .takeaways li:last-child {{ margin-bottom: 0; }}
+    .takeaways li::marker {{ color: var(--dusk); }}
     .warning {{
       background: #fff7ed;
       border: 1px solid #fed7aa;
@@ -1431,12 +1513,118 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
       padding: 24px;
       border-top: 1px solid #e5ecf2;
       margin-top: 24px;
+      background: white;
     }}
     footer span {{ color: var(--ocean); font-weight: 700; }}
     @media (max-width: 900px) {{
       .kpi-grid {{ grid-template-columns: repeat(2, 1fr); }}
       .grid-2 {{ grid-template-columns: 1fr; }}
+      nav.tabs {{ padding: 0 16px; }}
+      main {{ padding: 0 16px 40px 16px; }}
     }}
+    """
+
+    js = """
+    function showPanel(id, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    """
+
+    # ---- Build each panel ----
+    overview = f"""
+      <div class="panel-intro">
+        High-level state of the publication. Subscriber base, revenue, reach, engagement, paid flow.
+        Use this view as the daily check. The other tabs go deeper.
+      </div>
+      <div class="kpi-grid">{''.join(tiles)}</div>
+      {_takeaways_block("Bottom Line", takeaways.get('overview', []))}
+      {_chart_block("Subscribers — total list and paid", charts.get("subscribers", ""))}
+      <div class="grid-2">
+        {_chart_block("Annual recurring revenue", charts.get("arr", ""))}
+        {_chart_block("Daily traffic", charts.get("traffic", ""))}
+      </div>
+    """
+
+    growth = f"""
+      <div class="panel-intro">
+        Where new visitors and subscribers come from, and which channels actually convert.
+        Substack-internal, social, search, direct, email referrals each behave differently.
+      </div>
+      {_takeaways_block("What's Working, What's Not", takeaways.get('growth', []))}
+      {_chart_block("Acquisition funnel by category", charts.get("source_funnel", ""))}
+      <div class="grid-2">
+        {_chart_block("New revenue by category", charts.get("revenue_by_source", ""))}
+        {_chart_block("Top growth sources (top 10)", charts.get("growth_sources", ""))}
+      </div>
+      <div class="chart-block">
+        <h3>Growth sources detail</h3>
+        {growth_sources_table}
+      </div>
+    """
+
+    engagement = f"""
+      <div class="panel-intro">
+        Open rates, click-through, engagement by post type and audience segment.
+        How the list responds to the work, both quantitatively and over time.
+      </div>
+      {_takeaways_block("Engagement Read", takeaways.get('engagement', []))}
+      {_chart_block("Engagement trend — open and click rates over time", charts.get("engagement_trend", ""))}
+      {_chart_block("Email engagement — last 20 posts", charts.get("email_engagement", ""))}
+      {_chart_block("Post type performance — reach vs engagement", charts.get("post_type_performance", ""))}
+    """
+
+    funnel = f"""
+      <div class="panel-intro">
+        How subscribers move from free to paid. Direct conversions, upgrades from the free list,
+        trials, cancellations. The conversion physics of the publication.
+      </div>
+      {_takeaways_block("Funnel Mechanics", takeaways.get('funnel', []))}
+      {_chart_block("Paid subscriber waterfall — last 30d", charts.get("funnel_waterfall", ""))}
+      <div class="grid-2">
+        {_chart_block("Free vs paid composition (180d)", charts.get("free_paid_composition", ""))}
+        {_chart_block("Paid subscriber daily flow", charts.get("paid_growth", ""))}
+      </div>
+      <div class="chart-block">
+        <h3>Recent unsubscribes</h3>
+        {unsubs_html}
+      </div>
+    """
+
+    content_panel = f"""
+      <div class="panel-intro">
+        Post-level performance. Which titles drove signups, which converted to paid,
+        which audiences and formats are pulling weight.
+      </div>
+      {_takeaways_block("Editorial Read", takeaways.get('content', []))}
+      {_chart_block("Audience segment split — views and signups", charts.get("audience_split", ""))}
+      <div class="chart-block">
+        <h3>Top posts (30d) by views</h3>
+        {top_posts_html}
+      </div>
+      <div class="chart-block">
+        <h3>Recent posts</h3>
+        {recent_posts_html}
+      </div>
+    """
+
+    audience = f"""
+      <div class="panel-intro">
+        Who the readers are. Geographic distribution, the follower-to-email ratio,
+        traffic source mix. Where the audience lives, literally and structurally.
+      </div>
+      {_takeaways_block("Audience Composition", takeaways.get('audience', []))}
+      <div class="grid-2">
+        {_chart_block("Audience location — top free signup sources", charts.get("audience_location", ""))}
+        {_chart_block("Traffic sources by views", charts.get("traffic_sources", ""))}
+      </div>
+      <div class="chart-block">
+        <h3>Traffic source detail</h3>
+        {traffic_sources_table}
+      </div>
     """
 
     html = f"""<!DOCTYPE html>
@@ -1444,7 +1632,7 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lighthouse Macro — Substack Dashboard</title>
+  <title>Lighthouse Macro - Substack Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet" />
@@ -1462,48 +1650,27 @@ def render_html(kpi: dict, charts: dict, tables: dict, stamp_human: str,
       <div>research.lighthousemacro.com</div>
     </div>
   </header>
+  <nav class="tabs">
+    <button class="active" onclick="showPanel('panel-overview', this)">Overview</button>
+    <button onclick="showPanel('panel-growth', this)">Growth Engine</button>
+    <button onclick="showPanel('panel-engagement', this)">Engagement</button>
+    <button onclick="showPanel('panel-funnel', this)">Funnel</button>
+    <button onclick="showPanel('panel-content', this)">Content</button>
+    <button onclick="showPanel('panel-audience', this)">Audience</button>
+  </nav>
   <main>
     {missing_html}
-    <div class="kpi-grid">
-      {''.join(tiles)}
-    </div>
-
-    {chart_block("Subscribers", charts.get("subscribers", ""))}
-
-    <div class="grid-2">
-      {chart_block("Annual recurring revenue", charts.get("arr", ""))}
-      {chart_block("Paid subscriber flow", charts.get("paid_growth", ""))}
-    </div>
-
-    {chart_block("Daily traffic", charts.get("traffic", ""))}
-
-    {chart_block("Email engagement — last 20 posts", charts.get("email_engagement", ""))}
-
-    <div class="chart-block">
-      <h3>Top posts (30d) — by views</h3>
-      {top_posts_html}
-    </div>
-
-    <div class="chart-block">
-      <h3>Recent posts</h3>
-      {recent_posts_html}
-    </div>
-
-    <div class="grid-2">
-      {chart_block("Traffic sources", charts.get("traffic_sources", ""))}
-      {chart_block("Audience location", charts.get("audience_location", ""))}
-    </div>
-
-    {chart_block("Growth sources", charts.get("growth_sources", ""))}
-
-    <div class="chart-block">
-      <h3>Recent unsubscribes</h3>
-      {unsubs_html}
-    </div>
+    <section id="panel-overview" class="panel active">{overview}</section>
+    <section id="panel-growth" class="panel">{growth}</section>
+    <section id="panel-engagement" class="panel">{engagement}</section>
+    <section id="panel-funnel" class="panel">{funnel}</section>
+    <section id="panel-content" class="panel">{content_panel}</section>
+    <section id="panel-audience" class="panel">{audience}</section>
   </main>
   <footer>
     <span>LIGHTHOUSE MACRO</span> · INTERNAL · DO NOT DISTRIBUTE
   </footer>
+  <script>{js}</script>
 </body>
 </html>
 """
@@ -1583,22 +1750,109 @@ def table_recent_posts(es: pd.DataFrame) -> str:
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>")
 
 
+def _load_resubbed_emails() -> set[str]:
+    """Read RESUBBED_FILE and return a normalized set of email addresses
+    that have re-subscribed since their unsubscribe event."""
+    if not RESUBBED_FILE.exists():
+        return set()
+    out = set()
+    for line in RESUBBED_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        out.add(line.lower())
+    return out
+
+
 def table_unsubs(unsubs: pd.DataFrame) -> str:
     if unsubs is None or unsubs.empty:
         return "<p style='color:#898989;font-size:12px'>No unsubscribes recorded.</p>"
+    resubbed = _load_resubbed_emails()
     df = unsubs.copy()
     if "unsubscribed_at" in df.columns:
         df = df.sort_values("unsubscribed_at", ascending=False)
-    df = df.head(15)
+    df = df.head(20)
     rows = []
+    active_count = 0
+    resubbed_count = 0
     for _, r in df.iterrows():
         when = r["unsubscribed_at"].strftime("%Y-%m-%d") if "unsubscribed_at" in df.columns and pd.notna(r["unsubscribed_at"]) else "—"
-        email = _s(r.get("email")).replace("<", "&lt;")
+        email_raw = _s(r.get("email")).strip()
+        email = email_raw.replace("<", "&lt;")
         bucket = _s(r.get("cancel_reason_bucket"))
         feedback = _s(r.get("feedback")).replace("<", "&lt;").replace(">", "&gt;")
-        rows.append(f"<tr><td>{when}</td><td>{email}</td><td>{bucket}</td><td>{feedback}</td></tr>")
-    return ("<table><thead><tr>"
+        is_resub = email_raw.lower() in resubbed
+        if is_resub:
+            resubbed_count += 1
+            row_style = " style='opacity:0.55;background:#f4faf6'"
+            badge = (f"<span style='display:inline-block;background:{STARBOARD};color:white;"
+                     f"padding:1px 7px;border-radius:10px;font-size:9px;font-weight:700;"
+                     f"letter-spacing:1px;text-transform:uppercase;margin-left:6px'>Resubbed</span>")
+            email_cell = f"{email}{badge}"
+        else:
+            active_count += 1
+            row_style = ""
+            email_cell = email
+        rows.append(f"<tr{row_style}><td>{when}</td><td>{email_cell}</td><td>{bucket}</td><td>{feedback}</td></tr>")
+    summary = (f"<div style='font-size:11px;color:{DOLDRUMS};margin-bottom:10px'>"
+               f"Showing {len(rows)} unsubscribe events. "
+               f"<strong style='color:{PORT}'>{active_count} still off the list.</strong> "
+               f"<strong style='color:{STARBOARD}'>{resubbed_count} re-subscribed</strong> "
+               f"(tracked in <code>{RESUBBED_FILE.name}</code>).</div>") if rows else ""
+    return (summary + "<table><thead><tr>"
             "<th>When</th><th>Email</th><th>Reason</th><th>Feedback</th>"
+            "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>")
+
+
+def table_growth_sources(A: dict) -> str:
+    src = A.get("growth_top_sources")
+    if src is None or src.empty:
+        return "<p style='color:#898989;font-size:12px'>No growth source data.</p>"
+    rows = []
+    for _, r in src.iterrows():
+        name = _s(r.get("source")).replace("<", "&lt;")
+        if len(name) > 60:
+            name = name[:60] + "..."
+        rows.append(
+            f"<tr><td>{name}</td>"
+            f"<td class='num'>{int(r['unique_visitors']):,}</td>"
+            f"<td class='num'>{int(r['new_subscribers'])}</td>"
+            f"<td class='num'>${int(r['new_revenue']):,}</td></tr>"
+        )
+    return ("<table><thead><tr>"
+            "<th>Source</th>"
+            "<th style='text-align:right'>Visitors</th>"
+            "<th style='text-align:right'>New subs</th>"
+            "<th style='text-align:right'>Revenue</th>"
+            "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>")
+
+
+def table_traffic_sources(A: dict) -> str:
+    df = A.get("traffic_sources")
+    if df is None or df.empty:
+        return "<p style='color:#898989;font-size:12px'>No traffic source data.</p>"
+    df = df.sort_values("views", ascending=False).head(15)
+    rows = []
+    for _, r in df.iterrows():
+        src = _s(r.get("source"))
+        cat = _s(r.get("source_category"))
+        views = _fmt_int(r.get("views"))
+        users = _fmt_int(r.get("users"))
+        signups = _fmt_int(r.get("free_signup")) if pd.notna(r.get("free_signup")) else "—"
+        subs = _fmt_int(r.get("subscribed")) if pd.notna(r.get("subscribed")) else "—"
+        rows.append(
+            f"<tr><td>{src}</td><td>{cat}</td>"
+            f"<td class='num'>{views}</td>"
+            f"<td class='num'>{users}</td>"
+            f"<td class='num'>{signups}</td>"
+            f"<td class='num'>{subs}</td></tr>"
+        )
+    return ("<table><thead><tr>"
+            "<th>Source</th><th>Category</th>"
+            "<th style='text-align:right'>Views</th>"
+            "<th style='text-align:right'>Users</th>"
+            "<th style='text-align:right'>Signups</th>"
+            "<th style='text-align:right'>Subs</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>")
 
 
@@ -1642,6 +1896,17 @@ def run() -> Path:
     kpi = compute_kpis(data)
     append_kpi_history(kpi, stamp)
 
+    analysis = analyze(data, kpi)
+
+    takeaways = {
+        "overview":   takeaways_overview(kpi, analysis),
+        "growth":     takeaways_growth(analysis),
+        "engagement": takeaways_engagement(kpi, analysis),
+        "funnel":     takeaways_funnel(kpi, analysis),
+        "content":    takeaways_content(analysis),
+        "audience":   takeaways_audience(kpi, analysis),
+    }
+
     charts: dict = {}
     if "subscribers" in data:        charts["subscribers"] = chart_subscribers(data["subscribers"], data.get("emails"))
     if "arr" in data:                charts["arr"] = chart_arr(data["arr"])
@@ -1652,14 +1917,27 @@ def run() -> Path:
     if "paid_subscriber_growth" in data: charts["paid_growth"] = chart_paid_growth(data["paid_subscriber_growth"])
     if "email_stats" in data:        charts["email_engagement"] = chart_email_engagement(data["email_stats"])
 
+    # Analysis-panel charts
+    charts["source_funnel"] = chart_source_funnel(analysis)
+    charts["revenue_by_source"] = chart_revenue_by_source(analysis)
+    charts["post_type_performance"] = chart_post_type_performance(analysis)
+    charts["audience_split"] = chart_audience_split(analysis, kpi)
+    charts["funnel_waterfall"] = chart_funnel_waterfall(analysis, kpi)
+    if "subscribers" in data and "emails" in data:
+        charts["free_paid_composition"] = chart_free_paid_composition(data["subscribers"], data["emails"])
+    if "email_stats" in data:
+        charts["engagement_trend"] = chart_engagement_trend(data["email_stats"])
+
     tables = {
         "top_posts": table_top_posts(data.get("email_stats")),
         "recent_posts": table_recent_posts(data.get("email_stats")),
         "unsubs": table_unsubs(data.get("unsubscribes")),
+        "growth_sources": table_growth_sources(analysis),
+        "traffic_sources": table_traffic_sources(analysis),
     }
 
     missing = [t for t in CSV_TYPES if t not in picks and t != "free_subscriber_growth"]
-    html = render_html(kpi, charts, tables, stamp_human, missing)
+    html = render_html(kpi, charts, tables, stamp_human, missing, analysis, takeaways)
 
     versioned = OUT_DIR / f"dashboard_{stamp}.html"
     latest = OUT_DIR / "dashboard_latest.html"

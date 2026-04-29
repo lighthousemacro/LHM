@@ -119,10 +119,11 @@ def chart_pillar_vs_target(conn, pillar, target_series, target_h, target_mode,
     style_ax(ax); style_ax(ax2)
     ax.tick_params(right=False); ax2.tick_params(left=False)
 
+    # 2-series overlay: Ocean (protagonist, signal) + Dusk (antagonist, target)
     l1 = ax.plot(aligned.index, aligned['sig'],
-                 color=OCEAN, linewidth=2.0, label=f'{pillar} composite z-score (LHS)')
+                 color=OCEAN, linewidth=2.4, label=f'{pillar} composite z-score (LHS)')
     l2 = ax2.plot(aligned.index, aligned['fwd'],
-                  color=DUSK, linewidth=1.5, alpha=0.7, label=target_label + ' (RHS)')
+                  color=DUSK, linewidth=1.6, alpha=0.85, label=target_label + ' (RHS)')
 
     ax.axhline(0, color='#D1D1D1', linewidth=0.7, linestyle='--')
 
@@ -161,9 +162,10 @@ def chart_spread(conn, pillar, asset_a, asset_b, h, weights, label, output_name,
     style_ax(ax); style_ax(ax2)
     ax.tick_params(right=False); ax2.tick_params(left=False)
 
-    ax.plot(aligned.index, aligned['sig'], color=OCEAN, linewidth=2.0,
+    # 2-series overlay: Ocean (signal) + Dusk (target spread)
+    ax.plot(aligned.index, aligned['sig'], color=OCEAN, linewidth=2.4,
             label=f'{pillar} composite z-score (LHS)')
-    ax2.plot(aligned.index, aligned['fwd'], color=VENUS, linewidth=1.4, alpha=0.7,
+    ax2.plot(aligned.index, aligned['fwd'], color=DUSK, linewidth=1.6, alpha=0.85,
              label=label + ' (RHS)')
     ax.axhline(0, color='#D1D1D1', linewidth=0.7, linestyle='--')
     ax2.axhline(0, color='#D1D1D1', linewidth=0.7, linestyle='--')

@@ -585,6 +585,9 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 
 ## Data Handling
 
+- **Always load the full available history.** Every chart pulls the entire data series from its earliest available date forward. Never pre-window the data load. The chart shows whatever subset best illustrates the point via `set_xlim()`, but the underlying data behind it always extends back to LHS of available history.
+- **Why:** z-scores, rolling stats, regime classifications, and any historical context lines (recession bands, prior-cycle anchors, "December 2018 low" annotations) only work correctly if the full series is loaded. Pre-windowed data computes statistics against the wrong baseline.
+- **The exception:** if a series genuinely doesn't exist further back (e.g., spot BTC ETF flows started 2024), load what exists and document the actual start date. Don't fake or extrapolate.
 - Always `dropna()`. Forward-fill quarterly to daily.
 - Smooth volatile series with 3-month MA. Don't smooth already-smoothed measures.
 

@@ -27,6 +27,7 @@
   - **Monetary Mechanics** — money and credit. Government, financial conditions, plumbing. Three pillars.
   - **Market Structure** — what prices and positioning are telling us. Structure, sentiment. Two pillars.
 - Pascal checkpoint: *"Why twelve and not ten or twenty?"* Bob: *"Because we found these are the twelve that consistently lead something else. Add more, you add noise. Subtract any one, you go blind to a real signal."*
+- Pascal checkpoint: *"Where does Bitcoin fit?"* Bob: *"Crypto isn't a thirteenth pillar — it's a downstream asset that the twelve drive. Treat Bitcoin like the highest-beta liquidity instrument on the planet. When global liquidity expands, BTC leads. When it contracts, BTC bleeds first. We'll come back to this every episode, because for your listeners, it's the most concrete way to feel the framework move."*
 
 **Act 2 — Walk the pillars.** Labor opens because it's the lead indicator on the lead indicator — labor turns before growth turns, and growth turns before equities turn. Every pillar gets real treatment.
 
@@ -38,7 +39,7 @@
 - **Housing.** Housing is rate-sensitive collateral. When rates rise, transactions freeze, but prices don't fall because nobody has to sell. We call it the **frozen equilibrium**. Housing leads consumer behavior with a 6-9 month lag, because the wealth effect runs through home equity.
 - **Consumer.** 68% of US GDP. The consumer is the last domino — they keep spending until they can't. We watch real (inflation-adjusted) personal consumption, the saving rate, and credit card delinquencies. When delinquencies rise while spending stays high, you're watching the last leg of a credit cycle.
 - **Business.** Capital expenditure — capex — is forward commitment. Companies don't build factories for next quarter. They build for the next decade. Capex tells you what management actually believes, separate from what they say on earnings calls.
-- **Trade.** The dollar is the world's pricing mechanism. A strong dollar makes US imports cheaper (good for inflation) and US exports more expensive (bad for multinationals). It also strangles emerging markets that borrowed in dollars. The dollar is in every macro equation, even when it's not the topic.
+- **Trade.** The dollar is the world's pricing mechanism. A strong dollar makes US imports cheaper (good for inflation) and US exports more expensive (bad for multinationals). It also strangles emerging markets that borrowed in dollars. The dollar is in every macro equation, even when it's not the topic — including Bitcoin's. **DXY** (Dollar Index) is one of the cleanest single-variable predictors of BTC direction over multi-month windows. Strong dollar, BTC struggles. Weak dollar, BTC tailwind.
 
 ### Monetary Mechanics (the three money-and-credit pillars)
 

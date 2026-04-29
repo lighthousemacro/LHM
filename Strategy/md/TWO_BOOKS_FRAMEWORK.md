@@ -1,8 +1,8 @@
-# THE TWO BOOKS FRAMEWORK
-## Core Book & Technical Overlay Book
+# THE PORTFOLIO FRAMEWORK
+## One Book, Two Ways of Taking Risk
 
-**Version:** 1.0
-**Date:** January 20, 2026
+**Version:** 2.0
+**Date:** April 29, 2026 (reframed from "Two Books" v1.0, January 20, 2026)
 **Author:** Bob Sheehan, CFA, CMT
 
 *"MACRO, ILLUMINATED."*
@@ -13,12 +13,16 @@
 
 True global macro is directional, not directionally constrained. Soros didn't break the Bank of England by being too bullish on the UK's currency. He shorted the shit out of the pound. We are directional macro, not relative value. We have views. In a world where prices go up most of the time, our bias will be towards owning as opposed to shorting. The framework accommodates wherever the thesis takes us: long or short.
 
-The distinction between the two books isn't about direction or duration. It's about what drives the position:
+The portfolio is a single book. Within it, there are two ways of taking risk, distinguished by what drives the position:
 
-- **Core Book:** Position follows a macro/fundamental thesis
-- **Technical Overlay:** Position follows price structure alone
+- **Framework-driven sizing:** Position follows a macro/fundamental thesis, sized by conviction, gated by regime
+- **Technical sleeve:** Position follows price structure alone, no thesis required
 
-**Critical Insight:** The books are entry frameworks, not holding period constraints. The moment you own something, you're managing a position. Entry logic determines how you get in. Price and drivers determine how long you stay.
+The technical sleeve is the **humility patch** on a macro framework. It exists because markets and macro aren't always rational together. Sometimes the framework says no and price keeps ripping. Sometimes the framework says yes and price won't break out. The honest response isn't to white-knuckle the framework. It's to admit price action is a real signal even when we can't logically defend it from the top down.
+
+The framework is the alpha. The technical sleeve is the acknowledgment that markets don't owe the framework anything.
+
+**Critical insight:** Both modes are entry frameworks, not holding period constraints. The moment you own something, you're managing a position. Entry logic determines how you get in. Price and drivers determine how long you stay.
 
 ---
 

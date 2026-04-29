@@ -139,8 +139,8 @@
 
 **Companion visuals (3):**
 1. Two Books schematic — Core vs Technical Overlay, with activation logic.
-2. Tier-sizing diagram — the four tiers and what gets in each.
-3. Regime multiplier × MRI table — what your sizing looks like in each regime.
+2. Tier-sizing diagram — the four tiers and what gets in each (with a Bitcoin position shown as one example sleeve).
+3. Regime multiplier × MRI table — what your sizing looks like in each regime, with a Bitcoin sizing column alongside equity sizing.
 
 ---
 

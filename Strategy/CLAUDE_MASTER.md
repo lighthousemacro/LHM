@@ -99,7 +99,7 @@ Chief Investment Officer, Lighthouse Macro, LLC (Delaware)
 | Email | bob@lighthousemacro.com |
 | Advisory | advisory@lighthousemacro.com |
 | Research | research@lighthousemacro.com |
-| Phone | +1 (240) 672-7418 |
+| Phone | +1 (929) 238-9397 |
 | Twitter/X | @LHMacro |
 | Bank | Mercury |
 

@@ -2,7 +2,7 @@
 ## One Book, Two Ways of Taking Risk
 
 **Version:** 2.0
-**Date:** April 29, 2026 (reframed from "One Book" v1.0, January 20, 2026)
+**Date:** April 29, 2026 (reframed from "Two Books Framework" v1.0, January 20, 2026)
 **Author:** Bob Sheehan, CFA, CMT
 
 *"MACRO, ILLUMINATED."*

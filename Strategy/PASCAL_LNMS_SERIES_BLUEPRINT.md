@@ -15,15 +15,15 @@
 
 **Act 1 — The diagnostic problem.** Why a framework. Introduce the three-engine architecture: Macro Dynamics, Monetary Mechanics, Market Structure. Twelve pillars across three engines.
 
-**Act 2 — Walk the pillars in story form (25 min).** Labor opens because it's the source code, but every pillar gets real treatment. We're walking the framework, not running through it.
+**Act 2 — Walk the pillars in story form.** Labor opens because it's the source code, but every pillar gets real treatment. We're walking the framework, not running through it.
 - **Open with Labor (a little longer).** Quits as truth serum. Flows lead, stocks lag. Drop the line: *"By the time the unemployment rate moves, the story is already over."*
 - **The real-economy pillars get full treatment:** **Prices** (the transmission belt, sticky last mile), **Growth** (second derivative, why levels mislead), **Housing** (frozen equilibrium, rate sensitivity, collateral), **Consumer** (68% of GDP, the last domino), **Business** (capex as forward commitment), **Trade** (dollar pass-through).
 - **Then the monetary engine:** **Government** (fiscal dominance, term premium), **Financial** (credit spreads as the lead indicator), **Plumbing** (the invisible infrastructure).
 - **Then the market engine:** **Structure** (breadth, trend, momentum), **Sentiment** (contrarian only at extremes).
 
-**Act 3 — Historical illustration (5 min).** 2007–08: labor flows deteriorating while equities made new highs. The framework would have flagged it. The headline data didn't.
+**Act 3 — Historical illustration.** 2007–08: labor flows deteriorating while equities made new highs. The framework would have flagged it. The headline data didn't.
 
-**Close (3 min).** "Twelve pillars across three engines. Next week, we connect them."
+**Close.** "Twelve pillars across three engines. Next week, we connect them."
 
 **Companion visuals (3):**
 1. Three-engine schematic
@@ -34,22 +34,22 @@
 
 ## Episode 2 — Synthesis: How the Pillars Talk to Each Other
 
-**Cold open (2 min).** Any single pillar can lie. The edge is in the conversation between them.
+**Cold open.** Any single pillar can lie. The edge is in the conversation between them.
 
-**Act 1 — Composites are relationships, not readings (10 min).**
+**Act 1 — Composites are relationships, not readings.**
 - **MRI** — single number, regime classification, equity allocation range.
 - **LCI, CLG, MSI, SPI.**
 - On CLG: *"Credit spreads minus labor fragility. When credit is tight but labor is soft, something has to give. Usually credit catches up."*
 
-**Act 2 — Four chains as four stories (20 min, the meatiest segment).**
+**Act 2 — Four chains as four stories (the meatiest segment).**
 1. **Labor → credit → equity.** Silent Deceleration. Sequential lead-lag is the alpha. 1999–2000, 2007–08.
 2. **Collateral fragility / crypto-Treasury loop.** Stablecoins as marginal T-bill buyer. New transmission channel. European institutional listeners lean in here.
 3. **Plumbing → asset prices.** RRP drain → reserve scarcity → SLR-stressed dealers → repo widening → auction tails. Pascal: *"Why doesn't anyone cover it?"* Bob: *"Because it's boring until it isn't, and by then it's too late."*
 4. **Fiscal dominance / term premium as the honest signal.** Structural deficits, post-QE world, term premium needs to reprice.
 
-**Act 3 — Divergences (8 min).** SBD and SSD. Why divergences matter more than levels. December 2018 low, October 2022 low.
+**Act 3 — Divergences.** SBD and SSD. Why divergences matter more than levels. December 2018 low, October 2022 low.
 
-**Close (5 min).** "Pillars are inputs. Composites are processors. Chains are how the framework actually thinks. Next week, we turn it into a portfolio."
+**Close.** "Pillars are inputs. Composites are processors. Chains are how the framework actually thinks. Next week, we turn it into a portfolio."
 
 **Companion visuals (3):**
 1. Four-chains diagram (one composite image)
@@ -60,22 +60,22 @@
 
 ## Episode 3 — Application: How Worldview Becomes Portfolio
 
-**Cold open (2 min).** Most macro people don't run money. The gap between *"I think rates are going lower"* and *"long duration this size, this stop, this catalyst, this invalidation"* is where careers are made and lost.
+**Cold open.** Most macro people don't run money. The gap between *"I think rates are going lower"* and *"long duration this size, this stop, this catalyst, this invalidation"* is where careers are made and lost.
 
-**Act 1 — Two Books (15 min).**
+**Act 1 — Two Books.**
 - **Core Book.** Macro + fundamental + technical. 3–6 month horizon. Up to 20% per position. MRI regime multiplier on sizing. **Cash is a position, not drag.**
 - **Technical Overlay Book.** Pure trend, momentum, relative strength. Activated when Core is defensive. Smaller positions, tighter stops.
 - Pascal: *"Why not one book?"* Bob: *"Because conviction-weighted macro and pure technical aren't the same trade, and pretending they are is how you confuse yourself."*
 
-**Act 2 — The discipline (15 min).**
+**Act 2 — The discipline.**
 - **Conviction weighting.** Tier 1 = 20%, Tier 2 = 12%, Tier 3 = 7%, Tier 4 = 0%. Concentration is a feature.
 - **Dual stops** (thesis + price, whichever triggers first). Pascal: *"Why two?"* Bob: *"Because thesis can break before price moves, and price can break before thesis is wrong. Either alone leaves you exposed."*
 - **Regime multipliers** (1.2x low risk → 0x crisis). Mechanical, not discretionary.
 - **Technical overlay scoring** (12 points across trend/momentum/RS, 8/12 to enter). *"Stories are easy to tell. Scores are harder to fake."*
 
-**Act 3 — Strong views, weakly held (8 min).** Explicit invalidation criteria. BofA SGS sleeve historical illustration: $1.2B at peak, 2.35 Sortino, 103% upside / 76% downside capture.
+**Act 3 — Strong views, weakly held.** Explicit invalidation criteria. BofA SGS sleeve historical illustration: $1.2B at peak, 2.35 Sortino, 103% upside / 76% downside capture.
 
-**Close (5 min).** *"Worldview without a portfolio is a tweet. A portfolio without a worldview is a series of guesses. The framework is the bridge."*
+**Close.** *"Worldview without a portfolio is a tweet. A portfolio without a worldview is a series of guesses. The framework is the bridge."*
 
 **Final hand-off.** Point listeners to the Diagnostic Dozen pillar series on Substack for long-form.
 

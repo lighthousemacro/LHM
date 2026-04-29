@@ -115,7 +115,7 @@
 
 **Act 1 — Two Books: separating the trades you make for different reasons.**
 
-- **The Core Book.** Macro plus fundamental plus technical. 3-6 month catalyst horizon. Up to 20% of capital in any single position. Position sizing is multiplied by an MRI regime multiplier — when the MRI says low risk, you size up; when it says crisis, you size to zero. **Cash is a position, not drag.** When the framework says you shouldn't be in the market, the right size is zero, not "well, what should I buy instead."
+- **The Core Book.** Macro plus fundamental plus technical. 3-6 month catalyst horizon. Up to 20% of capital in any single position. Position sizing is multiplied by an MRI regime multiplier — when the MRI says low risk, you size up; when it says crisis, you size to zero. **Cash is a position, not drag.** When the framework says you shouldn't be in the market, the right size is zero, not "well, what should I buy instead." Crypto fits inside the Core Book the same way duration or single names do — sized by conviction, gated by regime, governed by dual stops. Bitcoin gets no special treatment, which is the highest compliment we can pay it.
 
 - **The Technical Overlay Book.** Pure trend, momentum, relative strength. No fundamental opinion required. Activated only when the Core Book is defensive — meaning when the macro picture is bad enough that we're sitting in cash, but markets keep ripping anyway. Smaller positions, tighter stops, designed to participate in moves your macro view said wouldn't happen.
 

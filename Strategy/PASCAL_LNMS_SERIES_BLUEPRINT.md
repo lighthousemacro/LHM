@@ -140,7 +140,7 @@ Pascal checkpoint: *"So when does the technical sleeve fire?"* Bob: *"Most often
 **Final hand-off.** Point listeners to the Diagnostic Dozen pillar series on Substack for long-form treatment of every pillar we've covered. The next thing we'll be writing about — wages, labor, and the fiscal-dominance feedback loop — is exactly the kind of cross-pillar synthesis this framework was built for. Three engines, twelve pillars, one map.
 
 **Companion visuals (3):**
-1. Two Books schematic — Core vs Technical Overlay, with activation logic.
+1. One book, two sleeves — framework-driven sizing vs technical sleeve, with the "humility patch" framing.
 2. Tier-sizing diagram — the four tiers and what gets in each (with a Bitcoin position shown as one example sleeve).
 3. Regime multiplier × MRI table — what your sizing looks like in each regime, with a Bitcoin sizing column alongside equity sizing.
 

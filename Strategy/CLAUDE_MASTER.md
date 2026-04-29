@@ -74,7 +74,7 @@ Bob's research identity is built around framework-first macro analysis — proce
 ## Who Bob Is
 
 **Robert Brown Sheehan, CFA, CMT** (goes by Bob)
-Founder & Chief Investment Officer, Lighthouse Macro, LLC (Delaware)
+Chief Investment Officer, Lighthouse Macro, LLC (Delaware)
 
 ### Background
 

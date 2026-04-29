@@ -47,3 +47,21 @@
 2026-04-28 16:35:11 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSGASS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-04-28 16:35:16 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSGMS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-04-28 16:35:42 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-04-29 12:05:26 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSCCAS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-29 12:05:28 [WARNING] Attempt 2 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSCCAS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
+2026-04-29 12:05:36 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RRSFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-29 12:07:51 [WARNING] DB read attempt 1 failed (database is locked); waiting 1s.
+2026-04-29 12:09:23 [WARNING] DB read attempt 2 failed (database is locked); waiting 2s.
+2026-04-29 12:10:55 [WARNING] DB read attempt 3 failed (database is locked); waiting 4s.
+2026-04-29 12:11:32 [INFO] Stale series (9):
+  HOUST: db=2026-01-01 -> fred=2026-03-01
+  PERMIT: db=2026-01-01 -> fred=2026-03-01
+  PERMIT1: db=2026-01-01 -> fred=2026-03-01
+  COMPUTSA: db=2026-01-01 -> fred=2026-03-01
+  UNDCONTSA: db=2026-01-01 -> fred=2026-03-01
+  DGORDER: db=2026-02-01 -> fred=2026-03-01
+  ADXTNO: db=2026-02-01 -> fred=2026-03-01
+  NEWORDER: db=2026-02-01 -> fred=2026-03-01
+  ANDENO: db=2026-02-01 -> fred=2026-03-01
+2026-04-29 12:13:24 [INFO]   HOUST: refreshed (+807 obs)
+2026-04-29 12:14:53 [ERROR]   PERMIT: fetch failed: database is locked

@@ -115,7 +115,7 @@
 
 **Act 1 — Two Books: separating the trades you make for different reasons.**
 
-- **The Core Book.** Macro plus fundamental plus technical. 3-6 month catalyst horizon. Up to 20% of capital in any single position. Position sizing is multiplied by an MRI regime multiplier — when the MRI says low risk, you size up; when it says crisis, you size to zero. **Cash is a position, not drag.** When the framework says you shouldn't be in the market, the right size is zero, not "well, what should I buy instead."
+- **The Core Book.** Macro plus fundamental plus technical. 3-6 month catalyst horizon. Up to 20% of capital in any single position. Position sizing is multiplied by an MRI regime multiplier — when the MRI says low risk, you size up; when it says crisis, you size to zero. **Cash is a position, not drag.** When the framework says you shouldn't be in the market, the right size is zero, not "well, what should I buy instead." Crypto fits inside the Core Book the same way duration or single names do — sized by conviction, gated by regime, governed by dual stops. Bitcoin gets no special treatment, which is the highest compliment we can pay it.
 
 - **The Technical Overlay Book.** Pure trend, momentum, relative strength. No fundamental opinion required. Activated only when the Core Book is defensive — meaning when the macro picture is bad enough that we're sitting in cash, but markets keep ripping anyway. Smaller positions, tighter stops, designed to participate in moves your macro view said wouldn't happen.
 
@@ -131,7 +131,7 @@
 
 - **Technical overlay scoring.** The Technical Overlay Book uses a 12-point system: 4 points for trend structure, 4 for momentum, 4 for relative strength. You need 8 out of 12 to enter. *"Stories are easy to tell. Scores are harder to fake."*
 
-**Act 3 — Strong views, weakly held.** Every position we put on, we publish the conditions under which we'd be wrong. Explicit invalidation criteria. Not because we expect to be wrong, but because we expect to be wrong sometimes, and pre-commitment is the only thing that beats the urge to defend a losing trade. Historical illustration: BofA SGS sleeve. $1.2 billion at peak, 2.35 Sortino ratio, 103% upside capture, 76% downside capture. The discipline isn't about being right more often. It's about your wins being bigger than your losses, on average, over hundreds of decisions.
+**Act 3 — Strong views, weakly held.** Every position we put on, we publish the conditions under which we'd be wrong. Explicit invalidation criteria. Not because we expect to be wrong, but because we expect to be wrong sometimes, and pre-commitment is the only thing that beats the urge to defend a losing trade. The crypto-specific version: a long-Bitcoin thesis premised on net liquidity expansion is invalidated when net liquidity inflects negative, not when Bitcoin hits some round-number stop. Define the macro condition that supports the trade, exit when the macro condition breaks. Price stops protect you from the case where you're early; thesis stops protect you from the case where you're wrong. Historical illustration: BofA SGS sleeve. $1.2 billion at peak, 2.35 Sortino ratio, 103% upside capture, 76% downside capture. The discipline isn't about being right more often. It's about your wins being bigger than your losses, on average, over hundreds of decisions.
 
 **Close.** *"Worldview without a portfolio is a tweet. A portfolio without a worldview is a series of guesses. The framework is the bridge."*
 

@@ -115,13 +115,13 @@
 
 **Cold open.** Most macro people don't run money. The gap between *"I think rates are going lower"* and *"long duration this size, this stop, this catalyst, this invalidation"* is where careers are made and lost. Today we close that gap.
 
-**Act 1 — Two Books: separating the trades you make for different reasons.**
+**Act 1 — One book, two ways of taking risk.**
 
-- **The Core Book.** Macro plus fundamental plus technical. 3-6 month catalyst horizon. Up to 20% of capital in any single position. Position sizing is multiplied by an MRI regime multiplier — when the MRI says low risk, you size up; when it says crisis, you size to zero. **Cash is a position, not drag.** When the framework says you shouldn't be in the market, the right size is zero, not "well, what should I buy instead." Crypto fits inside the Core Book the same way duration or single names do — sized by conviction, gated by regime, governed by dual stops. Bitcoin gets no special treatment, which is the highest compliment we can pay it.
+Most of the book runs on the framework: macro thesis, fundamental confirmation, technical entry, full conviction sizing. That's the work. 3-6 month catalyst horizon. Up to 20% of capital in any single position. Sizing scales with the MRI regime — low risk, you size up; crisis, you size to zero. **Cash is a position, not drag.** When the framework says you shouldn't be in the market, the right size is zero, not *"well, what should I buy instead."* Crypto sits inside the same book the same way rates or equities do — sized by conviction, gated by regime, governed by dual stops.
 
-- **The Technical Overlay Book.** Pure trend, momentum, relative strength. No fundamental opinion required. Activated only when the Core Book is defensive — meaning when the macro picture is bad enough that we're sitting in cash, but markets keep ripping anyway. Smaller positions, tighter stops, designed to participate in moves your macro view said wouldn't happen.
+But markets and macro aren't always rational together. Sometimes the framework says no and price keeps ripping. Sometimes the framework says yes and price won't break out. The honest response isn't to white-knuckle the framework — it's to admit that price action is a real signal even when we can't logically defend it from the top down. So a portion of the book is reserved for trades the framework wouldn't sponsor on its own: pure trend, pure momentum, pure relative strength. Smaller positions. Tighter stops. No fundamental thesis required. **It's the humility patch on a macro framework.** The framework is the alpha. The technical sleeve is the acknowledgment that markets don't owe the framework anything.
 
-- Pascal checkpoint: *"Why not one book?"* Bob: *"Because conviction-weighted macro and pure technical aren't the same trade, and pretending they are is how you confuse yourself. The technical book has different stops, different sizing, different holding periods. Mixing them means your wins get smaller and your losses get bigger."*
+Pascal checkpoint: *"So when does the technical sleeve fire?"* Bob: *"Most often when macro is saying defensive but the tape keeps making higher highs. We don't want to miss the move just because we can't defend it on a chart. Smaller size, tighter stops, no thesis stop because there is no thesis. Just price. The sleeve protects us against being right too early, which in this business is indistinguishable from being wrong."*
 
 **Act 2 — The discipline: four principles.**
 

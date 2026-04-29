@@ -65,3 +65,11 @@
   ANDENO: db=2026-02-01 -> fred=2026-03-01
 2026-04-29 12:13:24 [INFO]   HOUST: refreshed (+807 obs)
 2026-04-29 12:14:53 [ERROR]   PERMIT: fetch failed: database is locked
+2026-04-29 12:17:24 [INFO]   PERMIT1: refreshed (+795 obs)
+2026-04-29 12:18:55 [ERROR]   COMPUTSA: fetch failed: database is locked
+2026-04-29 12:19:17 [INFO]   UNDCONTSA: refreshed (+675 obs)
+2026-04-29 12:19:18 [INFO]   DGORDER: refreshed (+410 obs)
+2026-04-29 12:19:19 [INFO]   ADXTNO: refreshed (+410 obs)
+2026-04-29 12:19:20 [INFO]   NEWORDER: refreshed (+410 obs)
+2026-04-29 12:19:21 [INFO]   ANDENO: refreshed (+410 obs)
+2026-04-29 12:19:21 [INFO] Freshness check done: 7 series refreshed, 3,917 obs added.

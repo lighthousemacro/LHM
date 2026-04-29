@@ -20530,3 +20530,16 @@ Breadth total: 13 series, 9,750 observations
 2026-04-29 12:13:06 [ERROR] Error fetching UNRATE: database is locked
 2026-04-29 12:13:14 [ERROR] Error fetching U6RATE: database is locked
 2026-04-29 12:13:22 [ERROR] Error fetching CIVPART: database is locked
+2026-04-29 12:15:48 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=ICSA&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-29 12:15:59 [ERROR] Error fetching ICSA: database is locked
+2026-04-29 12:16:08 [ERROR] Error fetching CCSA: database is locked
+2026-04-29 12:16:16 [ERROR] Error fetching JTS1000JOR: database is locked
+2026-04-29 12:16:25 [ERROR] Error fetching JTS1000QUR: database is locked
+2026-04-29 12:16:33 [ERROR] Error fetching JTS1000HIR: database is locked
+2026-04-29 12:16:41 [ERROR] Error fetching CPIAUCSL: database is locked
+2026-04-29 12:16:49 [ERROR] Error fetching CPILFESL: database is locked
+2026-04-29 12:16:57 [ERROR] Error fetching PCEPI: database is locked
+2026-04-29 12:17:05 [ERROR] Error fetching PCEPILFE: database is locked
+2026-04-29 12:17:13 [ERROR] Error fetching CUSR0000SACL1E: database is locked
+2026-04-29 12:17:21 [ERROR] Error fetching CUSR0000SAS: database is locked
+2026-04-29 12:20:51 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=DGS10&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...

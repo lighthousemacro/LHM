@@ -30,26 +30,27 @@ The framework is the alpha. The technical sleeve is the acknowledgment that mark
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                         THE TWO BOOKS                                            │
+│                ONE BOOK, TWO WAYS OF TAKING RISK                                 │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                  │
-│  CORE BOOK (50-100% of capital)                                                 │
-│  ─────────────────────────────────                                              │
-│  • Macro + Fundamental + Technical driven                                       │
+│  FRAMEWORK-DRIVEN SIZING (most of the book, 50-100% of capital)                 │
+│  ───────────────────────────────────────────────────────────────                │
+│  • Macro thesis + fundamental confirmation + technical entry                    │
 │  • LONG OR SHORT based on thesis                                                │
 │  • MRI regime multiplier applies to sizing                                      │
-│  • Thesis-driven entry with 3-6 month catalyst horizon                          │
+│  • 3-6 month catalyst horizon                                                   │
 │  • Full position sizing (up to 20% per position)                                │
-│  • Can go to 100% cash when no setups qualify                                   │
+│  • Cash is a position, not drag — when framework says no, size = zero           │
 │                                                                                  │
-│  TECHNICAL OVERLAY BOOK (0-50% of capital)                                      │
-│  ─────────────────────────────────────────                                      │
-│  • Pure technical (trend + momentum + relative strength)                        │
+│  TECHNICAL SLEEVE (the humility patch, 0-50% of capital)                        │
+│  ──────────────────────────────────────────────────────                         │
+│  • Pure trend / momentum / relative strength                                    │
 │  • LONG OR SHORT based on price structure                                       │
-│  • Activated when Core Book is defensive (MRI > +1.0)                           │
-│  • No macro thesis required, following price                                    │
-│  • Sizing at 50% of Core (max 10% longs, 5% shorts per position)                │
-│  • Tighter stops (10% longs, 8% shorts)                                         │
+│  • Activated most often when framework is defensive but tape keeps              │
+│    making higher highs                                                          │
+│  • No macro thesis required, follows price                                      │
+│  • Smaller sizing (max 10% longs, 5% shorts per position)                       │
+│  • Tighter stops (10% longs, 8% shorts), no thesis stop because no thesis       │
 │                                                                                  │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```

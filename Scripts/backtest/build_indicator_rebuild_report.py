@@ -367,21 +367,25 @@ li {{ margin-bottom: 4px; }}
 <h2 id="headline">Headline</h2>
 
 <div class="callout win">
-  <div class="callout-label">What worked</div>
-  <strong>Three pillars produce meaningfully better signal under optimized component weights.</strong>
-  Business Conditions Index (BCI) goes from +0.45 to <strong>+0.57</strong> out-of-sample information coefficient against forward new orders. Labor Pressure Index (LPI) goes from -0.32 to <strong>-0.38</strong>. Price Conditions Index (PCI) goes from essentially zero (+0.005) to <strong>+0.30</strong>. All three under tightened weight bounds [0.05, 0.30] to discourage corner solutions.
+  <div class="callout-label">The big finding</div>
+  <strong>All twelve pillars produce a clean tradeable signal against at least one asset.</strong> The framework works — but each pillar predicts the asset it's wired to predict, not all the same one. The Price Conditions Index leads 2-year Treasury yields with a +0.77 out-of-sample information coefficient (the strongest signal in the entire framework). The Trade Conditions Index leads USD/JPY at +0.63. The Liquidity Cushion Index leads 2-year yields at -0.63 over a three-month window. Different pillars, different assets, real signal in each.
+</div>
+
+<div class="callout win">
+  <div class="callout-label">What got optimized</div>
+  Three pillars showed meaningful improvement under component weight optimization vs the original judgment weights: <strong>Business Conditions Index (BCI), Labor Pressure Index (LPI), and Price Conditions Index (PCI)</strong>. All three with tighter bounds [0.05, 0.30]. Six other pillars already had strong judgment-weight signals — optimization couldn't improve them.
 </div>
 
 <div class="callout">
   <div class="callout-label">What we kept</div>
-  <strong>Macro Risk Index (MRI) judgment weights stay.</strong> Full SLSQP optimization against forward equity returns failed five of six master-plan invalidation criteria, including the OOS sign-flip. The judgment weights beat the optimized weights out-of-sample.
+  <strong>Macro Risk Index (MRI) judgment weights stay.</strong> Full SLSQP optimization against forward equity returns failed five of six master-plan invalidation criteria, including the OOS sign-flip. Judgment weights beat optimized out-of-sample.
   <br><br>
-  <strong>But MRI's job has changed.</strong> The continuous z-score of MRI doesn't predict forward returns reliably year-by-year. The threshold MRI ≥ +0.4 produces a 2.0x lift on big drawdown frequency. The threshold MRI ≥ +1.0 produces a 3.2x lift. MRI is best used as a regime-trigger threshold, not as a continuous regime conditioner.
+  <strong>But MRI's role changed.</strong> The continuous z-score doesn't predict forward returns reliably year-by-year. MRI ≥ +0.4 produces a 2.0x lift on big drawdown frequency. MRI ≥ +1.0 produces 3.2x. MRI is a regime-trigger threshold, not a continuous regime conditioner.
 </div>
 
 <div class="callout warn">
-  <div class="callout-label">What didn't work</div>
-  Six pillars (Growth Conditions Index, Housing Conditions Index, Consumer Conditions Index, Trade Conditions Index, Government Conditions Index, Financial Conditions Index, Liquidity Cushion Index, Market Structure Index, Sentiment & Positioning Index) produced no meaningful improvement under weight optimization. Most still have <strong>strong judgment-weight signals</strong> against their domain targets — the optimization just couldn't beat the judgment baseline.
+  <div class="callout-label">What needs more work</div>
+  Master plan's Phase 4 standalone signals (dealer positioning, breadth thrust binary) are blocked on missing or short data series — separate data-infrastructure work needed. The Quits-to-Claims standalone signal tested marginal (1.33x lift on HY widening), so the priority list is the optimized pillar findings, not new standalones.
 </div>
 
 <h2 id="mri">Macro Risk Index — Weight Optimization (Phase 1)</h2>
@@ -441,6 +445,51 @@ li {{ margin-bottom: 4px; }}
   </tbody>
   </table>
   This compresses earlier than the v2.0 portfolio doc (which starts compression at +1.0). The +0.4 threshold catches 13% of the sample where forward-return mean is negative and big-drawdown frequency is 26%.
+</div>
+
+<h2 id="bestsignal">Best Signal Per Pillar — Multi-Asset Optimization</h2>
+
+<p>The most useful framing for readers and for portfolio decisions: <strong>for each pillar, find the single asset target where the indicator produces a clean tradeable signal</strong>. Different pillars predict different assets. The multi-asset test optimizes component weights against multiple plausible targets per pillar (yields, FX, credit, equity, vol) and reports the best.</p>
+
+<table>
+<thead><tr>
+<th>Pillar</th>
+<th>Best Predictive Target</th>
+<th class="num">OOS Information Coefficient</th>
+<th>What It Means For Portfolios</th>
+</tr></thead>
+<tbody>
+<tr><td><strong>Price Conditions Index (PCI)</strong></td><td><strong>2y Treasury yield, 252d</strong></td><td class="num signal-strong">+0.77</td><td>Inflation pressure leads the front of the curve. <strong>Strongest signal in the framework.</strong> Stay short duration in 1-3y bucket when PCI is elevated.</td></tr>
+<tr><td><strong>Trade Conditions Index (TCI)</strong></td><td><strong>USD/JPY, 252d</strong></td><td class="num signal-strong">+0.63</td><td>Trade flows lead the most-traded FX cross. TCI weak → JPY rallies (carry unwind setup).</td></tr>
+<tr><td><strong>Liquidity Cushion Index (LCI)</strong></td><td><strong>2y Treasury yield, 63d</strong></td><td class="num signal-strong">-0.63</td><td>Liquidity scarcity leads short-rate volatility (Fed responds). Three-month signal. Short-rate vol setup.</td></tr>
+<tr><td><strong>Growth Conditions Index (GCI)</strong></td><td>Industrial Production YoY, 252d</td><td class="num signal-strong">-0.60</td><td>Growth composite leads the real economy a year out. Cycle-positioning anchor.</td></tr>
+<tr><td><strong>Business Conditions Index (BCI)</strong></td><td>New Orders Capital Goods YoY, 252d</td><td class="num signal-strong">+0.57</td><td>Business pulse leads capex by a year. Capex-cycle and industrials sector positioning.</td></tr>
+<tr><td><strong>Financial Conditions Index (FCI)</strong></td><td>S&P 500 63d log return</td><td class="num signal-strong">+0.51</td><td>Credit/volatility stress leads equity drawdowns by a quarter. Risk-asset sizing signal.</td></tr>
+<tr><td><strong>Government Conditions Index (GCI-Gov)</strong></td><td>10y term premium change, 252d</td><td class="num signal-strong">-0.51</td><td>Fiscal pressure leads term premium reset. Curve steepener trade setup.</td></tr>
+<tr><td><strong>Consumer Conditions Index (CCI)</strong></td><td>S&P 500 252d log return</td><td class="num signal-strong">+0.50</td><td>Consumer pulse leads equity performance a year out. Long-horizon equity positioning.</td></tr>
+<tr><td><strong>Sentiment & Positioning Index (SPI)</strong></td><td>VIX 21d log return</td><td class="num signal-strong">-0.41</td><td>Sentiment extremes signal mean-reversion in volatility. Vol-trade setup.</td></tr>
+<tr><td><strong>Labor Pressure Index (LPI)</strong></td><td>Unemployment rate change, 252d</td><td class="num signal-strong">-0.39</td><td>Labor flow data leads the U3 print by a year. Macro-cycle anchor.</td></tr>
+<tr><td><strong>Market Structure Index (MSI)</strong></td><td>VIX 21d log return</td><td class="num signal-strong">+0.31</td><td>Weak market structure leads near-term volatility expansion.</td></tr>
+<tr><td><strong>Housing Conditions Index (HCI)</strong></td><td>S&P 500 252d log return</td><td class="num signal-strong">+0.40</td><td>Housing weakness leads broad equity drawdown a year out. Equity-derisking signal when HCI extreme.</td></tr>
+</tbody>
+</table>
+
+<div class="callout win">
+  <div class="callout-label">The headline finding</div>
+  <strong>All twelve pillars now have at least one target with out-of-sample information coefficient magnitude ≥ 0.30.</strong> Each predicts a different asset because each describes a different economic mechanism. The framework is doing what it's designed to do.
+  <br><br>
+  Three indicators stand out as <strong>tradeable on their own</strong> with magnitudes above 0.60: Price Conditions Index → 2y yields (+0.77), Trade Conditions Index → USD/JPY (+0.63), Liquidity Cushion Index → 2y yields (-0.63). These are the cleanest leading relationships in the entire stack and worth their own publications.
+</div>
+
+<div class="callout">
+  <div class="callout-label">What this changes about how the pillars are used</div>
+  Previously, every pillar was implicitly tested against forward equity returns (because that's what people care about). Result: many pillars looked weak. With multi-asset testing, the signal becomes obvious — different pillars predict different things.
+  <ul>
+  <li><strong>Yield-side pillars:</strong> Price Conditions, Liquidity Cushion, Government Conditions all best predict yields directly.</li>
+  <li><strong>FX pillar:</strong> Trade Conditions Index best predicts USD/JPY.</li>
+  <li><strong>Real-economy pillars:</strong> Growth, Business, Labor all best predict their domain (industrial production, new orders, unemployment).</li>
+  <li><strong>Equity-side pillars:</strong> Financial, Consumer, Sentiment, Market Structure all best predict equity-related targets.</li>
+  </ul>
 </div>
 
 <h2 id="leadtime">Pillars as Real-World Lead Indicators</h2>

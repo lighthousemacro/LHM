@@ -68,7 +68,7 @@ Rule: there must be at least two specific conditions, with levels and timeframes
 
 ### 6. The So-What
 
-Framework takeaway. Where does this leave us on the Two Books? What does MRI say? What would a Core Book investor do differently after reading this?
+Framework takeaway. Where does this leave the portfolio? What does MRI say? What would a framework-driven investor do differently after reading this? (Keep this internal — "Two Books" and "Core Book" language stays out of public copy until PiTrade is live.)
 
 End with a one-sentence tease for the next Beam. Hook the reader into returning.
 

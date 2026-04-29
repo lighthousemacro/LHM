@@ -211,7 +211,7 @@ Non-negotiable for every draft the synthesis feeds to `lhm-content-engine`:
 
 - **No emdashes.** Commas, periods, colons, parentheses, ellipses.
 - **No "Not X, it's Y" construction.** Zero instances per piece. Never as a closer. Rewrite with direct assertion or a complete contrast.
-- **No Two Books language** in public copy until PiTrade is live.
+- **No portfolio-framework language in public copy** until PiTrade is live. Keep "framework-driven sizing," "technical sleeve," "humility patch," and any legacy "Core Book" / "Technical Overlay Book" framings out of published Beam/Beacon/Note/Chartbook copy.
 - **The Beam / The Beacon / The Chartbook / The Horizon** — always with the definite article in reader-facing bylines.
 - **"We" frame** — "we track," "we are seeing." Never "the data shows."
 - **Strong views weakly held.** Every piece has explicit invalidation criteria.

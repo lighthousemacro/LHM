@@ -276,8 +276,9 @@ These are what to check first when a chart "looks off":
 | Tick marks visible | Plot looks busy | `tick_params(length=0)` via `style_*_ax()` |
 | Gridlines visible | Plot looks like default matplotlib | `ax.grid(False)` via `style_*_ax()` |
 | Data drawn in non-palette colors | Visual incoherence | Cycle the 5 canonical colors: Ocean, Dusk, Sky, Sea, Venus |
-| Data starts mid-history on the LHS, gap before earliest visible point | Pre-windowed data load instead of full history | Always load full available history; use `set_xlim()` to control the visible window, never to truncate the data |
+| Data starts mid-history on the LHS, gap before earliest visible point | Pre-windowed data load instead of full history | Always load full available history; `set_xlim()` controls the visible window, never the data |
 | z-scores or rolling stats look wrong / regime classifications drift | Statistics computed on a windowed subset instead of full series | Recompute on the full-history series. Display window doesn't change baseline. |
+| Multi-series chart shows a solo line for years before the second series begins | Display window defaulted to overall-earliest start date instead of overlap start | Default visible window to LHS = MAX(per-series start dates) — the chart is communicating a *relationship*, default to where the relationship exists. Override only if Bob explicitly asks for solo pre-overlap history. |
 
 ---
 

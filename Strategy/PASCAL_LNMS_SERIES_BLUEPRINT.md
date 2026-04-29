@@ -27,7 +27,7 @@
   - **Monetary Mechanics** — money and credit. Government, financial conditions, plumbing. Three pillars.
   - **Market Structure** — what prices and positioning are telling us. Structure, sentiment. Two pillars.
 - Pascal checkpoint: *"Why twelve and not ten or twenty?"* Bob: *"Because we found these are the twelve that consistently lead something else. Add more, you add noise. Subtract any one, you go blind to a real signal."*
-- Pascal checkpoint: *"Where does Bitcoin fit?"* Bob: *"Crypto isn't a thirteenth pillar — it's a downstream asset that the twelve drive. Treat Bitcoin like the highest-beta liquidity instrument on the planet. When global liquidity expands, BTC leads. When it contracts, BTC bleeds first. We'll come back to this every episode, because for your listeners, it's the most concrete way to feel the framework move."*
+- Pascal checkpoint: *"Where does Bitcoin fit?"* Bob: *"Same place every other asset fits. The twelve pillars are diagnostic, they tell you what the macro state is. Rates, equities, credit, FX, crypto — those are the assets you express the view in. Bitcoin is unique because it's the highest-beta liquidity instrument on the planet, which makes it the cleanest, fastest read on whether the framework is firing. When global liquidity expands, BTC leads. When it contracts, BTC bleeds first. So your listeners will hear us come back to it every episode, not because crypto is special in the framework, but because it's the asset that responds the loudest."*
 
 **Act 2 — Walk the pillars.** Labor opens because it's the lead indicator on the lead indicator — labor turns before growth turns, and growth turns before equities turn. Every pillar gets real treatment.
 

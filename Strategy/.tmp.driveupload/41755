@@ -1,7 +1,9 @@
 # Pascal Hügli — Less Noise More Signal
 ## Three-Part Evergreen Series Blueprint
 
-**Concept.** A reference asset on the LHM framework. Three episodes, one arc: **how we see → how we connect → how we act.** This is the canonical audio reference for the Diagnostic Dozen — what listeners hear *before* they read the Substack series.
+**The series in one line.** LHM's answer to: *how do you build a comprehensive framework for analyzing the macro landscape and applying it to financial markets?* Three episodes. One arc. **How we see → how we connect → how we act.**
+
+**Concept.** A reference asset on the LHM framework. The canonical audio reference for the Diagnostic Dozen — what listeners hear *before* they read the Substack series.
 
 **Audience.** The smart professional who runs money or makes decisions about money, but doesn't spend their days inside the macro stack. Allocators, CIOs, family-office heads, fundamental PMs, founders managing real balance sheets, sophisticated private investors. Finance-fluent — credit spread, yield curve, duration, beta all land without explanation. Macro-specific vocabulary (quits rate, term premium, RRP, SLR, OAS) gets defined on first use. Not Macro 101 for civilians. Macro for professionals who don't live in macro.
 

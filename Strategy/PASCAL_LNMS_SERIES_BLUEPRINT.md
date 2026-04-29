@@ -17,7 +17,7 @@
 
 ## Episode 1 — The Diagnostic Dozen: How We See
 
-**Cold open.** Pascal and I have done this before, on a single topic at a time. This series is different. Three episodes to lay out the whole framework — see, connect, act. Most macro is reaction dressed up as analysis. Headlines hit, talking heads explain, prices move, narrative gets retrofitted. LHM inverts the order. Framework first. Data feeds the framework. Interpretation falls out. By the end of the series, you'll have a process you can use whether or not we're in the room.
+**Cold open.** Last time Pascal and I sat down, we spent an hour on plumbing — RRP, dealer balance sheets, the stablecoin-Treasury loop, why funding markets matter when nobody's covering them. That episode was one pillar. One pillar out of twelve. Today we pull the camera back and show the whole map. Three episodes to lay out the whole framework: how we see, how we connect, how we act. Most macro is reaction dressed up as analysis. Headlines hit, talking heads explain, prices move, narrative gets retrofitted. LHM inverts the order. Framework first. Data feeds the framework. Interpretation falls out. By the end of the series, you'll have a process you can use whether or not we're in the room.
 
 **Act 1 — Why a framework at all.**
 - Macro is twelve things happening at once. Anyone can pick one, build a story, sound smart for a quarter.

@@ -379,19 +379,22 @@ Positive CLI = expanding liquidity transmission. Negative = contracting.
 | MSI < -0.5 | Reduce gross exposure | All |
 | SPI > +1.5 | Contrarian fade | All |
 
-## Two Books Framework
+## One Book, Two Ways of Taking Risk
 
-### Core Book (50-100% of capital)
-- Macro + fundamental + technical driven, LONG OR SHORT
-- MRI regime multiplier applies to sizing
-- 3-6 month catalyst horizon, up to 20% per position
-- Can go 100% cash
+The portfolio is a single book. The distinction isn't about parallel sleeves with separate logic — it's about what drives a position.
 
-### Technical Overlay Book (0-50% of capital)
-- Pure technical (trend + momentum + relative strength), LONG OR SHORT
-- Activated when Core Book defensive (MRI > +1.0)
-- Max 10% longs, 5% shorts per position
-- Tighter stops (10% longs, 8% shorts)
+### Framework-driven sizing (most of the book)
+- Macro thesis + fundamental confirmation + technical entry
+- LONG OR SHORT based on thesis, full conviction sizing up to 20% per position
+- MRI regime multiplier scales the size mechanically (low risk = up, crisis = zero)
+- 3-6 month catalyst horizon
+- **Cash is a position, not drag.** When the framework says no, the right size is zero.
+
+### Technical sleeve (the humility patch)
+- Pure trend / momentum / relative strength. No fundamental thesis required.
+- Exists because markets and macro aren't always rational together. Sometimes the framework says no and price keeps ripping. The honest response isn't to white-knuckle the framework — it's to admit price action is a real signal even when we can't logically defend it from the top down.
+- Smaller positions, tighter stops, no thesis stop because there is no thesis. Just price.
+- The framework is the alpha. The technical sleeve is the acknowledgment that markets don't owe the framework anything. It protects against being right too early — which in this business is indistinguishable from being wrong.
 
 ### Position Sizing
 

@@ -9,6 +9,31 @@ Then: final chart data export + presentation table
 
 Author: Lighthouse Macro
 Date: 2026-02-12
+
+---
+
+PRODUCTION IMPLEMENTATION NOTE (2026-04-29)
+
+This is the production CLI: 4-component empirical model.
+Components: DollarYoY, ResRatio_RoC, StableBTC_RoC, ResRatio.
+
+The public-facing CLI architecture (March 10 Substack article and
+Strategy/md/CLI_CRYPTO_LIQUIDITY_IMPULSE.md) describes a 3-tier,
+8-component framework. That broader architecture is the conceptual
+vision. The published article does NOT disclose component weights or
+which components are implemented vs conceptual; component weights are
+explicitly listed as proprietary. So this 4-component implementation
+is consistent with what was published.
+
+Open research question (parked, not blocking): does adding the 4
+unimplemented Tier 2 components (TGA, RRP, SOFR-IORB, HY OAS) plus
+the Tier 3 components (ETF flows, exchange reserves, leverage filter)
+improve OOS performance vs the current 4-component build? If yes,
+adopt. If no, the current build is the right one. Either outcome,
+the public framing holds.
+
+For the conceptual framework see:
+    /Users/bob/LHM/Strategy/md/CLI_CRYPTO_LIQUIDITY_IMPULSE.md
 """
 
 import sqlite3

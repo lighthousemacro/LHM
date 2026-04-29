@@ -585,9 +585,12 @@ Every color contains some combination of 23, 89, and BB. The brand palette is a 
 
 ## Data Handling
 
-- **Always load the full available history.** Every chart pulls the entire data series from its earliest available date forward. Never pre-window the data load. The chart shows whatever subset best illustrates the point via `set_xlim()`, but the underlying data behind it always extends back to LHS of available history.
-- **Why:** z-scores, rolling stats, regime classifications, and any historical context lines (recession bands, prior-cycle anchors, "December 2018 low" annotations) only work correctly if the full series is loaded. Pre-windowed data computes statistics against the wrong baseline.
-- **The exception:** if a series genuinely doesn't exist further back (e.g., spot BTC ETF flows started 2024), load what exists and document the actual start date. Don't fake or extrapolate.
+- **Always load the full available history.** Every chart pulls the entire data series from its earliest available date forward. Never pre-window the data load. The data behind the chart always extends back to LHS of available history.
+- **Display window defaults to where ALL plotted series have data.** When a chart plots multiple series with different start dates (e.g., Series A from 1945, Series B from 1960), the visible window starts at 1960 — the latest of the per-series start dates among everything being plotted. Reason: a chart of A and B is showing the *relationship* between them. Showing A as a solo line for 15 years before B exists communicates the wrong thing. Default to where the relationship is observable.
+- **Why load full history then:** z-scores, rolling stats, regime classifications, and any historical context (recession bands, prior-cycle anchors, "December 2018 low" annotations) need each series' full history to compute correctly. Pre-windowed data computes statistics against the wrong baseline. Load complete, display windowed-to-relationship.
+- **The exceptions, both Bob-explicit:**
+  - If a series genuinely doesn't exist further back (e.g., spot BTC ETF flows started 2024), load what exists and document the actual start date. Don't fake or extrapolate.
+  - If Bob explicitly asks to see one series' solo pre-overlap history (e.g., "show A back to its start, even though B isn't there yet"), extend the display window. Default is overlap-only.
 - Always `dropna()`. Forward-fill quarterly to daily.
 - Smooth volatile series with 3-month MA. Don't smooth already-smoothed measures.
 

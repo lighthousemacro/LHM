@@ -220,9 +220,12 @@ This creates breathing room between the end of the data lines and the right spin
 
 ## Data Handling
 
-- **Always load the full available history.** Every chart pulls the entire data series from its earliest available date forward. Never pre-window the data load. The visible chart range is controlled by `set_xlim()` (or `set_xlim_to_data()`), not by truncating the data. The underlying data behind the chart always extends back to LHS of available history, even when the displayed window is narrower.
-- **Why this matters:** z-scores, rolling means, percentile ranks, regime classifications, and any historical context (recession shading, "1999-2000" or "2018 December low" annotations) only work correctly if the full series is loaded. A z-score computed on 2020-onward data is a different statistic than one computed on the full history. Pre-windowed loads compute stats against the wrong baseline and produce charts that look right but are subtly broken.
-- **The exception:** if a series genuinely doesn't exist further back (e.g., spot BTC ETF flows started 2024), load whatever exists from its actual start date. Don't fake forward, don't extrapolate, don't pad with zeros. Document the actual series start in the chart caption if relevant.
+- **Always load the full available history.** Every chart pulls the entire data series from its earliest available date forward. Never pre-window the data load. The underlying data behind the chart always extends back to LHS of available history.
+- **Display window defaults to where ALL plotted series have data.** When a chart plots multiple series with different start dates (e.g., Series A from 1945, Series B from 1960), the visible window starts at 1960 — the latest of the per-series start dates among everything plotted. Reason: a chart showing A and B is communicating the *relationship* between them. Showing A as a solo line for 15 years before B exists communicates the wrong thing. Default to where the relationship is observable.
+- **Why load full history then:** z-scores, rolling means, percentile ranks, regime classifications, and any historical context (recession shading, "1999-2000" or "2018 December low" annotations) need each series' full history to compute correctly. A z-score computed on 2020-onward data is a different statistic than one computed on the full history. Load complete, display windowed-to-relationship.
+- **The exceptions, both Bob-explicit:**
+  - If a series genuinely doesn't exist further back (e.g., spot BTC ETF flows started 2024), load whatever exists from its actual start date. Don't fake forward, don't extrapolate, don't pad with zeros. Document the actual series start in the chart caption if relevant.
+  - If Bob explicitly asks to see one series' solo pre-overlap history (e.g., "show A back to its start, even though B isn't there yet"), extend the display window. Default is overlap-only.
 - **Always** `dropna()` **before plotting** to prevent line breaks at NaN gaps
 - FRED data frequently has sporadic NaN values that create orphaned data points
 - **Quarterly data** (e.g. ECI): forward-fill to monthly frequency before plotting

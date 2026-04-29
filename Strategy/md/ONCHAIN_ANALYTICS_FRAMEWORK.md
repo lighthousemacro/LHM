@@ -16,7 +16,7 @@
 8. [The Perfect Setup](#the-perfect-setup)
 9. [Verdict Logic & Screening](#verdict-logic)
 10. [Position Sizing & Risk Management](#position-sizing)
-11. [Technical Overlay Book](#technical-overlay-book)
+11. [Technical Sleeve](#technical-overlay-book)
 12. [Trading Rules Framework](#trading-rules)
 13. [Red Flags & Warning Signs](#red-flags)
 14. [Data Sources & Vendor Infrastructure](#data-sources)
@@ -823,11 +823,11 @@ Exit if:
 
 ---
 
-## Technical Overlay Book
+## Technical Sleeve
 
 ### Concept
 
-The Core Book is macro-driven. When MRI is elevated and the regime multiplier compresses position sizes to near-zero, the framework can leave capital idle even when clear technical trends exist. The Technical Overlay Book provides a structured way to participate in pure technical setups when the Core Book is defensive.
+The framework-driven sleeve is macro-driven. When MRI is elevated and the regime multiplier compresses position sizes to near-zero, the framework can leave capital idle even when clear technical trends exist. The Technical Sleeve provides a structured way to participate in pure technical setups when the framework-driven sleeve is defensive.
 
 **This is not an override of the macro framework.** It's a separate, smaller allocation with different rules.
 
@@ -848,7 +848,7 @@ The Core Book is macro-driven. When MRI is elevated and the regime multiplier co
 │  TECHNICAL OVERLAY BOOK (0-30% of capital)                                      │
 │  ─────────────────────────────────────────                                      │
 │  • Pure technical (trend + momentum only)                                       │
-│  • Activated when Core Book is defensive                                        │
+│  • Activated when framework is defensive                                        │
 │  • Shorter holding period (weeks, not months)                                   │
 │  • Reduced sizing (max 5% per position)                                         │
 │  • Tighter stops (10% hard stop, no exceptions)                                 │
@@ -859,12 +859,12 @@ The Core Book is macro-driven. When MRI is elevated and the regime multiplier co
 
 ### Activation Criteria
 
-The Technical Overlay Book is NOT always active. It requires explicit activation:
+The Technical Sleeve is NOT always active. It requires explicit activation:
 
 ```
 TECHNICAL BOOK ACTIVATION CHECKLIST:
 ────────────────────────────────────
-[ ] Core Book is in defensive mode (MRI > +1.0)
+[ ] framework-driven sleeve is in defensive mode (MRI > +1.0)
 [ ] At least 3 clear technical setups exist (long OR short)
 [ ] BTC or SPX showing directional trend (not chop/range)
 [ ] You have bandwidth to monitor shorter timeframes
@@ -874,7 +874,7 @@ ALL conditions must be met to allocate to Technical Book.
 ```
 
 **When to Deactivate:**
-- MRI drops below +1.0 (Core Book re-activates fully)
+- MRI drops below +1.0 (framework re-engages fully)
 - No remaining setups meet criteria
 - Consecutive losses (3 stopped out in a row = pause and reassess)
 
@@ -1002,7 +1002,7 @@ ADDITIONAL SHORT RULES:
 ### Example: Technical Book in Action
 
 ```
-SCENARIO: MRI at +1.2 (Restrictive), Core Book 85% cash
+SCENARIO: MRI at +1.2 (Restrictive), framework-driven sleeve 85% cash
 
 Technical Book Activation Check:
 [✓] MRI > +1.0
@@ -1018,7 +1018,7 @@ Position Selection:
 • LINK: Score 6/9 → SKIP (below threshold)
 
 Final Allocation:
-• Core Book: 85% cash
+• Framework-driven: 85% cash
 • Technical Book: 13% (5% SOL, 5% AAVE, 3% SUI)
 • Total: 85% cash + 13% technical + 2% buffer = 100%
 
@@ -1036,7 +1036,7 @@ To be clear about boundaries:
 **The Technical Book is NOT:**
 - A way to override macro when you're impatient
 - A license to trade every setup you see
-- A replacement for the Core Book
+- A replacement for the framework-driven sleeve
 - Active all the time
 - An excuse to ignore MRI signals
 
@@ -1047,16 +1047,16 @@ To be clear about boundaries:
 - A way to stay engaged without violating macro discipline
 - Optional (you can always stay 100% cash)
 
-### Integration with Core Book
+### Integration with framework-driven sleeve
 
-When MRI improves and Core Book re-activates:
+When MRI improves and framework re-engages:
 
-1. **Evaluate Technical Book positions** against Core Book criteria
-2. **Positions that qualify** for Core Book can be sized up (if fundamentals support)
+1. **Evaluate Technical Book positions** against framework-driven sleeve criteria
+2. **Positions that qualify** for framework-driven sleeve can be sized up (if fundamentals support)
 3. **Positions that don't qualify** should be closed or kept at Technical Book sizing with Technical Book stops
-4. **Technical Book allocation shrinks** as Core Book allocation expands
+4. **Technical Book allocation shrinks** as framework-driven sleeve allocation expands
 
-The two books should never compete for the same capital. When Core is active, Technical is small or inactive.
+The two ways of taking risk should never compete for the same capital. When Core is active, Technical is small or inactive.
 
 ---
 

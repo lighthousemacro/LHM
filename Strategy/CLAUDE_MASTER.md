@@ -1004,7 +1004,7 @@ These work because they are short by design and are surrounded by longer analyti
 
 ## The "we" frame
 
-For published written content (Beacons, Beams, Notes, Chartbooks, Horizons), speak as Lighthouse Macro: "we're seeing stress," not "the data shows stress." In speech (podcasts, calls, video), both "I" and "we" are fine, whichever lands naturally. In internal notes and drafts, "I" is the default.
+For published written content (Beacons, Beams, Notes, Chartbooks, Horizons), default to "we" voice as Lighthouse Macro: "we're seeing stress," "we read the print as..." Letting the data speak directly is also fine: "the data shows stress," "spreads are pricing one story." Both register as on-brand. What to avoid is hedge framing that uses third-person to dodge a view: "some observers note," "the consensus suggests." In speech (podcasts, calls, video), both "I" and "we" are fine, whichever lands naturally. In internal notes and drafts, "I" is the default.
 
 ## Strong views, weakly held
 

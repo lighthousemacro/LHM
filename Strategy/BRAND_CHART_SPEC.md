@@ -316,7 +316,7 @@ All text inside chart frames inherits the house voice rules:
 
 - **No emdashes.** Commas, periods, colons, parentheses, ellipses instead.
 - **No "Not X, it's Y" construction.** Zero instances. Never as a closer.
-- **No Two Books language** until PiTrade is live ("Core Book," "Technical Overlay Book" banned).
+- **No portfolio-framework language in public copy** until PiTrade is live. Internal terminology ("framework-driven sizing," "technical sleeve," "humility patch," and any legacy "Core Book" / "Technical Overlay Book" framings) stays internal.
 - **No AI-tell phrases** ("cautiously optimistic," "geopolitical uncertainty," "it is important to note," "at the end of the day").
 - **"We" frame** when referring to our own analysis.
 

@@ -1,7 +1,7 @@
 # LIGHTHOUSE MACRO — MASTER CONTEXT
 
 **LAST_SYNC:** 2026-04-29
-**Version:** 5.9
+**Version:** 5.10
 **Purpose:** Single source of truth for all AI assistants (Claude, Gemini, ChatGPT)
 
 *"MACRO, ILLUMINATED."*
@@ -940,7 +940,7 @@ Source bundles at `/Users/bob/LHM/claude skills/` (note the space in the folder 
 **END OF MASTER CONTEXT**
 
 **Version:** 5.7
-**Compiled:** 2026-02-16 (v5.0); 2026-04-14 (v5.1 — added Section 15: Automation & Remote Work, updated Section 14 for git-push sync); 2026-04-28 (v5.3 — document footer updated to single-line three-link format); 2026-04-29 (v5.4 — added Section 0: Memory Summary from Claude.ai nightly memory export); 2026-04-29 (v5.5 — phone updated to +1 (929) 238-9397; "Founder" framing flagged as not preferred verbally but kept in canonical signature/title); 2026-04-29 (v5.6 — appended voice working guide; clarified we/I usage for written vs spoken); 2026-04-29 (v5.7 — clarified "we" frame; data-as-subject framing is also on-brand, only third-person hedge framing is the failure mode); 2026-04-29 (v5.8 — Two Books → "One book, two ways of taking risk" with humility-patch framing for the technical sleeve; propagated everywhere); 2026-04-29 (v5.9 — chart data-loading rule: every chart loads full available history, set_xlim controls visible window only; propagated to all four chart-spec docs)
+**Compiled:** 2026-02-16 (v5.0); 2026-04-14 (v5.1 — added Section 15: Automation & Remote Work, updated Section 14 for git-push sync); 2026-04-28 (v5.3 — document footer updated to single-line three-link format); 2026-04-29 (v5.4 — added Section 0: Memory Summary from Claude.ai nightly memory export); 2026-04-29 (v5.5 — phone updated to +1 (929) 238-9397; "Founder" framing flagged as not preferred verbally but kept in canonical signature/title); 2026-04-29 (v5.6 — appended voice working guide; clarified we/I usage for written vs spoken); 2026-04-29 (v5.7 — clarified "we" frame; data-as-subject framing is also on-brand, only third-person hedge framing is the failure mode); 2026-04-29 (v5.8 — Two Books → "One book, two ways of taking risk" with humility-patch framing for the technical sleeve; propagated everywhere); 2026-04-29 (v5.9 — chart data-loading rule: every chart loads full available history, set_xlim controls visible window only; propagated to all four chart-spec docs); 2026-04-29 (v5.10 — chart display rule refined: multi-series charts default visible window to LHS = MAX(per-series starts), the overlap-only default; load complete, display windowed-to-relationship)
 **Author:** Bob Sheehan, CFA, CMT
 
 ---

@@ -52,13 +52,13 @@
 - **Structure.** Trend, breadth, momentum. Are most stocks participating, or is the index being held up by a handful of names? When breadth narrows while the index makes new highs, you're watching distribution — institutions selling to retail. We measure it inside our **Market Structure Index, MSI**.
 - **Sentiment and positioning.** What investors are doing and saying. Surveys, fund flows, options positioning. We use it as a contrarian signal — extreme bullishness is a sell signal, extreme fear is a buy signal — but only at extremes. We track it in our **Sentiment & Positioning Index, SPI**: high SPI means fear, which is bullish.
 
-**Act 3 — Historical illustration.** 2007 to 2008. Labor flows were deteriorating (quits falling, long-term unemployment rising, hires-to-quits ratio breaking down) for nine months while equities made new highs. Credit spreads were widening modestly. Housing was already cracking. The framework — looking at all twelve pillars at once — would have flagged a Macro Dynamics deterioration that Market Structure was ignoring. The headline data didn't say recession until December 2008, by which point the bear market was already over half-done. Process beats reaction.
+**Act 3 — Historical illustration.** Two short cases. **2007 to 2008:** Labor flows deteriorating (quits falling, long-term unemployment rising, hires-to-quits ratio breaking down) for nine months while equities made new highs. The framework would have flagged a Macro Dynamics deterioration that Market Structure was ignoring. **2022 crypto winter:** Net liquidity peaked in late 2021 and rolled over hard through 2022. Bitcoin topped within weeks of the liquidity peak and bottomed when liquidity stabilized in late 2022. Different asset class, same framework. Process beats reaction.
 
-**Close.** *"Twelve pillars across three engines. That's how we see. Next week, we connect them — because no single pillar tells the truth on its own."*
+**Close.** *"Twelve pillars across three engines. That's how we see. Next week, we connect them — because no single pillar tells the truth on its own, and the chains are where the framework actually earns its keep."*
 
 **Companion visuals (3):**
 1. Three-engine schematic with all twelve pillars labeled.
-2. Labor flows leading the unemployment rate (multi-cycle historical chart, with quits highlighted).
+2. Labor flows leading the unemployment rate AND net liquidity leading Bitcoin — two-panel chart, same framework, two asset classes.
 3. Clean pillar table — twelve pillars, the one or two key indicators each, lead time on each.
 
 ---
@@ -82,7 +82,13 @@
 
 - **Chain 1: Labor → Credit → Equity.** The most reliable lead-lag in macro. Labor turns first (LFI starts climbing). Credit catches up next (HY OAS widens). Equity multiples compress last. We call the period when labor has turned but credit is still tight **Silent Deceleration**. The market hasn't noticed yet. We saw it in 1999-2000 and 2007-08. Both times, the sequential order was identical, and the gap between labor turning and equity turning was 6-9 months. That gap is the alpha.
 
-- **Chain 2: The crypto-Treasury loop.** A new transmission channel that didn't exist before 2020. Stablecoins — digital tokens pegged to the dollar — back themselves with US Treasury bills. Tether and Circle alone hold over $100 billion in T-bills. When crypto rallies, stablecoin supply expands, which means more T-bill demand, which means lower yields. When crypto crashes, stablecoin supply contracts, which means forced T-bill selling. Crypto has become a marginal buyer of US government debt. European institutional listeners lean in here because this is the channel that's hardest to see from the European fixed-income desk.
+- **Chain 2: The liquidity → crypto transmission.** This is the chain Pascal's audience cares about most, so we give it real time. Two layers running simultaneously.
+
+  **Layer A: Macro liquidity into Bitcoin.** When the Fed's balance sheet is expanding and the Treasury General Account is drawing down (both add liquidity to the system), risk assets rally — but Bitcoin rallies hardest, because it's the highest-beta liquidity instrument on the planet. The lead-lag: net liquidity inflects, Bitcoin follows in 4-12 weeks. Equities follow Bitcoin on the upside by another 2-6 weeks. BTC is the canary.
+
+  **Layer B: The crypto-Treasury loop, the new piece.** Stablecoins — digital tokens pegged to the dollar — back themselves with US Treasury bills. Tether and Circle together hold over $100 billion in T-bills. When crypto rallies, stablecoin supply expands, more T-bill demand, lower yields. When crypto crashes, stablecoin supply contracts, forced T-bill selling. Crypto has become a marginal buyer of US government debt. **Bitcoin ETF flows add a second channel:** spot BTC ETFs aggregate institutional demand into a measurable daily flow. Persistent ETF outflows are the cleanest single tell that institutional crypto demand is rolling over.
+
+  Pascal checkpoint: *"So if I'm long Bitcoin, what should I actually be watching?"* Bob: *"Three things. Net liquidity for the multi-month tide. Stablecoin supply growth for on-chain demand. ETF flows for institutional demand. Our CLI rolls all three into one number, with a leverage-regime filter on top — because perpetual futures funding rates tell you when crypto is fragile regardless of what macro is doing."*
 
 - **Chain 3: Plumbing → Asset Prices.** Pascal: *"Why doesn't anyone cover it?"* Bob: *"Because it's boring until it isn't, and by then it's too late."* The mechanism: the Fed's reverse repo facility (RRP) is where money market funds park excess cash. When the RRP drains toward zero, that excess liquidity moves into bank reserves. When reserves get scarce, dealer banks (who have to hold reserves against Treasury holdings under SLR — Supplementary Leverage Ratio rules) start hitting their balance sheet limits. When dealer balance sheets are stressed, the repo market widens — repo is overnight collateralized lending, the daily plumbing of the financial system. When repo widens, Treasury auctions start tailing — meaning yields come in higher than expected. By the time you see auction tails, the stress is already in the system. The whole chain runs in 1-4 weeks. Faster than any other macro signal.
 
@@ -97,9 +103,9 @@
 **Close.** *"Pillars are inputs. Composites are processors. Chains are how the framework actually thinks. Next week, we turn it into a portfolio."*
 
 **Companion visuals (3):**
-1. Four-chains diagram (one composite image showing all four lead-lag relationships).
-2. CLG historical chart with annotation at major credit-labor disconnects.
-3. Sentiment-Structure Divergence at a known turning point (December 2018 or October 2022).
+1. Four-chains diagram (one composite image showing all four lead-lag relationships, with the liquidity → crypto chain visually weighted).
+2. Net liquidity overlaid on Bitcoin price (the cleanest single-chart proof that crypto trades like a liquidity instrument).
+3. CLG historical chart with annotation at major credit-labor disconnects.
 
 ---
 

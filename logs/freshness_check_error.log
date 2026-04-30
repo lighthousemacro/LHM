@@ -86,3 +86,33 @@
 2026-04-29 16:37:12 [WARNING] Attempt 2 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=JTSTSR&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
 2026-04-29 16:37:39 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-04-30 08:36:54 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-04-30 12:35:33 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=JTSHIR&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-30 12:35:38 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=INDPRO&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-04-30 12:35:50 [INFO] Stale series (13):
+  PCEPI: db=2026-02-01 -> fred=2026-03-01
+  PCEPILFE: db=2026-02-01 -> fred=2026-03-01
+  PCE: db=2026-02-01 -> fred=2026-03-01
+  PCEDG: db=2026-02-01 -> fred=2026-03-01
+  PCEND: db=2026-02-01 -> fred=2026-03-01
+  PCES: db=2026-02-01 -> fred=2026-03-01
+  PSAVERT: db=2026-02-01 -> fred=2026-03-01
+  DSPIC96: db=2026-02-01 -> fred=2026-03-01
+  ICSA: db=2026-04-18 -> fred=2026-04-25
+  CCSA: db=2026-04-11 -> fred=2026-04-18
+  NETEXP: db=2025-10-01 -> fred=2026-01-01
+  GDP: db=2025-10-01 -> fred=2026-01-01
+  GDPC1: db=2025-10-01 -> fred=2026-01-01
+2026-04-30 12:35:51 [INFO]   PCEPI: refreshed (+807 obs)
+2026-04-30 12:35:52 [INFO]   PCEPILFE: refreshed (+807 obs)
+2026-04-30 12:35:53 [INFO]   PCE: refreshed (+807 obs)
+2026-04-30 12:35:54 [INFO]   PCEDG: refreshed (+807 obs)
+2026-04-30 12:35:55 [INFO]   PCEND: refreshed (+807 obs)
+2026-04-30 12:35:56 [INFO]   PCES: refreshed (+807 obs)
+2026-04-30 12:35:57 [INFO]   PSAVERT: refreshed (+807 obs)
+2026-04-30 12:35:58 [INFO]   DSPIC96: refreshed (+807 obs)
+2026-04-30 12:36:01 [INFO]   ICSA: refreshed (+3095 obs)
+2026-04-30 12:36:03 [INFO]   CCSA: refreshed (+3094 obs)
+2026-04-30 12:36:04 [INFO]   NETEXP: refreshed (+317 obs)
+2026-04-30 12:36:05 [INFO]   GDP: refreshed (+317 obs)
+2026-04-30 12:36:06 [INFO]   GDPC1: refreshed (+317 obs)
+2026-04-30 12:36:06 [INFO] Freshness check done: 13 series refreshed, 13,596 obs added.

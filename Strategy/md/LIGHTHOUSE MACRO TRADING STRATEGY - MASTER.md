@@ -292,7 +292,7 @@ BROAD MARKET (Engine 3)          POSITION TECHNICALS
 
 ## V. Proprietary Indicators
 
-### Macro Risk Index (MRI) — Master Composite
+### Macro Risk Index (MRI), Master Composite
 
 The Macro Risk Index (MRI) synthesizes all 12 pillar composites into a single regime indicator:
 
@@ -449,7 +449,7 @@ Position Size = Regime_Multiplier × Conviction_Weight × Liquidity_Adjustment
 | Price > 50d BUT 50d < 200d | 0.5 pts |
 | Price < 50d | 0 pts (disqualified) |
 
-**2. Momentum Quality — Context Aware (0-2 pts)**
+**2. Momentum Quality, Context Aware (0-2 pts)**
 
 *In Uptrend (Price > 50d > 200d):*
 
@@ -624,7 +624,7 @@ Before any trade consideration, these filters must pass. If any fail, the trade 
 
 **Visual:** Panel 2 shows red/magenta = automatic pass
 
-**Why:** Opportunity cost—capital better deployed in relative leaders
+**Why:** Opportunity cost. Capital is better deployed in relative leaders.
 
 ### Rule 4: Never Add to Losers
 

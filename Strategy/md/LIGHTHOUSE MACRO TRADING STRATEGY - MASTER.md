@@ -209,7 +209,7 @@ We track breadth metrics and then ask: given where we are *now*, what do forward
 | | | > 80% (crowded) | Next 20d: +0.3% avg, 52% win rate |
 | % Stocks > 50d MA | [Live] | < 35% (washed out) | Next 63d: +4.8% avg, 71% win rate |
 | | | > 85% (crowded) | Next 63d: +1.2% avg, 55% win rate |
-| % Stocks > 200d MA | [Live] | < 45% (bear regime) | Next 126d: bifurcated—either recovery or acceleration |
+| % Stocks > 200d MA | [Live] | < 45% (bear regime) | Next 126d: bifurcated, either recovery or acceleration |
 | | | > 75% (bull regime) | Next 126d: +6.2% avg, but elevated drawdown risk |
 | % Stocks at 63d High | [Live] | < 3% (no leadership) | Next 20d: watch for breadth thrust or continued deterioration |
 | | | > 20% (broad breakout) | Next 63d: momentum tends to persist |
@@ -229,7 +229,7 @@ We track breadth metrics and then ask: given where we are *now*, what do forward
 3. Calibrate aggression accordingly
 ```
 
-This isn't prediction—it's base rates. If % stocks > 50d MA is at 28% right now, history says forward 63-day returns average +4.8% with 71% win rate. Doesn't mean it *will* rally, but the odds favor leaning in. We use this to size positions and set expectations, not to make binary bets.
+This isn't prediction. It's base rates. If % stocks > 50d MA is at 28% right now, history says forward 63-day returns average +4.8% with 71% win rate. Doesn't mean it *will* rally, but the odds favor leaning in. We use this to size positions and set expectations, not to make binary bets.
 
 **Volatility & Positioning:**
 
@@ -240,7 +240,7 @@ This isn't prediction—it's base rates. If % stocks > 50d MA is at 28% right no
 | HY OAS | < 300 bps = complacent |
 | Equity-Bond Correlation | > +0.3 = diversification breaking |
 
-**Diagnostic Use Case:** Breadth divergences often lead price by 2-4 weeks. Conditional return analysis helps calibrate *how much* to lean into or against the current setup. When indices are rising but breadth is deteriorating, reduce position sizes and tighten stops—the foundation is cracking even if the roof looks fine.
+**Diagnostic Use Case:** Breadth divergences often lead price by 2-4 weeks. Conditional return analysis helps calibrate *how much* to lean into or against the current setup. When indices are rising but breadth is deteriorating, reduce position sizes and tighten stops. The foundation is cracking even if the roof looks fine.
 
 ---
 

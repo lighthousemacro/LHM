@@ -47,9 +47,7 @@ Lighthouse Macro's trading strategy combines systematic regime identification wi
 
 ### The Edge
 
-**Flows > Stocks.** We measure labor market deterioration 6-9 months before unemployment rises. We track Fed plumbing stress before funding markets break. We identify credit complacency before spreads widen. We see structure break before fundamentals confirm. By the time everyone knows, it's too late. That's the window where we operate.
-
-**Current MRI: +1.1 (HIGH RISK)** → Defensive positioning warranted.
+**Flows > Stocks.** We measure labor market deterioration 6-9 months before unemployment rises. We track Fed plumbing stress before funding markets break. We identify credit complacency before spreads widen. We see structure break before fundamentals confirm. By the time everyone knows, the move is over. That's the window where we operate.
 
 ---
 
@@ -61,7 +59,7 @@ Lighthouse Macro's trading strategy combines systematic regime identification wi
 
 **1. Regimes Matter More Than Assets**
 
-Asset class returns are regime-dependent. A bull market in equities under abundant liquidity (LCI > 0) behaves fundamentally differently than a bull market under scarce liquidity (LCI < -0.5). Identifying regime shifts earlier = alpha generation.
+Asset class returns are regime-dependent. A bull market in equities under abundant liquidity (LCI > 0) behaves fundamentally differently than a bull market under scarce liquidity (LCI < -0.5). Identifying regime shifts earlier is where alpha comes from.
 
 **2. Position Sizing is Alpha**
 
@@ -69,11 +67,11 @@ Risk management matters more than instrument selection. The difference between 7
 
 **3. Simplicity Over Complexity**
 
-Implement with liquid instruments (ETFs, futures, spot). Avoid exotic structures for complexity's sake. Most blowups start with options leverage; we prefer simple execution with proper sizing.
+Implement with liquid instruments (ETFs, futures, spot). Avoid exotic structures for complexity's sake. Most blowups start with options leverage. Simple execution with proper sizing wins over time.
 
 **4. Dual Risk Framework**
 
-Every position has two invalidation criteria:
+Every framework-driven position carries two invalidation criteria:
 - **Thesis-based stops:** Fundamental regime change (e.g., LFI drops below 0.5)
 - **Price-based stops:** Technical structure breaks (e.g., 50d MA < 200d MA)
 
@@ -81,7 +79,7 @@ Use whichever triggers first. Preserve capital.
 
 **5. Flows > Stocks**
 
-Leading indicators (quits rate, RRP flows, funding spreads) > lagging indicators (unemployment, GDP). Position ahead of data confirmation. The "Honest Signal" is always in the flows.
+Leading indicators (quits rate, RRP flows, funding spreads) beat lagging indicators (unemployment, GDP). Position ahead of data confirmation. The honest signal is always in the flows.
 
 ---
 

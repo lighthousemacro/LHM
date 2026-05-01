@@ -339,8 +339,6 @@ LFI = 0.30 × z(Long_Term_Unemployed_Share)
 | +1.0 to +1.5 | High | Defensive posture |
 | > +1.5 | Critical | Maximum defense |
 
-**Current LFI: +0.93** → Elevated → Defensive signal
-
 ### Liquidity Cushion Index (LCI)
 
 ```
@@ -361,8 +359,6 @@ LCI = 0.25 × z(Reserves_vs_LCLOR)
 | -1.0 to -0.5 | Scarce | Elevated caution |
 | < -1.0 | Crisis | Cash priority |
 
-**Current LCI: -0.8** → Scarce → Elevated caution
-
 ### Credit-Labor Gap (CLG)
 
 ```
@@ -375,9 +371,7 @@ CLG = z(HY_OAS) - z(LFI)
 | -1.0 to +1.0 | Aligned | No spread trade |
 | < -1.0 | Credit ignoring labor reality | Add credit hedges |
 
-**Current CLG: -1.2** → Credit complacent → Add credit protection
-
-### Market Structure Index (MSI) — NEW in v2.0
+### Market Structure Index (MSI)
 
 ```
 MSI = 0.15 × z(Price_vs_200d_MA_%)

@@ -290,11 +290,11 @@ BROAD MARKET (Engine 3)          POSITION TECHNICALS
 
 ---
 
-## IV. Proprietary Indicators
+## V. Proprietary Indicators
 
-### Macro Risk Index (MRI) v2.0 — Master Composite
+### Macro Risk Index (MRI) — Master Composite
 
-The MRI synthesizes all 12 pillar composites into a single regime indicator:
+The Macro Risk Index (MRI) synthesizes all 12 pillar composites into a single regime indicator:
 
 ```
 MRI = 0.12 × (-LPI)           # Labor (inverted)
@@ -311,8 +311,6 @@ MRI = 0.12 × (-LPI)           # Labor (inverted)
     + 0.08 × SPI              # Sentiment (high = contrarian risk)
 ```
 
-**v2.0 Change:** Added Pillars 11-12 (Structure, Sentiment) with 8% weight each, rebalanced other pillars accordingly.
-
 **Signal Thresholds:**
 
 | **MRI Range** | **Regime** | **Equity Allocation** | **Regime Multiplier** |
@@ -322,8 +320,6 @@ MRI = 0.12 × (-LPI)           # Labor (inverted)
 | +0.5 to +1.0 | Elevated | 45-55% | 0.6x |
 | +1.0 to +1.5 | High Risk | 35-45% | 0.3x |
 | > +1.5 | Crisis | 25-35% | 0.0x (cash) |
-
-**Current MRI: +1.1 → HIGH RISK → Regime Multiplier: 0.3x**
 
 ### Labor Fragility Index (LFI)
 

@@ -233,12 +233,12 @@ This isn't prediction—it's base rates. If % stocks > 50d MA is at 28% right no
 
 **Volatility & Positioning:**
 
-| **Indicator** | **Threshold** | **Current** | **Signal** |
-|---------------|---------------|-------------|------------|
-| VIX | < 15 = Complacent, > 25 = Fear | ~18 | ⚠️ Elevated |
-| VIX Term Structure | Contango = Calm, Backwardation = Fear | Contango | 🟢 OK |
-| HY OAS | < 300 bps = Complacent | 290 bps | 🔴 Too tight |
-| Equity-Bond Correlation | > +0.3 = Diversification breaking | Rising | ⚠️ Watch |
+| **Indicator** | **Threshold** |
+|---------------|---------------|
+| VIX | < 15 = complacent, > 25 = fear |
+| VIX Term Structure | contango = calm, backwardation = fear |
+| HY OAS | < 300 bps = complacent |
+| Equity-Bond Correlation | > +0.3 = diversification breaking |
 
 **Diagnostic Use Case:** Breadth divergences often lead price by 2-4 weeks. Conditional return analysis helps calibrate *how much* to lean into or against the current setup. When indices are rising but breadth is deteriorating, reduce position sizes and tighten stops—the foundation is cracking even if the roof looks fine.
 

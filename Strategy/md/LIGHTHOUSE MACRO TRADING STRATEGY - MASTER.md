@@ -174,7 +174,7 @@ Every trade must pass through the integrated three-engine framework. Single-engi
 | Core PCE | > 2.5% = elevated |
 | ISM Manufacturing | < 48 = recession |
 
-The Labor Pressure Index (LPI) and Labor Fragility Index (LFI) summarize the labor inputs. Above +0.5 on LFI is the elevated band; above +1.0 is high; above +1.5 is critical.
+The Labor Pressure Index (LPI) and Labor Fragility Index (LFI) summarize the labor inputs. Above +0.5 on LFI is the elevated band. Above +1.0 is high. Above +1.5 is critical.
 
 ### Engine 2: Monetary Mechanics (Pillars 8-10)
 
@@ -894,23 +894,27 @@ Screen for:
 
 ### Benchmark Selection Hierarchy
 
+Relative strength is a measure of opportunity cost. Holding asset X instead of asset Y is an implicit bet that X will outperform Y over the holding period. The benchmark represents the alternative use of capital, the thing you would hold if you weren't holding the position. Beating the benchmark is the reason for the trade. Failing to beat it is misallocation.
+
+In equities this is straightforward. SPY or Russell 3000 serves as the market proxy. In crypto there is no single "market" because the asset class is structurally fragmented. Layer 1s compete with each other (BTC, ETH, SOL, ADA all fighting for share). Tokens serve different functions (DeFi vs. infrastructure vs. consumer vs. store-of-value). Capital rotates between BTC dominance regimes and alt seasons in cycles. No single benchmark perfectly captures crypto as an asset class, so we use a tiered system.
+
 **Tier 1: BTC as Universal Default (80% of positions)**
 
-Use for: L1 competitors, infrastructure, store-of-value alternatives, cross-chain protocols
+Use for: L1 competitors, infrastructure, store-of-value alternatives, cross-chain protocols.
 
-**Rationale:** BTC is the liquidity anchor. If an asset can't beat BTC, why hold it?
+Bitcoin is the liquidity anchor and regime determinant for crypto. Institutional capital enters through BTC first. Macro risk-off flees to BTC last. Fed pivots move BTC, then everything else. BTC is to crypto what the dollar is to currencies, not necessarily the best, but the universal reference point. If an asset can't outperform BTC in a supportive regime, just hold BTC. The burden of proof is on the alt to justify its existence in the portfolio.
 
 **Tier 2: ETH for Ethereum Ecosystem (15% of positions)**
 
-Use for: L2s (ARB, OP), DeFi protocols (UNI, AAVE), ETH-denominated assets
+Use for: L2s (ARB, OP, MATIC), Ethereum DeFi protocols (UNI, AAVE, MKR), ETH-denominated assets (stETH, rETH).
 
-**Rationale:** These are leveraged bets on Ethereum's success. Primary benchmark = ETH, secondary check = BTC.
+Ethereum is the application layer of crypto. Anything built on Ethereum is a leveraged bet on Ethereum's success, not crypto broadly. An L2 should outperform ETH if the L2 thesis is correct. If it merely tracks ETH, hold ETH instead (less risk, better liquidity). If it underperforms ETH, the thesis is broken. Primary benchmark is ETH. Secondary check is BTC, because if the whole Ethereum ecosystem is losing to BTC, the asset class allocation question reasserts itself.
 
 **Tier 3: Sector Indices (5% of positions)**
 
-Use for: Sector rotation strategies with 10+ positions
+Use for: sector rotation strategies running 10+ positions.
 
-**Practical recommendation:** Skip this for concentrated portfolios.
+Skip this for concentrated portfolios. The construction overhead and tracking error are not worth it for books that hold a handful of names.
 
 ### Crypto Position Sizing Adjustments
 

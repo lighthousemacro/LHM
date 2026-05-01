@@ -83,7 +83,29 @@ Leading indicators (quits rate, RRP flows, funding spreads) beat lagging indicat
 
 ---
 
-## II. The Macro Foundation: Connecting to the 12 Pillars
+## II. One Book, Two Ways of Taking Risk
+
+The portfolio is a single book. The distinction is what drives a given position.
+
+### Framework-Driven (most of the book)
+
+Macro thesis plus fundamental confirmation plus technical entry. Long or short. Sizing up to 20% per position via the Tier system. The MRI regime multiplier scales mechanically. Catalyst horizon 3-6 months. Cash is a position. This is the engine that earns over a full cycle.
+
+Every framework-driven position has a thesis and an invalidation, and uses dual stops (thesis or price, whichever triggers first).
+
+### Technical Sleeve (humility patch)
+
+Pure trend, momentum, or relative strength. No thesis required. Smaller positions, tighter stops. No thesis stop because there is no thesis — just price.
+
+The sleeve exists because markets do not owe the framework anything. When the framework is defensive (MRI elevated, regime multiplier compressed) but clear technical trends exist in the tape, capital should not sit fully idle. The sleeve participates in pure technical setups while the framework-driven book stays defensive on the macro view.
+
+When the framework re-engages (MRI improves), positions in the sleeve that meet framework criteria can graduate to the framework-driven book. The two should not compete for the same capital. When the framework is fully active, the sleeve is small or inactive.
+
+**Public language note:** Don't cite "framework-driven sleeve" / "technical sleeve" / "humility patch" in published copy until the first PiTrade is live.
+
+---
+
+## III. The Macro Foundation: Connecting to the 12 Pillars
 
 Our trading framework doesn't exist in isolation. It's the **execution layer** of the 12 Macro Pillars (The Diagnostic Dozen). Every position traces back to a pillar signal.
 

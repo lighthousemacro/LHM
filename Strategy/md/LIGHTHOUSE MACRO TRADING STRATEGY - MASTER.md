@@ -531,11 +531,6 @@ When all six Perfect Setup elements align (see Section VI), award bonus:
 | High Risk | +1.2 | 0.3x | 20% | 6% |
 | Crisis | +1.8 | 0.0x | 20% | 0% (cash) |
 
-**Current Regime (MRI +1.1):**
-- Tier 1 (20% base) → 20% × 0.3 = **6% maximum position**
-- Tier 2 (12% base) → 12% × 0.3 = **3.6% maximum position**
-- Tier 3 (7% base) → 7% × 0.3 = **2.1% maximum position**
-
 ---
 
 ## VII. The Perfect Setup: Anatomical Breakdown

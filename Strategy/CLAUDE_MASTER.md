@@ -273,6 +273,8 @@ The portfolio is a single book. The distinction is what drives a position.
 
 # SECTION 10: PROPRIETARY INDICATORS (The Codex)
 
+**Canonical indicator reference:** `/Users/bob/LHM/Strategy/INDICATORS_MASTER.md` — formulas, thresholds, audit findings, live values, candidates. Single source of truth. Quick-reference table below.
+
 | Indicator | Full Name |
 |---|---|
 | LPI | Labor Pressure Index |

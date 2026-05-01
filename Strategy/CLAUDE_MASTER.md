@@ -245,9 +245,10 @@ The portfolio is a single book. The distinction is what drives a position.
 
 # SECTION 9: DATA INFRASTRUCTURE
 
-- **DB:** `/Users/bob/LHM/Data/databases/Lighthouse_Master.db` (SQLite, ~1,400+ series, ~2.5M+ obs)
+- **DB:** `/Users/bob/LHM/Data/databases/Lighthouse_Master.db` (SQLite, ~2,500 series, ~4.15M obs)
 - **Pipeline:** `/Users/bob/LHM/Scripts/data_pipeline/lighthouse_master_db.py`
 - **Config:** `/Users/bob/LHM/Scripts/data_pipeline/lighthouse/config.py`
+- **OpenBB backend:** `/Users/bob/LHM/Scripts/openbb_backend/lhm_backend.py` — FastAPI bridge that exposes Lighthouse_Master.db to OpenBB Workspace as the source of truth. Launch: `openbb-api --app .../lhm_backend.py --name app --host 127.0.0.1 --port 6900`. Add `http://127.0.0.1:6900` as a custom backend in OpenBB Workspace. Endpoints: `/health /categories /sources /series /observations /latest /composites /composite_history`.
 - **Sources:** FRED, BLS, BEA, Census, NY Fed, OFR, TreasuryDirect, Yahoo, AAII, Zillow, TradingView (sub), DefiLlama, CoinGecko
 - **Schedule:** 06:00 ET refresh, 07:00 ET indicators, 07:15 ET alerts
 - **Pipeline flow:** RAW → STAGING → CURATED → FEATURES → INDICATORS → OUTPUTS

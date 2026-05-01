@@ -4,7 +4,7 @@
 **Version:** 3.0 (Consolidated)
 **Date:** May 1, 2026
 **Author:** Bob Sheehan, CFA, CMT
-**Status:** Internal — Production Reference
+**Status:** Internal, production reference
 
 *"MACRO, ILLUMINATED."*
 
@@ -95,7 +95,7 @@ Every framework-driven position has a thesis and an invalidation, and uses dual 
 
 ### Technical Sleeve (humility patch)
 
-Pure trend, momentum, or relative strength. No thesis required. Smaller positions, tighter stops. No thesis stop because there is no thesis — just price.
+Pure trend, momentum, or relative strength. No thesis required. Smaller positions, tighter stops. No thesis stop because there is no thesis. Just price.
 
 The sleeve exists because markets do not owe the framework anything. When the framework is defensive (MRI elevated, regime multiplier compressed) but clear technical trends exist in the tape, capital should not sit fully idle. The sleeve participates in pure technical setups while the framework-driven book stays defensive on the macro view.
 

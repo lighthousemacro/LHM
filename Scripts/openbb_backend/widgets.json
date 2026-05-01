@@ -1,0 +1,189 @@
+{
+  "lhm_health": {
+    "name": "LHM DB Health",
+    "description": "Database connection status and global stats. Drop this on a dashboard to confirm the backend is live and the pipeline is current.",
+    "category": "Lighthouse Macro",
+    "subCategory": "System",
+    "type": "markdown",
+    "endpoint": "health",
+    "gridData": {
+      "w": 20,
+      "h": 5
+    }
+  },
+  "lhm_composites_latest": {
+    "name": "LHM Composites — Latest",
+    "description": "Latest reading for every LHM proprietary composite (45 indices). Source of truth: lighthouse_indices table.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Composites",
+    "type": "table",
+    "endpoint": "composites",
+    "gridData": {
+      "w": 40,
+      "h": 20
+    },
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "index_id", "headerName": "Composite", "cellDataType": "text", "pinned": "left", "width": 200 },
+          { "field": "as_of", "headerName": "As Of", "cellDataType": "date", "width": 110 },
+          { "field": "value", "headerName": "Value", "cellDataType": "number", "formatterFn": "none", "width": 100 },
+          { "field": "status", "headerName": "Status", "cellDataType": "text", "width": 220 }
+        ]
+      }
+    }
+  },
+  "lhm_composite_history": {
+    "name": "LHM Composite — History",
+    "description": "Historical time series for a single LHM composite. Pick MRI, LFI, LCI, MSI, SPI, etc. from the index_id parameter.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Composites",
+    "type": "chart",
+    "endpoint": "composite_history",
+    "gridData": {
+      "w": 40,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "index_id",
+        "value": "MRI",
+        "label": "Composite ID",
+        "description": "MRI / LPI / PCI / GCI / HCI / CCI / BCI / TCI / GCI_Gov / FCI / LCI / MSI / SPI / LFI / LDI / CLG / YFS / SVI / EMD / SBD / SSD / SLI / etc.",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start date",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End date",
+        "show": true
+      }
+    ]
+  },
+  "lhm_categories": {
+    "name": "LHM Categories",
+    "description": "All data categories in Lighthouse_Master.db with series counts. Use as a directory for browsing.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Catalog",
+    "type": "table",
+    "endpoint": "categories",
+    "gridData": {
+      "w": 20,
+      "h": 20
+    },
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "category", "headerName": "Category", "cellDataType": "text", "pinned": "left" },
+          { "field": "series_count", "headerName": "Series", "cellDataType": "number", "width": 110 }
+        ]
+      }
+    }
+  },
+  "lhm_sources": {
+    "name": "LHM Sources",
+    "description": "All data sources in Lighthouse_Master.db with series counts.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Catalog",
+    "type": "table",
+    "endpoint": "sources",
+    "gridData": {
+      "w": 20,
+      "h": 20
+    },
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "source", "headerName": "Source", "cellDataType": "text", "pinned": "left" },
+          { "field": "series_count", "headerName": "Series", "cellDataType": "number", "width": 110 }
+        ]
+      }
+    }
+  },
+  "lhm_series_search": {
+    "name": "LHM Series — Browse",
+    "description": "Browse the 2,498 series in Lighthouse_Master.db. Filter by category, source, or text search.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Catalog",
+    "type": "table",
+    "endpoint": "series",
+    "gridData": {
+      "w": 40,
+      "h": 20
+    },
+    "params": [
+      { "type": "text", "paramName": "category", "label": "Category", "show": true },
+      { "type": "text", "paramName": "source", "label": "Source", "show": true },
+      { "type": "text", "paramName": "search", "label": "Search (id or title)", "show": true },
+      { "type": "number", "paramName": "limit", "value": 200, "label": "Limit", "show": true }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "series_id", "headerName": "ID", "cellDataType": "text", "pinned": "left", "width": 160 },
+          { "field": "title", "headerName": "Title", "cellDataType": "text", "width": 280 },
+          { "field": "source", "headerName": "Source", "cellDataType": "text", "width": 120 },
+          { "field": "category", "headerName": "Category", "cellDataType": "text", "width": 160 },
+          { "field": "frequency", "headerName": "Freq", "cellDataType": "text", "width": 80 },
+          { "field": "last_value_date", "headerName": "Latest", "cellDataType": "date", "width": 110 },
+          { "field": "obs_count", "headerName": "Obs", "cellDataType": "number", "width": 90 }
+        ]
+      }
+    }
+  },
+  "lhm_series_chart": {
+    "name": "LHM Series — Time Series",
+    "description": "Plot any single series from Lighthouse_Master.db.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Series",
+    "type": "chart",
+    "endpoint": "observations",
+    "gridData": {
+      "w": 40,
+      "h": 15
+    },
+    "params": [
+      { "type": "text", "paramName": "series_id", "value": "DGS10", "label": "Series ID", "show": true },
+      { "type": "date", "paramName": "start_date", "label": "Start", "show": true },
+      { "type": "date", "paramName": "end_date", "label": "End", "show": true }
+    ]
+  },
+  "lhm_latest_tile": {
+    "name": "LHM Series — Latest Values",
+    "description": "Latest observation for one or more series. Comma-separate IDs (e.g. UNRATE,DGS10,SPX). Useful for dashboard headline tiles.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Series",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 30,
+      "h": 12
+    },
+    "params": [
+      { "type": "text", "paramName": "series_ids", "value": "DGS10,UNRATE,VIXCLS", "label": "Series IDs (comma-separated)", "show": true }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "series_id", "headerName": "ID", "pinned": "left", "width": 130 },
+          { "field": "title", "headerName": "Title", "width": 240 },
+          { "field": "date", "headerName": "Date", "cellDataType": "date", "width": 110 },
+          { "field": "value", "headerName": "Value", "cellDataType": "number", "width": 110 },
+          { "field": "units", "headerName": "Units", "width": 100 }
+        ]
+      }
+    }
+  }
+}

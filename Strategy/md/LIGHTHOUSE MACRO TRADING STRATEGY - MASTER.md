@@ -538,7 +538,7 @@ When all six Perfect Setup elements align (see Section VI), award bonus:
 
 ---
 
-## VI. The Perfect Setup: Anatomical Breakdown
+## VII. The Perfect Setup: Anatomical Breakdown
 
 The Perfect Setup is the **only configuration** that justifies maximum position sizing. Everything else is partial position or pass.
 
@@ -603,7 +603,7 @@ Z-RoC Momentum (Bottom Panel):
 
 ---
 
-## VII. Absolute Rules: Non-Negotiable Filters
+## VIII. Absolute Rules: Non-Negotiable Filters
 
 Before any trade consideration, these filters must pass. If any fail, the trade doesn't happen.
 
@@ -651,7 +651,7 @@ Before any trade consideration, these filters must pass. If any fail, the trade 
 
 ---
 
-## VIII. Asset Class Framework & Implementation
+## IX. Asset Class Framework & Implementation
 
 ### Core Portfolio (90% of Capital)
 
@@ -708,7 +708,7 @@ Before any trade consideration, these filters must pass. If any fail, the trade 
 
 ---
 
-## IX. Tactical Timeframe Optimization
+## X. Tactical Timeframe Optimization
 
 ### The 3-6 Month Tactical Sweet Spot
 

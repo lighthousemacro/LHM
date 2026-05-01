@@ -369,6 +369,7 @@ Pipeline: scout → engine → calendar (validate). Data-analyst is backbone for
 | Content | Path |
 |---|---|
 | This file | `/Users/bob/LHM/Strategy/CLAUDE_MASTER.md` |
+| **Indicators master** (canonical) | `/Users/bob/LHM/Strategy/INDICATORS_MASTER.md` |
 | Pillar details | `/Users/bob/LHM/Strategy/Pillar_*/` |
 | Trading strategy | `/Users/bob/LHM/Strategy/LIGHTHOUSE MACRO TRADING STRATEGY - MASTER.md` |
 | Portfolio framework | `/Users/bob/LHM/Strategy/md/TWO_BOOKS_FRAMEWORK.md` (legacy filename, content reframed) |

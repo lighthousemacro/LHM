@@ -1,10 +1,10 @@
 # LIGHTHOUSE MACRO TRADING STRATEGY
 ## Complete Framework for Multi-Asset Macro Execution
 
-**Version:** 2.0 (The Diagnostic Dozen)
-**Date:** January 19, 2026
+**Version:** 3.0 (Consolidated)
+**Date:** May 1, 2026
 **Author:** Bob Sheehan, CFA, CMT
-**Status:** Production-Ready
+**Status:** Internal — Production Reference
 
 *"MACRO, ILLUMINATED."*
 
@@ -14,24 +14,25 @@
 
 1. [Executive Summary](#executive-summary)
 2. [Investment Philosophy](#i-investment-philosophy)
-3. [The Macro Foundation: Connecting to the 12 Pillars](#ii-the-macro-foundation-connecting-to-the-12-pillars)
-4. [The Three-Engine Analytical Framework](#iii-the-three-engine-analytical-framework)
-5. [Proprietary Indicators](#iv-proprietary-indicators)
-6. [Position Sizing & Conviction Framework](#v-position-sizing--conviction-framework)
-7. [The Perfect Setup: Anatomical Breakdown](#vi-the-perfect-setup-anatomical-breakdown)
-8. [Absolute Rules: Non-Negotiable Filters](#vii-absolute-rules-non-negotiable-filters)
-9. [Asset Class Framework & Implementation](#viii-asset-class-framework--implementation)
-10. [Tactical Timeframe Optimization](#ix-tactical-timeframe-optimization)
-11. [Risk Management Framework](#x-risk-management-framework)
-12. [Implementation Workflow](#xi-implementation-workflow)
-13. [Crypto-Specific Considerations](#xii-crypto-specific-considerations)
-14. [Current Regime Assessment](#xiii-current-regime-assessment)
+3. [One Book, Two Ways of Taking Risk](#ii-one-book-two-ways-of-taking-risk)
+4. [The Macro Foundation: Connecting to the 12 Pillars](#iii-the-macro-foundation-connecting-to-the-12-pillars)
+5. [The Three-Engine Analytical Framework](#iv-the-three-engine-analytical-framework)
+6. [Proprietary Indicators](#v-proprietary-indicators)
+7. [Position Sizing & Conviction Framework](#vi-position-sizing--conviction-framework)
+8. [The Perfect Setup: Anatomical Breakdown](#vii-the-perfect-setup-anatomical-breakdown)
+9. [Absolute Rules: Non-Negotiable Filters](#viii-absolute-rules-non-negotiable-filters)
+10. [Asset Class Framework & Implementation](#ix-asset-class-framework--implementation)
+11. [Tactical Timeframe Optimization](#x-tactical-timeframe-optimization)
+12. [Risk Management Framework](#xi-risk-management-framework)
+13. [Implementation Workflow](#xii-implementation-workflow)
+14. [Crypto-Specific Considerations](#xiii-crypto-specific-considerations)
+15. [The Psychological Edge](#xiv-the-psychological-edge)
 
 ---
 
 ## Executive Summary
 
-Lighthouse Macro's trading strategy combines **systematic regime identification** with **disciplined position sizing** to generate alpha at macro inflection points. We don't predict—we measure. We don't diversify for safety—we concentrate when conviction is high.
+Lighthouse Macro's trading strategy combines systematic regime identification with disciplined position sizing to generate alpha at macro inflection points. The framework measures rather than predicts. It concentrates when conviction is high rather than diversifying for safety.
 
 ### Core Differentiation
 

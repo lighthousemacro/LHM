@@ -147,28 +147,13 @@ Our trading framework doesn't exist in isolation. It's the **execution layer** o
 | MSI < -0.5 | Reduce gross exposure | All |
 | SPI > +1.5 | Contrarian fade (crowding risk) | All |
 
-### Current Pillar State (January 2026)
+### Current Pillar State
 
-| **Pillar** | **Composite** | **Trading Signal** |
-|------------|---------------|-------------------|
-| Labor | LFI +0.93 | ⚠️ Reduce cyclicals |
-| Prices | PCI +0.7 | ⚠️ Fed constrained |
-| Growth | GCI -0.4 | ⚠️ Manufacturing weak |
-| Housing | HCI -0.6 | 🔴 Avoid sector |
-| Consumer | CCI -0.3 | ⚠️ Credit stress building |
-| Business | BCI -0.4 | ⚠️ Small biz weak |
-| Trade | TCI -0.5 | ⚠️ Dollar headwind |
-| Government | GCI-Gov +1.1 | 🔴 Fiscal dominance |
-| Financial | FCI +0.3 | ⚠️ Spreads too tight |
-| Plumbing | LCI -0.8 | 🔴 Buffer exhausted |
-| Structure | MSI [Live] | Monitor for breadth divergence |
-| Sentiment | SPI [Live] | Monitor for crowding extremes |
-
-**MRI: +1.1 = HIGH RISK REGIME**
+Live readings for all 12 pillar composites flow from the daily indicator pipeline (`/Users/bob/LHM/Scripts/data_pipeline/`). The MRI synthesizes them into the regime multiplier that scales position sizes.
 
 ---
 
-## III. The Three-Engine Analytical Framework
+## IV. The Three-Engine Analytical Framework
 
 Every trade must pass through the integrated three-engine framework. Single-engine signals are insufficient; we require **convergence across engines** for high-conviction positioning.
 

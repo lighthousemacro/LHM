@@ -165,35 +165,33 @@ Every trade must pass through the integrated three-engine framework. Single-engi
 
 **Primary Indicators:**
 
-| **Indicator** | **Threshold** | **Current** | **Signal** |
-|---------------|---------------|-------------|------------|
-| Quits Rate | < 2.0% = Pre-recessionary | 1.9% | 🔴 Breach |
-| Long-Term Unemployed | > 22% = Fragility | 25.7% | 🔴 Breach |
-| Hires/Quits Ratio | < 2.0 = Demand weakening | 1.85 | 🔴 Breach |
-| Temp Help YoY | < -3% = Recession signal | -7.1% | 🔴 Breach |
-| Core PCE | > 2.5% = Elevated | 3.2% | 🔴 Above target |
-| ISM Manufacturing | < 48 = Recession | 49.3 | ⚠️ Contraction |
+| **Indicator** | **Threshold** |
+|---------------|---------------|
+| Quits Rate | < 2.0% = pre-recessionary |
+| Long-Term Unemployed | > 22% = fragility |
+| Hires/Quits Ratio | < 2.0 = demand weakening |
+| Temp Help YoY | < -3% = recession signal |
+| Core PCE | > 2.5% = elevated |
+| ISM Manufacturing | < 48 = recession |
 
-**LFI Current: +0.93** (Elevated fragility—defensive signal)
+The Labor Pressure Index (LPI) and Labor Fragility Index (LFI) summarize the labor inputs. Above +0.5 on LFI is the elevated band; above +1.0 is high; above +1.5 is critical.
 
 ### Engine 2: Monetary Mechanics (Pillars 8-10)
 
 **Focus:** Government (Fiscal), Financial (Credit/Conditions), Plumbing (Liquidity)
 
-**Key Insight:** RRP exhaustion removes the system's shock absorber. Treasury issuance now drains reserves directly. We've entered Fiscal Dominance—the regime where fiscal policy overwhelms monetary policy.
+**Key Insight:** RRP exhaustion removes the system's shock absorber. Treasury issuance drains reserves directly when the buffer is gone. The regime where fiscal policy overwhelms monetary policy is fiscal dominance, and term premium is the price of admission.
 
 **Primary Indicators:**
 
-| **Indicator** | **Threshold** | **Current** | **Signal** |
-|---------------|---------------|-------------|------------|
-| RRP Balance | < $200B = Buffer gone | $150B | 🔴 Drained |
-| Reserves vs LCLOR | < $300B = Scarcity | $300B | ⚠️ At limit |
-| EFFR-IORB Spread | > +8 bps = Stress | +3 bps | 🟢 OK |
-| SOFR-IORB Spread | > +10 bps = Funding stress | +5 bps | 🟡 Elevated |
-| Deficit/GDP | > 5% = Elevated | 7.2% | 🔴 Wartime levels |
-| Term Premium | > +50 bps = Repricing | +25 bps | ⚠️ Rising |
-
-**LCI Current: -0.8** (Scarce liquidity—monitor funding stress)
+| **Indicator** | **Threshold** |
+|---------------|---------------|
+| RRP Balance | < $200B = buffer gone |
+| Reserves vs LCLOR | < $300B = scarcity |
+| EFFR-IORB Spread | > +8 bps = stress |
+| SOFR-IORB Spread | > +10 bps = funding stress |
+| Deficit/GDP | > 5% = elevated |
+| Term Premium | > +50 bps = repricing |
 
 ### Engine 3: Market Technicals (Broad Market Diagnostics)
 

@@ -395,7 +395,7 @@ MSI = 0.15 × z(Price_vs_200d_MA_%)
 | -1.0 to -0.5 | Deteriorating | Reduce exposure |
 | < -1.0 | Broken | Defensive positioning |
 
-### Sentiment Pillar Index (SPI) — NEW in v2.0
+### Sentiment & Positioning Index (SPI)
 
 ```
 SPI = 0.20 × z(AAII_Bull_Bear_Spread)
@@ -417,7 +417,7 @@ SPI = 0.20 × z(AAII_Bull_Bear_Spread)
 
 ---
 
-## V. Position Sizing & Conviction Framework
+## VI. Position Sizing & Conviction Framework
 
 ### The Regime-Conviction-Size Formula
 

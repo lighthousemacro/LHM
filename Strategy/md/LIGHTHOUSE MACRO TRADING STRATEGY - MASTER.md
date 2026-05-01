@@ -707,7 +707,7 @@ Before any trade consideration, these filters must pass. If any fail, the trade 
 
 ### The 3-6 Month Tactical Sweet Spot
 
-Research across 80+ years of market data reveals that the 3-6 month horizon represents a "Goldilocks zone":
+Research across 80+ years of market data shows that macro signals decay faster than strategic horizons but persist longer than day-trading windows. The 3-6 month horizon is the Goldilocks zone where forecast accuracy remains meaningful (GDP errors of 1-2 percentage points versus 2+ at 12 months), transaction costs stay manageable (20-80 bps round-trip for liquid ETFs), and signal persistence justifies active repositioning.
 
 | **Timeframe** | **GDP Forecast Error** | **Momentum Persistence** | **Verdict** |
 |---------------|------------------------|--------------------------|-------------|
@@ -717,45 +717,65 @@ Research across 80+ years of market data reveals that the 3-6 month horizon repr
 | 6-12 months | ±2.2 ppts | +0.5 Sharpe | Signal decay |
 | > 12 months | ±2.6 ppts | Reversal risk | Mean reversion |
 
+The incremental forecast error from 3 months to 12 months is small (~0.7 ppts), so tactical positions sacrifice limited accuracy while gaining substantial flexibility. The dominant constraint isn't forecast skill, it's signal persistence and the cost of repositioning.
+
 ### The Magic Number: Formation + Holding = 14-18 Months
 
-For 3-month tactical positions: Use 9-12 month lookback
-For 6-month tactical positions: Use 6-12 month lookback
+Academic work across 58 futures contracts shows momentum is positive at all lookback windows from 1-12 months, with 12-month lookback delivering the strongest statistical significance (t-stats of 6.61 for the all-asset combined sample). Performance declines with longer holds: 12-month lookback held one month exceeds Sharpe 1.0, but deteriorates to 0.8-1.0 at three months and 0.5-0.8 at six months.
 
-**The 12-14 Month Danger Zone:** Momentum-to-mean-reversion transition. Exit or reverse by month 12-14.
+The "magic number" finding: **formation period plus holding period should equal 14-18 months** for optimal risk-adjusted returns.
+
+- 3-month tactical positions: 9-12 month lookback
+- 6-month tactical positions: 6-12 month lookback
+
+**The 12-14 Month Danger Zone:** Beyond 12-14 months, positive autocorrelation weakens and reversal risk rises. Beyond 24 months, negative autocorrelation dominates (currencies show the sharpest long-term reversals). Tactical momentum positions should either exit by month 12-14 or transition to a contrarian framework. Riding momentum past month 14 while sizing it like a momentum trade buys the worst of both regimes.
 
 ### Three-Layer Position Architecture
 
 **Layer 1: Core Strategic-Tactical (60-70% of risk budget)**
 - Holding period: 3-6 months
-- Adjustment frequency: Monthly to quarterly
+- Adjustment frequency: monthly to quarterly
 - Signal source: MRI, LFI, LCI regime changes
-- Current example: 40% equity / 45% bonds / 15% cash (MRI +1.1 defensive)
 
 **Layer 2: Tactical Intermediate (20-30% of risk budget)**
 - Holding period: 1-3 months
-- Adjustment frequency: Weekly to monthly
-- Signal source: Relative strength rotation, sector momentum
-- Current example: Overweight XLV (healthcare), underweight XLF (financials)
+- Adjustment frequency: weekly to monthly
+- Signal source: relative strength rotation, sector momentum
 
 **Layer 3: Event-Driven Overlays (10-20% of risk budget)**
 - Holding period: 1-3 weeks
-- Adjustment frequency: Event-triggered
+- Adjustment frequency: event-triggered
 - Signal source: FOMC, data releases, liquidity stress
 
 ### Event-Driven Positioning: The FOMC Trade
 
-**Pre-FOMC Equity Drift (49 bps average, 1.14 Sharpe):**
-- Days -10 to -5: Establish 5-10% long equity position
-- Day -1 (24 hours before): Scale to 15-20%
-- Day 0 (announcement): Exit 75-100% at or before 2:15pm
+The 50-day Treasury drift after FOMC meetings is one of the highest-conviction monetary mechanics trades. Following actual target rate changes, 10-year Treasury yields respond just 1.7 bps on announcement day, only 17% of their eventual 50-day response. Impact builds to 6.0 bps by day 20 and peaks at 14.1 bps by day 50. Five-year notes move 3.3 bps day 0 to 15.1 bps day 50. Mutual fund flows take weeks to fully adjust, with cumulative outflows from intermediate bond funds peaking between months 3 and 6 after a policy surprise. This drift only follows actual rate moves, not no-change meetings.
+
+The pre-FOMC equity drift runs the opposite direction. The 24-hour window before FOMC meetings averages 49 bps with a 1.14 Sharpe ratio. Drift begins ~25 days before the meeting and accumulates through the final 24 hours. Since 1994, ~80% of S&P 500 annual returns have been earned during pre-FOMC windows that represent only ~13% of trading days.
+
+**Pre-FOMC Equity Drift (49 bps avg, 1.14 Sharpe):**
+- Days -10 to -5: establish 5-10% long equity position
+- Day -1 (24 hours before): scale to 15-20%
+- Day 0 (announcement): exit 75-100% at or before the announcement
 
 **Post-FOMC Treasury Drift (120+ bps over 50 days):**
-- Day 0 (post-announcement): Establish 10-15% duration position
-- Day 20: Scale to 20% if drift confirms
-- Day 45-50: Exit before mean reversion begins
+- Day 0 (post-announcement): establish 10-15% duration position
+- Day 20: scale to 20% if drift confirms
+- Day 45-50: exit before mean reversion begins
 
-**Annual Opportunity:** 8 FOMC meetings × (49 bps equity + 100 bps bonds) = 400-800 bps gross potential
+**Annual Opportunity:** 8 FOMC meetings × (49 bps equity + 100 bps bonds) = 400-800 bps gross potential. The same risk capital can rotate from equities pre-FOMC to duration post-FOMC, capturing both drift patterns from a single meeting cycle.
+
+### Liquidity Stress Episode Durations
+
+Stress episodes resolve at very different speeds depending on the underlying problem and the policy response.
+
+| **Episode Type** | **Duration** | **Example** |
+|------------------|--------------|-------------|
+| Pure liquidity (rapid policy response) | 2-3 days | Sept 2019 repo spike |
+| Acute episode with structural element | 2-4 weeks | March 2020 COVID dash-for-cash (20 days acute, 6-8 weeks for full recovery) |
+| Solvency-tinged stress | 6-8 weeks | March-May 2023 regional banks (SVB → First Republic) |
+
+Pure liquidity events with standing facilities should compress to days. Solvency or policy-uncertainty episodes extend to 2-3 months. Tactical traders must differentiate, because the same defensive positioning that's correct in 2023 banks would be massively wrong in 2019 repo.
 
 ---
 

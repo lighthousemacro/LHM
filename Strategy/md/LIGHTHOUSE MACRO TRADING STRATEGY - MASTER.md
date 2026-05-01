@@ -155,7 +155,7 @@ Live readings for all 12 pillar composites flow from the daily indicator pipelin
 
 ## IV. The Three-Engine Analytical Framework
 
-Every trade must pass through the integrated three-engine framework. Single-engine signals are insufficient; we require **convergence across engines** for high-conviction positioning.
+Every trade must pass through the integrated three-engine framework. Single-engine signals are insufficient. High-conviction positioning requires **convergence across engines**.
 
 ### Engine 1: Macro Dynamics (Pillars 1-7)
 

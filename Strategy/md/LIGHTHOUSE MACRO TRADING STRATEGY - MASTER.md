@@ -630,7 +630,7 @@ Before any trade consideration, these filters must pass. If any fail, the trade 
 
 **Logic:** Averaging down violates trend-following philosophy
 
-**Why:** Catching knives vs riding rockets—we choose rockets
+**Why:** Catching knives vs. riding rockets. We choose rockets.
 
 ### Rule 5: Never Chase Above +15% Extension from 50d MA
 
@@ -761,7 +761,7 @@ For 6-month tactical positions: Use 6-12 month lookback
 
 ## XI. Risk Management Framework
 
-### Position Limits (Hard Limits—Never Exceed)
+### Position Limits (Hard Limits, Never Exceed)
 
 | **Limit Type** | **Maximum** |
 |----------------|-------------|

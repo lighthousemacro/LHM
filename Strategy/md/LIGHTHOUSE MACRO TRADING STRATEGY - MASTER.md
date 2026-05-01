@@ -764,7 +764,7 @@ For 6-month tactical positions: Use 6-12 month lookback
 
 ---
 
-## X. Risk Management Framework
+## XI. Risk Management Framework
 
 ### Position Limits (Hard Limits—Never Exceed)
 
@@ -821,7 +821,7 @@ Exit when technical structure breaks:
 
 ---
 
-## XI. Implementation Workflow
+## XII. Implementation Workflow
 
 ### Morning Routine (06:30 - 07:30 ET)
 
@@ -895,7 +895,7 @@ Screen for:
 
 ---
 
-## XII. Crypto-Specific Considerations
+## XIII. Crypto-Specific Considerations
 
 ### Benchmark Selection Hierarchy
 

@@ -988,7 +988,7 @@ The market will show you a thousand reasons to override the rules:
 - "I have special information"
 - "Rules are for other people"
 
-Every overridden rule is a deposit in the account of regret. Every followed rule—even when painful—is compounding discipline.
+Every overridden rule is a deposit in the account of regret. Every followed rule, even when painful, is compounding discipline.
 
 You don't need to be smarter than the market. You need to be more disciplined than your past self.
 
@@ -996,12 +996,9 @@ You don't need to be smarter than the market. You need to be more disciplined th
 
 ---
 
-**That's our view from the Watch. Until next time, we'll be sure to keep the light on....**
-
 *Bob Sheehan, CFA, CMT*
 *Founder & CIO, Lighthouse Macro*
-*January 19, 2026*
 
 ---
 
-*This document integrates the Position Sizing & Risk Management Framework, Multi-Asset Macro Strategy, Tactical Timeframe Optimization Framework, Benchmark Selection for Crypto Relative Strength Analysis, and the 12 Macro Pillars (The Diagnostic Dozen) into a single cohesive trading strategy. For detailed pillar-level analysis, refer to the individual PILLAR documents (1-12).*
+*This document is the consolidated Lighthouse Macro trading strategy. It absorbs the Position Sizing & Risk Management Framework, Multi-Asset Macro Strategy, Tactical Timeframe Optimization Framework, and Benchmark Selection for Crypto Relative Strength Analysis. For detailed pillar-level analysis, refer to the individual `Pillar_*` directories. For token-level on-chain fundamentals, refer to `ONCHAIN_ANALYTICS_FRAMEWORK.md`.*

@@ -950,54 +950,7 @@ Use for: Sector rotation strategies with 10+ positions
 
 ---
 
-## XIII. Current Regime Assessment
-
-### January 2026 State
-
-**MRI: +1.1 (HIGH RISK)**
-
-| **Indicator** | **Reading** | **Signal** |
-|---------------|-------------|------------|
-| LFI | +0.93 | 🔴 Labor fragility elevated |
-| LCI | -0.8 | 🔴 Liquidity buffer exhausted |
-| CLG | -1.2 | 🔴 Credit complacent |
-| PCI | +0.7 | ⚠️ Inflation elevated |
-| GCI-Gov | +1.1 | 🔴 Fiscal dominance |
-
-### Current Tactical Allocation
-
-| **Asset** | **Strategic** | **Tactical** | **Rationale** |
-|-----------|---------------|--------------|---------------|
-| SPY (Equities) | 60% | 40% | Underweight -20% (MRI +1.1, expensive) |
-| AGG (Bonds) | 40% | 45% | Overweight +5% (Fed cutting likely) |
-| Cash | 0% | 10% | Add +10% (liquidity, reduce vol) |
-| XLV (Healthcare) | 0% | 3% | Defensive sector tilt |
-| GLD (Gold) | 0% | 2% | Crisis hedge |
-
-### Invalidation Criteria
-
-**Exit defensive positioning if:**
-- Quits rate rises above 2.1%
-- LFI drops below +0.5
-- MRI drops below +0.5
-- Fed announces emergency liquidity intervention
-- Credit spreads widen > 500 bps (stress priced)
-
-### Expected Outcomes
-
-**If Thesis Correct (Recession Q4 2026):**
-- Portfolio: -3.5% (vs strategic -11.5%)
-- **Outperformance: +8%**
-
-**If Thesis Wrong (Goldilocks Continues):**
-- Portfolio: +5.0% (vs strategic +7%)
-- **Underperformance: -2%**
-
-**Risk/Reward:** Asymmetric—avoid -8% vs give up -2%
-
----
-
-## The Psychological Edge: Trusting the Framework
+## XIV. The Psychological Edge: Trusting the Framework
 
 The hardest part isn't calculating scores. It's following the rules when your gut screams otherwise.
 

@@ -431,3 +431,129 @@ def divergence_grid(
         except HTTPException:
             continue
     return out
+
+
+# ---------------------------------------------------------------------------
+# Panel endpoints — multi-series payloads for OpenBB chart widgets
+# ---------------------------------------------------------------------------
+
+def _multi_series(
+    c: sqlite3.Connection,
+    series_ids: list[str],
+    start_date: str | None,
+    end_date: str | None,
+) -> list[dict[str, Any]]:
+    """Long-format rows ({date, series_id, value}) for one or more series."""
+    if not series_ids:
+        return []
+    placeholders = ",".join("?" * len(series_ids))
+    sql = (
+        f"SELECT date, series_id, value FROM observations "
+        f"WHERE series_id IN ({placeholders})"
+    )
+    params: list[Any] = list(series_ids)
+    if start_date:
+        sql += " AND date >= ?"
+        params.append(start_date)
+    if end_date:
+        sql += " AND date <= ?"
+        params.append(end_date)
+    sql += " ORDER BY date ASC"
+    return [dict(r) for r in c.execute(sql, params).fetchall()]
+
+
+@app.get("/breadth_panel")
+def breadth_panel(
+    start_date: str | None = Query(None),
+    end_date: str | None = Query(None),
+) -> list[dict[str, Any]]:
+    """% of S&P 500 above its 20d / 50d / 200d MA. Pillar 11 — Structure."""
+    ids = ["SPX_PCT_ABOVE_20D", "SPX_PCT_ABOVE_50D", "SPX_PCT_ABOVE_200D"]
+    with _conn() as c:
+        rows = _multi_series(c, ids, start_date, end_date)
+    if not rows:
+        raise HTTPException(status_code=404, detail="No breadth observations found")
+    return rows
+
+
+@app.get("/sentiment_panel")
+def sentiment_panel(
+    start_date: str | None = Query(None),
+    end_date: str | None = Query(None),
+) -> list[dict[str, Any]]:
+    """AAII bull / bear / spread. Pillar 12 — Sentiment."""
+    ids = ["AAII_Bullish", "AAII_Bearish", "AAII_Bull_Bear_Spread"]
+    with _conn() as c:
+        rows = _multi_series(c, ids, start_date, end_date)
+    if not rows:
+        raise HTTPException(status_code=404, detail="No sentiment observations found")
+    return rows
+
+
+@app.get("/rates_panel")
+def rates_panel(
+    start_date: str | None = Query(None),
+    end_date: str | None = Query(None),
+) -> list[dict[str, Any]]:
+    """Treasury curve anchors: 2Y, 5Y, 10Y, 30Y. Plus 30Y mortgage."""
+    ids = ["DGS2", "DGS5", "DGS10", "DGS30", "MORTGAGE30US"]
+    with _conn() as c:
+        rows = _multi_series(c, ids, start_date, end_date)
+    if not rows:
+        raise HTTPException(status_code=404, detail="No rates observations found")
+    return rows
+
+
+@app.get("/credit_panel")
+def credit_panel(
+    start_date: str | None = Query(None),
+    end_date: str | None = Query(None),
+) -> list[dict[str, Any]]:
+    """Credit spread anchors: HY OAS, IG OAS, EMD OAS."""
+    ids = ["BAMLH0A0HYM2", "BAMLC0A0CM"]
+    with _conn() as c:
+        rows = _multi_series(c, ids, start_date, end_date)
+    if not rows:
+        raise HTTPException(status_code=404, detail="No credit observations found")
+    return rows
+
+
+@app.get("/plumbing_panel")
+def plumbing_panel(
+    start_date: str | None = Query(None),
+    end_date: str | None = Query(None),
+) -> list[dict[str, Any]]:
+    """Plumbing anchors: RRP, WALCL, TGA, IORB."""
+    ids = ["RRPONTSYD", "WALCL", "WTREGEN", "IORB"]
+    with _conn() as c:
+        rows = _multi_series(c, ids, start_date, end_date)
+    if not rows:
+        raise HTTPException(status_code=404, detail="No plumbing observations found")
+    return rows
+
+
+@app.get("/engine_summary")
+def engine_summary() -> list[dict[str, Any]]:
+    """One row per engine with mean |z| of its pillar composites. Use as a regime tile."""
+    grouped: dict[str, list[float]] = {}
+    with _conn() as c:
+        for pillar, meta in PILLAR_MAP.items():
+            rows = _series_history(c, meta["composite"], kind="composite")
+            _, z, _ = _zscore(rows)
+            if z is None:
+                continue
+            grouped.setdefault(meta["engine"], []).append(z)
+    out: list[dict[str, Any]] = []
+    for engine, zs in grouped.items():
+        if not zs:
+            continue
+        mean_abs = sum(abs(z) for z in zs) / len(zs)
+        mean = sum(zs) / len(zs)
+        out.append({
+            "engine": engine,
+            "pillars_n": len(zs),
+            "mean_z": round(mean, 3),
+            "mean_abs_z": round(mean_abs, 3),
+            "max_abs_z": round(max(abs(z) for z in zs), 3),
+        })
+    return out

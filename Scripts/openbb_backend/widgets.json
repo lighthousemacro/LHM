@@ -297,5 +297,92 @@
         ]
       }
     }
+  },
+
+  "lhm_breadth_panel": {
+    "name": "Breadth — % > 20d / 50d / 200d MA",
+    "description": "S&P 500 breadth panel. Three-line view of percent of constituents above their 20d, 50d, 200d moving average. Pillar 11 — Structure.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Structure",
+    "type": "chart",
+    "endpoint": "breadth_panel",
+    "gridData": { "w": 40, "h": 15 },
+    "params": [
+      { "type": "date", "paramName": "start_date", "label": "Start", "show": true },
+      { "type": "date", "paramName": "end_date", "label": "End", "show": true }
+    ]
+  },
+  "lhm_sentiment_panel": {
+    "name": "Sentiment — AAII Bull / Bear / Spread",
+    "description": "AAII bullish %, bearish %, and bull-bear spread. Pillar 12 — Sentiment.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Sentiment",
+    "type": "chart",
+    "endpoint": "sentiment_panel",
+    "gridData": { "w": 40, "h": 15 },
+    "params": [
+      { "type": "date", "paramName": "start_date", "label": "Start", "show": true },
+      { "type": "date", "paramName": "end_date", "label": "End", "show": true }
+    ]
+  },
+  "lhm_rates_panel": {
+    "name": "Rates — Treasury Curve + Mortgage",
+    "description": "2Y, 5Y, 10Y, 30Y Treasury yields plus 30Y mortgage rate. Pillar 8 — Government / Pillar 4 — Housing transmission.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Rates",
+    "type": "chart",
+    "endpoint": "rates_panel",
+    "gridData": { "w": 40, "h": 15 },
+    "params": [
+      { "type": "date", "paramName": "start_date", "label": "Start", "show": true },
+      { "type": "date", "paramName": "end_date", "label": "End", "show": true }
+    ]
+  },
+  "lhm_credit_panel": {
+    "name": "Credit — HY vs IG OAS",
+    "description": "ICE BofA high-yield and investment-grade option-adjusted spreads. Pillar 9 — Financial.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Credit",
+    "type": "chart",
+    "endpoint": "credit_panel",
+    "gridData": { "w": 40, "h": 15 },
+    "params": [
+      { "type": "date", "paramName": "start_date", "label": "Start", "show": true },
+      { "type": "date", "paramName": "end_date", "label": "End", "show": true }
+    ]
+  },
+  "lhm_plumbing_panel": {
+    "name": "Plumbing — RRP / WALCL / TGA / IORB",
+    "description": "Reserve management + Fed liquidity stack. Pillar 10 — Plumbing.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Plumbing",
+    "type": "chart",
+    "endpoint": "plumbing_panel",
+    "gridData": { "w": 40, "h": 15 },
+    "params": [
+      { "type": "date", "paramName": "start_date", "label": "Start", "show": true },
+      { "type": "date", "paramName": "end_date", "label": "End", "show": true }
+    ]
+  },
+  "lhm_engine_summary": {
+    "name": "Engines — Mean |z| Summary",
+    "description": "Per-engine summary of pillar composite z-scores. Mean, mean |z|, and max |z| across the pillars in each engine. The fastest read on which engine is doing the work.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Synthesis",
+    "type": "table",
+    "endpoint": "engine_summary",
+    "gridData": { "w": 30, "h": 12 },
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "engine", "headerName": "Engine", "cellDataType": "text", "pinned": "left", "width": 200 },
+          { "field": "pillars_n", "headerName": "Pillars", "cellDataType": "number", "width": 90 },
+          { "field": "mean_z", "headerName": "Mean z", "cellDataType": "number", "width": 100 },
+          { "field": "mean_abs_z", "headerName": "Mean |z|", "cellDataType": "number", "width": 100 },
+          { "field": "max_abs_z", "headerName": "Max |z|", "cellDataType": "number", "width": 100 }
+        ]
+      }
+    }
   }
 }

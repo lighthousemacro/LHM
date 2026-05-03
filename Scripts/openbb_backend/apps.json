@@ -29,9 +29,10 @@
           "name": "Pulse",
           "layout": [
             { "i": "lhm_health",            "x": 0,  "y": 0,  "w": 20, "h": 5 },
+            { "i": "lhm_engine_summary",    "x": 0,  "y": 5,  "w": 20, "h": 12 },
             { "i": "lhm_pillar_heatmap",    "x": 20, "y": 0,  "w": 20, "h": 20 },
-            { "i": "lhm_mri_history",       "x": 0,  "y": 5,  "w": 20, "h": 15 },
-            { "i": "lhm_composite_history", "x": 0,  "y": 20, "w": 20, "h": 15 },
+            { "i": "lhm_mri_history",       "x": 0,  "y": 17, "w": 20, "h": 15 },
+            { "i": "lhm_composite_history", "x": 0,  "y": 32, "w": 20, "h": 15 },
             { "i": "lhm_pulse_tiles",       "x": 20, "y": 20, "w": 20, "h": 15 }
           ]
         }
@@ -41,16 +42,19 @@
 
   "lhm_asset_flow": {
     "name": "02 Asset Flow",
-    "description": "Cross-asset reads — rates, credit, FX, equities — with full series browsing.",
+    "description": "Cross-asset reads — rates, credit, plumbing, breadth, sentiment — sourced direct from the LHM master DB.",
     "tabs": {
       "tabs": {
         "Flow": {
           "id": "flow",
           "name": "Flow",
           "layout": [
-            { "i": "lhm_pulse_tiles",       "x": 0,  "y": 0,  "w": 40, "h": 12 },
-            { "i": "lhm_series_chart",      "x": 0,  "y": 12, "w": 40, "h": 15 },
-            { "i": "lhm_series_search",     "x": 0,  "y": 27, "w": 40, "h": 18 }
+            { "i": "lhm_rates_panel",       "x": 0,  "y": 0,  "w": 20, "h": 15 },
+            { "i": "lhm_credit_panel",      "x": 20, "y": 0,  "w": 20, "h": 15 },
+            { "i": "lhm_plumbing_panel",    "x": 0,  "y": 15, "w": 20, "h": 15 },
+            { "i": "lhm_breadth_panel",     "x": 20, "y": 15, "w": 20, "h": 15 },
+            { "i": "lhm_sentiment_panel",   "x": 0,  "y": 30, "w": 20, "h": 15 },
+            { "i": "lhm_pulse_tiles",       "x": 20, "y": 30, "w": 20, "h": 15 }
           ]
         }
       }

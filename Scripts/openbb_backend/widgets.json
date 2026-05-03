@@ -6,22 +6,16 @@
     "subCategory": "System",
     "type": "markdown",
     "endpoint": "health",
-    "gridData": {
-      "w": 20,
-      "h": 5
-    }
+    "gridData": { "w": 20, "h": 5 }
   },
   "lhm_composites_latest": {
     "name": "LHM Composites — Latest",
-    "description": "Latest reading for every LHM proprietary composite (45 indices). Source of truth: lighthouse_indices table.",
+    "description": "Latest reading for every LHM proprietary composite. Source of truth: lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Composites",
     "type": "table",
     "endpoint": "composites",
-    "gridData": {
-      "w": 40,
-      "h": 20
-    },
+    "gridData": { "w": 40, "h": 20 },
     "data": {
       "table": {
         "showAll": true,
@@ -36,49 +30,26 @@
   },
   "lhm_composite_history": {
     "name": "LHM Composite — History",
-    "description": "Historical time series for a single LHM composite. Pick MRI, LFI, LCI, MSI, SPI, etc. from the index_id parameter.",
+    "description": "Historical time series for a single LHM composite. Pick MRI, LFI, LCI, MSI, SPI, etc.",
     "category": "Lighthouse Macro",
     "subCategory": "Composites",
     "type": "chart",
     "endpoint": "composite_history",
-    "gridData": {
-      "w": 40,
-      "h": 15
-    },
+    "gridData": { "w": 40, "h": 15 },
     "params": [
-      {
-        "type": "text",
-        "paramName": "index_id",
-        "value": "MRI",
-        "label": "Composite ID",
-        "description": "MRI / LPI / PCI / GCI / HCI / CCI / BCI / TCI / GCI_Gov / FCI / LCI / MSI / SPI / LFI / LDI / CLG / YFS / SVI / EMD / SBD / SSD / SLI / etc.",
-        "show": true
-      },
-      {
-        "type": "date",
-        "paramName": "start_date",
-        "label": "Start date",
-        "show": true
-      },
-      {
-        "type": "date",
-        "paramName": "end_date",
-        "label": "End date",
-        "show": true
-      }
+      { "type": "text", "paramName": "index_id", "value": "MRI", "label": "Composite ID", "show": true },
+      { "type": "date", "paramName": "start_date", "label": "Start date", "show": true },
+      { "type": "date", "paramName": "end_date", "label": "End date", "show": true }
     ]
   },
   "lhm_categories": {
     "name": "LHM Categories",
-    "description": "All data categories in Lighthouse_Master.db with series counts. Use as a directory for browsing.",
+    "description": "All data categories in Lighthouse_Master.db with series counts.",
     "category": "Lighthouse Macro",
     "subCategory": "Catalog",
     "type": "table",
     "endpoint": "categories",
-    "gridData": {
-      "w": 20,
-      "h": 20
-    },
+    "gridData": { "w": 20, "h": 20 },
     "data": {
       "table": {
         "showAll": true,
@@ -96,10 +67,7 @@
     "subCategory": "Catalog",
     "type": "table",
     "endpoint": "sources",
-    "gridData": {
-      "w": 20,
-      "h": 20
-    },
+    "gridData": { "w": 20, "h": 20 },
     "data": {
       "table": {
         "showAll": true,
@@ -112,15 +80,12 @@
   },
   "lhm_series_search": {
     "name": "LHM Series — Browse",
-    "description": "Browse the 2,498 series in Lighthouse_Master.db. Filter by category, source, or text search.",
+    "description": "Browse the 2,500+ series in Lighthouse_Master.db. Filter by category, source, or text search.",
     "category": "Lighthouse Macro",
     "subCategory": "Catalog",
     "type": "table",
     "endpoint": "series",
-    "gridData": {
-      "w": 40,
-      "h": 20
-    },
+    "gridData": { "w": 40, "h": 20 },
     "params": [
       { "type": "text", "paramName": "category", "label": "Category", "show": true },
       { "type": "text", "paramName": "source", "label": "Source", "show": true },
@@ -149,10 +114,7 @@
     "subCategory": "Series",
     "type": "chart",
     "endpoint": "observations",
-    "gridData": {
-      "w": 40,
-      "h": 15
-    },
+    "gridData": { "w": 40, "h": 15 },
     "params": [
       { "type": "text", "paramName": "series_id", "value": "DGS10", "label": "Series ID", "show": true },
       { "type": "date", "paramName": "start_date", "label": "Start", "show": true },
@@ -161,17 +123,167 @@
   },
   "lhm_latest_tile": {
     "name": "LHM Series — Latest Values",
-    "description": "Latest observation for one or more series. Comma-separate IDs (e.g. UNRATE,DGS10,SPX). Useful for dashboard headline tiles.",
+    "description": "Latest observation for one or more series. Comma-separate IDs (e.g. UNRATE,DGS10,SPX).",
     "category": "Lighthouse Macro",
     "subCategory": "Series",
     "type": "table",
     "endpoint": "latest",
-    "gridData": {
-      "w": 30,
-      "h": 12
-    },
+    "gridData": { "w": 30, "h": 12 },
     "params": [
       { "type": "text", "paramName": "series_ids", "value": "DGS10,UNRATE,VIXCLS", "label": "Series IDs (comma-separated)", "show": true }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "series_id", "headerName": "ID", "pinned": "left", "width": 130 },
+          { "field": "title", "headerName": "Title", "width": 240 },
+          { "field": "date", "headerName": "Date", "cellDataType": "date", "width": 110 },
+          { "field": "value", "headerName": "Value", "cellDataType": "number", "width": 110 },
+          { "field": "units", "headerName": "Units", "width": 100 }
+        ]
+      }
+    }
+  },
+
+  "lhm_pillar_heatmap": {
+    "name": "Diagnostic Dozen — Pillar Heatmap",
+    "description": "Current z-score for all 12 pillar composites, grouped by engine. Sorted by absolute stress.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Synthesis",
+    "type": "table",
+    "endpoint": "pillar_heatmap",
+    "gridData": { "w": 40, "h": 20 },
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "pillar", "headerName": "Pillar", "cellDataType": "text", "pinned": "left", "width": 130 },
+          { "field": "engine", "headerName": "Engine", "cellDataType": "text", "width": 180 },
+          { "field": "composite", "headerName": "Composite", "cellDataType": "text", "width": 110 },
+          { "field": "z_score", "headerName": "Z-score", "cellDataType": "number", "width": 100 },
+          { "field": "value", "headerName": "Value", "cellDataType": "number", "width": 100 },
+          { "field": "as_of", "headerName": "As Of", "cellDataType": "date", "width": 110 }
+        ]
+      }
+    }
+  },
+  "lhm_transmission_chain": {
+    "name": "Transmission Chain — Lead/Lag Z-Scores",
+    "description": "Lead/lag normalized z-scores along a predefined transmission chain. Switch chain via the dropdown.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Synthesis",
+    "type": "table",
+    "endpoint": "transmission_chain_table",
+    "gridData": { "w": 40, "h": 18 },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "chain_id",
+        "value": "plumbing_credit_labor",
+        "label": "Chain",
+        "description": "plumbing_credit_labor / rates_housing_consumer / sentiment_structure_risk",
+        "show": true,
+        "options": [
+          { "value": "plumbing_credit_labor",  "label": "Plumbing → Credit → Labor" },
+          { "value": "rates_housing_consumer", "label": "Rates → Housing → Consumer" },
+          { "value": "sentiment_structure_risk", "label": "Sentiment → Structure → Risk" }
+        ]
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "step", "headerName": "Step", "cellDataType": "number", "pinned": "left", "width": 70 },
+          { "field": "node", "headerName": "Node", "cellDataType": "text", "width": 160 },
+          { "field": "role", "headerName": "Role", "cellDataType": "text", "width": 220 },
+          { "field": "z_score", "headerName": "Z-score", "cellDataType": "number", "width": 100 },
+          { "field": "value", "headerName": "Value", "cellDataType": "number", "width": 110 },
+          { "field": "as_of", "headerName": "As Of", "cellDataType": "date", "width": 110 }
+        ]
+      }
+    }
+  },
+  "lhm_divergence_pair": {
+    "name": "Divergence — Market vs Real Economy",
+    "description": "Z-score gap between a market-side composite (MSI/SPI/FCI) and a real-economy composite (LFI/GCI/CCI/HCI/BCI). |Δz| above the threshold flags decoupling.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Synthesis",
+    "type": "markdown",
+    "endpoint": "divergence",
+    "gridData": { "w": 30, "h": 12 },
+    "params": [
+      { "type": "text",   "paramName": "market_node", "value": "MSI", "label": "Market node",
+        "options": [
+          { "value": "MSI", "label": "MSI — Market Structure" },
+          { "value": "SPI", "label": "SPI — Sentiment & Positioning" },
+          { "value": "FCI", "label": "FCI — Financial Conditions" }
+        ], "show": true
+      },
+      { "type": "text",   "paramName": "real_node", "value": "LFI", "label": "Real-economy node",
+        "options": [
+          { "value": "LFI", "label": "LFI — Labor Fragility" },
+          { "value": "GCI", "label": "GCI — Growth" },
+          { "value": "CCI", "label": "CCI — Consumer" },
+          { "value": "HCI", "label": "HCI — Housing" },
+          { "value": "BCI", "label": "BCI — Business" },
+          { "value": "CLG", "label": "CLG — Credit-Labor Gap" },
+          { "value": "LCI", "label": "LCI — Liquidity Cushion" }
+        ], "show": true
+      },
+      { "type": "number", "paramName": "threshold", "value": 1.0, "label": "Flag threshold (|Δz|)", "show": true }
+    ]
+  },
+  "lhm_divergence_grid": {
+    "name": "Divergence — Grid",
+    "description": "Pairwise divergence across the canonical market vs real-economy pairs. Flags rows where |Δz| ≥ threshold.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Synthesis",
+    "type": "table",
+    "endpoint": "divergence_grid",
+    "gridData": { "w": 40, "h": 18 },
+    "params": [
+      { "type": "number", "paramName": "threshold", "value": 1.0, "label": "Flag threshold (|Δz|)", "show": true }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          { "field": "market_node", "headerName": "Market", "cellDataType": "text", "pinned": "left", "width": 110 },
+          { "field": "real_node",   "headerName": "Real",   "cellDataType": "text", "width": 110 },
+          { "field": "market_z",    "headerName": "Mkt z",  "cellDataType": "number", "width": 90 },
+          { "field": "real_z",      "headerName": "Real z", "cellDataType": "number", "width": 90 },
+          { "field": "delta_z",     "headerName": "Δz",     "cellDataType": "number", "width": 90 },
+          { "field": "flag",        "headerName": "Flag",   "cellDataType": "text", "width": 130 },
+          { "field": "direction",   "headerName": "Read",   "cellDataType": "text", "width": 240 }
+        ]
+      }
+    }
+  },
+
+  "lhm_mri_history": {
+    "name": "MRI — Master Composite",
+    "description": "Macro Risk Index. Master composite that drives the regime multiplier and equity allocation.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Pulse",
+    "type": "chart",
+    "endpoint": "composite_history",
+    "gridData": { "w": 40, "h": 15 },
+    "params": [
+      { "type": "text", "paramName": "index_id", "value": "MRI", "show": false }
+    ]
+  },
+  "lhm_pulse_tiles": {
+    "name": "Pulse — Headline Series",
+    "description": "Anchor reads: MRI driver components (10Y, 2Y, VIX, HY OAS, Mortgage 30Y, RRP).",
+    "category": "Lighthouse Macro",
+    "subCategory": "Pulse",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": { "w": 40, "h": 15 },
+    "params": [
+      { "type": "text", "paramName": "series_ids", "value": "DGS10,DGS2,VIXCLS,BAMLH0A0HYM2,MORTGAGE30US,RRPONTSYD,WALCL", "show": true, "label": "Series IDs" }
     ],
     "data": {
       "table": {

@@ -14,6 +14,7 @@ Then in OpenBB Workspace: Settings → Backend → add http://127.0.0.1:6900
 
 from __future__ import annotations
 
+import json
 import sqlite3
 from pathlib import Path
 from typing import Any
@@ -22,6 +23,9 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 DB_PATH = Path("/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
+BACKEND_DIR = Path(__file__).resolve().parent
+WIDGETS_PATH = BACKEND_DIR / "widgets.json"
+APPS_PATH = BACKEND_DIR / "apps.json"
 
 app = FastAPI(
     title="Lighthouse Macro Data Backend",
@@ -44,6 +48,22 @@ def _conn() -> sqlite3.Connection:
     c = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     c.row_factory = sqlite3.Row
     return c
+
+
+@app.get("/widgets.json")
+def widgets_manifest() -> dict[str, Any]:
+    """Widget manifest consumed by OpenBB Workspace."""
+    if not WIDGETS_PATH.exists():
+        raise HTTPException(status_code=500, detail=f"widgets.json missing at {WIDGETS_PATH}")
+    return json.loads(WIDGETS_PATH.read_text())
+
+
+@app.get("/apps.json")
+def apps_manifest() -> dict[str, Any]:
+    """Apps (dashboard layout) manifest consumed by OpenBB Workspace."""
+    if not APPS_PATH.exists():
+        raise HTTPException(status_code=500, detail=f"apps.json missing at {APPS_PATH}")
+    return json.loads(APPS_PATH.read_text())
 
 
 @app.get("/health")
@@ -209,3 +229,205 @@ def composite_history(
             detail=f"Composite '{index_id}' not found or no data in range",
         )
     return [dict(r) for r in rows]
+
+
+# ---------------------------------------------------------------------------
+# Synthesis layer: pillar map, transmission chains, divergence, heatmap
+# ---------------------------------------------------------------------------
+
+PILLAR_MAP: dict[str, dict[str, str]] = {
+    "Labor":      {"composite": "LFI",     "engine": "Macro Dynamics"},
+    "Prices":     {"composite": "PCI",     "engine": "Macro Dynamics"},
+    "Growth":     {"composite": "GCI",     "engine": "Macro Dynamics"},
+    "Housing":    {"composite": "HCI",     "engine": "Macro Dynamics"},
+    "Consumer":   {"composite": "CCI",     "engine": "Macro Dynamics"},
+    "Business":   {"composite": "BCI",     "engine": "Macro Dynamics"},
+    "Trade":      {"composite": "TCI",     "engine": "Macro Dynamics"},
+    "Government": {"composite": "GCI_Gov", "engine": "Monetary Mechanics"},
+    "Financial":  {"composite": "FCI",     "engine": "Monetary Mechanics"},
+    "Plumbing":   {"composite": "LCI",     "engine": "Monetary Mechanics"},
+    "Structure":  {"composite": "MSI",     "engine": "Market Structure"},
+    "Sentiment":  {"composite": "SPI",     "engine": "Market Structure"},
+}
+
+CHAINS: dict[str, dict[str, Any]] = {
+    "plumbing_credit_labor": {
+        "label": "Plumbing → Credit → Labor",
+        "description": "Reserves and funding stress feed credit conditions, which lead labor fragility.",
+        "links": [
+            {"step": 1, "node": "LCI", "role": "Plumbing"},
+            {"step": 2, "node": "FCI", "role": "Financial"},
+            {"step": 3, "node": "CLG", "role": "Credit-Labor Gap"},
+            {"step": 4, "node": "LFI", "role": "Labor Fragility"},
+        ],
+    },
+    "rates_housing_consumer": {
+        "label": "Rates → Housing → Consumer",
+        "description": "Long rates set mortgage cost, housing transmits to consumer.",
+        "links": [
+            {"step": 1, "node": "DGS10",        "role": "10Y Treasury",    "kind": "series"},
+            {"step": 2, "node": "MORTGAGE30US", "role": "30Y Mortgage",    "kind": "series"},
+            {"step": 3, "node": "HCI",          "role": "Housing"},
+            {"step": 4, "node": "CCI",          "role": "Consumer"},
+        ],
+    },
+    "sentiment_structure_risk": {
+        "label": "Sentiment → Structure → Risk",
+        "description": "Positioning extremes diverge from breadth, then resolve into MRI.",
+        "links": [
+            {"step": 1, "node": "SPI", "role": "Sentiment"},
+            {"step": 2, "node": "MSI", "role": "Structure"},
+            {"step": 3, "node": "SSD", "role": "Sent-Struct Divergence"},
+            {"step": 4, "node": "MRI", "role": "Macro Risk"},
+        ],
+    },
+}
+
+
+def _zscore(rows: list[sqlite3.Row]) -> tuple[float | None, float | None, float | None]:
+    """Return (latest_value, latest_z, lookback_n) from a list of (date, value) rows."""
+    vals = [r["value"] for r in rows if r["value"] is not None]
+    if len(vals) < 30:
+        return (vals[-1] if vals else None, None, len(vals))
+    latest = vals[-1]
+    mean = sum(vals) / len(vals)
+    var = sum((v - mean) ** 2 for v in vals) / len(vals)
+    sd = var ** 0.5
+    z = (latest - mean) / sd if sd > 0 else None
+    return latest, z, len(vals)
+
+
+def _series_history(c: sqlite3.Connection, node: str, kind: str = "composite") -> list[sqlite3.Row]:
+    if kind == "series":
+        sql = "SELECT date, value FROM observations WHERE series_id = ? ORDER BY date ASC"
+    else:
+        sql = "SELECT date, value FROM lighthouse_indices WHERE index_id = ? ORDER BY date ASC"
+    return c.execute(sql, (node,)).fetchall()
+
+
+@app.get("/pillar_heatmap")
+def pillar_heatmap() -> list[dict[str, Any]]:
+    """Current z-score for all 12 pillar composites. Heatmap-friendly shape."""
+    out: list[dict[str, Any]] = []
+    with _conn() as c:
+        for pillar, meta in PILLAR_MAP.items():
+            comp = meta["composite"]
+            rows = _series_history(c, comp, kind="composite")
+            if not rows:
+                continue
+            latest, z, n = _zscore(rows)
+            as_of = rows[-1]["date"] if rows else None
+            out.append({
+                "pillar": pillar,
+                "engine": meta["engine"],
+                "composite": comp,
+                "as_of": as_of,
+                "value": latest,
+                "z_score": round(z, 3) if z is not None else None,
+                "lookback_n": n,
+            })
+    return out
+
+
+@app.get("/transmission_chain")
+def transmission_chain(
+    chain_id: str = Query(
+        "plumbing_credit_labor",
+        description="plumbing_credit_labor / rates_housing_consumer / sentiment_structure_risk",
+    ),
+) -> dict[str, Any]:
+    """Lead/lag normalized z-scores along a predefined transmission chain."""
+    chain = CHAINS.get(chain_id)
+    if chain is None:
+        raise HTTPException(status_code=404, detail=f"Unknown chain_id: {chain_id}")
+    nodes: list[dict[str, Any]] = []
+    with _conn() as c:
+        for link in chain["links"]:
+            kind = link.get("kind", "composite")
+            rows = _series_history(c, link["node"], kind=kind)
+            latest, z, n = _zscore(rows)
+            as_of = rows[-1]["date"] if rows else None
+            nodes.append({
+                "step": link["step"],
+                "node": link["node"],
+                "role": link["role"],
+                "kind": kind,
+                "as_of": as_of,
+                "value": latest,
+                "z_score": round(z, 3) if z is not None else None,
+                "lookback_n": n,
+            })
+    return {
+        "chain_id": chain_id,
+        "label": chain["label"],
+        "description": chain["description"],
+        "nodes": nodes,
+    }
+
+
+@app.get("/transmission_chain_table")
+def transmission_chain_table(
+    chain_id: str = Query("plumbing_credit_labor"),
+) -> list[dict[str, Any]]:
+    """Same as /transmission_chain but flat shape for OpenBB table widget."""
+    payload = transmission_chain(chain_id=chain_id)
+    return payload["nodes"]
+
+
+@app.get("/divergence")
+def divergence(
+    market_node: str = Query("MSI", description="Market-side composite (MSI, SPI, FCI)"),
+    real_node: str = Query("LFI", description="Real-economy composite (LFI, GCI, CCI, HCI, BCI)"),
+    threshold: float = Query(1.0, ge=0.0, description="|Δz| above this is flagged"),
+) -> dict[str, Any]:
+    """Z-score gap between a market-side and real-economy composite. Flags decoupling."""
+    with _conn() as c:
+        m_rows = _series_history(c, market_node, kind="composite")
+        r_rows = _series_history(c, real_node, kind="composite")
+    if not m_rows or not r_rows:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Missing history for {market_node} or {real_node}",
+        )
+    m_val, m_z, _ = _zscore(m_rows)
+    r_val, r_z, _ = _zscore(r_rows)
+    if m_z is None or r_z is None:
+        raise HTTPException(status_code=400, detail="Insufficient history for z-score")
+    delta = m_z - r_z
+    flag = "DIVERGENT" if abs(delta) >= threshold else "ALIGNED"
+    direction = "Market hot vs real soft" if delta > 0 else "Real hot vs market soft"
+    return {
+        "market_node": market_node,
+        "real_node": real_node,
+        "as_of_market": m_rows[-1]["date"],
+        "as_of_real": r_rows[-1]["date"],
+        "market_z": round(m_z, 3),
+        "real_z": round(r_z, 3),
+        "delta_z": round(delta, 3),
+        "threshold": threshold,
+        "flag": flag,
+        "direction": direction if flag == "DIVERGENT" else "—",
+    }
+
+
+@app.get("/divergence_grid")
+def divergence_grid(
+    threshold: float = Query(1.0, ge=0.0),
+) -> list[dict[str, Any]]:
+    """Pairwise divergence across the canonical market vs real-economy pairs."""
+    pairs = [
+        ("MSI", "LFI"),
+        ("MSI", "GCI"),
+        ("MSI", "CCI"),
+        ("SPI", "LFI"),
+        ("SPI", "BCI"),
+        ("FCI", "CLG"),
+        ("FCI", "LCI"),
+    ]
+    out: list[dict[str, Any]] = []
+    for m, r in pairs:
+        try:
+            out.append(divergence(market_node=m, real_node=r, threshold=threshold))
+        except HTTPException:
+            continue
+    return out

@@ -1,0 +1,157 @@
+{
+  "lhm_pulse": {
+    "name": "01 The Pulse",
+    "description": "Macro Risk Index, pillar heatmap, and the anchor reads. Where the framework stands right now.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "groups": [
+      {
+        "name": "Composite",
+        "type": "param",
+        "paramName": "index_id",
+        "defaultValue": "MRI",
+        "options": [
+          { "value": "MRI", "label": "MRI — Macro Risk Index" },
+          { "value": "LFI", "label": "LFI — Labor Fragility" },
+          { "value": "LCI", "label": "LCI — Liquidity Cushion" },
+          { "value": "FCI", "label": "FCI — Financial Conditions" },
+          { "value": "MSI", "label": "MSI — Market Structure" },
+          { "value": "SPI", "label": "SPI — Sentiment & Positioning" },
+          { "value": "CLG", "label": "CLG — Credit-Labor Gap" }
+        ]
+      }
+    ],
+    "tabs": {
+      "tabs": {
+        "Pulse": {
+          "id": "pulse",
+          "name": "Pulse",
+          "layout": [
+            { "i": "lhm_health",            "x": 0,  "y": 0,  "w": 20, "h": 5 },
+            { "i": "lhm_pillar_heatmap",    "x": 20, "y": 0,  "w": 20, "h": 20 },
+            { "i": "lhm_mri_history",       "x": 0,  "y": 5,  "w": 20, "h": 15 },
+            { "i": "lhm_composite_history", "x": 0,  "y": 20, "w": 20, "h": 15 },
+            { "i": "lhm_pulse_tiles",       "x": 20, "y": 20, "w": 20, "h": 15 }
+          ]
+        }
+      }
+    }
+  },
+
+  "lhm_asset_flow": {
+    "name": "02 Asset Flow",
+    "description": "Cross-asset reads — rates, credit, FX, equities — with full series browsing.",
+    "tabs": {
+      "tabs": {
+        "Flow": {
+          "id": "flow",
+          "name": "Flow",
+          "layout": [
+            { "i": "lhm_pulse_tiles",       "x": 0,  "y": 0,  "w": 40, "h": 12 },
+            { "i": "lhm_series_chart",      "x": 0,  "y": 12, "w": 40, "h": 15 },
+            { "i": "lhm_series_search",     "x": 0,  "y": 27, "w": 40, "h": 18 }
+          ]
+        }
+      }
+    }
+  },
+
+  "lhm_chain": {
+    "name": "03 The Chain",
+    "description": "Transmission chains. Pick a chain, watch the lead/lag z-scores hop step by step.",
+    "groups": [
+      {
+        "name": "Chain",
+        "type": "param",
+        "paramName": "chain_id",
+        "defaultValue": "plumbing_credit_labor",
+        "options": [
+          { "value": "plumbing_credit_labor",   "label": "Plumbing → Credit → Labor" },
+          { "value": "rates_housing_consumer",  "label": "Rates → Housing → Consumer" },
+          { "value": "sentiment_structure_risk", "label": "Sentiment → Structure → Risk" }
+        ]
+      }
+    ],
+    "tabs": {
+      "tabs": {
+        "Chain": {
+          "id": "chain",
+          "name": "Chain",
+          "layout": [
+            { "i": "lhm_transmission_chain", "x": 0,  "y": 0,  "w": 40, "h": 18 },
+            { "i": "lhm_pillar_heatmap",     "x": 0,  "y": 18, "w": 20, "h": 20 },
+            { "i": "lhm_composite_history",  "x": 20, "y": 18, "w": 20, "h": 20 }
+          ]
+        }
+      }
+    }
+  },
+
+  "lhm_real_check": {
+    "name": "04 Real Check",
+    "description": "Real-economy reads against market expectations. The gap between price and the data underneath.",
+    "groups": [
+      {
+        "name": "Real-economy composite",
+        "type": "param",
+        "paramName": "index_id",
+        "defaultValue": "LFI",
+        "options": [
+          { "value": "LFI", "label": "LFI — Labor Fragility" },
+          { "value": "GCI", "label": "GCI — Growth" },
+          { "value": "CCI", "label": "CCI — Consumer" },
+          { "value": "HCI", "label": "HCI — Housing" },
+          { "value": "BCI", "label": "BCI — Business" },
+          { "value": "TCI", "label": "TCI — Trade" }
+        ]
+      }
+    ],
+    "tabs": {
+      "tabs": {
+        "Real Check": {
+          "id": "real_check",
+          "name": "Real Check",
+          "layout": [
+            { "i": "lhm_pillar_heatmap",     "x": 0,  "y": 0,  "w": 20, "h": 20 },
+            { "i": "lhm_composite_history",  "x": 20, "y": 0,  "w": 20, "h": 20 },
+            { "i": "lhm_divergence_grid",    "x": 0,  "y": 20, "w": 40, "h": 18 }
+          ]
+        }
+      }
+    }
+  },
+
+  "lhm_divergence": {
+    "name": "05 Divergence",
+    "description": "Where market-side composites disagree with real-economy composites. The risk screen.",
+    "groups": [
+      {
+        "name": "Pair",
+        "type": "endpointParam",
+        "paramName": "market_node",
+        "defaultValue": "MSI"
+      },
+      {
+        "name": "Real",
+        "type": "endpointParam",
+        "paramName": "real_node",
+        "defaultValue": "LFI"
+      }
+    ],
+    "tabs": {
+      "tabs": {
+        "Divergence": {
+          "id": "divergence",
+          "name": "Divergence",
+          "layout": [
+            { "i": "lhm_divergence_pair",   "x": 0,  "y": 0,  "w": 20, "h": 12 },
+            { "i": "lhm_divergence_grid",   "x": 20, "y": 0,  "w": 20, "h": 18 },
+            { "i": "lhm_pillar_heatmap",    "x": 0,  "y": 12, "w": 20, "h": 20 },
+            { "i": "lhm_composite_history", "x": 20, "y": 18, "w": 20, "h": 14 }
+          ]
+        }
+      }
+    }
+  }
+}

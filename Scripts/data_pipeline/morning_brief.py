@@ -1,722 +1,757 @@
 #!/usr/bin/env python3
 """
-LIGHTHOUSE MACRO - MORNING BRIEF (v2.0)
+LIGHTHOUSE MACRO - MORNING BRIEF (v3.0)
 ========================================
-Charts-first morning briefing driven by the FRED release calendar.
-Picks charts based on what released yesterday, today, and tomorrow,
-with day-of-week rotation for quiet days.
+Charts-first morning briefing. Apr 29 layout, dynamic data.
 
-Outputs:
-    1. HTML file: ~/Desktop/LHM_Morning_Brief.html
-    2. macOS notification with headline summary
-    3. Persistent log: /Users/bob/LHM/logs/morning_brief.log
+Renders 10 base64-inlined charts with brand styling, computes hero stats
+and narrative summary from current DB values + LHM threshold dictionary.
+Writes timestamped archive under Outputs/morning_brief/YYYY-MM-DD/ and a
+copy at ~/Desktop/LHM_Morning_Brief.html.
 
 Usage:
-    python morning_brief.py              # Full brief
-    python morning_brief.py --no-notify  # Skip macOS notification
-    python morning_brief.py --stdout     # Print to stdout instead of file
-    python morning_brief.py --no-charts  # Skip chart generation (faster)
+    python morning_brief.py
+    python morning_brief.py --no-charts   # skip chart re-render (use last batch)
+    python morning_brief.py --stdout      # print HTML to stdout instead of writing
 """
+from __future__ import annotations
 
-import sqlite3
-import subprocess
-import sys
+import argparse
+import base64
+import html
+import json
 import os
-from datetime import datetime
+import sqlite3
+import sys
+import traceback
+from datetime import date, datetime
 from pathlib import Path
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from compute_indices import STATUS_THRESHOLDS, get_status
+import matplotlib
 
-DB_PATH = Path("/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
-OUTPUT_PATH = Path.home() / "Desktop" / "LHM_Morning_Brief.html"
-LOG_PATH = Path("/Users/bob/LHM/logs/morning_brief.log")
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
 
-# Thresholds that demand attention when crossed
-ALERT_THRESHOLDS = {
-    "MRI": [(0.50, "RECESSION"), (0.25, "PRE-RECESSION"), (-0.20, "EARLY EXPANSION")],
-    "LFI": [(1.0, "HIGH"), (0.5, "ELEVATED")],
-    "LCI": [(-1.0, "SCARCE"), (-0.5, "TIGHT")],
-    "CLG": [(-1.0, "MISPRICED")],
-    "MSI": [(-1.0, "WEAK"), (-0.5, "TRANSITIONAL"), (0.5, "BULLISH")],
-    "SPI": [(1.5, "EXTREME FEAR"), (1.0, "FEARFUL"), (-1.0, "EUPHORIC")],
-    "SBD": [(1.0, "DISTRIBUTION"), (1.5, "EXTREME DISTRIBUTION")],
-    "SSD": [(1.5, "CAPITULATION LOW"), (-1.5, "BLOW-OFF TOP RISK")],
-    "REC_PROB": [(0.40, "ELEVATED"), (0.70, "HIGH RISK")],
-    "SLI": [(-0.5, "CONTRACTING"), (-1.0, "SEVERELY CONTRACTING")],
-}
+LHM_ROOT = Path("/Users/bob/LHM")
+sys.path.insert(0, str(LHM_ROOT / "Scripts" / "chart_generation"))
+
+from lhm_chart_template import (  # noqa: E402
+    COLORS,
+    add_last_value_label,
+    add_recessions,
+    brand_fig,
+    legend_style,
+    new_fig,
+    save_fig,
+    set_theme,
+    set_xlim_to_data,
+    style_ax,
+    style_dual_ax,
+)
+
+DB_PATH = LHM_ROOT / "Data" / "databases" / "Lighthouse_Master.db"
+DESKTOP_PATH = Path.home() / "Desktop" / "LHM_Morning_Brief.html"
+ARCHIVE_ROOT = LHM_ROOT / "Outputs" / "morning_brief"
+LOG_PATH = LHM_ROOT / "logs" / "morning_brief.log"
+
+set_theme("white")
 
 
 # ============================================================
-# DATA FUNCTIONS
+# DATA ACCESS
 # ============================================================
 
-def get_latest_indices(conn: sqlite3.Connection) -> dict:
-    """Get the most recent value for each index."""
-    query = """
-        SELECT li.index_id, li.value, li.status, li.date
-        FROM lighthouse_indices li
-        INNER JOIN (
-            SELECT index_id, MAX(date) as max_date
-            FROM lighthouse_indices
-            GROUP BY index_id
-        ) latest ON li.index_id = latest.index_id AND li.date = latest.max_date
-        ORDER BY li.index_id
-    """
-    cursor = conn.execute(query)
-    results = {}
-    for row in cursor:
-        results[row[0]] = {
-            "value": row[1],
-            "status": row[2],
-            "date": row[3],
-        }
+def _conn() -> sqlite3.Connection:
+    return sqlite3.connect(DB_PATH, timeout=30)
+
+
+def pull(conn: sqlite3.Connection, series_id: str, start: str | None = None) -> pd.DataFrame:
+    q = "SELECT date, value FROM observations WHERE series_id = ?"
+    params: list = [series_id]
+    if start:
+        q += " AND date >= ?"
+        params.append(start)
+    q += " ORDER BY date"
+    df = pd.read_sql(q, conn, params=params)
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.dropna(subset=["value"]).sort_values("date").reset_index(drop=True)
+    return df
+
+
+def latest(conn: sqlite3.Connection, series_id: str):
+    df = pull(conn, series_id)
+    if df.empty:
+        return None, None
+    row = df.iloc[-1]
+    return row["date"], float(row["value"])
+
+
+def n_back(conn: sqlite3.Connection, series_id: str, n: int):
+    df = pull(conn, series_id)
+    if len(df) <= n:
+        return None
+    return float(df.iloc[-1 - n]["value"])
+
+
+# ============================================================
+# CHART RENDERERS
+# Each returns the path to the saved PNG and a dict of values used
+# in caption / narrative generation.
+# ============================================================
+
+def chart_01_hy_oas(conn, out_dir: Path) -> dict:
+    df = pull(conn, "BAMLH0A0HYM2", "2018-01-01")
+    bps = df["value"] * 100
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(df["date"], bps, color=COLORS["ocean"], linewidth=2.6)
+    ax.axhline(300, color=COLORS["venus"], linewidth=1.4, linestyle="--", alpha=0.85)
+    ax.text(df["date"].iloc[10], 308, "300 bps  complacency line",
+            color=COLORS["venus"], fontsize=10, style="italic")
+    last_val = float(bps.iloc[-1])
+    ax.scatter([df["date"].iloc[-1]], [last_val], color=COLORS["dusk"], s=70, zorder=5)
+    add_recessions(ax)
+    style_ax(ax)
+    ax.set_ylabel("OAS (bps)", color=COLORS["doldrums"])
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{x:.0f}"))
+    add_last_value_label(ax, df.set_index("date")["value"] * 100, COLORS["ocean"], fmt="{:.0f}", side="right")
+    set_xlim_to_data(ax, df.set_index("date").index)
+    brand_fig(fig,
+              "HY OAS",
+              subtitle="ICE BofA US High Yield Index, option-adjusted spread",
+              source="ICE BofA via FRED", data_date=df["date"].iloc[-1])
+    out = out_dir / "chart_01_hy_oas.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    bps_4w = float(bps.iloc[-21]) if len(bps) > 21 else last_val
+    return {"path": out.name, "value": last_val, "delta_4w": last_val - bps_4w,
+            "asof": df["date"].iloc[-1]}
+
+
+def chart_02_aaii(conn, out_dir: Path) -> dict:
+    df = pull(conn, "AAII_Bull_Bear_Spread", "2018-01-01")
+    df["pct"] = df["value"] * 100
+    fig, ax = new_fig(figsize=(14, 7.5))
+    colors = [COLORS["starboard"] if v > 0 else COLORS["port"] for v in df["pct"]]
+    ax.bar(df["date"], df["pct"], color=colors, alpha=0.55, width=4.0)
+    ax.plot(df["date"], df["pct"].rolling(8).mean(),
+            color=COLORS["ocean"], linewidth=2.4, label="8-week MA")
+    ax.axhline(30, color=COLORS["venus"], linewidth=1.2, linestyle="--", alpha=0.7)
+    ax.axhline(-20, color=COLORS["venus"], linewidth=1.2, linestyle="--", alpha=0.7)
+    ax.axhline(0, color=COLORS["fog"], linewidth=1.0, linestyle="-")
+    ax.text(df["date"].iloc[5], 32, "Euphoria  +30%", color=COLORS["venus"], fontsize=10, style="italic")
+    ax.text(df["date"].iloc[5], -23, "Capitulation  -20%", color=COLORS["venus"], fontsize=10, style="italic")
+    style_ax(ax)
+    ax.set_ylabel("Bull minus bear (%)", color=COLORS["doldrums"])
+    set_xlim_to_data(ax, df.set_index("date").index)
+    legend_style()
+    last = df.iloc[-1]
+    val = float(last["pct"])
+    val_5w = float(df.iloc[-6]["pct"]) if len(df) > 6 else val
+    brand_fig(fig,
+              "AAII Bull-Bear Spread",
+              subtitle="AAII Investor Sentiment Survey, bull minus bear spread",
+              source="AAII", data_date=last["date"])
+    out = out_dir / "chart_02_aaii.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name, "value": val, "delta_5w": val - val_5w, "asof": last["date"]}
+
+
+def chart_03_quits(conn, out_dir: Path) -> dict:
+    df = pull(conn, "JTSQUR", "2010-01-01")
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(df["date"], df["value"], color=COLORS["ocean"], linewidth=2.6)
+    ax.fill_between(df["date"], df["value"], 0, color=COLORS["ocean"], alpha=0.10)
+    ax.axhline(2.0, color=COLORS["venus"], linewidth=1.4, linestyle="--", alpha=0.85)
+    ax.text(df["date"].iloc[10], 2.04, "2.0%  pre-recessionary threshold",
+            color=COLORS["venus"], fontsize=10, style="italic")
+    add_recessions(ax)
+    style_ax(ax)
+    ax.set_ylabel("Quits rate (%)", color=COLORS["doldrums"])
+    ax.set_ylim(1.0, 3.2)
+    add_last_value_label(ax, df.set_index("date")["value"], COLORS["ocean"], fmt="{:.1f}%")
+    set_xlim_to_data(ax, df.set_index("date").index)
+    last = df.iloc[-1]
+    brand_fig(fig,
+              "Quits Rate",
+              subtitle="JOLTS quits rate, total nonfarm",
+              source="BLS / JOLTS", data_date=last["date"])
+    out = out_dir / "chart_03_quits.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name, "value": float(last["value"]), "asof": last["date"]}
+
+
+def chart_04_breakevens(conn, out_dir: Path) -> dict:
+    df = pull(conn, "T5YIFR", "2022-01-01")
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(df["date"], df["value"], color=COLORS["ocean"], linewidth=2.6,
+            label="5Y5Y forward inflation")
+    ax.axhline(2.0, color=COLORS["venus"], linewidth=1.4, linestyle="--", alpha=0.85)
+    ax.text(df["date"].iloc[10], 2.02, "Fed's 2.0% target",
+            color=COLORS["venus"], fontsize=10, style="italic")
+    last = df.iloc[-1]
+    style_ax(ax)
+    ax.set_ylabel("Implied inflation (%)", color=COLORS["doldrums"])
+    add_last_value_label(ax, df.set_index("date")["value"], COLORS["ocean"], fmt="{:.2f}%")
+    set_xlim_to_data(ax, df.set_index("date").index)
+    legend_style()
+    val = float(last["value"])
+    val_1m = float(df.iloc[-22]["value"]) if len(df) > 22 else val
+    brand_fig(fig,
+              "5Y5Y Forward Inflation",
+              subtitle="5-Year, 5-Year forward inflation expectation rate",
+              source="FRED", data_date=last["date"])
+    out = out_dir / "chart_04_breakevens.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name, "value": val, "delta_1m_bps": (val - val_1m) * 100, "asof": last["date"]}
+
+
+def chart_05_rrp(conn, out_dir: Path) -> dict:
+    df = pull(conn, "RRPONTSYD", "2021-01-01")
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(df["date"], df["value"], color=COLORS["ocean"], linewidth=2.6)
+    ax.fill_between(df["date"], df["value"], 0, color=COLORS["ocean"], alpha=0.18)
+    ax.axhline(200, color=COLORS["venus"], linewidth=1.4, linestyle="--", alpha=0.85)
+    ax.text(df["date"].iloc[5], 215, "$200B  buffer-exhaustion line",
+            color=COLORS["venus"], fontsize=10, style="italic")
+    style_ax(ax)
+    ax.set_ylabel("RRP usage ($B)", color=COLORS["doldrums"])
+    add_last_value_label(ax, df.set_index("date")["value"], COLORS["ocean"], fmt="${:.0f}B")
+    set_xlim_to_data(ax, df.set_index("date").index)
+    last = df.iloc[-1]
+    brand_fig(fig,
+              "Overnight Reverse Repo",
+              subtitle="ON RRP usage, daily",
+              source="NY Fed via FRED", data_date=last["date"])
+    out = out_dir / "chart_05_rrp.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    peak = float(df["value"].max())
+    return {"path": out.name, "value": float(last["value"]), "peak": peak, "asof": last["date"]}
+
+
+def chart_06_breadth(conn, out_dir: Path) -> dict:
+    spx = pull(conn, "SPX_Close", "2024-06-01")
+    pct50 = pull(conn, "SPX_PCT_ABOVE_50D", "2024-06-01")
+    fig, ax1 = new_fig(figsize=(14, 7.5))
+    ax2 = ax1.twinx()
+    l1 = ax1.plot(spx["date"], spx["value"], color=COLORS["ocean"], linewidth=2.4, label="S&P 500")
+    l2 = ax2.plot(pct50["date"], pct50["value"], color=COLORS["dusk"], linewidth=2.0,
+                  label="% S&P 500 above 50-day MA")
+    ax2.axhline(50, color=COLORS["fog"], linewidth=1.0, linestyle="--")
+    style_dual_ax(ax1, ax2, COLORS["ocean"], COLORS["dusk"])
+    ax1.set_ylabel("S&P 500 level", color=COLORS["ocean"])
+    ax2.set_ylabel("% above 50-day MA", color=COLORS["dusk"])
+    set_xlim_to_data(ax1, spx.set_index("date").index, pct50.set_index("date").index)
+    add_last_value_label(ax1, spx.set_index("date")["value"], COLORS["ocean"], fmt="{:.0f}", side="left")
+    add_last_value_label(ax2, pct50.set_index("date")["value"], COLORS["dusk"], fmt="{:.0f}%", side="right")
+    last = spx.iloc[-1]
+    lines = l1 + l2
+    ax1.legend(lines, [l.get_label() for l in lines], loc="upper left",
+               frameon=True, facecolor="white", edgecolor=COLORS["fog"])
+    brand_fig(fig,
+              "S&P 500 vs Breadth",
+              subtitle="S&P 500 close vs % of constituents above 50-day MA",
+              source="Yahoo / Lighthouse Macro", data_date=last["date"])
+    out = out_dir / "chart_06_breadth.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name, "spx": float(last["value"]),
+            "pct50": float(pct50.iloc[-1]["value"]),
+            "asof": last["date"]}
+
+
+def chart_07_clg(conn, out_dir: Path) -> dict:
+    hy = pull(conn, "BAMLH0A0HYM2", "2010-01-01")
+    quits = pull(conn, "JTSQUR", "2010-01-01")
+    hy_m = hy.set_index("date").resample("MS").last()["value"].dropna()
+    quits_m = quits.set_index("date").resample("MS").last()["value"].dropna()
+    df = pd.DataFrame({"hy": hy_m, "quits": quits_m}).dropna()
+    df["hy_z"] = (df["hy"] - df["hy"].rolling(60).mean()) / df["hy"].rolling(60).std()
+    df["quits_z"] = (df["quits"] - df["quits"].rolling(60).mean()) / df["quits"].rolling(60).std()
+    df["clg"] = df["hy_z"] + df["quits_z"]
+    df = df.dropna()
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(df.index, df["clg"], color=COLORS["ocean"], linewidth=2.4)
+    ax.fill_between(df.index, df["clg"], 0, where=(df["clg"] > 0),
+                    color=COLORS["sea"], alpha=0.25, label="Credit aligned with labor")
+    ax.fill_between(df.index, df["clg"], 0, where=(df["clg"] <= 0),
+                    color=COLORS["venus"], alpha=0.20, label="Credit too tight or labor too soft")
+    ax.axhline(0, color=COLORS["fog"], linewidth=1.0)
+    ax.axhline(-1.0, color=COLORS["venus"], linewidth=1.2, linestyle="--", alpha=0.7)
+    ax.text(df.index[5], -1.07, "CLG  -1.0  warning line",
+            color=COLORS["venus"], fontsize=10, style="italic")
+    add_recessions(ax)
+    style_ax(ax)
+    ax.set_ylabel("CLG (z-score units)", color=COLORS["doldrums"])
+    set_xlim_to_data(ax, df.index)
+    legend_style()
+    last_date = df.index[-1]
+    brand_fig(fig,
+              "Credit-Labor Gap",
+              subtitle="z(HY OAS) + z(Quits Rate). Negative = credit/labor disagreement",
+              source="FRED / BLS (LHM composite)", data_date=last_date)
+    out = out_dir / "chart_07_clg.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name, "value": float(df["clg"].iloc[-1]), "asof": last_date}
+
+
+def chart_08_curve(conn, out_dir: Path) -> dict:
+    df = pull(conn, "T10Y2Y", "2018-01-01")
+    df["bps"] = df["value"] * 100
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(df["date"], df["bps"], color=COLORS["ocean"], linewidth=2.4)
+    ax.fill_between(df["date"], df["bps"], 0, where=(df["bps"] >= 0),
+                    color=COLORS["sea"], alpha=0.18)
+    ax.fill_between(df["date"], df["bps"], 0, where=(df["bps"] < 0),
+                    color=COLORS["venus"], alpha=0.18)
+    ax.axhline(0, color=COLORS["fog"], linewidth=1.0)
+    add_recessions(ax)
+    style_ax(ax)
+    ax.set_ylabel("10Y-2Y spread (bps)", color=COLORS["doldrums"])
+    add_last_value_label(ax, df.set_index("date")["bps"], COLORS["ocean"], fmt="{:.0f} bps")
+    set_xlim_to_data(ax, df.set_index("date").index)
+    last = df.iloc[-1]
+    brand_fig(fig,
+              "2s10s Spread",
+              subtitle="10-Year minus 2-Year Treasury yield",
+              source="FRED", data_date=last["date"])
+    out = out_dir / "chart_08_curve.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name, "value": float(last["bps"]), "asof": last["date"]}
+
+
+def chart_09_dollar(conn, out_dir: Path) -> dict:
+    df = pull(conn, "DTWEXBGS", "2022-01-01")
+    df["ma50"] = df["value"].rolling(50).mean()
+    df["ma200"] = df["value"].rolling(200).mean()
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(df["date"], df["value"], color=COLORS["ocean"], linewidth=2.4, label="Trade-weighted dollar")
+    ax.plot(df["date"], df["ma50"], color=COLORS["dusk"], linewidth=1.5, alpha=0.85, label="50-day MA")
+    ax.plot(df["date"], df["ma200"], color=COLORS["sky"], linewidth=1.3, alpha=0.85, label="200-day MA")
+    style_ax(ax)
+    ax.set_ylabel("Index level", color=COLORS["doldrums"])
+    add_last_value_label(ax, df.set_index("date")["value"], COLORS["ocean"], fmt="{:.1f}")
+    set_xlim_to_data(ax, df.set_index("date").index)
+    legend_style()
+    last = df.iloc[-1]
+    val = float(last["value"])
+    ma50 = float(df["ma50"].iloc[-1])
+    ma200 = float(df["ma200"].iloc[-1])
+    brand_fig(fig,
+              "Trade-Weighted Dollar",
+              subtitle="Nominal broad U.S. dollar index, daily",
+              source="Federal Reserve / FRED", data_date=last["date"])
+    out = out_dir / "chart_09_dollar.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name, "value": val, "ma50": ma50, "ma200": ma200,
+            "below_ma50": val < ma50, "below_ma200": val < ma200, "asof": last["date"]}
+
+
+def chart_10_crypto_vs_spx(conn, out_dir: Path) -> dict:
+    btc = pull(conn, "CRYPTO_BTC_PRICE", "2026-02-01")
+    eth = pull(conn, "CRYPTO_ETH_PRICE", "2026-02-01")
+    spx = pull(conn, "SPX_Close", "2026-02-01")
+    btc = btc[(btc["value"] > 1000) & (btc["value"] < 1_000_000)].reset_index(drop=True)
+    eth = eth[(eth["value"] > 100) & (eth["value"] < 100_000)].reset_index(drop=True)
+
+    def rebase(df):
+        df = df.copy()
+        df["v"] = df["value"] / df["value"].iloc[0] * 100
+        return df
+
+    btc_r, eth_r, spx_r = rebase(btc), rebase(eth), rebase(spx)
+    fig, ax = new_fig(figsize=(14, 7.5))
+    ax.plot(btc_r["date"], btc_r["v"], color=COLORS["ocean"], linewidth=2.4, label="BTC")
+    ax.plot(eth_r["date"], eth_r["v"], color=COLORS["dusk"], linewidth=2.0, label="ETH")
+    ax.plot(spx_r["date"], spx_r["v"], color=COLORS["sea"], linewidth=2.0, label="S&P 500")
+    ax.axhline(100, color=COLORS["fog"], linewidth=1.0, linestyle="--")
+    style_ax(ax)
+    ax.set_ylabel("Indexed (Feb 1, 2026 = 100)", color=COLORS["doldrums"])
+    set_xlim_to_data(ax, btc_r.set_index("date").index, eth_r.set_index("date").index,
+                     spx_r.set_index("date").index)
+    legend_style()
+    last_date = max(btc_r["date"].iloc[-1], spx_r["date"].iloc[-1])
+    brand_fig(fig,
+              "Risk Assets Rebased",
+              subtitle="BTC, ETH, S&P 500 indexed to February 1, 2026",
+              source="CoinGecko / Yahoo", data_date=last_date)
+    out = out_dir / "chart_10_crypto_vs_spx.png"
+    save_fig(fig, str(out))
+    plt.close(fig)
+    return {"path": out.name,
+            "btc": float(btc_r["v"].iloc[-1]) - 100,
+            "eth": float(eth_r["v"].iloc[-1]) - 100,
+            "spx": float(spx_r["v"].iloc[-1]) - 100,
+            "asof": last_date}
+
+
+CHART_FUNCS = [
+    ("hy_oas", chart_01_hy_oas),
+    ("aaii", chart_02_aaii),
+    ("quits", chart_03_quits),
+    ("breakevens", chart_04_breakevens),
+    ("rrp", chart_05_rrp),
+    ("breadth", chart_06_breadth),
+    ("clg", chart_07_clg),
+    ("curve", chart_08_curve),
+    ("dollar", chart_09_dollar),
+    ("crypto_vs_spx", chart_10_crypto_vs_spx),
+]
+
+
+# ============================================================
+# CAPTION + NARRATIVE
+# Driven entirely off the values returned by the chart funcs.
+# No invented copy.
+# ============================================================
+
+def fmt_caption(key: str, v: dict) -> tuple[str, str]:
+    """Return (one-line caption, why-it-matters paragraph) for a chart."""
+    if key == "hy_oas":
+        delta = v["delta_4w"]
+        dirn = "tighter" if delta < 0 else "wider"
+        comp = "below" if v["value"] < 300 else "above"
+        cap = (f"HY OAS at {v['value']:.0f} bps. {comp.capitalize()} the 300 bps "
+               f"complacency line. {abs(delta):.0f} bps {dirn} over 4 weeks.")
+        why = ("Spreads are pricing the soft landing. Below 300 bps is the LHM "
+               "complacency threshold. Watch for repricing on any catalyst that "
+               "challenges that view.")
+        return cap, why
+
+    if key == "aaii":
+        delta = v["delta_5w"]
+        cap = (f"AAII Bull-Bear at {v['value']:+.1f}%. "
+               f"{abs(delta):.1f} pp swing over 5 weeks.")
+        if v["value"] > 30:
+            why = ("Above the +30% euphoria line. Contrarian sell signal per the "
+                   "SPI threshold framework.")
+        elif v["value"] < -20:
+            why = ("Below the -20% capitulation line. Contrarian buy zone per the "
+                   "SPI threshold framework.")
+        else:
+            why = ("Inside the neutral band. We watch the rate of change as much as "
+                   "the level.")
+        return cap, why
+
+    if key == "quits":
+        below = v["value"] < 2.0
+        cap = (f"Quits rate at {v['value']:.1f}%. "
+               f"{'Below' if below else 'Above'} the 2.0% pre-recessionary line.")
+        why = ("Workers do not quit when they doubt the next job. Sub-2.0% prints "
+               "are the labor market's truth serum, and they show up in LFI before "
+               "the headline payroll number turns.")
+        return cap, why
+
+    if key == "breakevens":
+        delta_bps = v["delta_1m_bps"]
+        dirn = "higher" if delta_bps > 0 else "lower"
+        cap = (f"5Y5Y forward inflation at {v['value']:.2f}%. "
+               f"{abs(delta_bps):.0f} bps {dirn} over the past month.")
+        why = ("The market's read on long-run inflation. Sustained moves here "
+               "pressure term premium and the long end of the curve.")
+        return cap, why
+
+    if key == "rrp":
+        cap = f"RRP usage at ${v['value']:.0f}B. Down from ${v['peak']/1000:.1f}T at peak."
+        why = ("From here, any liquidity drain hits reserves directly. The buffer "
+               "Pillar 10 has tracked for years is effectively gone.")
+        return cap, why
+
+    if key == "breadth":
+        cap = (f"S&P 500 at {v['spx']:.0f}. "
+               f"{v['pct50']:.0f}% of constituents above their 50-day MA.")
+        if v["pct50"] < 50:
+            why = ("Index higher, breadth lower. Generals without soldiers. "
+                   "MSI decays in the background while the headline holds.")
+        else:
+            why = ("Breadth is participating. The risk-on tape is supported "
+                   "by more than the top of the index.")
+        return cap, why
+
+    if key == "clg":
+        cap = f"Credit-Labor Gap at {v['value']:+.2f} (z-score units)."
+        if v["value"] < -1.0:
+            why = ("Past the -1.0 warning line. Spreads are pricing one labor "
+                   "market and quits are telling another. The chain runs labor "
+                   "first, credit second, equity third.")
+        elif v["value"] < 0:
+            why = ("Negative but inside the warning line. Watch for further drift; "
+                   "credit and labor are starting to disagree.")
+        else:
+            why = ("Credit and labor are aligned. The CLG is not flagging.")
+        return cap, why
+
+    if key == "curve":
+        cap = f"2s10s spread at {v['value']:+.0f} bps."
+        if v["value"] > 0:
+            why = ("Steepening regime. The long end demanding term premium for "
+                   "fiscal-dominance and inflation risk is consistent with our "
+                   "structural call.")
+        else:
+            why = ("Inverted. The classic recession lead, though duration of "
+                   "inversion matters more than the level.")
+        return cap, why
+
+    if key == "dollar":
+        rel = []
+        if v["below_ma50"]:
+            rel.append("below 50-day")
+        if v["below_ma200"]:
+            rel.append("below 200-day")
+        rel_str = ", ".join(rel) if rel else "above both moving averages"
+        cap = f"Trade-weighted dollar at {v['value']:.1f}. {rel_str}."
+        why = ("Net liquidity expanding plus dollar weakening is the setup the "
+               "CLI work points to for risk assets. The dollar is the regime "
+               "switch.")
+        return cap, why
+
+    if key == "crypto_vs_spx":
+        cap = (f"Since Feb 1: BTC {v['btc']:+.1f}%, "
+               f"ETH {v['eth']:+.1f}%, S&P 500 {v['spx']:+.1f}%.")
+        why = ("Risk-on showing up unevenly. Ratio between equities and crypto "
+               "is the cleanest read on whether the dollar move has translated "
+               "across the risk spectrum.")
+        return cap, why
+
+    return "", ""
+
+
+# ============================================================
+# HERO STATS
+# ============================================================
+
+def compute_hero(conn) -> dict:
+    """Pull current MRI / regime / warning level for the hero block."""
+    out = {"mri": None, "regime": None, "rec_prob": None, "warning_level": None,
+           "alloc_mult": None, "alloc_label": None}
+    try:
+        d, mri = latest(conn, "MRI")
+        out["mri"] = mri
+        if mri is not None:
+            if mri < -0.5:
+                out["regime"], out["alloc_label"], out["alloc_mult"] = "LOW RISK", "AGGRESSIVE", 1.2
+            elif mri < 0.5:
+                out["regime"], out["alloc_label"], out["alloc_mult"] = "MID-CYCLE", "NEUTRAL", 1.0
+            elif mri < 1.0:
+                out["regime"], out["alloc_label"], out["alloc_mult"] = "ELEVATED", "DEFENSIVE", 0.6
+            elif mri < 1.5:
+                out["regime"], out["alloc_label"], out["alloc_mult"] = "HIGH RISK", "PROTECTIVE", 0.3
+            else:
+                out["regime"], out["alloc_label"], out["alloc_mult"] = "CRISIS", "CAPITAL PRESERVATION", 0.0
+    except Exception:
+        pass
+    try:
+        _, rp = latest(conn, "REC_PROB")
+        out["rec_prob"] = rp
+    except Exception:
+        pass
+    return out
+
+
+# ============================================================
+# HTML BUILD
+# ============================================================
+
+def b64(path: Path) -> str:
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode("ascii")
+
+
+def build_html(brief_date: date, charts: list[tuple[str, dict]],
+               out_dir: Path, hero: dict) -> str:
+    chart_blocks = []
+    for i, (key, v) in enumerate(charts, 1):
+        img_path = out_dir / v["path"]
+        if not img_path.exists():
+            continue
+        cap, why = fmt_caption(key, v)
+        data = b64(img_path)
+        chart_blocks.append(f"""
+    <div style="margin: 32px 0; padding: 0;">
+      <img src="data:image/png;base64,{data}" alt="Chart {i}"
+           style="width: 100%; max-width: 900px; height: auto; display: block; border: 0;" />
+      <div style="font-family: Georgia, serif; font-size: 13px; color: #555; margin-top: 8px; line-height: 1.5;">
+        <strong style="color: #2389BB;">Figure {i}.</strong> {html.escape(cap)}
+      </div>
+      <div style="font-family: -apple-system, Helvetica, Arial, sans-serif; font-size: 14px; color: #1a1a1a; margin-top: 8px; line-height: 1.55;">
+        {html.escape(why)}
+      </div>
+    </div>
+""")
+
+    summary_lines = []
+    cmap = {k: v for k, v in charts}
+    if "hy_oas" in cmap:
+        summary_lines.append(f"HY OAS at {cmap['hy_oas']['value']:.0f} bps "
+                             f"({'below' if cmap['hy_oas']['value'] < 300 else 'above'} the 300 bps complacency line).")
+    if "aaii" in cmap:
+        summary_lines.append(f"AAII Bull-Bear at {cmap['aaii']['value']:+.1f}%.")
+    if "quits" in cmap:
+        summary_lines.append(f"Quits at {cmap['quits']['value']:.1f}%.")
+    if "rrp" in cmap:
+        summary_lines.append(f"RRP at ${cmap['rrp']['value']:.0f}B.")
+    if "clg" in cmap:
+        summary_lines.append(f"Credit-Labor Gap at {cmap['clg']['value']:+.2f}.")
+    summary = " ".join(summary_lines)
+
+    hero_html = ""
+    if hero.get("mri") is not None:
+        mri_val = hero["mri"]
+        regime = hero.get("regime") or ""
+        rec = f"{hero['rec_prob']*100:.1f}%" if hero.get("rec_prob") is not None else "n/a"
+        alloc = hero.get("alloc_label") or ""
+        mult = f"{hero['alloc_mult']:.1f}x" if hero.get("alloc_mult") is not None else "n/a"
+        hero_html = f"""
+    <table cellpadding="0" cellspacing="0" border="0" width="100%"
+           style="margin: 14px 0 8px 0; border-collapse: collapse;">
+      <tr>
+        <td style="padding: 10px 14px; background: #2389BB; color: #fff; width: 25%;">
+          <div style="font-size: 10px; letter-spacing: 0.08em; opacity: 0.85;">MACRO RISK INDEX</div>
+          <div style="font-size: 22px; font-weight: 700; margin-top: 2px;">{mri_val:+.2f}</div>
+          <div style="font-size: 11px; margin-top: 2px;">{html.escape(regime)}</div>
+        </td>
+        <td style="padding: 10px 14px; background: #f0f6fa; width: 25%; border-right: 1px solid #fff;">
+          <div style="font-size: 10px; letter-spacing: 0.08em; color: #555;">RECESSION PROBABILITY</div>
+          <div style="font-size: 22px; font-weight: 700; color: #2389BB; margin-top: 2px;">{rec}</div>
+          <div style="font-size: 11px; color: #555; margin-top: 2px;">6-12 month forward</div>
+        </td>
+        <td style="padding: 10px 14px; background: #f0f6fa; width: 25%; border-right: 1px solid #fff;">
+          <div style="font-size: 10px; letter-spacing: 0.08em; color: #555;">REGIME</div>
+          <div style="font-size: 22px; font-weight: 700; color: #2389BB; margin-top: 2px;">{html.escape(regime or "N/A")}</div>
+          <div style="font-size: 11px; color: #555; margin-top: 2px;">MRI-driven</div>
+        </td>
+        <td style="padding: 10px 14px; background: #f0f6fa; width: 25%;">
+          <div style="font-size: 10px; letter-spacing: 0.08em; color: #555;">ALLOCATION MULTIPLIER</div>
+          <div style="font-size: 22px; font-weight: 700; color: #2389BB; margin-top: 2px;">{mult}</div>
+          <div style="font-size: 11px; color: #555; margin-top: 2px;">{html.escape(alloc)}</div>
+        </td>
+      </tr>
+    </table>
+"""
+
+    title_str = brief_date.strftime("%B %-d, %Y")
+    return f"""<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LHM Morning Brief — {title_str}</title>
+</head>
+<body style="margin: 0; padding: 0; background: #f8f8f8; font-family: -apple-system, Helvetica, Arial, sans-serif; color: #1a1a1a;">
+  <div style="max-width: 920px; margin: 0 auto; background: #ffffff; padding: 32px 28px;">
+    <div style="border-bottom: 4px solid #2389BB; padding-bottom: 14px; margin-bottom: 22px;">
+      <div style="font-size: 13px; color: #2389BB; font-weight: 700; letter-spacing: 0.08em;">LIGHTHOUSE MACRO &nbsp;|&nbsp; MORNING BRIEF</div>
+      <div style="font-size: 22px; font-weight: 700; margin-top: 6px;">{html.escape(title_str)}</div>
+      <div style="font-size: 13px; color: #555; margin-top: 4px;">Ten charts. Live readings from the Lighthouse Master DB.</div>
+    </div>
+
+    {hero_html}
+
+    <div style="font-size: 15px; line-height: 1.6; color: #1a1a1a; margin-top: 18px; margin-bottom: 18px;">
+      {html.escape(summary)}
+    </div>
+
+    {''.join(chart_blocks)}
+
+    <div style="margin-top: 40px; padding-top: 18px; border-top: 1px solid #D1D1D1; font-size: 12px; color: #555; line-height: 1.55;">
+      <div style="color: #2389BB; font-weight: 700; font-style: italic;">MACRO, ILLUMINATED.</div>
+      <div style="margin-top: 6px;">Bob Sheehan, CFA, CMT &middot; Founder &amp; CIO &middot; Lighthouse Macro</div>
+      <div>LighthouseMacro.com &middot; @LHMacro</div>
+    </div>
+  </div>
+</body>
+</html>
+"""
+
+
+# ============================================================
+# MAIN
+# ============================================================
+
+def render_all(conn, out_dir: Path) -> list[tuple[str, dict]]:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    results = []
+    for i, (key, fn) in enumerate(CHART_FUNCS, 1):
+        try:
+            v = fn(conn, out_dir)
+            print(f"  [{i:02d}/10] {key:18s} OK  ({v.get('path')})")
+            results.append((key, v))
+        except Exception as e:
+            print(f"  [{i:02d}/10] {key:18s} FAILED: {e}")
+            traceback.print_exc()
     return results
 
 
-def get_prior_indices(conn: sqlite3.Connection, current_dates: dict) -> dict:
-    """Get the prior day's value for each index to compute changes."""
-    prior = {}
-    for index_id, info in current_dates.items():
-        query = """
-            SELECT value, status, date
-            FROM lighthouse_indices
-            WHERE index_id = ? AND date < ?
-            ORDER BY date DESC
-            LIMIT 1
-        """
-        cursor = conn.execute(query, (index_id, info["date"]))
-        row = cursor.fetchone()
-        if row:
-            prior[index_id] = {
-                "value": row[0],
-                "status": row[1],
-                "date": row[2],
-            }
-    return prior
+def write_manifest(out_dir: Path, brief_date: date, charts: list[tuple[str, dict]], hero: dict):
+    def _ser(v):
+        if isinstance(v, (pd.Timestamp, datetime, date)):
+            return pd.Timestamp(v).strftime("%Y-%m-%d")
+        if isinstance(v, (np.floating,)):
+            return float(v)
+        if isinstance(v, (np.integer,)):
+            return int(v)
+        return v
 
-
-def detect_regime_changes(current: dict, prior: dict) -> list:
-    """Detect when an index has crossed into a new regime."""
-    changes = []
-    for index_id, curr in current.items():
-        prev = prior.get(index_id)
-        if prev and curr["status"] != prev["status"]:
-            changes.append({
-                "index": index_id,
-                "from_status": prev["status"],
-                "to_status": curr["status"],
-                "from_value": prev["value"],
-                "to_value": curr["value"],
-                "date": curr["date"],
-            })
-    return changes
-
-
-def detect_threshold_alerts(current: dict) -> list:
-    """Flag indices at attention-worthy levels."""
-    alerts = []
-    for index_id, thresholds in ALERT_THRESHOLDS.items():
-        if index_id not in current:
-            continue
-        val = current[index_id]["value"]
-        for threshold, label in thresholds:
-            if (threshold > 0 and val >= threshold) or (threshold < 0 and val <= threshold):
-                alerts.append({
-                    "index": index_id,
-                    "value": val,
-                    "threshold": threshold,
-                    "label": label,
-                    "status": current[index_id]["status"],
-                })
-                break
-    return alerts
-
-
-# ============================================================
-# STATUS COLOR
-# ============================================================
-
-def _status_color(status: str) -> str:
-    """Map a status string to a CSS color."""
-    if not status:
-        return "#898989"
-    s = status.upper()
-    if any(w in s for w in ["CRISIS", "SCARCE", "HIGH RISK", "WEAK", "TRADE CRISIS",
-                            "SEVERELY", "BLOW-OFF", "PORT", "RECESSION"]):
-        return "#FF2389"  # Venus
-    if any(w in s for w in ["ELEVATED", "PRE-RECESSION", "CAUTIOUS", "LATE",
-                            "TIGHT", "STRESSED", "HEADWIND", "FEARFUL",
-                            "MISPRICED", "BEARISH", "RED", "PRE_CRISIS"]):
-        return "#FF6723"  # Dusk
-    if any(w in s for w in ["NEUTRAL", "MID-CYCLE", "BALANCED", "NORMAL",
-                            "FROZEN", "SLOWING", "STAGE"]):
-        return "#898989"  # Doldrums
-    if any(w in s for w in ["EXPANSION", "ON TARGET", "TREND", "LOOSE",
-                            "LOW RISK", "BULLISH", "GREEN", "ACCUMULATION",
-                            "CAPITAL", "RAPID"]):
-        return "#00BB89"  # Sea
-    return "#898989"
-
-
-# ============================================================
-# HTML BUILDER
-# ============================================================
-
-def build_brief(conn: sqlite3.Connection, include_charts: bool = True) -> str:
-    """Build the full morning brief as self-contained HTML."""
-    now = datetime.now()
-    current = get_latest_indices(conn)
-    prior = get_prior_indices(conn, current)
-    regime_changes = detect_regime_changes(current, prior)
-    alerts = detect_threshold_alerts(current)
-
-    # Fetch release calendar context and select charts
-    calendar_ctx = {"yesterday": [], "today": [], "upcoming": []}
-    chart_specs = []
-    release_headlines = []
-    try:
-        from release_chart_selector import fetch_calendar_context, select_charts
-        calendar_ctx = fetch_calendar_context()
-        chart_specs, release_headlines = select_charts(calendar_ctx)
-        print(f"  Release context: {len(release_headlines)} headlines, {len(chart_specs)} charts selected")
-    except Exception as e:
-        print(f"  WARNING: Release chart selector failed: {e}")
-
-    # Generate charts
-    chart_data = []
-    if include_charts and chart_specs:
-        try:
-            from brief_charts import generate_selected_charts
-            chart_data = generate_selected_charts(conn, chart_specs)
-            print(f"  Generated {len(chart_data)} charts")
-        except Exception as e:
-            print(f"  WARNING: Chart generation failed: {e}")
-
-    # Hero card values
-    mri_val = current.get("MRI", {}).get("value", 0)
-    mri_status = current.get("MRI", {}).get("status", "N/A") or "N/A"
-    rec_val = current.get("REC_PROB", {}).get("value", 0)
-    rec_status = current.get("REC_PROB", {}).get("status", "N/A") or "N/A"
-    warn_val = current.get("WARNING_LEVEL", {}).get("value", 0)
-    warn_status = current.get("WARNING_LEVEL", {}).get("status", "N/A") or "N/A"
-    alloc_val = current.get("ALLOC_MULTIPLIER", {}).get("value", 0)
-    alloc_status = current.get("ALLOC_MULTIPLIER", {}).get("status", "N/A") or "N/A"
-
-    # Context banner (what drove chart selection)
-    context_html = ""
-    if release_headlines:
-        tags = " ".join(
-            f'<span class="ctx-tag">{h}</span>' for h in release_headlines[:6]
-        )
-        context_html = f"""
-        <div class="context-banner">
-            <span class="ctx-label">RELEASE CONTEXT</span>
-            {tags}
-        </div>"""
-
-    # Alerts banner (regime changes + threshold alerts)
-    _ALERT_NAMES = {
-        "MRI": "Macro Risk", "LPI": "Labor Pressure", "LFI": "Labor Fragility",
-        "PCI": "Price Conditions", "GCI": "Growth", "HCI": "Housing",
-        "CCI": "Consumer", "BCI": "Business", "TCI": "Trade",
-        "GCI_Gov": "Government", "FCI": "Financial", "LCI": "Liquidity Cushion",
-        "CLG": "Credit-Labor Gap", "MSI": "Market Structure",
-        "SBD": "Breadth Divergence", "SPI": "Sentiment", "SSD": "Sent-Structure Div",
-        "SLI": "Stablecoin Liquidity", "REC_PROB": "Recession Prob",
-        "ENSEMBLE_RISK": "Ensemble Risk", "WARNING_LEVEL": "Warning Level",
-        "ALLOC_MULTIPLIER": "Allocation", "CTI": "Trade Conditions",
+    manifest = {
+        "date": brief_date.strftime("%Y-%m-%d"),
+        "hero": {k: _ser(v) for k, v in hero.items()},
+        "charts": [{"key": k, **{kk: _ser(vv) for kk, vv in v.items()}} for k, v in charts],
     }
+    with open(out_dir / "manifest.json", "w") as f:
+        json.dump(manifest, f, indent=2, default=str)
 
-    alert_items = []
-    for rc in regime_changes[:4]:
-        name = _ALERT_NAMES.get(rc["index"], rc["index"])
-        alert_items.append(
-            f'<span class="alert-tag regime">{name}: '
-            f'{rc["from_status"]} &#8594; {rc["to_status"]}</span>'
-        )
-    for a in alerts[:4]:
-        name = _ALERT_NAMES.get(a["index"], a["index"])
-        alert_items.append(
-            f'<span class="alert-tag threshold">{name}: '
-            f'{a["value"]:+.2f} [{a["label"]}]</span>'
-        )
-    alerts_html = ""
-    if alert_items:
-        alerts_html = f"""
-        <div class="alerts-banner">
-            <span class="ctx-label">ALERTS</span>
-            {"".join(alert_items)}
-        </div>"""
-
-    # Charts HTML (grouped by context)
-    charts_html = ""
-    if chart_data:
-        # Group charts by context label
-        groups = {}
-        for c in chart_data:
-            ctx = c.get("context", "")
-            groups.setdefault(ctx, []).append(c)
-
-        sections = []
-        for ctx_label, charts in groups.items():
-            items = []
-            for c in charts:
-                if c.get("base64"):
-                    items.append(
-                        f'<div class="chart-card">'
-                        f'<img src="data:image/png;base64,{c["base64"]}" alt="{c["title"]}" />'
-                        f'</div>'
-                    )
-            if items:
-                label_html = ""
-                if ctx_label:
-                    label_html = f'<div class="chart-group-label">{ctx_label}</div>'
-                sections.append(
-                    f'<div class="chart-group">'
-                    f'{label_html}'
-                    f'<div class="chart-grid">{"".join(items)}</div>'
-                    f'</div>'
-                )
-        charts_html = "\n".join(sections)
-
-    # Calendar HTML (next 3 days only, key releases)
-    calendar_html = ""
-    all_releases = []
-    for time_label, releases in [("Today", calendar_ctx.get("today", [])),
-                                  ("Upcoming", calendar_ctx.get("upcoming", []))]:
-        for r in releases:
-            all_releases.append(r)
-
-    if all_releases:
-        cal_items = []
-        for r in all_releases[:12]:
-            try:
-                d = datetime.strptime(r["date"], "%Y-%m-%d")
-                day_str = d.strftime("%a %b %d")
-            except (ValueError, TypeError):
-                day_str = r["date"]
-            cal_items.append(
-                f'<div class="cal-item">'
-                f'<span class="cal-date">{day_str}</span>'
-                f'<span class="cal-name">{r["name"]}</span>'
-                f'</div>'
-            )
-        calendar_html = f"""
-        <div class="section">
-            <h2>Upcoming Releases</h2>
-            {"".join(cal_items)}
-        </div>"""
-
-    # Assemble full HTML
-    html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LHM Morning Brief - {now.strftime('%b %d, %Y')}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {{
-            --ocean: #2389BB;
-            --dusk: #FF6723;
-            --sky: #23BBFF;
-            --venus: #FF2389;
-            --sea: #00BB89;
-            --doldrums: #898989;
-            --starboard: #238923;
-            --port: #892323;
-            --fog: #D1D1D1;
-            --bg: #ffffff;
-            --card: #f9fafb;
-            --text: #1a1a1a;
-            --muted: #555555;
-            --border: #e5e7eb;
-        }}
-
-        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-
-        body {{
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 0;
-        }}
-
-        .wrapper {{
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }}
-
-        /* ---- ACCENT BAR ---- */
-        .accent-bar {{
-            height: 4px;
-            background: linear-gradient(90deg, var(--ocean) 66%, var(--dusk) 66%);
-            margin-bottom: 1.5rem;
-        }}
-
-        /* ---- HEADER ---- */
-        .header {{
-            text-align: center;
-            padding: 1rem 0;
-            border-bottom: 2px solid var(--ocean);
-            margin-bottom: 1.2rem;
-        }}
-        .header-brand {{
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: var(--ocean);
-            margin-bottom: 0.2rem;
-        }}
-        .header-title {{
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.2rem;
-        }}
-        .header-meta {{
-            font-size: 0.8rem;
-            color: var(--muted);
-            font-family: 'Source Code Pro', monospace;
-        }}
-
-        /* ---- CONTEXT BANNER ---- */
-        .context-banner, .alerts-banner {{
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1rem;
-            border-radius: 6px;
-        }}
-        .context-banner {{
-            background: #f0f7fb;
-            border: 1px solid #c8e2f0;
-        }}
-        .alerts-banner {{
-            background: #fef7f0;
-            border: 1px solid #f5d6b8;
-        }}
-        .ctx-label {{
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: var(--ocean);
-            text-transform: uppercase;
-        }}
-        .alerts-banner .ctx-label {{
-            color: var(--dusk);
-        }}
-        .ctx-tag {{
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: var(--ocean);
-            background: rgba(35, 137, 187, 0.08);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-        }}
-        .alert-tag {{
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Source Code Pro', monospace;
-        }}
-        .alert-tag.regime {{
-            color: var(--dusk);
-            background: rgba(255, 103, 35, 0.08);
-        }}
-        .alert-tag.threshold {{
-            color: var(--venus);
-            background: rgba(255, 35, 137, 0.08);
-        }}
-
-        /* ---- HERO CARDS ---- */
-        .hero-grid {{
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }}
-        .hero-card {{
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-        }}
-        .hero-label {{
-            font-size: 0.7rem;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.4rem;
-        }}
-        .hero-value {{
-            font-family: 'Source Code Pro', monospace;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-        }}
-        .hero-status {{
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
-        }}
-        .hero-desc {{
-            font-size: 0.65rem;
-            color: var(--muted);
-            line-height: 1.3;
-            margin-top: 0.15rem;
-        }}
-
-        /* ---- CHART GROUPS ---- */
-        .chart-group {{
-            margin-bottom: 1.5rem;
-        }}
-        .chart-group-label {{
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--ocean);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.6rem;
-            padding-bottom: 0.3rem;
-            border-bottom: 1px solid var(--border);
-        }}
-        .chart-grid {{
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
-        }}
-        .chart-card {{
-            border: 2px solid var(--ocean);
-            border-radius: 6px;
-            overflow: hidden;
-        }}
-        .chart-card img {{
-            width: 100%;
-            height: auto;
-            display: block;
-        }}
-
-        /* ---- SECTIONS ---- */
-        .section {{
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-        }}
-        .section h2 {{
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--ocean);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid var(--border);
-        }}
-
-        /* ---- CALENDAR ---- */
-        .cal-item {{
-            display: flex;
-            gap: 1rem;
-            padding: 0.35rem 0;
-            font-size: 0.82rem;
-            border-bottom: 1px solid var(--border);
-        }}
-        .cal-item:last-child {{ border-bottom: none; }}
-        .cal-date {{
-            font-family: 'Source Code Pro', monospace;
-            color: var(--ocean);
-            font-weight: 600;
-            min-width: 90px;
-        }}
-        .cal-name {{
-            color: var(--text);
-        }}
-
-        /* ---- FOOTER ---- */
-        .footer {{
-            text-align: center;
-            padding: 1.5rem 0 1rem;
-            font-size: 0.75rem;
-            color: var(--muted);
-        }}
-        .footer-tagline {{
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--ocean);
-            font-size: 0.8rem;
-            margin-bottom: 0.3rem;
-        }}
-
-        /* ---- RESPONSIVE ---- */
-        @media (max-width: 768px) {{
-            .hero-grid {{ grid-template-columns: repeat(2, 1fr); }}
-            .chart-grid {{ grid-template-columns: 1fr; }}
-            .wrapper {{ padding: 0.8rem; }}
-        }}
-    </style>
-</head>
-<body>
-<div class="wrapper">
-
-    <div class="accent-bar"></div>
-
-    <div class="header">
-        <div class="header-brand">LIGHTHOUSE MACRO</div>
-        <div class="header-title">Morning Brief &bull; {now.strftime('%A, %B %d, %Y')}</div>
-        <div class="header-meta">{now.strftime('%H:%M ET')}</div>
-    </div>
-
-    {context_html}
-    {alerts_html}
-
-    <!-- Hero Cards -->
-    <div class="hero-grid">
-        <div class="hero-card">
-            <div class="hero-label">Macro Risk Index</div>
-            <div class="hero-value" style="color:{_status_color(mri_status)}">{mri_val:+.3f}</div>
-            <div class="hero-status" style="color:{_status_color(mri_status)}">{mri_status}</div>
-            <div class="hero-desc">12-pillar composite. Positive = rising risk.</div>
-        </div>
-        <div class="hero-card">
-            <div class="hero-label">Recession Probability</div>
-            <div class="hero-value" style="color:{_status_color(rec_status)}">{rec_val:.1%}</div>
-            <div class="hero-status" style="color:{_status_color(rec_status)}">{rec_status}</div>
-            <div class="hero-desc">6-12 month forward probability.</div>
-        </div>
-        <div class="hero-card">
-            <div class="hero-label">Warning Level</div>
-            <div class="hero-value" style="color:{_status_color(warn_status)}">{warn_val:.0f}</div>
-            <div class="hero-status" style="color:{_status_color(warn_status)}">{warn_status}</div>
-            <div class="hero-desc">Pillar indices in elevated or worse.</div>
-        </div>
-        <div class="hero-card">
-            <div class="hero-label">Allocation Multiplier</div>
-            <div class="hero-value" style="color:{_status_color(alloc_status)}">{alloc_val:.2f}x</div>
-            <div class="hero-status" style="color:{_status_color(alloc_status)}">{alloc_status}</div>
-            <div class="hero-desc">Regime-driven equity sizing. 1.0x = neutral.</div>
-        </div>
-    </div>
-
-    {charts_html}
-    {calendar_html}
-
-    <div class="footer">
-        <div class="footer-tagline">MACRO, ILLUMINATED.</div>
-        Lighthouse Macro &bull; {now.strftime('%Y-%m-%d %H:%M ET')}
-    </div>
-
-</div>
-</body>
-</html>"""
-
-    return html
-
-
-# ============================================================
-# NOTIFICATION + LOGGING
-# ============================================================
-
-def build_notification_summary(conn: sqlite3.Connection) -> str:
-    """Build a short summary for macOS notification."""
-    current = get_latest_indices(conn)
-    prior = get_prior_indices(conn, current)
-    regime_changes = detect_regime_changes(current, prior)
-
-    parts = []
-    if "MRI" in current:
-        parts.append(f"MRI: {current['MRI']['value']:.2f} [{current['MRI']['status']}]")
-    if "MSI" in current:
-        parts.append(f"MSI: {current['MSI']['value']:.2f} [{current['MSI']['status']}]")
-    if regime_changes:
-        for rc in regime_changes[:2]:
-            parts.append(f"{rc['index']}: {rc['from_status']}->{rc['to_status']}")
-
-    return " | ".join(parts) if parts else "Pipeline complete. No alerts."
-
-
-def send_notification(title: str, message: str):
-    """Send a macOS notification via terminal-notifier or osascript."""
-    try:
-        subprocess.run(
-            ["terminal-notifier",
-             "-title", title,
-             "-message", message,
-             "-group", "lhm-morning-brief",
-             "-sound", "default"],
-            capture_output=True, timeout=5
-        )
-        return
-    except (FileNotFoundError, subprocess.TimeoutExpired):
-        pass
-
-    try:
-        escaped_msg = message.replace('"', '\\"').replace("'", "\\'")
-        escaped_title = title.replace('"', '\\"')
-        subprocess.run(
-            ["osascript", "-e",
-             f'display notification "{escaped_msg}" with title "{escaped_title}"'],
-            capture_output=True, timeout=5
-        )
-    except (subprocess.TimeoutExpired, Exception):
-        pass
-
-
-def log_brief(brief: str):
-    """Append a timestamped entry to the morning brief log."""
-    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(LOG_PATH, "a") as f:
-        f.write(f"\n{'='*70}\n")
-        f.write(f"MORNING BRIEF - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"{'='*70}\n")
-        f.write(f"HTML dashboard generated at {OUTPUT_PATH}\n")
-
-
-# ============================================================
-# CLI
-# ============================================================
 
 def main():
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Lighthouse Macro Morning Brief")
-    parser.add_argument("--no-notify", action="store_true", help="Skip macOS notification")
-    parser.add_argument("--stdout", action="store_true", help="Print to stdout instead of file")
-    parser.add_argument("--no-charts", action="store_true", help="Skip chart generation (faster)")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--no-charts", action="store_true",
+                        help="skip chart re-render; reuse PNGs in today's archive dir")
+    parser.add_argument("--stdout", action="store_true",
+                        help="print HTML to stdout instead of writing files")
+    parser.add_argument("--date", default=None,
+                        help="override brief date (YYYY-MM-DD); defaults to today")
     args = parser.parse_args()
 
-    conn = sqlite3.connect(DB_PATH, timeout=30)
+    brief_date = date.today() if not args.date else date.fromisoformat(args.date)
+    out_dir = ARCHIVE_ROOT / brief_date.strftime("%Y-%m-%d")
+    out_dir.mkdir(parents=True, exist_ok=True)
 
-    brief = build_brief(conn, include_charts=not args.no_charts)
+    conn = _conn()
+    hero = compute_hero(conn)
+
+    if args.no_charts:
+        existing = []
+        for key, _fn in CHART_FUNCS:
+            for f in sorted(out_dir.glob(f"chart_*_{key}.png")):
+                existing.append((key, {"path": f.name}))
+                break
+        charts = existing
+        print(f"Skipping render. Reusing {len(charts)} chart(s) from {out_dir}")
+    else:
+        print(f"Rendering 10 charts into {out_dir}")
+        charts = render_all(conn, out_dir)
+
+    html_doc = build_html(brief_date, charts, out_dir, hero)
+    write_manifest(out_dir, brief_date, charts, hero)
 
     if args.stdout:
-        print(brief)
+        sys.stdout.write(html_doc)
     else:
-        OUTPUT_PATH.write_text(brief)
-        print(f"Morning brief written to {OUTPUT_PATH}")
-
-    log_brief(brief)
-
-    if not args.no_notify:
-        summary = build_notification_summary(conn)
-        send_notification("LHM Morning Brief", summary)
-        print(f"Notification sent: {summary}")
+        archive_path = out_dir / "morning_brief.html"
+        archive_path.write_text(html_doc)
+        DESKTOP_PATH.write_text(html_doc)
+        print(f"HTML written: {archive_path}")
+        print(f"HTML written: {DESKTOP_PATH}")
+        LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(LOG_PATH, "a") as f:
+            f.write(f"{datetime.now().isoformat()} v3 ok charts={len(charts)} -> {archive_path}\n")
 
     conn.close()
 

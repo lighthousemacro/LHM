@@ -522,3 +522,28 @@
 2026-05-05 10:40:02,982 [INFO] loaded traffic_sources: 44 rows
 2026-05-05 10:40:03,275 [INFO] loaded unsubscribes: 5 rows
 2026-05-05 10:40:12,300 [INFO] wrote /Users/bob/LHM/Outputs/Substack_Dashboard/dashboard_latest.html (888 KB)
+2026-05-05 16:30:07,347 [INFO] picked arr: lighthousemacro_arr_2026-04-26.csv
+2026-05-05 16:30:07,348 [INFO] picked audience_location: lighthousemacro_audience_location_2026-04-26 (1).csv
+2026-05-05 16:30:07,348 [INFO] picked email_stats: lighthousemacro_email_stats_2026-04-26.csv
+2026-05-05 16:30:07,348 [INFO] picked emails: lighthousemacro_emails_2026-04-20.csv
+2026-05-05 16:30:07,348 [INFO] picked followers: lighthousemacro_followers_2026-04-22.csv
+2026-05-05 16:30:07,349 [INFO] picked growth_sources: lighthousemacro_growth_sources_2026-04-26 (2).csv
+2026-05-05 16:30:07,349 [INFO] picked paid_subscriber_growth: lighthousemacro_paid_subscriber_growth_2026-04-22.csv
+2026-05-05 16:30:07,349 [INFO] picked subscribers: lighthousemacro_subscribers_2026-04-22.csv
+2026-05-05 16:30:07,349 [INFO] picked traffic: lighthousemacro_traffic_2026-04-26.csv
+2026-05-05 16:30:07,349 [INFO] picked traffic_sources: lighthousemacro_traffic_sources_2026-04-26.csv
+2026-05-05 16:30:07,349 [INFO] picked unsubscribes: lighthousemacro_unsubscribes_2026-04-26.csv
+2026-05-05 16:30:07,349 [WARNING] missing CSV types: free_subscriber_growth
+2026-05-05 16:30:07,365 [INFO] archived 11 CSVs to /Users/bob/LHM/Data/substack_snapshots/2026-05-05_1630
+2026-05-05 16:30:07,390 [INFO] loaded arr: 233 rows
+2026-05-05 16:30:07,391 [INFO] loaded audience_location: 65 rows
+2026-05-05 16:30:07,398 [INFO] loaded email_stats: 49 rows
+2026-05-05 16:30:07,401 [INFO] loaded emails: 1659 rows
+2026-05-05 16:30:07,404 [INFO] loaded followers: 1460 rows
+2026-05-05 16:30:07,409 [INFO] loaded growth_sources: 228 rows
+2026-05-05 16:30:07,411 [INFO] loaded paid_subscriber_growth: 31 rows
+2026-05-05 16:30:07,416 [INFO] loaded subscribers: 1661 rows
+2026-05-05 16:30:07,418 [INFO] loaded traffic: 89 rows
+2026-05-05 16:30:07,418 [INFO] loaded traffic_sources: 44 rows
+2026-05-05 16:30:07,422 [INFO] loaded unsubscribes: 5 rows
+2026-05-05 16:30:08,383 [INFO] wrote /Users/bob/LHM/Outputs/Substack_Dashboard/dashboard_latest.html (888 KB)

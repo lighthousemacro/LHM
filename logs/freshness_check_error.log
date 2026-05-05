@@ -171,3 +171,18 @@
   MSACSR: db=2026-01-01 -> fred=2026-03-01
   BOPGSTB: db=2026-02-01 -> fred=2026-03-01
   BOPGTB: db=2026-02-01 -> fred=2026-03-01
+2026-05-05 10:46:18 [ERROR]   JTSJOL: fetch failed: database is locked
+2026-05-05 10:47:21 [INFO]   JTSHIL: refreshed (+304 obs)
+2026-05-05 10:48:43 [INFO]   JTSQUL: refreshed (+304 obs)
+2026-05-05 10:48:45 [INFO]   JTSQUR: refreshed (+304 obs)
+2026-05-05 10:49:05 [INFO]   JTSHIR: refreshed (+304 obs)
+2026-05-05 10:49:06 [INFO]   JTSTSR: refreshed (+304 obs)
+2026-05-05 10:49:07 [INFO]   JTS1000JOR: refreshed (+304 obs)
+2026-05-05 10:49:08 [INFO]   JTS1000QUR: refreshed (+304 obs)
+2026-05-05 10:49:09 [INFO]   JTS1000HIR: refreshed (+304 obs)
+2026-05-05 10:49:26 [INFO]   HSN1F: refreshed (+759 obs)
+2026-05-05 10:49:30 [INFO]   MSPNHSUS: refreshed (+759 obs)
+2026-05-05 10:49:34 [INFO]   MSACSR: refreshed (+759 obs)
+2026-05-05 10:49:41 [INFO]   BOPGSTB: refreshed (+411 obs)
+2026-05-05 10:49:44 [INFO]   BOPGTB: refreshed (+411 obs)
+2026-05-05 10:49:48 [INFO] Freshness check done: 13 series refreshed, 5,531 obs added.

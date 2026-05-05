@@ -734,3 +734,8 @@ rsync(32170): error: /Users/bob/LHM/Scripts/.tmp.driveupload/41911: open (2) in 
 === 2026-05-05 15:00:00 mirror start ===
 === 2026-05-05 15:00:03 mirror end (exit 0) ===
 === 2026-05-05 15:30:00 mirror start ===
+rsync(12116): error: logs/.sync.log.nAy5tYKF5d: write: No space left on device
+rsync(12116): error: buf_copy
+rsync(12116): error: logs/.sync.log.nAy5tYKF5d: write: No space left on device
+rsync(12114): error: unexpected end of file
+=== 2026-05-05 15:30:03 mirror end (exit 0) ===

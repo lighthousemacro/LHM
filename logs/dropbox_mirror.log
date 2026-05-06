@@ -797,3 +797,4 @@ rsync(28992): error: mkstempat: 'logs/.dropbox_mirror.log.r1aqnCZtCY': No space 
 rsync(28992): error: mkstempat: 'logs/.sync.log.EaS6WThh87': No space left on device
 === 2026-05-06 14:00:02 mirror end (exit 0) ===
 === 2026-05-06 14:30:00 mirror start ===
+=== 2026-05-06 14:30:02 mirror end (exit 0) ===

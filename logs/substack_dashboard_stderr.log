@@ -65,3 +65,14 @@ Traceback (most recent call last):
     os.mkdir(self, mode)
     ~~~~~~~~^^^^^^^^^^^^
 OSError: [Errno 28] No space left on device: '/Users/bob/LHM/Data/substack_snapshots/2026-05-07_0446'
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.12_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/logging/__init__.py", line 1155, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+object address  : 0x10f1b8940
+object refcount : 3
+object type     : 0x1038fea28
+object type name: OSError
+object repr     : OSError(28, 'No space left on device')
+lost sys.stderr

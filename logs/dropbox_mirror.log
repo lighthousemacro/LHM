@@ -812,3 +812,34 @@ rsync(30083): error: mkstempat: 'External/GDrive/.Daily Digest Generator .RB0OaB
 rsync(30083): error: External/GDrive/Daily Digest Generator : utimensat (2): No such file or directory
 rsync(30081): error: unexpected end of file
 === 2026-05-06 21:08:09 mirror end (exit 0) ===
+=== 2026-05-07 08:01:46 mirror start ===
+rsync(32030): error: mkstempat: 'External/GDrive/.Daily Digest Generator .Ig3WdcLLwm': No space left on device
+rsync(32030): error: External/GDrive/Daily Digest Generator : utimensat (2): No such file or directory
+rsync(32028): error: unexpected end of file
+=== 2026-05-07 08:01:48 mirror end (exit 0) ===
+=== 2026-05-07 09:00:00 mirror start ===
+rsync(32137): error: mkstempat: 'External/GDrive/.Daily Digest Generator .l507eJvqdg': No space left on device
+rsync(32137): error: External/GDrive/Daily Digest Generator : utimensat (2): No such file or directory
+rsync(32136): error: unexpected end of file
+=== 2026-05-07 09:00:23 mirror end (exit 0) ===
+=== 2026-05-07 10:02:04 mirror start ===
+rsync(32388): error: mkstempat: 'External/GDrive/.Daily Digest Generator .t8486ziXz6': No space left on device
+rsync(32388): error: External/GDrive/Daily Digest Generator : utimensat (2): No such file or directory
+rsync(32387): error: unexpected end of file
+=== 2026-05-07 10:02:05 mirror end (exit 0) ===
+=== 2026-05-07 13:30:00 mirror start ===
+rsync(32988): error: mkstempat: 'External/GDrive/.Daily Digest Generator .86WDEIZXXG': No space left on device
+rsync(32988): error: External/GDrive/Daily Digest Generator : utimensat (2): No such file or directory
+rsync(32986): error: unexpected end of file
+=== 2026-05-07 13:30:02 mirror end (exit 0) ===
+=== 2026-05-07 14:30:01 mirror start ===
+rsync(33662): error: mkstempat: 'External/GDrive/.Daily Digest Generator .5ZlaFf0amf': No space left on device
+rsync(33662): error: External/GDrive/Daily Digest Generator : utimensat (2): No such file or directory
+rsync(33658): error: unexpected end of file
+=== 2026-05-07 14:45:57 mirror end (exit 0) ===
+=== 2026-05-07 15:35:23 mirror start ===
+rsync(33808): error: mkstempat: 'External/GDrive/.Daily Digest Generator .ccUJwBNYXB': No space left on device
+rsync(33808): error: External/GDrive/Daily Digest Generator : utimensat (2): No such file or directory
+rsync(33807): error: unexpected end of file
+=== 2026-05-07 15:35:25 mirror end (exit 0) ===
+=== 2026-05-07 18:31:43 mirror start ===

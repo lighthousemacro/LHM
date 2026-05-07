@@ -478,3 +478,15 @@
 2026-05-07 04:46:08,276 [INFO] picked traffic_sources: lighthousemacro_traffic_sources_2026-04-26.csv
 2026-05-07 04:46:08,276 [INFO] picked unsubscribes: lighthousemacro_unsubscribes_2026-04-26.csv
 2026-05-07 04:46:08,276 [WARNING] missing CSV types: free_subscriber_growth
+2026-05-07 16:44:09,694 [INFO] picked arr: lighthousemacro_arr_2026-04-26.csv
+2026-05-07 16:44:09,707 [INFO] picked audience_location: lighthousemacro_audience_location_2026-04-26 (1).csv
+2026-05-07 16:44:09,707 [INFO] picked email_stats: lighthousemacro_email_stats_2026-04-26.csv
+2026-05-07 16:44:09,722 [INFO] picked emails: lighthousemacro_emails_2026-04-20.csv
+2026-05-07 16:44:09,723 [INFO] picked followers: lighthousemacro_followers_2026-04-22.csv
+2026-05-07 16:44:09,723 [INFO] picked growth_sources: lighthousemacro_growth_sources_2026-04-26 (2).csv
+2026-05-07 16:44:09,724 [INFO] picked paid_subscriber_growth: lighthousemacro_paid_subscriber_growth_2026-04-22.csv
+2026-05-07 16:44:09,724 [INFO] picked subscribers: lighthousemacro_subscribers_2026-04-22.csv
+2026-05-07 16:44:09,725 [INFO] picked traffic: lighthousemacro_traffic_2026-04-26.csv
+2026-05-07 16:44:09,725 [INFO] picked traffic_sources: lighthousemacro_traffic_sources_2026-04-26.csv
+2026-05-07 16:44:09,726 [INFO] picked unsubscribes: lighthousemacro_unsubscribes_2026-04-26.csv
+2026-05-07 16:44:09,726 [WARNING] missing CSV types: free_subscriber_growth

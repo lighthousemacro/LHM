@@ -34,3 +34,34 @@
   df["unsubscribed_at"] = pd.to_datetime(df["unsubscribed_at"], errors="coerce", utc=True)
 /Users/bob/LHM/Scripts/dashboards/substack_dashboard.py:236: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
   df["unsubscribed_at"] = pd.to_datetime(df["unsubscribed_at"], errors="coerce", utc=True)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.12_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/logging/__init__.py", line 1155, in emit
+    self.flush()
+    ~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.12_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/logging/__init__.py", line 1137, in flush
+    self.stream.flush()
+    ~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 28] No space left on device
+Call stack:
+  File "/Users/bob/LHM/Scripts/dashboards/substack_dashboard.py", line 2035, in <module>
+    out = run()
+  File "/Users/bob/LHM/Scripts/dashboards/substack_dashboard.py", line 1951, in run
+    picks = discover_csvs()
+  File "/Users/bob/LHM/Scripts/dashboards/substack_dashboard.py", line 129, in discover_csvs
+    log.warning("missing CSV types: %s", ", ".join(missing))
+Message: 'missing CSV types: %s'
+Arguments: ('free_subscriber_growth',)
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/dashboards/substack_dashboard.py", line 2035, in <module>
+    out = run()
+  File "/Users/bob/LHM/Scripts/dashboards/substack_dashboard.py", line 1954, in run
+    archive_snapshot(picks, stamp)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/dashboards/substack_dashboard.py", line 135, in archive_snapshot
+    snap_dir.mkdir(parents=True, exist_ok=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.12_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '/Users/bob/LHM/Data/substack_snapshots/2026-05-07_0446'

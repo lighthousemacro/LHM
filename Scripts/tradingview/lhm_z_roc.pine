@@ -1,0 +1,188 @@
+//@version=6
+indicator("LHM Momentum Z Composite", "LHM Z-RoC Composite", overlay=false, timeframe="D", timeframe_gaps=true)
+
+// =============================================================================
+//  LHM Momentum Z Composite (zFinal)
+//
+//  Three equal-weighted components, 252d lookback throughout. MA Deviation
+//  internally weighted 50/30/20 (21d / 50d / 200d). Robust z-score per
+//  median/MAD (1.4826 normalization). Capped at ±10. Single output line.
+//
+//      zTac    = z(roc(close, 21))
+//      zRegime = z(roc(close, 63))
+//      dev21   = (close - ma21)  / ma21  * 100
+//      dev50   = (close - ma50)  / ma50  * 100
+//      dev200  = (close - ma200) / ma200 * 100
+//      maDevZ  = 0.5*z(dev21) + 0.3*z(dev50) + 0.2*z(dev200)
+//      zFinal  = (zTac + zRegime + maDevZ) / 3.0
+//
+//  Color rule (Sky / Doldrums / Venus): see plot section.
+//  Reading rule lives in the LHM chart standards (Horizon May 2026 onward).
+// =============================================================================
+
+// =============================================================================
+//  INPUTS
+// =============================================================================
+lookback     = input.int(252, title="Z Lookback", minval=20, group="Core")
+capZ         = input.float(10.0, title="Cap |z| at", minval=1.0, maxval=20.0, step=0.5, group="Core")
+
+lenTac       = input.int(21, title="Tactical ROC length",  minval=5, group="Components")
+lenRegime    = input.int(63, title="Regime ROC length",    minval=20, group="Components")
+lenMA21      = input.int(21,  title="MA Deviation: short",  minval=5,   group="Components")
+lenMA50      = input.int(50,  title="MA Deviation: medium", minval=20,  group="Components")
+lenMA200     = input.int(200, title="MA Deviation: long",   minval=50,  group="Components")
+wMA21        = input.float(0.5, title="MA-dev weight 21d",  minval=0, maxval=1, step=0.05, group="Components")
+wMA50        = input.float(0.3, title="MA-dev weight 50d",  minval=0, maxval=1, step=0.05, group="Components")
+wMA200       = input.float(0.2, title="MA-dev weight 200d", minval=0, maxval=1, step=0.05, group="Components")
+
+showInner    = input.bool(true,  title="Show ±1.0 dashed bands", group="Bands")
+showOuter    = input.bool(true,  title="Show ±2.0 solid bands",  group="Bands")
+
+showDiv      = input.bool(true,  title="Show divergence pivots", group="Divergence")
+divPivotLen  = input.int(5, title="Pivot detection bars", minval=2, maxval=20, group="Divergence")
+
+showTrendTint = input.bool(true, title="Show trend-regime tint background", group="Trend tint")
+
+// =============================================================================
+//  PALETTE — 23/89/BB system (CLAUDE_MASTER §6)
+// =============================================================================
+Ocean     = #2389BB
+Dusk      = #FF6723
+Sky       = #23BBFF
+LightSky  = #89CCFF
+Sea       = #00BB89
+Venus     = #FF2389
+Doldrums  = #898989
+Starboard = #238923
+Port      = #892323
+Fog       = #D1D1D1
+
+DoldrumsLt   = color.new(Doldrums, 80)
+StarboardBg  = color.new(Starboard, 92)
+PortBg       = color.new(Port, 92)
+DoldrumsBg   = color.new(Doldrums, 95)
+
+// =============================================================================
+//  ROBUST Z-SCORE HELPER
+//      Median & MAD over `lookback`. Same convention as the Python implementation
+//      in compute_indices.py (1.4826 normalization, ±capZ clip).
+// =============================================================================
+f_robust_z(src, n) =>
+    med = ta.percentile_linear_interpolation(src, n, 50)
+    mad = ta.percentile_linear_interpolation(math.abs(src - med), n, 50)
+    z   = mad == 0.0 ? 0.0 : (src - med) / (mad * 1.4826)
+    math.max(-capZ, math.min(capZ, z))
+
+// =============================================================================
+//  COMPONENTS
+// =============================================================================
+roc21  = ta.roc(close, lenTac)
+roc63  = ta.roc(close, lenRegime)
+
+ma21   = ta.sma(close, lenMA21)
+ma50   = ta.sma(close, lenMA50)
+ma200  = ta.sma(close, lenMA200)
+dev21  = ma21  == 0.0 ? 0.0 : (close - ma21)  / ma21  * 100.0
+dev50  = ma50  == 0.0 ? 0.0 : (close - ma50)  / ma50  * 100.0
+dev200 = ma200 == 0.0 ? 0.0 : (close - ma200) / ma200 * 100.0
+
+zTac     = f_robust_z(roc21,  lookback)
+zRegime  = f_robust_z(roc63,  lookback)
+zDev21   = f_robust_z(dev21,  lookback)
+zDev50   = f_robust_z(dev50,  lookback)
+zDev200  = f_robust_z(dev200, lookback)
+
+maDevZ   = wMA21 * zDev21 + wMA50 * zDev50 + wMA200 * zDev200
+zFinal   = (zTac + zRegime + maDevZ) / 3.0
+
+// =============================================================================
+//  COLOR-BY-VALUE
+//      Sky      when zFinal >  +1.0  (good momentum + trend strong)
+//      Doldrums when -1.0 ≤ zFinal ≤ +1.0
+//      Venus    when zFinal <  -1.0  (broken)
+// =============================================================================
+zColor = zFinal > 1.0 ? Sky : zFinal < -1.0 ? Venus : Doldrums
+
+// =============================================================================
+//  TREND-REGIME TINT BACKGROUND
+//      Read price-panel trend state from the chart's own MA stack and tint
+//      the top of the panel accordingly. Makes the cross-panel reading rule
+//      physically built into the chart.
+// =============================================================================
+priceUp     = close > ma50 and ma50 > ma200
+priceDown   = close < ma50 and ma50 < ma200
+priceMixed  = not priceUp and not priceDown
+tintColor   = priceUp ? StarboardBg : priceDown ? PortBg : DoldrumsBg
+
+bgcolor(showTrendTint ? tintColor : na, title="Trend regime tint", offset=0)
+
+// =============================================================================
+//  DIVERGENCE PIVOTS
+//      Bullish: price LL, zFinal HL → Sea marker
+//      Bearish: price HH, zFinal LH → Venus marker
+// =============================================================================
+pivHi_z  = ta.pivothigh(zFinal, divPivotLen, divPivotLen)
+pivLo_z  = ta.pivotlow(zFinal,  divPivotLen, divPivotLen)
+pivHi_px = ta.pivothigh(close,  divPivotLen, divPivotLen)
+pivLo_px = ta.pivotlow(close,   divPivotLen, divPivotLen)
+
+var float prevHi_z  = na
+var float prevHi_px = na
+var float prevLo_z  = na
+var float prevLo_px = na
+
+bearDiv = false
+bullDiv = false
+
+if not na(pivHi_z) and not na(pivHi_px)
+    if not na(prevHi_z) and not na(prevHi_px)
+        if pivHi_px > prevHi_px and pivHi_z < prevHi_z
+            bearDiv := true
+    prevHi_z  := pivHi_z
+    prevHi_px := pivHi_px
+
+if not na(pivLo_z) and not na(pivLo_px)
+    if not na(prevLo_z) and not na(prevLo_px)
+        if pivLo_px < prevLo_px and pivLo_z > prevLo_z
+            bullDiv := true
+    prevLo_z  := pivLo_z
+    prevLo_px := pivLo_px
+
+// =============================================================================
+//  PLOT
+// =============================================================================
+plot(zFinal, title="Z Final", color=zColor, linewidth=3)
+
+// Reference lines
+hline(0,    title="Zero",  color=Fog,      linestyle=hline.style_dashed, linewidth=1)
+hline(showInner ?  1.0 : na, title="+1σ",  color=Doldrums, linestyle=hline.style_dashed, linewidth=1)
+hline(showInner ? -1.0 : na, title="-1σ",  color=Doldrums, linestyle=hline.style_dashed, linewidth=1)
+hline(showOuter ?  2.0 : na, title="+2σ",  color=Doldrums, linestyle=hline.style_solid,  linewidth=2)
+hline(showOuter ? -2.0 : na, title="-2σ",  color=Doldrums, linestyle=hline.style_solid,  linewidth=2)
+
+// Divergence markers (offset back to the actual pivot bar)
+plotshape(showDiv and bullDiv ? zFinal[divPivotLen] : na, title="Bullish divergence",
+          location=location.absolute, style=shape.triangleup,   color=Sea,
+          size=size.small, offset=-divPivotLen)
+plotshape(showDiv and bearDiv ? zFinal[divPivotLen] : na, title="Bearish divergence",
+          location=location.absolute, style=shape.triangledown, color=Venus,
+          size=size.small, offset=-divPivotLen)
+
+// Right-edge label, color-matched to current zFinal
+if barstate.islast
+    label.new(bar_index + 3, zFinal,
+              str.tostring(zFinal, "0.00"),
+              color=zColor, textcolor=color.white,
+              style=label.style_label_left, size=size.small)
+
+// =============================================================================
+//  ALERTS
+// =============================================================================
+alertcondition(ta.crossover(zFinal,  1.0), title="Z above +1.0", message="LHM Z Composite: above +1.0 (Sky)")
+alertcondition(ta.crossunder(zFinal, 1.0), title="Z back to Doldrums (from above)", message="LHM Z Composite: back into Doldrums band from above")
+alertcondition(ta.crossunder(zFinal, -1.0), title="Z below -1.0", message="LHM Z Composite: below -1.0 (Venus)")
+alertcondition(ta.crossover(zFinal,  -1.0), title="Z back to Doldrums (from below)", message="LHM Z Composite: back into Doldrums band from below")
+alertcondition(ta.crossover(zFinal,  2.0), title="Z above +2.0", message="LHM Z Composite: extreme overbought (>+2σ)")
+alertcondition(ta.crossunder(zFinal, -2.0), title="Z below -2.0", message="LHM Z Composite: extreme oversold (<-2σ)")
+alertcondition(bullDiv, title="Bullish divergence", message="LHM Z Composite: bullish divergence")
+alertcondition(bearDiv, title="Bearish divergence", message="LHM Z Composite: bearish divergence")

@@ -290,6 +290,31 @@ BROAD MARKET (Engine 3)          POSITION TECHNICALS
 
 ---
 
+### The Two Gates — three rules and the benchmark map
+
+The framework runs on two filters, not one. The macro regime read tells us **where** we want to be positioned. The market regime read tells us **when**. Both have to align for a trade to fire. Three rules sit on top of the three position-level reads, named explicitly because they are the part of the discipline that gets bent under pressure when a thesis is right and the price isn't yet.
+
+**Rule one — no outright laggards.** Every long requires a Relative-to-Index regime of Mixed (Doldrums) or Green (Starboard) against its correct benchmark. Red (Port) blocks entry regardless of price action or thesis strength. Hedges are exempt because the whole point of a hedge is to be uncorrelated with the index it's meant to offset.
+
+**Rule two — RS-divergence override.** A Red RS regime can be overridden only when the Composite Z-RoC shows material positive divergence against the RS trend, which is the early-cycle leadership pattern before relative strength confirms. Half-size at most until RS rotates Green. The override exists rarely; most positions clear the laggard rule cleanly without invoking it.
+
+**Rule three — base length preference.** Price-panel breakouts come from a base whose length is roughly proportional to the holding period. For 3-6 month framework positions, the absolute minimum base is 3-6 months. Strong preference is 3-6 year structural bases, the kind that come out of a multi-year accumulation rather than a six-week shelf. Mid-trend continuation entries at extended price are explicitly disfavored. The reasoning is mechanical. Bases that long enforce conviction by demanding patience, and they reduce the asymmetry of paying late in a move.
+
+**Benchmark map.** Equity positions bench against SPY because SPY is the PiTrade-published portfolio benchmark, and the position-level RS gate must match the headline-level scoreboard. Cross-asset and rates positions use the bench that captures the relative trade.
+
+| **Position type** | **Benchmark** |
+|---|---|
+| Equity sectors, single-name equities, equity factors (XLP, XLU, XLE, XLK, COWZ, AVGO, AAPL, etc.) | SPY |
+| Broad equity, small caps (QQQ, IWM, VTI) | SPY |
+| Cross-asset macro hedges and commodities (GLD, PDBC, DBC, DBE) | KMLM |
+| Curve-positioned rates (SHY, TLT, IEF, TIP) | Curve counterpart (SHY ↔ TLT, TIP ↔ IEF) |
+| Crypto (IBIT, ETHA) | CRYPTOCAP:TOTAL |
+| Vol hedges (VIXY, TAIL) | Exempt — no RS gate |
+
+**Failure mode the rules prevent:** loading into a position because the macro thesis is right, while the price action is in the stop zone and the relative strength is bleeding. The framework's discipline is to wait. When the gates conflict at the position level, the position does not fire.
+
+---
+
 ## V. Proprietary Indicators
 
 ### Macro Risk Index (MRI), Master Composite

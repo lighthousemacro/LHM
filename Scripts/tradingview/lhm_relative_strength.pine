@@ -1,0 +1,148 @@
+//@version=6
+indicator("LHM Relative Strength to Index", "LHM RS", overlay=false, timeframe="D", timeframe_gaps=true)
+
+// =============================================================================
+//  LHM Relative Strength to Index
+//
+//  RS = (close / benchClose) × 100, smoothed via SMA63 and SMA252 internally
+//  for regime classification. Single output line, color-by-regime:
+//
+//      Starboard #238923 — RS > SMA63 > SMA252                (Green / uptrend)
+//      Doldrums  #898989 — anything else                       (Mixed)
+//      Port      #892323 — RS < SMA63 < SMA252                (Red / downtrend)
+//
+//  SMA lines themselves are HIDDEN on the rendered chart — the regime logic
+//  is encoded in the line color, not duplicated as separate plotted series.
+//
+//  Benchmark resolution:
+//    1. If user passes a manual symbol, use it.
+//    2. Otherwise call f_autoBench(syminfo.ticker) which carries hardcoded
+//       role-based overrides (SHY→TLT, sector ETFs→SPY, GLD/PDBC→KMLM, etc.)
+//       per the corrected benchmark map shipped with Horizon May 2026.
+// =============================================================================
+
+// =============================================================================
+//  INPUTS
+// =============================================================================
+useManualBench = input.bool(false, title="Use manual benchmark override?", group="Benchmark")
+manualBench    = input.symbol("AMEX:SPY",   title="Manual benchmark symbol", group="Benchmark")
+
+len63          = input.int(63,  title="Short-trend SMA",  minval=10, group="Smoothing")
+len252         = input.int(252, title="Long-trend SMA",   minval=50, group="Smoothing")
+
+showRefLevel   = input.bool(true, title="Show 100 reference line (no relative change)", group="Display")
+showSmaPlots   = input.bool(false, title="Plot SMA63 / SMA252 on chart? (default OFF)", group="Display")
+
+// =============================================================================
+//  PALETTE — 23/89/BB system
+// =============================================================================
+Ocean     = #2389BB
+Dusk      = #FF6723
+Sky       = #23BBFF
+Sea       = #00BB89
+Venus     = #FF2389
+Doldrums  = #898989
+Starboard = #238923
+Port      = #892323
+Fog       = #D1D1D1
+
+// =============================================================================
+//  AUTO-BENCHMARK ROUTER
+//      Hardcoded role-based overrides per the corrected benchmark map shipped
+//      with Horizon May 2026:
+//        - SHY                    → TLT  (curve-relative)
+//        - COWZ                   → SPY  (PiTrade equity benchmark)
+//        - GLD, PDBC, DBC, DBE,
+//          DBO, USO, USL, BNO     → KMLM (cross-asset macro hedge / commodities)
+//        - All equity sector ETFs
+//          (XLP, XLU, XLE, XLK,
+//           XLY, XLV, XLF, XLI,
+//           XLB, XLRE, XLC)       → SPY override (don't fall through to default)
+//        - Crypto (BTCUSD, ETHUSD,
+//           IBIT, ETHA, etc.)     → CRYPTOCAP:TOTAL
+//        - Vol hedges (VIXY, TAIL) → exempt (no RS applied; flagged below)
+//      Anything else falls through to RUA (Russell 3000) as a broad equity bench.
+// =============================================================================
+f_autoBench(t) =>
+    upper = str.upper(t)
+    bench = ""
+    // Curve-positioned rates
+    if upper == "SHY"
+        bench := "AMEX:TLT"
+    if upper == "TIP"
+        bench := "AMEX:IEF"
+    // Commodities / cross-asset macro hedges → KMLM
+    if upper == "GLD" or upper == "PDBC" or upper == "DBC" or upper == "DBE" or upper == "DBO" or upper == "USO" or upper == "USL" or upper == "BNO" or upper == "GLDM" or upper == "IAU"
+        bench := "AMEX:KMLM"
+    // Quality
+    if upper == "COWZ"
+        bench := "AMEX:SPY"
+    // Equity sector ETFs — explicit so they don't fall through to RUA default
+    if upper == "XLP" or upper == "XLU" or upper == "XLE" or upper == "XLK" or upper == "XLY" or upper == "XLV" or upper == "XLF" or upper == "XLI" or upper == "XLB" or upper == "XLRE" or upper == "XLC"
+        bench := "AMEX:SPY"
+    // Broad equity / small caps stay vs SPY
+    if upper == "QQQ" or upper == "QQQM" or upper == "VTI" or upper == "VOO" or upper == "IVV" or upper == "SPLG" or upper == "IWM" or upper == "VTWO" or upper == "IWO"
+        bench := "AMEX:SPY"
+    // Crypto wrappers and majors
+    if upper == "IBIT" or upper == "ETHA" or upper == "BITO" or upper == "BTCUSD" or upper == "ETHUSD" or upper == "BTCUSDT" or upper == "ETHUSDT"
+        bench := "CRYPTOCAP:TOTAL"
+    // Vol hedges — RS is exempt for these. We still publish a line but flag it.
+    isExempt = upper == "VIXY" or upper == "TAIL" or upper == "VXX" or upper == "UVIX" or upper == "SVXY"
+    // Default for anything we didn't catch above: broad equity bench
+    if bench == "" and not isExempt
+        bench := "TVC:RUA"
+    if isExempt
+        bench := "AMEX:SPY"  // technical default; semantics is "exempt"
+    bench
+
+benchSym  = useManualBench ? manualBench : f_autoBench(syminfo.ticker)
+benchClose = request.security(benchSym, timeframe.period, close)
+
+// =============================================================================
+//  RS COMPUTATION
+// =============================================================================
+rs     = benchClose == 0.0 ? 100.0 : (close / benchClose) * 100.0
+sma63  = ta.sma(rs, len63)
+sma252 = ta.sma(rs, len252)
+
+// Regime classification — kept purely from the SMA stack relative to RS
+isGreen = rs > sma63 and sma63 > sma252
+isRed   = rs < sma63 and sma63 < sma252
+isMixed = not isGreen and not isRed
+
+regimeColor = isGreen ? Starboard : isRed ? Port : Doldrums
+
+// =============================================================================
+//  PLOTS
+// =============================================================================
+plot(rs, title="RS (T / Bench × 100)", color=regimeColor, linewidth=3)
+
+// Optional SMA plots for diagnostic; default OFF — regime logic is in the color.
+plot(showSmaPlots ? sma63  : na, title="SMA63",  color=Ocean, linewidth=1, display=display.all)
+plot(showSmaPlots ? sma252 : na, title="SMA252", color=Dusk,  linewidth=1, display=display.all)
+
+// 100 = "no relative change since lookback start" — only meaningful as a soft
+// reference; semantics depend on when the ratio was anchored, so we render it
+// in Fog dashed and let the regime color carry the read.
+hline(showRefLevel ? 100.0 : na, title="100 reference", color=Fog, linestyle=hline.style_dashed, linewidth=1)
+
+// Right-edge ratio tag, color-matched to the current regime
+if barstate.islast
+    label.new(bar_index + 3, rs,
+              str.tostring(rs, "0.00"),
+              color=regimeColor, textcolor=color.white,
+              style=label.style_label_left, size=size.small)
+
+// Benchmark watermark in the top-left so the reader sees what the line is vs.
+if barstate.islast
+    txt = "vs " + benchSym
+    label.new(bar_index - 50, ta.highest(rs, 50), txt,
+              color=color.new(Doldrums, 70), textcolor=Doldrums,
+              style=label.style_label_right, size=size.small)
+
+// =============================================================================
+//  ALERTS
+// =============================================================================
+alertcondition(isGreen and not isGreen[1], title="RS regime → Green",  message="LHM RS: regime turned Green (uptrend confirmed)")
+alertcondition(isRed   and not isRed[1],   title="RS regime → Red",    message="LHM RS: regime turned Red (downtrend confirmed)")
+alertcondition(isMixed and not isMixed[1], title="RS regime → Mixed",  message="LHM RS: regime turned Mixed (no clean read)")

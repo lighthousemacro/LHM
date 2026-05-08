@@ -25,7 +25,7 @@ CHART_DIR = '/Users/bob/LHM/Outputs/charts/horizon_may_2026'
 
 CHART_FILES = {
     1:  'chart_01_mri.png',
-    2:  None,  # FOMC dissents skipped
+    2:  'chart_02_fomc_dissents.png',
     3:  'chart_03_treasury_borrowing.png',
     4:  'chart_04_spy_rsi.png',
     5:  'chart_05_yields.png',
@@ -34,10 +34,22 @@ CHART_FILES = {
     8:  'chart_08_clg.png',
     9:  'chart_09_hire_rate.png',
     10: 'chart_10_quit_rate.png',
-    11: None,  # Hyperscaler capex skipped
+    11: 'chart_11_hyperscaler.png',
     12: 'chart_12_semi_ip.png',
     13: 'chart_13_eps_decomp.png',
     14: 'chart_14_book_composition.png',
+}
+
+TABLE_PNGS = {
+    'book':  'table_01_book.png',
+    'risk':  'table_02_risk_matrix.png',
+    'specs': 'table_03_chart_specs.png',
+}
+
+TABLE_FIRST_HEADER = {
+    'book':  '| Position | Ticker | Target wt',
+    'risk':  '| Risk | Probability | Impact',
+    'specs': '| # | Title | Type',
 }
 
 
@@ -73,9 +85,51 @@ def replace_figures(md_text):
     return pattern.sub(repl, md_text)
 
 
+def replace_tables_with_pngs(md_text):
+    """Find each known markdown table and replace it with a base64-embedded PNG.
+    Detection: each table starts with a unique header line; the table block
+    runs until the first non-table line (line not starting with '|')."""
+    lines = md_text.split('\n')
+    out = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        matched_key = None
+        for key, hdr in TABLE_FIRST_HEADER.items():
+            if line.startswith(hdr):
+                matched_key = key
+                break
+        if matched_key is None:
+            out.append(line)
+            i += 1
+            continue
+
+        # Skip the table block: collect all consecutive lines starting with '|'
+        # plus the separator row (---|---|...)
+        while i < len(lines) and (lines[i].startswith('|') or lines[i].strip() == ''):
+            if lines[i].strip() == '':
+                # Blank line ends the table
+                break
+            i += 1
+
+        # Insert the PNG reference
+        png_name = TABLE_PNGS[matched_key]
+        png_path = os.path.join(CHART_DIR, png_name)
+        if os.path.exists(png_path):
+            b64 = img_to_b64(png_path)
+            out.append(f'<figure class="lhm-table"><img src="{b64}" alt="LHM table"></figure>')
+        else:
+            out.append(f'<div class="figure-missing">[Table PNG missing: {png_name}]</div>')
+
+    return '\n'.join(out)
+
+
 def build():
     with open(MD_PATH) as f:
         md = f.read()
+
+    # Replace tables FIRST with embedded PNGs
+    md = replace_tables_with_pngs(md)
 
     # Replace figures BEFORE markdown conversion so the HTML lands inline
     md = replace_figures(md)
@@ -164,9 +218,16 @@ td {{
 tr:nth-child(even) td {{ background: #f5f8fa; }}
 ul, ol {{ padding-left: 1.5em; }}
 li {{ margin: 0.35em 0; }}
-.lhm-figure {{
+.lhm-figure, .lhm-table {{
     margin: 2em 0;
     text-align: center;
+}}
+.lhm-table img {{
+    width: 100%;
+    max-width: 760px;
+    height: auto;
+    border: 1px solid #e0e7ec;
+    border-radius: 2px;
 }}
 .lhm-figure img {{
     width: 100%;

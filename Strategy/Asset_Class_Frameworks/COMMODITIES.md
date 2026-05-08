@@ -127,18 +127,25 @@
 | $60-75 | -0.1-0.2 pp | Disinflationary |
 | < $60 | Demand destruction signal | Deflationary |
 
-### Energy ETF Preference
+### Energy expression — the XLE / PDBC split
 
-**Avoid direct commodity ETFs (USO, UNG)** due to:
-- Contango roll drag (can be 5-15% annually)
-- Tracking error
-- K-1 tax complexity
+The framework expresses energy through two complementary lines, not one. Each captures a different piece of the thread, and they trigger on a deliberately asymmetric Iran path.
 
-**Prefer energy equities (XLE, XOP)** because:
-- No roll drag
-- Dividend income
-- Operational leverage to oil prices
-- Better liquidity
+| Line | Captures | Benchmark | Why this bench |
+|---|---|---|---|
+| **XLE** | Equity-operator pricing power, capital discipline, dividend yield from integrated and E&P names. Operational leverage to WTI without futures-curve drag. | **SPY** | Sector ETF benched against the PiTrade portfolio benchmark; the position-level RS gate must match the headline-level scoreboard. |
+| **PDBC** | Direct fiscal-dominance and inflation-pass-through commodity exposure. K-1-free, 1099 reporting (no partnership tax friction). Roll-optimized to mitigate contango drag versus naive front-month exposure. | **KMLM** | Cross-asset macro hedge against the managed-futures CTA bench, which carries trend exposure across rates, currencies, and commodities — the right peer set for a direct-commodity expression. |
+
+**Asymmetric Iran trigger.** The Iran path resolves either direction with different consequences for each line, and the trigger structure is built around that asymmetry.
+
+| Iran resolution | XLE | PDBC | Reasoning |
+|---|---|---|---|
+| WTI re-anchors **above $85** (deal collapses, supply premium re-priced) | Fires | Fires | Both threads work. Operators get pricing power, commodity gets pass-through. |
+| WTI breaks **below $78** (deal completes, Strait reopens, supply normalizes) | Fires (smaller) | **Stays cash** | XLE's equity-operator capital-discipline thesis still works at lower WTI; the dividend-and-buyback profile of US E&P is structural. PDBC's commodity-pass-through thesis invalidates on a deal that re-supplies the market. |
+
+**On direct commodity ETFs.** Earlier framework drafts blanket-avoided direct commodity ETFs (USO, UNG) for contango roll drag, tracking error, and K-1 tax friction. PDBC is the explicit exception: roll-optimized, K-1-free, and the cleanest off-the-shelf vehicle for direct-commodity exposure when the framework wants pass-through rather than equity-operator beta. Naive single-commodity ETFs (USO, UNG, BNO) remain disfavored for the same reasons; the avoidance was about structure, not about commodities-as-an-expression.
+
+**Position sizing.** The two lines size independently. In the May 2026 launch book each line targets 5%, with both staged behind the trigger structure above. Combined energy exposure tops out at ~10% of book on a both-fire path, which is the framework's standing energy ceiling for fiscal-dominance regimes.
 
 ---
 

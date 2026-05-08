@@ -133,15 +133,28 @@ The detail files stay in place. This document is the index, the live state, and 
 
 **Claim:** Single number capturing aggregate macro risk across all twelve Diagnostic Dozen pillars. The output that drives the equity allocation table and the position-sizing regime multiplier.
 
-**Formula (v2.0):**
+**Formula (v2.0, sign-corrected):**
 
 ```
-MRI = 0.10*LPI + 0.10*PCI + 0.08*GCI + 0.06*HCI + 0.08*CCI + 0.06*BCI + 0.05*TCI
-    + 0.10*GCI_Gov + 0.12*FCI + 0.08*LCI
-    + 0.09*MSI + 0.08*SPI
+MRI = 0.12 × (-LPI)
+    + 0.08 × PCI
+    + 0.12 × (-GCI)
+    + 0.06 × (-HCI)
+    + 0.08 × (-CCI)
+    + 0.08 × (-BCI)
+    + 0.05 × (-TCI)
+    + 0.10 × GCI_Gov
+    + 0.05 × (-FCI)
+    + 0.10 × (-LCI)
+    + 0.08 × (-MSI)
+    + 0.08 × SPI
 ```
 
-Weights sum to 1.00. Macro Dynamics block = 0.53. Monetary Mechanics block = 0.30. Market Structure block = 0.17.
+Weights sum to 1.00.
+
+**Sign convention:** MRI rises with risk. Bad-when-elevated pillars enter with negative coefficients. PCI, GCI_Gov, and SPI enter positively (high prices, high fiscal pressure, high sentiment all = risk up). The earlier all-positive formulation in v2.0 documentation was a transcription error against the regime table — the live engine in `compute_indices.py` already inverts these signs, so this is a documentation correction, not a behavior change. The published `lighthouse_indices.MRI` value tracks the regime table directionally (rises with risk) and has done so since the composite went live.
+
+**Daily nowcast architecture:** MRI is computed daily as a forward-fill nowcast. Each pillar contributes its most recent available value at the publication timestamp. Daily-cadence pillars (FCI, LCI, MSI, SPI; PCI when its underlying daily proxies refresh) carry to the most recent trading day. Monthly and quarterly pillars (LPI, GCI, HCI, CCI, BCI, TCI, GCI_Gov when its monthly inputs lead) carry forward their last release. Each MRI publication should include the per-pillar vintage table to disclose which inputs are live and which are carried, and the operative read for sizing is the ALLOC_MULTIPLIER ensemble (which incorporates dispersion and regime stability), not the raw MRI alone.
 
 **Regime classification → equity allocation table:**
 

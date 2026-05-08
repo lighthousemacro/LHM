@@ -275,27 +275,29 @@ The portfolio is a single book. The distinction is what drives a position.
 
 **Canonical indicator reference:** `/Users/bob/LHM/Strategy/INDICATORS_MASTER.md` — formulas, thresholds, audit findings, live values, candidates. Single source of truth. Quick-reference table below.
 
-| Indicator | Full Name |
-|---|---|
-| LPI | Labor Pressure Index |
-| LFI | Labor Fragility Index |
-| PCI | Price Conditions Index |
-| GCI | Growth Conditions Index |
-| HCI | Housing Conditions Index |
-| CCI | Consumer Conditions Index (7-component, updated Feb 2026) |
-| BCI | Business Conditions Index |
-| TCI | Trade Conditions Index |
-| GCI-Gov | Government Conditions Index |
-| FCI | Financial Conditions Index |
-| CLG | Credit-Labor Gap |
-| LCI | Liquidity Cushion Index |
-| MSI | Market Structure Index |
-| SPI | Sentiment & Positioning Index |
-| SBD | Structure-Breadth Divergence |
-| SSD | Sentiment-Structure Divergence |
-| MRI | Macro Risk Index (master composite) |
-| CLI | Crypto Liquidity Impulse |
-| SLI | Stablecoin Liquidity Impulse |
+**Naming convention (locked 2026-05-08):** Cool descriptive vocabulary — Pulse / Tide / Thrust / Heat / Pressure / Fragility / Cushion / Impulse / Gap / Divergence. Each name describes what the indicator captures, not generic "X Conditions Index." Code IDs (PCI, GCI, etc.) remain as legacy identifiers in scripts; published/reader-facing surfaces use the new names. GCI-Gov → FPI rename authorized in code.
+
+| Code | Name | Family |
+|---|---|---|
+| LPI | Labor Pressure | Pressure |
+| LFI | Labor Fragility | Fragility |
+| PCI | **Inflation Heat** | Heat |
+| GCI | **Activity Pulse** | Pulse |
+| HCI | **Housing Tide** | Tide |
+| CCI | **Consumer Pulse** (7-component, updated Feb 2026) | Pulse |
+| BCI | **Capex Thrust** | Thrust |
+| TCI | **Global Tide** | Tide |
+| FPI (was GCI-Gov) | **Fiscal Pressure** | Pressure |
+| FCI | **Credit Tide** | Tide |
+| CLG | Credit-Labor Gap | Gap |
+| LCI | Liquidity Cushion | Cushion |
+| MSI | **Breadth Pulse** | Pulse |
+| SPI | **Sentiment Tide** | Tide |
+| SBD | Structure-Breadth Divergence | Divergence |
+| SSD | Sentiment-Structure Divergence | Divergence |
+| MRI | Macro Risk Index (master composite) | Risk |
+| CLI | Crypto Liquidity Impulse | Impulse |
+| SLI | Stablecoin Liquidity Impulse | Impulse |
 
 **Naming convention:** First reference uses full name with abbreviation in parens — "Labor Pressure Index (LPI)" — then the abbrev. Never lead cold with the acronym for external readers.
 

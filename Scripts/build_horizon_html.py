@@ -27,30 +27,24 @@ CHART_FILES = {
     1:  'chart_01_mri.png',
     2:  'chart_02_fomc_dissents.png',
     3:  'chart_03_treasury_borrowing.png',
-    4:  'chart_04_spy_rsi.png',
+    4:  'chart_04_spy_breadth.png',
     5:  'chart_05_yields.png',
     6:  'chart_06_term_premium.png',
     7:  'chart_07_sbd.png',
     8:  'chart_08_clg.png',
-    9:  'chart_09_hire_rate.png',
-    10: 'chart_10_quit_rate.png',
-    11: 'chart_11_hyperscaler.png',
-    12: 'chart_12_semi_ip.png',
-    13: 'chart_13_eps_decomp.png',
-    14: 'chart_14_book_composition.png',
+    9:  'chart_09_hire_quit_combined.png',
+    10: 'chart_11_hyperscaler.png',
+    11: 'chart_12_semi_ip.png',
+    12: 'chart_13_eps_decomp.png',
+    13: 'chart_14_book_composition.png',
 }
 
-TABLE_PNGS = {
-    'book':  'table_01_book.png',
-    'risk':  'table_02_risk_matrix.png',
-    'specs': 'table_03_chart_specs.png',
-}
-
-TABLE_FIRST_HEADER = {
-    'book':  '| Position | Ticker | Target wt',
-    'risk':  '| Risk | Probability | Impact',
-    'specs': '| # | Title | Type',
-}
+# All tables now render as native HTML for the May 2026 Horizon — the
+# Book table restructured into 8 positions with a different schema, and
+# the Chart Specifications table was replaced with prose. Risk Matrix
+# stays native too for consistency with the rest of the doc.
+TABLE_PNGS = {}
+TABLE_FIRST_HEADER = {}
 
 
 def img_to_b64(path):

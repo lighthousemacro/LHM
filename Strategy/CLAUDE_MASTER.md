@@ -93,20 +93,20 @@ Lighthouse Macro | Research | @LHMacro
 
 **Outputs:** (1) Recession probability, 6–12mo fwd. (2) Threshold warning system. (3) MRI regime classification.
 
-| Pillar | Index | Lead Time | Key Insight |
+| Pillar | Indicator | Lead Time | Key Insight |
 |---|---|---|---|
-| 1. Labor | LPI, LFI | Leading | Quits = truth serum. Flows lead, stocks lag. |
-| 2. Prices | PCI | 12-18mo (shelter) | Last mile sticky. |
-| 3. Growth | GCI | 2-4mo | Second derivative matters. |
-| 4. Housing | HCI | 6-9mo | Frozen equilibrium, rate sensitive. |
-| 5. Consumer | CCI | 1-3mo | 68% of GDP. The Last Domino. |
-| 6. Business | BCI | 4-8mo | Capex = forward commitment. |
-| 7. Trade | TCI | 3-6mo | Dollar/tariff pass-through. |
-| 8. Government | GCI-Gov | Structural | Fiscal dominance, term premium. |
-| 9. Financial | FCI, CLG | 6-9mo | Spreads lead defaults. |
-| 10. Plumbing | LCI | 1-4wk | RRP exhaustion = no buffer. |
-| 11. Structure | MSI, SBD | 2-4mo | Breadth divergence = distribution. |
-| 12. Sentiment | SPI, SSD | Days-weeks | Contrarian at extremes only. |
+| 1. Labor | Labor Pressure (LPI), Labor Fragility (LFI) | Leading | Quits = truth serum. Flows lead, stocks lag. |
+| 2. Prices | Inflation Heat (PCI) | 12-18mo (shelter) | Last mile sticky. |
+| 3. Growth | Activity Pulse (GCI) | 2-4mo | Second derivative matters. |
+| 4. Housing | Housing Tide (HCI) | 6-9mo | Frozen equilibrium, rate sensitive. |
+| 5. Consumer | Consumer Pulse (CCI) | 1-3mo | 68% of GDP. The Last Domino. |
+| 6. Business | Capex Thrust (BCI) | 4-8mo | Capex = forward commitment. |
+| 7. Trade | Global Tide (TCI) | 3-6mo | Rotation engine via dollar dynamics. |
+| 8. Government | Fiscal Pressure (FPI) | Structural | Fiscal dominance, term premium. |
+| 9. Financial | Credit Tide (FCI), Credit-Labor Gap (CLG) | 6-9mo | Spreads lead defaults. |
+| 10. Plumbing | Liquidity Cushion (LCI) | 1-4wk | RRP exhaustion = no buffer. |
+| 11. Structure | Breadth Pulse (MSI), Structure-Breadth Divergence (SBD) | 2-4mo | Breadth divergence = distribution. |
+| 12. Sentiment | Sentiment Tide (SPI), Sentiment-Structure Divergence (SSD) | Days-weeks | Contrarian at extremes only. |
 
 **Full pillar docs:** `/Users/bob/LHM/Strategy/Pillar_*/` — formulas, full thresholds, indicator detail live there.
 

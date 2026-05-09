@@ -44,7 +44,7 @@ OUT_MD = OUTPUT_DIR / "pillar_registry_v4_summary.md"
 OUT_DIFF = OUTPUT_DIR / "pillar_v3_vs_v4_basket_diff.md"
 
 BOUNDS = (0.02, 0.40)
-N_RESTARTS = 15
+N_RESTARTS = 8
 N_FOLDS = 5
 MIN_FOLD_OBS = 250
 

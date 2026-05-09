@@ -26,20 +26,21 @@ The detail files stay in place. This document is the index, the live state, and 
 ## TABLE OF CONTENTS
 
 1. [How to read this document](#how-to-read-this-document)
-2. [Live composite snapshot (45 indices)](#live-composite-snapshot)
-3. [Master Composite — MRI](#master-composite-mri)
-4. [12-Pillar Diagnostic Dozen](#12-pillar-diagnostic-dozen)
+2. [May 2026 rebuild state — methodology v2 + v3/v4/v5/v6 results](#may-2026-rebuild-state)
+3. [Live composite snapshot (45 indices)](#live-composite-snapshot)
+4. [Master Composite — MRI](#master-composite-mri)
+5. [12-Pillar Diagnostic Dozen](#12-pillar-diagnostic-dozen)
    - [Macro Dynamics (1-7)](#macro-dynamics-17)
    - [Monetary Mechanics (8-10)](#monetary-mechanics-810)
    - [Market Structure (11-12)](#market-structure-1112)
-5. [Cross-pillar derived indices](#cross-pillar-derived-indices)
-6. [Risk regime outputs](#risk-regime-outputs)
-7. [Crypto sector composites](#crypto-sector-composites)
-8. [Treasury microstructure indicators](#treasury-microstructure-indicators)
-9. [Advanced trading frameworks](#advanced-trading-frameworks)
-10. [Audit findings & live trading whitelist](#audit-findings--live-trading-whitelist)
-11. [Candidate indicators (proposed, unbuilt)](#candidate-indicators-proposed-unbuilt)
-12. [Naming conventions and aliases](#naming-conventions-and-aliases)
+6. [Cross-pillar derived indices](#cross-pillar-derived-indices)
+7. [Risk regime outputs](#risk-regime-outputs)
+8. [Crypto sector composites](#crypto-sector-composites)
+9. [Treasury microstructure indicators](#treasury-microstructure-indicators)
+10. [Advanced trading frameworks](#advanced-trading-frameworks)
+11. [Audit findings & live trading whitelist (Apr 30, partly superseded)](#audit-findings--live-trading-whitelist)
+12. [Candidate indicators (proposed, unbuilt)](#candidate-indicators-proposed-unbuilt)
+13. [Naming conventions and aliases](#naming-conventions-and-aliases)
 
 ---
 

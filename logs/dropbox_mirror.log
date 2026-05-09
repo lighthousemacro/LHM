@@ -909,3 +909,8 @@ rsync(33807): error: unexpected end of file
 === 2026-05-08 20:00:00 mirror start ===
 === 2026-05-08 20:00:03 mirror end (exit 0) ===
 === 2026-05-08 20:30:00 mirror start ===
+rsync(41691): error: .claude/worktrees/lucid-matsumoto-0a11e2/External/GDrive/.Daily Digest Generator .GuwoA6APjR: write: No space left on device
+rsync(41691): error: buf_copy
+rsync(41691): error: .claude/worktrees/lucid-matsumoto-0a11e2/External/GDrive/.Daily Digest Generator .GuwoA6APjR: write: No space left on device
+rsync(41690): error: unexpected end of file
+=== 2026-05-08 20:30:08 mirror end (exit 0) ===

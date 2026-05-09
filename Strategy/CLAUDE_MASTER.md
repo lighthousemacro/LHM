@@ -217,6 +217,12 @@ The portfolio is a single book. The distinction is what drives a position.
 
 **Helpers:** `new_fig`, `style_ax`, `style_dual_ax`, `style_single_ax`, `set_xlim_to_data`, `brand_fig`, `add_last_value_label`, `add_annotation_box`, `add_recessions`, `legend_style`.
 
+## Charts — always 2x publication count
+
+**Hard rule (locked 2026-05-09).** For every publication, render twice the chart count the piece itself uses. Half publish in the piece. Half become a paid-only supplementary chart pack, released as a follow-up Beam or appended for paid subs. Beams: 5 in piece + 5 supplementary. Beacons: 2x. Horizons: 2x (current target 30–50 in piece → 60–100 total). Chartbooks: 50+ in piece + another 50+ supplementary.
+
+**Why:** Every cut chart is research already done. Keeping it as a paid follow-up is near-zero marginal cost and directly increases subscriber value. The piece-editing process becomes curation ("which 5 are strongest"), not "do we have enough." The supplementary set also recovers missed Beams in tight publishing weeks.
+
 ## Tables in published content — ALWAYS PNG, never markdown
 
 **Hard rule (locked 2026-05-09).** Any table in a published artifact (Beam, Beacon, Note, Chartbook, Horizon, PDF, deck, social) renders as a styled PNG via chart-god / lhm-brand-system. Never as a markdown `| col | col |` block. Never as raw HTML `<table>`. Internal docs keep markdown tables. Published drafts do not.

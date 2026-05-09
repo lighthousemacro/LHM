@@ -108,7 +108,7 @@ Think: "I'm not mad, just disappointed in the data." The adult in the room watch
 |---------|-------|
 | Company | Lighthouse Macro |
 | Tagline | MACRO, ILLUMINATED. |
-| Positioning | Institutional-grade macro research serving hedge funds, CIOs, central banks, and allocators |
+| Positioning | Institutional-grade macro and economic intelligence for two audiences: market participants (hedge funds, CIOs, central banks, allocators, individual investors) and non-market participants (business owners, operators, corporates, policy folks) |
 | Founder | Bob Sheehan, CFA, CMT |
 | Title | Founder & Chief Investment Officer |
 

@@ -217,6 +217,12 @@ The portfolio is a single book. The distinction is what drives a position.
 
 **Helpers:** `new_fig`, `style_ax`, `style_dual_ax`, `style_single_ax`, `set_xlim_to_data`, `brand_fig`, `add_last_value_label`, `add_annotation_box`, `add_recessions`, `legend_style`.
 
+## Tables in published content — ALWAYS PNG, never markdown
+
+**Hard rule (locked 2026-05-09).** Any table in a published artifact (Beam, Beacon, Note, Chartbook, Horizon, PDF, deck, social) renders as a styled PNG via chart-god / lhm-brand-system. Never as a markdown `| col | col |` block. Never as raw HTML `<table>`. Internal docs keep markdown tables. Published drafts do not.
+
+**Self-check.** Before any draft ships, grep the source for `|---|` and `| col |`. If any survive in published content, the draft fails. Replace with `[Figure N: <description>. PNG render.]` and put the source rows in an HTML comment for the renderer.
+
 ---
 
 # SECTION 8: PUBLICATION CADENCE

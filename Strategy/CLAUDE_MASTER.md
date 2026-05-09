@@ -209,7 +209,7 @@ The portfolio is a single book. The distinction is what drives a position.
 - No gridlines. All four spines visible at 0.5pt. Doldrums `#898989`.
 - Right axis = primary. RHS pill. Dual-axis: RHS=Ocean primary, LHS=Dusk secondary, both pills.
 - Border: `4.0pt solid #2389BB`. DPI 200. `bbox_inches='tight', pad_inches=0.025`.
-- X-axis padding: 30d left, 180d right (for pills).
+- X-axis padding: **0 left, 180d right.** Data hugs the LHS axis (no gap between x=1 and the left spine). Always a gap between x=last and the RHS spine, so the rightmost label/pill has room to breathe. Asymmetric by design, not an oversight.
 - **Data loading:** Always load full available history (z-scores, regimes, recession bands need it). Visible window defaults to MAX of per-series start dates so multi-series charts show the *relationship*. Exceptions are Bob-explicit only.
 - Always `dropna()`. Forward-fill quarterly→daily. Smooth volatile series with 3mo MA (don't double-smooth).
 - NBER recession shading: white theme gray α 0.12.

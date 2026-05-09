@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    LHM SUBSTACK OUTREACH DASHBOARD
+    ===============================
+    Reads the latest snapshot under Data/substack_snapshots/<stamp>/ that
+    substack_dashboard.py just produced, computes outreach cuts, and writes
+    a self-contained HTML dashboard to:
+        Outputs/Substack_Dashboard/outreach_latest.html
+
+    Schedule:
+        04:35 and 16:35 local time, every day. Five minutes after the
+        existing substack_dashboard.py job (04:30 / 16:30) so the latest
+        snapshot is fully written before this reads from it.
+
+    Local time = ET on Bob's Mac. No DST toggling needed.
+
+    To install:
+        cp /Users/bob/LHM/Scripts/dashboards/com.lighthousemacro.substack-outreach.plist \
+           ~/Library/LaunchAgents/
+        launchctl unload ~/Library/LaunchAgents/com.lighthousemacro.substack-outreach.plist 2>/dev/null
+        launchctl load ~/Library/LaunchAgents/com.lighthousemacro.substack-outreach.plist
+
+    To run immediately:
+        launchctl start com.lighthousemacro.substack-outreach
+
+    Logs:
+        /Users/bob/LHM/logs/substack_outreach.log          (script's own logger)
+        /Users/bob/LHM/logs/substack_outreach_stdout.log   (launchd stdout)
+        /Users/bob/LHM/logs/substack_outreach_stderr.log   (launchd stderr)
+
+    Bookmark in Chrome:
+        file:///Users/bob/LHM/Outputs/Substack_Dashboard/outreach_latest.html
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.lighthousemacro.substack-outreach</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/bob/LHM/.venv/bin/python</string>
+        <string>/Users/bob/LHM/Scripts/dashboards/substack_outreach.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/bob/LHM</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>/Users/bob/LHM</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>4</integer><key>Minute</key><integer>35</integer></dict>
+        <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>35</integer></dict>
+    </array>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bob/LHM/logs/substack_outreach_stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/bob/LHM/logs/substack_outreach_stderr.log</string>
+</dict>
+</plist>

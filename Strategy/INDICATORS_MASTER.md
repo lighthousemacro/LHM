@@ -1,8 +1,14 @@
 # LIGHTHOUSE MACRO — INDICATORS MASTER
 
-**Single source of truth for every proprietary measurement, composite, and framework.**
+> # ⚓ THIS IS THE INDICATOR SOURCE DOC.
+>
+> One file. Every proprietary measurement, composite, threshold, formula, audit finding, and live state lives here.
+>
+> **The additive iteration rule.** Anything Bob brings forward from past conversations, prior drafts, scratch notes, or new sessions — even if it represents a full reframe — gets merged INTO this file. Never a sibling, never a "v2" alongside, never a separate "new" doc. If the new framing replaces what's here, edit it in. If it adds, append. If it deprecates, mark and supersede inline. **When two docs disagree, this one wins. There is no other.**
+>
+> **Companion source docs (the volume series):** `INDICATORS_MASTER.md` (this file) → `STRATEGY_MASTER.md` (planned) → `RISK_MASTER.md` (planned). All three eventually consolidate into "LHM Macro Strategy & Cross-Asset Trading — Volume 1: The 12 Pillars."
 
-**Last consolidated:** 2026-05-01
+**Last consolidated:** 2026-05-09 (v4/v5/v6 rebuild + naming lock + methodology v2)
 **DB snapshot:** 2,498 series · 4.15M observations · 45 live composites in `lighthouse_indices`
 **Replaces / consolidates:**
 - `Strategy/LIGHTHOUSE MACRO - PROPRIETARY INDICATORS REFERENCE.md` (39 numbered indicators, formulas + thresholds)
@@ -10,7 +16,8 @@
 - `Outputs/mri_optimization/{LIVE_STATUS,DECISIONS,CANDIDATE_NEW_INDICATORS,PHASE_1_FINDINGS,PILLAR_BASKET_AUDIT,PILLAR_BASKET_CURATED,SIGNAL_SERIES_PLAN,BEAM_PLAN_BY_ASSET}.md`
 - `Outputs/mri_optimization/descriptive/PILLAR_DESCRIPTIVE_ANALYSIS.md`
 - `Outputs/mri_optimization/predictive/PILLAR_PREDICTIVE_GRID.md`
-- `Outputs/mri_optimization/*.json` (4 optimization runs)
+- `Outputs/mri_optimization/*.json` (8 optimization runs through v6)
+- `Outputs/mri_optimization/pillar_registry_v{2,3,4,5,6}*.{json,md}` (May 8-9 rebuild)
 
 The detail files stay in place. This document is the index, the live state, and the canonical names + formulas + thresholds. When information conflicts, this file wins.
 

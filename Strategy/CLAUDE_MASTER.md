@@ -105,7 +105,7 @@ Lighthouse Macro | Research | @LHMacro
 | 8. Government | Fiscal Pressure (FPI) | Structural | Fiscal dominance, term premium. |
 | 9. Financial | Credit Tide (FCI), Credit-Labor Gap (CLG) | 6-9mo | Spreads lead defaults. |
 | 10. Plumbing | Liquidity Cushion (LCI) | 1-4wk | RRP exhaustion = no buffer. |
-| 11. Structure | Breadth Pulse (MSI), Structure-Breadth Divergence (SBD) | 2-4mo | Breadth divergence = distribution. |
+| 11. Structure | Market Breadth Pulse (MSI), Structure-Breadth Divergence (SBD) | 2-4mo | Breadth divergence = distribution. |
 | 12. Sentiment | Sentiment Tide (SPI), Sentiment-Structure Divergence (SSD) | Days-weeks | Contrarian at extremes only. |
 
 **Full pillar docs:** `/Users/bob/LHM/Strategy/Pillar_*/` — formulas, full thresholds, indicator detail live there.

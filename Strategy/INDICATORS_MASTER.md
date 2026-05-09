@@ -74,7 +74,7 @@ The Apr 30 audit found a real bug: the original optimizer (`pillar_weight_optimi
 
 **Multi-role registry v3** (`Scripts/backtest/pillar_rebuild_v3_registry.py`, May 8): each pillar's basket can feed multiple composites with role-specific weights — diagnostic, asset-predictive, relative-predictive, lead-lag — instead of one-best-target collapse. Output: `pillar_registry_v3.json` + `pillar_registry_v3_summary.md`. **10 of 12 diagnostic companions real**; **66 of 288 relative-perf cells real**.
 
-**Expanded baskets v4** (`Scripts/backtest/pillar_rebuild_v4_expanded.py` + `pillar_specs_v2.py`, May 9): re-runs v3 with Tier 1 basket additions (CCI ground-up, BCI ANDENO, LCI IORB/EFFR/TGCR, etc.). Output: `pillar_registry_v4.json` + `pillar_registry_v4_summary.md` + `pillar_v3_vs_v4_basket_diff.md`. **8 of 10 diagnostics real** (FPI mixed, **LCI broken — see below**); **59 of 240 relperf real**.
+**Expanded baskets v4** (`Scripts/backtest/pillar_rebuild_v4_expanded.py` + `pillar_specs_v2.py`, May 9): re-runs v3 with Tier 1 basket additions (CCI ground-up, BCI ANDENO, LCI EFFR/TGCR, etc.). Output: `pillar_registry_v4.json` + `pillar_registry_v4_summary.md` + `pillar_v3_vs_v4_basket_diff.md`. **8 of 10 diagnostics real** (FPI/LCI mixed at 60% dom); **68 of 240 relperf real** (post-LCI-fix, 2026-05-09 re-run).
 
 **Asset-predictive grid v5** (`Scripts/backtest/pillar_rebuild_v5_assets.py`, May 9): 130 cells (10 pillars × 13 asset targets) with weights re-optimized per target. Output: `pillar_registry_v5_assets.json` + `_summary.md`. **53 of 130 OK cells real** (post-LCI-fix, 2026-05-09 re-run).
 
@@ -139,8 +139,9 @@ Significant patterns by asset: DGS10 105, DGS2 88, HYOAS 77, VIX 74, GLD 72, DXY
 
 ### Open issues from the rebuild
 
-- **🔴 Liquidity Cushion broken in v4/v5.** Tier 1 adds (IORB 2008+, NYFED_TGCR 2018+, OFR MMF 2010+) collapsed the alignment window below `MIN_FOLD_OBS × (n_folds+1) = 1500` daily aligned obs. Composite couldn't be built. Fix options: (a) drop the short-history adds and keep them as standalone diagnostics, or (b) lower `MIN_FOLD_OBS` for Liquidity Cushion specifically to use the post-2018 window. Pending decision.
+- **🟢 Liquidity Cushion fixed (2026-05-09 re-run).** IORB dropped from the basket — its 2021-07 start collapsed the alignment window below 1500 obs. New basket: TOTRESNS, RRPONTSYD, WALCL, WTREGEN, SOFR, EFFR, NYFED_TGCR, OFR MMF Repo, OFR MMF Total. Diagnostic: WF +0.104, dom 60% (mixed, soft signal). **Relperf: 9 of 24 real** — LCI is a rotation engine: small_vs_large 252d +0.447, em_vs_dm 252d +0.396, homebuilders_vs_broad 252d +0.360, us_vs_intl 252d -0.358. **Asset-predictive: 5 of 13 real** — t10y2y_252d -0.417 (curve flattener), usdjpy_252d +0.297, dxy_252d -0.240, vix_63d -0.127, spx_252d +0.123. **TODO:** ingest a spliced IOER (2008-07 → 2021-07) + IORB (2021-07 →) continuous series (`IORB_FULL`) so we can re-add a continuous reserves rate.
 - **🟡 Fiscal Pressure mixed.** Term-premium diagnostic at 60% dominant pct (below 80% real threshold). Either accept as soft signal or reweight basket to lift dom%.
+- **🟡 Liquidity Cushion diagnostic mixed.** Same 60% dom issue as FPI — basket reads coherently against forward HY OAS but doesn't dominate. Soft signal use OK; not a rate-the-current-state composite.
 - **🟡 Market Breadth Pulse + Sentiment Tide still blocked.** MSI breadth components only Feb 2023+ (need survivorship-bias-aware S&P 500 backfill). SPI documented components (NAAIM, II, Put/Call, ETF flows, VIX backwardation) not ingested. Same as Apr 30 — not addressed in rebuild.
 
 ### What this means for live trading

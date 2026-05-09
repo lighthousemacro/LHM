@@ -71,7 +71,7 @@ Lighthouse Macro | Research | @LHMacro
 - "@LHMacro" → https://x.com/LHMacro
 
 **Tagline:** "MACRO, ILLUMINATED."
-**Mission:** Institutional-grade macro research for hedge funds, CIOs, central banks, allocators.
+**Mission:** Institutional-grade macro and economic intelligence for two audiences: **market participants** (hedge funds, CIOs, central banks, allocators, individual investors) and **non-market participants** (business owners, operators, corporates, policy folks — anyone whose decisions hinge on the macro environment without trading on it). Canonical articulation: Two Economies / "Most Americans" Beacon, Apr 20 2026.
 **Philosophy:** Flows > stocks. Concentrated, conviction-weighted positions. Cash is a position, not drag.
 
 ---

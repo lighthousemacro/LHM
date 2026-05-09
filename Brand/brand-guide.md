@@ -4,7 +4,7 @@
 
 **Company:** Lighthouse Macro
 **Tagline:** MACRO, ILLUMINATED.
-**Positioning:** Institutional-grade macro research serving hedge funds, CIOs, central banks, and allocators
+**Positioning:** Institutional-grade macro and economic intelligence for two audiences — **market participants** (hedge funds, CIOs, central banks, allocators, individual investors) and **non-market participants** (business owners, operators, corporates, policy folks). Canonical articulation: Two Economies / "Most Americans" Beacon, Apr 20 2026.
 
 ## Color Palette
 

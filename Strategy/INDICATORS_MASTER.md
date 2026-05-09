@@ -120,8 +120,11 @@ Code IDs (PCI, GCI, etc.) remain as legacy identifiers in scripts. Published sur
 | Global Risk Tide | SPX 252d | +0.336 | 80% | Equity 1y leader |
 | Credit Tide | DGS2 252d | -0.333 | 80% | Short rates leader |
 | Credit Tide | VIX 21d | -0.298 | 100% | Vol leader (1mo) |
+| Liquidity Cushion | T10Y2Y 252d | -0.417 | 80% | Curve flattener when liquidity drains |
+| Liquidity Cushion | USDJPY 252d | +0.297 | 80% | FX carry leader |
+| Liquidity Cushion | DXY 252d | -0.240 | 80% | Dollar leader |
 
-Real signals by pillar (of OK in v5): Global Risk Tide 10, Credit Tide 8, Housing Tide 7, Activity Pulse 6, Inflation Heat 6, Labor Pressure 5, Capex Thrust 3, Fiscal Pressure 2, Consumer Pulse 1, Liquidity Cushion 0.
+Real signals by pillar (of OK in v5, post-LCI-fix): Global Risk Tide 10, Credit Tide 8, Housing Tide 7, Activity Pulse 6, Inflation Heat 6, Labor Pressure 5, **Liquidity Cushion 5** (was 0), Capex Thrust 3, Fiscal Pressure 2, Consumer Pulse 1.
 
 ### Top lead-lag patterns (v6, sorted by |excess|)
 

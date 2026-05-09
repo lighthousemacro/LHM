@@ -62,6 +62,106 @@ The detail files stay in place. This document is the index, the live state, and 
 
 ---
 
+## MAY 2026 REBUILD STATE
+
+**This section reflects the current authoritative state of the framework after the May 8–9 rebuild. It supersedes the relevant parts of the Apr 30 Audit Findings section below.**
+
+### What the rebuild fixed
+
+The Apr 30 audit found a real bug: the original optimizer (`pillar_weight_optimization.py`) used a sign-agnostic |IC| objective with a single 90/10 in-sample/out-of-sample split. Result: 7 of 12 reported pillar OOS ICs had the wrong sign and magnitudes were inflated 2–7×. This was a *weight-fitting* bug, not a framework bug. The pillars themselves, the threshold rules, the regime mapping, and the price-with-trend trading hierarchy were always sound and never touched the broken weights.
+
+**Methodology v2** (`Scripts/backtest/pillar_rebuild_v2.py`, May 8): replaces the broken optimizer with 5-fold expanding-window walk-forward `TimeSeriesSplit` + signed IC reporting. Output: `pillar_rebuild_v2.json` + `pillar_v1_vs_v2_comparison.md`. Cite this only.
+
+**Multi-role registry v3** (`Scripts/backtest/pillar_rebuild_v3_registry.py`, May 8): each pillar's basket can feed multiple composites with role-specific weights — diagnostic, asset-predictive, relative-predictive, lead-lag — instead of one-best-target collapse. Output: `pillar_registry_v3.json` + `pillar_registry_v3_summary.md`. **10 of 12 diagnostic companions real**; **66 of 288 relative-perf cells real**.
+
+**Expanded baskets v4** (`Scripts/backtest/pillar_rebuild_v4_expanded.py` + `pillar_specs_v2.py`, May 9): re-runs v3 with Tier 1 basket additions (CCI ground-up, BCI ANDENO, LCI IORB/EFFR/TGCR, etc.). Output: `pillar_registry_v4.json` + `pillar_registry_v4_summary.md` + `pillar_v3_vs_v4_basket_diff.md`. **8 of 10 diagnostics real** (FPI mixed, **LCI broken — see below**); **59 of 240 relperf real**.
+
+**Asset-predictive grid v5** (`Scripts/backtest/pillar_rebuild_v5_assets.py`, May 9): 130 cells (10 pillars × 13 asset targets) with weights re-optimized per target. Output: `pillar_registry_v5_assets.json` + `_summary.md`. **48 of 117 OK cells real**; LCI absent.
+
+**Lead-lag event study v6** (`Scripts/backtest/pillar_rebuild_v6_leadlag.py`, May 9): equal-weight composite z-score breach → forward asset return vs baseline, t-tested. Output: `pillar_registry_v6_leadlag.json` + `_summary.md`. **609 of 776 patterns significant** (p<0.05, n_breaches≥30).
+
+### Names locked (2026-05-08 — supersedes "X Conditions Index" pattern)
+
+| Code | Locked name | Family |
+|---|---|---|
+| LPI | Labor Pressure | Pressure |
+| LFI | Labor Fragility | Fragility |
+| PCI | **Inflation Heat** | Heat |
+| GCI | **Activity Pulse** | Pulse |
+| HCI | **Housing Tide** | Tide |
+| CCI | **Consumer Pulse** | Pulse |
+| BCI | **Capex Thrust** | Thrust |
+| TCI | **Global Risk Tide** | Tide |
+| FPI (was GCI_Gov) | **Fiscal Pressure** | Pressure |
+| FCI | **Credit Tide** | Tide |
+| LCI | Liquidity Cushion | Cushion |
+| MSI | **Market Breadth Pulse** | Pulse |
+| SPI | **Sentiment Tide** | Tide |
+| MRI | Macro Risk Index | Risk |
+
+Code IDs (PCI, GCI, etc.) remain as legacy identifiers in scripts. Published surfaces use the locked names. Vocabulary palette: Pulse / Heat / Gauge / Tide / Pressure / Stress / Strain / Compression / Squeeze / Contraction / Fragility / Cushion / Thrust / Impulse / Flow / Drift / Phase / Scale / Scope / Transmission / Loop / Bridge / Cascade / Confluence / Gap / Divergence / Dispersion. Never default to "X Conditions Index."
+
+### Top per-asset signals (v5, real cells, sorted by |WF mean|)
+
+| Pillar | Target | WF mean | Dom% | Read |
+|---|---|---:|---:|---|
+| Inflation Heat | T10Y2Y 252d | -0.600 | 100% | Curve indicator |
+| Global Risk Tide | DXY 252d | -0.464 | 80% | Dollar dial |
+| Housing Tide | DGS2 252d | +0.442 | 100% | Front-end leader |
+| Activity Pulse | T10Y2Y 252d | -0.438 | 100% | Curve leader |
+| Activity Pulse | DXY 252d | +0.433 | 80% | Dollar leader |
+| Credit Tide | VIX 63d | -0.429 | 100% | Vol leader (3mo) |
+| Consumer Pulse | DGS2 252d | -0.416 | 100% | Short rates leader |
+| Credit Tide | DXY 252d | -0.413 | 100% | Dollar leader |
+| Capex Thrust | T10Y2Y 252d | -0.390 | 100% | Curve leader |
+| Credit Tide | T10Y2Y 252d | +0.377 | 100% | Curve leader |
+| Global Risk Tide | HYOAS 126d | -0.351 | 100% | Credit-spread leader (6mo) |
+| Housing Tide | DGS10 252d | +0.351 | 100% | Long-end leader |
+| Global Risk Tide | SPX 252d | +0.336 | 80% | Equity 1y leader |
+| Credit Tide | DGS2 252d | -0.333 | 80% | Short rates leader |
+| Credit Tide | VIX 21d | -0.298 | 100% | Vol leader (1mo) |
+
+Real signals by pillar (of OK in v5): Global Risk Tide 10, Credit Tide 8, Housing Tide 7, Activity Pulse 6, Inflation Heat 6, Labor Pressure 5, Capex Thrust 3, Fiscal Pressure 2, Consumer Pulse 1, Liquidity Cushion 0.
+
+### Top lead-lag patterns (v6, sorted by |excess|)
+
+Read: "When [pillar] z-score [breaches threshold], [asset] over the next [horizon] does X% in excess of baseline."
+
+| Pillar | Asset | Horizon | Threshold | Excess | t-stat | Hit% |
+|---|---|---:|---|---:|---:|---:|
+| Credit Tide | VIX | 252d | z > +2.0 | -70.2% | -59.6 | 100% |
+| Consumer Pulse | VIX | 252d | z < -2.0 | -66.8% | -43.4 | 100% |
+| Credit Tide | VIX | 252d | z > +1.5 | -63.1% | -43.0 | 99% |
+| Inflation Heat | VIX | 252d | z < -1.5 | -53.9% | -13.4 | 96% |
+| Liquidity Cushion | VIX | 252d | z > +1.5 | -48.0% | -13.7 | 100% |
+
+Significant patterns by asset: DGS10 105, DGS2 88, HYOAS 77, VIX 74, GLD 72, DXY 70, SPY 68, TLT 55. **Rates carry the most pillar lead-lag content.**
+
+### Open issues from the rebuild
+
+- **🔴 Liquidity Cushion broken in v4/v5.** Tier 1 adds (IORB 2008+, NYFED_TGCR 2018+, OFR MMF 2010+) collapsed the alignment window below `MIN_FOLD_OBS × (n_folds+1) = 1500` daily aligned obs. Composite couldn't be built. Fix options: (a) drop the short-history adds and keep them as standalone diagnostics, or (b) lower `MIN_FOLD_OBS` for Liquidity Cushion specifically to use the post-2018 window. Pending decision.
+- **🟡 Fiscal Pressure mixed.** Term-premium diagnostic at 60% dominant pct (below 80% real threshold). Either accept as soft signal or reweight basket to lift dom%.
+- **🟡 Market Breadth Pulse + Sentiment Tide still blocked.** MSI breadth components only Feb 2023+ (need survivorship-bias-aware S&P 500 backfill). SPI documented components (NAAIM, II, Put/Call, ETF flows, VIX backwardation) not ingested. Same as Apr 30 — not addressed in rebuild.
+
+### What this means for live trading
+
+**Use unchanged:**
+- All threshold-based signals (RRP, EFFR-IORB, HY OAS, breadth thrust, % > 200d, AAII, etc.) — these never depended on the optimized weights.
+- The MRI regime → equity allocation table, conviction-weighted sizing tiers, dual stops, "cash is a position."
+- The price-with-trend technical hierarchy: Price (panel 1) → Relative trend (panel 2) → Z-RoC (panel 3).
+- The 12-pillar synthesis read for macro thesis development.
+
+**Now usable (newly validated):**
+- v5 top per-asset signals as the cross-asset translator: which pillar reads predict which asset class at which horizon.
+- v6 breach patterns as event-study confirmation when a pillar z hits ±1.5 / ±2.0.
+
+**Still avoid for now:**
+- Citing prior optimization JSON OOS IC numbers (Apr 30 audit).
+- Optimized Consumer Pulse / Capex Thrust / Credit Tide as descriptive levels (use single-component proxies: RSXFS, NEWORDER, IG OAS) — until Tier 1 production weights are locked from v5.
+- Liquidity Cushion v4/v5 outputs (broken).
+
+---
+
 ## LIVE COMPOSITE SNAPSHOT
 
 **As of 2026-05-01.** All 45 composites in `lighthouse_indices`. Latest reading per index_id.
@@ -627,6 +727,8 @@ Reference §36-39. These are basis-trade and microstructure frameworks used in t
 ---
 
 ## AUDIT FINDINGS & LIVE TRADING WHITELIST
+
+> **Note (2026-05-09):** This section is the **Apr 30 audit snapshot**. The "What's broken or suspect" list and the "Decisions required" list have been partly superseded by the May 2026 rebuild — see [May 2026 rebuild state](#may-2026-rebuild-state) for the current status of CCI / BCI / FCI optimized composites, naming decisions, GCI-Gov→FPI rename, methodology v2, and LCI's new (different) failure mode.
 
 **Source:** `Outputs/mri_optimization/LIVE_STATUS.md` (Apr 30, 2026)
 

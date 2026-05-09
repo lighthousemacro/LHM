@@ -76,7 +76,7 @@ The Apr 30 audit found a real bug: the original optimizer (`pillar_weight_optimi
 
 **Expanded baskets v4** (`Scripts/backtest/pillar_rebuild_v4_expanded.py` + `pillar_specs_v2.py`, May 9): re-runs v3 with Tier 1 basket additions (CCI ground-up, BCI ANDENO, LCI IORB/EFFR/TGCR, etc.). Output: `pillar_registry_v4.json` + `pillar_registry_v4_summary.md` + `pillar_v3_vs_v4_basket_diff.md`. **8 of 10 diagnostics real** (FPI mixed, **LCI broken — see below**); **59 of 240 relperf real**.
 
-**Asset-predictive grid v5** (`Scripts/backtest/pillar_rebuild_v5_assets.py`, May 9): 130 cells (10 pillars × 13 asset targets) with weights re-optimized per target. Output: `pillar_registry_v5_assets.json` + `_summary.md`. **48 of 117 OK cells real**; LCI absent.
+**Asset-predictive grid v5** (`Scripts/backtest/pillar_rebuild_v5_assets.py`, May 9): 130 cells (10 pillars × 13 asset targets) with weights re-optimized per target. Output: `pillar_registry_v5_assets.json` + `_summary.md`. **53 of 130 OK cells real** (post-LCI-fix, 2026-05-09 re-run).
 
 **Lead-lag event study v6** (`Scripts/backtest/pillar_rebuild_v6_leadlag.py`, May 9): equal-weight composite z-score breach → forward asset return vs baseline, t-tested. Output: `pillar_registry_v6_leadlag.json` + `_summary.md`. **609 of 776 patterns significant** (p<0.05, n_breaches≥30).
 

@@ -101,7 +101,7 @@ Lighthouse Macro | Research | @LHMacro
 | 4. Housing | Housing Tide (HCI) | 6-9mo | Frozen equilibrium, rate sensitive. |
 | 5. Consumer | Consumer Pulse (CCI) | 1-3mo | 68% of GDP. The Last Domino. |
 | 6. Business | Capex Thrust (BCI) | 4-8mo | Capex = forward commitment. |
-| 7. Trade | Global Tide (TCI) | 3-6mo | Rotation engine via dollar dynamics. |
+| 7. Trade | Global Risk Tide (TCI) | 3-6mo | Rotation engine via dollar dynamics. |
 | 8. Government | Fiscal Pressure (FPI) | Structural | Fiscal dominance, term premium. |
 | 9. Financial | Credit Tide (FCI), Credit-Labor Gap (CLG) | 6-9mo | Spreads lead defaults. |
 | 10. Plumbing | Liquidity Cushion (LCI) | 1-4wk | RRP exhaustion = no buffer. |
@@ -286,12 +286,12 @@ The portfolio is a single book. The distinction is what drives a position.
 | HCI | **Housing Tide** | Tide |
 | CCI | **Consumer Pulse** (7-component, updated Feb 2026) | Pulse |
 | BCI | **Capex Thrust** | Thrust |
-| TCI | **Global Tide** | Tide |
+| TCI | **Global Risk Tide** | Tide |
 | FPI (was GCI-Gov) | **Fiscal Pressure** | Pressure |
 | FCI | **Credit Tide** | Tide |
 | CLG | Credit-Labor Gap | Gap |
 | LCI | Liquidity Cushion | Cushion |
-| MSI | **Breadth Pulse** | Pulse |
+| MSI | **Market Breadth Pulse** | Pulse |
 | SPI | **Sentiment Tide** | Tide |
 | SBD | Structure-Breadth Divergence | Divergence |
 | SSD | Sentiment-Structure Divergence | Divergence |

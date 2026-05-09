@@ -219,7 +219,11 @@ EXPANDED_PILLAR_SPECS = {
     },
 
     # =========================================================================
-    # LIQUIDITY CUSHION (LCI) — adds IORB, EFFR, TGCR, MMF series
+    # LIQUIDITY CUSHION (LCI) — adds EFFR, TGCR, MMF series
+    # IORB dropped 2026-05-09: starts 2021-07-29, collapsed alignment window
+    # below MIN_FOLD_OBS * (n_folds+1) = 1500. TODO: ingest spliced IOER (2008-2021)
+    # + IORB (2021+) as a continuous series and re-add to basket.
+    # Binding constraint now: NYFED_TGCR + SOFR (both 2018-04-03) ~2022 daily obs.
     # =========================================================================
     'LCI': {
         'components': [
@@ -229,8 +233,7 @@ EXPANDED_PILLAR_SPECS = {
             ('WALCL',                     +1, 'yoy_pct', None),
             ('WTREGEN',                   -1, 'yoy_pct', None),  # Rising TGA = liquidity drain
             ('SOFR',                      -1, 'level',   None),  # High SOFR = scarce
-            # Tier 1
-            ('IORB',                      -1, 'level',   None),  # Interest on reserves
+            # Tier 1 (IORB dropped — see header note)
             ('EFFR',                      -1, 'level',   None),  # Effective fed funds
             ('NYFED_TGCR',                -1, 'level',   None),  # Tri-party GC rate
             ('OFR_MMF-MMF_RP_TOT-M',      +1, 'yoy_pct', None),  # MMF Repo (more = abundant)

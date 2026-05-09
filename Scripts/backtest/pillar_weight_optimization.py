@@ -25,6 +25,7 @@ Date: 2026-04-29
 """
 
 import json
+import os
 import sqlite3
 import sys
 import warnings
@@ -38,7 +39,7 @@ from scipy.optimize import minimize
 
 warnings.filterwarnings('ignore')
 
-DB_PATH = "/Users/bob/LHM/Data/databases/Lighthouse_Master.db"
+DB_PATH = os.environ.get("LHM_DB_PATH", "/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
 OUTPUT_DIR = Path("/Users/bob/LHM/Outputs/mri_optimization")
 OUT_PATH = OUTPUT_DIR / "pillar_weight_optimization.json"
 

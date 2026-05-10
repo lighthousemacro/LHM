@@ -84,3 +84,4 @@ lost sys.stderr
   df["unsubscribed_at"] = pd.to_datetime(df["unsubscribed_at"], errors="coerce", utc=True)
 No Substack CSVs found in ~/Downloads. Drop today's exports there and re-run.
 No Substack CSVs found in ~/Downloads. Drop today's exports there and re-run.
+No Substack CSVs found in ~/Downloads. Drop today's exports there and re-run.

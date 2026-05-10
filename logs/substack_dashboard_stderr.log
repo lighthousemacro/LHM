@@ -83,3 +83,4 @@ lost sys.stderr
 /Users/bob/LHM/Scripts/dashboards/substack_dashboard.py:236: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
   df["unsubscribed_at"] = pd.to_datetime(df["unsubscribed_at"], errors="coerce", utc=True)
 No Substack CSVs found in ~/Downloads. Drop today's exports there and re-run.
+No Substack CSVs found in ~/Downloads. Drop today's exports there and re-run.

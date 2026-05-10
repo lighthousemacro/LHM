@@ -198,24 +198,22 @@ def add_recessions(ax, start_date=None):
                    alpha=THEME['recession_alpha'], zorder=0)
 
 def set_xlim_to_data(ax, *indices, right_frac=0.06):
-    """X-axis range with 30-day left pad and configurable right pad.
+    """X-axis range — data hugs the left spine, configurable right pad.
 
-    Default right pad is 6% of the plotted span. That gives the right-edge pill
-    enough breathing room so it never collides with the last data point, while
-    still keeping recent data visually dominant. Lower values (2-3%) cause the
-    pill to kiss or overlap the line; higher values (>8%) waste chart real
-    estate.
+    LHM rule (locked): 0 left padding, gap on the right for the value pill.
+    Default right pad is 6% of the plotted span — enough breathing room so
+    the pill never collides with the last data point, while keeping recent
+    data visually dominant. Lower values (2-3%) cause the pill to kiss the
+    line; higher values (>8%) waste chart real estate.
 
     Uses LATEST start across all indices for series that begin at different
     dates.
     """
     start = max(idx.min() for idx in indices)
     end = max(idx.max() for idx in indices)
-    padding_left = pd.Timedelta(days=30)
-    # span excluding the right pad (so right_frac is fraction of plotted area)
-    span = end - (start - padding_left)
+    span = end - start
     right_pad = pd.Timedelta(seconds=span.total_seconds() * (right_frac / (1 - right_frac)))
-    ax.set_xlim(start - padding_left, end + right_pad)
+    ax.set_xlim(start, end + right_pad)
 
 def legend_style():
     """Legend styling dict for ax.legend(**legend_style())."""

@@ -479,3 +479,13 @@
   AWHAETP: db=2026-03-01 -> fred=2026-04-01
 2026-05-08 16:36:00 [INFO]   AWHAETP: refreshed (+242 obs)
 2026-05-08 16:36:00 [INFO] Freshness check done: 1 series refreshed, 242 obs added.
+2026-05-11 10:43:24 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSCCAS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-11 10:43:44 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=UNRATE&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-11 10:43:50 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=JTSHIR&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-11 10:44:05 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=GDP&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-11 10:44:21 [INFO] Stale series (2):
+  EXHOSLUSM495S: db=2026-03-01 -> fred=2026-04-01
+  HOSINVUSM495N: db=2026-03-01 -> fred=2026-04-01
+2026-05-11 10:44:27 [INFO]   EXHOSLUSM495S: refreshed (+13 obs)
+2026-05-11 10:44:28 [INFO]   HOSINVUSM495N: refreshed (+13 obs)
+2026-05-11 10:44:28 [INFO] Freshness check done: 2 series refreshed, 26 obs added.

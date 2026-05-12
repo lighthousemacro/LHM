@@ -504,3 +504,30 @@
 2026-05-12 08:35:25 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=JTSJOL&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-05-12 08:35:29 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=JTSTSR&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-05-12 08:35:48 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-12 12:35:14 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSFHFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-12 12:35:17 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSSGHBMS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-12 12:35:20 [WARNING] Attempt 2 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSSGHBMS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
+2026-05-12 12:35:24 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series
+2026-05-12 12:35:24 [WARNING] RSSGHBMS: FRED /series call failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSSGHBMS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json
+2026-05-12 12:35:24 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSHPCS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-12 12:35:41 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=JTS1000QUR&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-12 12:35:44 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=CCSA&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-12 12:35:50 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=MSACSR&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-12 12:36:04 [INFO] Stale series (8):
+  CPIAUCSL: db=2026-03-01 -> fred=2026-04-01
+  CPILFESL: db=2026-03-01 -> fred=2026-04-01
+  CUSR0000SAH1: db=2026-03-01 -> fred=2026-04-01
+  CUSR0000SEHA: db=2026-03-01 -> fred=2026-04-01
+  CUSR0000SEHC: db=2026-03-01 -> fred=2026-04-01
+  CUSR0000SAS: db=2026-03-01 -> fred=2026-04-01
+  CUSR0000SACL1E: db=2026-03-01 -> fred=2026-04-01
+  MEDCPIM158SFRBCLE: db=2026-03-01 -> fred=2026-04-01
+2026-05-12 12:36:05 [INFO]   CPIAUCSL: refreshed (+951 obs)
+2026-05-12 12:36:06 [INFO]   CPILFESL: refreshed (+831 obs)
+2026-05-12 12:36:08 [INFO]   CUSR0000SAH1: refreshed (+879 obs)
+2026-05-12 12:36:11 [INFO]   CUSR0000SEHA: refreshed (+543 obs)
+2026-05-12 12:36:14 [INFO]   CUSR0000SEHC: refreshed (+519 obs)
+2026-05-12 12:36:17 [INFO]   CUSR0000SAS: refreshed (+843 obs)
+2026-05-12 12:36:19 [INFO]   CUSR0000SACL1E: refreshed (+831 obs)
+2026-05-12 12:36:20 [INFO]   MEDCPIM158SFRBCLE: refreshed (+520 obs)
+2026-05-12 12:36:20 [INFO] Freshness check done: 8 series refreshed, 5,917 obs added.

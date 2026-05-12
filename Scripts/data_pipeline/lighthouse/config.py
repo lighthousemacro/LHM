@@ -31,9 +31,10 @@ OUTPUT_DIR = DB_PATH.parent
 
 API_KEYS = {
     "FRED": os.getenv("FRED_API_KEY", "11893c506c07b3b8647bf16cf60586e8"),
-    "BLS": os.getenv("BLS_API_KEY", "2e66aeb26c664d4fbc862de06d1f8899"),
+    "BLS": os.getenv("BLS_API_KEY", "e83e702d7e244961951cf9026d1ae437"),
     "BEA": os.getenv("BEA_API_KEY", "4401D40D-4047-414F-B4FE-D441E96F8DE8"),
     "TOKEN_TERMINAL": os.getenv("TOKEN_TERMINAL_API_KEY", "348c4261-f49b-4517-949c-e18ef6a6c300"),
+    "FINCEPT": os.getenv("FINCEPT_API_KEY", ""),
 }
 
 def validate_api_keys():

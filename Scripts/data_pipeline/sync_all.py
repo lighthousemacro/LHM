@@ -7,10 +7,12 @@ Called automatically after daily pipeline run, or standalone.
 
 Destinations:
     1. LOCAL  - Dated database backups (7-day rolling)
-    2. GITHUB - Auto-commit and push code, strategy, brand, logs
+    2. GITHUB - Pull --rebase, auto-commit and push code, strategy, brand, logs
     3. ICLOUD - Database backup copy
-    4. GDRIVE - Database backup + Strategy + Brand
-    5. DROPBOX - Database backup copy
+    4. DROPBOX - Database backup copy + Strategy + Brand
+
+Note: Google Drive was retired 2026-05-12 (chronic "Resource deadlock avoided"
+errors on the CloudStorage mount). iCloud + Dropbox cover the same ground.
 
 Usage:
     python sync_all.py              # Full sync to all destinations
@@ -37,17 +39,6 @@ LOGS_DIR = LHM_ROOT / "logs"
 DROPBOX_DIR = Path.home() / "Dropbox" / "LHM_Backups"
 
 
-def _find_cloud_dir(pattern, subfolder):
-    """Find cloud storage mount by glob pattern, return path with subfolder."""
-    cloud_base = Path.home() / "Library" / "CloudStorage"
-    matches = sorted(cloud_base.glob(pattern), key=lambda p: p.stat().st_mtime, reverse=True)
-    if matches:
-        if "My Drive" in str(pattern) or "GDrive" in pattern:
-            return matches[0] / "My Drive" / subfolder
-        return matches[0] / subfolder
-    return None
-
-
 def _get_icloud_dir():
     """Find writable iCloud path. Prefers Mobile Documents (writable), falls back to CloudStorage."""
     # Primary: Mobile Documents (always writable)
@@ -62,13 +53,12 @@ def _get_icloud_dir():
     return None
 
 
-def _get_gdrive_dir():
-    return _find_cloud_dir("GDrive-bob@lighthousemacro.com*", "")
-
-
 # Cloud retention (days)
 CLOUD_RETENTION_DAYS = 30
 LOCAL_RETENTION_DAYS = 7
+
+# Where loud, human-visible failure breadcrumbs go
+FAILURE_LOG = LOGS_DIR / "SYNC_FAILURES.log"
 
 
 def log(msg):
@@ -77,21 +67,88 @@ def log(msg):
     print(f"[{ts}] {msg}")
 
 
+def notify_failure(title, msg):
+    """Surface a sync failure where Bob will actually see it.
+
+    Three channels, all best-effort: timestamped line in logs/SYNC_FAILURES.log,
+    a macOS notification, and stderr. The point is that a silent FAILED in
+    sync.log never happens again.
+    """
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{ts}] {title}: {msg}"
+    try:
+        LOGS_DIR.mkdir(parents=True, exist_ok=True)
+        with open(FAILURE_LOG, "a") as fh:
+            fh.write(line + "\n")
+    except Exception:
+        pass
+    try:
+        # Keep it short; notifications truncate hard.
+        short = msg.strip().splitlines()[0][:200] if msg.strip() else title
+        subprocess.run(
+            ["osascript", "-e",
+             f'display notification {short!r} with title "LHM sync: {title}"'],
+            capture_output=True, timeout=10,
+        )
+    except Exception:
+        pass
+    print(line, file=sys.stderr)
+
+
+def _git(*args, **kw):
+    """Run a git command in LHM_ROOT, capturing output."""
+    kw.setdefault("capture_output", True)
+    kw.setdefault("text", True)
+    return subprocess.run(["git", *args], cwd=str(LHM_ROOT), **kw)
+
+
+def git_reconcile_remote(dry_run=False):
+    """Fetch and rebase local commits on top of origin/main before pushing.
+
+    This is the fix for the silent wedge: a plain `git push` rejects forever
+    (non-fast-forward) the moment anything lands on the remote out of band.
+    Rebasing keeps the pipeline-sync commits linear on top. On conflict we
+    abort cleanly (so the next run isn't stuck mid-rebase) and shout.
+    """
+    fetch = _git("fetch", "origin", "main", timeout=120)
+    if fetch.returncode != 0:
+        notify_failure("git fetch failed", fetch.stderr or fetch.stdout)
+        return False
+
+    # How far has the remote moved ahead of us?
+    behind = _git("rev-list", "--count", "HEAD..origin/main")
+    n_behind = int(behind.stdout.strip() or "0") if behind.returncode == 0 else 0
+    if n_behind == 0:
+        return True
+
+    log(f"GIT SYNC: remote is {n_behind} commit(s) ahead, rebasing local work on top.")
+    if dry_run:
+        log("GIT SYNC [DRY RUN]: would `git rebase --autostash origin/main`")
+        return True
+
+    reb = _git("rebase", "--autostash", "origin/main", timeout=180)
+    if reb.returncode != 0:
+        _git("rebase", "--abort")
+        notify_failure(
+            "git rebase conflict",
+            "Local pipeline history diverged from origin/main and auto-rebase "
+            "hit a conflict. Resolve by hand:\n"
+            "  cd /Users/bob/LHM && git pull --rebase origin main\n"
+            f"git said:\n{reb.stderr or reb.stdout}",
+        )
+        return False
+    return True
+
+
 def git_sync(dry_run=False):
-    """Auto-commit changed files and push to GitHub."""
+    """Reconcile with remote, auto-commit changed files, push to GitHub."""
     log("GIT SYNC: Starting...")
 
     os.chdir(LHM_ROOT)
 
-    # Check if there are any changes
-    result = subprocess.run(
-        ["git", "status", "--porcelain"],
-        capture_output=True, text=True, cwd=str(LHM_ROOT)
-    )
-
-    if not result.stdout.strip():
-        log("GIT SYNC: No changes to commit.")
-        return True
+    # Pull remote changes down first so the push can't wedge on non-fast-forward.
+    if not git_reconcile_remote(dry_run=dry_run):
+        return False
 
     # Stage specific directories (not everything)
     stage_paths = [
@@ -111,45 +168,35 @@ def git_sync(dry_run=False):
     for path in stage_paths:
         full = LHM_ROOT / path
         if full.exists():
-            subprocess.run(
-                ["git", "add", path],
-                cwd=str(LHM_ROOT), capture_output=True
-            )
+            _git("add", path)
 
-    # Check if anything is staged
-    result = subprocess.run(
-        ["git", "diff", "--cached", "--quiet"],
-        cwd=str(LHM_ROOT)
-    )
+    # Commit if anything is staged.
+    if _git("diff", "--cached", "--quiet").returncode != 0:
+        date_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+        commit = _git("commit", "-m", f"Daily pipeline sync {date_str}")
+        if commit.returncode != 0:
+            notify_failure("git commit failed", commit.stderr or commit.stdout)
+            return False
+        log(f"GIT SYNC: Committed: Daily pipeline sync {date_str}")
+    else:
+        log("GIT SYNC: Nothing new staged.")
 
-    if result.returncode == 0:
-        log("GIT SYNC: Nothing staged to commit.")
+    # Push if we're ahead of the remote (covers fresh commits AND any
+    # previously-committed-but-unpushed work the rebase carried forward).
+    ahead = _git("rev-list", "--count", "origin/main..HEAD")
+    if ahead.returncode == 0 and ahead.stdout.strip() == "0":
+        log("GIT SYNC: Already in sync with origin/main.")
         return True
 
-    # Commit
-    date_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    commit_msg = f"Daily pipeline sync {date_str}"
-
-    result = subprocess.run(
-        ["git", "commit", "-m", commit_msg],
-        capture_output=True, text=True, cwd=str(LHM_ROOT)
-    )
-
-    if result.returncode != 0:
-        log(f"GIT SYNC: Commit failed: {result.stderr}")
-        return False
-
-    log(f"GIT SYNC: Committed: {commit_msg}")
-
-    # Push
-    result = subprocess.run(
-        ["git", "push", "origin", "main"],
-        capture_output=True, text=True, cwd=str(LHM_ROOT),
-        timeout=120
-    )
-
-    if result.returncode != 0:
-        log(f"GIT SYNC: Push failed: {result.stderr}")
+    push = _git("push", "origin", "main", timeout=120)
+    if push.returncode != 0:
+        notify_failure(
+            "git push failed",
+            "Push to origin/main was rejected. If it says 'non-fast-forward', "
+            "the remote moved again — rerun the sync (it will rebase) or:\n"
+            "  cd /Users/bob/LHM && git pull --rebase origin main && git push\n"
+            f"git said:\n{push.stderr or push.stdout}",
+        )
         return False
 
     log("GIT SYNC: Pushed to origin/main.")
@@ -167,13 +214,8 @@ def cloud_sync(dry_run=False):
         log(f"CLOUD SYNC: Database not found at {DB_SOURCE}")
         return False
 
-    icloud = _get_icloud_dir()
-    gdrive_base = _get_gdrive_dir()
-    gdrive_backups = (gdrive_base / "LHM_Backups") if gdrive_base else None
-
     destinations = {
-        "iCloud": icloud,
-        "GDrive": gdrive_backups,
+        "iCloud": _get_icloud_dir(),
         "Dropbox": DROPBOX_DIR,
     }
 
@@ -203,16 +245,15 @@ def cloud_sync(dry_run=False):
             else:
                 log(f"CLOUD SYNC [{name}]: {backup_name} already exists, skipping.")
 
-            # For GDrive, also sync Strategy and Brand folders
-            if name == "GDrive" and gdrive_base:
-                gdrive_lhm = gdrive_base / "LHM"
-                gdrive_lhm.mkdir(parents=True, exist_ok=True)
-
+            # Dropbox also mirrors the Strategy and Brand folders (this used
+            # to live on Google Drive; moved here when GDrive was retired).
+            if name == "Dropbox":
+                dropbox_lhm = dest_dir.parent / "LHM"
                 for folder in ["Strategy", "Brand"]:
                     src = LHM_ROOT / folder
-                    dst = gdrive_lhm / folder
+                    dst = dropbox_lhm / folder
                     if src.exists():
-                        # Use rsync for efficient folder sync
+                        dst.mkdir(parents=True, exist_ok=True)
                         result = subprocess.run(
                             ["rsync", "-a", "--delete",
                              str(src) + "/", str(dst) + "/"],
@@ -228,6 +269,7 @@ def cloud_sync(dry_run=False):
 
         except Exception as e:
             log(f"CLOUD SYNC [{name}]: Error: {e}")
+            notify_failure(f"cloud sync [{name}] failed", str(e))
             success = False
 
     return success

@@ -349,7 +349,7 @@ The portfolio is a single book. The distinction is what drives a position.
 1. Updates LAST_SYNC
 2. Copies to `~/.claude/CLAUDE.md`
 3. Desktop export: `~/Desktop/LHM_MASTER_CONTEXT.md`
-4. Commits + pushes Strategy/CLAUDE_MASTER.md to `github.com/BobSheehan23/LHM` on real content changes (skips LAST_SYNC-only churn)
+4. Commits + pushes Strategy/CLAUDE_MASTER.md to `github.com/lighthousemacro/LHM` on real content changes (skips LAST_SYNC-only churn)
 
 **Auto-pickup:** Claude Code (local, remote-control, cloud) · scheduled remote triggers · memory system (`~/.claude/projects/-Users-bob/memory/`) · skills (`~/.claude/skills/`)
 

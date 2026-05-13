@@ -272,6 +272,26 @@ def cloud_sync(dry_run=False):
             notify_failure(f"cloud sync [{name}] failed", str(e))
             success = False
 
+    # Chart library: canonical copy lives in Dropbox (~/Dropbox/LHM_Charts,
+    # also symlinked at ~/LHM/Charts). Mirror it into iCloud Drive as a plain
+    # Files folder (NOT the Photos app) so it's reachable from the phone.
+    if not dry_run:
+        chart_lib = Path.home() / "Dropbox" / "LHM_Charts"
+        icloud_mirror = (Path.home() / "Library" / "Mobile Documents" /
+                         "com~apple~CloudDocs" / "LHM_Charts")
+        if chart_lib.exists():
+            try:
+                icloud_mirror.mkdir(parents=True, exist_ok=True)
+                r = subprocess.run(["rsync", "-a", "--delete",
+                                    str(chart_lib) + "/", str(icloud_mirror) + "/"],
+                                   capture_output=True, text=True)
+                if r.returncode == 0:
+                    log("CLOUD SYNC [iCloud]: Mirrored chart library")
+                else:
+                    log(f"CLOUD SYNC [iCloud]: chart-library rsync failed: {r.stderr}")
+            except Exception as e:
+                log(f"CLOUD SYNC [iCloud]: chart-library mirror error: {e}")
+
     return success
 
 

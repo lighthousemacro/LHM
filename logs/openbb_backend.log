@@ -1,0 +1,2 @@
+[32mINFO[0m:     127.0.0.1:53200 - "[1mGET / HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53200 - "[1mGET /favicon.ico HTTP/1.1[0m" [31m404 Not Found[0m

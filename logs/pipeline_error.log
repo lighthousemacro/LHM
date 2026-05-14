@@ -25059,3 +25059,14 @@ Breadth total: 13 series, 9,763 observations
 2026-05-12 06:00:10 [ERROR] Missing API keys: FINCEPT. Set them in .env or as environment variables.
 2026-05-13 06:00:05 [ERROR] Missing API keys: FINCEPT. Set them in .env or as environment variables.
 2026-05-14 06:21:09 [ERROR] Missing API keys: FINCEPT. Set them in .env or as environment variables.
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 269, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/run_pipeline.py", line 163, in main
+    get_stats()
+    ~~~~~~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/pipeline.py", line 336, in get_stats
+    total_obs = conn.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+                ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: database is locked

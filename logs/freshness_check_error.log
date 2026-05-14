@@ -614,3 +614,11 @@
 2026-05-14 10:44:27 [INFO]   RSNSR: refreshed (+412 obs)
 2026-05-14 10:45:26 [INFO]   RSGMS: refreshed (+412 obs)
 2026-05-14 10:45:31 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=RSDBS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-14 10:46:27 [INFO]   RSDBS: refreshed (+412 obs)
+2026-05-14 10:47:26 [INFO]   RSMSR: refreshed (+412 obs)
+2026-05-14 10:48:14 [INFO]   RSGCSN: refreshed (+412 obs)
+2026-05-14 10:48:54 [INFO]   RRSFS: refreshed (+411 obs)
+2026-05-14 10:49:29 [INFO]   RSFSXMV: refreshed (+412 obs)
+2026-05-14 10:51:46 [INFO]   ICSA: refreshed (+3097 obs)
+2026-05-14 10:53:57 [INFO]   CCSA: refreshed (+3096 obs)
+2026-05-14 10:53:59 [INFO] Freshness check done: 20 series refreshed, 13,608 obs added.

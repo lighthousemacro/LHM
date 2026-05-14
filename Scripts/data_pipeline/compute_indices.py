@@ -140,7 +140,7 @@ STATUS_THRESHOLDS = {
         (-1.0, "HEADWIND"),
         (-999, "TRADE CRISIS")
     ],
-    "GCI_Gov": [
+    "FPI": [
         (1.5, "FISCAL CRISIS"),
         (1.0, "HIGH STRESS"),
         (0.5, "ELEVATED"),
@@ -777,9 +777,10 @@ def compute_tci(df: pd.DataFrame) -> pd.Series:
     return tci
 
 
-def compute_gci_gov(df: pd.DataFrame) -> pd.Series:
+def compute_fpi(df: pd.DataFrame) -> pd.Series:
     """
-    Government Pillar Composite Index (GCI-Gov)
+    Fiscal Pressure Index (FPI) — Pillar 8 (Government).
+    Previously coded as GCI-Gov; renamed per 2026-05-08 naming lock.
     """
     # Debt to GDP
     debt_gdp = df.get("Debt_to_GDP", pd.Series(dtype=float))
@@ -788,12 +789,12 @@ def compute_gci_gov(df: pd.DataFrame) -> pd.Series:
     # Term Premium
     z_term = df.get("Term_Premium_10Y_z", pd.Series(dtype=float))
 
-    gci_gov = nan_weighted_sum([
+    fpi = nan_weighted_sum([
         (z_debt, 0.50),
         (z_term, 0.50),
     ])
 
-    return gci_gov
+    return fpi
 
 
 def compute_fci(df: pd.DataFrame, lci: pd.Series) -> pd.Series:
@@ -1104,9 +1105,97 @@ def compute_sli(conn: sqlite3.Connection) -> pd.DataFrame:
 # ==========================================
 
 # Per-overlay daily-ffill cap. Weekly cadence with publication slack ~14 days.
-# Beyond the cap, the overlay surfaces as NaN — composite then degrades via
-# nan_weighted_sum renormalization instead of carrying a fake-fresh reading.
+# Beyond the cap, the overlay surfaces as NaN.
 NOWCAST_FFILL_LIMIT_DAYS = 14
+
+
+# Bridge registry — per composite, the Layer-1 daily series that carries it
+# from its last full-coverage anchor to today.
+#
+# Each entry: composite_id → (partner_name, sign)
+#   partner_name: column in horizon_dataset OR "overlay:<key>" for overlays
+#                 loaded via load_nowcast_overlays.
+#   sign:        +1 if partner moves with the composite, -1 if inverse.
+#
+# Partners are picked from daily-fresh series in horizon_dataset:
+#   Initial_Claims_z         — weekly, labor stress proxy
+#   HY_OAS_z, IG_OAS_z       — daily credit spread proxies
+#   Forward_Inflation_5Y_z   — daily TIPS breakeven, inflation proxy
+#   Mortgage_30Y             — weekly mortgage rate
+#   Term_Premium_10Y_z       — daily, fiscal pressure proxy
+#   OFR_FSI_US_z             — daily financial stress, inverse of liquidity cushion
+#   Dollar_Index_yoy_pct     — daily, trade headwind proxy
+#   overlay:Growth_Nowcast_WEI_z — NY Fed Weekly Economic Index, growth nowcast
+#
+# These bridges are interim — Phase 2 will swap each one for a proper
+# regression / state-space model with confidence bands and vintage tracking.
+BRIDGE_REGISTRY: dict = {
+    "GCI":     ("overlay:Growth_Nowcast_WEI_z", +1),
+    "LFI":     ("Initial_Claims_z",      +1),
+    "LPI":     ("Initial_Claims_z",      -1),
+    "LDI":     ("Initial_Claims_z",      -1),
+    "PCI":     ("Forward_Inflation_5Y_z", +1),
+    "HCI":     ("Mortgage_30Y",          -1),
+    "CCI":     ("HY_OAS_z",              -1),
+    "BCI":     ("HY_OAS_z",              -1),
+    "TCI":     ("Dollar_Index_yoy_pct",  -1),
+    "GCI_Gov": ("Term_Premium_10Y_z",    +1),
+    "LCI":     ("OFR_FSI_US_z",          -1),
+    "FCI":     ("HY_OAS_z",              -1),
+}
+
+
+def _resolve_bridge_partner(
+    name: str,
+    df: pd.DataFrame,
+    overlays: dict,
+) -> pd.Series | None:
+    """
+    Resolve a BRIDGE_REGISTRY partner spec to a daily-indexed z-score series.
+
+    Names prefixed with "overlay:" pull from the loaded nowcast overlays.
+    Names matching a horizon_dataset column ending in "_z" are used directly.
+    Other column names get a daily 252d z-score computed inline.
+    Returns None if the partner cannot be found.
+    """
+    if name.startswith("overlay:"):
+        return overlays.get(name[len("overlay:"):])
+    if name in df.columns:
+        s = df[name].astype(float)
+        if name.endswith("_z"):
+            return s
+        return compute_zscore(s, window=252, min_periods=63)
+    return None
+
+
+def _bridge_apply(
+    composite_id: str,
+    anchor: pd.Series,
+    df: pd.DataFrame,
+    overlays: dict,
+) -> pd.Series:
+    """
+    Look up the bridge spec for a composite and apply bridge_to_today() with
+    the resolved partner. Returns the anchor unchanged if no bridge is wired
+    or the partner has no data.
+    """
+    spec = BRIDGE_REGISTRY.get(composite_id)
+    if spec is None:
+        return anchor
+    partner_name, sign = spec
+    partner = _resolve_bridge_partner(partner_name, df, overlays)
+    if partner is None or partner.dropna().empty:
+        return anchor
+    pre = anchor.last_valid_index()
+    bridged = bridge_to_today(anchor, sign * partner)
+    post = bridged.last_valid_index()
+    if pre is not None and post is not None and post > pre:
+        sign_str = "-" if sign < 0 else "+"
+        print(
+            f"      bridge: {composite_id} anchor ends {pre.date()}, "
+            f"carried to {post.date()} via {sign_str}{partner_name}"
+        )
+    return bridged
 
 
 def load_nowcast_overlays(
@@ -1446,68 +1535,58 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
         # Only compute for last available date
         df = df.iloc[[-1]]
 
-    print("\n--- Computing Indices ---")
+    print("\n--- Computing Indices (strict anchor + Layer-1 bridge) ---")
 
-    # Compute pillar composites first
+    # Pillar composites: compute strict anchor then bridge to today.
     print("   Computing LPI (Labor Pillar)...")
-    lpi = compute_lpi(df)
+    lpi = _bridge_apply("LPI", compute_lpi(df), df, nowcast_overlays)
 
     print("   Computing PCI (Prices Pillar)...")
-    pci = compute_pci(df)
+    pci = _bridge_apply("PCI", compute_pci(df), df, nowcast_overlays)
 
     print("   Computing GCI (Growth Pillar)...")
-    gci = compute_gci(df)
-    # Layer-1 bridge: carry GCI from its last full-coverage anchor to today
-    # using NY Fed Weekly Economic Index as the daily real-economy nowcast.
-    # Anchor is strict 3-component formula. Bridge offset-anchors to that.
-    wei_overlay = nowcast_overlays.get("Growth_Nowcast_WEI_z")
-    if wei_overlay is not None:
-        anchor_end_before = gci.last_valid_index()
-        gci = bridge_to_today(gci, wei_overlay, label="GCI ← WEI")
-        anchor_end_after = gci.last_valid_index()
-        if anchor_end_before is not None and anchor_end_after is not None and anchor_end_after > anchor_end_before:
-            print(
-                f"      bridge: GCI anchor ends {anchor_end_before.date()}, "
-                f"bridged forward to {anchor_end_after.date()} via WEI"
-            )
+    gci = _bridge_apply("GCI", compute_gci(df), df, nowcast_overlays)
 
     print("   Computing HCI (Housing Pillar)...")
-    hci = compute_hci(df)
+    hci = _bridge_apply("HCI", compute_hci(df), df, nowcast_overlays)
 
     print("   Computing CCI (Consumer Pillar)...")
-    cci = compute_cci(df)
+    cci = _bridge_apply("CCI", compute_cci(df), df, nowcast_overlays)
 
     print("   Computing BCI (Business Pillar)...")
-    bci = compute_bci(df)
+    bci = _bridge_apply("BCI", compute_bci(df), df, nowcast_overlays)
 
     print("   Computing TCI (Trade Pillar)...")
-    tci = compute_tci(df)
+    tci = _bridge_apply("TCI", compute_tci(df), df, nowcast_overlays)
 
     print("   Computing GCI-Gov (Government Pillar)...")
-    gci_gov = compute_gci_gov(df)
+    gci_gov = _bridge_apply("GCI_Gov", compute_gci_gov(df), df, nowcast_overlays)
 
-    # Compute key indices
+    # LFI / LCI: bridge before they feed FCI and CLG so those inherit fresh values.
     print("   Computing LFI (Labor Fragility Index)...")
-    lfi = compute_lfi(df)
+    lfi = _bridge_apply("LFI", compute_lfi(df), df, nowcast_overlays)
 
     print("   Computing LCI (Liquidity Cushion Index)...")
-    lci = compute_lci(df)
+    lci = _bridge_apply("LCI", compute_lci(df), df, nowcast_overlays)
 
     print("   Computing FCI (Financial Conditions)...")
-    fci = compute_fci(df, lci)
+    fci = _bridge_apply("FCI", compute_fci(df, lci), df, nowcast_overlays)
 
     print("   Computing CLG (Credit-Labor Gap)...")
+    # CLG = z(HY_OAS) - z(LFI); both inputs daily-fresh after LFI bridge.
     clg = compute_clg(df, lfi)
 
     print("   Computing MRI (Macro Risk Index)...")
+    # MRI consumes the bridged pillars. Strict weighted sum across the 10
+    # pillars: MRI is fresh wherever every pillar is fresh.
     mri = compute_mri(lpi, pci, gci, hci, cci, bci, tci, gci_gov, fci, lci)
 
     # Additional indicators
     print("   Computing LDI (Labor Dynamism Index)...")
-    ldi = compute_ldi(df)
+    ldi = _bridge_apply("LDI", compute_ldi(df), df, nowcast_overlays)
 
     print("   Computing YFS (Yield-Funding Stress)...")
-    yfs = compute_yfs(df)
+    yfs = compute_yfs(df)  # all-daily inputs, no bridge needed
 
     print("   Computing SVI (Spread-Volatility Imbalance)...")
     svi = compute_svi(df)

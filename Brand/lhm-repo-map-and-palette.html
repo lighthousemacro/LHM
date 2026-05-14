@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>LHM — Brand palette &amp; GitHub visibility map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ocean: #2389BB;
+      --dusk: #FF6723;
+      --sky: #23BBFF;
+      --sea: #00BB89;
+      --starboard: #238923;
+      --port: #892323;
+      --venus: #FF2389;
+      --doldrums: #898989;
+      --fog: #D1D1D1;
+      --navy: #0A1628;
+      --paper: #ffffff;
+      --ink: #1a1a1a;
+      --muted: #555555;
+      --bar-h: 4px;
+      --radius: 10px;
+      --shadow: 0 8px 28px rgba(10, 22, 40, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink);
+      background: #f4f7fa;
+    }
+    .accent-bar {
+      height: var(--bar-h);
+      background: linear-gradient(90deg, var(--ocean) 0%, var(--ocean) 66.67%, var(--dusk) 66.67%, var(--dusk) 100%);
+    }
+    header {
+      background: var(--paper);
+      border-bottom: 1px solid var(--fog);
+      padding: 2rem 1.5rem 1.75rem;
+      box-shadow: var(--shadow);
+    }
+    header h1 {
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      font-size: 1.65rem;
+      margin: 0 0 0.35rem;
+      color: var(--ocean);
+      letter-spacing: -0.02em;
+    }
+    header .tag {
+      font-family: Montserrat, sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--dusk);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    header p.lead {
+      max-width: 72ch;
+      margin: 0.75rem 0 0;
+      color: var(--muted);
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+    section {
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.35rem 1.5rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid #e8ecf0;
+      box-shadow: var(--shadow);
+    }
+    section h2 {
+      font-family: Montserrat, sans-serif;
+      font-size: 1.1rem;
+      color: var(--ocean);
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--fog);
+    }
+    .callout {
+      border-left: 4px solid var(--dusk);
+      background: #fff8f4;
+      padding: 0.85rem 1rem;
+      margin: 0 0 1rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .callout.safe {
+      border-left-color: var(--sea);
+      background: #f4fffb;
+    }
+    .callout strong { color: var(--ink); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.55rem 0.65rem;
+      border-bottom: 1px solid #eef1f4;
+      vertical-align: top;
+    }
+    th {
+      font-weight: 600;
+      color: var(--ocean);
+      background: #f8fafc;
+    }
+    tr:last-child td { border-bottom: none; }
+    code {
+      font-family: ui-monospace, "Source Code Pro", monospace;
+      font-size: 0.86em;
+      background: #f0f4f8;
+      padding: 0.12em 0.35em;
+      border-radius: 4px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .pill-tracked { background: #e8f4fa; color: var(--ocean); }
+    .pill-ignore { background: #f0f0f0; color: #444; }
+    .pill-risk-hi { background: #fde8ef; color: #8a1c3d; }
+    .pill-risk-med { background: #fff4e6; color: #8a4b00; }
+    .pill-risk-lo { background: #e8f8f0; color: #0d5c36; }
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.85rem;
+    }
+    .swatch {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid #e0e6ec;
+    }
+    .swatch-color {
+      height: 72px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+    }
+    .swatch-color.light-text { color: var(--ink); text-shadow: none; }
+    .swatch-meta {
+      padding: 0.6rem 0.65rem;
+      background: #fafbfc;
+      font-size: 0.82rem;
+    }
+    .swatch-meta .name { font-weight: 600; color: var(--ink); }
+    .swatch-meta .hex { font-family: ui-monospace, monospace; color: var(--muted); }
+    .pillar-list {
+      columns: 2;
+      column-gap: 2rem;
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .pillar-list li { margin-bottom: 0.35rem; break-inside: avoid; }
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--doldrums);
+      font-style: italic;
+    }
+    @media (max-width: 640px) {
+      .pillar-list { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="accent-bar" aria-hidden="true"></div>
+  <header>
+    <div class="tag">Lighthouse Macro · internal reference</div>
+    <h1>LHM palette &amp; GitHub visibility map</h1>
+    <p class="lead">
+      One page: canonical brand colors (signature palette + chart theme tokens) and how Git visibility relates to
+      “open source” risk. Open this file locally in a browser; it is marked <code>noindex</code> if ever hosted as a static page.
+    </p>
+  </header>
+  <main>
+    <section aria-labelledby="visibility">
+      <h2 id="visibility">Twelve-pillar documentation &amp; “not public”</h2>
+      <div class="callout">
+        <strong>Git does not support private folders inside a public repository.</strong>
+        Anything committed and pushed to GitHub is visible to anyone who can clone the repo at its current visibility.
+        To keep the full pillar framework <em>uploaded</em> (version-controlled, backed up, shared with the team) but
+        <em>not public</em>, the repository itself must stay <strong>Private</strong> (or use a separate private repo /
+        submodule for <code>Strategy/</code>). Switching a repo from Private → Public would expose history, including past commits.
+      </div>
+      <p style="margin-top:0">All twelve pillar master markdown files are present under <code>Strategy/Pillar_*</code> and tracked in git:</p>
+      <ul class="pillar-list">
+        <li><code>Strategy/Pillar_01_Labor/PILLAR 1 LABOR.md</code></li>
+        <li><code>Strategy/Pillar_02_Prices/PILLAR 2 PRICES.md</code></li>
+        <li><code>Strategy/Pillar_03_Growth/PILLAR 3 GROWTH.md</code></li>
+        <li><code>Strategy/Pillar_04_Housing/PILLAR 4 HOUSING.md</code></li>
+        <li><code>Strategy/Pillar_05_Consumer/PILLAR 5 CONSUMER.md</code></li>
+        <li><code>Strategy/Pillar_06_Business/PILLAR 6 BUSINESS.md</code></li>
+        <li><code>Strategy/Pillar_07_Trade/PILLAR 7 TRADE.md</code></li>
+        <li><code>Strategy/Pillar_08_Government/PILLAR 8 GOVERNMENT.md</code></li>
+        <li><code>Strategy/Pillar_09_Financial/PILLAR 9 FINANCIAL.md</code></li>
+        <li><code>Strategy/Pillar_10_Plumbing/PILLAR 10 PLUMBING.md</code></li>
+        <li><code>Strategy/Pillar_11_Market_Structure/PILLAR 11 MARKET STRUCTURE.md</code></li>
+        <li><code>Strategy/Pillar_12_Sentiment/PILLAR 12 SENTIMENT.md</code></li>
+      </ul>
+      <p class="muted" style="color:var(--muted);margin-bottom:0;font-size:0.9rem">
+        Related strategy assets (chartbooks, indicators master, voice guides, etc.) live alongside these under <code>Strategy/</code>.
+      </p>
+    </section>
+
+    <section aria-labelledby="repo-map">
+      <h2 id="repo-map">What is and is not on GitHub</h2>
+      <p style="margin-top:0">
+        “On GitHub” here means <strong>tracked by git and pushed</strong>. Files listed in <code>.gitignore</code> are normally
+        <strong>not</strong> uploaded unless someone forced them in earlier (legacy tracked paths can remain until removed).
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Area</th>
+            <th>Typical state</th>
+            <th>Sensitivity (if repo were public)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Data/databases/</code>, <code>Data/raw/</code>, <code>*.parquet</code>, large CSV panels</td>
+            <td><span class="pill pill-ignore">gitignored</span></td>
+            <td><span class="pill pill-risk-lo">Low on GitHub</span> — excluded by design; never commit master DB dumps.</td>
+          </tr>
+          <tr>
+            <td><code>.env</code>, keys, <code>API_KEYS.md</code></td>
+            <td><span class="pill pill-ignore">gitignored</span></td>
+            <td><span class="pill pill-risk-lo">Low on GitHub</span> — still rotate any key ever leaked in history.</td>
+          </tr>
+          <tr>
+            <td><code>Strategy/</code> (12 pillars + frameworks)</td>
+            <td><span class="pill pill-tracked">tracked (~92 paths)</span></td>
+            <td><span class="pill pill-risk-hi">High IP</span> — proprietary research architecture; fine only if repo stays private or you accept public methodology release.</td>
+          </tr>
+          <tr>
+            <td><code>lighthouse_quant/</code></td>
+            <td><span class="pill pill-tracked">tracked</span></td>
+            <td><span class="pill pill-risk-med">Medium</span> — model structure and code; rarely raw data.</td>
+          </tr>
+          <tr>
+            <td><code>Scripts/data_pipeline/</code></td>
+            <td><span class="pill pill-tracked">tracked</span></td>
+            <td><span class="pill pill-risk-med">Medium</span> — operational logic; series IDs are not secrets; keys stay in env.</td>
+          </tr>
+          <tr>
+            <td><code>Brand/</code></td>
+            <td><span class="pill pill-tracked">tracked</span></td>
+            <td><span class="pill pill-risk-lo">Low–medium</span> — brand kit; large font bundles may be license-sensitive (check OFL/README in tree).</td>
+          </tr>
+          <tr>
+            <td><code>Archive/</code>, <code>External/</code>, <code>Working/</code></td>
+            <td><span class="pill pill-tracked">mixed</span> <span class="pill pill-ignore">often ignored for new files</span></td>
+            <td><span class="pill pill-risk-med">Review</span> — many paths are still tracked historically; treat as cruft / third-party until cleaned.</td>
+          </tr>
+          <tr>
+            <td><code>Charts/*.png</code>, <code>Outputs/</code></td>
+            <td><span class="pill pill-ignore">gitignored</span></td>
+            <td><span class="pill pill-risk-lo">Low</span> — generated artifacts.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout safe" style="margin-top:1rem;margin-bottom:0">
+        <strong>Verdict for a private institutional repo:</strong> Keeping code + methodology in git while databases, env secrets,
+        and rendered outputs stay gitignored is a normal and defensible layout. If the remote were <strong>public</strong>, the main concern
+        is <code>Strategy/</code> and any lingering tracked material under <code>Archive/</code> / <code>External/</code> — not the pipeline skeleton alone.
+      </div>
+    </section>
+
+    <section aria-labelledby="counts">
+      <h2 id="counts">Tracked path counts (snapshot)</h2>
+      <p style="margin-top:0;font-size:0.92rem;color:var(--muted)">Approximate file counts from <code>git ls-files</code> by top-level folder — useful for spotting heavy trees.</p>
+      <table>
+        <thead><tr><th>Folder</th><th>Tracked files</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td><code>Scripts/</code></td><td>217</td><td>Pipeline, charts, automation</td></tr>
+          <tr><td><code>Brand/</code></td><td>231</td><td>Specs, fonts, assets</td></tr>
+          <tr><td><code>Archive/</code></td><td>667</td><td>Legacy bulk — consider pruning for a slimmer public footprint</td></tr>
+          <tr><td><code>External/</code></td><td>421</td><td>Third-party / external drops — review before any public flip</td></tr>
+          <tr><td><code>Data/</code></td><td>114</td><td>Mostly code + catalogs; large DB files should remain ignored</td></tr>
+          <tr><td><code>Strategy/</code></td><td>92</td><td>Pillars + chartbook scripts + images/PDFs</td></tr>
+          <tr><td><code>Charts/</code></td><td>56</td><td>Some PNGs tracked under Strategy subfolders; root chart outputs often ignored</td></tr>
+          <tr><td><code>Working/</code></td><td>57</td><td>Scratch — ideally not tracked long-term</td></tr>
+          <tr><td><code>lighthouse_quant/</code></td><td>24</td><td>Quant package</td></tr>
+          <tr><td><code>logs/</code></td><td>20</td><td>Usually low sensitivity; avoid logging secrets</td></tr>
+          <tr><td><code>Analysis/</code></td><td>7</td><td>Ad hoc research</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="palette">
+      <h2 id="palette">LHM signature palette (Brand guide + chart spec)</h2>
+      <p style="margin-top:0;color:var(--muted);font-size:0.92rem">Mnemonic: signature colors are built from 23 / 89 / BB combinations. Ocean anchors both light and dark chart themes.</p>
+      <div class="palette-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#2389BB">Primary</div>
+          <div class="swatch-meta"><span class="name">Ocean</span><br /><span class="hex">#2389BB</span> — headers, links, RHS primary series</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#FF6723">Beacon</div>
+          <div class="swatch-meta"><span class="name">Dusk</span><br /><span class="hex">#FF6723</span> — accent bar, CTAs, LHS secondary</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#23BBFF">Secondary</div>
+          <div class="swatch-meta"><span class="name">Sky</span><br /><span class="hex">#23BBFF</span> — tertiary series</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#00BB89">Tertiary</div>
+          <div class="swatch-meta"><span class="name">Sea</span><br /><span class="hex">#00BB89</span> — on-target bands</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#238923">Bullish</div>
+          <div class="swatch-meta"><span class="name">Starboard</span><br /><span class="hex">#238923</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#892323">Bearish</div>
+          <div class="swatch-meta"><span class="name">Port</span><br /><span class="hex">#892323</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#FF2389">Alert</div>
+          <div class="swatch-meta"><span class="name">Venus</span><br /><span class="hex">#FF2389</span> — 2% target, critical markers</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color light-text" style="background:#898989">Structural</div>
+          <div class="swatch-meta"><span class="name">Doldrums</span><br /><span class="hex">#898989</span> — spines, muted UI</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color light-text" style="background:#D1D1D1">Reference</div>
+          <div class="swatch-meta"><span class="name">Fog</span><br /><span class="hex">#D1D1D1</span> — zero / ghost lines</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#0A1628">Dark BG</div>
+          <div class="swatch-meta"><span class="name">Dark Navy</span><br /><span class="hex">#0A1628</span> — optional dark theme background</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1e3350">Dark spine</div>
+          <div class="swatch-meta"><span class="name">Spine (dark)</span><br /><span class="hex">#1e3350</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color light-text" style="background:#ffffff;border-bottom:1px solid #e0e6ec">Publication</div>
+          <div class="swatch-meta"><span class="name">White (default)</span><br /><span class="hex">#FFFFFF</span> — primary publication surface</div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>Lighthouse Macro · MACRO, ILLUMINATED. · Source: Brand/brand-guide.md &amp; Brand/chart-styling.md (v4)</footer>
+  <div class="accent-bar" aria-hidden="true"></div>
+</body>
+</html>

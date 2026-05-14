@@ -314,6 +314,61 @@ def compute_zscore(series: pd.Series, window: int = 24, min_periods: int = None)
     return (series - rolling_mean) / rolling_std
 
 
+def nan_weighted_sum(components: list) -> pd.Series:
+    """
+    NaN-aware weighted sum of z-score components.
+
+    At each date, computes the weighted mean using only the components that
+    are present (not NaN), with weights renormalized over the present subset.
+    Returns NaN at dates where every component is NaN.
+
+    This replaces the .fillna(0) pattern that silently treats a missing
+    input as a "neutral" z-score of zero — masking staleness behind a
+    fake-fresh reading. With this helper, a stale input drops out of the
+    weighting at that date, so the composite is computed from real readings
+    only or surfaces honestly as NaN.
+
+    Args:
+        components: list of (series, weight) tuples. Weights should be the
+            original (full-coverage) weights. They are renormalized at each
+            date over the components that are present.
+
+    Returns:
+        Weighted composite series, NaN where all components are missing.
+    """
+    if not components:
+        return pd.Series(dtype=float)
+
+    series_list, weights = zip(*components)
+    df = pd.concat(series_list, axis=1)
+    df.columns = range(len(series_list))
+
+    w = np.asarray(weights, dtype=float)
+    present = df.notna().to_numpy()
+    vals = df.to_numpy(dtype=float, na_value=0.0)
+
+    weighted_sum = vals @ w
+    present_weight = present.astype(float) @ w
+
+    with np.errstate(invalid="ignore", divide="ignore"):
+        result = np.where(present_weight > 0, weighted_sum / present_weight, np.nan)
+
+    return pd.Series(result, index=df.index, dtype=float)
+
+
+def nan_mean(*serieses: pd.Series) -> pd.Series:
+    """
+    NaN-aware mean across an arbitrary number of equally-weighted series.
+    Returns NaN where every input is NaN. Equivalent to nan_weighted_sum
+    with equal weights but avoids the divide step when caller doesn't need
+    custom weights.
+    """
+    if not serieses:
+        return pd.Series(dtype=float)
+    df = pd.concat(serieses, axis=1)
+    return df.mean(axis=1, skipna=True)
+
+
 # ==========================================
 # INDEX FORMULAS
 # ==========================================
@@ -358,14 +413,11 @@ def compute_lfi(df: pd.DataFrame) -> pd.Series:
     hires_quits_ratio = hires / quits.replace(0, np.nan)
     z_hires_quits = -compute_zscore(hires_quits_ratio, window=24)
 
-    # Validation-informed weights (sum to 1.0)
-    lfi = (0.15 * z_longterm.fillna(0) +    # Reduced from 0.35
-           0.45 * z_quits.fillna(0) +        # Increased from 0.35
-           0.40 * z_hires_quits.fillna(0))   # Increased from 0.30
-
-    # Only return where we have at least one component
-    valid_mask = z_longterm.notna() | z_quits.notna() | hires_quits_ratio.notna()
-    lfi = lfi.where(valid_mask)
+    lfi = nan_weighted_sum([
+        (z_longterm, 0.15),
+        (z_quits, 0.45),
+        (z_hires_quits, 0.40),
+    ])
 
     # Smooth with 3-month (63 trading day) moving average to reduce noise
     # Raw z-score composites are choppy at daily frequency
@@ -417,15 +469,12 @@ def compute_lci(df: pd.DataFrame) -> pd.Series:
     # Chicago NFCI as financial conditions proxy (inverted - negative = loose)
     z_nfci = -df.get("Chicago_NFCI_z", pd.Series(dtype=float))
 
-    # Weighted composite (simplified with available components)
-    lci = (0.30 * z_reserves.fillna(0) +
-           0.25 * z_rrp.fillna(0) +
-           0.25 * z_effr_sofr.fillna(0) +
-           0.20 * z_nfci.fillna(0))
-
-    # Only return where we have at least one component
-    valid_mask = z_reserves.notna() | z_rrp.notna() | z_nfci.notna()
-    lci = lci.where(valid_mask)
+    lci = nan_weighted_sum([
+        (z_reserves, 0.30),
+        (z_rrp, 0.25),
+        (z_effr_sofr, 0.25),
+        (z_nfci, 0.20),
+    ])
 
     return lci
 
@@ -490,15 +539,13 @@ def compute_lpi(df: pd.DataFrame) -> pd.Series:
     # Prime Age LFPR
     z_lfpr = df.get("LFPR_Prime_Age_25_54_z", pd.Series(dtype=float))
 
-    # Weighted composite
-    lpi = (0.25 * z_quits.fillna(0) +
-           0.20 * z_hires_quits.fillna(0) +
-           0.20 * z_longterm.fillna(0) +
-           0.20 * z_claims.fillna(0) +
-           0.15 * z_lfpr.fillna(0))
-
-    valid_mask = z_quits.notna() | z_claims.notna() | z_lfpr.notna()
-    lpi = lpi.where(valid_mask)
+    lpi = nan_weighted_sum([
+        (z_quits, 0.25),
+        (z_hires_quits, 0.20),
+        (z_longterm, 0.20),
+        (z_claims, 0.20),
+        (z_lfpr, 0.15),
+    ])
 
     return lpi
 
@@ -530,14 +577,12 @@ def compute_pci(df: pd.DataFrame) -> pd.Series:
     # 5Y5Y Forward Inflation
     z_5y5y = df.get("Forward_Inflation_5Y_z", pd.Series(dtype=float))
 
-    # Weighted composite
-    pci = (0.35 * z_pce_3m.fillna(0) +
-           0.25 * z_shelter.fillna(0) +
-           0.20 * z_sticky.fillna(0) +
-           0.20 * z_5y5y.fillna(0))
-
-    valid_mask = z_pce_3m.notna() | z_shelter.notna() | z_5y5y.notna()
-    pci = pci.where(valid_mask)
+    pci = nan_weighted_sum([
+        (z_pce_3m, 0.35),
+        (z_shelter, 0.25),
+        (z_sticky, 0.20),
+        (z_5y5y, 0.20),
+    ])
 
     return pci
 
@@ -567,13 +612,11 @@ def compute_gci(df: pd.DataFrame) -> pd.Series:
     starts_yoy = df.get("Housing_Starts_yoy_pct", pd.Series(dtype=float))
     z_starts = compute_zscore(starts_yoy, window=24)
 
-    # Weighted composite (simplified)
-    gci = (0.40 * z_ip.fillna(0) +
-           0.30 * z_retail.fillna(0) +
-           0.30 * z_starts.fillna(0))
-
-    valid_mask = z_ip.notna() | z_retail.notna() | z_starts.notna()
-    gci = gci.where(valid_mask)
+    gci = nan_weighted_sum([
+        (z_ip, 0.40),
+        (z_retail, 0.30),
+        (z_starts, 0.30),
+    ])
 
     return gci
 
@@ -600,14 +643,13 @@ def compute_hci(df: pd.DataFrame) -> pd.Series:
     mortgage = df.get("Mortgage_30Y", pd.Series(dtype=float))
     z_mortgage = -compute_zscore(mortgage, window=52)
 
-    hci = (0.25 * z_starts.fillna(0) +
-           0.25 * z_sales.fillna(0) +
-           0.20 * z_supply.fillna(0) +
-           0.15 * z_cs.fillna(0) +
-           0.15 * z_mortgage.fillna(0))
-
-    valid_mask = z_starts.notna() | z_sales.notna() | z_cs.notna()
-    hci = hci.where(valid_mask)
+    hci = nan_weighted_sum([
+        (z_starts, 0.25),
+        (z_sales, 0.25),
+        (z_supply, 0.20),
+        (z_cs, 0.15),
+        (z_mortgage, 0.15),
+    ])
 
     return hci
 
@@ -625,12 +667,11 @@ def compute_cci(df: pd.DataFrame) -> pd.Series:
     # Credit Card Delinquency (INVERTED)
     z_delinq = -df.get("Delinquency_Credit_Card_z", pd.Series(dtype=float))
 
-    cci = (0.35 * z_sentiment.fillna(0) +
-           0.35 * z_saving.fillna(0) +
-           0.30 * z_delinq.fillna(0))
-
-    valid_mask = z_sentiment.notna() | z_saving.notna() | z_delinq.notna()
-    cci = cci.where(valid_mask)
+    cci = nan_weighted_sum([
+        (z_sentiment, 0.35),
+        (z_saving, 0.35),
+        (z_delinq, 0.30),
+    ])
 
     return cci
 
@@ -650,12 +691,11 @@ def compute_bci(df: pd.DataFrame) -> pd.Series:
     # HY Spreads (INVERTED - tight spreads = good for business)
     z_hy = -df.get("HY_OAS_z", pd.Series(dtype=float))
 
-    bci = (0.35 * z_ci.fillna(0) +
-           0.35 * z_bus.fillna(0) +
-           0.30 * z_hy.fillna(0))
-
-    valid_mask = z_ci.notna() | z_bus.notna() | z_hy.notna()
-    bci = bci.where(valid_mask)
+    bci = nan_weighted_sum([
+        (z_ci, 0.35),
+        (z_bus, 0.35),
+        (z_hy, 0.30),
+    ])
 
     return bci
 
@@ -672,11 +712,10 @@ def compute_tci(df: pd.DataFrame) -> pd.Series:
     eur_yoy = df.get("EUR_USD_yoy_pct", pd.Series(dtype=float))
     z_eur = compute_zscore(eur_yoy, window=252)
 
-    tci = (0.50 * z_dollar.fillna(0) +
-           0.50 * z_eur.fillna(0))
-
-    valid_mask = z_dollar.notna() | z_eur.notna()
-    tci = tci.where(valid_mask)
+    tci = nan_weighted_sum([
+        (z_dollar, 0.50),
+        (z_eur, 0.50),
+    ])
 
     return tci
 
@@ -692,11 +731,10 @@ def compute_gci_gov(df: pd.DataFrame) -> pd.Series:
     # Term Premium
     z_term = df.get("Term_Premium_10Y_z", pd.Series(dtype=float))
 
-    gci_gov = (0.50 * z_debt.fillna(0) +
-               0.50 * z_term.fillna(0))
-
-    valid_mask = z_debt.notna() | z_term.notna()
-    gci_gov = gci_gov.where(valid_mask)
+    gci_gov = nan_weighted_sum([
+        (z_debt, 0.50),
+        (z_term, 0.50),
+    ])
 
     return gci_gov
 
@@ -717,14 +755,13 @@ def compute_fci(df: pd.DataFrame, lci: pd.Series) -> pd.Series:
     # VIX (INVERTED - low VIX = loose)
     z_vix = -df.get("VIX_z", pd.Series(dtype=float))
 
-    fci = (0.25 * z_hy.fillna(0) +
-           0.25 * z_nfci.fillna(0) +
-           0.25 * z_curve.fillna(0) +
-           0.15 * z_vix.fillna(0) +
-           0.10 * lci.fillna(0))
-
-    valid_mask = z_hy.notna() | z_nfci.notna() | z_curve.notna()
-    fci = fci.where(valid_mask)
+    fci = nan_weighted_sum([
+        (z_hy, 0.25),
+        (z_nfci, 0.25),
+        (z_curve, 0.25),
+        (z_vix, 0.15),
+        (lci, 0.10),
+    ])
 
     return fci
 
@@ -767,21 +804,18 @@ def compute_mri(lpi: pd.Series, pci: pd.Series, gci: pd.Series,
         - LCI and TCI show higher importance than originally weighted
         - BCI and GCI_Gov remain important leading indicators
     """
-    # Validation-informed weights (sum to 1.0)
-    mri = (0.33 * (-lpi).fillna(0) +     # Labor - highest weight (was 0.15)
-           0.03 * pci.fillna(0) +         # Prices - reduced (was 0.10)
-           0.02 * (-gci).fillna(0) +      # Growth - reduced (was 0.15)
-           0.02 * (-hci).fillna(0) +      # Housing - reduced (was 0.08)
-           0.02 * (-cci).fillna(0) +      # Consumer - reduced (was 0.10)
-           0.13 * (-bci).fillna(0) +      # Business - slight increase (was 0.10)
-           0.12 * (-tci).fillna(0) +      # Trade - increased (was 0.07)
-           0.12 * gci_gov.fillna(0) +     # Government - slight increase (was 0.10)
-           0.07 * (-fci).fillna(0) +      # Financial - increased (was 0.05)
-           0.14 * (-lci).fillna(0))       # Plumbing - increased (was 0.10)
-
-    # Need at least a few components to be valid
-    valid_mask = lpi.notna() | gci.notna() | lci.notna()
-    mri = mri.where(valid_mask)
+    mri = nan_weighted_sum([
+        (-lpi,    0.33),   # Labor
+        (pci,     0.03),   # Prices
+        (-gci,    0.02),   # Growth
+        (-hci,    0.02),   # Housing
+        (-cci,    0.02),   # Consumer
+        (-bci,    0.13),   # Business
+        (-tci,    0.12),   # Trade
+        (gci_gov, 0.12),   # Government
+        (-fci,    0.07),   # Financial
+        (-lci,    0.14),   # Plumbing
+    ])
 
     return mri
 
@@ -810,10 +844,7 @@ def compute_ldi(df: pd.DataFrame) -> pd.Series:
     quits_claims_ratio = quits / (claims / 1000).replace(0, np.nan)  # Scale claims
     z_quits_claims = compute_zscore(quits_claims_ratio, window=24)
 
-    ldi = (z_quits.fillna(0) + z_hires_quits.fillna(0) + z_quits_claims.fillna(0)) / 3
-
-    valid_mask = z_quits.notna() | hires_quits_ratio.notna()
-    ldi = ldi.where(valid_mask)
+    ldi = nan_mean(z_quits, z_hires_quits, z_quits_claims)
 
     return ldi
 
@@ -836,10 +867,7 @@ def compute_yfs(df: pd.DataFrame) -> pd.Series:
     sofr_effr = sofr - effr
     z_sofr_effr = compute_zscore(sofr_effr, window=252)
 
-    yfs = (z_10y2y.fillna(0) + z_10y3m.fillna(0) + z_sofr_effr.fillna(0)) / 3
-
-    valid_mask = z_10y2y.notna() | z_10y3m.notna() | z_sofr_effr.notna()
-    yfs = yfs.where(valid_mask)
+    yfs = nan_mean(z_10y2y, z_10y3m, z_sofr_effr)
 
     return yfs
 
@@ -1132,19 +1160,21 @@ def compute_msi(conn: sqlite3.Connection) -> pd.Series:
         print("      Warning: No valid MSI components found")
         return pd.Series(dtype=float, name="MSI")
 
-    # Compute weighted sum
-    msi = pd.Series(0.0, index=market_df.index, name="MSI")
-    for name, (series, weight) in components.items():
-        aligned = series.reindex(msi.index)
-        msi = msi + (aligned * weight).fillna(0)
+    pairs = [
+        (series.reindex(market_df.index), weight)
+        for series, weight in components.values()
+    ]
+    msi = nan_weighted_sum(pairs)
+    msi.name = "MSI"
 
-    # Only keep values where we have at least some data
-    valid_mask = sum(
+    # Quality gate: require at least 3 of the configured components to be
+    # present at a given date. Below that bar we'd be renormalizing over a
+    # thin subset that doesn't represent the structure pillar.
+    present_count = sum(
         (~components[k][0].reindex(msi.index).isna()).astype(int)
         for k in components
-    ) >= 3  # Require at least 3 components
-
-    msi = msi.where(valid_mask)
+    )
+    msi = msi.where(present_count >= 3)
 
     return msi
 
@@ -1238,19 +1268,12 @@ def compute_spi(conn: sqlite3.Connection) -> pd.Series:
         print("      Warning: No valid SPI components found")
         return pd.Series(dtype=float, name="SPI")
 
-    # Compute weighted sum
-    spi = pd.Series(0.0, index=market_df.index, name="SPI")
-    for name, (series, weight) in components.items():
-        aligned = series.reindex(spi.index)
-        spi = spi + (aligned * weight).fillna(0)
-
-    # Only keep values where we have at least some data
-    valid_mask = sum(
-        (~components[k][0].reindex(spi.index).isna()).astype(int)
-        for k in components
-    ) >= 1
-
-    spi = spi.where(valid_mask)
+    pairs = [
+        (series.reindex(market_df.index), weight)
+        for series, weight in components.values()
+    ]
+    spi = nan_weighted_sum(pairs)
+    spi.name = "SPI"
 
     return spi
 

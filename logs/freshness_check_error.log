@@ -604,3 +604,13 @@
 2026-05-14 09:19:46 [INFO]   RSXFS: refreshed (+412 obs)
 2026-05-14 09:20:26 [INFO]   RSFSDP: refreshed (+412 obs)
 2026-05-14 09:30:24 [INFO]   RSMVPD: refreshed (+412 obs)
+2026-05-14 09:31:05 [INFO]   RSGASS: refreshed (+412 obs)
+2026-05-14 10:00:06 [INFO]   RSBMGESD: refreshed (+412 obs)
+2026-05-14 10:20:32 [INFO]   RSFHFS: refreshed (+412 obs)
+2026-05-14 10:21:19 [INFO]   RSEAS: refreshed (+412 obs)
+2026-05-14 10:36:46 [INFO]   RSCCAS: refreshed (+412 obs)
+2026-05-14 10:37:25 [INFO]   RSSGHBMS: refreshed (+412 obs)
+2026-05-14 10:38:08 [INFO]   RSHPCS: refreshed (+412 obs)
+2026-05-14 10:44:27 [INFO]   RSNSR: refreshed (+412 obs)
+2026-05-14 10:45:26 [INFO]   RSGMS: refreshed (+412 obs)
+2026-05-14 10:45:31 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series/observations?series_id=RSDBS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...

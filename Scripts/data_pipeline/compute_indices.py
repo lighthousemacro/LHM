@@ -826,7 +826,7 @@ def compute_fci(df: pd.DataFrame, lci: pd.Series) -> pd.Series:
 
 def compute_mri(lpi: pd.Series, pci: pd.Series, gci: pd.Series,
                hci: pd.Series, cci: pd.Series, bci: pd.Series,
-               tci: pd.Series, gci_gov: pd.Series, fci: pd.Series,
+               tci: pd.Series, fpi: pd.Series, fci: pd.Series,
                lci: pd.Series) -> pd.Series:
     """
     Macro Risk Index (MRI) - Master Composite
@@ -870,7 +870,7 @@ def compute_mri(lpi: pd.Series, pci: pd.Series, gci: pd.Series,
         (-cci,    0.02),   # Consumer
         (-bci,    0.13),   # Business
         (-tci,    0.12),   # Trade
-        (gci_gov, 0.12),   # Government
+        (fpi,     0.12),   # Government (Fiscal Pressure)
         (-fci,    0.07),   # Financial
         (-lci,    0.14),   # Plumbing
     ])
@@ -1130,19 +1130,54 @@ NOWCAST_FFILL_LIMIT_DAYS = 14
 # These bridges are interim — Phase 2 will swap each one for a proper
 # regression / state-space model with confidence bands and vintage tracking.
 BRIDGE_REGISTRY: dict = {
-    "GCI":     ("overlay:Growth_Nowcast_WEI_z", +1),
-    "LFI":     ("Initial_Claims_z",      +1),
-    "LPI":     ("Initial_Claims_z",      -1),
-    "LDI":     ("Initial_Claims_z",      -1),
-    "PCI":     ("Forward_Inflation_5Y_z", +1),
-    "HCI":     ("Mortgage_30Y",          -1),
-    "CCI":     ("HY_OAS_z",              -1),
-    "BCI":     ("HY_OAS_z",              -1),
-    "TCI":     ("Dollar_Index_yoy_pct",  -1),
-    "GCI_Gov": ("Term_Premium_10Y_z",    +1),
-    "LCI":     ("OFR_FSI_US_z",          -1),
-    "FCI":     ("HY_OAS_z",              -1),
+    # Composite        Partner (daily, fresh today)         Sign  Notes
+    "GCI":     ("overlay:Growth_Nowcast_WEI_z", +1),  # NY Fed WEI, daily-tracked
+    "LFI":     ("HY_OAS_z",              +1),         # daily; credit stress leads labor stress
+    "LPI":     ("HY_OAS_z",              -1),         # inverse for labor health
+    "LDI":     ("HY_OAS_z",              -1),         # inverse for labor dynamism
+    "PCI":     ("Forward_Inflation_5Y_z", +1),        # daily TIPS-derived inflation
+    "HCI":     ("Treasury_10Y",          -1),         # daily; mortgage rates track 10Y
+    "CCI":     ("HY_OAS_z",              -1),         # daily macro risk proxy
+    "BCI":     ("HY_OAS_z",              -1),         # daily cost-of-capital proxy
+    "TCI":     ("HY_OAS_z",              -1),         # daily risk-on/off proxy
+    "FPI":     ("Curve_10Y_2Y_z",        +1),         # daily; curve steepening = term premium up
+    "LCI":     ("RRP_Usage_z",           +1),         # daily; RRP balance is the cushion itself
+    "FCI":     ("HY_OAS_z",              -1),         # daily; spreads inversely track looseness
 }
+
+
+# Reader-facing names per the 2026-05-08 naming lock. Used for print output
+# and diagrams. Database index_id codes remain unchanged as legacy keys,
+# except GCI_Gov → FPI (rename authorized).
+COMPOSITE_NAMES: dict = {
+    "LPI": "Labor Pressure",
+    "LFI": "Labor Fragility",
+    "LDI": "Labor Dynamism",
+    "PCI": "Inflation Heat",
+    "GCI": "Activity Pulse",
+    "HCI": "Housing Tide",
+    "CCI": "Consumer Pulse",
+    "BCI": "Capex Thrust",
+    "TCI": "Global Risk Tide",
+    "FPI": "Fiscal Pressure",
+    "FCI": "Credit Tide",
+    "LCI": "Liquidity Cushion",
+    "CLG": "Credit-Labor Gap",
+    "MSI": "Market Breadth Pulse",
+    "SBD": "Structure-Breadth Divergence",
+    "SPI": "Sentiment Tide",
+    "SSD": "Sentiment-Structure Divergence",
+    "MRI": "Macro Risk Index",
+    "YFS": "Yield-Funding Stress",
+    "SVI": "Spread-Volatility Imbalance",
+    "EMD": "Equity Momentum Divergence",
+}
+
+
+def _display(code: str) -> str:
+    """Reader-facing label for log lines and diagrams."""
+    name = COMPOSITE_NAMES.get(code)
+    return f"{name} ({code})" if name else code
 
 
 def _resolve_bridge_partner(
@@ -1196,6 +1231,76 @@ def _bridge_apply(
             f"carried to {post.date()} via {sign_str}{partner_name}"
         )
     return bridged
+
+
+# Yahoo Finance intraday tickers → horizon_dataset column name.
+# These are quotes that update every business day during market hours, so
+# they should never be more than a few hours stale. Used by
+# _extend_intraday_quotes() below to close any FRED-publish-window gap.
+INTRADAY_QUOTE_MAP: dict = {
+    "^TNX":  "Treasury_10Y",
+    "^TYX":  "Treasury_30Y",
+    "^FVX":  "Treasury_5Y",
+    "^IRX":  "Treasury_3M",
+    "^VIX":  "VIX",
+    "^GSPC": "SPX_Close",
+}
+
+
+def _extend_intraday_quotes(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Splice in today's intraday quotes from yfinance for key daily series.
+
+    The horizon_dataset's max date comes from whatever sources FRED has
+    published by pipeline run time. Treasury yields, VIX, and equity index
+    closes are quoted continuously during market hours — there is no reason
+    for those columns to lag by a day. This function:
+
+      1. Pulls the last few business days' closes for each ticker in
+         INTRADAY_QUOTE_MAP from yfinance.
+      2. Extends df.index forward through today if needed.
+      3. Fills any NaN values in the target column with the yfinance close.
+
+    Falls back silently if yfinance isn't importable or a fetch errors —
+    the bridges then just stamp at whatever the prior data supports.
+    """
+    try:
+        import yfinance as yf
+    except ImportError:
+        print("   intraday extend: yfinance not available, skipping")
+        return df
+
+    today = pd.Timestamp.today().normalize()
+    new_dates = pd.date_range(df.index.max() + pd.Timedelta(days=1), today, freq="D")
+    if len(new_dates):
+        # Extend index with NaN rows so bridges have somewhere to stamp.
+        df = df.reindex(df.index.union(new_dates))
+
+    extended_to: dict = {}
+    for ticker, col in INTRADAY_QUOTE_MAP.items():
+        if col not in df.columns:
+            continue
+        try:
+            hist = yf.Ticker(ticker).history(period="10d", auto_adjust=False)
+            if hist.empty:
+                continue
+            # yfinance returns tz-aware dates; normalize to naive daily.
+            hist = hist.copy()
+            hist.index = hist.index.tz_localize(None).normalize()
+            for d, row in hist[["Close"]].iterrows():
+                v = float(row["Close"])
+                if d in df.index and pd.isna(df.at[d, col]):
+                    df.at[d, col] = v
+                    extended_to.setdefault(col, d)
+                    if d > extended_to[col]:
+                        extended_to[col] = d
+        except Exception as e:
+            print(f"   intraday extend {ticker} → {col} failed: {e}")
+
+    for col, d in extended_to.items():
+        print(f"   intraday extend: {col} carried to {d.date()} via yfinance")
+
+    return df.sort_index()
 
 
 def load_nowcast_overlays(
@@ -1520,6 +1625,12 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
     print(f"   Loaded {len(df)} rows, {len(df.columns)} columns")
     print(f"   Date range: {df.index.min().date()} to {df.index.max().date()}")
 
+    # Splice in today's intraday quotes from yfinance so bridges through
+    # market-quoted series (Treasury yields, VIX, SPX) stamp through today.
+    print("\n--- Extending intraday quotes (yfinance) ---")
+    df = _extend_intraday_quotes(df)
+    print(f"   Extended date range: {df.index.min().date()} to {df.index.max().date()}")
+
     # Layer-1 nowcast overlays. These feed bridge_to_today() below so the
     # strict composite formulas can be carried forward from their last
     # full-coverage anchor to the latest real-time reading, without morphing
@@ -1538,54 +1649,54 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
     print("\n--- Computing Indices (strict anchor + Layer-1 bridge) ---")
 
     # Pillar composites: compute strict anchor then bridge to today.
-    print("   Computing LPI (Labor Pillar)...")
+    print(f"   Computing {_display('LPI')}...")
     lpi = _bridge_apply("LPI", compute_lpi(df), df, nowcast_overlays)
 
-    print("   Computing PCI (Prices Pillar)...")
+    print(f"   Computing {_display('PCI')}...")
     pci = _bridge_apply("PCI", compute_pci(df), df, nowcast_overlays)
 
-    print("   Computing GCI (Growth Pillar)...")
+    print(f"   Computing {_display('GCI')}...")
     gci = _bridge_apply("GCI", compute_gci(df), df, nowcast_overlays)
 
-    print("   Computing HCI (Housing Pillar)...")
+    print(f"   Computing {_display('HCI')}...")
     hci = _bridge_apply("HCI", compute_hci(df), df, nowcast_overlays)
 
-    print("   Computing CCI (Consumer Pillar)...")
+    print(f"   Computing {_display('CCI')}...")
     cci = _bridge_apply("CCI", compute_cci(df), df, nowcast_overlays)
 
-    print("   Computing BCI (Business Pillar)...")
+    print(f"   Computing {_display('BCI')}...")
     bci = _bridge_apply("BCI", compute_bci(df), df, nowcast_overlays)
 
-    print("   Computing TCI (Trade Pillar)...")
+    print(f"   Computing {_display('TCI')}...")
     tci = _bridge_apply("TCI", compute_tci(df), df, nowcast_overlays)
 
-    print("   Computing GCI-Gov (Government Pillar)...")
-    gci_gov = _bridge_apply("GCI_Gov", compute_gci_gov(df), df, nowcast_overlays)
+    print(f"   Computing {_display('FPI')}...")
+    fpi = _bridge_apply("FPI", compute_fpi(df), df, nowcast_overlays)
 
-    # LFI / LCI: bridge before they feed FCI and CLG so those inherit fresh values.
-    print("   Computing LFI (Labor Fragility Index)...")
+    # Bridge LFI / LCI before they feed FCI and CLG.
+    print(f"   Computing {_display('LFI')}...")
     lfi = _bridge_apply("LFI", compute_lfi(df), df, nowcast_overlays)
 
-    print("   Computing LCI (Liquidity Cushion Index)...")
+    print(f"   Computing {_display('LCI')}...")
     lci = _bridge_apply("LCI", compute_lci(df), df, nowcast_overlays)
 
-    print("   Computing FCI (Financial Conditions)...")
+    print(f"   Computing {_display('FCI')}...")
     fci = _bridge_apply("FCI", compute_fci(df, lci), df, nowcast_overlays)
 
-    print("   Computing CLG (Credit-Labor Gap)...")
-    # CLG = z(HY_OAS) - z(LFI); both inputs daily-fresh after LFI bridge.
+    print(f"   Computing {_display('CLG')}...")
+    # CLG = z(HY_OAS) − z(LFI); both inputs daily-fresh after LFI bridge.
     clg = compute_clg(df, lfi)
 
-    print("   Computing MRI (Macro Risk Index)...")
+    print(f"   Computing {_display('MRI')}...")
     # MRI consumes the bridged pillars. Strict weighted sum across the 10
     # pillars: MRI is fresh wherever every pillar is fresh.
-    mri = compute_mri(lpi, pci, gci, hci, cci, bci, tci, gci_gov, fci, lci)
+    mri = compute_mri(lpi, pci, gci, hci, cci, bci, tci, fpi, fci, lci)
 
     # Additional indicators
-    print("   Computing LDI (Labor Dynamism Index)...")
+    print(f"   Computing {_display('LDI')}...")
     ldi = _bridge_apply("LDI", compute_ldi(df), df, nowcast_overlays)
 
-    print("   Computing YFS (Yield-Funding Stress)...")
+    print(f"   Computing {_display('YFS')}...")
     yfs = compute_yfs(df)  # all-daily inputs, no bridge needed
 
     print("   Computing SVI (Spread-Volatility Imbalance)...")
@@ -1662,7 +1773,7 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
         "CCI": cci,
         "BCI": bci,
         "TCI": tci,
-        "GCI_Gov": gci_gov,
+        "FPI": fpi,
         "FCI": fci,
         # Market Structure (Pillar 11)
         "MSI": msi,

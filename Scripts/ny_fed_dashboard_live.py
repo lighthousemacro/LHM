@@ -1,18 +1,33 @@
-#!/Users/bob/Desktop/Bob_EquiLend_Models/venv/bin/python3
-import dash
-from dash import dcc, html, Input, Output, dash_table
+#!/usr/bin/env python3
+import ast
+import glob
+import json
+import os
+import sys
+from pathlib import Path
+
+try:
+    import dash
+except ImportError:
+    print(
+        "ny_fed_dashboard_live needs dash, plotly, and pandas.\n\n"
+        "On Homebrew Python, use a venv (PEP 668 blocks global pip), e.g.:\n"
+        "  python3 -m venv .venv && .venv/bin/pip install dash plotly pandas\n"
+        "  .venv/bin/python Scripts/ny_fed_dashboard_live.py\n",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import pandas as pd
-import glob
-import os
-import ast
-import json
+from dash import Input, Output, dash_table, dcc, html
 
 app = dash.Dash(__name__)
 app.title = 'NY Fed Market Data Dashboard'
 
-base_dir = 'ny_fed_data'
+# Resolve CSVs relative to repo root (parent of Scripts/), not the shell cwd.
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+base_dir = str(_REPO_ROOT / "ny_fed_data")
 
 def latest(pattern):
     files = glob.glob(pattern)
@@ -284,4 +299,12 @@ def render_content(tab):
     return html.Div()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    data_path = Path(base_dir)
+    if not data_path.is_dir():
+        data_path.mkdir(parents=True, exist_ok=True)
+        print(f"Created data directory (add NY Fed CSV exports here): {data_path}")
+    else:
+        n = len(list(data_path.glob("*.csv")))
+        print(f"NY Fed dashboard — loading CSVs from {data_path} ({n} files)")
+    print("Open http://127.0.0.1:8050/ in a browser (Ctrl+C to stop)")
+    app.run(debug=True, host="127.0.0.1", port=8050)

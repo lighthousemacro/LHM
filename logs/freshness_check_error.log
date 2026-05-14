@@ -576,3 +576,31 @@
 2026-05-13 16:35:33 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=DSPIC96&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-05-13 16:35:35 [WARNING] Attempt 2 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=DSPIC96&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
 2026-05-13 16:35:52 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-14 09:16:58 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=CUSR0000SAH1&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-14 09:17:01 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=CUSR0000SAS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-14 09:17:04 [WARNING] Attempt 2 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=CUSR0000SAS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
+2026-05-14 09:18:23 [INFO] Stale series (20):
+  RSAFS: db=2026-03-01 -> fred=2026-04-01
+  RSXFS: db=2026-03-01 -> fred=2026-04-01
+  RSFSDP: db=2026-03-01 -> fred=2026-04-01
+  RSMVPD: db=2026-03-01 -> fred=2026-04-01
+  RSGASS: db=2026-03-01 -> fred=2026-04-01
+  RSBMGESD: db=2026-03-01 -> fred=2026-04-01
+  RSFHFS: db=2026-03-01 -> fred=2026-04-01
+  RSEAS: db=2026-03-01 -> fred=2026-04-01
+  RSCCAS: db=2026-03-01 -> fred=2026-04-01
+  RSSGHBMS: db=2026-03-01 -> fred=2026-04-01
+  RSHPCS: db=2026-03-01 -> fred=2026-04-01
+  RSNSR: db=2026-03-01 -> fred=2026-04-01
+  RSGMS: db=2026-03-01 -> fred=2026-04-01
+  RSDBS: db=2026-03-01 -> fred=2026-04-01
+  RSMSR: db=2026-03-01 -> fred=2026-04-01
+  RSGCSN: db=2026-03-01 -> fred=2026-04-01
+  RRSFS: db=2026-03-01 -> fred=2026-04-01
+  RSFSXMV: db=2026-03-01 -> fred=2026-04-01
+  ICSA: db=2026-05-02 -> fred=2026-05-09
+  CCSA: db=2026-04-25 -> fred=2026-05-02
+2026-05-14 09:19:08 [INFO]   RSAFS: refreshed (+412 obs)
+2026-05-14 09:19:46 [INFO]   RSXFS: refreshed (+412 obs)
+2026-05-14 09:20:26 [INFO]   RSFSDP: refreshed (+412 obs)
+2026-05-14 09:30:24 [INFO]   RSMVPD: refreshed (+412 obs)

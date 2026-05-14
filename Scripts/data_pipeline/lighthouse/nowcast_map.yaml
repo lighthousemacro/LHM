@@ -1,0 +1,422 @@
+# LHM Nowcast Map (Layer 1)
+# ============================
+# Every monthly/quarterly horizon_dataset column feeding the proprietary
+# indicators is mapped to (a) its best public real-time nowcast, and
+# (b) its best high-frequency proxy. Layer 2 (LHM modeling) consumes Layer 1
+# outputs. See feedback_indicators_are_nowcasts memory for the rule.
+#
+# Fields per entry:
+#   horizon_column:       column name as compute_indices.py expects it
+#   construct:            what this column is measuring (plain English)
+#   pillar:               1-12 (or "cross" for cross-pillar)
+#   raw_series_id:        source series in observations table
+#   raw_cadence:          daily | weekly | monthly | quarterly
+#   external_nowcast:     FRED/Fed nowcast series (preferred when it exists)
+#   proxy_daily:          best high-frequency proxy
+#   nowcast_strategy:     external | proxy_regression | proxy_carry | model | none
+#   confidence:           high | medium | low | tbd
+#   notes:                anything weird about this input
+#
+# Status legend in nowcast_strategy:
+#   external             — use the external nowcast series directly
+#   proxy_regression     — model raw_series_id ~ proxy_daily (lead-lag regression)
+#   proxy_carry          — carry last raw print, but flag proxy direction as a sanity overlay
+#   model                — pure time-series (ARIMA / state-space) when no proxy fits
+#   none                 — daily-cadence already, no nowcast needed
+#
+# Phase 1 ships when every monthly/quarterly entry has a real strategy
+# (no "tbd" rows survive). Phase 2 adds confidence intervals + vintage tracking.
+
+version: 0.1.0
+last_updated: 2026-05-14
+
+inputs:
+
+  # ============================================================
+  # PILLAR 1 — LABOR (LFI, LPI, CLG via LFI)
+  # ============================================================
+  - horizon_column: JOLTS_Quits_Rate
+    construct: Job quits rate, total nonfarm
+    pillar: 1
+    raw_series_id: JTSQUR
+    raw_cadence: monthly
+    external_nowcast: null  # No Fed nowcast exists for quits
+    proxy_daily: ICSA, CCSA, Indeed_Job_Postings (when available)
+    nowcast_strategy: proxy_regression
+    confidence: medium
+    notes: Quits is the "truth serum" of the framework. Build regression vs initial claims + continuing claims, both daily/weekly. Cross-check against Indeed series if subscribed.
+
+  - horizon_column: JOLTS_Hires_Rate
+    construct: Hiring rate, total nonfarm
+    pillar: 1
+    raw_series_id: JTSHIR
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: ICSA (inverse), ADP_Weekly (when available)
+    nowcast_strategy: proxy_regression
+    confidence: medium
+
+  - horizon_column: Unemployed_27wks_Plus_z
+    construct: Long-term unemployment z-score
+    pillar: 1
+    raw_series_id: LNS13008397
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: ICSA, CCSA (continuing claims tracks long-duration spell formation)
+    nowcast_strategy: proxy_regression
+    confidence: medium
+
+  - horizon_column: LFPR_Prime_Age_25_54_z
+    construct: Prime-age labor force participation rate, z-score
+    pillar: 1
+    raw_series_id: LNS11300060
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: model
+    confidence: low
+    notes: LFPR is slow-moving, ARIMA is fine. Low information density between prints.
+
+  - horizon_column: Initial_Claims
+    construct: Initial jobless claims
+    pillar: 1
+    raw_series_id: ICSA
+    raw_cadence: weekly
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+    notes: Already weekly. Daily-resolution carry between Thursday prints is fine.
+
+  # ============================================================
+  # PILLAR 2 — PRICES (PCI)
+  # ============================================================
+  - horizon_column: PCE_Core_3m_ann
+    construct: Core PCE inflation, 3-month annualized
+    pillar: 2
+    raw_series_id: PCEPILFE
+    raw_cadence: monthly
+    external_nowcast: CFINPCE  # Cleveland Fed core PCE nowcast (verify FRED ID)
+    proxy_daily: T5YIE, T10YIE (TIPS breakevens)
+    nowcast_strategy: external
+    confidence: high
+    notes: Cleveland Fed Inflation Nowcasting is THE answer here. Daily updated nowcast for current-month CPI/PCE. Verify the exact FRED series IDs (CFINPCE, EXPINF*).
+
+  - horizon_column: CPI_Shelter_yoy_pct
+    construct: Shelter component CPI YoY
+    pillar: 2
+    raw_series_id: CUSR0000SAH1
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: Zillow_Rent_Index_yoy, Apartment_List_Rent_yoy
+    nowcast_strategy: proxy_regression
+    confidence: medium
+    notes: 12-18mo lag from market rents → CPI shelter is the structural relationship. Zillow ZORI leads by ~12mo in the framework already.
+
+  - horizon_column: Sticky_Core_CPI_yoy_pct
+    construct: Sticky core CPI YoY (Atlanta Fed)
+    pillar: 2
+    raw_series_id: CORESTICKM159SFRBATL
+    raw_cadence: monthly
+    external_nowcast: null  # Already an Atlanta Fed sticky measure
+    proxy_daily: null
+    nowcast_strategy: model
+    confidence: medium
+    notes: This IS Atlanta Fed's slow-moving inflation measure. ARIMA on the published series.
+
+  - horizon_column: Forward_Inflation_5Y_z
+    construct: 5Y forward inflation expectations
+    pillar: 2
+    raw_series_id: T5YIFR
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  # ============================================================
+  # PILLAR 3 — GROWTH (GCI)
+  # ============================================================
+  - horizon_column: Industrial_Production_yoy_pct
+    construct: Industrial Production YoY
+    pillar: 3
+    raw_series_id: INDPRO
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: Weekly_Rail_Carloads (FRED: RAILFRTCARLOADSD11), Weekly_Steel_Production
+    nowcast_strategy: proxy_regression
+    confidence: medium
+    notes: NY Fed Nowcast also produces an IP component; check.
+
+  - horizon_column: Retail_Sales_yoy_pct
+    construct: Retail Sales YoY
+    pillar: 5  # technically cross-cut with consumer
+    raw_series_id: RSAFS
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: WRBSMI  # Redbook weekly same-store sales
+    nowcast_strategy: proxy_regression
+    confidence: medium
+    notes: Redbook is the cleanest weekly retail proxy. Strong leading relationship.
+
+  - horizon_column: Consumer_Sentiment_z
+    construct: University of Michigan consumer sentiment, z-score
+    pillar: 12
+    raw_series_id: UMCSENT
+    raw_cadence: monthly  # but preliminary + final = 2x/month
+    external_nowcast: null
+    proxy_daily: AAII_Bull_Bear_Spread, NAAIM_Exposure
+    nowcast_strategy: proxy_regression
+    confidence: low
+    notes: UMich is mood-driven, hard to nowcast well. AAII / NAAIM are weekly investor proxies, only loosely correlated.
+
+  # ============================================================
+  # PILLAR 4 — HOUSING (HCI)
+  # ============================================================
+  - horizon_column: Housing_Starts_yoy_pct
+    construct: Housing starts YoY
+    pillar: 4
+    raw_series_id: HOUST
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: MBA_Mortgage_Applications (weekly), Mortgage_30Y_yoy_change
+    nowcast_strategy: proxy_regression
+    confidence: medium
+
+  - horizon_column: Existing_Home_Sales_yoy_pct
+    construct: Existing home sales YoY
+    pillar: 4
+    raw_series_id: EXHOSLUSM495S
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: MBA_Purchase_Applications (weekly), Pending_Home_Sales_yoy
+    nowcast_strategy: proxy_regression
+    confidence: medium
+
+  - horizon_column: Months_Supply_z
+    construct: Months supply of homes, z-score
+    pillar: 4
+    raw_series_id: MSACSR
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: Active_Listings_Realtor_dot_com (weekly, scraped)
+    nowcast_strategy: proxy_regression
+    confidence: low
+
+  - horizon_column: Case_Shiller_Home_Prices_yoy_pct
+    construct: Case-Shiller home prices YoY
+    pillar: 4
+    raw_series_id: CSUSHPISA
+    raw_cadence: monthly  # 2-month publication lag
+    external_nowcast: null
+    proxy_daily: Zillow_ZHVI_yoy, Redfin_HPI
+    nowcast_strategy: proxy_regression
+    confidence: high
+    notes: Zillow/Redfin lead Case-Shiller by ~2 months reliably.
+
+  # ============================================================
+  # PILLAR 5 — CONSUMER (CCI)
+  # ============================================================
+  - horizon_column: Saving_Rate_z
+    construct: Personal saving rate, z-score
+    pillar: 5
+    raw_series_id: PSAVERT
+    raw_cadence: monthly
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: model
+    confidence: low
+    notes: No clean daily proxy. Saving rate is residual = income - spending. Could be back-out from daily card-spending + income nowcast.
+
+  - horizon_column: Delinquency_Credit_Card_z
+    construct: Credit card delinquency rate, z-score
+    pillar: 5
+    raw_series_id: DRCCLACBS
+    raw_cadence: quarterly
+    external_nowcast: null
+    proxy_daily: NY_Fed_Consumer_Credit_Panel (slow), credit_card_lender_earnings_calls
+    nowcast_strategy: model
+    confidence: low
+    notes: Quarterly with significant lag. Probably accept monthly stamps from issuer earnings reports as a proxy update.
+
+  # ============================================================
+  # PILLAR 9 — FINANCIAL (FCI, CLG)
+  # ============================================================
+  - horizon_column: HY_OAS
+    construct: High yield credit spread (ICE BofA HY OAS)
+    pillar: 9
+    raw_series_id: BAMLH0A0HYM2
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: Chicago_NFCI_z
+    construct: Chicago Fed National Financial Conditions Index
+    pillar: 9
+    raw_series_id: NFCI
+    raw_cadence: weekly
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: Business_Loans_yoy_pct
+    construct: C&I bank lending YoY
+    pillar: 9
+    raw_series_id: BUSLOANS
+    raw_cadence: weekly  # H.8 release
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: CI_Loans_yoy_pct
+    construct: Commercial & Industrial loans YoY
+    pillar: 9
+    raw_series_id: TOTCI
+    raw_cadence: weekly
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  # ============================================================
+  # PILLAR 10 — PLUMBING (LCI, Liquidity Stage)
+  # ============================================================
+  - horizon_column: Bank_Reserves
+    construct: Aggregate reserves of depository institutions
+    pillar: 10
+    raw_series_id: WRESBAL
+    raw_cadence: weekly
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: RRP_Usage
+    construct: Reverse repo facility usage
+    pillar: 10
+    raw_series_id: RRPONTSYD
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: EFFR
+    construct: Effective Fed Funds Rate
+    pillar: 10
+    raw_series_id: EFFR
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: SOFR
+    construct: Secured Overnight Financing Rate
+    pillar: 10
+    raw_series_id: SOFR
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  # ============================================================
+  # PILLAR 8 — GOVERNMENT (FPI, formerly GCI_Gov)
+  # ============================================================
+  - horizon_column: Debt_to_GDP
+    construct: Federal debt as % of GDP
+    pillar: 8
+    raw_series_id: GFDEGDQ188S
+    raw_cadence: quarterly
+    external_nowcast: GDPNOW  # use Atlanta Fed nowcast in the denominator
+    proxy_daily: TreasuryDirect_total_debt (daily)
+    nowcast_strategy: proxy_regression
+    confidence: high
+    notes: Numerator (debt) is daily-available from TreasuryDirect. Denominator (GDP) gets the GDPNow nowcast. Recompute ratio daily.
+
+  - horizon_column: Term_Premium_10Y_z
+    construct: 10Y Treasury term premium, z-score
+    pillar: 8
+    raw_series_id: THREEFYTP10  # NY Fed (verify)
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: Curve_10Y_2Y_z
+    construct: 10Y - 2Y spread, z-score
+    pillar: 8
+    raw_series_id: T10Y2Y
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  - horizon_column: Curve_10Y_3M_z
+    construct: 10Y - 3M spread, z-score
+    pillar: 8
+    raw_series_id: T10Y3M
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  # ============================================================
+  # PILLAR 7 — TRADE (TCI)
+  # ============================================================
+  - horizon_column: Dollar_Index_yoy_pct
+    construct: Trade-weighted broad dollar YoY
+    pillar: 7
+    raw_series_id: DTWEXBGS
+    raw_cadence: weekly  # though FRED publishes with a few days lag
+    external_nowcast: null
+    proxy_daily: DXY (ICE Dollar Index, daily)
+    nowcast_strategy: proxy_carry
+    confidence: high
+    notes: Use DXY directly as the daily proxy when DTWEXBGS lags.
+
+  - horizon_column: EUR_USD_yoy_pct
+    construct: EUR/USD YoY
+    pillar: 7
+    raw_series_id: DEXUSEU
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+  # ============================================================
+  # PILLAR 12 — SENTIMENT (SPI)
+  # ============================================================
+  - horizon_column: VIX
+    construct: CBOE VIX
+    pillar: 12
+    raw_series_id: VIXCLS
+    raw_cadence: daily
+    external_nowcast: null
+    proxy_daily: null
+    nowcast_strategy: none
+    confidence: high
+
+# ============================================================
+# Phase 1 acceptance criteria:
+#   - Every monthly/quarterly entry has nowcast_strategy != "tbd"
+#   - For each "external" entry: FRED series ID verified and ingestable
+#   - For each "proxy_regression" entry: regression spec written + backtested
+#   - For each "model" entry: ARIMA/state-space spec written + backtested
+#   - horizon_dataset_builder.py wired to consume the resolved nowcast values
+#   - compute_indices.py .fillna(0) masking removed
+#
+# Open todos (catalog gaps to fill in Phase 1 refinement):
+#   - Pillar 6 (Business / Capex Thrust) inputs not yet listed
+#   - Pillar 11 (Market Structure) inputs (MSI breadth components) all daily already
+#   - Add Atlanta Fed Wage Growth Tracker mapping to LPI / wage CPI
+#   - Add NY Fed Weekly Economic Index as a cross-cut GCI nowcast

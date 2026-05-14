@@ -1304,6 +1304,12 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
     print(f"   Loaded {len(df)} rows, {len(df.columns)} columns")
     print(f"   Date range: {df.index.min().date()} to {df.index.max().date()}")
 
+    # TODO (nowcast): monthly inputs (JOLTS, BLS, BEA, NAHB) make daily
+    # downstream indices NULL between prints. Bob's rule is every indicator
+    # is a real-time nowcast, predicated on a formula or higher-frequency
+    # proxies, not a flat forward-fill. Design pending. See
+    # feedback_indicators_are_nowcasts memory.
+
     if latest_only:
         # Only compute for last available date
         df = df.iloc[[-1]]

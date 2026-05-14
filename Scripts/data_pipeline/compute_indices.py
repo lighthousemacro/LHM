@@ -314,27 +314,21 @@ def compute_zscore(series: pd.Series, window: int = 24, min_periods: int = None)
     return (series - rolling_mean) / rolling_std
 
 
-def nan_weighted_sum(components: list) -> pd.Series:
+def weighted_sum_strict(components: list) -> pd.Series:
     """
-    NaN-aware weighted sum of z-score components.
+    Strict weighted sum of z-score components — the canonical composite formula.
 
-    At each date, computes the weighted mean using only the components that
-    are present (not NaN), with weights renormalized over the present subset.
-    Returns NaN at dates where every component is NaN.
-
-    This replaces the .fillna(0) pattern that silently treats a missing
-    input as a "neutral" z-score of zero — masking staleness behind a
-    fake-fresh reading. With this helper, a stale input drops out of the
-    weighting at that date, so the composite is computed from real readings
-    only or surfaces honestly as NaN.
+    The composite is computed only at dates where every input is present.
+    Any NaN input propagates to NaN output at that date. This preserves the
+    exact published formula and weights — no implicit substitutions, no
+    silent reweighting. Trailing-tail freshness is provided separately by
+    bridge_to_today() using Layer-1 nowcasts.
 
     Args:
-        components: list of (series, weight) tuples. Weights should be the
-            original (full-coverage) weights. They are renormalized at each
-            date over the components that are present.
+        components: list of (series, weight) tuples.
 
     Returns:
-        Weighted composite series, NaN where all components are missing.
+        Weighted composite, NaN at any date with a missing input.
     """
     if not components:
         return pd.Series(dtype=float)
@@ -344,29 +338,92 @@ def nan_weighted_sum(components: list) -> pd.Series:
     df.columns = range(len(series_list))
 
     w = np.asarray(weights, dtype=float)
-    present = df.notna().to_numpy()
-    vals = df.to_numpy(dtype=float, na_value=0.0)
-
-    weighted_sum = vals @ w
-    present_weight = present.astype(float) @ w
-
-    with np.errstate(invalid="ignore", divide="ignore"):
-        result = np.where(present_weight > 0, weighted_sum / present_weight, np.nan)
-
-    return pd.Series(result, index=df.index, dtype=float)
+    valid = df.notna().all(axis=1)
+    # Plain weighted sum where valid; NaN elsewhere.
+    weighted_sum = df.fillna(0).to_numpy() @ w
+    out = pd.Series(weighted_sum, index=df.index, dtype=float)
+    return out.where(valid)
 
 
-def nan_mean(*serieses: pd.Series) -> pd.Series:
+# Back-compat alias. Both names point at the strict implementation so we don't
+# have to rename every call site.
+nan_weighted_sum = weighted_sum_strict
+
+
+def all_present_mean(*serieses: pd.Series) -> pd.Series:
     """
-    NaN-aware mean across an arbitrary number of equally-weighted series.
-    Returns NaN where every input is NaN. Equivalent to nan_weighted_sum
-    with equal weights but avoids the divide step when caller doesn't need
-    custom weights.
+    Strict mean across equally-weighted series. NaN at any date where any input
+    is NaN. Used for composites defined as a simple average (LDI, YFS).
     """
     if not serieses:
         return pd.Series(dtype=float)
     df = pd.concat(serieses, axis=1)
-    return df.mean(axis=1, skipna=True)
+    valid = df.notna().all(axis=1)
+    return df.mean(axis=1, skipna=False).where(valid)
+
+
+# Back-compat alias.
+nan_mean = all_present_mean
+
+
+def bridge_to_today(
+    anchor: pd.Series,
+    nowcast_z: pd.Series,
+    label: str = "",
+) -> pd.Series:
+    """
+    Carry a composite forward from its last full-coverage value to today using
+    a Layer-1 nowcast z-score as the bridge.
+
+    The anchor is the strict-formula composite — exactly the published
+    indicator, computed only where every input is present. The bridge fills
+    the gap from the last anchor date to the latest available nowcast date.
+
+    Procedure:
+        1. last_anchor_date = anchor's last non-NaN date.
+        2. Match the nowcast to the same handoff point.
+        3. offset = anchor_level - nowcast_level_at_handoff.
+        4. For each date t > last_anchor_date where the nowcast has a value:
+               bridged[t] = nowcast_z[t] + offset
+        5. The composite is the anchor through last_anchor_date and the
+           offset-anchored bridge after.
+
+    The offset anchoring keeps the level continuous at the handoff. The bridge
+    carries direction and magnitude using the nowcast. Days where the nowcast
+    is itself NaN remain NaN — the bridge does not invent values.
+
+    Args:
+        anchor: strict composite series (NaN where any input is NaN).
+        nowcast_z: Layer-1 nowcast z-score for this composite, daily-indexed.
+        label: optional tag for logging.
+
+    Returns:
+        Series with anchor + bridge values combined.
+    """
+    if anchor.empty or anchor.dropna().empty:
+        return anchor
+    if nowcast_z is None or nowcast_z.empty or nowcast_z.dropna().empty:
+        return anchor
+
+    last_anchor_date = anchor.last_valid_index()
+    anchor_level = anchor.loc[last_anchor_date]
+
+    nowcast_at_or_before = nowcast_z.loc[:last_anchor_date].dropna()
+    if nowcast_at_or_before.empty:
+        return anchor
+    handoff_nowcast = nowcast_at_or_before.iloc[-1]
+    offset = anchor_level - handoff_nowcast
+
+    result = anchor.copy()
+    tail_idx = nowcast_z.index[(nowcast_z.index > last_anchor_date) & nowcast_z.notna()]
+    if len(tail_idx):
+        bridged = nowcast_z.loc[tail_idx] + offset
+        # Ensure tail dates exist in result; if not, extend.
+        new_dates = bridged.index.difference(result.index)
+        if len(new_dates):
+            result = result.reindex(result.index.union(new_dates))
+        result.loc[bridged.index] = bridged
+    return result
 
 
 # ==========================================
@@ -1043,6 +1100,53 @@ def compute_sli(conn: sqlite3.Connection) -> pd.DataFrame:
 
 
 # ==========================================
+# LAYER-1 NOWCAST OVERLAYS
+# ==========================================
+
+# Per-overlay daily-ffill cap. Weekly cadence with publication slack ~14 days.
+# Beyond the cap, the overlay surfaces as NaN — composite then degrades via
+# nan_weighted_sum renormalization instead of carrying a fake-fresh reading.
+NOWCAST_FFILL_LIMIT_DAYS = 14
+
+
+def load_nowcast_overlays(
+    conn: sqlite3.Connection,
+    daily_index: pd.DatetimeIndex,
+) -> dict:
+    """
+    Pull Layer-1 nowcast partners from observations and return as z-score
+    series aligned to the supplied daily index.
+
+    Currently wired:
+        WEI (NY Fed Weekly Economic Index, series_id='WEI')
+            → Growth_Nowcast_WEI_z
+            Weekly, ffill-capped at NOWCAST_FFILL_LIMIT_DAYS.
+            Daily z-score, 252d rolling.
+
+    The architecture rule (see Outputs/nowcast_architecture_2026-05-14.html):
+    Layer 1 produces a daily value for every column or stamps it NaN.
+    Layer 2 (the composites) consumes Layer 1 outputs only.
+
+    Returns:
+        dict[column_name -> pd.Series] keyed by horizon_dataset column name.
+    """
+    overlays: dict = {}
+
+    wei_df = pd.read_sql(
+        "SELECT date, value FROM observations WHERE series_id = 'WEI' ORDER BY date",
+        conn,
+        parse_dates=["date"],
+    )
+    if not wei_df.empty:
+        wei = wei_df.set_index("date")["value"].sort_index()
+        wei_daily = wei.reindex(daily_index, method="ffill", limit=NOWCAST_FFILL_LIMIT_DAYS)
+        z_wei = compute_zscore(wei_daily, window=252, min_periods=63)
+        overlays["Growth_Nowcast_WEI_z"] = z_wei
+
+    return overlays
+
+
+# ==========================================
 # MARKET STRUCTURE INDEX (MSI) - PILLAR 11
 # ==========================================
 
@@ -1327,11 +1431,16 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
     print(f"   Loaded {len(df)} rows, {len(df.columns)} columns")
     print(f"   Date range: {df.index.min().date()} to {df.index.max().date()}")
 
-    # TODO (nowcast): monthly inputs (JOLTS, BLS, BEA, NAHB) make daily
-    # downstream indices NULL between prints. Bob's rule is every indicator
-    # is a real-time nowcast, predicated on a formula or higher-frequency
-    # proxies, not a flat forward-fill. Design pending. See
-    # feedback_indicators_are_nowcasts memory.
+    # Layer-1 nowcast overlays. These feed bridge_to_today() below so the
+    # strict composite formulas can be carried forward from their last
+    # full-coverage anchor to the latest real-time reading, without morphing
+    # the published formula at any in-coverage date.
+    print("\n--- Loading Layer-1 Nowcast Overlays ---")
+    nowcast_overlays = load_nowcast_overlays(conn, df.index)
+    for col, series in nowcast_overlays.items():
+        latest = series.dropna().index.max() if not series.dropna().empty else None
+        latest_str = latest.date().isoformat() if latest is not None else "—"
+        print(f"   {col}: latest {latest_str}, {series.notna().sum()} non-NaN obs")
 
     if latest_only:
         # Only compute for last available date
@@ -1348,6 +1457,19 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
 
     print("   Computing GCI (Growth Pillar)...")
     gci = compute_gci(df)
+    # Layer-1 bridge: carry GCI from its last full-coverage anchor to today
+    # using NY Fed Weekly Economic Index as the daily real-economy nowcast.
+    # Anchor is strict 3-component formula. Bridge offset-anchors to that.
+    wei_overlay = nowcast_overlays.get("Growth_Nowcast_WEI_z")
+    if wei_overlay is not None:
+        anchor_end_before = gci.last_valid_index()
+        gci = bridge_to_today(gci, wei_overlay, label="GCI ← WEI")
+        anchor_end_after = gci.last_valid_index()
+        if anchor_end_before is not None and anchor_end_after is not None and anchor_end_after > anchor_end_before:
+            print(
+                f"      bridge: GCI anchor ends {anchor_end_before.date()}, "
+                f"bridged forward to {anchor_end_after.date()} via WEI"
+            )
 
     print("   Computing HCI (Housing Pillar)...")
     hci = compute_hci(df)
@@ -1540,10 +1662,17 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
 
 
 def write_indices_to_db(conn: sqlite3.Connection, indices_df: pd.DataFrame):
-    """Write computed indices to lighthouse_indices table."""
+    """Write computed indices to lighthouse_indices table.
+
+    For each index_id present in indices_df, all existing rows for that
+    index_id are deleted before re-insert. This is the only way to remove
+    rows that the previous run produced but the current run did not — e.g.
+    when a composite's strict formula no longer stamps the recent tail
+    because an input went stale. Without the delete, those stale rows
+    would persist and silently lie to downstream readers.
+    """
     c = conn.cursor()
 
-    # Create table if not exists
     c.execute('''CREATE TABLE IF NOT EXISTS lighthouse_indices (
         date TEXT,
         index_id TEXT,
@@ -1552,15 +1681,20 @@ def write_indices_to_db(conn: sqlite3.Connection, indices_df: pd.DataFrame):
         PRIMARY KEY (date, index_id)
     )''')
 
-    # Insert/replace data
+    # Per-index clean re-write.
+    ids = sorted(indices_df["index_id"].unique())
+    for index_id in ids:
+        c.execute("DELETE FROM lighthouse_indices WHERE index_id = ?", (index_id,))
+    deleted = c.rowcount  # last DELETE's count, not cumulative — informational only
+
     for _, row in indices_df.iterrows():
         c.execute("""
-            INSERT OR REPLACE INTO lighthouse_indices (date, index_id, value, status)
+            INSERT INTO lighthouse_indices (date, index_id, value, status)
             VALUES (?, ?, ?, ?)
         """, (row["date"], row["index_id"], row["value"], row["status"]))
 
     conn.commit()
-    print(f"   Wrote {len(indices_df)} rows to lighthouse_indices")
+    print(f"   Cleaned and rewrote {len(indices_df)} rows across {len(ids)} index_ids in lighthouse_indices")
 
 
 def verify_indices(conn: sqlite3.Connection):

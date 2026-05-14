@@ -47,20 +47,24 @@ def backup_database():
 
             print(f"Database backed up to {LHM_BACKUP_DIR}")
 
-            # Clean up old backups (keep last 7 days)
+            # Clean up old backups (keep today + yesterday only)
             cleanup_old_backups()
     except Exception as e:
         print(f"WARNING: Backup failed: {e}")
 
 
 def cleanup_old_backups():
-    """Remove backups older than 7 days."""
+    """Keep only the two most recent backups (today + yesterday's rollback).
+    Anything older than the prior-day backup is deleted on every run."""
     try:
-        cutoff = datetime.now().timestamp() - (7 * 24 * 60 * 60)
-        for f in LHM_BACKUP_DIR.glob("Lighthouse_Master_*.db"):
-            if f.stat().st_mtime < cutoff:
-                f.unlink()
-                print(f"Removed old backup: {f.name}")
+        backups = sorted(
+            LHM_BACKUP_DIR.glob("Lighthouse_Master_*.db"),
+            key=lambda f: f.stat().st_mtime,
+            reverse=True,
+        )
+        for f in backups[2:]:
+            f.unlink()
+            print(f"Removed old backup: {f.name}")
     except Exception as e:
         print(f"WARNING: Cleanup failed: {e}")
 

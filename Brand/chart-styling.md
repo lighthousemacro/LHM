@@ -370,15 +370,43 @@ ax.legend(loc='upper left', **legend_style())
 
 ## Color Assignments by Theme
 
-**UPDATED (Feb 2026):** Ocean `#2389BB` is PRIMARY for BOTH themes. White theme is primary publication format.
+**UPDATED (May 2026):** Top-tier secondaries are now four: Dusk, Sky, Bright, Deep (tied alongside Ocean as the primary plotting set). Bright `#89ccff` and Deep `#123456` join the canonical palette. Offwhite `#f4f7f9` is the surface secondary. Dark theme bg moves from `#0A1628` to Deep `#123456`. On dark, Bright is promoted to primary because Ocean dims against the Deep canvas.
 
 ### White Theme (Primary)
 
-RoleColorHexPrimary seriesOcean`#2389BB`Secondary seriesDusk`#FF6723`Tertiary seriesSky`#23BBFF`Quaternary seriesSea`#00BB89`AccentVenus`#FF2389`BackgroundWhite`#ffffff`Foreground textDark`#1a1a1a`Muted textGray`#555555`SpineDoldrums`#898989`Legend bgLight`#f8f8f8`Legend fgDark`#1a1a1a`
+| Role | Color | Hex |
+|------|-------|-----|
+| Primary series | Ocean | `#2389BB` |
+| Secondary series | Dusk | `#FF6723` |
+| Tertiary series | Sky | `#23BBFF` |
+| Quaternary series | Bright | `#89ccff` |
+| Quinary series | Deep | `#123456` |
+| Sextary series | Sea | `#00BB89` |
+| Accent | Venus | `#FF2389` |
+| Background | Paper | `#ffffff` |
+| Card / surface secondary | Offwhite | `#f4f7f9` |
+| Foreground text | Ink | `#1a1a1a` |
+| Muted text | Gray | `#555555` |
+| Spine | Doldrums | `#898989` |
+| Legend bg | Offwhite | `#f4f7f9` |
+| Legend fg | Ink | `#1a1a1a` |
 
-### Dark Theme (Optional)
+### Dark Theme
 
-RoleColorHexPrimary seriesOcean`#2389BB`Secondary seriesDusk`#FF6723`Tertiary seriesSky`#23BBFF`Quaternary seriesSea`#00BB89`AccentVenus`#FF2389`BackgroundDark Navy`#0A1628`Foreground textLight`#e6edf3`Muted textGray`#8b949e`SpineDark Blue`#1e3350`Legend bgDark Blue`#0f1f38`Legend fgLight`#e6edf3`
+| Role | Color | Hex |
+|------|-------|-----|
+| Primary series | Bright | `#89ccff` |
+| Secondary series | Dusk | `#FF6723` |
+| Tertiary series | Sky | `#23BBFF` |
+| Quaternary series | Sea | `#00BB89` |
+| Accent | Venus | `#FF2389` |
+| Background | Deep | `#123456` |
+| Foreground text | Offwhite | `#f4f7f9` |
+| Muted text | Steel | `#9bb1c5` |
+| Spine | Slate | `#2a4a6a` |
+| Legend bg | Deep-lift | `#1a3a5a` |
+| Legend fg | Offwhite | `#f4f7f9` |
+| Border (figure frame) | Bright | `#89ccff` |
 
 ### Full Theme Dictionary
 

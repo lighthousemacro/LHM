@@ -134,6 +134,36 @@ def fig_b64(fig) -> str:
     return base64.b64encode(save_fig_buffer(fig)).decode("ascii")
 
 
+def _smooth(s: pd.Series, window: int = 63, min_periods: int | None = None) -> pd.Series:
+    """3mma smoothing for long-history pillar charts. window=63 trading days
+    is canonical 3-month MA. Pass 126 for 6mma, 252 for 12mma."""
+    if s is None or s.empty:
+        return s
+    return s.rolling(window, min_periods=min_periods or max(1, window // 3)).mean()
+
+
+def _tight_ylim(ax, series_list, buffer_frac: float = 0.08) -> None:
+    """Set ax.set_ylim() to the actual data envelope plus a small buffer.
+    Call AFTER any axhspan bands so the bands clip to the data window
+    rather than dictating the axis range."""
+    import numpy as np
+    vals = []
+    for s in series_list:
+        if s is None or len(s) == 0:
+            continue
+        arr = np.asarray(s, dtype=float)
+        arr = arr[~np.isnan(arr)]
+        if arr.size:
+            vals.append(arr)
+    if not vals:
+        return
+    lo = float(min(a.min() for a in vals))
+    hi = float(max(a.max() for a in vals))
+    span = hi - lo if hi > lo else 1.0
+    pad = span * buffer_frac
+    ax.set_ylim(lo - pad, hi + pad)
+
+
 # ============================================================================
 # CHARTS — all use canonical lhm_chart_template helpers
 # ============================================================================
@@ -146,23 +176,32 @@ def chart_mri(conn) -> str:
     ).set_index("date").dropna()
     if df.empty:
         return ""
+    raw = df["value"]
+    smooth = _smooth(raw, window=63)
     fig, ax = new_fig(figsize=(13, 5.4))
-    color = COLORS["bright"] if matplotlib.rcParams.get("__lhm_dark__") else COLORS["ocean"]
-    # Cycle-phase shading (light bands)
-    ax.axhspan(-3,    -0.20, color=COLORS["sea"],   alpha=0.08, zorder=0)
-    ax.axhspan(-0.20,  0.10, color=COLORS["fog"],   alpha=0.20, zorder=0)
-    ax.axhspan( 0.10,  0.25, color=COLORS["dusk"],  alpha=0.10, zorder=0)
-    ax.axhspan( 0.25,  0.50, color=COLORS["dusk"],  alpha=0.18, zorder=0)
-    ax.axhspan( 0.50,  3,    color=COLORS["port"],  alpha=0.18, zorder=0)
-    ax.plot(df.index, df["value"], color=color, linewidth=2.4)
+    color = COLORS["ocean"]
+    # Cycle-phase shading. Drawn first; ylim is tightened below so the
+    # bands clip to the data window rather than forcing the axis to ±3.
+    ax.axhspan(-3,    -0.20, color=COLORS["sea"],   alpha=0.10, zorder=0)
+    ax.axhspan(-0.20,  0.10, color=COLORS["fog"],   alpha=0.22, zorder=0)
+    ax.axhspan( 0.10,  0.25, color=COLORS["dusk"],  alpha=0.12, zorder=0)
+    ax.axhspan( 0.25,  0.50, color=COLORS["dusk"],  alpha=0.20, zorder=0)
+    ax.axhspan( 0.50,  3,    color=COLORS["port"],  alpha=0.22, zorder=0)
+    ax.plot(raw.index, raw.values, color=color, linewidth=0.7, alpha=0.35,
+            label="MRI (daily)")
+    ax.plot(smooth.index, smooth.values, color=color, linewidth=2.0,
+            label="3mma")
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7, zorder=0)
     style_single_ax(ax, fmt="{:+.2f}")
-    add_last_value_label(ax, df["value"], color, fmt="{:+.2f}", side="right")
+    add_last_value_label(ax, smooth.dropna(), color, fmt="{:+.2f}", side="right")
     set_xlim_to_data(ax, df.index)
+    _tight_ylim(ax, [raw.values], buffer_frac=0.10)
     add_recessions(ax, start_date=df.index[0])
+    leg = ax.legend(loc="upper left", **legend_style(), fontsize=9)
+    leg.get_frame().set_linewidth(0.5)
     brand_fig(fig,
               title="Macro Risk Index",
-              subtitle="25y composite with cycle-phase shading and NBER recessions",
+              subtitle="Cycle-phase shading with NBER recessions, 3mma overlay",
               source="Lighthouse Macro composites",
               data_date=df.index[-1])
     return fig_b64(fig)
@@ -242,12 +281,15 @@ def chart_labor_stack(conn) -> str:
     }
     indices_used = []
     earliest = None
+    all_values = []
     for code, (color, label) in palette.items():
         s = _composite_series(conn, code, years=25)
         if s.empty:
             continue
-        ax.plot(s.index, s.values, color=color, linewidth=1.6, label=label)
+        smooth = _smooth(s, window=63)
+        ax.plot(smooth.index, smooth.values, color=color, linewidth=1.5, label=label)
         indices_used.append(s.index)
+        all_values.append(smooth.dropna().values)
         if earliest is None or s.index[0] < earliest:
             earliest = s.index[0]
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
@@ -258,9 +300,11 @@ def chart_labor_stack(conn) -> str:
     leg.get_frame().set_linewidth(0.5)
     if earliest is not None:
         add_recessions(ax, start_date=earliest)
+    if all_values:
+        _tight_ylim(ax, all_values, buffer_frac=0.10)
     brand_fig(fig,
               title="Pillar 1 — Labor",
-              subtitle="Fragility, Pressure, Dynamism over 25 years",
+              subtitle="Fragility, Pressure, Dynamism over 25y · 3mma",
               source="Lighthouse Macro composites")
     return fig_b64(fig)
 
@@ -269,22 +313,24 @@ def chart_pci_history(conn) -> str:
     s = _composite_series(conn, "PCI", years=25)
     if s.empty:
         return ""
+    smooth = _smooth(s, window=63)
     fig, ax = new_fig(figsize=(13, 5.0))
-    ax.fill_between(s.index, 0, s.values, where=(s.values > 0),
-                    color=COLORS["dusk"], alpha=0.18, linewidth=0)
-    ax.fill_between(s.index, 0, s.values, where=(s.values < 0),
-                    color=COLORS["ocean"], alpha=0.18, linewidth=0)
-    ax.plot(s.index, s.values, color=COLORS["ocean"], linewidth=1.6)
+    ax.fill_between(smooth.index, 0, smooth.values, where=(smooth.values > 0),
+                    color=COLORS["dusk"], alpha=0.20, linewidth=0)
+    ax.fill_between(smooth.index, 0, smooth.values, where=(smooth.values < 0),
+                    color=COLORS["ocean"], alpha=0.20, linewidth=0)
+    ax.plot(smooth.index, smooth.values, color=COLORS["ocean"], linewidth=1.6)
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
     ax.axhline(1.5, color=COLORS["port"], linestyle=":", linewidth=0.8)
     ax.axhline(-1.5, color=COLORS["starboard"], linestyle=":", linewidth=0.8)
     style_single_ax(ax, fmt="{:+.1f}")
-    add_last_value_label(ax, s, COLORS["ocean"], fmt="{:+.2f}")
+    add_last_value_label(ax, smooth.dropna(), COLORS["ocean"], fmt="{:+.2f}")
     set_xlim_to_data(ax, s.index)
+    _tight_ylim(ax, [smooth.dropna().values], buffer_frac=0.12)
     add_recessions(ax, start_date=s.index[0])
     brand_fig(fig,
               title="Pillar 2 — Inflation Heat",
-              subtitle="25y composite. Dusk shading above zero, Ocean below.",
+              subtitle="25y composite · 3mma · Dusk above zero, Ocean below",
               source="Lighthouse Macro composites",
               data_date=s.index[-1])
     return fig_b64(fig)
@@ -300,26 +346,30 @@ def chart_growth_vs_wei(conn) -> str:
     ).set_index("date")["value"].dropna()
     if gci.empty:
         return ""
+    gci_s = _smooth(gci, window=63)
+    wei_s = _smooth(wei, window=63) if not wei.empty else wei
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.plot(gci.index, gci.values, color=COLORS["dusk"], linewidth=1.6,
+    ax.plot(gci_s.index, gci_s.values, color=COLORS["dusk"], linewidth=1.6,
             label="Activity Pulse (GCI)")
-    if not wei.empty:
-        ax2.plot(wei.index, wei.values, color=COLORS["ocean"], linewidth=1.6,
+    if not wei_s.empty:
+        ax2.plot(wei_s.index, wei_s.values, color=COLORS["ocean"], linewidth=1.6,
                  label="NY Fed WEI (right)")
     style_dual_ax(ax, ax2, COLORS["dusk"], COLORS["ocean"])
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
-    align_yaxis_smart(ax, ax2, s1=gci.values, s2=(wei.values if not wei.empty else None))
-    add_last_value_label(ax, gci, COLORS["dusk"], fmt="{:+.2f}", side="left")
-    if not wei.empty:
-        add_last_value_label(ax2, wei, COLORS["ocean"], fmt="{:+.2f}", side="right")
+    align_yaxis_smart(ax, ax2,
+                      s1=gci_s.dropna().values,
+                      s2=(wei_s.dropna().values if not wei_s.empty else None))
+    add_last_value_label(ax, gci_s.dropna(), COLORS["dusk"], fmt="{:+.2f}", side="left")
+    if not wei_s.empty:
+        add_last_value_label(ax2, wei_s.dropna(), COLORS["ocean"], fmt="{:+.2f}", side="right")
         set_xlim_to_data(ax, gci.index, wei.index)
     else:
         set_xlim_to_data(ax, gci.index)
     add_recessions(ax, start_date=gci.index[0])
     brand_fig(fig,
               title="Pillar 3 — Activity Pulse vs NY Fed WEI",
-              subtitle="GCI (Dusk, left) and Weekly Economic Index (Ocean, right)",
+              subtitle="GCI (Dusk, left) and Weekly Economic Index (Ocean, right) · 3mma",
               source="Lighthouse Macro composites; NY Fed",
               data_date=gci.index[-1])
     return fig_b64(fig)
@@ -334,27 +384,30 @@ def chart_housing_vs_10y(conn) -> str:
     ).set_index("date")["value"].dropna()
     if hci.empty:
         return ""
+    hci_s = _smooth(hci, window=63)
+    tsy_s = _smooth(tsy, window=63) if not tsy.empty else tsy
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.plot(hci.index, hci.values, color=COLORS["ocean"], linewidth=1.6,
+    ax.plot(hci_s.index, hci_s.values, color=COLORS["ocean"], linewidth=1.6,
             label="Housing Tide (HCI)")
-    if not tsy.empty:
-        ax2.plot(tsy.index, tsy.values, color=COLORS["dusk"], linewidth=1.6,
+    if not tsy_s.empty:
+        ax2.plot(tsy_s.index, tsy_s.values, color=COLORS["dusk"], linewidth=1.6,
                  label="10Y yield (right)")
     style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
-    align_yaxis_smart(ax, ax2, s1=hci.values,
-                      s2=(tsy.values if not tsy.empty else None))
-    add_last_value_label(ax, hci, COLORS["ocean"], fmt="{:+.2f}", side="left")
-    if not tsy.empty:
-        add_last_value_label(ax2, tsy, COLORS["dusk"], fmt="{:.2f}%", side="right")
+    align_yaxis_smart(ax, ax2,
+                      s1=hci_s.dropna().values,
+                      s2=(tsy_s.dropna().values if not tsy_s.empty else None))
+    add_last_value_label(ax, hci_s.dropna(), COLORS["ocean"], fmt="{:+.2f}", side="left")
+    if not tsy_s.empty:
+        add_last_value_label(ax2, tsy_s.dropna(), COLORS["dusk"], fmt="{:.2f}%", side="right")
         set_xlim_to_data(ax, hci.index, tsy.index)
     else:
         set_xlim_to_data(ax, hci.index)
     add_recessions(ax, start_date=hci.index[0])
     brand_fig(fig,
               title="Pillar 4 — Housing Tide vs 10Y",
-              subtitle="HCI (Ocean, left) vs 10Y Treasury (Dusk, right) over 25y",
+              subtitle="HCI (Ocean, left) vs 10Y Treasury (Dusk, right) over 25y · 3mma",
               source="Lighthouse Macro composites; FRED DGS10",
               data_date=hci.index[-1])
     return fig_b64(fig)
@@ -373,30 +426,30 @@ def chart_credit_spreads(conn) -> str:
     ).set_index("date")["value"].dropna() * 100
     if hy.empty:
         return ""
+    hy_s = _smooth(hy, window=63)
+    ig_s = _smooth(ig, window=63) if not ig.empty else ig
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.plot(hy.index, hy.values, color=COLORS["ocean"], linewidth=1.4,
+    ax.plot(hy_s.index, hy_s.values, color=COLORS["ocean"], linewidth=1.4,
             label="HY OAS, bps")
-    if not ig.empty:
-        ax2.plot(ig.index, ig.values, color=COLORS["dusk"], linewidth=1.4,
+    if not ig_s.empty:
+        ax2.plot(ig_s.index, ig_s.values, color=COLORS["dusk"], linewidth=1.4,
                  label="IG OAS, bps (right)")
     ax.axhline(300, color=COLORS["dusk"], linestyle=":", linewidth=0.8)
     ax.axhline(500, color=COLORS["port"], linestyle=":", linewidth=0.8)
     style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
-    # Spread levels are positive-only; midpoint alignment lets the two curves
-    # overlay meaningfully despite very different scales.
-    align_yaxis_midpoint(ax, ax2, s1=hy.values,
-                         s2=(ig.values if not ig.empty else None))
-    add_last_value_label(ax, hy, COLORS["ocean"], fmt="{:.0f}", side="left")
-    if not ig.empty:
-        add_last_value_label(ax2, ig, COLORS["dusk"], fmt="{:.0f}", side="right")
+    align_yaxis_midpoint(ax, ax2, s1=hy_s.dropna().values,
+                         s2=(ig_s.dropna().values if not ig_s.empty else None))
+    add_last_value_label(ax, hy_s.dropna(), COLORS["ocean"], fmt="{:.0f}", side="left")
+    if not ig_s.empty:
+        add_last_value_label(ax2, ig_s.dropna(), COLORS["dusk"], fmt="{:.0f}", side="right")
         set_xlim_to_data(ax, hy.index, ig.index)
     else:
         set_xlim_to_data(ax, hy.index)
     add_recessions(ax, start_date=hy.index[0])
     brand_fig(fig,
               title="Pillar 9 — Credit Spreads",
-              subtitle="ICE BofA HY OAS (Ocean) and IG OAS (Dusk) over 25y",
+              subtitle="ICE BofA HY OAS (Ocean) and IG OAS (Dusk) over 25y · 3mma",
               source="FRED BAMLH0A0HYM2 / BAMLC0A0CM",
               data_date=hy.index[-1])
     return fig_b64(fig)
@@ -471,8 +524,9 @@ def chart_breadth(conn) -> str:
         ).set_index("date")["value"].dropna()
         if df.empty:
             continue
-        ax.plot(df.index, df.values, color=color, linewidth=1.0, label=label,
-                alpha=0.85)
+        smooth = _smooth(df, window=63)
+        ax.plot(smooth.index, smooth.values, color=color, linewidth=1.2,
+                label=label, alpha=0.95)
         indices_used.append(df.index)
         if earliest is None or df.index[0] < earliest:
             earliest = df.index[0]
@@ -488,7 +542,7 @@ def chart_breadth(conn) -> str:
         add_recessions(ax, start_date=earliest)
     brand_fig(fig,
               title="Pillar 11 — S&P 500 Breadth",
-              subtitle="% of members above 20d, 50d, and 200d MAs — full history",
+              subtitle="% of members above 20d, 50d, 200d MAs · 3mma",
               source="Lighthouse Macro breadth fetcher")
     return fig_b64(fig)
 

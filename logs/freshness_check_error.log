@@ -640,3 +640,7 @@
 2026-05-15 08:35:13 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSGASS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-05-15 08:35:18 [WARNING] Attempt 1 failed: 500 Server Error: Internal Server Error for url: https://api.stlouisfed.org/fred/series?series_id=RSGMS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-05-15 08:35:48 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-15 12:35:37 [INFO] Stale series (1):
+  INDPRO: db=2026-03-01 -> fred=2026-04-01
+2026-05-15 12:35:41 [INFO]   INDPRO: refreshed (+1288 obs)
+2026-05-15 12:35:42 [INFO] Freshness check done: 1 series refreshed, 1,288 obs added.

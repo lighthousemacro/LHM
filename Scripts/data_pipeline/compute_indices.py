@@ -2084,6 +2084,8 @@ def main():
     parser.add_argument("--latest", action="store_true", help="Only compute latest date")
     parser.add_argument("--verify", action="store_true", help="Verify against expected values")
     parser.add_argument("--dry-run", action="store_true", help="Compute but don't write to database")
+    parser.add_argument("--no-dashboard", action="store_true", help="Skip rebuilding the nowcast dashboard")
+    parser.add_argument("--no-open", action="store_true", help="Skip auto-opening the dashboard in browser")
 
     args = parser.parse_args()
 
@@ -2110,6 +2112,23 @@ def main():
         verify_indices(conn)
 
     conn.close()
+
+    # Rebuild the nowcast dashboard so the same file Bob always opens
+    # reflects the latest indicator state. Runs in-process; failures are
+    # logged but never block the pipeline.
+    if not args.dry_run and not args.no_dashboard:
+        print("\n--- Rebuilding Nowcast Dashboard ---")
+        try:
+            sys.path.insert(0, "/Users/bob/LHM/Scripts/dashboards")
+            import nowcast_dashboard  # noqa: WPS433
+            latest, history, run_date = nowcast_dashboard.fetch_state()
+            html = nowcast_dashboard.render_dashboard(latest, history, run_date)
+            nowcast_dashboard.write_dashboard(html)
+            print(f"   Wrote {nowcast_dashboard.OUTPUT_PATH}")
+            if not args.no_open:
+                nowcast_dashboard.open_in_browser()
+        except Exception as e:  # noqa: BLE001
+            print(f"   Dashboard rebuild failed: {e}")
 
     print("\n" + "=" * 70)
     print("INDEX COMPUTATION COMPLETE")

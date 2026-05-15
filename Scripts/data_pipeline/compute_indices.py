@@ -366,64 +366,89 @@ def all_present_mean(*serieses: pd.Series) -> pd.Series:
 nan_mean = all_present_mean
 
 
+# Bridge tier labels — track which fallback rung produced each value.
+TIER_ANCHOR = "anchor"           # strict formula, all inputs present
+TIER_PRIMARY = "primary"         # primary daily partner
+TIER_SECONDARY = "secondary"     # secondary daily partner
+TIER_TERTIARY = "tertiary"       # tertiary daily partner
+TIER_PERSIST = "persistence"     # last bridge value carried forward when
+                                 # every partner is NaN at that date
+
+
 def bridge_to_today(
     anchor: pd.Series,
-    nowcast_z: pd.Series,
-    label: str = "",
-) -> pd.Series:
+    partners: list,
+    target_index: pd.DatetimeIndex | None = None,
+) -> tuple[pd.Series, pd.Series]:
     """
-    Carry a composite forward from its last full-coverage value to today using
-    a Layer-1 nowcast z-score as the bridge.
+    Extend a composite from its last full-coverage anchor to the end of
+    target_index using a tiered list of Layer-1 partners.
 
-    The anchor is the strict-formula composite — exactly the published
-    indicator, computed only where every input is present. The bridge fills
-    the gap from the last anchor date to the latest available nowcast date.
-
-    Procedure:
-        1. last_anchor_date = anchor's last non-NaN date.
-        2. Match the nowcast to the same handoff point.
-        3. offset = anchor_level - nowcast_level_at_handoff.
-        4. For each date t > last_anchor_date where the nowcast has a value:
-               bridged[t] = nowcast_z[t] + offset
-        5. The composite is the anchor through last_anchor_date and the
-           offset-anchored bridge after.
-
-    The offset anchoring keeps the level continuous at the handoff. The bridge
-    carries direction and magnitude using the nowcast. Days where the nowcast
-    is itself NaN remain NaN — the bridge does not invent values.
+    The composite always has a value past the anchor. The bridge walks the
+    partner list in priority order at each date. The first partner with a
+    value at that date is used, offset-anchored to keep the level continuous
+    at the handoff. If every partner is NaN at a given date, the bridge
+    persists the last published value rather than emitting NaN.
 
     Args:
-        anchor: strict composite series (NaN where any input is NaN).
-        nowcast_z: Layer-1 nowcast z-score for this composite, daily-indexed.
-        label: optional tag for logging.
+        anchor: strict composite series.
+        partners: list of pd.Series, each ALREADY signed (multiplied by its
+            partner sign). Order is priority: index 0 is primary.
+        target_index: dates to extend to. Defaults to anchor.index.
 
     Returns:
-        Series with anchor + bridge values combined.
+        (bridged_series, tier_series) where tier_series labels each row's
+        source (anchor / primary / secondary / tertiary / persistence).
     """
     if anchor.empty or anchor.dropna().empty:
-        return anchor
-    if nowcast_z is None or nowcast_z.empty or nowcast_z.dropna().empty:
-        return anchor
+        return anchor, pd.Series(index=anchor.index, dtype=object)
+    partners = [p for p in partners if p is not None and not p.dropna().empty]
 
     last_anchor_date = anchor.last_valid_index()
-    anchor_level = anchor.loc[last_anchor_date]
+    anchor_level = float(anchor.loc[last_anchor_date])
 
-    nowcast_at_or_before = nowcast_z.loc[:last_anchor_date].dropna()
-    if nowcast_at_or_before.empty:
-        return anchor
-    handoff_nowcast = nowcast_at_or_before.iloc[-1]
-    offset = anchor_level - handoff_nowcast
+    # Pre-compute the offset for each partner at the handoff point.
+    offsets = []
+    for p in partners:
+        history = p.loc[:last_anchor_date].dropna()
+        if history.empty:
+            offsets.append(None)
+        else:
+            offsets.append(anchor_level - float(history.iloc[-1]))
 
-    result = anchor.copy()
-    tail_idx = nowcast_z.index[(nowcast_z.index > last_anchor_date) & nowcast_z.notna()]
-    if len(tail_idx):
-        bridged = nowcast_z.loc[tail_idx] + offset
-        # Ensure tail dates exist in result; if not, extend.
-        new_dates = bridged.index.difference(result.index)
-        if len(new_dates):
-            result = result.reindex(result.index.union(new_dates))
-        result.loc[bridged.index] = bridged
-    return result
+    # Build the full target index.
+    if target_index is None:
+        target_index = anchor.index
+    full_index = anchor.index.union(target_index)
+    for p in partners:
+        full_index = full_index.union(p.index)
+    full_index = full_index.sort_values()
+
+    result = anchor.reindex(full_index).copy()
+    tier = pd.Series(index=full_index, dtype=object)
+    tier.loc[anchor.dropna().index] = TIER_ANCHOR
+
+    tail_dates = full_index[full_index > last_anchor_date]
+    last_value = anchor_level
+    tier_names = [TIER_PRIMARY, TIER_SECONDARY, TIER_TERTIARY]
+    for d in tail_dates:
+        found = False
+        for i, (p, off) in enumerate(zip(partners, offsets)):
+            if off is None:
+                continue
+            if d in p.index:
+                pv = p.loc[d]
+                if pd.notna(pv):
+                    result.at[d] = float(pv) + off
+                    tier.at[d] = tier_names[min(i, len(tier_names) - 1)]
+                    last_value = result.at[d]
+                    found = True
+                    break
+        if not found:
+            result.at[d] = last_value
+            tier.at[d] = TIER_PERSIST
+
+    return result, tier
 
 
 # ==========================================
@@ -1130,19 +1155,69 @@ NOWCAST_FFILL_LIMIT_DAYS = 14
 # These bridges are interim — Phase 2 will swap each one for a proper
 # regression / state-space model with confidence bands and vintage tracking.
 BRIDGE_REGISTRY: dict = {
-    # Composite        Partner (daily, fresh today)         Sign  Notes
-    "GCI":     ("overlay:Growth_Nowcast_WEI_z", +1),  # NY Fed WEI, daily-tracked
-    "LFI":     ("HY_OAS_z",              +1),         # daily; credit stress leads labor stress
-    "LPI":     ("HY_OAS_z",              -1),         # inverse for labor health
-    "LDI":     ("HY_OAS_z",              -1),         # inverse for labor dynamism
-    "PCI":     ("Forward_Inflation_5Y_z", +1),        # daily TIPS-derived inflation
-    "HCI":     ("Treasury_10Y",          -1),         # daily; mortgage rates track 10Y
-    "CCI":     ("HY_OAS_z",              -1),         # daily macro risk proxy
-    "BCI":     ("HY_OAS_z",              -1),         # daily cost-of-capital proxy
-    "TCI":     ("HY_OAS_z",              -1),         # daily risk-on/off proxy
-    "FPI":     ("Curve_10Y_2Y_z",        +1),         # daily; curve steepening = term premium up
-    "LCI":     ("RRP_Usage_z",           +1),         # daily; RRP balance is the cushion itself
-    "FCI":     ("HY_OAS_z",              -1),         # daily; spreads inversely track looseness
+    # Composite → ordered list of (partner_name, sign) tuples.
+    # First entry is the primary partner. If it has no value at a date, the
+    # bridge falls through to the secondary, then tertiary. If every partner
+    # is NaN, the last published value is persisted. By construction the
+    # composite always has a current value past the strict-formula anchor.
+    "GCI": [
+        ("overlay:Growth_Nowcast_WEI_z", +1),   # NY Fed WEI, daily real-economy
+        ("HY_OAS_z",              -1),          # spreads as macro risk proxy
+        ("VIX_z",                 -1),          # volatility regime proxy
+    ],
+    "LFI": [
+        ("HY_OAS_z",              +1),          # credit stress leads labor stress
+        ("VIX_z",                 +1),          # risk-off regime
+        ("Initial_Claims_z",      +1),          # weekly truth-serum
+    ],
+    "LPI": [
+        ("HY_OAS_z",              -1),
+        ("VIX_z",                 -1),
+        ("Initial_Claims_z",      -1),
+    ],
+    "LDI": [
+        ("HY_OAS_z",              -1),
+        ("VIX_z",                 -1),
+        ("Initial_Claims_z",      -1),
+    ],
+    "PCI": [
+        ("Forward_Inflation_5Y_z", +1),         # TIPS-derived 5Y forward
+        ("Breakeven_5Y_z",         +1),         # 5Y breakeven backup
+    ],
+    "HCI": [
+        ("Treasury_10Y",          -1),          # mortgage rates track 10Y
+        ("Mortgage_30Y",          -1),          # weekly mortgage rate
+        ("Treasury_30Y",          -1),          # long-rate fallback
+    ],
+    "CCI": [
+        ("HY_OAS_z",              -1),
+        ("VIX_z",                 -1),
+    ],
+    "BCI": [
+        ("HY_OAS_z",              -1),
+        ("IG_OAS_z",              -1),
+        ("VIX_z",                 -1),
+    ],
+    "TCI": [
+        ("HY_OAS_z",              -1),
+        ("VIX_z",                 -1),
+        ("Dollar_Index_yoy_pct",  -1),
+    ],
+    "FPI": [
+        ("Curve_10Y_2Y_z",        +1),          # curve steepening = term premium
+        ("Curve_10Y_3M_z",        +1),
+        ("Term_Premium_10Y_z",    +1),
+    ],
+    "LCI": [
+        ("RRP_Usage_z",           +1),          # RRP balance is the cushion itself
+        ("VIX_z",                 -1),          # stress regime as inverse cushion
+        ("OFR_FSI_US_z",          -1),
+    ],
+    "FCI": [
+        ("HY_OAS_z",              -1),
+        ("VIX_z",                 -1),
+        ("Curve_10Y_2Y_z",        +1),
+    ],
 }
 
 
@@ -1210,25 +1285,42 @@ def _bridge_apply(
     overlays: dict,
 ) -> pd.Series:
     """
-    Look up the bridge spec for a composite and apply bridge_to_today() with
-    the resolved partner. Returns the anchor unchanged if no bridge is wired
-    or the partner has no data.
+    Resolve the tiered partner list for a composite and apply bridge_to_today.
+
+    Returns the bridged series. Tier metadata is computed but not yet
+    persisted to the database (the lighthouse_indices schema would need a
+    new column to carry it). The bridge guarantees a value at every date
+    past the anchor: primary partner → secondary → tertiary → persistence.
     """
-    spec = BRIDGE_REGISTRY.get(composite_id)
-    if spec is None:
+    spec_list = BRIDGE_REGISTRY.get(composite_id)
+    if not spec_list:
         return anchor
-    partner_name, sign = spec
-    partner = _resolve_bridge_partner(partner_name, df, overlays)
-    if partner is None or partner.dropna().empty:
+    if isinstance(spec_list, tuple):
+        spec_list = [spec_list]
+
+    partners = []
+    partner_labels = []
+    for partner_name, sign in spec_list:
+        p = _resolve_bridge_partner(partner_name, df, overlays)
+        if p is None or p.dropna().empty:
+            continue
+        partners.append(sign * p)
+        partner_labels.append(("-" if sign < 0 else "+") + partner_name)
+
+    if not partners:
         return anchor
+
     pre = anchor.last_valid_index()
-    bridged = bridge_to_today(anchor, sign * partner)
+    bridged, tier = bridge_to_today(anchor, partners, target_index=df.index)
     post = bridged.last_valid_index()
     if pre is not None and post is not None and post > pre:
-        sign_str = "-" if sign < 0 else "+"
+        # Show which tiers were used in the post-anchor tail
+        tail_tiers = tier.loc[tier.index > pre].dropna().value_counts().to_dict()
+        breakdown = ", ".join(f"{k}={v}" for k, v in tail_tiers.items()) or "—"
+        primary_label = partner_labels[0] if partner_labels else "—"
         print(
             f"      bridge: {composite_id} anchor ends {pre.date()}, "
-            f"carried to {post.date()} via {sign_str}{partner_name}"
+            f"carried to {post.date()} · primary {primary_label} · tiers: {breakdown}"
         )
     return bridged
 
@@ -1555,10 +1647,13 @@ def compute_spi(conn: sqlite3.Connection) -> pd.Series:
             0.15 / 0.30  # 0.50
         )
 
-    # AAII Bull-Bear spread (INVERTED: low bull-bear = high fear = high SPI)
+    # AAII Bull-Bear spread (INVERTED: low bull-bear = high fear = high SPI).
+    # AAII is a weekly print; ffill within its publication cadence so the
+    # daily z-score isn't NaN six days out of seven.
     if 'AAII_Bull_Bear_Spread' in market_df.columns:
+        aaii_daily = market_df['AAII_Bull_Bear_Spread'].ffill(limit=7)
         components['aaii'] = (
-            compute_zscore(-market_df['AAII_Bull_Bear_Spread']),  # Inverted
+            compute_zscore(-aaii_daily),  # Inverted
             0.15 / 0.30  # 0.50
         )
 
@@ -1793,6 +1888,30 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
         "REC_PROB": rec_prob,
     }
 
+    # Ensure every macro composite carries a value through today via
+    # persistence. Daily-native composites (MSI, SPI, SBD, SSD, EMD, SVI,
+    # YFS, LIQ_STAGE) don't go through the tiered bridge — their last value
+    # is held forward to df.index.max() so every indicator always has a
+    # current read.
+    today_stamp = df.index.max()
+    for index_id, series in list(indices.items()):
+        if not isinstance(series, pd.Series) or series.dropna().empty:
+            continue
+        last_valid = series.last_valid_index()
+        if last_valid is None or last_valid >= today_stamp:
+            continue
+        last_value = float(series.loc[last_valid])
+        # Extend index to today and fill NaN tail with the last value.
+        new_idx = series.index.union(
+            pd.date_range(last_valid + pd.Timedelta(days=1), today_stamp, freq="D")
+        )
+        extended = series.reindex(new_idx).sort_index()
+        tail = extended.index[extended.index > last_valid]
+        for d in tail:
+            if pd.isna(extended.at[d]):
+                extended.at[d] = last_value
+        indices[index_id] = extended
+
     # Convert to long format for database storage
     rows = []
     for index_id, series in indices.items():
@@ -1844,6 +1963,32 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
             "value": round(ensemble_result.base_probability, 4),
             "status": get_status("REC_PROB", ensemble_result.base_probability)
         })
+
+        # Persist ensemble outputs to today if the ensemble's anchor date
+        # is behind df.index.max() (typically by one publish-window day).
+        ensemble_outputs = [
+            ("WARNING_LEVEL", warning_level_value, warning_result.overall_level.name),
+            ("ENSEMBLE_RISK", round(ensemble_result.adjusted_probability, 4), ensemble_result.regime.name),
+            ("DISCONTINUITY_PREMIUM", round(ensemble_result.discontinuity_premium, 4),
+                get_status("DISCONTINUITY_PREMIUM", ensemble_result.discontinuity_premium)),
+            ("ALLOC_MULTIPLIER", round(ensemble_result.allocation_multiplier, 4),
+                get_status("ALLOC_MULTIPLIER", ensemble_result.allocation_multiplier)),
+            ("BASE_REC_PROB", round(ensemble_result.base_probability, 4),
+                get_status("REC_PROB", ensemble_result.base_probability)),
+        ]
+        try:
+            ensemble_ts = pd.Timestamp(ensemble_date)
+        except Exception:
+            ensemble_ts = None
+        if ensemble_ts is not None and ensemble_ts < today_stamp:
+            for d in pd.date_range(ensemble_ts + pd.Timedelta(days=1), today_stamp, freq="D"):
+                for eid, val, st in ensemble_outputs:
+                    rows.append({
+                        "date": d.strftime("%Y-%m-%d"),
+                        "index_id": eid,
+                        "value": val,
+                        "status": st,
+                    })
 
     result_df = pd.DataFrame(rows)
     print(f"   Generated {len(result_df)} index observations")

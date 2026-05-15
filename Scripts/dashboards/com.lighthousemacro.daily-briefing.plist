@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Lighthouse Macro — Daily Briefing
+  Generates HTML briefing with 10 inline charts on weekday mornings.
+  Install:
+    cp ~/LHM/Scripts/dashboards/com.lighthousemacro.daily-briefing.plist \
+       ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$UID \
+       ~/Library/LaunchAgents/com.lighthousemacro.daily-briefing.plist
+  Unload:
+    launchctl bootout gui/$UID/com.lighthousemacro.daily-briefing
+
+  Note: runs 7:42am Mon-Fri local time (ET when on EST/EDT). Hour shifts
+  when system tz changes — adjust as needed.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.lighthousemacro.daily-briefing</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/python3.14</string>
+    <string>/Users/bob/LHM/Scripts/dashboards/daily_briefing.py</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Weekday</key><integer>1</integer>
+      <key>Hour</key><integer>7</integer>
+      <key>Minute</key><integer>42</integer>
+    </dict>
+    <dict>
+      <key>Weekday</key><integer>2</integer>
+      <key>Hour</key><integer>7</integer>
+      <key>Minute</key><integer>42</integer>
+    </dict>
+    <dict>
+      <key>Weekday</key><integer>3</integer>
+      <key>Hour</key><integer>7</integer>
+      <key>Minute</key><integer>42</integer>
+    </dict>
+    <dict>
+      <key>Weekday</key><integer>4</integer>
+      <key>Hour</key><integer>7</integer>
+      <key>Minute</key><integer>42</integer>
+    </dict>
+    <dict>
+      <key>Weekday</key><integer>5</integer>
+      <key>Hour</key><integer>7</integer>
+      <key>Minute</key><integer>42</integer>
+    </dict>
+  </array>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/bob/LHM/logs/daily_briefing.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/bob/LHM/logs/daily_briefing.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHONPATH</key>
+    <string>/Users/bob/LHM</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/bob/LHM</string>
+</dict>
+</plist>

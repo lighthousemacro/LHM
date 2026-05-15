@@ -33,15 +33,27 @@ from matplotlib.ticker import FuncFormatter
 # ============================================
 COLORS = {
     'ocean':     '#2389BB',  # primary brand
-    'dusk':      '#FF6723',  # secondary / accent
-    'sky':       '#23BBFF',  # tertiary / lighter secondary
+    'dusk':      '#FF6723',  # secondary / accent (top tier)
+    'sky':       '#23BBFF',  # secondary / lighter blue (top tier)
+    'bright':    '#89ccff',  # secondary / soft sky (top tier) — pops on dark
+    'deep':      '#123456',  # secondary / deep navy (top tier) — dark-theme bg
     'venus':     '#FF2389',  # critical alerts / 2% target
     'sea':       '#00BB89',  # tertiary / on-target bands
     'doldrums':  '#898989',  # spines, muted text
     'starboard': '#238923',  # bullish regime
     'port':      '#892323',  # bearish regime / crisis bands
     'fog':       '#D1D1D1',  # zero lines, ghost refs
+    'offwhite':  '#f4f7f9',  # secondary surface / card bg
 }
+
+# Multi-series cycling order. Use this when plotting >2 lines so the
+# series colors stay on-brand. Top tier (Ocean/Dusk/Sky/Bright/Deep) leads;
+# Sea/Venus/Doldrums fill in below.
+LHM_PALETTE = [
+    COLORS['ocean'], COLORS['dusk'], COLORS['sky'],
+    COLORS['bright'], COLORS['deep'],
+    COLORS['sea'], COLORS['venus'], COLORS['doldrums'],
+]
 
 RECESSIONS = [
     ('1953-07-01', '1954-05-01'),
@@ -65,33 +77,45 @@ ICON_PATH = '/Users/bob/LHM/Brand/icon_transparent_128.png'
 THEME = {}
 
 def set_theme(mode='white'):
-    """Set global theme: 'white' (primary) or 'dark'."""
+    """Set global theme: 'white' (primary) or 'dark'.
+
+    White: pure white paper bg, ink text, Doldrums spines.
+    Dark: Deep (#123456) bg, offwhite text, slightly lifted spine for contrast.
+    """
     if mode == 'dark':
         THEME.update({
-            'bg': '#0A1628', 'fg': '#e6edf3', 'muted': '#8b949e',
-            'spine': '#1e3350', 'zero_line': '#e6edf3',
+            'bg': COLORS['deep'],          # Deep #123456 as dark canvas
+            'fg': COLORS['offwhite'],      # Offwhite text/labels
+            'muted': '#9bb1c5',
+            'spine': '#2a4a6a',            # subtle lift above Deep for legible spines
+            'zero_line': COLORS['offwhite'],
             'recession': '#ffffff', 'recession_alpha': 0.06,
             'ocean': COLORS['ocean'], 'dusk': COLORS['dusk'],
-            'sky': COLORS['sky'], 'sea': COLORS['sea'], 'venus': COLORS['venus'],
-            'primary': COLORS['ocean'], 'secondary': COLORS['dusk'],
+            'sky': COLORS['sky'], 'bright': COLORS['bright'],
+            'sea': COLORS['sea'], 'venus': COLORS['venus'],
+            # On Deep bg, Bright pops harder than Ocean — promote it to primary
+            # for the dark-theme series order.
+            'primary': COLORS['bright'], 'secondary': COLORS['dusk'],
             'tertiary': COLORS['sky'], 'quaternary': COLORS['sea'],
-            'accent': COLORS['venus'], 'fill_alpha': 0.20,
-            'box_bg': '#0A1628', 'box_edge': COLORS['ocean'],
-            'legend_bg': '#0f1f38', 'legend_fg': '#e6edf3',
+            'accent': COLORS['venus'], 'fill_alpha': 0.22,
+            'box_bg': COLORS['deep'], 'box_edge': COLORS['bright'],
+            'legend_bg': '#1a3a5a', 'legend_fg': COLORS['offwhite'],
             'mode': 'dark',
         })
     else:
         THEME.update({
             'bg': '#ffffff', 'fg': '#1a1a1a', 'muted': '#555555',
-            'spine': '#898989', 'zero_line': '#D1D1D1',
+            'spine': COLORS['doldrums'], 'zero_line': COLORS['fog'],
             'recession': 'gray', 'recession_alpha': 0.12,
             'ocean': COLORS['ocean'], 'dusk': COLORS['dusk'],
-            'sky': COLORS['sky'], 'sea': COLORS['sea'], 'venus': COLORS['venus'],
+            'sky': COLORS['sky'], 'bright': COLORS['bright'],
+            'sea': COLORS['sea'], 'venus': COLORS['venus'],
+            # On white bg, Ocean and Deep are the workhorse high-contrast pair.
             'primary': COLORS['ocean'], 'secondary': COLORS['dusk'],
             'tertiary': COLORS['sky'], 'quaternary': COLORS['sea'],
             'accent': COLORS['venus'], 'fill_alpha': 0.15,
             'box_bg': '#ffffff', 'box_edge': COLORS['ocean'],
-            'legend_bg': '#f8f8f8', 'legend_fg': '#1a1a1a',
+            'legend_bg': COLORS['offwhite'], 'legend_fg': '#1a1a1a',
             'mode': 'white',
         })
 
@@ -311,16 +335,37 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
 # ============================================
 # SAVE
 # ============================================
-def save_fig(fig, filepath):
-    """Save figure with 4pt Ocean border frame. Returns the filepath."""
-    border_color = COLORS['ocean']
-    border_width = 4.0
+def _add_border(fig, border_color=None, border_width=4.0):
+    """Attach the signature Ocean (or Bright on dark) border to the figure."""
+    if border_color is None:
+        border_color = COLORS['bright'] if THEME.get('mode') == 'dark' else COLORS['ocean']
     fig.patches.append(plt.Rectangle(
         (0, 0), 1, 1, transform=fig.transFigure,
         fill=False, edgecolor=border_color, linewidth=border_width,
-        zorder=100, clip_on=False
+        zorder=100, clip_on=False,
     ))
+
+
+def save_fig(fig, filepath):
+    """Save figure to disk with 4pt brand border. Returns the filepath."""
+    _add_border(fig)
     fig.savefig(filepath, dpi=200, bbox_inches='tight', pad_inches=0.025,
                 facecolor=THEME['bg'], edgecolor='none')
     plt.close(fig)
     return filepath
+
+
+def save_fig_buffer(fig, dpi=150):
+    """Render figure to an in-memory PNG buffer (BytesIO) so it can be
+    base64-embedded in HTML. Same brand border and theme bg as save_fig.
+
+    Returns:
+        bytes: raw PNG bytes.
+    """
+    import io
+    _add_border(fig)
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png', dpi=dpi, bbox_inches='tight',
+                pad_inches=0.025, facecolor=THEME['bg'], edgecolor='none')
+    plt.close(fig)
+    return buf.getvalue()

@@ -29,7 +29,7 @@ APPS_PATH = BACKEND_DIR / "apps.json"
 
 app = FastAPI(
     title="Lighthouse Macro Data Backend",
-    description="Query interface to Lighthouse_Master.db (2,498 macro/market/crypto series).",
+    description="Query interface to Lighthouse_Master.db (2,530 macro/market/crypto series across 18 sources).",
     version="1.0.0",
 )
 
@@ -243,7 +243,7 @@ PILLAR_MAP: dict[str, dict[str, str]] = {
     "Consumer":   {"composite": "CCI",     "engine": "Macro Dynamics"},
     "Business":   {"composite": "BCI",     "engine": "Macro Dynamics"},
     "Trade":      {"composite": "TCI",     "engine": "Macro Dynamics"},
-    "Government": {"composite": "GCI_Gov", "engine": "Monetary Mechanics"},
+    "Government": {"composite": "FPI",     "engine": "Monetary Mechanics"},
     "Financial":  {"composite": "FCI",     "engine": "Monetary Mechanics"},
     "Plumbing":   {"composite": "LCI",     "engine": "Monetary Mechanics"},
     "Structure":  {"composite": "MSI",     "engine": "Market Structure"},
@@ -530,6 +530,66 @@ def plumbing_panel(
     if not rows:
         raise HTTPException(status_code=404, detail="No plumbing observations found")
     return rows
+
+
+@app.get("/treasury_auctions")
+def treasury_auctions(
+    start_date: str | None = Query(None),
+    end_date: str | None = Query(None),
+) -> list[dict[str, Any]]:
+    """Treasury auction quality + supply mix from fiscaldata.treasury.gov.
+
+    10Y note: tail (bp), bid-to-cover, indirect bidder share.
+    Aggregate: bills share of marketable debt, weighted-avg maturity.
+    """
+    ids = [
+        "TD_AUCTION_TAIL_10Y",
+        "TD_AUCTION_BTC_10Y",
+        "TD_INDIRECT_SHARE_10Y",
+        "TD_BILLS_SHARE",
+        "TD_WAM_MARKETABLE",
+    ]
+    with _conn() as c:
+        rows = _multi_series(c, ids, start_date, end_date)
+    if not rows:
+        raise HTTPException(status_code=404, detail="No Treasury auction observations found")
+    return rows
+
+
+@app.get("/risk_model")
+def risk_model() -> list[dict[str, Any]]:
+    """Latest output from the lighthouse_quant risk ensemble.
+
+    Surfaces recession probability, ensemble risk score, warning level,
+    allocation multiplier, and liquidity-stage / discontinuity-premium tags.
+    All values pulled from lighthouse_indices.
+    """
+    ids = [
+        "REC_PROB",
+        "BASE_REC_PROB",
+        "ENSEMBLE_RISK",
+        "WARNING_LEVEL",
+        "ALLOC_MULTIPLIER",
+        "LIQ_STAGE",
+        "DISCONTINUITY_PREMIUM",
+    ]
+    placeholders = ",".join("?" * len(ids))
+    sql = f"""
+        SELECT i.index_id, i.date AS as_of, i.value, i.status
+        FROM lighthouse_indices i
+        JOIN (
+            SELECT index_id, MAX(date) AS max_date
+            FROM lighthouse_indices
+            WHERE index_id IN ({placeholders})
+            GROUP BY index_id
+        ) m ON m.index_id = i.index_id AND m.max_date = i.date
+        ORDER BY i.index_id
+    """
+    with _conn() as c:
+        rows = c.execute(sql, ids).fetchall()
+    if not rows:
+        raise HTTPException(status_code=404, detail="No risk-model outputs found in lighthouse_indices")
+    return [dict(r) for r in rows]
 
 
 @app.get("/engine_summary")

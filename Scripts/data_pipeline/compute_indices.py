@@ -366,13 +366,139 @@ def all_present_mean(*serieses: pd.Series) -> pd.Series:
 nan_mean = all_present_mean
 
 
-# Bridge tier labels — track which fallback rung produced each value.
-TIER_ANCHOR = "anchor"           # strict formula, all inputs present
-TIER_PRIMARY = "primary"         # primary daily partner
-TIER_SECONDARY = "secondary"     # secondary daily partner
-TIER_TERTIARY = "tertiary"       # tertiary daily partner
-TIER_PERSIST = "persistence"     # last bridge value carried forward when
-                                 # every partner is NaN at that date
+# Bridge tier labels — track which method produced each value.
+TIER_ANCHOR = "anchor"             # strict formula, all inputs present
+TIER_REGRESSION = "regression"     # OLS prediction from fitted proxy model
+TIER_PERSIST = "persistence"       # last value carried forward
+TIER_OFFSET = "offset"             # legacy offset-glue fallback (deprecated)
+
+
+def bridge_via_regression(
+    anchor: pd.Series,
+    proxies: dict,
+    target_index: pd.DatetimeIndex | None = None,
+    min_overlap: int = 252,
+) -> tuple[pd.Series, pd.Series, dict]:
+    """
+    Multi-proxy regression bridge.
+
+    Fits the composite's historical anchor against a basket of daily/weekly
+    proxies via ordinary least squares over the full available overlap, then
+    uses the fitted model to project the composite forward from the last
+    full-coverage date to the latest date in target_index.
+
+    This is the canonical bridge. It is NOT a level-translation of one
+    partner curve. The model learns each proxy's empirical contribution (and
+    sign) from the data. Where proxies disagree historically with the
+    anchor's economic intuition, OLS sorts it out.
+
+    Args:
+        anchor: strict composite series (NaN past last full-coverage date).
+        proxies: dict[name -> pd.Series], raw (unsigned). Each is a daily
+            or weekly Layer-1 partner.
+        target_index: dates the bridge should extend to.
+        min_overlap: minimum overlapping observations required to fit. Below
+            this we fall back to persistence.
+
+    Returns:
+        (bridged_series, tier_series, fit_info) where:
+          - bridged_series: anchor + regression forward
+          - tier_series: per-date label (anchor / regression / persistence)
+          - fit_info: dict with alpha, betas, sigma (residual std error),
+            r2, n_overlap, partner_names. Sigma is usable for confidence
+            bands at ± 1.96σ for 95%.
+    """
+    import numpy as np
+
+    if anchor.empty or anchor.dropna().empty:
+        return anchor, pd.Series(index=anchor.index, dtype=object), {}
+
+    proxies = {k: v for k, v in proxies.items()
+               if v is not None and not v.dropna().empty}
+    if not proxies:
+        return anchor, pd.Series(index=anchor.index, dtype=object), {}
+
+    if target_index is None:
+        target_index = anchor.index
+
+    full_index = anchor.index.union(target_index)
+    for p in proxies.values():
+        full_index = full_index.union(p.index)
+    full_index = full_index.sort_values()
+
+    df = pd.DataFrame({"y": anchor.reindex(full_index)})
+    for name, p in proxies.items():
+        df[name] = p.reindex(full_index)
+
+    overlap = df.dropna()
+    n_overlap = int(len(overlap))
+
+    last_anchor_date = anchor.last_valid_index()
+    last_anchor_value = float(anchor.loc[last_anchor_date])
+
+    tier = pd.Series(index=full_index, dtype=object)
+    tier.loc[anchor.dropna().index] = TIER_ANCHOR
+    result = anchor.reindex(full_index).copy()
+
+    if n_overlap < min_overlap:
+        # Not enough historical overlap to trust a fit. Persist.
+        for d in full_index[full_index > last_anchor_date]:
+            result.at[d] = last_anchor_value
+            tier.at[d] = TIER_PERSIST
+        return result, tier, {
+            "n_overlap": n_overlap,
+            "fallback": "persistence",
+            "partner_names": list(proxies.keys()),
+        }
+
+    # OLS via lstsq. Design matrix = [intercept, proxy_1, proxy_2, ...]
+    proxy_names = [c for c in overlap.columns if c != "y"]
+    Y = overlap["y"].to_numpy(dtype=float)
+    X = np.column_stack([
+        np.ones(n_overlap),
+        *(overlap[c].to_numpy(dtype=float) for c in proxy_names),
+    ])
+    beta, *_ = np.linalg.lstsq(X, Y, rcond=None)
+    alpha = float(beta[0])
+    betas = {name: float(b) for name, b in zip(proxy_names, beta[1:])}
+
+    fitted = X @ beta
+    resid = Y - fitted
+    k = len(beta)
+    sigma = float(np.std(resid, ddof=k) if n_overlap > k else np.std(resid))
+    ss_res = float((resid ** 2).sum())
+    ss_tot = float(((Y - Y.mean()) ** 2).sum())
+    r2 = (1.0 - ss_res / ss_tot) if ss_tot > 0 else 0.0
+
+    # Forward prediction: every date where ALL proxies are present.
+    proxy_present = df[proxy_names].notna().all(axis=1)
+    pred_idx = df.index[proxy_present]
+    X_pred = np.column_stack([
+        np.ones(len(pred_idx)),
+        *(df.loc[pred_idx, c].to_numpy(dtype=float) for c in proxy_names),
+    ])
+    pred = X_pred @ beta
+    pred_series = pd.Series(pred, index=pred_idx, dtype=float)
+
+    # Combine: anchor up through last_anchor_date; regression after.
+    last_filled = last_anchor_value
+    for d in full_index[full_index > last_anchor_date]:
+        if d in pred_series.index:
+            result.at[d] = float(pred_series.loc[d])
+            tier.at[d] = TIER_REGRESSION
+            last_filled = result.at[d]
+        else:
+            result.at[d] = last_filled
+            tier.at[d] = TIER_PERSIST
+
+    return result, tier, {
+        "n_overlap": n_overlap,
+        "alpha": alpha,
+        "betas": betas,
+        "sigma": sigma,
+        "r2": r2,
+        "partner_names": proxy_names,
+    }
 
 
 def bridge_to_today(
@@ -1285,12 +1411,12 @@ def _bridge_apply(
     overlays: dict,
 ) -> pd.Series:
     """
-    Resolve the tiered partner list for a composite and apply bridge_to_today.
+    Resolve the partner basket for a composite and apply the regression bridge.
 
-    Returns the bridged series. Tier metadata is computed but not yet
-    persisted to the database (the lighthouse_indices schema would need a
-    new column to carry it). The bridge guarantees a value at every date
-    past the anchor: primary partner → secondary → tertiary → persistence.
+    BRIDGE_REGISTRY entries used to carry (partner, sign) tuples for the
+    legacy offset-glue bridge. With the regression model we let OLS recover
+    signs empirically — the sign field is ignored. The partner *names* are
+    still meaningful: they pick which Layer-1 series feed the model.
     """
     spec_list = BRIDGE_REGISTRY.get(composite_id)
     if not spec_list:
@@ -1298,30 +1424,41 @@ def _bridge_apply(
     if isinstance(spec_list, tuple):
         spec_list = [spec_list]
 
-    partners = []
-    partner_labels = []
-    for partner_name, sign in spec_list:
+    proxies: dict = {}
+    for entry in spec_list:
+        partner_name = entry[0] if isinstance(entry, tuple) else entry
         p = _resolve_bridge_partner(partner_name, df, overlays)
         if p is None or p.dropna().empty:
             continue
-        partners.append(sign * p)
-        partner_labels.append(("-" if sign < 0 else "+") + partner_name)
+        proxies[partner_name] = p
 
-    if not partners:
+    if not proxies:
         return anchor
 
     pre = anchor.last_valid_index()
-    bridged, tier = bridge_to_today(anchor, partners, target_index=df.index)
+    bridged, tier, info = bridge_via_regression(
+        anchor, proxies, target_index=df.index
+    )
     post = bridged.last_valid_index()
     if pre is not None and post is not None and post > pre:
-        # Show which tiers were used in the post-anchor tail
-        tail_tiers = tier.loc[tier.index > pre].dropna().value_counts().to_dict()
-        breakdown = ", ".join(f"{k}={v}" for k, v in tail_tiers.items()) or "—"
-        primary_label = partner_labels[0] if partner_labels else "—"
-        print(
-            f"      bridge: {composite_id} anchor ends {pre.date()}, "
-            f"carried to {post.date()} · primary {primary_label} · tiers: {breakdown}"
-        )
+        n = info.get("n_overlap", 0)
+        r2 = info.get("r2")
+        sigma = info.get("sigma")
+        names = info.get("partner_names", list(proxies.keys()))
+        if r2 is not None and sigma is not None:
+            betas = info.get("betas", {})
+            beta_summary = ", ".join(f"{k}={v:+.2f}" for k, v in betas.items())
+            print(
+                f"      bridge: {composite_id} anchor ends {pre.date()}, "
+                f"projected to {post.date()} via OLS on {len(names)} proxies "
+                f"(n={n}, R²={r2:.2f}, σ={sigma:.2f}) · betas: {beta_summary}"
+            )
+        else:
+            print(
+                f"      bridge: {composite_id} anchor ends {pre.date()}, "
+                f"carried to {post.date()} (fallback: "
+                f"{info.get('fallback', 'persistence')})"
+            )
     return bridged
 
 

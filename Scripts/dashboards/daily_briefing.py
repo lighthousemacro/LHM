@@ -51,6 +51,8 @@ from lhm_chart_template import (  # noqa: E402
     set_xlim_to_data,
     legend_style,
     align_yaxis_zero,
+    align_yaxis_midpoint,
+    align_yaxis_smart,
     brand_fig,
     save_fig_buffer,
 )
@@ -139,7 +141,7 @@ def fig_b64(fig) -> str:
 def chart_mri(conn) -> str:
     df = pd.read_sql(
         "SELECT date, value FROM lighthouse_indices "
-        "WHERE index_id='MRI' AND date >= date('now','-3 year') ORDER BY date",
+        "WHERE index_id='MRI' AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"],
     ).set_index("date").dropna()
     if df.empty:
@@ -157,9 +159,10 @@ def chart_mri(conn) -> str:
     style_single_ax(ax, fmt="{:+.2f}")
     add_last_value_label(ax, df["value"], color, fmt="{:+.2f}", side="right")
     set_xlim_to_data(ax, df.index)
+    add_recessions(ax, start_date=df.index[0])
     brand_fig(fig,
               title="Macro Risk Index",
-              subtitle="3y composite with cycle-phase shading",
+              subtitle="25y composite with cycle-phase shading and NBER recessions",
               source="Lighthouse Macro composites",
               data_date=df.index[-1])
     return fig_b64(fig)
@@ -220,7 +223,8 @@ def chart_pillar_heatmap(conn) -> str:
     return fig_b64(fig)
 
 
-def _composite_series(conn, code: str, years: int = 2) -> pd.Series:
+def _composite_series(conn, code: str, years: int = 25) -> pd.Series:
+    """Default to 25y of history for pillar context. Override years= per chart."""
     df = pd.read_sql(
         f"SELECT date, value FROM lighthouse_indices "
         f"WHERE index_id=? AND date >= date('now','-{years} year') ORDER BY date",
@@ -237,27 +241,32 @@ def chart_labor_stack(conn) -> str:
         "LDI": (COLORS["sea"],   "Labor Dynamism (LDI)"),
     }
     indices_used = []
+    earliest = None
     for code, (color, label) in palette.items():
-        s = _composite_series(conn, code, years=2)
+        s = _composite_series(conn, code, years=25)
         if s.empty:
             continue
-        ax.plot(s.index, s.values, color=color, linewidth=2.0, label=label)
+        ax.plot(s.index, s.values, color=color, linewidth=1.6, label=label)
         indices_used.append(s.index)
+        if earliest is None or s.index[0] < earliest:
+            earliest = s.index[0]
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
     if indices_used:
         set_xlim_to_data(ax, *indices_used)
     style_single_ax(ax, fmt="{:+.1f}")
     leg = ax.legend(loc="upper left", **legend_style(), fontsize=9)
     leg.get_frame().set_linewidth(0.5)
+    if earliest is not None:
+        add_recessions(ax, start_date=earliest)
     brand_fig(fig,
               title="Pillar 1 — Labor",
-              subtitle="Fragility, Pressure, Dynamism. 2y view.",
+              subtitle="Fragility, Pressure, Dynamism over 25 years",
               source="Lighthouse Macro composites")
     return fig_b64(fig)
 
 
 def chart_pci_history(conn) -> str:
-    s = _composite_series(conn, "PCI", years=3)
+    s = _composite_series(conn, "PCI", years=25)
     if s.empty:
         return ""
     fig, ax = new_fig(figsize=(13, 5.0))
@@ -265,81 +274,87 @@ def chart_pci_history(conn) -> str:
                     color=COLORS["dusk"], alpha=0.18, linewidth=0)
     ax.fill_between(s.index, 0, s.values, where=(s.values < 0),
                     color=COLORS["ocean"], alpha=0.18, linewidth=0)
-    ax.plot(s.index, s.values, color=COLORS["ocean"], linewidth=2.2)
+    ax.plot(s.index, s.values, color=COLORS["ocean"], linewidth=1.6)
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
     ax.axhline(1.5, color=COLORS["port"], linestyle=":", linewidth=0.8)
     ax.axhline(-1.5, color=COLORS["starboard"], linestyle=":", linewidth=0.8)
     style_single_ax(ax, fmt="{:+.1f}")
     add_last_value_label(ax, s, COLORS["ocean"], fmt="{:+.2f}")
     set_xlim_to_data(ax, s.index)
+    add_recessions(ax, start_date=s.index[0])
     brand_fig(fig,
               title="Pillar 2 — Inflation Heat",
-              subtitle="3y composite. Dusk shading = above-target heat, Ocean = slack.",
+              subtitle="25y composite. Dusk shading above zero, Ocean below.",
               source="Lighthouse Macro composites",
               data_date=s.index[-1])
     return fig_b64(fig)
 
 
 def chart_growth_vs_wei(conn) -> str:
-    gci = _composite_series(conn, "GCI", years=2)
+    gci = _composite_series(conn, "GCI", years=25)
+    # WEI starts ~2008; full history of overlap is the real story.
     wei = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='WEI' "
-        "AND date >= date('now','-2 year') ORDER BY date",
+        "ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna()
     if gci.empty:
         return ""
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.plot(gci.index, gci.values, color=COLORS["dusk"], linewidth=2.2,
+    ax.plot(gci.index, gci.values, color=COLORS["dusk"], linewidth=1.6,
             label="Activity Pulse (GCI)")
     if not wei.empty:
-        ax2.plot(wei.index, wei.values, color=COLORS["ocean"], linewidth=2.0,
+        ax2.plot(wei.index, wei.values, color=COLORS["ocean"], linewidth=1.6,
                  label="NY Fed WEI (right)")
     style_dual_ax(ax, ax2, COLORS["dusk"], COLORS["ocean"])
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
-    align_yaxis_zero(ax, ax2)
+    align_yaxis_smart(ax, ax2, s1=gci.values, s2=(wei.values if not wei.empty else None))
     add_last_value_label(ax, gci, COLORS["dusk"], fmt="{:+.2f}", side="left")
     if not wei.empty:
         add_last_value_label(ax2, wei, COLORS["ocean"], fmt="{:+.2f}", side="right")
         set_xlim_to_data(ax, gci.index, wei.index)
     else:
         set_xlim_to_data(ax, gci.index)
+    add_recessions(ax, start_date=gci.index[0])
     brand_fig(fig,
-              title="Pillar 3 — Activity Pulse + WEI",
-              subtitle="GCI (Dusk, left) overlaid on NY Fed WEI (Ocean, right).",
+              title="Pillar 3 — Activity Pulse vs NY Fed WEI",
+              subtitle="GCI (Dusk, left) and Weekly Economic Index (Ocean, right)",
               source="Lighthouse Macro composites; NY Fed",
               data_date=gci.index[-1])
     return fig_b64(fig)
 
 
 def chart_housing_vs_10y(conn) -> str:
-    hci = _composite_series(conn, "HCI", years=3)
+    hci = _composite_series(conn, "HCI", years=25)
     tsy = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='DGS10' "
-        "AND date >= date('now','-3 year') ORDER BY date",
+        "AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna()
     if hci.empty:
         return ""
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.plot(hci.index, hci.values, color=COLORS["ocean"], linewidth=2.2,
+    ax.plot(hci.index, hci.values, color=COLORS["ocean"], linewidth=1.6,
             label="Housing Tide (HCI)")
     if not tsy.empty:
-        ax2.plot(tsy.index, tsy.values, color=COLORS["dusk"], linewidth=2.0,
+        ax2.plot(tsy.index, tsy.values, color=COLORS["dusk"], linewidth=1.6,
                  label="10Y yield (right)")
     style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
     ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
+    align_yaxis_smart(ax, ax2, s1=hci.values,
+                      s2=(tsy.values if not tsy.empty else None))
     add_last_value_label(ax, hci, COLORS["ocean"], fmt="{:+.2f}", side="left")
     if not tsy.empty:
         add_last_value_label(ax2, tsy, COLORS["dusk"], fmt="{:.2f}%", side="right")
         set_xlim_to_data(ax, hci.index, tsy.index)
     else:
         set_xlim_to_data(ax, hci.index)
+    add_recessions(ax, start_date=hci.index[0])
     brand_fig(fig,
               title="Pillar 4 — Housing Tide vs 10Y",
-              subtitle="HCI composite (Ocean, left) and 10Y Treasury yield (Dusk, right).",
+              subtitle="HCI (Ocean, left) vs 10Y Treasury (Dusk, right) over 25y",
               source="Lighthouse Macro composites; FRED DGS10",
               data_date=hci.index[-1])
     return fig_b64(fig)
@@ -348,77 +363,94 @@ def chart_housing_vs_10y(conn) -> str:
 def chart_credit_spreads(conn) -> str:
     hy = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='BAMLH0A0HYM2' "
-        "AND date >= date('now','-3 year') ORDER BY date",
+        "AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna() * 100  # to bps
     ig = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='BAMLC0A0CM' "
-        "AND date >= date('now','-3 year') ORDER BY date",
+        "AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna() * 100
     if hy.empty:
         return ""
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.plot(hy.index, hy.values, color=COLORS["ocean"], linewidth=2.2,
+    ax.plot(hy.index, hy.values, color=COLORS["ocean"], linewidth=1.4,
             label="HY OAS, bps")
     if not ig.empty:
-        ax2.plot(ig.index, ig.values, color=COLORS["dusk"], linewidth=2.0,
+        ax2.plot(ig.index, ig.values, color=COLORS["dusk"], linewidth=1.4,
                  label="IG OAS, bps (right)")
     ax.axhline(300, color=COLORS["dusk"], linestyle=":", linewidth=0.8)
     ax.axhline(500, color=COLORS["port"], linestyle=":", linewidth=0.8)
-    ax.text(hy.index[-1], 305, "300 complacent floor",
-            color=COLORS["dusk"], fontsize=8, ha="right")
-    ax.text(hy.index[-1], 505, "500 stress threshold",
-            color=COLORS["port"], fontsize=8, ha="right")
     style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
+    # Spread levels are positive-only; midpoint alignment lets the two curves
+    # overlay meaningfully despite very different scales.
+    align_yaxis_midpoint(ax, ax2, s1=hy.values,
+                         s2=(ig.values if not ig.empty else None))
     add_last_value_label(ax, hy, COLORS["ocean"], fmt="{:.0f}", side="left")
     if not ig.empty:
         add_last_value_label(ax2, ig, COLORS["dusk"], fmt="{:.0f}", side="right")
         set_xlim_to_data(ax, hy.index, ig.index)
     else:
         set_xlim_to_data(ax, hy.index)
+    add_recessions(ax, start_date=hy.index[0])
     brand_fig(fig,
               title="Pillar 9 — Credit Spreads",
-              subtitle="ICE BofA HY OAS (Ocean, left) and IG OAS (Dusk, right).",
+              subtitle="ICE BofA HY OAS (Ocean) and IG OAS (Dusk) over 25y",
               source="FRED BAMLH0A0HYM2 / BAMLC0A0CM",
               data_date=hy.index[-1])
     return fig_b64(fig)
 
 
 def chart_plumbing(conn) -> str:
+    # RRP starts ~2003; WALCL has decades of history. Use 25y window so the
+    # full QE / QT cycle is visible.
     rrp = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='RRPONTSYD' "
-        "AND date >= date('now','-3 year') ORDER BY date",
+        "AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna() / 1e3  # to $B
     walcl = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='WALCL' "
-        "AND date >= date('now','-3 year') ORDER BY date",
+        "AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna() / 1e6  # to $T
-    if rrp.empty:
+    if rrp.empty and walcl.empty:
         return ""
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.fill_between(rrp.index, 0, rrp.values, color=COLORS["ocean"], alpha=0.18)
-    ax.plot(rrp.index, rrp.values, color=COLORS["ocean"], linewidth=1.8,
-            label="RRP, $B")
+    if not rrp.empty:
+        ax.fill_between(rrp.index, 0, rrp.values, color=COLORS["ocean"], alpha=0.15)
+        ax.plot(rrp.index, rrp.values, color=COLORS["ocean"], linewidth=1.4,
+                label="RRP, $B")
     if not walcl.empty:
-        ax2.plot(walcl.index, walcl.values, color=COLORS["dusk"], linewidth=2.0,
+        ax2.plot(walcl.index, walcl.values, color=COLORS["dusk"], linewidth=1.4,
                  label="Fed BS, $T (right)")
     style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
-    add_last_value_label(ax, rrp, COLORS["ocean"], fmt="${:.0f}B", side="left")
+    # Both positive-only and on different scales — midpoint align.
+    align_yaxis_midpoint(
+        ax, ax2,
+        s1=(rrp.values if not rrp.empty else None),
+        s2=(walcl.values if not walcl.empty else None),
+    )
+    if not rrp.empty:
+        add_last_value_label(ax, rrp, COLORS["ocean"], fmt="${:.0f}B", side="left")
     if not walcl.empty:
         add_last_value_label(ax2, walcl, COLORS["dusk"], fmt="${:.2f}T", side="right")
+    if not rrp.empty and not walcl.empty:
         set_xlim_to_data(ax, rrp.index, walcl.index)
+    elif not walcl.empty:
+        set_xlim_to_data(ax, walcl.index)
     else:
         set_xlim_to_data(ax, rrp.index)
+    start_date = (rrp.index[0] if not rrp.empty else walcl.index[0])
+    add_recessions(ax, start_date=start_date)
+    end_date = (rrp.index[-1] if not rrp.empty else walcl.index[-1])
     brand_fig(fig,
               title="Pillar 10 — Plumbing",
-              subtitle="RRP balance ($B, left) and Fed balance sheet ($T, right).",
+              subtitle="RRP balance ($B, left) and Fed balance sheet ($T, right) — 25y",
               source="FRED RRPONTSYD / WALCL",
-              data_date=rrp.index[-1])
+              data_date=end_date)
     return fig_b64(fig)
 
 
@@ -430,17 +462,20 @@ def chart_breadth(conn) -> str:
     ]
     fig, ax = new_fig(figsize=(13, 5.0))
     indices_used = []
+    earliest = None
     for sid, color, label in series_ids:
         df = pd.read_sql(
             "SELECT date, value FROM observations WHERE series_id=? "
-            "AND date >= date('now','-2 year') ORDER BY date",
+            "AND date >= date('now','-25 year') ORDER BY date",
             conn, parse_dates=["date"], params=(sid,)
         ).set_index("date")["value"].dropna()
         if df.empty:
             continue
-        ax.plot(df.index, df.values, color=color, linewidth=1.8, label=label,
-                alpha=0.95)
+        ax.plot(df.index, df.values, color=color, linewidth=1.0, label=label,
+                alpha=0.85)
         indices_used.append(df.index)
+        if earliest is None or df.index[0] < earliest:
+            earliest = df.index[0]
     ax.axhline(80, color=COLORS["fog"], linewidth=0.7, linestyle=":")
     ax.axhline(25, color=COLORS["fog"], linewidth=0.7, linestyle=":")
     ax.set_ylim(0, 100)
@@ -449,48 +484,52 @@ def chart_breadth(conn) -> str:
     leg.get_frame().set_linewidth(0.5)
     if indices_used:
         set_xlim_to_data(ax, *indices_used)
+    if earliest is not None:
+        add_recessions(ax, start_date=earliest)
     brand_fig(fig,
               title="Pillar 11 — S&P 500 Breadth",
-              subtitle="% of members above 20d, 50d, and 200d moving averages.",
+              subtitle="% of members above 20d, 50d, and 200d MAs — full history",
               source="Lighthouse Macro breadth fetcher")
     return fig_b64(fig)
 
 
 def chart_sentiment(conn) -> str:
+    # AAII goes back to 1987; VIX to 1990. Use full history.
     aaii = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='AAII_Bull_Bear_Spread' "
-        "AND date >= date('now','-2 year') ORDER BY date",
+        "AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna() * 100  # to percentage points
     vix = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='VIXCLS' "
-        "AND date >= date('now','-2 year') ORDER BY date",
+        "AND date >= date('now','-25 year') ORDER BY date",
         conn, parse_dates=["date"]
     ).set_index("date")["value"].dropna()
     if aaii.empty:
         return ""
     fig, ax = new_fig(figsize=(13, 5.0))
     ax2 = ax.twinx()
-    ax.bar(aaii.index, aaii.values, color=COLORS["ocean"], alpha=0.55, width=4)
+    ax.bar(aaii.index, aaii.values, color=COLORS["ocean"], alpha=0.45, width=4)
     ax.axhline(30, color=COLORS["port"], linewidth=0.8, linestyle=":")
     ax.axhline(-20, color=COLORS["starboard"], linewidth=0.8, linestyle=":")
-    ax.text(aaii.index[-1], 31, "+30 euphoria",
-            color=COLORS["port"], fontsize=8, ha="right")
-    ax.text(aaii.index[-1], -19, "-20 capitulation",
-            color=COLORS["starboard"], fontsize=8, ha="right")
     if not vix.empty:
-        ax2.plot(vix.index, vix.values, color=COLORS["dusk"], linewidth=1.8,
-                 alpha=0.9, label="VIX (right)")
+        ax2.plot(vix.index, vix.values, color=COLORS["dusk"], linewidth=1.0,
+                 alpha=0.85, label="VIX (right)")
     style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
+    # AAII spread crosses zero; VIX is positive-only. align_yaxis_smart
+    # detects this and uses zero alignment.
+    align_yaxis_smart(ax, ax2, s1=aaii.values,
+                      s2=(vix.values if not vix.empty else None))
     add_last_value_label(ax, aaii, COLORS["ocean"], fmt="{:+.1f}", side="left")
     if not vix.empty:
         add_last_value_label(ax2, vix, COLORS["dusk"], fmt="{:.1f}", side="right")
         set_xlim_to_data(ax, aaii.index, vix.index)
     else:
         set_xlim_to_data(ax, aaii.index)
+    add_recessions(ax, start_date=aaii.index[0])
     brand_fig(fig,
               title="Pillar 12 — Sentiment",
-              subtitle="AAII bull-bear spread (Ocean bars, left) and VIX (Dusk, right).",
+              subtitle="AAII bull-bear (Ocean bars, left) and VIX (Dusk, right) — 25y",
               source="AAII; CBOE VIXCLS",
               data_date=aaii.index[-1])
     return fig_b64(fig)

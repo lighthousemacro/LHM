@@ -130,11 +130,15 @@ def set_theme(mode='white'):
 # ============================================
 def new_fig(figsize=(14, 8)):
     """Create single-axis figure with LHM theme and reserved margins for
-    the header band (top) and the brand footer (bottom)."""
+    the header band (top) and the brand footer (bottom).
+
+    Top margin reserved at 0.84 to leave room for: header watermarks at 0.98,
+    accent bar at 0.955, title at 0.93, subtitle at 0.87. Plot area begins
+    at 0.84 so subtitle and plot are not scrunched."""
     fig, ax = plt.subplots(figsize=figsize)
     fig.patch.set_facecolor(THEME['bg'])
     ax.set_facecolor(THEME['bg'])
-    fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94)
+    fig.subplots_adjust(top=0.84, bottom=0.10, left=0.06, right=0.94)
     return fig, ax
 
 def new_fig_multi(rows, cols, figsize=(14, 10)):
@@ -143,7 +147,7 @@ def new_fig_multi(rows, cols, figsize=(14, 10)):
     fig.patch.set_facecolor(THEME['bg'])
     for ax in axes.flat:
         ax.set_facecolor(THEME['bg'])
-    fig.subplots_adjust(top=0.88, bottom=0.08, left=0.06, right=0.94,
+    fig.subplots_adjust(top=0.84, bottom=0.10, left=0.06, right=0.94,
                         hspace=0.35, wspace=0.25)
     return fig, axes
 
@@ -255,7 +259,11 @@ def legend_style():
     )
 
 def align_yaxis_zero(a1, a2):
-    """Align both y-axes at zero for dual-axis charts."""
+    """Align both y-axes at zero for dual-axis charts.
+
+    Use when at least one series crosses zero or is naturally centered at
+    zero (z-scores, deviations, spreads vs. baseline). Both axes share a
+    horizontal zero line, so overlays line up visually."""
     y1_min, y1_max = a1.get_ylim()
     y2_min, y2_max = a2.get_ylim()
     r1 = abs(y1_min) / max(abs(y1_max), 1e-6)
@@ -263,6 +271,63 @@ def align_yaxis_zero(a1, a2):
     r = max(r1, r2)
     a1.set_ylim(bottom=-r * abs(y1_max), top=y1_max)
     a2.set_ylim(bottom=-r * abs(y2_max), top=y2_max)
+
+
+def align_yaxis_midpoint(a1, a2, s1=None, s2=None):
+    """Align both y-axes at their data midpoints when neither crosses zero.
+
+    Use for positive-only pairs (spread levels, prices, indices). Computes
+    each series' median as the alignment anchor and rescales both axes so
+    the medians sit at the same y-pixel. Without this, two positive series
+    on a dual axis look like they trend the same when they don't, or vice
+    versa — overlays mislead.
+
+    If `s1` and `s2` are passed, midpoints come from the actual data. If
+    omitted, midpoints come from the current axis limits."""
+    import numpy as np
+
+    if s1 is not None and len(s1) > 0:
+        mid1 = float(np.nanmedian(np.asarray(s1, dtype=float)))
+    else:
+        y1_min, y1_max = a1.get_ylim()
+        mid1 = (y1_min + y1_max) / 2.0
+
+    if s2 is not None and len(s2) > 0:
+        mid2 = float(np.nanmedian(np.asarray(s2, dtype=float)))
+    else:
+        y2_min, y2_max = a2.get_ylim()
+        mid2 = (y2_min + y2_max) / 2.0
+
+    y1_min, y1_max = a1.get_ylim()
+    y2_min, y2_max = a2.get_ylim()
+    half1 = max(mid1 - y1_min, y1_max - mid1)
+    half2 = max(mid2 - y2_min, y2_max - mid2)
+    a1.set_ylim(bottom=mid1 - half1, top=mid1 + half1)
+    a2.set_ylim(bottom=mid2 - half2, top=mid2 + half2)
+
+
+def align_yaxis_smart(a1, a2, s1=None, s2=None):
+    """Pick the right alignment automatically.
+
+    If either provided series spans zero (or the axis already does), use
+    zero alignment. Otherwise use midpoint alignment so positive-only
+    overlays still register as comparable.
+    """
+    import numpy as np
+
+    def _spans_zero(series, axis):
+        if series is not None and len(series) > 0:
+            arr = np.asarray(series, dtype=float)
+            arr = arr[~np.isnan(arr)]
+            if arr.size:
+                return arr.min() < 0 < arr.max()
+        lo, hi = axis.get_ylim()
+        return lo < 0 < hi
+
+    if _spans_zero(s1, a1) or _spans_zero(s2, a2):
+        align_yaxis_zero(a1, a2)
+    else:
+        align_yaxis_midpoint(a1, a2, s1, s2)
 
 # ============================================
 # BRAND (header band + footer + watermarks)
@@ -331,11 +396,12 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
                      fontsize=9, color=THEME['muted'],
                      ha='left', va='top', style='italic')
 
-    # Title + subtitle inside the header band
-    fig.suptitle(title, fontsize=15, fontweight='bold', y=0.945,
+    # Title under the accent bar. Subtitle below with breathing room above
+    # the plot area (which starts at y=0.84 via new_fig).
+    fig.suptitle(title, fontsize=15, fontweight='bold', y=0.93,
                  color=THEME['fg'])
     if subtitle:
-        fig.text(0.5, 0.895, subtitle, fontsize=14, ha='center',
+        fig.text(0.5, 0.87, subtitle, fontsize=12, ha='center',
                  color=OCEAN, style='italic')
 
 # ============================================

@@ -8,35 +8,41 @@
 
 ## Color Palette
 
-### Signature 8-Color Palette (23/89/BB Mnemonic)
+### Signature Palette (23/89/BB Mnemonic)
 
-Every color contains some combination of 23, 89, and BB. The brand palette is a signature.
+The signature mnemonic is 23/89/BB. Every color contains some combination of 23, 89, and BB — except the two contrast workhorses (Bright, Deep) and the surface utility (Offwhite), which extend the system without breaking it.
+
+**Top-tier secondaries (tied):** Dusk, Sky, Bright, Deep. These four sit alongside Ocean as the primary plotting palette. Cycle order on white bg: Ocean → Dusk → Sky → Bright → Deep → Sea → Venus → Doldrums. On dark bg, Bright is promoted to primary because Ocean dims against Deep.
 
 | Layer | Name | Hex | Mnemonic | Usage |
 |-------|------|-----|----------|-------|
-| Primary | Ocean | `#2389BB` | 23+89+BB | Anchor: headers, borders, links, chart primary |
-| The Beacon | Dusk | `#FF6723` | 23 | Key insights, CTA buttons, accent bar, callouts |
-| Secondary | Sky | `#23BBFF` | BB | Lighter blue for secondary chart lines |
+| Primary | Ocean | `#2389BB` | 23+89+BB | Anchor: headers, borders, links, chart primary on white |
+| Top secondary | Dusk | `#FF6723` | 23 | Key insights, CTA buttons, accent bar, callouts |
+| Top secondary | Sky | `#23BBFF` | BB | Lighter blue for secondary chart lines |
+| Top secondary | Bright | `#89ccff` | — | Soft sky for contrast on dark bg; primary on dark theme |
+| Top secondary | Deep | `#123456` | — | Dark canvas. Also high-contrast accent line on white bg |
 | Tertiary | Sea | `#00BB89` | BB+89 | Regime bands, on-target, trend shading |
 | Bullish | Starboard | `#238923` | 23+89 | Bullish regime, professional green |
 | Bearish | Port | `#892323` | 89+23 | Bearish regime, crisis bands |
 | Alert | Venus | `#FF2389` | 23+89 | 2% target lines, critical alerts |
 | Structural | Doldrums | `#898989` | 89+89 | Axis spines, labels, secondary text |
 
-### Reference Colors
+### Surface and Reference Colors
 
-| Name | Hex | Mnemonic | Usage |
-|------|-----|----------|-------|
-| Fog | `#D1D1D1` | D1+D1 | Zero lines, ghost reference lines |
+| Name | Hex | Usage |
+|------|-----|-------|
+| Paper | `#FFFFFF` | Default chart and page background (white theme) |
+| Offwhite | `#f4f7f9` | Card backgrounds, table fills, legend backgrounds on white theme |
+| Fog | `#D1D1D1` | Zero lines, ghost reference lines |
 
 ### Chart Background
 
 | Context | Color | Hex |
 |---------|-------|-----|
-| Primary (all publications) | White | `#FFFFFF` |
-| Optional secondary | Dark Navy | `#0A1628` |
+| Primary (all publications) | Paper | `#FFFFFF` |
+| Dark variant | Deep | `#123456` |
 
-White theme is primary for all Substack, PDF, social, and Chartbook output.
+White theme is primary for Substack, PDF, social, and Chartbook output. Dark theme uses Deep `#123456` as the canvas with Offwhite text/spines and Bright as the primary plotting color.
 
 ## Typography
 

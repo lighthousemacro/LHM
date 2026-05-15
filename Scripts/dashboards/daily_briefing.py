@@ -2,8 +2,10 @@
 """
 LIGHTHOUSE MACRO — DAILY BRIEFING
 ==================================
-Generates the v3 daily briefing as a self-contained HTML document with
-10 brand-compliant inline charts and inline-hyperlinked source phrases.
+Generates the v3 daily briefing as a self-contained HTML document with 10
+brand-compliant inline charts. Each chart is rendered twice: in the canonical
+white theme AND in the dark theme (Deep #123456 bg). A toggle at the top of
+the page swaps both the page palette and the chart images.
 
 Reads:
     /Users/bob/LHM/Data/databases/Lighthouse_Master.db
@@ -22,7 +24,6 @@ from __future__ import annotations
 
 import argparse
 import base64
-import io
 import os
 import sqlite3
 import subprocess
@@ -34,28 +35,46 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
+
+# Canonical brand helpers
+sys.path.insert(0, "/Users/bob/LHM/Scripts/chart_generation")
+from lhm_chart_template import (  # noqa: E402
+    COLORS,
+    LHM_PALETTE,
+    set_theme,
+    new_fig,
+    style_single_ax,
+    style_dual_ax,
+    add_last_value_label,
+    add_recessions,
+    set_xlim_to_data,
+    legend_style,
+    align_yaxis_zero,
+    brand_fig,
+    save_fig_buffer,
+)
 
 DB_PATH = Path("/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
 OUTPUT_DIR = Path("/Users/bob/LHM/Outputs")
 LATEST_PATH = OUTPUT_DIR / "daily_briefing_latest.html"
 
-# Brand palette
-OCEAN     = "#2389BB"
-DUSK      = "#FF6723"
-SKY       = "#23BBFF"
-SEA       = "#00BB89"
-VENUS     = "#FF2389"
-DOLDRUMS  = "#898989"
-STARBOARD = "#238923"
-PORT      = "#892323"
-FOG       = "#D1D1D1"
+# Web palette (used for the HTML scaffold)
+OCEAN     = COLORS["ocean"]
+DUSK      = COLORS["dusk"]
+SKY       = COLORS["sky"]
+BRIGHT    = COLORS["bright"]
+DEEP      = COLORS["deep"]
+SEA       = COLORS["sea"]
+VENUS     = COLORS["venus"]
+DOLDRUMS  = COLORS["doldrums"]
+STARBOARD = COLORS["starboard"]
+PORT      = COLORS["port"]
+FOG       = COLORS["fog"]
+OFFWHITE  = COLORS["offwhite"]
 INK       = "#1a1a1a"
-PAPER     = "#ffffff"
 
-# Inline link map. Anchor phrase → canonical source URL. Replacements only
-# fire once per phrase per render so we don't link every occurrence.
+# Inline-link map. Anchor phrase → canonical source URL. First-occurrence only.
 LINK_MAP: dict[str, str] = {
     "10-year Treasury":      "https://fred.stlouisfed.org/series/DGS10",
     "10-year":               "https://fred.stlouisfed.org/series/DGS10",
@@ -93,101 +112,60 @@ LINK_MAP: dict[str, str] = {
 
 
 def link_phrase(text: str) -> str:
-    """Convert known anchor phrases in plain text to inline HTML hyperlinks.
-    First occurrence only per phrase. Preserves the rest of the text."""
     if not text:
         return text
     seen: set[str] = set()
-    # Sort phrases longest-first so we don't get partial-match collisions.
     for phrase in sorted(LINK_MAP.keys(), key=len, reverse=True):
         if phrase in seen:
             continue
-        url = LINK_MAP[phrase]
-        # Plain replace, first occurrence only.
         idx = text.find(phrase)
         if idx == -1:
             continue
+        url = LINK_MAP[phrase]
         text = text[:idx] + f'<a href="{url}" target="_blank">{phrase}</a>' + text[idx + len(phrase):]
         seen.add(phrase)
     return text
 
 
+def fig_b64(fig) -> str:
+    return base64.b64encode(save_fig_buffer(fig)).decode("ascii")
+
+
 # ============================================================================
-# CHART HELPERS — brand-compliant matplotlib
+# CHARTS — all use canonical lhm_chart_template helpers
 # ============================================================================
-
-def _style_axes(ax) -> None:
-    ax.tick_params(colors=DOLDRUMS, labelsize=8)
-    for spine in ax.spines.values():
-        spine.set_color(DOLDRUMS)
-        spine.set_linewidth(0.5)
-    ax.grid(False)
-    ax.set_facecolor(PAPER)
-
-
-def _stamp(fig, ax, title: str, subtitle: str, source: str) -> None:
-    """Add the brand stamps: accent bar, title, subtitle, source, watermark."""
-    fig.patch.set_facecolor(PAPER)
-    # Top accent bar
-    fig.add_artist(plt.Rectangle((0, 0.985), 0.66, 0.012, color=OCEAN,
-                                 transform=fig.transFigure, clip_on=False))
-    fig.add_artist(plt.Rectangle((0.66, 0.985), 0.34, 0.012, color=DUSK,
-                                 transform=fig.transFigure, clip_on=False))
-    fig.text(0.02, 0.955, "LIGHTHOUSE MACRO", color=OCEAN,
-             font="Montserrat", weight=700, fontsize=9, va="top")
-    fig.text(0.02, 0.93, title, color=INK,
-             font="Montserrat", weight=700, fontsize=13, va="top")
-    if subtitle:
-        fig.text(0.02, 0.895, subtitle, color=DOLDRUMS,
-                 font="Inter", fontsize=9, va="top")
-    fig.text(0.02, 0.02, f"Lighthouse Macro | {source}", color=DOLDRUMS,
-             font="Source Code Pro", fontsize=7.5, va="bottom")
-    fig.text(0.98, 0.02, "MACRO, ILLUMINATED.", color=OCEAN,
-             font="Montserrat", weight=700, fontsize=8, ha="right", va="bottom")
-
-
-def fig_to_b64(fig, dpi: int = 150) -> str:
-    buf = io.BytesIO()
-    fig.savefig(buf, format="png", dpi=dpi, bbox_inches="tight",
-                facecolor=PAPER, pad_inches=0.06)
-    plt.close(fig)
-    return base64.b64encode(buf.getvalue()).decode("ascii")
-
 
 def chart_mri(conn) -> str:
     df = pd.read_sql(
         "SELECT date, value FROM lighthouse_indices "
-        "WHERE index_id='MRI' AND date >= date('now','-3 year') "
-        "ORDER BY date",
+        "WHERE index_id='MRI' AND date >= date('now','-3 year') ORDER BY date",
         conn, parse_dates=["date"],
-    ).set_index("date")
+    ).set_index("date").dropna()
     if df.empty:
         return ""
-    fig, ax = plt.subplots(figsize=(9, 3.2))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.82, bottom=0.18, left=0.06, right=0.96)
-    ax.axhspan(-3, -0.20, color="#e7f5ec", alpha=0.4, lw=0)
-    ax.axhspan(-0.20, 0.10, color="#f2f7fc", alpha=0.5, lw=0)
-    ax.axhspan(0.10, 0.25, color="#fff2e3", alpha=0.5, lw=0)
-    ax.axhspan(0.25, 0.50, color="#fce0d2", alpha=0.5, lw=0)
-    ax.axhspan(0.50, 3, color="#f0d4d4", alpha=0.5, lw=0)
-    ax.plot(df.index, df["value"], color=OCEAN, lw=1.6)
-    ax.axhline(0, color=DOLDRUMS, lw=0.5, ls="--")
-    ax.set_ylim(df["value"].min() - 0.2, df["value"].max() + 0.2)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 7]))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    latest_val = df["value"].iloc[-1]
-    ax.scatter([df.index[-1]], [latest_val], color=OCEAN, s=24, zorder=5)
-    ax.annotate(f"{latest_val:+.2f}", xy=(df.index[-1], latest_val),
-                xytext=(8, 0), textcoords="offset points",
-                color=OCEAN, fontsize=9, weight="bold", va="center")
-    _stamp(fig, ax,
-           "Macro Risk Index", "3y history with cycle-phase shading",
-           "Lighthouse Macro composites; date " + df.index.max().date().isoformat())
-    return fig_to_b64(fig)
+    fig, ax = new_fig(figsize=(13, 5.4))
+    color = COLORS["bright"] if matplotlib.rcParams.get("__lhm_dark__") else COLORS["ocean"]
+    # Cycle-phase shading (light bands)
+    ax.axhspan(-3,    -0.20, color=COLORS["sea"],   alpha=0.08, zorder=0)
+    ax.axhspan(-0.20,  0.10, color=COLORS["fog"],   alpha=0.20, zorder=0)
+    ax.axhspan( 0.10,  0.25, color=COLORS["dusk"],  alpha=0.10, zorder=0)
+    ax.axhspan( 0.25,  0.50, color=COLORS["dusk"],  alpha=0.18, zorder=0)
+    ax.axhspan( 0.50,  3,    color=COLORS["port"],  alpha=0.18, zorder=0)
+    ax.plot(df.index, df["value"], color=color, linewidth=2.4)
+    ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7, zorder=0)
+    style_single_ax(ax, fmt="{:+.2f}")
+    add_last_value_label(ax, df["value"], color, fmt="{:+.2f}", side="right")
+    set_xlim_to_data(ax, df.index)
+    brand_fig(fig,
+              title="Macro Risk Index",
+              subtitle="3y composite with cycle-phase shading",
+              source="Lighthouse Macro composites",
+              data_date=df.index[-1])
+    return fig_b64(fig)
 
 
 def chart_pillar_heatmap(conn) -> str:
+    """A horizontal mini-bar heatmap, in canonical style."""
     pillar_codes = {
         1: "LFI", 2: "PCI", 3: "GCI", 4: "HCI", 5: "CCI", 6: "BCI",
         7: "TCI", 8: "FPI", 9: "FCI", 10: "LCI", 11: "MSI", 12: "SPI",
@@ -197,182 +175,173 @@ def chart_pillar_heatmap(conn) -> str:
         5: "Consumer", 6: "Business", 7: "Trade", 8: "Govt",
         9: "Financial", 10: "Plumbing", 11: "Structure", 12: "Sentiment",
     }
-    vals = {}
-    for p, code in pillar_codes.items():
+    values = []
+    labels = []
+    for p in range(1, 13):
         r = conn.execute(
             "SELECT value FROM lighthouse_indices WHERE index_id=? "
-            "ORDER BY date DESC LIMIT 1", (code,)
+            "ORDER BY date DESC LIMIT 1", (pillar_codes[p],)
         ).fetchone()
-        vals[p] = r[0] if r else None
+        v = r[0] if r else 0.0
+        values.append(v if v is not None else 0.0)
+        labels.append(f"{p}. {pillar_names[p]}")
 
-    fig, ax = plt.subplots(figsize=(9, 3.4))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.78, bottom=0.10, left=0.04, right=0.98)
-    ax.set_xlim(0, 12); ax.set_ylim(0, 2.4)
-    ax.set_xticks([]); ax.set_yticks([])
-    for spine in ax.spines.values():
-        spine.set_visible(False)
+    fig, ax = new_fig(figsize=(13, 5.4))
 
     def color_for(z):
         if z is None:
-            return DOLDRUMS
-        if z <= -1.5: return PORT
-        if z <= -0.5: return DUSK
-        if z <= 0.5:  return DOLDRUMS
-        if z <= 1.5:  return SEA
-        return STARBOARD
+            return COLORS["doldrums"]
+        if z <= -1.5: return COLORS["port"]
+        if z <= -0.5: return COLORS["dusk"]
+        if z <= 0.5:  return COLORS["doldrums"]
+        if z <= 1.5:  return COLORS["sea"]
+        return COLORS["starboard"]
 
-    for i in range(12):
-        p = i + 1
-        cx = i + 0.5
-        cy = 1.4
-        z = vals[p]
-        ax.add_patch(plt.Circle((cx, cy), 0.34, color=color_for(z), zorder=3))
-        ax.text(cx, cy, f"{p}", color="#fff",
-                font="Montserrat", weight=700, fontsize=12,
-                ha="center", va="center", zorder=4)
-        ax.text(cx, 0.78, pillar_names[p], color=INK,
-                font="Inter", fontsize=8.5, weight=600,
-                ha="center", va="center")
-        ax.text(cx, 0.42, f"{z:+.2f}" if z is not None else "—",
-                color=DOLDRUMS, font="Source Code Pro", fontsize=8,
-                ha="center", va="center")
-    _stamp(fig, ax,
-           "The Diagnostic Dozen",
-           "Current pillar-composite z-score. Color: red = stressed, orange = elevated, gray = neutral, green = healthy",
-           "Lighthouse Macro composites")
-    return fig_to_b64(fig)
+    colors = [color_for(v) for v in values]
+    y = list(range(len(values)))
+    ax.barh(y, values, color=colors, edgecolor="none", height=0.7)
+    ax.set_yticks(y)
+    ax.set_yticklabels(labels, fontsize=10, color=COLORS["doldrums"])
+    ax.invert_yaxis()
+    ax.axvline(0, color=COLORS["fog"], linewidth=0.6, linestyle="--")
+    for i, v in enumerate(values):
+        ax.text(v + (0.04 if v >= 0 else -0.04), i, f"{v:+.2f}",
+                ha="left" if v >= 0 else "right", va="center",
+                fontsize=10, color=COLORS["doldrums"], fontweight="bold")
+    style_single_ax(ax, fmt="{:+.1f}")
+    ax.tick_params(axis="y", which="both", left=False, right=False)
+    pad = max(abs(min(values)), abs(max(values))) * 1.25 or 1.0
+    ax.set_xlim(-pad, pad)
+    brand_fig(fig,
+              title="The Diagnostic Dozen",
+              subtitle="Current pillar-composite z-score, ordered 1-12",
+              source="Lighthouse Macro composites")
+    return fig_b64(fig)
+
+
+def _composite_series(conn, code: str, years: int = 2) -> pd.Series:
+    df = pd.read_sql(
+        f"SELECT date, value FROM lighthouse_indices "
+        f"WHERE index_id=? AND date >= date('now','-{years} year') ORDER BY date",
+        conn, parse_dates=["date"], params=(code,),
+    ).set_index("date").dropna()
+    return df["value"]
 
 
 def chart_labor_stack(conn) -> str:
-    fig, ax = plt.subplots(figsize=(9, 3.2))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.06, right=0.96)
-    palette = {"LFI": OCEAN, "LPI": DUSK, "LDI": SEA}
-    for code, color in palette.items():
-        df = pd.read_sql(
-            "SELECT date, value FROM lighthouse_indices "
-            "WHERE index_id=? AND date >= date('now','-2 year') "
-            "ORDER BY date",
-            conn, parse_dates=["date"], params=(code,),
-        ).set_index("date")
-        if df.empty:
+    fig, ax = new_fig(figsize=(13, 5.4))
+    palette = {
+        "LFI": (COLORS["ocean"], "Labor Fragility (LFI)"),
+        "LPI": (COLORS["dusk"],  "Labor Pressure (LPI)"),
+        "LDI": (COLORS["sea"],   "Labor Dynamism (LDI)"),
+    }
+    indices_used = []
+    for code, (color, label) in palette.items():
+        s = _composite_series(conn, code, years=2)
+        if s.empty:
             continue
-        ax.plot(df.index, df["value"], color=color, lw=1.4, label=code)
-    ax.axhline(0, color=DOLDRUMS, lw=0.4, ls="--")
-    ax.legend(loc="lower left", frameon=False, fontsize=8.5,
-              labelcolor=DOLDRUMS, ncol=3)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 1 — Labor",
-           "LFI fragility (Ocean), LPI pressure (Dusk), LDI dynamism (Sea). 2y view.",
-           "Lighthouse Macro composites")
-    return fig_to_b64(fig)
+        ax.plot(s.index, s.values, color=color, linewidth=2.0, label=label)
+        indices_used.append(s.index)
+    ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
+    if indices_used:
+        set_xlim_to_data(ax, *indices_used)
+    style_single_ax(ax, fmt="{:+.1f}")
+    leg = ax.legend(loc="upper left", **legend_style(), fontsize=9)
+    leg.get_frame().set_linewidth(0.5)
+    brand_fig(fig,
+              title="Pillar 1 — Labor",
+              subtitle="Fragility, Pressure, Dynamism. 2y view.",
+              source="Lighthouse Macro composites")
+    return fig_b64(fig)
 
 
 def chart_pci_history(conn) -> str:
-    df = pd.read_sql(
-        "SELECT date, value FROM lighthouse_indices "
-        "WHERE index_id='PCI' AND date >= date('now','-3 year') "
-        "ORDER BY date",
-        conn, parse_dates=["date"],
-    ).set_index("date")
-    if df.empty:
+    s = _composite_series(conn, "PCI", years=3)
+    if s.empty:
         return ""
-    fig, ax = plt.subplots(figsize=(9, 3.0))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.06, right=0.96)
-    ax.fill_between(df.index, 0, df["value"], where=df["value"] > 0,
-                    color=DUSK, alpha=0.15)
-    ax.fill_between(df.index, 0, df["value"], where=df["value"] < 0,
-                    color=OCEAN, alpha=0.15)
-    ax.plot(df.index, df["value"], color=INK, lw=1.4)
-    ax.axhline(0, color=DOLDRUMS, lw=0.4, ls="--")
-    ax.axhline(1.5, color=PORT, lw=0.5, ls=":")
-    ax.axhline(-1.5, color=STARBOARD, lw=0.5, ls=":")
-    ax.text(df.index[-1], 1.55, "+1.5 inflation crisis", color=PORT,
-            fontsize=7, ha="right", va="bottom")
-    ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 7]))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 2 — Inflation Heat",
-           "3y composite. Dusk shading = above-target heat, Ocean shading = below-target slack.",
-           "Lighthouse Macro composites")
-    return fig_to_b64(fig)
+    fig, ax = new_fig(figsize=(13, 5.0))
+    ax.fill_between(s.index, 0, s.values, where=(s.values > 0),
+                    color=COLORS["dusk"], alpha=0.18, linewidth=0)
+    ax.fill_between(s.index, 0, s.values, where=(s.values < 0),
+                    color=COLORS["ocean"], alpha=0.18, linewidth=0)
+    ax.plot(s.index, s.values, color=COLORS["ocean"], linewidth=2.2)
+    ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
+    ax.axhline(1.5, color=COLORS["port"], linestyle=":", linewidth=0.8)
+    ax.axhline(-1.5, color=COLORS["starboard"], linestyle=":", linewidth=0.8)
+    style_single_ax(ax, fmt="{:+.1f}")
+    add_last_value_label(ax, s, COLORS["ocean"], fmt="{:+.2f}")
+    set_xlim_to_data(ax, s.index)
+    brand_fig(fig,
+              title="Pillar 2 — Inflation Heat",
+              subtitle="3y composite. Dusk shading = above-target heat, Ocean = slack.",
+              source="Lighthouse Macro composites",
+              data_date=s.index[-1])
+    return fig_b64(fig)
 
 
 def chart_growth_vs_wei(conn) -> str:
-    gci = pd.read_sql(
-        "SELECT date, value FROM lighthouse_indices "
-        "WHERE index_id='GCI' AND date >= date('now','-2 year') ORDER BY date",
-        conn, parse_dates=["date"]
-    ).set_index("date")
+    gci = _composite_series(conn, "GCI", years=2)
     wei = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='WEI' "
         "AND date >= date('now','-2 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna()
     if gci.empty:
         return ""
-    fig, ax = plt.subplots(figsize=(9, 3.0))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.06, right=0.92)
-    ax.plot(gci.index, gci["value"], color=OCEAN, lw=1.4, label="Activity Pulse (GCI)")
-    ax.axhline(0, color=DOLDRUMS, lw=0.4, ls="--")
+    fig, ax = new_fig(figsize=(13, 5.0))
+    ax2 = ax.twinx()
+    ax.plot(gci.index, gci.values, color=COLORS["dusk"], linewidth=2.2,
+            label="Activity Pulse (GCI)")
     if not wei.empty:
-        ax2 = ax.twinx()
-        ax2.plot(wei.index, wei["value"], color=DUSK, lw=1.0, alpha=0.8,
+        ax2.plot(wei.index, wei.values, color=COLORS["ocean"], linewidth=2.0,
                  label="NY Fed WEI (right)")
-        ax2.tick_params(colors=DOLDRUMS, labelsize=8)
-        for spine in ax2.spines.values():
-            spine.set_color(DOLDRUMS); spine.set_linewidth(0.5)
-        ax2.spines["right"].set_color(DUSK)
-        ax2.tick_params(axis="y", colors=DUSK)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 3 — Activity Pulse + WEI",
-           "GCI (Ocean, left) with NY Fed Weekly Economic Index (Dusk, right).",
-           "Lighthouse Macro composites; NY Fed")
-    return fig_to_b64(fig)
+    style_dual_ax(ax, ax2, COLORS["dusk"], COLORS["ocean"])
+    ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
+    align_yaxis_zero(ax, ax2)
+    add_last_value_label(ax, gci, COLORS["dusk"], fmt="{:+.2f}", side="left")
+    if not wei.empty:
+        add_last_value_label(ax2, wei, COLORS["ocean"], fmt="{:+.2f}", side="right")
+        set_xlim_to_data(ax, gci.index, wei.index)
+    else:
+        set_xlim_to_data(ax, gci.index)
+    brand_fig(fig,
+              title="Pillar 3 — Activity Pulse + WEI",
+              subtitle="GCI (Dusk, left) overlaid on NY Fed WEI (Ocean, right).",
+              source="Lighthouse Macro composites; NY Fed",
+              data_date=gci.index[-1])
+    return fig_b64(fig)
 
 
 def chart_housing_vs_10y(conn) -> str:
-    hci = pd.read_sql(
-        "SELECT date, value FROM lighthouse_indices "
-        "WHERE index_id='HCI' AND date >= date('now','-3 year') ORDER BY date",
-        conn, parse_dates=["date"]
-    ).set_index("date")
+    hci = _composite_series(conn, "HCI", years=3)
     tsy = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='DGS10' "
         "AND date >= date('now','-3 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna()
     if hci.empty:
         return ""
-    fig, ax = plt.subplots(figsize=(9, 3.0))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.06, right=0.92)
-    ax.plot(hci.index, hci["value"], color=OCEAN, lw=1.4, label="Housing Tide")
-    ax.axhline(0, color=DOLDRUMS, lw=0.4, ls="--")
+    fig, ax = new_fig(figsize=(13, 5.0))
+    ax2 = ax.twinx()
+    ax.plot(hci.index, hci.values, color=COLORS["ocean"], linewidth=2.2,
+            label="Housing Tide (HCI)")
     if not tsy.empty:
-        ax2 = ax.twinx()
-        ax2.plot(tsy.index, tsy["value"], color=DUSK, lw=1.0, alpha=0.8,
-                 label="10Y yield")
-        ax2.tick_params(colors=DOLDRUMS, labelsize=8)
-        for spine in ax2.spines.values():
-            spine.set_color(DOLDRUMS); spine.set_linewidth(0.5)
-        ax2.spines["right"].set_color(DUSK)
-        ax2.tick_params(axis="y", colors=DUSK)
-        ax2.set_ylabel("10Y yield, %", color=DUSK, fontsize=8)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 7]))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 4 — Housing Tide vs 10-year",
-           "HCI composite (Ocean, left) overlaid with 10Y yield (Dusk, right).",
-           "Lighthouse Macro composites; FRED DGS10")
-    return fig_to_b64(fig)
+        ax2.plot(tsy.index, tsy.values, color=COLORS["dusk"], linewidth=2.0,
+                 label="10Y yield (right)")
+    style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
+    ax.axhline(0, color=COLORS["fog"], linestyle="--", linewidth=0.7)
+    add_last_value_label(ax, hci, COLORS["ocean"], fmt="{:+.2f}", side="left")
+    if not tsy.empty:
+        add_last_value_label(ax2, tsy, COLORS["dusk"], fmt="{:.2f}%", side="right")
+        set_xlim_to_data(ax, hci.index, tsy.index)
+    else:
+        set_xlim_to_data(ax, hci.index)
+    brand_fig(fig,
+              title="Pillar 4 — Housing Tide vs 10Y",
+              subtitle="HCI composite (Ocean, left) and 10Y Treasury yield (Dusk, right).",
+              source="Lighthouse Macro composites; FRED DGS10",
+              data_date=hci.index[-1])
+    return fig_b64(fig)
 
 
 def chart_credit_spreads(conn) -> str:
@@ -380,39 +349,40 @@ def chart_credit_spreads(conn) -> str:
         "SELECT date, value FROM observations WHERE series_id='BAMLH0A0HYM2' "
         "AND date >= date('now','-3 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna() * 100  # to bps
     ig = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='BAMLC0A0CM' "
         "AND date >= date('now','-3 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna() * 100
     if hy.empty:
         return ""
-    fig, ax = plt.subplots(figsize=(9, 3.0))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.06, right=0.92)
-    ax.plot(hy.index, hy["value"] * 100, color=OCEAN, lw=1.4, label="HY OAS")
-    ax.axhline(3.00 * 100, color=DUSK, lw=0.5, ls=":")
-    ax.axhline(5.00 * 100, color=PORT, lw=0.5, ls=":")
-    ax.text(hy.index[-1], 305, "300 complacent floor", color=DUSK,
-            fontsize=7, ha="right", va="bottom")
-    ax.text(hy.index[-1], 505, "500 stress threshold", color=PORT,
-            fontsize=7, ha="right", va="bottom")
+    fig, ax = new_fig(figsize=(13, 5.0))
+    ax2 = ax.twinx()
+    ax.plot(hy.index, hy.values, color=COLORS["ocean"], linewidth=2.2,
+            label="HY OAS, bps")
     if not ig.empty:
-        ax2 = ax.twinx()
-        ax2.plot(ig.index, ig["value"] * 100, color=DOLDRUMS, lw=1.0,
-                 alpha=0.7, label="IG OAS (right)")
-        ax2.tick_params(colors=DOLDRUMS, labelsize=8)
-        for spine in ax2.spines.values():
-            spine.set_color(DOLDRUMS); spine.set_linewidth(0.5)
-    ax.set_ylabel("HY OAS, bps", color=OCEAN, fontsize=8)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 7]))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 9 — Credit Spreads",
-           "ICE BofA HY OAS (Ocean) and IG OAS (Doldrums). Thresholds at 300 bps and 500 bps.",
-           "FRED BAMLH0A0HYM2 / BAMLC0A0CM")
-    return fig_to_b64(fig)
+        ax2.plot(ig.index, ig.values, color=COLORS["dusk"], linewidth=2.0,
+                 label="IG OAS, bps (right)")
+    ax.axhline(300, color=COLORS["dusk"], linestyle=":", linewidth=0.8)
+    ax.axhline(500, color=COLORS["port"], linestyle=":", linewidth=0.8)
+    ax.text(hy.index[-1], 305, "300 complacent floor",
+            color=COLORS["dusk"], fontsize=8, ha="right")
+    ax.text(hy.index[-1], 505, "500 stress threshold",
+            color=COLORS["port"], fontsize=8, ha="right")
+    style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
+    add_last_value_label(ax, hy, COLORS["ocean"], fmt="{:.0f}", side="left")
+    if not ig.empty:
+        add_last_value_label(ax2, ig, COLORS["dusk"], fmt="{:.0f}", side="right")
+        set_xlim_to_data(ax, hy.index, ig.index)
+    else:
+        set_xlim_to_data(ax, hy.index)
+    brand_fig(fig,
+              title="Pillar 9 — Credit Spreads",
+              subtitle="ICE BofA HY OAS (Ocean, left) and IG OAS (Dusk, right).",
+              source="FRED BAMLH0A0HYM2 / BAMLC0A0CM",
+              data_date=hy.index[-1])
+    return fig_b64(fig)
 
 
 def chart_plumbing(conn) -> str:
@@ -420,68 +390,69 @@ def chart_plumbing(conn) -> str:
         "SELECT date, value FROM observations WHERE series_id='RRPONTSYD' "
         "AND date >= date('now','-3 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna() / 1e3  # to $B
     walcl = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='WALCL' "
         "AND date >= date('now','-3 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna() / 1e6  # to $T
     if rrp.empty:
         return ""
-    fig, ax = plt.subplots(figsize=(9, 3.0))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.07, right=0.92)
-    ax.fill_between(rrp.index, 0, rrp["value"] / 1e3, color=OCEAN, alpha=0.18)
-    ax.plot(rrp.index, rrp["value"] / 1e3, color=OCEAN, lw=1.2, label="RRP, $B")
+    fig, ax = new_fig(figsize=(13, 5.0))
+    ax2 = ax.twinx()
+    ax.fill_between(rrp.index, 0, rrp.values, color=COLORS["ocean"], alpha=0.18)
+    ax.plot(rrp.index, rrp.values, color=COLORS["ocean"], linewidth=1.8,
+            label="RRP, $B")
     if not walcl.empty:
-        ax2 = ax.twinx()
-        ax2.plot(walcl.index, walcl["value"] / 1e6, color=DUSK, lw=1.0,
-                 alpha=0.85, label="Fed BS, $T (right)")
-        ax2.tick_params(colors=DOLDRUMS, labelsize=8)
-        for spine in ax2.spines.values():
-            spine.set_color(DOLDRUMS); spine.set_linewidth(0.5)
-        ax2.spines["right"].set_color(DUSK)
-        ax2.tick_params(axis="y", colors=DUSK)
-        ax2.set_ylabel("Fed balance sheet, $T", color=DUSK, fontsize=8)
-    ax.set_ylabel("RRP balance, $B", color=OCEAN, fontsize=8)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 7]))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 10 — Plumbing",
-           "RRP balance (Ocean fill, left) and Fed balance sheet (Dusk, right).",
-           "FRED RRPONTSYD / WALCL")
-    return fig_to_b64(fig)
+        ax2.plot(walcl.index, walcl.values, color=COLORS["dusk"], linewidth=2.0,
+                 label="Fed BS, $T (right)")
+    style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
+    add_last_value_label(ax, rrp, COLORS["ocean"], fmt="${:.0f}B", side="left")
+    if not walcl.empty:
+        add_last_value_label(ax2, walcl, COLORS["dusk"], fmt="${:.2f}T", side="right")
+        set_xlim_to_data(ax, rrp.index, walcl.index)
+    else:
+        set_xlim_to_data(ax, rrp.index)
+    brand_fig(fig,
+              title="Pillar 10 — Plumbing",
+              subtitle="RRP balance ($B, left) and Fed balance sheet ($T, right).",
+              source="FRED RRPONTSYD / WALCL",
+              data_date=rrp.index[-1])
+    return fig_b64(fig)
 
 
 def chart_breadth(conn) -> str:
-    series_ids = ["SPX_PCT_ABOVE_20D", "SPX_PCT_ABOVE_50D", "SPX_PCT_ABOVE_200D"]
-    palette = [OCEAN, DUSK, SEA]
-    fig, ax = plt.subplots(figsize=(9, 3.0))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.06, right=0.96)
-    for sid, color in zip(series_ids, palette):
+    series_ids = [
+        ("SPX_PCT_ABOVE_20D",  COLORS["ocean"],  "% > 20d"),
+        ("SPX_PCT_ABOVE_50D",  COLORS["dusk"],   "% > 50d"),
+        ("SPX_PCT_ABOVE_200D", COLORS["sea"],    "% > 200d"),
+    ]
+    fig, ax = new_fig(figsize=(13, 5.0))
+    indices_used = []
+    for sid, color, label in series_ids:
         df = pd.read_sql(
             "SELECT date, value FROM observations WHERE series_id=? "
             "AND date >= date('now','-2 year') ORDER BY date",
             conn, parse_dates=["date"], params=(sid,)
-        ).set_index("date")
+        ).set_index("date")["value"].dropna()
         if df.empty:
             continue
-        label = sid.replace("SPX_PCT_ABOVE_", "% > ")
-        ax.plot(df.index, df["value"], color=color, lw=1.3, label=label, alpha=0.85)
-    ax.axhline(80, color=DOLDRUMS, lw=0.4, ls=":")
-    ax.axhline(25, color=DOLDRUMS, lw=0.4, ls=":")
+        ax.plot(df.index, df.values, color=color, linewidth=1.8, label=label,
+                alpha=0.95)
+        indices_used.append(df.index)
+    ax.axhline(80, color=COLORS["fog"], linewidth=0.7, linestyle=":")
+    ax.axhline(25, color=COLORS["fog"], linewidth=0.7, linestyle=":")
     ax.set_ylim(0, 100)
-    ax.set_ylabel("% members", color=DOLDRUMS, fontsize=8)
-    ax.legend(loc="upper left", frameon=False, fontsize=8.5,
-              labelcolor=DOLDRUMS, ncol=3)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 11 — Market Breadth",
-           "% of S&P 500 members above 20d / 50d / 200d MAs. Bands at 25 / 80.",
-           "Lighthouse Macro breadth fetcher")
-    return fig_to_b64(fig)
+    style_single_ax(ax, fmt="{:.0f}")
+    leg = ax.legend(loc="lower left", ncol=3, **legend_style(), fontsize=9)
+    leg.get_frame().set_linewidth(0.5)
+    if indices_used:
+        set_xlim_to_data(ax, *indices_used)
+    brand_fig(fig,
+              title="Pillar 11 — S&P 500 Breadth",
+              subtitle="% of members above 20d, 50d, and 200d moving averages.",
+              source="Lighthouse Macro breadth fetcher")
+    return fig_b64(fig)
 
 
 def chart_sentiment(conn) -> str:
@@ -489,84 +460,87 @@ def chart_sentiment(conn) -> str:
         "SELECT date, value FROM observations WHERE series_id='AAII_Bull_Bear_Spread' "
         "AND date >= date('now','-2 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna() * 100  # to percentage points
     vix = pd.read_sql(
         "SELECT date, value FROM observations WHERE series_id='VIXCLS' "
         "AND date >= date('now','-2 year') ORDER BY date",
         conn, parse_dates=["date"]
-    ).set_index("date")
+    ).set_index("date")["value"].dropna()
     if aaii.empty:
         return ""
-    fig, ax = plt.subplots(figsize=(9, 3.0))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.07, right=0.92)
-    ax.bar(aaii.index, aaii["value"] * 100, color=OCEAN, alpha=0.55, width=4)
-    ax.axhline(30, color=PORT, lw=0.5, ls=":")
-    ax.axhline(-20, color=STARBOARD, lw=0.5, ls=":")
-    ax.text(aaii.index[-1], 30.5, "+30 euphoria", color=PORT,
-            fontsize=7, ha="right", va="bottom")
-    ax.text(aaii.index[-1], -19.5, "-20 capitulation", color=STARBOARD,
-            fontsize=7, ha="right", va="top")
-    ax.set_ylabel("AAII bull-bear, pp", color=OCEAN, fontsize=8)
+    fig, ax = new_fig(figsize=(13, 5.0))
+    ax2 = ax.twinx()
+    ax.bar(aaii.index, aaii.values, color=COLORS["ocean"], alpha=0.55, width=4)
+    ax.axhline(30, color=COLORS["port"], linewidth=0.8, linestyle=":")
+    ax.axhline(-20, color=COLORS["starboard"], linewidth=0.8, linestyle=":")
+    ax.text(aaii.index[-1], 31, "+30 euphoria",
+            color=COLORS["port"], fontsize=8, ha="right")
+    ax.text(aaii.index[-1], -19, "-20 capitulation",
+            color=COLORS["starboard"], fontsize=8, ha="right")
     if not vix.empty:
-        ax2 = ax.twinx()
-        ax2.plot(vix.index, vix["value"], color=DUSK, lw=1.1, alpha=0.9)
-        ax2.set_ylabel("VIX", color=DUSK, fontsize=8)
-        ax2.tick_params(colors=DOLDRUMS, labelsize=8)
-        for spine in ax2.spines.values():
-            spine.set_color(DOLDRUMS); spine.set_linewidth(0.5)
-        ax2.spines["right"].set_color(DUSK)
-        ax2.tick_params(axis="y", colors=DUSK)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Pillar 12 — Sentiment",
-           "AAII bull-bear spread (Ocean bars) and VIX (Dusk line). 2y view.",
-           "AAII; CBOE VIXCLS")
-    return fig_to_b64(fig)
+        ax2.plot(vix.index, vix.values, color=COLORS["dusk"], linewidth=1.8,
+                 alpha=0.9, label="VIX (right)")
+    style_dual_ax(ax, ax2, COLORS["ocean"], COLORS["dusk"])
+    add_last_value_label(ax, aaii, COLORS["ocean"], fmt="{:+.1f}", side="left")
+    if not vix.empty:
+        add_last_value_label(ax2, vix, COLORS["dusk"], fmt="{:.1f}", side="right")
+        set_xlim_to_data(ax, aaii.index, vix.index)
+    else:
+        set_xlim_to_data(ax, aaii.index)
+    brand_fig(fig,
+              title="Pillar 12 — Sentiment",
+              subtitle="AAII bull-bear spread (Ocean bars, left) and VIX (Dusk, right).",
+              source="AAII; CBOE VIXCLS",
+              data_date=aaii.index[-1])
+    return fig_b64(fig)
 
 
 def chart_cross_asset() -> str:
-    """Cross-asset normalized performance over last 12 months via yfinance."""
+    """12-month normalized cross-asset performance via yfinance."""
     try:
         import yfinance as yf
     except ImportError:
         return ""
-    tickers = {"SPY": OCEAN, "QQQ": DUSK, "TLT": SEA, "HYG": VENUS,
-               "GLD": STARBOARD, "BTC-USD": PORT}
-    fig, ax = plt.subplots(figsize=(9, 3.2))
-    _style_axes(ax)
-    fig.subplots_adjust(top=0.80, bottom=0.16, left=0.06, right=0.96)
-    for t, color in tickers.items():
+    tickers = [
+        ("SPY",     COLORS["ocean"]),
+        ("QQQ",     COLORS["dusk"]),
+        ("TLT",     COLORS["sea"]),
+        ("HYG",     COLORS["sky"]),
+        ("GLD",     COLORS["bright"]),
+        ("BTC-USD", COLORS["venus"]),
+    ]
+    fig, ax = new_fig(figsize=(13, 5.4))
+    last_date = None
+    for sym, color in tickers:
         try:
-            h = yf.Ticker(t).history(period="370d", auto_adjust=False)
+            h = yf.Ticker(sym).history(period="370d", auto_adjust=False)
             if h.empty:
                 continue
             h.index = h.index.tz_localize(None).normalize()
             norm = h["Close"] / h["Close"].iloc[0] * 100
-            label = t.replace("-USD", "")
-            ax.plot(norm.index, norm.values, color=color, lw=1.3, label=label)
+            label = sym.replace("-USD", "")
+            ax.plot(norm.index, norm.values, color=color, linewidth=1.8,
+                    label=label)
+            last_date = norm.index[-1]
         except Exception:
             continue
-    ax.axhline(100, color=DOLDRUMS, lw=0.4, ls="--")
-    ax.set_ylabel("Indexed = 100", color=DOLDRUMS, fontsize=8)
-    ax.legend(loc="upper left", frameon=False, fontsize=8.5,
-              labelcolor=DOLDRUMS, ncol=6)
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %y"))
-    _stamp(fig, ax,
-           "Cross-Asset, 12 Months",
-           "Normalized total return. SPY, QQQ, TLT, HYG, GLD, BTC.",
-           "yfinance close prices")
-    return fig_to_b64(fig)
+    ax.axhline(100, color=COLORS["fog"], linewidth=0.7, linestyle="--")
+    style_single_ax(ax, fmt="{:.0f}")
+    leg = ax.legend(loc="upper left", ncol=6, **legend_style(), fontsize=9)
+    leg.get_frame().set_linewidth(0.5)
+    brand_fig(fig,
+              title="Cross-Asset, 12 Months",
+              subtitle="Normalized total return. SPY, QQQ, TLT, HYG, GLD, BTC.",
+              source="Yahoo Finance close prices",
+              data_date=last_date)
+    return fig_b64(fig)
 
 
 # ============================================================================
-# DATA PULLS
+# DATA
 # ============================================================================
 
 def fetch_state(conn) -> dict:
-    """Latest value + 7d/21d delta + status for each macro indicator."""
     rows = conn.execute("""
         WITH latest AS (
           SELECT i.index_id, i.value, i.status, i.date
@@ -585,17 +559,16 @@ def fetch_state(conn) -> dict:
     """).fetchall()
     out = {}
     for r in rows:
-        v = r[1]; v7 = r[4]; v21 = r[5]
+        v, v7, v21 = r[1], r[4], r[5]
         out[r[0]] = {
             "value": v, "status": r[2], "date": r[3],
-            "delta_7d": (v - v7) if (v is not None and v7 is not None) else None,
+            "delta_7d":  (v - v7) if (v is not None and v7 is not None) else None,
             "delta_21d": (v - v21) if (v is not None and v21 is not None) else None,
         }
     return out
 
 
 def fetch_markets() -> dict:
-    """Cross-asset snapshot via yfinance."""
     try:
         import yfinance as yf
     except ImportError:
@@ -622,18 +595,10 @@ def fetch_markets() -> dict:
             chg = (last - prev) / prev * 100
             ma50 = float(c.rolling(50).mean().iloc[-1])
             ma200 = float(c.rolling(200).mean().iloc[-1]) if len(c) >= 200 else None
-            roc20 = c.pct_change(20)
-            z = None
-            if len(c) >= 252:
-                m = roc20.rolling(252).mean().iloc[-1]
-                s = roc20.rolling(252).std().iloc[-1]
-                if s and not pd.isna(s):
-                    z = float((roc20.iloc[-1] - m) / s)
             out[name] = {
                 "price": last, "chg_1d_pct": chg,
                 "vs_50": (last / ma50 - 1) * 100 if ma50 else None,
                 "vs_200": (last / ma200 - 1) * 100 if ma200 else None,
-                "z_roc": z,
                 "asof": h.index[-1].date().isoformat(),
             }
         except Exception:
@@ -642,7 +607,7 @@ def fetch_markets() -> dict:
 
 
 # ============================================================================
-# RENDER
+# RENDER HTML
 # ============================================================================
 
 def color_for_status(status: str | None) -> str:
@@ -670,30 +635,27 @@ def color_for_status(status: str | None) -> str:
 
 
 def fmt_delta(d):
-    if d is None:
-        return "n/a"
-    return f"{d:+.2f}"
+    return "n/a" if d is None else f"{d:+.2f}"
 
 
-def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
+def render_brief(state: dict, mkt: dict,
+                 charts_light: dict, charts_dark: dict, run_date: str) -> str:
     now = datetime.now()
     timestamp = now.strftime("%Y-%m-%d %H:%M ET")
 
-    def row(code: str, label: str | None = None) -> str:
+    def row(code, label=None):
         d = state.get(code, {})
         v = d.get("value"); st = d.get("status") or "—"
         c = color_for_status(st)
         return (
-            f'<tr>'
-            f'<td>{label or code}</td>'
+            f'<tr><td>{label or code}</td>'
             f'<td class="num">{(v if v is not None else 0):+.3f}</td>'
             f'<td class="num delta">{fmt_delta(d.get("delta_7d"))}</td>'
             f'<td class="num delta">{fmt_delta(d.get("delta_21d"))}</td>'
-            f'<td><span class="pill" style="background:{c};">{st}</span></td>'
-            f'</tr>'
+            f'<td><span class="pill" style="background:{c};">{st}</span></td></tr>'
         )
 
-    def master_tile(code: str, name: str, fmt: str) -> str:
+    def master_tile(code, name, fmt):
         d = state.get(code, {})
         v = d.get("value"); st = d.get("status") or "—"
         c = color_for_status(st)
@@ -715,29 +677,32 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
             f'</div>'
         )
 
-    def chart_block(key: str, alt: str) -> str:
-        b64 = charts.get(key, "")
-        if not b64:
+    def chart(key, alt):
+        light = charts_light.get(key, "")
+        dark = charts_dark.get(key, "")
+        if not (light or dark):
             return ""
-        return f'<figure class="chart"><img alt="{alt}" src="data:image/png;base64,{b64}"/></figure>'
+        return (
+            f'<figure class="chart">'
+            f'<img class="theme-light" alt="{alt}" src="data:image/png;base64,{light}"/>'
+            f'<img class="theme-dark"  alt="{alt}" src="data:image/png;base64,{dark}"/>'
+            f'</figure>'
+        )
 
-    def market_row(name: str) -> str:
+    def market_row(name):
         m = mkt.get(name, {})
         if not m:
             return f'<tr><td>{name}</td><td colspan="4" class="num">—</td></tr>'
-        chg = m.get("chg_1d_pct")
-        chg_color = STARBOARD if (chg or 0) >= 0 else PORT
+        chg = m.get("chg_1d_pct") or 0
+        cc = STARBOARD if chg >= 0 else PORT
         return (
-            f'<tr>'
-            f'<td>{name}</td>'
+            f'<tr><td>{name}</td>'
             f'<td class="num">{m.get("price"):.2f}</td>'
-            f'<td class="num" style="color:{chg_color};">{chg:+.2f}%</td>'
-            f'<td class="num">{m.get("vs_50") or 0:+.1f}%</td>'
-            f'<td class="num">{m.get("vs_200") or 0:+.1f}%</td>'
-            f'</tr>'
+            f'<td class="num" style="color:{cc};">{chg:+.2f}%</td>'
+            f'<td class="num">{(m.get("vs_50") or 0):+.1f}%</td>'
+            f'<td class="num">{(m.get("vs_200") or 0):+.1f}%</td></tr>'
         )
 
-    # Daily note prose with inline links applied
     mri = state.get("MRI", {}).get("value")
     warn = state.get("WARNING_LEVEL", {}).get("value")
     disc = state.get("DISCONTINUITY_PREMIUM", {}).get("value")
@@ -775,7 +740,7 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
     )
 
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <title>LHM Daily Briefing · {run_date}</title>
@@ -784,42 +749,67 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{{
-    --ocean:{OCEAN}; --dusk:{DUSK}; --sky:{SKY}; --sea:{SEA}; --venus:{VENUS};
-    --doldrums:{DOLDRUMS}; --starboard:{STARBOARD}; --port:{PORT}; --fog:{FOG};
-    --ink:{INK}; --paper:{PAPER};
+    --ocean:{OCEAN}; --dusk:{DUSK}; --sky:{SKY}; --bright:{BRIGHT}; --deep:{DEEP};
+    --sea:{SEA}; --venus:{VENUS}; --doldrums:{DOLDRUMS};
+    --starboard:{STARBOARD}; --port:{PORT}; --fog:{FOG}; --offwhite:{OFFWHITE};
+    --ink:{INK}; --paper:#ffffff;
   }}
   *{{box-sizing:border-box;}}
-  html,body{{background:var(--paper); color:var(--ink); margin:0; padding:0; font-family:'Inter', sans-serif; font-size:14px; line-height:1.6;}}
-  .wrap{{max-width:1120px; margin:0 auto; padding:28px 32px 64px;}}
+  html,body{{margin:0; padding:0; font-family:'Inter', sans-serif; font-size:14px; line-height:1.6;}}
+
+  /* LIGHT theme (default) */
+  html[data-theme="light"] body{{ background:var(--paper); color:var(--ink); }}
+  html[data-theme="light"] .card{{ background:var(--offwhite); border-color:var(--fog); }}
+  html[data-theme="light"] .footer, html[data-theme="light"] th{{ color:var(--doldrums); }}
+  html[data-theme="light"] th{{ border-bottom-color:var(--doldrums); }}
+  html[data-theme="light"] td{{ border-bottom-color:var(--fog); }}
+  html[data-theme="light"] figure.chart{{ background:var(--paper); border-color:var(--fog); }}
+  html[data-theme="light"] .theme-dark{{ display:none; }}
+  html[data-theme="light"] a{{ color:var(--ocean); }}
+
+  /* DARK theme */
+  html[data-theme="dark"] body{{ background:var(--deep); color:var(--offwhite); }}
+  html[data-theme="dark"] .card{{ background:#1a3a5a; border-color:#2a4a6a; }}
+  html[data-theme="dark"] .footer, html[data-theme="dark"] th{{ color:#9bb1c5; }}
+  html[data-theme="dark"] th{{ border-bottom-color:#2a4a6a; }}
+  html[data-theme="dark"] td{{ border-bottom-color:#1f3a5a; }}
+  html[data-theme="dark"] figure.chart{{ background:var(--deep); border-color:#2a4a6a; }}
+  html[data-theme="dark"] .theme-light{{ display:none; }}
+  html[data-theme="dark"] a{{ color:var(--bright); }}
+  html[data-theme="dark"] h2{{ border-bottom-color:#2a4a6a; }}
+  html[data-theme="dark"] .master-tile{{ background:#1a3a5a; border-color:#2a4a6a; }}
+
+  .wrap{{max-width:1180px; margin:0 auto; padding:28px 32px 64px;}}
   .accent-bar{{display:flex; height:6px; width:100%; margin-bottom:18px;}}
   .accent-bar .ocean{{flex:2; background:var(--ocean);}}
   .accent-bar .dusk{{flex:1; background:var(--dusk);}}
   .header{{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;}}
   .kicker{{font-family:'Source Code Pro', monospace; font-size:11px; letter-spacing:0.14em; color:var(--ocean); text-transform:uppercase; font-weight:600;}}
   h1{{font-family:'Montserrat', sans-serif; font-weight:800; font-size:34px; letter-spacing:-0.015em; margin:6px 0 0;}}
-  .stamps{{text-align:right; font-family:'Source Code Pro', monospace; font-size:11px; color:var(--doldrums);}}
-  .stamps strong{{color:var(--ink); font-size:13px; font-weight:600;}}
+  .stamps{{text-align:right; font-family:'Source Code Pro', monospace; font-size:11px;}}
+  .stamps strong{{font-size:13px; font-weight:600;}}
+  .theme-toggle{{font-family:'Source Code Pro', monospace; font-size:11px; padding:6px 12px; border-radius:14px; border:1px solid var(--ocean); background:transparent; color:inherit; cursor:pointer; margin-left:12px; font-weight:600; letter-spacing:0.05em;}}
+  .theme-toggle:hover{{ background:var(--ocean); color:#fff; }}
   h2{{font-family:'Montserrat', sans-serif; font-weight:700; font-size:18px; margin:36px 0 8px; padding-bottom:6px; border-bottom:1px solid var(--fog); letter-spacing:-0.005em;}}
   h3{{font-family:'Montserrat', sans-serif; font-weight:600; font-size:12px; margin:14px 0 6px; color:var(--ocean); text-transform:uppercase; letter-spacing:0.06em;}}
   p{{margin:0 0 12px;}}
-  a{{color:var(--ocean); text-decoration:none;}}
+  a{{text-decoration:none;}}
   a:hover{{text-decoration:underline;}}
   .master-row{{display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin:14px 0 20px;}}
-  .master-tile{{border:1px solid var(--fog); border-radius:10px; padding:14px 16px; background:var(--paper);}}
+  .master-tile{{border:1px solid var(--fog); border-radius:10px; padding:14px 16px;}}
   .master-tile-name{{font-family:'Montserrat', sans-serif; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--doldrums);}}
   .master-tile-value{{font-family:'Source Code Pro', monospace; font-weight:600; font-size:30px; margin:6px 0 8px; letter-spacing:-0.01em;}}
   .master-tile-status{{display:inline-block; padding:3px 10px; border-radius:11px; font-family:'Source Code Pro', monospace; font-size:11px; font-weight:600; color:#fff; letter-spacing:0.04em;}}
   table{{width:100%; border-collapse:collapse; font-size:12.5px; margin:8px 0 8px;}}
-  th,td{{padding:6px 9px; text-align:left; border-bottom:1px solid var(--fog); vertical-align:top;}}
-  th{{font-family:'Source Code Pro', monospace; font-size:10.5px; color:var(--doldrums); text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid var(--doldrums);}}
+  th,td{{padding:6px 9px; text-align:left; vertical-align:top; border-bottom:1px solid;}}
+  th{{font-family:'Source Code Pro', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em;}}
   td.num{{font-family:'Source Code Pro', monospace; text-align:right;}}
-  td.delta{{color:var(--doldrums); font-size:11.5px;}}
+  td.delta{{font-size:11.5px;}}
   .pill{{display:inline-block; padding:2px 9px; border-radius:11px; font-family:'Source Code Pro', monospace; font-size:10.5px; font-weight:600; color:#fff; letter-spacing:0.04em; white-space:nowrap;}}
-  figure.chart{{margin:14px 0 20px; border:1px solid var(--fog); border-radius:10px; overflow:hidden; background:var(--paper);}}
+  figure.chart{{margin:18px 0 22px; border:1px solid; border-radius:10px; overflow:hidden;}}
   figure.chart img{{display:block; width:100%; height:auto;}}
   .grid-2col{{display:grid; grid-template-columns:1fr 1fr; gap:12px;}}
-  .footer{{margin-top:48px; padding-top:14px; border-top:1px solid var(--fog); color:var(--doldrums); font-size:11px; font-family:'Source Code Pro', monospace; display:flex; justify-content:space-between;}}
-  .footer a{{color:var(--ocean);}}
+  .footer{{margin-top:48px; padding-top:14px; border-top:1px solid var(--fog); font-size:11px; font-family:'Source Code Pro', monospace; display:flex; justify-content:space-between;}}
 </style>
 </head>
 <body>
@@ -835,6 +825,7 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
       <div>Generated</div>
       <strong>{timestamp}</strong>
       <div>Indicator stamps as of {run_date}</div>
+      <button class="theme-toggle" onclick="document.documentElement.dataset.theme = (document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');">Toggle theme</button>
     </div>
   </div>
 
@@ -870,10 +861,10 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
     </table>
   </div>
 
-  {chart_block("mri", "Macro Risk Index 3y history")}
+  {chart("mri", "Macro Risk Index 3y history")}
 
   <h2>The Diagnostic Dozen</h2>
-  {chart_block("heatmap", "12-pillar heatmap")}
+  {chart("heatmap", "12-pillar heatmap")}
 
   <h3>Engine 1 — Macro Dynamics</h3>
   <table>
@@ -891,10 +882,10 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
     </tbody>
   </table>
 
-  {chart_block("labor", "Labor stack: LFI / LPI / LDI")}
-  {chart_block("pci", "Inflation Heat 3y")}
-  {chart_block("growth", "Activity Pulse vs WEI")}
-  {chart_block("housing", "Housing Tide vs 10Y yield")}
+  {chart("labor", "Labor stack: LFI / LPI / LDI")}
+  {chart("pci", "Inflation Heat 3y")}
+  {chart("growth", "Activity Pulse vs WEI")}
+  {chart("housing", "Housing Tide vs 10Y yield")}
 
   <h3>Engine 2 — Monetary Mechanics</h3>
   <table>
@@ -910,8 +901,8 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
     </tbody>
   </table>
 
-  {chart_block("credit", "Credit spreads HY / IG")}
-  {chart_block("plumbing", "Plumbing — RRP + Fed BS")}
+  {chart("credit", "Credit spreads HY / IG")}
+  {chart("plumbing", "Plumbing — RRP + Fed BS")}
 
   <h3>Engine 3 — Market Structure</h3>
   <table>
@@ -925,8 +916,8 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
     </tbody>
   </table>
 
-  {chart_block("breadth", "SPX breadth %s above MAs")}
-  {chart_block("sentiment", "AAII bull-bear + VIX")}
+  {chart("breadth", "SPX breadth %s above MAs")}
+  {chart("sentiment", "AAII bull-bear + VIX")}
 
   <h2>Cross-Asset</h2>
   <table>
@@ -953,7 +944,7 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
     </tbody>
   </table>
 
-  {chart_block("crossasset", "Cross-asset 12-month normalized")}
+  {chart("crossasset", "Cross-asset 12-month normalized")}
 
   <h2>Daily Note</h2>
   {note_html}
@@ -982,6 +973,23 @@ def render_brief(state: dict, mkt: dict, charts: dict, run_date: str) -> str:
 # MAIN
 # ============================================================================
 
+def _render_all_charts(conn, theme: str) -> dict:
+    set_theme(theme)
+    return {
+        "mri":        chart_mri(conn),
+        "heatmap":    chart_pillar_heatmap(conn),
+        "labor":      chart_labor_stack(conn),
+        "pci":        chart_pci_history(conn),
+        "growth":     chart_growth_vs_wei(conn),
+        "housing":    chart_housing_vs_10y(conn),
+        "credit":     chart_credit_spreads(conn),
+        "plumbing":   chart_plumbing(conn),
+        "breadth":    chart_breadth(conn),
+        "sentiment":  chart_sentiment(conn),
+        "crossasset": chart_cross_asset(),
+    }
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--no-open", action="store_true")
@@ -992,23 +1000,15 @@ def main():
         state = fetch_state(conn)
         run_date = max((s["date"] for s in state.values() if s.get("date")), default="—")
         mkt = fetch_markets()
-        charts = {
-            "mri":        chart_mri(conn),
-            "heatmap":    chart_pillar_heatmap(conn),
-            "labor":      chart_labor_stack(conn),
-            "pci":        chart_pci_history(conn),
-            "growth":     chart_growth_vs_wei(conn),
-            "housing":    chart_housing_vs_10y(conn),
-            "credit":     chart_credit_spreads(conn),
-            "plumbing":   chart_plumbing(conn),
-            "breadth":    chart_breadth(conn),
-            "sentiment":  chart_sentiment(conn),
-            "crossasset": chart_cross_asset(),
-        }
+
+        print("Rendering light-theme charts...")
+        charts_light = _render_all_charts(conn, "white")
+        print("Rendering dark-theme charts (Deep bg)...")
+        charts_dark = _render_all_charts(conn, "dark")
     finally:
         conn.close()
 
-    html = render_brief(state, mkt, charts, run_date)
+    html = render_brief(state, mkt, charts_light, charts_dark, run_date)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     dated = OUTPUT_DIR / f"daily_briefing_{datetime.now().strftime('%Y-%m-%d')}.html"

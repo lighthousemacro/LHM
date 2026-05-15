@@ -72,6 +72,7 @@ STARBOARD = COLORS["starboard"]
 PORT      = COLORS["port"]
 FOG       = COLORS["fog"]
 OFFWHITE  = COLORS["offwhite"]
+GLACIER   = COLORS["glacier"]
 INK       = "#1a1a1a"
 
 # Inline-link map. Anchor phrase → canonical source URL. First-occurrence only.
@@ -639,7 +640,7 @@ def fmt_delta(d):
 
 
 def render_brief(state: dict, mkt: dict,
-                 charts_light: dict, charts_dark: dict, run_date: str) -> str:
+                 charts: dict, run_date: str) -> str:
     now = datetime.now()
     timestamp = now.strftime("%Y-%m-%d %H:%M ET")
 
@@ -678,14 +679,15 @@ def render_brief(state: dict, mkt: dict,
         )
 
     def chart(key, alt):
-        light = charts_light.get(key, "")
-        dark = charts_dark.get(key, "")
-        if not (light or dark):
+        # Single white-canvas chart per indicator. Works on both light
+        # (Glacier page) and dark (Deep page) — the white card pops against
+        # both, premium-dashboard style.
+        b64 = charts.get(key, "")
+        if not b64:
             return ""
         return (
             f'<figure class="chart">'
-            f'<img class="theme-light" alt="{alt}" src="data:image/png;base64,{light}"/>'
-            f'<img class="theme-dark"  alt="{alt}" src="data:image/png;base64,{dark}"/>'
+            f'<img alt="{alt}" src="data:image/png;base64,{b64}"/>'
             f'</figure>'
         )
 
@@ -751,33 +753,42 @@ def render_brief(state: dict, mkt: dict,
   :root{{
     --ocean:{OCEAN}; --dusk:{DUSK}; --sky:{SKY}; --bright:{BRIGHT}; --deep:{DEEP};
     --sea:{SEA}; --venus:{VENUS}; --doldrums:{DOLDRUMS};
-    --starboard:{STARBOARD}; --port:{PORT}; --fog:{FOG}; --offwhite:{OFFWHITE};
+    --starboard:{STARBOARD}; --port:{PORT}; --fog:{FOG};
+    --offwhite:{OFFWHITE}; --glacier:{GLACIER};
     --ink:{INK}; --paper:#ffffff;
   }}
   *{{box-sizing:border-box;}}
   html,body{{margin:0; padding:0; font-family:'Inter', sans-serif; font-size:14px; line-height:1.6;}}
 
-  /* LIGHT theme (default) */
-  html[data-theme="light"] body{{ background:var(--paper); color:var(--ink); }}
-  html[data-theme="light"] .card{{ background:var(--offwhite); border-color:var(--fog); }}
+  /* LIGHT theme (default)
+     Page bg = Glacier (pale icy blue). Cards and charts = Paper white. The
+     subtle blue tint of the page lets white cards read as lifted surfaces. */
+  html[data-theme="light"] body{{ background:var(--glacier); color:var(--ink); }}
+  html[data-theme="light"] .card,
+  html[data-theme="light"] .master-tile,
+  html[data-theme="light"] figure.chart{{ background:var(--paper); border-color:#cfdde6; }}
   html[data-theme="light"] .footer, html[data-theme="light"] th{{ color:var(--doldrums); }}
   html[data-theme="light"] th{{ border-bottom-color:var(--doldrums); }}
-  html[data-theme="light"] td{{ border-bottom-color:var(--fog); }}
-  html[data-theme="light"] figure.chart{{ background:var(--paper); border-color:var(--fog); }}
-  html[data-theme="light"] .theme-dark{{ display:none; }}
+  html[data-theme="light"] td{{ border-bottom-color:#cfdde6; }}
+  html[data-theme="light"] h2{{ border-bottom-color:#cfdde6; }}
   html[data-theme="light"] a{{ color:var(--ocean); }}
 
-  /* DARK theme */
+  /* DARK theme
+     Page bg = Deep. Cards = Deep-lift. Chart canvas STAYS WHITE (premium
+     dashboard pattern): a white card on a Deep page reads sharp without
+     forcing the chart palette to fight a dark canvas. */
   html[data-theme="dark"] body{{ background:var(--deep); color:var(--offwhite); }}
-  html[data-theme="dark"] .card{{ background:#1a3a5a; border-color:#2a4a6a; }}
+  html[data-theme="dark"] .card,
+  html[data-theme="dark"] .master-tile{{ background:#1a3a5a; border-color:#3b5a7a; }}
+  html[data-theme="dark"] figure.chart{{ background:var(--paper); border-color:#3b5a7a; }}
   html[data-theme="dark"] .footer, html[data-theme="dark"] th{{ color:#9bb1c5; }}
-  html[data-theme="dark"] th{{ border-bottom-color:#2a4a6a; }}
-  html[data-theme="dark"] td{{ border-bottom-color:#1f3a5a; }}
-  html[data-theme="dark"] figure.chart{{ background:var(--deep); border-color:#2a4a6a; }}
-  html[data-theme="dark"] .theme-light{{ display:none; }}
+  html[data-theme="dark"] th{{ border-bottom-color:#3b5a7a; }}
+  html[data-theme="dark"] td{{ border-bottom-color:#22466e; }}
   html[data-theme="dark"] a{{ color:var(--bright); }}
-  html[data-theme="dark"] h2{{ border-bottom-color:#2a4a6a; }}
-  html[data-theme="dark"] .master-tile{{ background:#1a3a5a; border-color:#2a4a6a; }}
+  html[data-theme="dark"] h2{{ border-bottom-color:#3b5a7a; }}
+  html[data-theme="dark"] .theme-toggle{{ border-color:var(--bright); color:var(--bright); }}
+  html[data-theme="dark"] .theme-toggle:hover{{ background:var(--bright); color:var(--deep); }}
+  html[data-theme="dark"] .kicker{{ color:var(--bright); }}
 
   .wrap{{max-width:1180px; margin:0 auto; padding:28px 32px 64px;}}
   .accent-bar{{display:flex; height:6px; width:100%; margin-bottom:18px;}}
@@ -973,8 +984,10 @@ def render_brief(state: dict, mkt: dict,
 # MAIN
 # ============================================================================
 
-def _render_all_charts(conn, theme: str) -> dict:
-    set_theme(theme)
+def _render_all_charts(conn) -> dict:
+    """Single white-canvas chart per indicator. The HTML scaffold supplies
+    its own light/dark page bg; the chart card pops against both."""
+    set_theme("white")
     return {
         "mri":        chart_mri(conn),
         "heatmap":    chart_pillar_heatmap(conn),
@@ -1001,14 +1014,12 @@ def main():
         run_date = max((s["date"] for s in state.values() if s.get("date")), default="—")
         mkt = fetch_markets()
 
-        print("Rendering light-theme charts...")
-        charts_light = _render_all_charts(conn, "white")
-        print("Rendering dark-theme charts (Deep bg)...")
-        charts_dark = _render_all_charts(conn, "dark")
+        print("Rendering charts (white canvas, reused in both themes)...")
+        charts = _render_all_charts(conn)
     finally:
         conn.close()
 
-    html = render_brief(state, mkt, charts_light, charts_dark, run_date)
+    html = render_brief(state, mkt, charts, run_date)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     dated = OUTPUT_DIR / f"daily_briefing_{datetime.now().strftime('%Y-%m-%d')}.html"

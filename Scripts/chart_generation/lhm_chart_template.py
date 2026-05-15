@@ -44,6 +44,7 @@ COLORS = {
     'port':      '#892323',  # bearish regime / crisis bands
     'fog':       '#D1D1D1',  # zero lines, ghost refs
     'offwhite':  '#f4f7f9',  # secondary surface / card bg
+    'glacier':   '#e8f1f7',  # pale icy blue — light-theme page bg
 }
 
 # Multi-series cycling order. Use this when plotting >2 lines so the
@@ -83,23 +84,28 @@ def set_theme(mode='white'):
     Dark: Deep (#123456) bg, offwhite text, slightly lifted spine for contrast.
     """
     if mode == 'dark':
+        # Two-surface rule on dark: page canvas (Deep #123456) and chart canvas
+        # must differ so charts don't visually merge into the page. The chart
+        # PNG renders on Deep-lift (#1a3a5a), so when it's placed on a Deep
+        # page (via the HTML scaffold) the chart reads as a lifted card.
         THEME.update({
-            'bg': COLORS['deep'],          # Deep #123456 as dark canvas
+            'bg': '#1a3a5a',               # chart canvas (Deep-lift); page sits on Deep behind it
+            'page_bg': COLORS['deep'],     # page/document bg consumers should set themselves
             'fg': COLORS['offwhite'],      # Offwhite text/labels
             'muted': '#9bb1c5',
-            'spine': '#2a4a6a',            # subtle lift above Deep for legible spines
+            'spine': '#3b5a7a',            # legible spine against Deep-lift
             'zero_line': COLORS['offwhite'],
             'recession': '#ffffff', 'recession_alpha': 0.06,
             'ocean': COLORS['ocean'], 'dusk': COLORS['dusk'],
             'sky': COLORS['sky'], 'bright': COLORS['bright'],
             'sea': COLORS['sea'], 'venus': COLORS['venus'],
-            # On Deep bg, Bright pops harder than Ocean — promote it to primary
-            # for the dark-theme series order.
+            # On Deep-lift, Bright still leads — it's the highest-contrast
+            # primary line color on a dark canvas.
             'primary': COLORS['bright'], 'secondary': COLORS['dusk'],
             'tertiary': COLORS['sky'], 'quaternary': COLORS['sea'],
             'accent': COLORS['venus'], 'fill_alpha': 0.22,
-            'box_bg': COLORS['deep'], 'box_edge': COLORS['bright'],
-            'legend_bg': '#1a3a5a', 'legend_fg': COLORS['offwhite'],
+            'box_bg': '#1a3a5a', 'box_edge': COLORS['bright'],
+            'legend_bg': '#22466e', 'legend_fg': COLORS['offwhite'],
             'mode': 'dark',
         })
     else:

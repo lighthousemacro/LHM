@@ -522,7 +522,24 @@ Key elements: full-width Ocean/Dusk header bar with white text, matching thin fo
 
 The same 23/89/BB palette and brand logic that governs matplotlib output governs our TradingView charts. Styling is not a separate system. It is the same specification, implemented in Pine Script and TradingView's native controls.
 
-Pine Script source for all LHM indicators lives in `/Users/bob/LHM/Scripts/tradingview/`. TradingView is the deployment target. The repo is the source of truth. Update the `.pine` files here, then paste into the TradingView editor.
+Pine Script source for all LHM indicators lives in `Scripts/tradingview/`. TradingView is the deployment target. The repo is the source of truth. Update the `.pine` files here, then paste into the TradingView editor.
+
+### TradingView Remix (Chrome add-in)
+
+Use **TradingView Remix** (AI Chart Copilot browser extension) to speed up the standard LHM layout on TradingView — same 3-panel stack, same colors, same indicators as below. Helpful for pillar chartbooks, asset-class reviews, and quick technical screens when you are not running the matplotlib pipeline.
+
+**Workflow**
+
+1. Open the symbol on TradingView (daily, ~7.5Y lookback unless structural weekly view).
+2. Run Remix with a prompt that references this spec (palette + panel list). Example prompt:
+
+   > Apply Lighthouse Macro layout: hollow candles; MAs 50 Dusk `#FF6723`, 200 Ocean `#2389BB`; add pane **LHM Relative Strength** and **LHM Z-RoC Momentum** from saved indicators; S/R Sea `#00BB89`; regime colors Starboard `#238923`, Port `#892323`, Sky `#23BBFF`, Venus `#FF2389`.
+
+3. **Verify** colors and pane order against this file, then **paste/update** from `Scripts/tradingview/lhm_relative_strength.pine` and `lhm_z_roc.pine` if Remix drifted from repo Pine.
+
+Remix is a layout accelerator, not the source of truth. Git `.pine` files and this spec win on conflicts.
+
+Extension: [TradingView Remix on Chrome Web Store](https://chromewebstore.google.com/detail/tradingview-remix-ai-char/fchmejnoncmdhlebgdgifdnehoibalnd) · [tvremix.xyz](https://tvremix.xyz/)
 
 ### Standard Layout: 3-Panel Stack
 

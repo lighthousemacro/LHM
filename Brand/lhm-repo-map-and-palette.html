@@ -346,6 +346,39 @@
         </div>
       </div>
     </section>
+
+    <section aria-labelledby="tv-remix">
+      <h2 id="tv-remix">TradingView Remix (use this here too)</h2>
+      <p style="margin-top:0">
+        Same palette and chart rules as matplotlib / chart-styling — apply on TradingView via the
+        <strong>TradingView Remix</strong> Chrome add-in (AI chart copilot). Speeds up the standard
+        <strong>3-panel stack</strong>: price → <code>LHM Relative Strength</code> → <code>LHM Z-RoC Momentum</code>.
+      </p>
+      <table>
+        <thead><tr><th>Step</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Install Remix: <a href="https://chromewebstore.google.com/detail/tradingview-remix-ai-char/fchmejnoncmdhlebgdgifdnehoibalnd">Chrome Web Store</a> · <a href="https://tvremix.xyz/">tvremix.xyz</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Open symbol on TradingView (daily, ~7.5Y default).</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Prompt Remix with hex codes from the palette section above (Ocean <code>#2389BB</code>, Dusk <code>#FF6723</code>, etc.) and both LHM panes.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Confirm against <code>Brand/chart-styling.md</code>; paste Pine from <code>Scripts/tradingview/*.pine</code> if needed.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-bottom:0;font-size:0.9rem;color:var(--muted)">
+        Remix accelerates layout; repo Pine + chart-styling are source of truth. Full spec: <code>Brand/chart-styling.md</code> → TradingView Charts.
+      </p>
+    </section>
   </main>
   <footer>Lighthouse Macro · MACRO, ILLUMINATED. · Source: Brand/brand-guide.md &amp; Brand/chart-styling.md (v4)</footer>
   <div class="accent-bar" aria-hidden="true"></div>

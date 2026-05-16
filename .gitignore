@@ -63,3 +63,15 @@ Deliverables/**/*.csv
 Deliverables/**/*.pptx
 *.pptx
 API_KEYS.md
+
+# Proprietary strategy & pillar research (local only — full docs stay on disk)
+Strategy/Pillar_*/
+Strategy/Asset_Class_Frameworks/
+Strategy/INDICATORS_MASTER.md
+Strategy/CLAUDE_MASTER.md
+Strategy/PASCAL_LNMS_SERIES_BLUEPRINT.md
+Strategy/md/
+
+# Trading / master strategy artifacts elsewhere in repo
+Brand/Client Materials/03_Trading_Strategy_Summary.html
+Brand/LHM23/

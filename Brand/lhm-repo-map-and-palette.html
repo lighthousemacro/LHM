@@ -197,31 +197,13 @@
   </header>
   <main>
     <section aria-labelledby="visibility">
-      <h2 id="visibility">Twelve-pillar documentation &amp; “not public”</h2>
-      <div class="callout">
-        <strong>Git does not support private folders inside a public repository.</strong>
-        Anything committed and pushed to GitHub is visible to anyone who can clone the repo at its current visibility.
-        To keep the full pillar framework <em>uploaded</em> (version-controlled, backed up, shared with the team) but
-        <em>not public</em>, the repository itself must stay <strong>Private</strong> (or use a separate private repo /
-        submodule for <code>Strategy/</code>). Switching a repo from Private → Public would expose history, including past commits.
+      <h2 id="visibility">Pillar docs &amp; trading strategy (local only)</h2>
+      <div class="callout safe">
+        <strong>Policy:</strong> Twelve full pillar files (~1,200–1,750 lines each) and trading-strategy material stay under
+        <code>Strategy/</code> on your machine. They are in <code>.gitignore</code> and are <strong>not pushed</strong> to GitHub.
       </div>
-      <p style="margin-top:0">All twelve pillar master markdown files are present under <code>Strategy/Pillar_*</code> and tracked in git:</p>
-      <ul class="pillar-list">
-        <li><code>Strategy/Pillar_01_Labor/PILLAR 1 LABOR.md</code></li>
-        <li><code>Strategy/Pillar_02_Prices/PILLAR 2 PRICES.md</code></li>
-        <li><code>Strategy/Pillar_03_Growth/PILLAR 3 GROWTH.md</code></li>
-        <li><code>Strategy/Pillar_04_Housing/PILLAR 4 HOUSING.md</code></li>
-        <li><code>Strategy/Pillar_05_Consumer/PILLAR 5 CONSUMER.md</code></li>
-        <li><code>Strategy/Pillar_06_Business/PILLAR 6 BUSINESS.md</code></li>
-        <li><code>Strategy/Pillar_07_Trade/PILLAR 7 TRADE.md</code></li>
-        <li><code>Strategy/Pillar_08_Government/PILLAR 8 GOVERNMENT.md</code></li>
-        <li><code>Strategy/Pillar_09_Financial/PILLAR 9 FINANCIAL.md</code></li>
-        <li><code>Strategy/Pillar_10_Plumbing/PILLAR 10 PLUMBING.md</code></li>
-        <li><code>Strategy/Pillar_11_Market_Structure/PILLAR 11 MARKET STRUCTURE.md</code></li>
-        <li><code>Strategy/Pillar_12_Sentiment/PILLAR 12 SENTIMENT.md</code></li>
-      </ul>
-      <p class="muted" style="color:var(--muted);margin-bottom:0;font-size:0.9rem">
-        Related strategy assets (chartbooks, indicators master, voice guides, etc.) live alongside these under <code>Strategy/</code>.
+      <p style="margin-top:0;margin-bottom:0;font-size:0.92rem;color:var(--muted)">
+        Ignored: <code>Strategy/Pillar_*/</code>, <code>Strategy/md/</code>, asset-class frameworks. Older commits may still have copies.
       </p>
     </section>
 
@@ -251,9 +233,9 @@
             <td><span class="pill pill-risk-lo">Low on GitHub</span> — still rotate any key ever leaked in history.</td>
           </tr>
           <tr>
-            <td><code>Strategy/</code> (12 pillars + frameworks)</td>
-            <td><span class="pill pill-tracked">tracked (~92 paths)</span></td>
-            <td><span class="pill pill-risk-hi">High IP</span> — proprietary research architecture; fine only if repo stays private or you accept public methodology release.</td>
+            <td><code>Strategy/Pillar_*/</code>, <code>Strategy/md/</code>, trading masters</td>
+            <td><span class="pill pill-ignore">gitignored</span></td>
+            <td><span class="pill pill-risk-lo">Not pushed</span> — full pillar docs and trading strategy stay local.</td>
           </tr>
           <tr>
             <td><code>lighthouse_quant/</code></td>
@@ -300,7 +282,7 @@
           <tr><td><code>Archive/</code></td><td>667</td><td>Legacy bulk — consider pruning for a slimmer public footprint</td></tr>
           <tr><td><code>External/</code></td><td>421</td><td>Third-party / external drops — review before any public flip</td></tr>
           <tr><td><code>Data/</code></td><td>114</td><td>Mostly code + catalogs; large DB files should remain ignored</td></tr>
-          <tr><td><code>Strategy/</code></td><td>92</td><td>Pillars + chartbook scripts + images/PDFs</td></tr>
+          <tr><td><code>Strategy/</code> (public slice)</td><td>3</td><td>Voice + chart spec + cadence only; pillars/md gitignored</td></tr>
           <tr><td><code>Charts/</code></td><td>56</td><td>Some PNGs tracked under Strategy subfolders; root chart outputs often ignored</td></tr>
           <tr><td><code>Working/</code></td><td>57</td><td>Scratch — ideally not tracked long-term</td></tr>
           <tr><td><code>lighthouse_quant/</code></td><td>24</td><td>Quant package</td></tr>

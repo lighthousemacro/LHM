@@ -68,7 +68,6 @@ def fig12_turnover():
         ax,
         "Small-employer turnover at 3.9% — a 9-year low.\n"
         "Workers stopped quitting. The labor market froze.",
-        x=0.50, y=0.95,
     )
 
     brand_fig(

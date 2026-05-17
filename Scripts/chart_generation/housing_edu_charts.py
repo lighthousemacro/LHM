@@ -13,6 +13,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 import time
 import ssl
@@ -280,8 +281,45 @@ def style_single_ax(ax):
     ax.tick_params(axis='y', labelcolor=THEME['fg'], labelsize=10)
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             style='italic',
@@ -441,7 +479,7 @@ def chart_01():
     ax1.legend(loc='upper left', **legend_style())
     ax2.legend(loc='upper right', **legend_style())
 
-    add_annotation_box(ax1, 'Sales cratered as rates doubled.\nBuilders adapted with rate buydowns.', x=0.78, y=0.65)
+    add_annotation_box(ax1, 'Sales cratered as rates doubled.\nBuilders adapted with rate buydowns.')
 
     brand_fig(fig, 'New Home Sales vs. 30-Year Mortgage Rate',
               subtitle='Inverted Rate Axis | 2018-Present',
@@ -482,7 +520,7 @@ def chart_02():
     add_recessions(ax, start_date='2019-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Sun Belt cooled sharply. Northeast resilient.', x=0.72, y=0.85)
+    add_annotation_box(ax, 'Sun Belt cooled sharply. Northeast resilient.')
 
     brand_fig(fig, 'Regional Home Prices: Case-Shiller City Indices',
               subtitle='Year-over-Year % Change',
@@ -519,7 +557,7 @@ def chart_03():
     add_last_value_label(ax, new, color=THEME['primary'], fmt='{:,.0f}K')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Builders recovered via rate buydowns\nwhile resale market stays frozen.', x=0.45, y=0.93)
+    add_annotation_box(ax, 'Builders recovered via rate buydowns\nwhile resale market stays frozen.')
 
     brand_fig(fig, 'New Home Sales: Builders Filling the Void',
               subtitle='Seasonally Adjusted Annual Rate (Thousands) | 2005-Present',
@@ -558,7 +596,7 @@ def chart_04():
     ax1.legend(loc='upper left', **legend_style())
     ax2.legend(loc='upper right', **legend_style())
 
-    add_annotation_box(ax1, 'Rates doubled but debt service stayed\nbelow 2007 peak. Lock-in effect at work.', x=0.55, y=0.80)
+    add_annotation_box(ax1, 'Rates doubled but debt service stayed\nbelow 2007 peak. Lock-in effect at work.')
 
     brand_fig(fig, 'Mortgage Rate vs. Debt Service Burden',
               subtitle='Mortgage Payments as % of Disposable Income | 2005-Present',
@@ -603,7 +641,7 @@ def chart_05():
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'${x:,.0f}'))
     ax.set_ylim(0, max(payments) * 1.15)
 
-    add_annotation_box(ax, f'44% payment increase from 3% to 6.1%.\n$317,600 loan (median home, 20% down).', x=0.3, y=0.88)
+    add_annotation_box(ax, f'44% payment increase from 3% to 6.1%.\n$317,600 loan (median home, 20% down).')
 
     brand_fig(fig, 'Monthly Mortgage Payment by Rate',
               subtitle='Median Home ($397K) | 20% Down | 30-Year Fixed',
@@ -641,7 +679,7 @@ def chart_06():
     add_recessions(ax, start_date='2015-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'SF drives the cycle.\nMF a fraction of total.', x=0.87, y=0.93)
+    add_annotation_box(ax, 'SF drives the cycle.\nMF a fraction of total.')
 
     brand_fig(fig, 'Housing Starts: Single-Family vs. Multi-Family',
               subtitle='Thousands of Units, SAAR',
@@ -673,7 +711,7 @@ def chart_07():
     add_recessions(ax, start_date='2015-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'South = 50%+ of all construction.\nRegional divergence matters.', x=0.7, y=0.55)
+    add_annotation_box(ax, 'South = 50%+ of all construction.\nRegional divergence matters.')
 
     brand_fig(fig, 'Housing Starts by Region',
               subtitle='Thousands of Units, SAAR',
@@ -705,7 +743,7 @@ def chart_08():
     add_last_value_label(ax, permits, color=THEME['primary'], fmt='{:,.0f}K')
     add_last_value_label(ax, starts, color=THEME['secondary'], fmt='{:,.0f}K')
     ax.legend(loc='upper left', **legend_style())
-    add_annotation_box(ax, "Permits lead starts by 1-2 months.\nGap = future supply pipeline.", x=0.85, y=0.90)
+    add_annotation_box(ax, "Permits lead starts by 1-2 months.\nGap = future supply pipeline.")
 
     brand_fig(fig, 'Building Permits vs. Housing Starts',
               subtitle='The Construction Pipeline',
@@ -736,7 +774,7 @@ def chart_09():
     add_last_value_label(ax, comp, color=THEME['secondary'], fmt='{:,.0f}K')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Under construction peaked mid-2023.\nCompletions catching up.', x=0.8, y=0.40)
+    add_annotation_box(ax, 'Under construction peaked mid-2023.\nCompletions catching up.')
 
     brand_fig(fig, 'Housing Units Under Construction vs. Completions',
               subtitle='Thousands of Units, SAAR',
@@ -771,7 +809,7 @@ def chart_10():
     add_last_value_label(ax, national, color=THEME['primary'], fmt='{:.1f}%')
     add_last_value_label(ax, city20, color=THEME['secondary'], fmt='{:.1f}%')
     ax.legend(loc='upper left', **legend_style())
-    add_annotation_box(ax, 'Low single-digit appreciation.\nTight supply supporting prices.', x=0.78, y=0.88)
+    add_annotation_box(ax, 'Low single-digit appreciation.\nTight supply supporting prices.')
 
     brand_fig(fig, 'Case-Shiller Home Price Index',
               subtitle='National vs. 20-City Composite | Year-over-Year %',
@@ -807,7 +845,7 @@ def chart_11():
     add_recessions(ax, start_date='2005-01-01')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'FHFA broader coverage (conforming loans).\nCase-Shiller: repeat-sales methodology.', x=0.3, y=0.15)
+    add_annotation_box(ax, 'FHFA broader coverage (conforming loans).\nCase-Shiller: repeat-sales methodology.')
 
     brand_fig(fig, 'Case-Shiller vs. FHFA House Price Index',
               subtitle='Year-over-Year % Change | Two Measurement Approaches',
@@ -848,7 +886,7 @@ def chart_12():
     add_last_value_label(ax, combined['real'], color=THEME['secondary'], fmt='{:.1f}%')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Real flat-to-negative = affordability\nimproving without a crash.', x=0.7, y=0.15)
+    add_annotation_box(ax, 'Real flat-to-negative = affordability\nimproving without a crash.')
 
     brand_fig(fig, 'Nominal vs. Real Home Price Appreciation',
               subtitle='Case-Shiller YoY% Minus CPI YoY%',
@@ -970,7 +1008,7 @@ def chart_15():
     add_last_value_label(ax, dq, color=THEME['secondary'], fmt='{:.2f}%')
     ax.legend(loc='upper right', **legend_style())
 
-    add_annotation_box(ax, 'Not 2008. Credit channel is not engaged.\nBorrower profiles historically strong.', x=0.65, y=0.75)
+    add_annotation_box(ax, 'Not 2008. Credit channel is not engaged.\nBorrower profiles historically strong.')
 
     brand_fig(fig, 'Mortgage Delinquency Rate (30+ Days)',
               subtitle='Single-Family Residential | All Commercial Banks',
@@ -1078,7 +1116,7 @@ def chart_18():
     add_last_value_label(ax, shelter, color=THEME['primary'], fmt='{:.1f}%')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Shelter = 34% of CPI, 18% of Core PCE.\nMarket rents lead by 12-18 months.', x=0.5, y=0.45)
+    add_annotation_box(ax, 'Shelter = 34% of CPI, 18% of Core PCE.\nMarket rents lead by 12-18 months.')
 
     brand_fig(fig, 'CPI Shelter Inflation Components',
               subtitle='Year-over-Year % | Shelter, Rent, and OER',
@@ -1109,7 +1147,7 @@ def chart_19():
     add_last_value_label(ax, new_price / 1000, color=THEME['secondary'], fmt='${:.0f}K')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'New home premium narrowing.\nBuilders cutting to sustain volume.', x=0.35, y=0.55)
+    add_annotation_box(ax, 'New home premium narrowing.\nBuilders cutting to sustain volume.')
 
     brand_fig(fig, 'Median Home Prices: Existing vs. New',
               subtitle='National | Dollars',
@@ -1155,7 +1193,7 @@ def chart_20():
     ax.invert_yaxis()
     ax.set_xlim(0, total * 1.25)
 
-    add_annotation_box(ax, f'Total: ~${total:,} per unit\n~4-5% of median new home price.', x=0.75, y=0.85)
+    add_annotation_box(ax, f'Total: ~${total:,} per unit\n~4-5% of median new home price.')
 
     brand_fig(fig, 'Estimated Tariff Impact on New Home Construction',
               subtitle='Cost Per Unit by Material Category',
@@ -1269,7 +1307,7 @@ def chart_22():
     h2, l2 = ax2.get_legend_handles_labels()
     ax.legend(h2 + h1, l2 + l1, loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'ZORI leads CPI Shelter by 12-18 months.\nMarket rents peaked 2022, shelter CPI peaked 2024.', x=0.22, y=0.70)
+    add_annotation_box(ax, 'ZORI leads CPI Shelter by 12-18 months.\nMarket rents peaked 2022, shelter CPI peaked 2024.')
 
     brand_fig(fig, 'Zillow ZORI vs CPI Shelter Inflation',
               subtitle='Market Rents Lead Official Shelter CPI by 12-18 Months',
@@ -1304,7 +1342,7 @@ def chart_23():
     add_last_value_label(ax, zhvi_yoy, color=THEME['primary'], fmt='{:.1f}%')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'ZHVI leads Case-Shiller by 1-2 months.\nBroader coverage (all homes vs repeat sales).', x=0.55, y=0.90)
+    add_annotation_box(ax, 'ZHVI leads Case-Shiller by 1-2 months.\nBroader coverage (all homes vs repeat sales).')
 
     brand_fig(fig, 'Zillow ZHVI vs Case-Shiller National',
               subtitle='Home Price Indices Year-over-Year',
@@ -1390,7 +1428,7 @@ def chart_25():
     h2, l2 = ax2.get_legend_handles_labels()
     ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
 
-    add_annotation_box(ax1, 'Inventory elevated vs 2020 lows\nbut months supply rising on weak demand.', x=0.45, y=0.93)
+    add_annotation_box(ax1, 'Inventory elevated vs 2020 lows\nbut months supply rising on weak demand.')
 
     brand_fig(fig, 'New Home Inventory and Months\' Supply',
               subtitle='Homes For Sale (Thousands) vs. Months at Current Sales Pace',
@@ -1435,7 +1473,7 @@ def chart_26():
     h2, l2 = ax2.get_legend_handles_labels()
     ax1.legend(h1 + h2, l1 + l2, loc='upper right', **legend_style())
 
-    add_annotation_box(ax1, 'MF completion wave pushing vacancy higher.\nRent growth normalized from 15%+ to <2%.', x=0.60, y=0.92)
+    add_annotation_box(ax1, 'MF completion wave pushing vacancy higher.\nRent growth normalized from 15%+ to <2%.')
 
     brand_fig(fig, 'Zillow ZORI YoY% and Rental Vacancy Rate',
               subtitle='Rent Growth Normalizing as Multifamily Supply Delivers',
@@ -1487,7 +1525,7 @@ def chart_27():
     ax1.legend(loc='upper left', **legend_style())
     ax2.legend(loc='upper right', **legend_style())
 
-    add_annotation_box(ax1, 'Sales collapsed from 6.5M to 3.9M.\nFrozen in 3.8-4.3M band since mid-2023.', x=0.80, y=0.80)
+    add_annotation_box(ax1, 'Sales collapsed from 6.5M to 3.9M.\nFrozen in 3.8-4.3M band since mid-2023.')
 
     brand_fig(fig, 'Existing Home Sales vs. 30-Year Mortgage Rate',
               subtitle='Inverted Rate Axis | The Frozen Market',
@@ -1543,7 +1581,7 @@ def chart_28():
     add_last_value_label(ax, nahb_series, color=pill_color, fmt='{:.0f}')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, '21 months below 50.\nBuilders buying volume with margin.', x=0.18, y=0.88)
+    add_annotation_box(ax, '21 months below 50.\nBuilders buying volume with margin.')
 
     brand_fig(fig, 'NAHB Housing Market Index',
               subtitle='Builder Sentiment | Above 50 = Expansion',
@@ -1584,7 +1622,7 @@ def chart_29():
     add_last_value_label(ax, mba_smooth, color=THEME['primary'], fmt='{:,.0f}')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Highest-frequency demand signal.\nLeads sales by 4-8 weeks.', x=0.78, y=0.88)
+    add_annotation_box(ax, 'Highest-frequency demand signal.\nLeads sales by 4-8 weeks.')
 
     brand_fig(fig, 'MBA Purchase Application Index',
               subtitle='Mortgage Demand | 3-Month Moving Average',
@@ -1624,7 +1662,7 @@ def chart_30():
     add_last_value_label(ax, phs_series, color=THEME['primary'], fmt='{:.1f}%')
     ax.legend(loc='upper left', **legend_style())
 
-    add_annotation_box(ax, 'Pending sales = signed contracts.\nLeads closings by 1-2 months.', x=0.78, y=0.15)
+    add_annotation_box(ax, 'Pending sales = signed contracts.\nLeads closings by 1-2 months.')
 
     brand_fig(fig, 'Pending Home Sales',
               subtitle='Year-over-Year % Change',

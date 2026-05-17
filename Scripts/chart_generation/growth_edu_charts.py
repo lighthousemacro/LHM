@@ -12,6 +12,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 import time
 import ssl
@@ -227,8 +228,45 @@ def style_single_ax(ax):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             style='italic',
@@ -405,8 +443,7 @@ def chart_01():
     ip_2nd_last = ip_2nd.iloc[-1]
     momentum = "decelerating" if ip_2nd_last < 0 else "accelerating"
     add_annotation_box(ax,
-        f"IP at {ip_last:.1f}% YoY, {momentum}.\nOrange shading = negative second derivative.",
-        x=0.55, y=0.12)
+        f"IP at {ip_last:.1f}% YoY, {momentum}.\nOrange shading = negative second derivative.")
 
     brand_fig(fig, 'Industrial Production: The Second Derivative',
               subtitle='Momentum breaks (shaded) precede level declines',
@@ -456,8 +493,7 @@ def chart_02():
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
 
     add_annotation_box(ax1,
-        f"IP ({ip.iloc[-1]:.1f}%) and GDP ({gdp.iloc[-1]:.1f}%) highly correlated (r=0.86).\nIP peaks slightly before GDP at cycle turns.",
-        x=0.50, y=0.92)
+        f"IP ({ip.iloc[-1]:.1f}%) and GDP ({gdp.iloc[-1]:.1f}%) highly correlated (r=0.86).\nIP peaks slightly before GDP at cycle turns.")
 
     brand_fig(fig, 'Industrial Production vs Real GDP',
               subtitle='IP leads GDP by 1-2 quarters at cycle turns',
@@ -518,8 +554,7 @@ def chart_03():
     avg_last = regional_avg.iloc[-1]
     status = "expansion" if avg_last > 0 else "contraction"
     add_annotation_box(ax,
-        f"Regional avg at {avg_last:.1f}: manufacturing in {status}.\nISM (Jan 2026): 52.6, first expansion in 12 months.",
-        x=0.50, y=0.12)
+        f"Regional avg at {avg_last:.1f}: manufacturing in {status}.\nISM (Jan 2026): 52.6, first expansion in 12 months.")
 
     brand_fig(fig, 'Regional Fed Manufacturing Surveys',
               subtitle='Above 0 = expansion (similar to ISM above 50)',
@@ -584,7 +619,7 @@ def chart_04():
     else:
         annotation = (f"Orders at {orders_last:.1f}%, investment at {inv_last:.1f}%.\n"
                       f"Orders lead investment by 3-6 months.")
-    add_annotation_box(ax1, annotation, x=0.60, y=0.15)
+    add_annotation_box(ax1, annotation)
 
     brand_fig(fig, 'Core Capital Goods Orders: CEO Confidence',
               subtitle='Orders lead business investment by 3-6 months',
@@ -626,8 +661,7 @@ def chart_05():
     hours_last = hours.iloc[-1]
     status = "contracting" if hours_last < 0 else "expanding"
     add_annotation_box(ax,
-        f"Aggregate hours at {hours_last:.1f}%: labor input {status}.\nHours decline before headcount cuts.",
-        x=0.50, y=0.12 if hours_last > 0 else 0.92)
+        f"Aggregate hours at {hours_last:.1f}%: labor input {status}.\nHours decline before headcount cuts.")
 
     brand_fig(fig, 'Aggregate Hours Worked: Labor Input',
               subtitle='Hours contract before payrolls decline',
@@ -674,8 +708,7 @@ def chart_06():
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
 
     add_annotation_box(ax1,
-        f"Housing starts 3MMA ({starts.iloc[-1]:.1f}%) vs GDP ({gdp.iloc[-1]:.1f}%).\nHousing typically peaks 18-24+ months before recessions.",
-        x=0.57, y=0.20)
+        f"Housing starts 3MMA ({starts.iloc[-1]:.1f}%) vs GDP ({gdp.iloc[-1]:.1f}%).\nHousing typically peaks 18-24+ months before recessions.")
 
     brand_fig(fig, 'Housing Starts: The Long Lead',
               subtitle='Housing peaks 18-24+ months before GDP turns',
@@ -735,8 +768,7 @@ def chart_07():
     # Calculate total to show in annotation
     gdp_total = sum(values)
     add_annotation_box(ax,
-        f"YoY contributions to GDP growth.\nTotal: {gdp_total:+.1f} pp. PCE drives ~68% of GDP.",
-        x=0.52, y=0.92)
+        f"YoY contributions to GDP growth.\nTotal: {gdp_total:+.1f} pp. PCE drives ~68% of GDP.")
 
     brand_fig(fig, 'GDP Component Contributions (YoY)',
               subtitle='What is driving (or dragging) growth? (percentage points)',
@@ -796,8 +828,7 @@ def chart_08():
     s_last = services_plot.iloc[-1]
     spread = s_last - g_last
     add_annotation_box(ax1,
-        f"Goods-services spread: {spread:.1f} ppts.\nGoods turn first; services follow at cycle turns.",
-        x=0.50, y=0.92)
+        f"Goods-services spread: {spread:.1f} ppts.\nGoods turn first; services follow at cycle turns.")
 
     brand_fig(fig, 'The Great Divergence: Goods vs Services',
               subtitle='Goods contract first, services follow',
@@ -846,8 +877,7 @@ def chart_09():
     retail_last = retail_yoy.iloc[-1]
     status = "contracting" if retail_last < 0 else f"growing {retail_last:.1f}%"
     add_annotation_box(ax,
-        f"Real retail sales {status}.\nStrips inflation to show true volume growth.",
-        x=0.50, y=0.12 if retail_last > 2 else 0.92)
+        f"Real retail sales {status}.\nStrips inflation to show true volume growth.")
 
     brand_fig(fig, 'Real Retail Sales: Consumer Demand',
               subtitle='Volume growth after stripping inflation',
@@ -945,8 +975,7 @@ def chart_10():
     else: regime = "Recession"
 
     add_annotation_box(ax,
-        f"GCI at {gci_last:.2f}: {regime} regime.\nSynthesizing IP, capex, hours, housing, retail.",
-        x=0.35, y=0.92)
+        f"GCI at {gci_last:.2f}: {regime} regime.\nSynthesizing IP, capex, hours, housing, retail.")
 
     brand_fig(fig, 'Growth Composite Index (GCI)',
               subtitle='Synthesizing growth signals into one regime indicator',

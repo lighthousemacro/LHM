@@ -64,9 +64,7 @@ def fig1_wealth_concentration():
 
     add_annotation_box(
         ax,
-        'The top 1% hold more wealth than the entire\nbottom 50%. By a factor of 12.',
-        x=0.75, y=0.25
-    )
+        'The top 1% hold more wealth than the entire\nbottom 50%. By a factor of 12.')
 
     brand_fig(fig,
               title='Who Owns America',
@@ -148,9 +146,7 @@ def fig3_savings_rate_quintile():
 
     add_annotation_box(
         ax,
-        "Bottom 60% aren't building a buffer. They're surviving month to month.",
-        x=0.50, y=0.95
-    )
+        "Bottom 60% aren't building a buffer. They're surviving month to month.")
 
     brand_fig(fig,
               title='Personal Savings Rate by Income Group',
@@ -291,9 +287,7 @@ def fig6_delinquency_by_loan_type():
 
     add_annotation_box(
         ax,
-        f'Student loans leading (+{bps_above[0]} bps). Mortgages last. Stress builds from the bottom of the balance sheet up.',
-        x=0.50, y=0.95
-    )
+        f'Student loans leading (+{bps_above[0]} bps). Mortgages last. Stress builds from the bottom of the balance sheet up.')
 
     brand_fig(fig,
               title='Delinquency Stress: Every Category Above Pre-COVID Baseline',
@@ -354,9 +348,7 @@ def fig7_employment_by_firm_size():
     latest_date = adp_m['date'].max().strftime('%B %Y')
     add_annotation_box(
         ax,
-        f'Small firms are the only segment hiring. Large firms are cutting.\nComposition: stable headline, deteriorating job quality.',
-        x=0.50, y=0.95
-    )
+        f'Small firms are the only segment hiring. Large firms are cutting.\nComposition: stable headline, deteriorating job quality.')
 
     brand_fig(fig,
               title="Who's Hiring and Who's Cutting: Employment by Firm Size",
@@ -471,9 +463,7 @@ def fig9_retail_bifurcation():
     val_chg = value_idx.iloc[-1] - 100
     add_annotation_box(
         ax,
-        f'Luxury {lux_chg:+.0f}%. Value/discount {val_chg:+.0f}%. Same economy. Different planets.',
-        x=0.50, y=0.95
-    )
+        f'Luxury {lux_chg:+.0f}%. Value/discount {val_chg:+.0f}%. Same economy. Different planets.')
 
     brand_fig(fig,
               title='Two Consumers, Two Trajectories',
@@ -618,9 +608,7 @@ def fig11_wealth_transfer():
 
     add_annotation_box(
         ax,
-        '~$2T transfers every year. Most goes to the wealthy.\n55% of Millennials expect some. That changes the spending math.',
-        x=0.55, y=0.95
-    )
+        '~$2T transfers every year. Most goes to the wealthy.\n55% of Millennials expect some. That changes the spending math.')
 
     brand_fig(fig,
               title='The Great Wealth Transfer: $2 Trillion a Year and Accelerating',
@@ -659,9 +647,7 @@ def fig12_downpayment_sources():
 
     add_annotation_box(
         ax,
-        '40% of first-time buyers used a gift or inheritance.\nHousing is inheritance-sensitive, not just rate-sensitive. h/t @TimPierotti.',
-        x=0.50, y=0.06
-    )
+        '40% of first-time buyers used a gift or inheritance.\nHousing is inheritance-sensitive, not just rate-sensitive. h/t @TimPierotti.')
 
     brand_fig(fig,
               title='How First-Time Buyers Are Actually Getting Into Homes',

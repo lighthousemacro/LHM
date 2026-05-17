@@ -280,11 +280,48 @@ Use on expectations charts where 3% is the de-anchoring threshold.
 
 ## Annotation Box (Takeaway)
 
-Every chart should have an annotation box with 1-2 line commentary summarizing the takeaway. Positioned in dead space where there is no data.
+**Use sparingly.** A strong chart with a tight caption is almost always better than an in-chart annotation box. Only add an annotation when it carries information the chart itself cannot show (e.g., a regime call, a non-obvious causal note, a numerical takeaway that requires multiple series to compute). If the visual already tells the story, skip the box.
+
+### Universal Placement Rule (v4.1, May 2026)
+
+Every annotation box uses the same anchor, with no per-chart overrides:
+
+- **Position:** `x=0.5, y=0.98` in axes coordinates
+- **Alignment:** `ha='center'`, `va='top'`
+- **Wrapping:** Text wraps to a new line whenever a line would exceed **20 characters** left-to-right. Wrapping uses `textwrap.fill(..., width=20, break_long_words=False, break_on_hyphens=False)` so words are not split mid-token. Existing explicit `\n` in the source text is preserved; each segment is wrapped independently.
+
+Why: Bob's rule, codified after repeated cases of annotations sitting on top of data. A fixed top-center anchor with narrow wrapping keeps the box predictable, leaves the rest of the plot for data, and forces authors to keep takeaway text short. If top-center genuinely overlaps a critical series (rare — series usually peak in the middle, not the top-left/top-right where wrapping puts text), **remove the annotation** rather than reposition it. The chart-and-caption combo is the canonical alternative.
+
+### Canonical Implementation
 
 ```python
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    ax.text(x, y, text, transform=ax.transAxes,
+import textwrap
+
+def _wrap_annotation_text(text, width=20):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words."""
+    if not text:
+        return text
+    lines = text.split('\n')
+    wrapped = []
+    for line in lines:
+        if line.strip() == '':
+            wrapped.append(line)
+            continue
+        wrapped.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(wrapped)
+
+
+def add_annotation_box(ax, text, x=0.5, y=0.98, wrap_width=20):
+    """Takeaway box, top-center, auto-wrapped at 20 chars.
+
+    Do NOT override x/y per chart. The placement is universal."""
+    wrapped = _wrap_annotation_text(text, width=wrap_width)
+    ax.text(x, y, wrapped, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
@@ -293,18 +330,20 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
 ```
 
 - **Border color**: Always Ocean `#2389BB` (hardcoded, not theme-driven)
-- **Background**: Theme background color (opaque)
+- **Background**: Theme background color (opaque, `alpha=0.9` on white theme so any underlying line is muted, not erased)
 - **Text**: Theme foreground, italic, fontsize 10
-- **Default position**: `x=0.52, y=0.92` (slightly right of center, near top)
+- **Position**: `x=0.5, y=0.98`. **Do not override.** If the box overlaps data, delete the annotation; don't move it.
 - **CRITICAL: All annotation text must be dynamic** — use f-strings with live data values. Never hardcode numbers.
 
-### Position Guidelines
+### When to Annotate vs. Caption
 
-Override `x` and `y` to place the box in the largest empty area:
-
-ScenarioSuggested PositionData heavy on left, empty right-top`x=0.52, y=0.92` (default)Data heavy on top, empty bottom`x=0.52, y=0.12`Data heavy on right, empty left-top`x=0.35, y=0.92`Centered data, empty corners`x=0.45, y=0.92`
-
-Always verify visually that the box does not overlap data, legend, recession shading, or pills.
+| Situation | Use annotation box? |
+|-----------|---------------------|
+| The chart already makes the point visually | No — write a caption instead |
+| Single takeaway number requiring 2+ series to compute (e.g. "spread is at 87th pctile") | Yes |
+| Naming the current regime ("Crisis", "On target") | Yes — keep it short, wrap will trim it |
+| Long-form context, history, mechanism | No — use the surrounding article body |
+| Multiple competing takeaways | No — pick one for the chart, defer the rest |
 
 ---
 

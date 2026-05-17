@@ -17,6 +17,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 import time
 import ssl
@@ -299,12 +300,45 @@ def style_single_ax(ax, fmt='{:.1f}%'):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
 
 
-def add_annotation_box(ax, text, x=0.50, y=0.95):
-    """Add takeaway annotation box at specified position.
 
-    Default is bottom-center which avoids data on most time series charts.
-    Each chart caller should pass x,y explicitly based on where the dead space is.
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
     """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     box_fc = '#2389BB'
     txt_color = '#ffffff'
     ax.text(x, y, text, transform=ax.transAxes,
@@ -500,8 +534,7 @@ def chart_01():
     add_annotation_box(ax,
         f"Current: {last_val:.0f} bps ({pctile:.0f}th percentile)\n"
         f"20-year rolling distribution context.\n"
-        f"Percentile tells you where we stand in history.",
-        x=0.50, y=0.95)
+        f"Percentile tells you where we stand in history.")
 
     brand_fig(fig, 'High-Yield Credit Spreads',
               subtitle='ICE BofA HY OAS | Percentile Distribution (20-Year Rolling)',
@@ -701,8 +734,7 @@ def chart_04():
     add_annotation_box(ax,
         "The headline hides the war.\n"
         "Subcomponents can diverge sharply.\n"
-        "Credit subindex leads the composite.",
-        x=0.50, y=0.95)
+        "Credit subindex leads the composite.")
 
     brand_fig(fig, 'Financial Conditions: The Headline Hides the War',
               subtitle='NFCI Composite vs. Risk, Credit, and Leverage Subindices',
@@ -780,8 +812,7 @@ def chart_05():
     add_annotation_box(ax1,
         "When banks tighten (SLOOS drops inverted),\n"
         "loan growth follows 2-4 quarters later.\n"
-        "SLOOS is the pipeline. Loans are the flow.",
-        x=0.50, y=0.98)
+        "SLOOS is the pipeline. Loans are the flow.")
 
     brand_fig(fig, 'The Credit Pipeline: When Banks Tighten, Loan Growth Follows',
               subtitle='SLOOS C&I Tightening (Inverted, Leading) vs. C&I Loan Growth YoY',
@@ -844,8 +875,7 @@ def chart_06():
     add_annotation_box(ax1,
         "When these diverge, policy is not transmitting.\n"
         "Real rates restrictive + spreads tight =\n"
-        "the market is overriding the Fed.",
-        x=0.50, y=0.05)
+        "the market is overriding the Fed.")
 
     brand_fig(fig, 'The Transmission Gap',
               subtitle='Real Rates (Restrictive) vs. HY Spreads (Inverted, Loose)',
@@ -912,8 +942,7 @@ def chart_07():
     add_annotation_box(ax1,
         "When VVIX rises faster than VIX,\n"
         "dealers are hedging tail risk.\n"
-        "The vol market sees something equity doesn't.",
-        x=0.50, y=0.95)
+        "The vol market sees something equity doesn't.")
 
     brand_fig(fig, 'The Vol Signal: VIX vs. VVIX',
               subtitle='Equity Implied Volatility vs. Vol-of-Vol | Tail Risk Detection',
@@ -1108,8 +1137,7 @@ def chart_10():
     add_annotation_box(ax,
         "Rising ratio = market differentiating quality.\n"
         "When HY widens faster than IG, risk\n"
-        "repricing is underway. Spikes precede crises.",
-        x=0.50, y=0.95)
+        "repricing is underway. Spikes precede crises.")
 
     brand_fig(fig, 'Credit Quality Differentiation',
               subtitle='HY OAS / IG OAS Ratio | When the Market Starts Discriminating',
@@ -1303,8 +1331,7 @@ def chart_12():
     add_annotation_box(ax,
         "All three below zero: stress is muted.\n"
         "Watch for convergence above zero.\n"
-        "That is when isolated becomes systemic.",
-        x=0.50, y=0.95)
+        "That is when isolated becomes systemic.")
 
     brand_fig(fig, 'Financial Stress Convergence',
               subtitle='Three Public Stress Signals Normalized | Baa-10Y, NFCI, VIX',
@@ -1371,8 +1398,7 @@ def chart_13():
     add_annotation_box(ax,
         "Nearly half of all 'investment grade' bonds\n"
         "are one downgrade from junk.\n"
-        "The cliff is structural, not cyclical.",
-        x=0.50, y=0.95)
+        "The cliff is structural, not cyclical.")
 
     brand_fig(fig, 'The BBB Cliff',
               subtitle='BBB Share of Investment-Grade Universe | The Fallen Angel Risk',

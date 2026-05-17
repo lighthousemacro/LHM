@@ -12,6 +12,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 import time
 import ssl
@@ -229,8 +230,45 @@ def style_single_ax(ax):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             style='italic',
@@ -411,8 +449,7 @@ def chart_01():
     pce_last = pce.iloc[-1]
     gap = dpi_last - pce_last
     add_annotation_box(ax,
-        f"Income-Spending Gap: {gap:+.1f}pp.\nWhen spending exceeds income, credit fills the gap.",
-        x=0.52, y=0.92)
+        f"Income-Spending Gap: {gap:+.1f}pp.\nWhen spending exceeds income, credit fills the gap.")
 
     brand_fig(fig, 'Real Disposable Income vs Real Consumer Spending',
               subtitle='Income vs Credit: Which is driving spending?',
@@ -463,8 +500,7 @@ def chart_02():
     dur_last = durables.iloc[-1]
     svc_last = services.iloc[-1]
     add_annotation_box(ax,
-        f"Durables at {dur_last:.1f}% YoY, Services at {svc_last:.1f}%.\nDurables turn first at cycle inflections.",
-        x=0.52, y=0.92)
+        f"Durables at {dur_last:.1f}% YoY, Services at {svc_last:.1f}%.\nDurables turn first at cycle inflections.")
 
     brand_fig(fig, 'Personal Consumption Expenditures: Component Breakdown',
               subtitle='Durables lead the cycle, Services lag',
@@ -524,8 +560,7 @@ def chart_03():
     dur_last = durables.iloc[-1]
     svc_last = services.iloc[-1]
     add_annotation_box(ax1,
-        f"Durables ({dur_last:.1f}%) turn before Services ({svc_last:.1f}%).\nThe cyclical canary in the consumer coal mine.",
-        x=0.52, y=0.98)
+        f"Durables ({dur_last:.1f}%) turn before Services ({svc_last:.1f}%).\nThe cyclical canary in the consumer coal mine.")
 
     brand_fig(fig, 'Durable Goods vs Services Spending',
               subtitle='Durables turn first at cycle inflections',
@@ -580,8 +615,7 @@ def chart_04():
 
     sav_last = saving.iloc[-1]
     add_annotation_box(ax,
-        f"Saving rate at {sav_last:.1f}%. Pre-pandemic normal: 7.5%.\nExcess savings depleted by Q1 2024 per SF Fed.",
-        x=0.35, y=0.92)
+        f"Saving rate at {sav_last:.1f}%. Pre-pandemic normal: 7.5%.\nExcess savings depleted by Q1 2024 per SF Fed.")
 
     brand_fig(fig, 'Personal Saving Rate',
               subtitle='The fuel tank is running low',
@@ -637,8 +671,7 @@ def chart_05():
 
     rev_last = revolving.iloc[-1]
     add_annotation_box(ax1,
-        f"Revolving credit growing {rev_last:.1f}% YoY.\nCredit substituting for depleted savings.",
-        x=0.52, y=0.12)
+        f"Revolving credit growing {rev_last:.1f}% YoY.\nCredit substituting for depleted savings.")
 
     brand_fig(fig, 'Consumer Credit Growth: Revolving vs Nonrevolving',
               subtitle='Credit cards fill the gap when savings run dry',
@@ -690,8 +723,7 @@ def chart_06():
 
     dq_last = dq.iloc[-1]
     add_annotation_box(ax,
-        f"CC delinquency at {dq_last:.1f}%. Peaked ~3.2% Q2 2024.\nNY Fed Q4 2025: aggregate delinquency re-accelerating.",
-        x=0.62, y=0.92)
+        f"CC delinquency at {dq_last:.1f}%. Peaked ~3.2% Q2 2024.\nNY Fed Q4 2025: aggregate delinquency re-accelerating.")
 
     brand_fig(fig, 'Credit Card Delinquency Rate',
               subtitle='When savings run out, credit stress builds',
@@ -743,8 +775,7 @@ def chart_07():
 
     u_last = umich.iloc[-1]
     add_annotation_box(ax,
-        f"Sentiment at {u_last:.0f}.\nSustained readings below 65 historically\nprecede or coincide with recessions.",
-        x=0.55, y=0.98)
+        f"Sentiment at {u_last:.0f}.\nSustained readings below 65 historically\nprecede or coincide with recessions.")
 
     brand_fig(fig, 'University of Michigan Consumer Sentiment',
               subtitle='Confidence leads spending by 1-3 months',
@@ -809,8 +840,7 @@ def chart_08():
     nom_last = common['nominal'].iloc[-1]
     real_last = common['real'].iloc[-1]
     add_annotation_box(ax,
-        f"Aggregate payrolls: {nom_last:.1f}% nominal, {real_last:.1f}% real.\nEmployment x Hours x Wages = total income.",
-        x=0.55, y=0.98)
+        f"Aggregate payrolls: {nom_last:.1f}% nominal, {real_last:.1f}% real.\nEmployment x Hours x Wages = total income.")
 
     brand_fig(fig, 'Aggregate Weekly Payrolls (Employment x Hours x Wages)',
               subtitle='The paycheck reality behind consumer spending',
@@ -854,8 +884,7 @@ def chart_09():
 
     dsr_last = dsr.iloc[-1]
     add_annotation_box(ax,
-        f"DSR at {dsr_last:.1f}% of disposable income.\nRising rates push payments higher even\nwithout new borrowing.",
-        x=0.55, y=0.92)
+        f"DSR at {dsr_last:.1f}% of disposable income.\nRising rates push payments higher even\nwithout new borrowing.")
 
     brand_fig(fig, 'Household Debt Service Ratio',
               subtitle='Payment burden as share of disposable income',
@@ -913,8 +942,7 @@ def chart_10():
 
     ratio_last = common['ratio'].iloc[-1]
     add_annotation_box(ax,
-        f"NW/DPI at {ratio_last:.1f}x.\nAggregate looks strong, but top 10% hold ~68%\nof wealth. Bottom 50% have negative net worth.",
-        x=0.52, y=0.98)
+        f"NW/DPI at {ratio_last:.1f}x.\nAggregate looks strong, but top 10% hold ~68%\nof wealth. Bottom 50% have negative net worth.")
 
     brand_fig(fig, 'Household Net Worth to Disposable Income',
               subtitle='Aggregate wealth masks distributional reality',
@@ -1014,8 +1042,7 @@ def chart_11():
     else: regime = "Crisis"
 
     add_annotation_box(ax,
-        f"CCI at {cci_last:.2f}: {regime} regime.\nPCE, savings, credit, confidence, income, debt service.",
-        x=0.35, y=0.92)
+        f"CCI at {cci_last:.2f}: {regime} regime.\nPCE, savings, credit, confidence, income, debt service.")
 
     brand_fig(fig, 'Consumer Composite Index (CCI)',
               subtitle='Synthesizing consumer health into one regime indicator',

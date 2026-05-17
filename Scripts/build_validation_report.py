@@ -78,8 +78,7 @@ def fig_summary_bar(summary):
     ax.set_ylim(min(ics) - 0.10, max(ics) + 0.15)
 
     add_annotation_box(ax,
-        '|t| ≥ 2.0 = statistically significant. Three pillars (Prices, Housing, Government) clear that bar.',
-        x=0.50, y=0.96)
+        '|t| ≥ 2.0 = statistically significant. Three pillars (Prices, Housing, Government) clear that bar.')
 
     brand_fig(fig,
         title='Pillar Validation: walk-forward 63d-forward IC vs benchmark',

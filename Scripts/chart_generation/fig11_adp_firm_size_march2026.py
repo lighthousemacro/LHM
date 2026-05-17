@@ -101,9 +101,7 @@ def fig11_march2026_yoy():
 
     add_annotation_box(
         ax,
-        'Composition has flipped since January.\nSmall firms back to growth, medium firms still shedding.',
-        x=0.50, y=0.92
-    )
+        'Composition has flipped since January.\nSmall firms back to growth, medium firms still shedding.')
 
     brand_fig(
         fig,

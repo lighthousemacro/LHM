@@ -16,6 +16,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 import time
 import ssl
@@ -281,8 +282,45 @@ def style_single_ax(ax, fmt='{:.1f}%'):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     box_fc = '#2389BB'
     box_alpha = 1.0
     txt_color = '#ffffff'
@@ -459,8 +497,7 @@ def chart_01():
     add_annotation_box(ax,
         f"Trade deficit at ${bal.iloc[-1]:.0f}B.\n"
         f"Narrowing from peak, but driven by\n"
-        f"demand destruction, not competitiveness.",
-        x=0.675, y=0.15)
+        f"demand destruction, not competitiveness.")
 
     brand_fig(fig, 'U.S. Trade Balance: Goods & Services',
               subtitle='The persistent deficit tells half the story',
@@ -514,8 +551,7 @@ def chart_02():
 
     add_annotation_box(ax1,
         "Import prices lead CPI goods by 3-6 months.\n"
-        "Tariff pass-through is the pipeline right now.",
-        x=0.545, y=0.92)
+        "Tariff pass-through is the pipeline right now.")
 
     brand_fig(fig, 'The Inflation Pipeline: Import Prices → CPI Goods',
               subtitle='What you pay at the border shows up at the register',
@@ -556,8 +592,7 @@ def chart_03():
 
     add_annotation_box(ax,
         "Strong dollar = cheap imports, expensive exports.\n"
-        "EM currencies under disproportionate stress.",
-        x=0.50, y=0.95)
+        "EM currencies under disproportionate stress.")
 
     brand_fig(fig, 'Trade-Weighted Dollar: The Competitiveness Gauge',
               subtitle='Broad, Advanced Economies, and Emerging Markets',
@@ -612,8 +647,7 @@ def chart_04():
 
     add_annotation_box(ax,
         "Exports rebounding while imports contract.\n"
-        "Divergence signals shifting demand dynamics.",
-        x=0.52, y=0.92)
+        "Divergence signals shifting demand dynamics.")
 
     brand_fig(fig, 'U.S. Exports & Imports: Year-Over-Year Growth',
               subtitle='When both decelerate, global demand is weakening',
@@ -658,8 +692,7 @@ def chart_05():
 
     add_annotation_box(ax,
         "China imports peaked 2018 and are falling.\n"
-        "Decoupling is real: 22% → under 10% import share.",
-        x=0.40, y=0.92)
+        "Decoupling is real: 22% → under 10% import share.")
 
     brand_fig(fig, 'U.S.-China Trade: The Decoupling',
               subtitle='Import share falling, but the deficit shifted, not eliminated',
@@ -706,8 +739,7 @@ def chart_06():
 
     add_annotation_box(ax,
         "Ex-petroleum strips oil noise.\n"
-        "Consumer goods prices tell you what hits wallets.",
-        x=0.57, y=0.92)
+        "Consumer goods prices tell you what hits wallets.")
 
     brand_fig(fig, 'Import Price Decomposition',
               subtitle='Where the tariff pressure is actually landing',
@@ -757,8 +789,7 @@ def chart_07():
 
     add_annotation_box(ax,
         "Above 100 = export prices outpacing imports.\n"
-        "Energy independence and services exports driving favorable terms.",
-        x=0.52, y=0.92)
+        "Energy independence and services exports driving favorable terms.")
 
     brand_fig(fig, 'Terms of Trade: Competitiveness Barometer',
               subtitle='Export prices relative to import prices (100 = neutral)',
@@ -813,8 +844,7 @@ def chart_08():
 
     add_annotation_box(ax,
         "Trade policy uncertainty leads capex by 3-6 months.\n"
-        "At record highs, eclipsing 2019 trade war peaks.",
-        x=0.55, y=0.80)
+        "At record highs, eclipsing 2019 trade war peaks.")
 
     brand_fig(fig, 'Trade Policy Uncertainty Index',
               subtitle='When businesses cannot plan, they do not invest',
@@ -865,8 +895,7 @@ def chart_09():
 
     add_annotation_box(ax,
         "Goods deficit dominates, but services surplus\n"
-        "and primary income partially offset.",
-        x=0.55, y=0.15)
+        "and primary income partially offset.")
 
     brand_fig(fig, 'Current Account Decomposition',
               subtitle='The financial mirror of every trade deficit',
@@ -915,8 +944,7 @@ def chart_10():
 
     add_annotation_box(ax,
         "Wholesale I/S rising = importers front-loading\n"
-        "ahead of tariff escalation. Watch for reversal.",
-        x=0.52, y=0.93)
+        "ahead of tariff escalation. Watch for reversal.")
 
     brand_fig(fig, 'Inventory-to-Sales Ratios',
               subtitle='Where trade flows meet domestic demand',
@@ -964,8 +992,7 @@ def chart_11():
 
     add_annotation_box(ax,
         "Services surplus (~$22B/mo) partially offsets\n"
-        "the goods deficit (~$100B/mo). Tech, finance, IP.",
-        x=0.70, y=0.92)
+        "the goods deficit (~$100B/mo). Tech, finance, IP.")
 
     brand_fig(fig, 'Goods vs Services Trade Balance',
               subtitle='The structural split that defines U.S. trade',
@@ -1032,8 +1059,7 @@ def chart_12():
 
     add_annotation_box(ax,
         "Dollar Z-RoC: momentum of the dollar.\n"
-        "At extremes (>1.5 or <-1.5), reversals are probable.",
-        x=0.52, y=0.955)
+        "At extremes (>1.5 or <-1.5), reversals are probable.")
 
     brand_fig(fig, 'Dollar Z-RoC: The Momentum Signal',
               subtitle='63-day rate of change, z-scored for regime detection',
@@ -1088,8 +1114,7 @@ def chart_13():
 
     add_annotation_box(ax1,
         "Import prices ex-petro lead core PCE by ~4 months.\n"
-        "The tariff pipeline is building pressure.",
-        x=0.55, y=0.93)
+        "The tariff pipeline is building pressure.")
 
     brand_fig(fig, 'The Tariff Pipeline: Import Prices → Core PCE',
               subtitle='Import prices ex-petroleum (4-month lag) vs Core PCE',
@@ -1141,8 +1166,7 @@ def chart_14():
 
     add_annotation_box(ax1,
         "Strong dollar = weak exports. The relationship\n"
-        "is tight with a 3-6 month transmission lag.",
-        x=0.52, y=0.15)
+        "is tight with a 3-6 month transmission lag.")
 
     brand_fig(fig, 'The Dollar-Export Trade-Off',
               subtitle='Dollar strength (inverted) vs real export growth',
@@ -1186,8 +1210,7 @@ def chart_15():
 
     add_annotation_box(ax,
         "Japan deficit narrowing as yen weakens.\n"
-        "Autos and semiconductors dominate imports.",
-        x=0.30, y=0.92)
+        "Autos and semiconductors dominate imports.")
 
     brand_fig(fig, 'U.S.-Japan Trade',
               subtitle='Key bilateral for autos, semiconductors, and the yen carry trade',
@@ -1236,8 +1259,7 @@ def chart_16():
     add_annotation_box(ax,
         f"BIS REER {dev_pct:+.0f}% vs 10Y average.\n"
         "Inflation-adjusted: the gold standard for\n"
-        "competitiveness analysis.",
-        x=0.30, y=0.92)
+        "competitiveness analysis.")
 
     brand_fig(fig, 'BIS Real Effective Exchange Rate',
               subtitle='Dollar valuation adjusted for inflation differentials',
@@ -1300,8 +1322,7 @@ def chart_17():
 
     add_annotation_box(ax,
         "Negative = import costs rising faster than\n"
-        "export prices. Margin compression for U.S. firms.",
-        x=0.52, y=0.15)
+        "export prices. Margin compression for U.S. firms.")
 
     brand_fig(fig, 'Export-Import Price Spread',
               subtitle='The margin signal: who is absorbing the cost pressure?',
@@ -1344,8 +1365,7 @@ def chart_18():
 
     add_annotation_box(ax,
         "Freight volumes are the physical heartbeat of trade.\n"
-        "When all four decline, goods recession is underway.",
-        x=0.52, y=0.15)
+        "When all four decline, goods recession is underway.")
 
     brand_fig(fig, 'Domestic Freight: The Physical Trade Signal',
               subtitle='Year-over-year growth across transport modes',
@@ -1394,8 +1414,7 @@ def chart_19():
     spread = nominal.iloc[-1] - real.iloc[-1]
     add_annotation_box(ax,
         f"Gap of {spread:.1f} ppts = inflation eating\n"
-        "into real purchasing power. Tariffs widen this.",
-        x=0.52, y=0.15)
+        "into real purchasing power. Tariffs widen this.")
 
     brand_fig(fig, 'Real vs Nominal Retail Sales',
               subtitle='The inflation tax on consumer spending',
@@ -1444,8 +1463,7 @@ def chart_20():
 
     add_annotation_box(ax,
         "When EM line > DM line, emerging markets are\n"
-        "under disproportionate dollar pressure.",
-        x=0.52, y=0.15)
+        "under disproportionate dollar pressure.")
 
     brand_fig(fig, 'Dollar Strength: DM vs EM',
               subtitle='Who is bearing the brunt of dollar strength?',
@@ -1485,8 +1503,7 @@ def chart_21():
 
     add_annotation_box(ax,
         "Net exports are a persistent GDP drag.\n"
-        "Narrowing = GDP add, but quality matters.",
-        x=0.685, y=0.20)
+        "Narrowing = GDP add, but quality matters.")
 
     brand_fig(fig, 'Real Net Exports: The GDP Drag',
               subtitle='Trade as a GDP component (chained 2017 dollars)',
@@ -1546,8 +1563,7 @@ def chart_22():
 
     add_annotation_box(ax,
         "50+ years of structural deficit.\n"
-        "Each trade regime shift is visible.",
-        x=0.70, y=0.50)
+        "Each trade regime shift is visible.")
 
     brand_fig(fig, 'U.S. Trade Balance: The Long View',
               subtitle='From surplus to structural deficit since 1971',
@@ -1592,8 +1608,7 @@ def chart_23():
 
     add_annotation_box(ax1,
         "Structural shift: from net importer to\n"
-        "near-net exporter. Deficit is now goods, not oil.",
-        x=0.52, y=0.15)
+        "near-net exporter. Deficit is now goods, not oil.")
 
     brand_fig(fig, 'U.S. Energy Trade: Production & Exports',
               subtitle='The structural shift from importer to exporter',
@@ -1634,8 +1649,7 @@ def chart_24():
 
     add_annotation_box(ax,
         "Negative TIC = foreigners SELLING U.S. assets.\n"
-        "Watch Japan and China: both slowly reducing.",
-        x=0.52, y=0.92)
+        "Watch Japan and China: both slowly reducing.")
 
     brand_fig(fig, 'TIC Net Long-Term Flows',
               subtitle='The financial mirror: are foreigners still buying?',
@@ -1675,8 +1689,7 @@ def chart_25():
 
     add_annotation_box(ax,
         "These categories are tariff canaries.\n"
-        "Rising prices + falling volumes = pass-through.",
-        x=0.52, y=0.92)
+        "Rising prices + falling volumes = pass-through.")
 
     brand_fig(fig, 'Import-Sensitive Retail Categories',
               subtitle='Where tariff pass-through shows up first',
@@ -1712,8 +1725,7 @@ def chart_26():
 
     add_annotation_box(ax,
         "E-commerce bypasses some tariff pass-through\n"
-        "via competitive pressure. Structural channel shift.",
-        x=0.52, y=0.50)
+        "via competitive pressure. Structural channel shift.")
 
     brand_fig(fig, 'E-Commerce Share of Retail Sales',
               subtitle='The structural shift in how imports reach consumers',
@@ -1751,8 +1763,7 @@ def chart_27():
     add_annotation_box(ax,
         "Foreign Treasury holdings = trade deficit\n"
         "recycled into U.S. debt markets. When this\n"
-        "slows, term premium must rise.",
-        x=0.52, y=0.50)
+        "slows, term premium must rise.")
 
     brand_fig(fig, 'Foreign Holdings of U.S. Treasuries',
               subtitle='The capital account mirror of every trade deficit',
@@ -1810,8 +1821,7 @@ def chart_28():
 
     add_annotation_box(ax1,
         "When All imports spike but ex-petro is flat = oil.\n"
-        "When ex-petro spikes independently = tariffs.",
-        x=0.52, y=0.15)
+        "When ex-petro spikes independently = tariffs.")
 
     brand_fig(fig, 'Separating Oil from Tariffs',
               subtitle='WTI crude vs import prices (all and ex-petroleum)',
@@ -1856,8 +1866,7 @@ def chart_29():
 
     add_annotation_box(ax1,
         "Both rising = dollar strength vs trade partners.\n"
-        "CNY managed float; MXN = nearshoring signal.",
-        x=0.52, y=0.50)
+        "CNY managed float; MXN = nearshoring signal.")
 
     brand_fig(fig, 'Key Bilateral Rates: CNY & MXN',
               subtitle='The currencies that matter most for U.S. trade',
@@ -1909,8 +1918,7 @@ def chart_30():
 
     add_annotation_box(ax1,
         "Dollar weakness = import prices rise.\n"
-        "When both diverge: tariffs or supply shocks.",
-        x=0.52, y=0.15)
+        "When both diverge: tariffs or supply shocks.")
 
     brand_fig(fig, 'Dollar → Import Prices: The Transmission',
               subtitle='Dollar strength (inverted) vs import price inflation',

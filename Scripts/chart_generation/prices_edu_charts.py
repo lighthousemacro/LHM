@@ -12,6 +12,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 from datetime import datetime
 import pandas as pd
@@ -203,8 +204,45 @@ def style_single_ax(ax):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: f'{x:.1f}%'))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             style='italic',
@@ -511,8 +549,7 @@ def chart_02():
     pce_last = pce.iloc[-1]
     pce_above = ((pce_last / 2.0) - 1) * 100
     add_annotation_box(ax1,
-        f"The Fed targets Core PCE, not headline CPI.\nAt {pce_last:.1f}%, we're {pce_above:.0f}% above the 2% goal.",
-        x=0.50, y=0.92)
+        f"The Fed targets Core PCE, not headline CPI.\nAt {pce_last:.1f}%, we're {pce_above:.0f}% above the 2% goal.")
 
     brand_fig(fig, 'Headline CPI vs Core PCE: The Gap That Matters',
               subtitle='The number the Fed actually watches',
@@ -557,8 +594,7 @@ def chart_03():
     ax.legend(loc='upper left', **legend_style())
 
     add_annotation_box(ax,
-        f"Shelter = 34% of CPI weight.\nThe lag is mechanical, the decline is baked in.",
-        x=0.50, y=0.92)
+        f"Shelter = 34% of CPI weight.\nThe lag is mechanical, the decline is baked in.")
 
     brand_fig(fig, 'The Shelter Lag Trap',
               subtitle='Market rents lead CPI shelter by 12-18 months',
@@ -619,8 +655,7 @@ def chart_04():
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
 
     add_annotation_box(ax1,
-        f"Flexible inflation normalized.\nSticky at {sticky.iloc[-1]:.1f}% is {sticky.iloc[-1]/2:.1f}x the target.",
-        x=0.50, y=0.92)
+        f"Flexible inflation normalized.\nSticky at {sticky.iloc[-1]:.1f}% is {sticky.iloc[-1]/2:.1f}x the target.")
 
     brand_fig(fig, 'Sticky vs Flexible: The Persistence Problem',
               subtitle='Flexible leads Sticky by ~12 months',
@@ -675,8 +710,7 @@ def chart_05():
     ppi_last, cpi_last = ppi.iloc[-1], cpi.iloc[-1]
     ppi_vs = "below" if ppi_last < cpi_last else "above"
     add_annotation_box(ax1,
-        f"PPI ({ppi_last:.1f}%) {ppi_vs} CPI ({cpi_last:.1f}%) = {'dis' if ppi_last < cpi_last else ''}inflationary\npressure in the pipeline. Pass-through takes 3-6 months.",
-        x=0.50, y=0.92)
+        f"PPI ({ppi_last:.1f}%) {ppi_vs} CPI ({cpi_last:.1f}%) = {'dis' if ppi_last < cpi_last else ''}inflationary\npressure in the pipeline. Pass-through takes 3-6 months.")
 
     brand_fig(fig, 'The Pipeline: PPI Leads CPI',
               subtitle='Producer prices signal what consumer prices do next',
@@ -730,8 +764,7 @@ def chart_06():
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
 
     add_annotation_box(ax1,
-        f"5Y5Y at {fwd.iloc[-1]:.2f}%: {'drifting, not de-anchored' if fwd.iloc[-1] < 3.0 else 'de-anchoring risk'}.\nIf this breaks 3%, all bets are off.",
-        x=0.50, y=0.12)
+        f"5Y5Y at {fwd.iloc[-1]:.2f}%: {'drifting, not de-anchored' if fwd.iloc[-1] < 3.0 else 'de-anchoring risk'}.\nIf this breaks 3%, all bets are off.")
 
     brand_fig(fig, 'Inflation Expectations: Are They Anchored?',
               subtitle='The line between controlled and uncontrolled inflation',
@@ -784,8 +817,7 @@ def chart_07():
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left', **legend_style())
 
     add_annotation_box(ax1,
-        f"Trimmed mean strips the noise.\nAt {trimmed.iloc[-1]:.1f}%, the stickiness is broad-based.",
-        x=0.45, y=0.92)
+        f"Trimmed mean strips the noise.\nAt {trimmed.iloc[-1]:.1f}%, the stickiness is broad-based.")
 
     brand_fig(fig, 'Trimmed Mean vs Core: The Signal Beneath the Noise',
               subtitle='Dallas Fed trimmed mean confirms persistent inflation',
@@ -840,8 +872,7 @@ def chart_08():
     eci_last, pce_last = eci.iloc[-1], core_pce.iloc[-1]
     spiral_status = "No wage-price spiral." if eci_last > pce_last else "Wages falling behind prices."
     add_annotation_box(ax1,
-        f"{spiral_status} ECI at {eci_last:.1f}% vs Core PCE\nat {pce_last:.1f}%. Equilibrium, not resolution.",
-        x=0.50, y=0.92)
+        f"{spiral_status} ECI at {eci_last:.1f}% vs Core PCE\nat {pce_last:.1f}%. Equilibrium, not resolution.")
 
     brand_fig(fig, 'Wages vs Prices: The Spiral Check',
               subtitle='ECI compensation growth vs core inflation',
@@ -913,8 +944,7 @@ def _chart_09_core(shifted=False):
     dollar_dir = "Strong" if dollar_yoy.iloc[-1] > 0 else "Weak"
     goods_dir = "deflation" if goods.iloc[-1] < 0 else "inflation"
     add_annotation_box(ax1,
-        f"{dollar_dir} dollar ({dollar_yoy.iloc[-1]:.1f}% YoY) \u2192 goods {goods_dir}.\nThe 9-18 month lag is mechanical.",
-        x=0.50, y=0.92)
+        f"{dollar_dir} dollar ({dollar_yoy.iloc[-1]:.1f}% YoY) \u2192 goods {goods_dir}.\nThe 9-18 month lag is mechanical.")
 
     goods_title_word = "Deflation" if goods.iloc[-1] < 0 else "Disinflation"
     brand_fig(fig, f'The Dollar Channel: Goods {goods_title_word} Explained',
@@ -1048,8 +1078,7 @@ def chart_10():
     else:
         regime_note = "Easing urgently needed."
     add_annotation_box(ax,
-        f"PCI at {pci_last:.2f}: {regime} regime.\n{regime_note}",
-        x=0.35, y=0.92)
+        f"PCI at {pci_last:.2f}: {regime} regime.\n{regime_note}")
 
     brand_fig(fig, 'Prices Composite Index (PCI)',
               subtitle='Synthesizing all inflation signals into one regime indicator',

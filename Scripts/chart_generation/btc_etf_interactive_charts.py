@@ -4,6 +4,7 @@ Extracted from HTML interactive report and rendered in Lighthouse Macro style
 """
 
 import os
+import textwrap
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.image as mpimg
@@ -119,8 +120,45 @@ def add_outer_border(fig):
     ))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.08):
-    """Add takeaway box - default to bottom of chart area."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='bottom', style='italic',
             bbox=dict(boxstyle='round,pad=0.5', facecolor=THEME['bg'],
@@ -209,7 +247,7 @@ def chart_zscore_interactive():
 
     # Branding
     brand_fig(fig, 'THE SILENT CAPITULATION', '90-Day Flow Momentum Z-Score', source='Farside Investors')
-    add_annotation_box(ax, "Outflow regime  |  NEAR ALL-TIME LOWS (-1.93σ)", x=0.5, y=0.03)
+    add_annotation_box(ax, "Outflow regime  |  NEAR ALL-TIME LOWS (-1.93σ)")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.08, right=0.94)
@@ -267,7 +305,7 @@ def chart_cumulative_interactive():
     brand_fig(fig, 'CUMULATIVE ETF FLOWS', 'Net Inflows Since Launch ($ Billions)', source='Farside Investors')
 
     drawdown = cum_flows[-1] - cum_flows[peak_idx]
-    add_annotation_box(ax, f"${cum_flows[-1]:.1f}B total  |  ${drawdown:.1f}B bleed since peak", x=0.5, y=0.03)
+    add_annotation_box(ax, f"${cum_flows[-1]:.1f}B total  |  ${drawdown:.1f}B bleed since peak")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.08, right=0.94)
@@ -312,7 +350,7 @@ def chart_base_tvl_interactive():
 
     # Branding
     brand_fig(fig, 'BASE CHAIN TVL GROWTH', 'Total Value Locked (DeFi)', source='DefiLlama')
-    add_annotation_box(ax, f"+{growth:.0f}% growth  |  Aerodrome commands >40% of liquidity", x=0.5, y=0.88)
+    add_annotation_box(ax, f"+{growth:.0f}% growth  |  Aerodrome commands >40% of liquidity")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.08, right=0.94)
@@ -362,7 +400,7 @@ def chart_cbbtc_interactive():
 
     # Branding
     brand_fig(fig, 'THE RISE OF cbBTC', 'Coinbase Wrapped BTC Supply Growth', source='DefiLlama')
-    add_annotation_box(ax, "From $0 to $6B in 18 months  |  Capital rotating to productive collateral", x=0.5, y=0.88)
+    add_annotation_box(ax, "From $0 to $6B in 18 months  |  Capital rotating to productive collateral")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.08, right=0.94)

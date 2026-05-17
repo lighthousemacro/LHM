@@ -14,6 +14,7 @@ import matplotlib.image as mpimg
 from matplotlib.ticker import FuncFormatter
 from datetime import datetime, timedelta
 import os
+import textwrap
 
 # =============================================================================
 # THEME & PALETTE
@@ -183,7 +184,45 @@ def add_last_value_label(ax, y_data, color, fmt='{:.1f}%', side='right', fontsiz
                     xytext=(-6, 0), textcoords='offset points', bbox=pill, clip_on=False)
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=12, color='#2389BB', ha='center', va='top',
             fontweight='bold', style='italic',
@@ -336,8 +375,7 @@ def fig01_defensive_basket():
     ax.tick_params(axis='y', labelsize=13, pad=8)
     ax.tick_params(axis='x', labelsize=10)
 
-    add_annotation_box(ax, 'Defensive basket: up to +8% relative in five weeks.\nIn a flat tape, that is the entire game.',
-                       x=0.75, y=0.52)
+    add_annotation_box(ax, 'Defensive basket: up to +8% relative in five weeks.\nIn a flat tape, that is the entire game.')
 
     brand_fig(fig, 'Defensive Basket vs SPY: Jan 15 to Feb 22',
               'Relative performance, 5-week holding period',
@@ -372,8 +410,7 @@ def fig02_quits_rate():
     add_last_value_label(ax, q_plot, THEME['primary'], fmt='{:.1f}%')
 
     last_val = q_plot.iloc[-1]
-    add_annotation_box(ax, f'Quits at {last_val:.1f}%: sitting on the exact threshold\nthat preceded the last three recessions.',
-                       x=0.40, y=0.92)
+    add_annotation_box(ax, f'Quits at {last_val:.1f}%: sitting on the exact threshold\nthat preceded the last three recessions.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'JOLTS Quits Rate: Sitting on the Line',
@@ -404,8 +441,7 @@ def fig03_openings_rate():
     add_last_value_label(ax, o_plot, THEME['primary'], fmt='{:.1f}%')
 
     last_val = o_plot.iloc[-1]
-    add_annotation_box(ax, f'Openings rate at {last_val:.1f}%: lowest since 2020.\nProfessional services, retail, and finance leading the decline.',
-                       x=0.50, y=0.92)
+    add_annotation_box(ax, f'Openings rate at {last_val:.1f}%: lowest since 2020.\nProfessional services, retail, and finance leading the decline.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'JOLTS Job Openings Rate: Collapse to 2020 Lows',
@@ -443,8 +479,7 @@ def fig04_lfi():
     add_last_value_label(ax, lfi_plot, THEME['primary'], fmt='{:.2f}')
 
     last_val = lfi_plot.iloc[-1]
-    add_annotation_box(ax, f'LFI at {last_val:+.2f}: well above the +0.50 fragility threshold.\nLong-term unemployment building, quits decelerating.',
-                       x=0.50, y=0.15)
+    add_annotation_box(ax, f'LFI at {last_val:+.2f}: well above the +0.50 fragility threshold.\nLong-term unemployment building, quits decelerating.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'Labor Fragility Index (LFI): Structural Weakness Building',
@@ -480,8 +515,7 @@ def fig05_hy_oas():
     add_last_value_label(ax, hy_plot, THEME['primary'], fmt='{:.0f}')
 
     last_val = hy_plot.iloc[-1]
-    add_annotation_box(ax, f'HY OAS at {last_val:.0f} bps: below the 300 bps complacent\nthreshold. Credit pricing a different economy than labor.',
-                       x=0.70, y=0.92)
+    add_annotation_box(ax, f'HY OAS at {last_val:.0f} bps: below the 300 bps complacent\nthreshold. Credit pricing a different economy than labor.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'HY OAS: Credit Still in Denial',
@@ -543,8 +577,7 @@ def fig05_credit_labor_divergence():
     add_last_value_label(ax2, q_plot, c_primary, fmt='{:.1f}%', side='right')
     add_last_value_label(ax1, hy_bps, c_secondary, fmt='{:.0f}', side='left')
 
-    add_annotation_box(ax1, 'Credit and labor are pricing two different economies.\nThe divergence has persisted for over two years.',
-                       x=0.50, y=0.97)
+    add_annotation_box(ax1, 'Credit and labor are pricing two different economies.\nThe divergence has persisted for over two years.')
 
     # Combined legend
     lines1, labels1 = ax1.get_legend_handles_labels()
@@ -588,8 +621,7 @@ def fig06_clg():
     add_last_value_label(ax, clg_plot, THEME['primary'], fmt='{:.2f}')
 
     last_val = clg_plot.iloc[-1]
-    add_annotation_box(ax, f'CLG at {last_val:.2f}: deeply below -1.0 threshold.\nSpreads too tight for the labor reality underneath.',
-                       x=0.50, y=0.92)
+    add_annotation_box(ax, f'CLG at {last_val:.2f}: deeply below -1.0 threshold.\nSpreads too tight for the labor reality underneath.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'Credit-Labor Gap (CLG): Deeply Negative',
@@ -634,8 +666,7 @@ def fig07_vix():
     add_last_value_label(ax, vix_50d.dropna(), THEME['secondary'], fmt='{:.1f}', side='right')
 
     last_val = v_plot.iloc[-1]
-    add_annotation_box(ax, f'VIX at {last_val:.1f}: no longer complacent, not yet panicking.\nSCOTUS relief compressed the tariff tail.',
-                       x=0.55, y=0.92)
+    add_annotation_box(ax, f'VIX at {last_val:.1f}: no longer complacent, not yet panicking.\nSCOTUS relief compressed the tariff tail.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'VIX: From Complacency to Recalibration',
@@ -676,8 +707,7 @@ def fig08_sofr_effr():
     add_last_value_label(ax, e_plot, THEME['secondary'], fmt='{:.2f}%', side='left')
 
     last_spread = (s_plot.iloc[-1] - e_plot.iloc[-1]) * 100
-    add_annotation_box(ax, f'SOFR-EFFR spread: ~{last_spread:.0f} bps. Defensive, not Disorderly.\nThe One Switch: 15-20 bps = regime change.',
-                       x=0.50, y=0.20)
+    add_annotation_box(ax, f'SOFR-EFFR spread: ~{last_spread:.0f} bps. Defensive, not Disorderly.\nThe One Switch: 15-20 bps = regime change.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'SOFR vs EFFR: The One Switch',
@@ -727,8 +757,7 @@ def fig09_lci():
     add_last_value_label(ax, lci_plot, THEME['primary'], fmt='{:.2f}')
 
     last_val = lci_plot.iloc[-1]
-    add_annotation_box(ax, f'LCI at {last_val:.2f}: approaching but not yet breaching -0.50.\nRRP exhausted. System operating without a shock absorber.',
-                       x=0.45, y=0.92)
+    add_annotation_box(ax, f'LCI at {last_val:.2f}: approaching but not yet breaching -0.50.\nRRP exhausted. System operating without a shock absorber.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'Liquidity Cushion Index (LCI): Approaching Scarce',
@@ -776,8 +805,7 @@ def fig10_yield_curve():
     add_last_value_label(ax1, t_plot, c_secondary, fmt='{:.2f}%', side='left')
 
     last_curve = c_plot.iloc[-1]
-    add_annotation_box(ax1, f'10Y-2Y at +{last_curve*100:.0f} bps. Steepener building:\ndeficit dynamics, tariff pass-through, anchored front end.',
-                       x=0.50, y=0.97)
+    add_annotation_box(ax1, f'10Y-2Y at +{last_curve*100:.0f} bps. Steepener building:\ndeficit dynamics, tariff pass-through, anchored front end.')
 
     # Combined legend
     lines1, labels1 = ax1.get_legend_handles_labels()
@@ -830,8 +858,7 @@ def fig11_mri():
     else:
         regime = 'Low Risk'
 
-    add_annotation_box(ax, f'MRI at {last_val:.2f}: {regime} regime.\nLabor and credit divergence persists. Defensive posture holds.',
-                       x=0.50, y=0.15)
+    add_annotation_box(ax, f'MRI at {last_val:.2f}: {regime} regime.\nLabor and credit divergence persists. Defensive posture holds.')
 
     ax.legend(loc='upper left', **legend_style())
     brand_fig(fig, 'Macro Risk Index (MRI): Regime Classification',

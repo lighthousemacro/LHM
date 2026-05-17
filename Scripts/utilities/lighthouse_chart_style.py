@@ -10,6 +10,41 @@ from matplotlib.patches import FancyBboxPatch
 import matplotlib.dates as mdates
 from matplotlib.ticker import FuncFormatter
 import numpy as np
+import textwrap
+
+
+# =============================================================================
+# ANNOTATION RULE (v4.1, May 2026 — Bob's universal placement)
+# =============================================================================
+
+ANNOTATION_X = 0.5      # axes fraction, horizontal anchor (centered)
+ANNOTATION_Y = 0.98     # axes fraction, vertical anchor (top, va='top')
+ANNOTATION_WRAP_WIDTH = 20  # wrap text when a line exceeds this many chars
+
+
+def wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of an annotation at `width` characters.
+
+    Preserves explicit `\\n` in the input. Words are never split mid-token,
+    and hyphens are not used as break points (so figures like "10-year" stay
+    intact).
+
+    This is the canonical wrapping used by `add_callout_box` /
+    `add_annotation_box` across all Lighthouse Macro chart scripts.
+    """
+    if not text:
+        return text
+    out = []
+    for line in text.split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
 
 # =============================================================================
 # OFFICIAL 8-COLOR PALETTE
@@ -184,27 +219,54 @@ def add_threshold_line(ax, y_value, label, color='red', linestyle='--',
             fontsize=8, color=color, fontweight='bold')
 
 
-def add_callout_box(ax, text, position, boxstyle='round',
-                    facecolor='white', edgecolor=None, fontsize=8):
+def add_callout_box(ax, text, position=None, boxstyle='round',
+                    facecolor='white', edgecolor=None, fontsize=8,
+                    wrap_width=ANNOTATION_WRAP_WIDTH):
     """
-    Add annotation box with key insights
+    Add annotation box with key insights.
 
-    Parameters:
-    -----------
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026):
+    - Anchor is `(ANNOTATION_X, ANNOTATION_Y)` = `(0.5, 0.98)` in axes
+      coordinates, with `ha='center'`, `va='top'`.
+    - `position` is accepted for backward compatibility but **should not be
+      used to reposition the box per chart**. Pass `position=None` (default)
+      to use the canonical anchor. If a per-chart override is genuinely
+      necessary, do it consciously — the rule is that an annotation that
+      overlaps data should be deleted, not moved.
+    - Text auto-wraps at `wrap_width` characters per line.
+
+    Parameters
+    ----------
     ax : matplotlib axes
-    text : str - Box content
-    position : tuple - (x, y) in axes coordinates
-    boxstyle : str - Box style
+    text : str
+        Box content. Wrapped via `wrap_annotation_text`.
+    position : tuple, optional
+        `(x, y)` in axes coordinates. Defaults to the canonical anchor.
+    boxstyle : str
+        Box style (e.g. `'round'`).
+    facecolor : str
+        Box fill color.
+    edgecolor : str, optional
+        Box border color. Defaults to dusk orange.
+    fontsize : int
+        Text font size.
+    wrap_width : int
+        Wrap text at this many characters per line.
     """
     if edgecolor is None:
         edgecolor = LIGHTHOUSE_COLORS['dusk_orange']
 
+    if position is None:
+        x, y = ANNOTATION_X, ANNOTATION_Y
+    else:
+        x, y = position
+
     props = dict(boxstyle=boxstyle, facecolor=facecolor,
                  edgecolor=edgecolor, alpha=0.95, linewidth=1.5)
 
-    ax.text(position[0], position[1], text,
+    ax.text(x, y, wrap_annotation_text(text, width=wrap_width),
             transform=ax.transAxes, fontsize=fontsize,
-            verticalalignment='top', bbox=props,
+            ha='center', va='top', bbox=props,
             family='monospace')
 
 

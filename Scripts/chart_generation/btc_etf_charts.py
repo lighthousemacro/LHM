@@ -5,6 +5,7 @@ Uses REAL data from Farside Investors + yfinance + DefiLlama
 """
 
 import os
+import textwrap
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.image as mpimg
@@ -267,8 +268,45 @@ def add_outer_border(fig):
     ))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.08):
-    """Add takeaway box - default to bottom of chart area."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='bottom', style='italic',
             bbox=dict(boxstyle='round,pad=0.5', facecolor=THEME['bg'],
@@ -343,7 +381,7 @@ def chart_01_etf_flows():
 
     # Branding
     brand_fig(fig, 'THE SPOT CAPITULATION', 'Cumulative ETF Flows vs. BTC Price', source='Farside Investors, Yahoo Finance')
-    add_annotation_box(ax1, f"Outflows since peak: ${outflows_since_peak:,.0f}M  |  Price vs. peak: {price_drawdown:+.1f}%", x=0.5, y=0.03)
+    add_annotation_box(ax1, f"Outflows since peak: ${outflows_since_peak:,.0f}M  |  Price vs. peak: {price_drawdown:+.1f}%")
 
     # Legend
     lines = [l1, l2]
@@ -408,7 +446,7 @@ def chart_02_flow_momentum():
 
     # Count days of negative momentum
     recent_neg = (df['Flow_30d'].iloc[-30:] < 0).sum()
-    add_annotation_box(ax1, f"Negative momentum: {recent_neg}/30 recent days", x=0.5, y=0.03)
+    add_annotation_box(ax1, f"Negative momentum: {recent_neg}/30 recent days")
 
     # Legend
     lines = [l1, l2]
@@ -465,7 +503,7 @@ def chart_03_onchain():
 
     # Branding
     brand_fig(fig, 'THE ON-CHAIN REALITY', 'Base Chain Total Value Locked', source='DefiLlama')
-    add_annotation_box(ax, f"12-month TVL growth: +{growth_pct:.0f}%  |  Price falls, infrastructure grows.", x=0.5, y=0.03)
+    add_annotation_box(ax, f"12-month TVL growth: +{growth_pct:.0f}%  |  Price falls, infrastructure grows.")
 
     # Legend
     ax.legend(loc='upper left', **legend_style())
@@ -526,7 +564,7 @@ def chart_04_gbtc_vs_rest():
 
     # Branding
     brand_fig(fig, 'THE GBTC EXODUS', 'Grayscale Outflows vs. New ETF Inflows', source='Farside Investors')
-    add_annotation_box(ax1, f"GBTC: ${gbtc_cum.iloc[-1]/1000:.1f}B out  |  Others: +${rest_cum.iloc[-1]/1000:.1f}B in", x=0.5, y=0.03)
+    add_annotation_box(ax1, f"GBTC: ${gbtc_cum.iloc[-1]/1000:.1f}B out  |  Others: +${rest_cum.iloc[-1]/1000:.1f}B in")
 
     # Legend
     lines = [l1, l2]
@@ -595,7 +633,7 @@ def chart_05_largest_flows():
     # Find the biggest outflow
     worst_day = flows_raw['Total'].idxmin()
     worst_val = flows_raw['Total'].min()
-    add_annotation_box(ax, f"Largest outflow: ${worst_val:,.0f}M on {worst_day.strftime('%b %d, %Y')}", x=0.25, y=0.03)
+    add_annotation_box(ax, f"Largest outflow: ${worst_val:,.0f}M on {worst_day.strftime('%b %d, %Y')}")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.15, right=0.94)
@@ -670,7 +708,7 @@ def chart_06_flow_zscore_30d():
 
     # Branding
     brand_fig(fig, 'FLOW MOMENTUM Z-SCORE (30D)', '30-Day Rolling Flow Sum (Standardized)', source='Farside Investors')
-    add_annotation_box(ax, f"{regime}  |  {outliers_down} periods below -1σ historically", x=0.5, y=0.03)
+    add_annotation_box(ax, f"{regime}  |  {outliers_down} periods below -1σ historically")
 
     # Add +1/-1 labels
     ax.text(0.02, 1.1, '+1σ', fontsize=9, color=c_primary, alpha=0.7,
@@ -757,7 +795,7 @@ def chart_07_flow_zscore_90d():
 
     # Branding
     brand_fig(fig, 'THE SILENT CAPITULATION', '90-Day Flow Momentum (Standardized)', source='Farside Investors')
-    add_annotation_box(ax, f"{regime}  |  {note}", x=0.5, y=0.03)
+    add_annotation_box(ax, f"{regime}  |  {note}")
 
     # Add +1/-1 labels
     ax.text(0.02, 1.1, '+1σ', fontsize=9, color=c_primary, alpha=0.7,
@@ -860,7 +898,7 @@ def chart_08_base_cbbtc():
 
     # Branding
     brand_fig(fig, 'THE CAPITAL ROTATION', 'Base Chain TVL & cbBTC Market Cap Growth', source='DefiLlama, User Research')
-    add_annotation_box(ax1, f"Base TVL: 9x since Jan 2024  |  cbBTC: 0 → $6B since Sep 2024  |  Capital is moving, not leaving.", x=0.5, y=0.03)
+    add_annotation_box(ax1, f"Base TVL: 9x since Jan 2024  |  cbBTC: 0 → $6B since Sep 2024  |  Capital is moving, not leaving.")
 
     # Legend
     lines = [l1, l2]
@@ -913,7 +951,7 @@ def chart_09_onchain_metrics():
 
     # Branding
     brand_fig(fig, 'ON-CHAIN ACCUMULATION SIGNALS', 'MVRV, NUPL, SOPR (CryptoQuant, Feb 4, 2026)', source='CryptoQuant')
-    add_annotation_box(ax, "All three metrics signal accumulation zone. SOPR <1.0 = sellers realizing losses.", x=0.5, y=0.03)
+    add_annotation_box(ax, "All three metrics signal accumulation zone. SOPR <1.0 = sellers realizing losses.")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.12, right=0.94)
@@ -966,7 +1004,7 @@ def chart_10_exchange_flows():
 
     # Branding
     brand_fig(fig, 'EXCHANGE EXODUS', 'Net BTC Flows to/from Exchanges', source='CryptoQuant (Illustrative)')
-    add_annotation_box(ax, "Coins leaving exchanges → Cold storage. Bullish supply dynamics.", x=0.5, y=0.03)
+    add_annotation_box(ax, "Coins leaving exchanges → Cold storage. Bullish supply dynamics.")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.08, right=0.94)
@@ -1012,7 +1050,7 @@ def chart_11_sovereign_holdings():
 
     # Branding
     brand_fig(fig, 'SOVEREIGN HANDS', 'Known Government Bitcoin Holdings', source='Public Blockchain Data, BitcoinTreasuries')
-    add_annotation_box(ax, "Smart money accumulates during stress. Bhutan: $765M profit on $120M cost basis.", x=0.5, y=0.03)
+    add_annotation_box(ax, "Smart money accumulates during stress. Bhutan: $765M profit on $120M cost basis.")
 
     # Margins and border
     fig.subplots_adjust(top=0.86, bottom=0.10, left=0.15, right=0.94)

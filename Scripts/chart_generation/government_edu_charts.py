@@ -15,6 +15,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 import time
 import ssl
@@ -257,8 +258,45 @@ def style_single_ax(ax, fmt='{:.1f}%'):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     box_fc = '#2389BB'
     box_alpha = 1.0
     txt_color = '#ffffff'
@@ -446,8 +484,7 @@ def chart_01():
     add_annotation_box(ax,
         f"Running {abs(deficit.iloc[-1]):.0f}% of GDP deficits\n"
         f"outside of recession.\n"
-        f"This is structural, not cyclical.",
-        x=0.50, y=0.18)
+        f"This is structural, not cyclical.")
 
     brand_fig(fig, 'Federal Surplus/Deficit as % of GDP',
               subtitle='Structural deficits at full employment',
@@ -499,8 +536,7 @@ def chart_02():
     add_annotation_box(ax,
         "Term premium is the 'honest signal.'\n"
         "Post-QE suppression is normalizing.\n"
-        "Still below what structural deficits demand.",
-        x=0.50, y=0.93)
+        "Still below what structural deficits demand.")
 
     brand_fig(fig, 'ACM 10-Year Term Premium',
               subtitle='The honest signal of fiscal sustainability',
@@ -559,8 +595,7 @@ def chart_03():
     add_annotation_box(ax1,
         "A 4.5% yield driven by rate expectations\n"
         "is different from 4.5% driven by term premium.\n"
-        "The composition shift is the story.",
-        x=0.52, y=0.92)
+        "The composition shift is the story.")
 
     brand_fig(fig, '10-Year Yield Decomposition',
               subtitle='Expected rate vs. term premium: what is driving yields?',
@@ -604,8 +639,7 @@ def chart_04():
     add_annotation_box(ax,
         "Interest as a share of revenue is rising\n"
         "back toward early-1990s peaks.\n"
-        "The compounding trap is real.",
-        x=0.52, y=0.25)
+        "The compounding trap is real.")
 
     brand_fig(fig, 'Federal Interest Expense as % of Revenue',
               subtitle='The compounding trap: higher rates on a larger debt stock',
@@ -643,8 +677,7 @@ def chart_05():
     add_annotation_box(ax,
         "Interest payments have surpassed\n"
         "defense spending. Approaching $1T annually.\n"
-        "This is the doom loop in action.",
-        x=0.35, y=0.92)
+        "This is the doom loop in action.")
 
     brand_fig(fig, 'Federal Government Interest Outlays',
               subtitle='Now larger than defense spending',
@@ -687,8 +720,7 @@ def chart_06():
     add_annotation_box(ax,
         f"Debt-to-GDP at {debt_gdp.iloc[-1]:.0f}%.\n"
         f"Highest since WWII, but trajectory\n"
-        f"is the real concern: 120%+ by 2030.",
-        x=0.52, y=0.93)
+        f"is the real concern: 120%+ by 2030.")
 
     brand_fig(fig, 'Federal Debt as % of GDP',
               subtitle='The level matters less than the trajectory',
@@ -741,8 +773,7 @@ def chart_07():
     add_annotation_box(ax,
         "Positive = government adding to demand.\n"
         "Negative = fiscal drag on growth.\n"
-        "Spending cuts are contractionary by definition.",
-        x=0.52, y=0.92)
+        "Spending cuts are contractionary by definition.")
 
     brand_fig(fig, 'Fiscal Impulse: Year-Over-Year Change in Deficit',
               subtitle='The second derivative of government spending',
@@ -819,8 +850,7 @@ def chart_08():
     add_annotation_box(ax,
         f"GCI-Gov at {gcigov.iloc[-1]:.2f}.\n"
         "Positive = fiscal stress rising.\n"
-        "Synthesizes deficit, debt, interest, term premium.",
-        x=0.35, y=0.93)
+        "Synthesizes deficit, debt, interest, term premium.")
 
     brand_fig(fig, 'Government Conditions Index (GCI-Gov)',
               subtitle='Pillar 8 Composite: fiscal stress in a single number',
@@ -866,8 +896,7 @@ def chart_09():
     add_annotation_box(ax,
         "Foreign demand for Treasuries peaked\n"
         "around 2014 and has been declining.\n"
-        "The marginal buyer is now price-sensitive.",
-        x=0.40, y=0.92)
+        "The marginal buyer is now price-sensitive.")
 
     brand_fig(fig, 'Foreign Holdings as Share of Federal Debt',
               subtitle='The marginal buyer has changed',
@@ -928,8 +957,7 @@ def chart_10():
     add_annotation_box(ax,
         f"The gap: ${gap:,.0f}B in annual deficit.\n"
         f"Outlays growing faster than receipts.\n"
-        f"The scissors are opening, not closing.",
-        x=0.40, y=0.45)
+        f"The scissors are opening, not closing.")
 
     brand_fig(fig, 'Federal Receipts vs. Outlays (Trailing 12 Months)',
               subtitle='The structural gap: spending outpaces revenue',

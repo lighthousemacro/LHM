@@ -103,8 +103,7 @@ def chart1_savings_vs_credit():
     add_annotation_box(
         ax1,
         f"Saving rate {psavert.iloc[-1]:.1f}% (vs 8.5% historical avg).\n"
-        f"Consumer credit growing {totalsl_yoy.iloc[-1]:+.1f}% YoY — filling the gap.",
-        x=0.98, y=0.95, ha='right',
+        f"Consumer credit growing {totalsl_yoy.iloc[-1]:+.1f}% YoY — filling the gap.", ha='right',
     )
 
     brand_fig(
@@ -189,7 +188,6 @@ def chart2_deliq_by_type():
         ax,
         f"Consumer delinquencies at {current[1]:.2f}% — stress building across categories.\n"
         "Business delinquencies remain subdued. Two-speed credit.",
-        x=0.50, y=0.95,
     )
 
     # legend
@@ -270,7 +268,6 @@ def chart3_subprime_auto_2008_vs_current():
         ax,
         "All three subprime auto metrics at or above 2008 peak levels.\n"
         "The headline says 'consumer is fine.' The collateral says otherwise.",
-        x=0.50, y=0.95,
     )
 
     brand_fig(
@@ -325,7 +322,6 @@ def chart4_inflation_by_cohort():
         ax,
         "Bottom 20% experiences 6.1% inflation vs 3.2% for top 20%.\n"
         "Same country. Different price levels.",
-        x=0.28, y=0.95,
     )
 
     brand_fig(
@@ -390,7 +386,6 @@ def chart5_excess_savings_by_quintile():
     add_annotation_box(
         ax,
         "Bottom 80% depleted pandemic windfalls.\nOnly the top 20% remain buffered.",
-        x=0.50, y=0.95,
     )
 
     brand_fig(
@@ -462,7 +457,6 @@ def chart6_unemployment_demographic():
         ax1,
         "55+ workers: lowest unemployment rate but highest long-term share (31%).\n"
         "When they lose a job, they struggle to find another.",
-        x=0.72, y=0.95,
     )
 
     brand_fig(
@@ -543,7 +537,6 @@ def chart7_housing_by_tier():
         ax1,
         "Luxury stable (+2.4%). Entry-level collapsing (-8.6%) with 95 DOM.\n"
         "Housing market is two markets, selling to two consumers.",
-        x=0.50, y=0.95,
     )
 
     brand_fig(
@@ -655,7 +648,6 @@ def chart8_luxury_vs_value_retail():
         ax,
         f'Luxury {lux_chg:+.0f}% since Jan 2022. Value {val_chg:+.0f}% since Jan 2022.\n'
         'Luxury spending grows; lower-income households substitute to value.',
-        x=0.50, y=0.95,
     )
 
     brand_fig(

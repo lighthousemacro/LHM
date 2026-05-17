@@ -12,6 +12,7 @@ Usage:
 """
 
 import os
+import textwrap
 import argparse
 import time
 import ssl
@@ -277,8 +278,45 @@ def style_single_ax(ax, fmt='{:.1f}%'):
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, p: fmt.format(x)))
 
 
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    """Add takeaway annotation box in dead space."""
+
+# --- Annotation placement rule (v4.1, May 2026 — Bob's universal rule) ---
+# All annotation boxes anchor at (0.5, 0.98) in axes coords with va='top'.
+# Text wraps at ANNOTATION_WRAP_WIDTH chars/line. Do NOT override x/y per
+# chart: if an annotation overlaps data, delete it rather than reposition.
+ANNOTATION_X = 0.5
+ANNOTATION_Y = 0.98
+ANNOTATION_WRAP_WIDTH = 20
+
+
+def _wrap_annotation_text(text, width=ANNOTATION_WRAP_WIDTH):
+    """Wrap each line of annotation text at `width` characters.
+    Preserves explicit newlines; never splits words or hyphenated tokens."""
+    if not text:
+        return text
+    out = []
+    for line in str(text).split('\n'):
+        if line.strip() == '':
+            out.append(line)
+            continue
+        out.append(textwrap.fill(
+            line, width=width,
+            break_long_words=False,
+            break_on_hyphens=False,
+        ))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=ANNOTATION_X, y=ANNOTATION_Y):
+    """Top-center takeaway callout, auto-wrapped at 20 chars.
+
+    UNIVERSAL PLACEMENT RULE (v4.1, May 2026): anchor is
+    (0.5, 0.98) with va='top'. Do not override x/y per chart.
+    If the box overlaps data, delete the annotation instead of
+    repositioning it. Use sparingly — a strong chart + caption
+    is almost always better than an in-chart annotation.
+    """
+    text = _wrap_annotation_text(text)
+    text = _wrap_annotation_text(text)
     # Dark theme: Ocean fill at 20% to pop against chart bg
     # White theme: keep chart bg
     box_fc = '#2389BB'
@@ -492,8 +530,7 @@ def chart_01():
     regime = "expansion" if pmi_last > 50 else "contraction"
     add_annotation_box(ax,
         f"ISM Manufacturing at {pmi_last:.1f} ({regime}).\n"
-        f"Below 50 = contraction. Below 45 = deep recession signal.",
-        x=0.70, y=0.92)
+        f"Below 50 = contraction. Below 45 = deep recession signal.")
 
     brand_fig(fig, 'ISM Manufacturing PMI',
               subtitle='The earliest read on goods economy health',
@@ -554,8 +591,7 @@ def chart_02():
     spread_last_val = mfg.iloc[-1] - svc.iloc[-1]  # just for annotation
     add_annotation_box(ax_top,
         f"Manufacturing leads down by 6-9 months. Services follows.\n"
-        f"Gap narrows as cycles mature.",
-        x=0.58, y=0.12)
+        f"Gap narrows as cycles mature.")
 
     # === BOTTOM PANEL: Services - Manufacturing spread ===
     combined = pd.DataFrame({'mfg': mfg, 'svc': svc}).dropna()
@@ -632,8 +668,7 @@ def chart_03():
     add_annotation_box(ax,
         f"New Orders lead PMI by 1-2 months. Employment lags.\n"
         f"Orders {no_last:.1f}, Employment {emp_last:.1f}. "
-        f"{'Employment contracting.' if emp_last < 50 else 'Employment expanding.'}",
-        x=0.52, y=0.15)
+        f"{'Employment contracting.' if emp_last < 50 else 'Employment expanding.'}")
 
     brand_fig(fig, 'ISM Manufacturing Subcomponents',
               subtitle='New Orders lead. Employment confirms. Prices signal inflation.',
@@ -678,8 +713,7 @@ def chart_04():
     spread = orders_last - ships_last
     add_annotation_box(ax,
         f"Orders {orders_last:+.1f}% vs Shipments {ships_last:+.1f}%.\n"
-        f"Spread: {spread:+.1f}pp. Negative = backlog shrinking.",
-        x=0.80, y=0.94)
+        f"Spread: {spread:+.1f}pp. Negative = backlog shrinking.")
 
     brand_fig(fig, 'Core Capital Goods: Orders vs Shipments',
               subtitle='The Forward Commitment: CEOs voting with their checkbooks',
@@ -739,8 +773,7 @@ def chart_05():
     status = "shrinking" if last_val < 1.0 else "growing"
     add_annotation_box(ax,
         f"Ratio at {last_val:.2f}x. Backlog {status}.\n"
-        f"Below 0.95x = demand weaker than supply. Orders drying up.",
-        x=0.78, y=0.98)
+        f"Below 0.95x = demand weaker than supply. Orders drying up.")
 
     brand_fig(fig, 'Core Capital Goods: Bookings/Billings Ratio',
               subtitle='When orders lag shipments, the backlog is dying',
@@ -781,8 +814,7 @@ def chart_06():
     ext_last = ex_transport.iloc[-1]
     add_annotation_box(ax,
         f"Total durables: {total_last:+.1f}% YoY. Ex-transport: {ext_last:+.1f}%.\n"
-        f"Ex-transport strips Boeing volatility. The cleaner trend signal.",
-        x=0.52, y=0.92)
+        f"Ex-transport strips Boeing volatility. The cleaner trend signal.")
 
     brand_fig(fig, 'Durable Goods Orders: Total vs Ex-Transportation',
               subtitle='Stripping Boeing noise reveals the underlying trend',
@@ -853,8 +885,7 @@ def chart_07():
     status = "elevated" if is_last > 1.38 else "balanced"
     add_annotation_box(ax1,
         f"I/S ratio at {is_last:.2f} ({status}). Threshold: 1.40.\n"
-        f"When inventories build faster than sales, production cuts follow.",
-        x=0.52, y=0.92)
+        f"When inventories build faster than sales, production cuts follow.")
 
     brand_fig(fig, 'Business Inventories & Inventory/Sales Ratio',
               subtitle='The Mistake Detector: overstock signals liquidation ahead',
@@ -924,8 +955,7 @@ def chart_08():
     signal = "contraction" if avg_last < 0 else "expansion"
     add_annotation_box(ax,
         f"5-survey average at {avg_last:.1f} ({signal}).\n"
-        f"Regional surveys preview ISM by 2-3 weeks. Below zero = manufacturing shrinking.",
-        x=0.45, y=0.13)
+        f"Regional surveys preview ISM by 2-3 weeks. Below zero = manufacturing shrinking.")
 
     brand_fig(fig, 'Regional Fed Manufacturing Surveys',
               subtitle='ISM Preview: five districts tell one story',
@@ -1003,8 +1033,7 @@ def chart_09():
     slack = "building" if cu_last < 78 else "tight"
     add_annotation_box(ax1,
         f"IP growth: {ip_last:+.1f}% YoY. Capacity util: {cu_last:.1f}% (slack {slack}).\n"
-        f"Below 78% = slack in system. Pricing power falls, disinflation follows.",
-        x=0.62, y=0.96)
+        f"Below 78% = slack in system. Pricing power falls, disinflation follows.")
 
     brand_fig(fig, 'Industrial Production & Manufacturing Capacity Utilization',
               subtitle='Production output meets the capacity constraint',
@@ -1049,8 +1078,7 @@ def chart_10():
     status = "growing" if p_last > 0 else "contracting"
     add_annotation_box(ax,
         f"Corporate profits {status} at {p_last:+.1f}% YoY.\n"
-        f"Margin compression precedes layoffs by 2-4 quarters.",
-        x=0.52, y=0.92)
+        f"Margin compression precedes layoffs by 2-4 quarters.")
 
     brand_fig(fig, 'Corporate Profits: Year-Over-Year Growth',
               subtitle='The Bottom Line: profits peak before the economy does',
@@ -1101,8 +1129,7 @@ def chart_11():
     pressure = "Margins under pressure" if gap > 0 else "Margins expanding"
     add_annotation_box(ax,
         f"ULC {ulc_last:+.1f}% vs Productivity {prod_last:+.1f}%. Gap: {gap:+.1f}pp.\n"
-        f"{pressure}. When labor costs outrun productivity, layoffs follow.",
-        x=0.72, y=0.92)
+        f"{pressure}. When labor costs outrun productivity, layoffs follow.")
 
     subtitle = ('The Margin Squeeze: labor costs eating into profits'
                 if gap > 0
@@ -1171,8 +1198,7 @@ def chart_12():
     delinq_last = delinq.iloc[-1]
     add_annotation_box(ax1,
         f"Loan growth: {loans_last:+.1f}% YoY. Delinquency: {delinq_last:.1f}%.\n"
-        f"When growth declines and delinquency rises, the credit cycle turns.",
-        x=0.52, y=0.92)
+        f"When growth declines and delinquency rises, the credit cycle turns.")
 
     brand_fig(fig, 'Business Loan Growth & Delinquency Rate',
               subtitle='The Credit Channel: banks tighten as stress builds',
@@ -1216,8 +1242,7 @@ def chart_13():
     lei_last = lei_yoy.iloc[-1]
     add_annotation_box(ax,
         f"LEI {lei_last:+.1f}% YoY. Below -4% for 6+ months = recession.\n"
-        f"Composite of 10 leading indicators: the economy's crystal ball.",
-        x=0.72, y=0.95)
+        f"Composite of 10 leading indicators: the economy's crystal ball.")
 
     brand_fig(fig, 'Conference Board Leading Economic Index',
               subtitle='10 indicators, one signal: where the economy is heading',

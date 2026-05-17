@@ -259,11 +259,37 @@ Use on expectations charts where 3% is the de-anchoring threshold.
 
 ## Annotation Box (Takeaway)
 
-Every chart should have an annotation box with 1-2 line commentary summarizing the takeaway. Positioned in dead space where there is no data.
+**Use sparingly.** A strong chart with a tight caption almost always beats an in-chart annotation. Only add an annotation when it carries information the chart itself cannot show (regime call, multi-series takeaway, non-obvious causal note). If the visual already tells the story, skip the box.
+
+### Universal Placement Rule (v4.1, May 2026)
+
+Every annotation box uses the same anchor — no per-chart overrides:
+
+- **Position:** `x=0.5, y=0.98` in axes coordinates
+- **Alignment:** `ha='center'`, `va='top'`
+- **Wrapping:** Wrap to a new line when a line would exceed **20 characters** left-to-right. Use `textwrap.fill(..., width=20, break_long_words=False, break_on_hyphens=False)`. Preserve explicit `\n`; wrap each segment independently.
 
 ```python
-def add_annotation_box(ax, text, x=0.52, y=0.92):
-    ax.text(x, y, text, transform=ax.transAxes,
+import textwrap
+
+def _wrap_annotation_text(text, width=20):
+    if not text:
+        return text
+    out = []
+    for line in text.split('\n'):
+        if line.strip() == '':
+            out.append(line)
+        else:
+            out.append(textwrap.fill(line, width=width,
+                                     break_long_words=False,
+                                     break_on_hyphens=False))
+    return '\n'.join(out)
+
+
+def add_annotation_box(ax, text, x=0.5, y=0.98, wrap_width=20):
+    """Top-center, auto-wrapped at 20 chars. Do NOT override x/y."""
+    ax.text(x, y, _wrap_annotation_text(text, wrap_width),
+            transform=ax.transAxes,
             fontsize=10, color=THEME['fg'], ha='center', va='top',
             style='italic',
             bbox=dict(boxstyle='round,pad=0.5',
@@ -271,21 +297,21 @@ def add_annotation_box(ax, text, x=0.52, y=0.92):
                       alpha=0.9))
 ```
 
-- **Border color**: Always Ocean `#2389BB` (hardcoded, not theme-driven)
-- **Background**: Theme background color (opaque)
+- **Border color**: Always Ocean `#2389BB`
+- **Background**: Theme background, `alpha=0.9`
 - **Text**: Theme foreground, italic, fontsize 10
-- **Default position**: `x=0.52, y=0.92` (slightly right of center, near top)
-- **CRITICAL: All annotation text must be dynamic** — use f-strings with live data values. Never hardcode numbers.
+- **Position**: `x=0.5, y=0.98`. **Do not override.** If the box overlaps data, delete the annotation; don't move it.
+- **CRITICAL**: All annotation text must be dynamic — f-strings with live data values. Never hardcode numbers.
 
-### Position Guidelines
-Override `x` and `y` to place the box in the largest empty area:
+### When to Annotate vs. Caption
 
-| Scenario | Suggested Position |
+| Situation | Use annotation box? |
 |---|---|
-| Data heavy on left, empty right-top | `x=0.52, y=0.92` (default) |
-| Data heavy on top, empty bottom | `x=0.52, y=0.12` |
-| Data heavy on right, empty left-top | `x=0.35, y=0.92` |
-| Centered data, empty corners | `x=0.45, y=0.92` |
+| The chart already makes the point visually | No — write a caption |
+| Single takeaway computed from 2+ series | Yes |
+| Naming the current regime | Yes |
+| Long-form context, history, mechanism | No — body text |
+| Multiple competing takeaways | No — pick one |
 
 Always verify visually that the box does not overlap data, legend, recession shading, or pills.
 

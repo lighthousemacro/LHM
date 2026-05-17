@@ -53,8 +53,11 @@ Charts/*.jpg
 Images/
 Outputs/
 
-# Claude Code
-.claude/
+# Claude Code (track hook + settings, ignore everything else)
+.claude/*
+!.claude/hooks/
+!.claude/hooks/**
+!.claude/settings.json
 
 # External data files
 External/

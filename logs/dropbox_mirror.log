@@ -1388,3 +1388,4 @@ rsync(42693): error: /Users/bob/LHM/Projects/pharos/web/out/_next/static/Zuf4eIZ
 rsync(42693): error: /Users/bob/LHM/Projects/pharos/web/out/_next/static/Zuf4eIZxxyZ6fsqvldpnD/_ssgManifest.js: open (2) in /Users/bob: No such file or directory
 === 2026-05-22 15:04:05 mirror end (exit 0) ===
 === 2026-05-22 15:30:00 mirror start ===
+=== 2026-05-22 15:30:10 mirror end (exit 0) ===

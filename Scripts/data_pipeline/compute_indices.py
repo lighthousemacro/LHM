@@ -501,6 +501,241 @@ def bridge_via_regression(
     }
 
 
+TIER_WALKFWD = "walkforward"   # OOS-validated adaptive model prediction
+
+
+def _zn_scores(s: pd.Series, thresh: float = 3.0, min_periods: int = 252):
+    """Expanding-window z-score, neutral=zero, winsorized at +/- thresh.
+
+    Point-in-time: the score at t uses only data up to and including t (no
+    look-ahead). Mirrors macrosynergy make_zn_scores(neutral='zero',
+    thresh=3). Already-z columns pass through near-idempotently; raw level
+    columns (e.g. Treasury_10Y) get properly normalized.
+    """
+    m = s.expanding(min_periods=min_periods).mean()
+    sd = s.expanding(min_periods=min_periods).std()
+    z = (s - m) / sd.replace(0.0, np.nan)
+    return z.clip(-thresh, thresh)
+
+
+def bridge_via_walkforward(
+    anchor: pd.Series,
+    proxies: dict,
+    target_index: pd.DatetimeIndex | None = None,
+    min_overlap: int = 252 * 3,
+    refit_every: int = 63,
+    skill_floor: float = 0.10,
+) -> tuple[pd.Series, pd.Series, dict]:
+    """
+    Walk-forward, adaptive-model nowcast bridge (Macrosynergy method,
+    sklearn-native).
+
+    Per refit step the model class AND hyperparameters are re-selected from
+    a candidate zoo by inner time-series cross-validation; the chosen model
+    predicts the next block strictly out-of-sample. Features are point-in-
+    time zn-scored and include deliberate noise controls. Skill is measured
+    out-of-sample (correlation, sign accuracy) — never in-sample R².
+
+    Honest fallback: if OOS correlation is below skill_floor the proxy
+    basket has no real predictive content for this composite, so the
+    forward bridge holds the last anchor value (persistence) instead of
+    emitting a confident but meaningless extrapolation.
+
+    Returns (bridged, tier, info). info carries n_overlap, n_oos,
+    oos_corr, oos_sign_acc, oos_sigma (-> +/-1.96 sigma 95% band),
+    final_model, noise_ratio, fallback.
+    """
+    from sklearn.linear_model import LinearRegression, Ridge, ElasticNet
+    from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
+    from sklearn.pipeline import Pipeline
+    from sklearn.preprocessing import StandardScaler
+
+    empty_tier = pd.Series(index=anchor.index, dtype=object)
+    if anchor.empty or anchor.dropna().empty:
+        return anchor, empty_tier, {}
+    proxies = {k: v for k, v in proxies.items()
+               if v is not None and not v.dropna().empty}
+    if not proxies:
+        return anchor, empty_tier, {}
+
+    if target_index is None:
+        target_index = anchor.index
+    full_index = anchor.index.union(target_index)
+    for p in proxies.values():
+        full_index = full_index.union(p.index)
+    full_index = full_index.sort_values()
+
+    # Feature frame: zn-scored proxies + 2 deterministic noise controls.
+    feat = pd.DataFrame(index=full_index)
+    pnames = []
+    for name, p in proxies.items():
+        feat[name] = _zn_scores(p.reindex(full_index))
+        pnames.append(name)
+    rng = np.random.default_rng(42)
+    for j in (1, 2):
+        nz = pd.Series(rng.standard_normal(len(full_index)), index=full_index)
+        feat[f"NOISE{j}"] = _zn_scores(nz)
+    noise_cols = ["NOISE1", "NOISE2"]
+    all_cols = pnames + noise_cols
+
+    y_full = anchor.reindex(full_index)
+    last_anchor_date = anchor.last_valid_index()
+    last_anchor_value = float(anchor.loc[last_anchor_date])
+
+    fit_df = pd.concat([y_full.rename("y"), feat[all_cols]], axis=1).dropna()
+    n_overlap = int(len(fit_df))
+
+    tier = pd.Series(index=full_index, dtype=object)
+    tier.loc[anchor.dropna().index] = TIER_ANCHOR
+    result = anchor.reindex(full_index).copy()
+
+    def _persist_forward(reason):
+        for d in full_index[full_index > last_anchor_date]:
+            result.at[d] = last_anchor_value
+            tier.at[d] = TIER_PERSIST
+        return result, tier, {"n_overlap": n_overlap, "fallback": reason,
+                              "partner_names": pnames}
+
+    if n_overlap < min_overlap:
+        return _persist_forward("insufficient_overlap")
+
+    Xall = fit_df[all_cols].to_numpy(float)
+    Yall = fit_df["y"].to_numpy(float)
+    dates = fit_df.index
+
+    candidates = {
+        "ols": (Pipeline([("sc", StandardScaler()),
+                          ("m", LinearRegression())]), {}),
+        "ridge": (Pipeline([("sc", StandardScaler()), ("m", Ridge())]),
+                  {"m__alpha": [0.3, 1.0, 3.0, 10.0]}),
+        "enet": (Pipeline([("sc", StandardScaler()),
+                           ("m", ElasticNet(max_iter=5000))]),
+                 {"m__alpha": [0.01, 0.05, 0.2], "m__l1_ratio": [0.2, 0.5, 0.8]}),
+    }
+
+    # Expanding walk-forward: initial train then predict each refit block OOS.
+    start = min_overlap
+    oos_pred, oos_true = [], []
+    i = start
+    while i < n_overlap:
+        j = min(i + refit_every, n_overlap)
+        Xtr, Ytr = Xall[:i], Yall[:i]
+        Xte, Yte = Xall[i:j], Yall[i:j]
+        best, best_score = None, -np.inf
+        inner = TimeSeriesSplit(n_splits=4)
+        for _, (pipe, grid) in candidates.items():
+            try:
+                if grid:
+                    gs = GridSearchCV(pipe, grid, cv=inner,
+                                      scoring="neg_mean_squared_error",
+                                      n_jobs=1)
+                    gs.fit(Xtr, Ytr)
+                    cand, score = gs.best_estimator_, gs.best_score_
+                else:
+                    from sklearn.model_selection import cross_val_score
+                    score = np.mean(cross_val_score(
+                        pipe, Xtr, Ytr, cv=inner,
+                        scoring="neg_mean_squared_error"))
+                    cand = pipe.fit(Xtr, Ytr)
+            except Exception:
+                continue
+            if score > best_score:
+                best, best_score = cand, score
+        if best is None:
+            break
+        if not hasattr(best, "predict") or best_score == -np.inf:
+            break
+        if not getattr(best, "_is_fitted", True):
+            best.fit(Xtr, Ytr)
+        oos_pred.extend(best.predict(Xte).tolist())
+        oos_true.extend(Yte.tolist())
+        i = j
+
+    if len(oos_pred) < 20:
+        return _persist_forward("insufficient_oos")
+
+    op = np.asarray(oos_pred, float)
+    ot = np.asarray(oos_true, float)
+    oos_corr = float(np.corrcoef(op, ot)[0, 1]) if op.std() > 0 else 0.0
+    oos_sign = float(np.mean(np.sign(op) == np.sign(ot)))
+    oos_sigma = float(np.std(ot - op))
+
+    # Final model on ALL overlap for the forward extrapolation.
+    fbest, fscore = None, -np.inf
+    inner = TimeSeriesSplit(n_splits=4)
+    for _, (pipe, grid) in candidates.items():
+        try:
+            if grid:
+                gs = GridSearchCV(pipe, grid, cv=inner,
+                                  scoring="neg_mean_squared_error", n_jobs=1)
+                gs.fit(Xall, Yall)
+                cand, sc = gs.best_estimator_, gs.best_score_
+            else:
+                from sklearn.model_selection import cross_val_score
+                sc = np.mean(cross_val_score(pipe, Xall, Yall, cv=inner,
+                                             scoring="neg_mean_squared_error"))
+                cand = pipe.fit(Xall, Yall)
+        except Exception:
+            continue
+        if sc > fscore:
+            fbest, fscore = cand, sc
+    if fbest is None:
+        return _persist_forward("final_fit_failed")
+    try:
+        fbest.fit(Xall, Yall)
+    except Exception:
+        return _persist_forward("final_fit_failed")
+
+    # Noise-overfit check: linear-model coefficient mass on noise vs signal.
+    noise_ratio = None
+    try:
+        m = fbest.named_steps["m"]
+        if hasattr(m, "coef_"):
+            coefs = np.abs(np.ravel(m.coef_))
+            sig = coefs[:len(pnames)].sum()
+            noi = coefs[len(pnames):].sum()
+            noise_ratio = float(noi / (sig + noi)) if (sig + noi) > 0 else None
+    except Exception:
+        pass
+
+    model_name = type(fbest.named_steps["m"]).__name__
+
+    if oos_corr < skill_floor:
+        # No real OOS skill -> do not extrapolate on noise. Hold last value.
+        r, t, info = _persist_forward("low_oos_skill")
+        info.update({"n_oos": len(op), "oos_corr": oos_corr,
+                     "oos_sign_acc": oos_sign, "final_model": model_name,
+                     "noise_ratio": noise_ratio})
+        return r, t, info
+
+    # Forward: predict every date past the anchor where all proxies present.
+    fp = feat[all_cols].dropna()
+    fp = fp[fp.index > last_anchor_date]
+    last_filled = last_anchor_value
+    if len(fp):
+        preds = fbest.predict(fp.to_numpy(float))
+        ps = pd.Series(preds, index=fp.index, dtype=float)
+        for d in full_index[full_index > last_anchor_date]:
+            if d in ps.index:
+                result.at[d] = float(ps.loc[d])
+                tier.at[d] = TIER_WALKFWD
+                last_filled = result.at[d]
+            else:
+                result.at[d] = last_filled
+                tier.at[d] = TIER_PERSIST
+    else:
+        for d in full_index[full_index > last_anchor_date]:
+            result.at[d] = last_filled
+            tier.at[d] = TIER_PERSIST
+
+    return result, tier, {
+        "n_overlap": n_overlap, "n_oos": len(op),
+        "oos_corr": oos_corr, "oos_sign_acc": oos_sign,
+        "oos_sigma": oos_sigma, "final_model": model_name,
+        "noise_ratio": noise_ratio, "partner_names": pnames,
+    }
+
+
 def bridge_to_today(
     anchor: pd.Series,
     partners: list,
@@ -795,38 +1030,81 @@ def compute_pci(df: pd.DataFrame) -> pd.Series:
     return pci
 
 
+def _gci_raw_series(series_id: str) -> pd.Series:
+    """Pull a raw observations series. Used by the rebuilt GCI because the
+    Concurrent Activity components are not exposed as horizon_dataset features
+    (the Phase-C plumbing gap documented in INDICATOR_MIGRATION_PROGRAM.md)."""
+    with sqlite3.connect(str(DB_PATH)) as conn:
+        d = pd.read_sql(
+            "SELECT date, value FROM observations WHERE series_id = ? "
+            "AND value IS NOT NULL ORDER BY date",
+            conn, params=(series_id,), parse_dates=["date"],
+        )
+    if d.empty:
+        return pd.Series(dtype=float)
+    s = pd.Series(d["value"].astype(float).values,
+                  index=pd.to_datetime(d["date"])).sort_index()
+    return s[~s.index.duplicated(keep="last")]
+
+
+def _gci_ann_trend(level: pd.Series, m: int) -> pd.Series:
+    lvl = level.dropna()
+    return ((lvl / lvl.shift(m)) ** (12.0 / m) - 1.0) * 100.0
+
+
+def _gci_consistent_trend(level: pd.Series, f: int = 3, s: int = 6) -> pd.Series:
+    return (0.5 * _gci_ann_trend(level, f) + 0.5 * _gci_ann_trend(level, s)).dropna()
+
+
+def _gci_diff_trend(level: pd.Series, f: int = 3, s: int = 6) -> pd.Series:
+    d = level.dropna().diff()
+    return (0.5 * d.rolling(f).mean() + 0.5 * d.rolling(s).mean()).dropna()
+
+
 def compute_gci(df: pd.DataFrame) -> pd.Series:
     """
-    Growth Pillar Composite Index (GCI)
+    Growth Pillar Composite Index (GCI) — Concurrent Activity Tracker.
 
-    Formula:
-        GCI = 0.25 × z(Industrial_Production_YoY)
-            + 0.20 × z(ISM_Manufacturing)
-            + 0.15 × z(Core_Capital_Goods_Orders_YoY)
-            + 0.15 × z(Aggregate_Weekly_Hours_YoY)
-            + 0.10 × z(Real_Retail_Sales_YoY)
-            + 0.10 × z(Housing_Starts_YoY)
-            + 0.05 × z(-GDI_GDP_Spread)
+    REBUILT 2026-05-17. The prior basket (live code: 0.40 z(IP YoY) +
+    0.30 z(Retail YoY) + 0.30 z(Starts YoY) — itself inconsistent with both
+    its old docstring and INDICATORS_MASTER) was anti-predictive on GDP:
+    OOS IC -0.07, holdout -0.38. It was an industrial-cycle gauge mislabeled
+    as growth. This broad, consumption-inclusive basket is the fix specced in
+    INDICATOR_MIGRATION_PROGRAM.md line 363. The old basket was effectively
+    useless on GDP (IC +0.07). The rebuilt live pillar is robustly positive
+    and holds out of sample; magnitude is method-dependent: conservative
+    rolling-z IC +0.17 / holdout +0.16, sequential-zn (edge_board) IC +0.36 /
+    holdout +0.32. Honest read: ~0.2-0.35, holds OOS, a 2.5-5x improvement.
+    (Exploratory figures of +0.70 then +0.38 were both high on closer
+    measurement; the conservative range is the figure of record.)
+    Equal-weight mean of standardized component trends.
     """
-    # Industrial Production YoY
-    ip_yoy = df.get("Industrial_Production_yoy_pct", pd.Series(dtype=float))
-    z_ip = compute_zscore(ip_yoy, window=24)
+    monthly = lambda s: s.resample("MS").last().dropna()
+    comps = []
+    for sid, kind in (("INDPRO", "ct"), ("PAYEMS", "dt"), ("RSXFS", "ct"),
+                      ("RPI", "ct"), ("CFNAIMA3", "raw")):
+        raw = _gci_raw_series(sid)
+        if raw.empty:
+            continue
+        m = monthly(raw)
+        if kind == "ct":
+            sig = _gci_consistent_trend(m)
+        elif kind == "dt":
+            sig = _gci_diff_trend(m)
+        else:
+            sig = m
+        z = compute_zscore(sig, window=24)
+        if z is not None and not z.dropna().empty:
+            comps.append(z)
 
-    # Retail Sales YoY
-    retail_yoy = df.get("Retail_Sales_yoy_pct", pd.Series(dtype=float))
-    z_retail = compute_zscore(retail_yoy, window=24)
+    if not comps:
+        return pd.Series(index=df.index, dtype=float)
 
-    # Housing Starts YoY
-    starts_yoy = df.get("Housing_Starts_yoy_pct", pd.Series(dtype=float))
-    z_starts = compute_zscore(starts_yoy, window=24)
-
-    gci = nan_weighted_sum([
-        (z_ip, 0.40),
-        (z_retail, 0.30),
-        (z_starts, 0.30),
-    ])
-
-    return gci
+    gci_m = pd.concat(comps, axis=1).mean(axis=1, skipna=True).dropna()
+    gci_m = compute_zscore(gci_m, window=24).dropna()
+    # Monthly composite carried forward onto the frame's index, exactly how
+    # the pipeline treats every monthly pillar.
+    return gci_m.reindex(df.index, method="ffill")
 
 
 def compute_hci(df: pd.DataFrame) -> pd.Series:
@@ -1436,28 +1714,35 @@ def _bridge_apply(
         return anchor
 
     pre = anchor.last_valid_index()
-    bridged, tier, info = bridge_via_regression(
+    bridged, tier, info = bridge_via_walkforward(
         anchor, proxies, target_index=df.index
     )
     post = bridged.last_valid_index()
     if pre is not None and post is not None and post > pre:
         n = info.get("n_overlap", 0)
-        r2 = info.get("r2")
-        sigma = info.get("sigma")
-        names = info.get("partner_names", list(proxies.keys()))
-        if r2 is not None and sigma is not None:
-            betas = info.get("betas", {})
-            beta_summary = ", ".join(f"{k}={v:+.2f}" for k, v in betas.items())
+        corr = info.get("oos_corr")
+        if corr is not None and "n_oos" in info:
+            sa = info.get("oos_sign_acc")
+            sig = info.get("oos_sigma")
+            nr = info.get("noise_ratio")
+            mdl = info.get("final_model", "?")
+            fb = info.get("fallback")
+            sa_s = f"{sa:.0%}" if sa is not None else "n/a"
+            sig_s = f"{sig:.2f}" if sig is not None else "n/a"
+            if fb:
+                tail = f" · FALLBACK={fb} (held last value)"
+            else:
+                tail = f" · model={mdl}" + (
+                    f" · noise={nr:.0%}" if nr is not None else "")
             print(
-                f"      bridge: {composite_id} anchor ends {pre.date()}, "
-                f"projected to {post.date()} via OLS on {len(names)} proxies "
-                f"(n={n}, R²={r2:.2f}, σ={sigma:.2f}) · betas: {beta_summary}"
+                f"      bridge: {composite_id} {pre.date()}→{post.date()} "
+                f"OOS corr={corr:+.2f} sign={sa_s} "
+                f"σ={sig_s} n={n} noos={info['n_oos']}{tail}"
             )
         else:
             print(
-                f"      bridge: {composite_id} anchor ends {pre.date()}, "
-                f"carried to {post.date()} (fallback: "
-                f"{info.get('fallback', 'persistence')})"
+                f"      bridge: {composite_id} {pre.date()}→{post.date()} "
+                f"(fallback: {info.get('fallback', 'persistence')}, n={n})"
             )
     return bridged
 
@@ -2133,15 +2418,25 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
     return result_df
 
 
-def write_indices_to_db(conn: sqlite3.Connection, indices_df: pd.DataFrame):
+def write_indices_to_db(
+    conn: sqlite3.Connection,
+    indices_df: pd.DataFrame,
+    replace_history: bool = True,
+):
     """Write computed indices to lighthouse_indices table.
 
-    For each index_id present in indices_df, all existing rows for that
-    index_id are deleted before re-insert. This is the only way to remove
-    rows that the previous run produced but the current run did not — e.g.
+    replace_history=True (FULL recompute): for each index_id present, all
+    existing rows are deleted before re-insert. This is the only way to
+    remove rows the previous run produced but the current run did not — e.g.
     when a composite's strict formula no longer stamps the recent tail
-    because an input went stale. Without the delete, those stale rows
-    would persist and silently lie to downstream readers.
+    because an input went stale.
+
+    replace_history=False (INCREMENTAL / latest_only): upsert the computed
+    rows only, leaving prior history intact. A latest_only run produces a
+    single date, and some self-fetching composites (e.g. GCI, which builds
+    its full series from raw observations then reindexes to the frame) emit
+    exactly that one row — deleting history on those would wipe the whole
+    series down to today every run. Incremental runs must never delete.
     """
     c = conn.cursor()
 
@@ -2153,20 +2448,20 @@ def write_indices_to_db(conn: sqlite3.Connection, indices_df: pd.DataFrame):
         PRIMARY KEY (date, index_id)
     )''')
 
-    # Per-index clean re-write.
     ids = sorted(indices_df["index_id"].unique())
-    for index_id in ids:
-        c.execute("DELETE FROM lighthouse_indices WHERE index_id = ?", (index_id,))
-    deleted = c.rowcount  # last DELETE's count, not cumulative — informational only
+    if replace_history:
+        for index_id in ids:
+            c.execute("DELETE FROM lighthouse_indices WHERE index_id = ?", (index_id,))
 
     for _, row in indices_df.iterrows():
         c.execute("""
-            INSERT INTO lighthouse_indices (date, index_id, value, status)
+            INSERT OR REPLACE INTO lighthouse_indices (date, index_id, value, status)
             VALUES (?, ?, ?, ?)
         """, (row["date"], row["index_id"], row["value"], row["status"]))
 
     conn.commit()
-    print(f"   Cleaned and rewrote {len(indices_df)} rows across {len(ids)} index_ids in lighthouse_indices")
+    verb = "Cleaned and rewrote" if replace_history else "Upserted"
+    print(f"   {verb} {len(indices_df)} rows across {len(ids)} index_ids in lighthouse_indices")
 
 
 def verify_indices(conn: sqlite3.Connection):

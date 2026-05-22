@@ -134,7 +134,9 @@ def main():
         try:
             conn = sqlite3.connect(INDICES_DB_PATH)
             indices_df = compute_all_indices(conn, latest_only=True)
-            write_indices_to_db(conn, indices_df)
+            # Incremental run: upsert today's row, never delete history. A full
+            # rebuild (compute_indices.py, no --latest) still rewrites cleanly.
+            write_indices_to_db(conn, indices_df, replace_history=False)
             verify_indices(conn)
             conn.close()
             print("Index computation complete.")

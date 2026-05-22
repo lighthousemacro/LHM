@@ -1,0 +1,201 @@
+2026-05-17 06:53:19,105 WARNING   OECD_GDP_REAL_US: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-17 06:53:59,020 INFO   OECD_CPI_YOY_US: 843 obs
+2026-05-17 06:54:16,681 WARNING   OECD_UNEMP_US: OpenBBError: 
+[Error] -> Error: 429 -> You have exceeded the number of requests for data downloads or very large data ranges permitted in the OECD Data API. Please contact us through the OECD Data Explorer (https://data-explorer.oecd.org) feedback form (indicating your IP address) to request more details or exceptions.
+2026-05-17 06:54:30,682 WARNING   OECD_CLI_US: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-17 06:54:44,638 WARNING   OECD_LTIR_US: OpenBBError: 
+[Unexpected Error] -> Exception -> Error with the OECD request: 429
+2026-05-17 06:54:59,178 WARNING   OECD_STIR_US: OpenBBError: 
+[Unexpected Error] -> Exception -> Error with the OECD request: 429
+2026-05-17 06:55:02,275 INFO   OECD_CPI_YOY_EA: 420 obs
+2026-05-17 06:55:15,689 WARNING   OECD_GDP_REAL_JP: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-17 06:55:21,371 INFO   OECD_CPI_YOY_JP: 786 obs
+2026-05-17 06:55:34,977 WARNING   OECD_UNEMP_JP: OpenBBError: 
+[Error] -> Error: 429 -> You have exceeded the number of requests for data downloads or very large data ranges permitted in the OECD Data API. Please contact us through the OECD Data Explorer (https://data-explorer.oecd.org) feedback form (indicating your IP address) to request more details or exceptions.
+2026-05-17 06:55:47,870 WARNING   OECD_CLI_JP: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-17 06:56:02,245 WARNING   OECD_LTIR_JP: OpenBBError: 
+[Unexpected Error] -> Exception -> Error with the OECD request: 429
+2026-05-17 06:56:33,338 WARNING   OECD_STIR_JP: OpenBBError: 
+[Unexpected Error] -> Exception -> Error with the OECD request: 429
+2026-05-17 06:56:49,875 WARNING   OECD_GDP_REAL_GB: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-17 06:56:54,898 INFO   OECD_CPI_YOY_GB: 843 obs
+2026-05-17 06:57:10,786 WARNING   OECD_UNEMP_GB: OpenBBError: 
+[Error] -> Error: 429 -> You have exceeded the number of requests for data downloads or very large data ranges permitted in the OECD Data API. Please contact us through the OECD Data Explorer (https://data-explorer.oecd.org) feedback form (indicating your IP address) to request more details or exceptions.
+2026-05-17 06:57:23,932 WARNING   OECD_CLI_GB: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-17 06:57:43,069 WARNING   OECD_LTIR_GB: OpenBBError: 
+[Unexpected Error] -> Exception -> Error with the OECD request: 429
+2026-05-17 06:57:57,567 WARNING   OECD_STIR_GB: OpenBBError: 
+[Unexpected Error] -> Exception -> Error with the OECD request: 429
+2026-05-17 06:58:10,024 WARNING   OECD_GDP_REAL_DE: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-17 06:58:19,408 INFO   OECD_CPI_YOY_DE: 844 obs
+2026-05-17 06:58:33,452 WARNING   OECD_UNEMP_DE: OpenBBError: 
+[Error] -> Error: 429 -> You have exceeded the number of requests for data downloads or very large data ranges permitted in the OECD Data API. Please contact us through the OECD Data Explorer (https://data-explorer.oecd.org) feedback form (indicating your IP address) to request more details or exceptions.
+2026-05-17 06:58:46,217 WARNING   OECD_CLI_DE: OpenBBError: 
+[Error] -> Error with the OECD request: 429
+2026-05-18 15:18:11,573 INFO   OECD_GDP_REAL_US: 317 obs
+2026-05-18 15:18:15,378 INFO   OECD_CPI_YOY_US: 843 obs
+2026-05-18 15:18:20,302 INFO   OECD_UNEMP_US: 855 obs
+2026-05-18 15:18:24,953 INFO   OECD_CLI_US: 856 obs
+2026-05-18 15:18:26,045 INFO   OECD_LTIR_US: 868 obs
+2026-05-18 15:18:26,820 INFO   OECD_STIR_US: 742 obs
+2026-05-18 15:18:29,263 INFO   OECD_CPI_YOY_EA: 420 obs
+2026-05-18 15:18:32,513 INFO   OECD_GDP_REAL_JP: 264 obs
+2026-05-18 15:18:36,196 INFO   OECD_CPI_YOY_JP: 786 obs
+2026-05-18 15:18:40,634 INFO   OECD_UNEMP_JP: 855 obs
+2026-05-18 15:18:55,670 INFO   OECD_CLI_JP: 808 obs
+2026-05-18 15:19:02,626 INFO   OECD_LTIR_JP: 448 obs
+2026-05-18 15:19:05,238 INFO   OECD_STIR_JP: 288 obs
+2026-05-18 15:19:08,353 INFO   OECD_GDP_REAL_GB: 285 obs
+2026-05-18 15:19:10,867 INFO   OECD_CPI_YOY_GB: 843 obs
+2026-05-18 15:19:17,861 INFO   OECD_UNEMP_GB: 516 obs
+2026-05-18 15:19:22,974 INFO   OECD_CLI_GB: 821 obs
+2026-05-18 15:19:27,826 INFO   OECD_LTIR_GB: 796 obs
+2026-05-18 15:19:31,501 INFO   OECD_STIR_GB: 482 obs
+2026-05-18 15:19:34,878 INFO   OECD_GDP_REAL_DE: 265 obs
+2026-05-18 15:19:38,289 INFO   OECD_CPI_YOY_DE: 844 obs
+2026-05-18 15:19:43,566 INFO   OECD_UNEMP_DE: 423 obs
+2026-05-18 15:19:51,133 INFO   OECD_CLI_DE: 784 obs
+2026-05-18 15:19:55,072 INFO   OECD_LTIR_DE: 840 obs
+2026-05-18 15:19:56,463 INFO   OECD_STIR_DE: 796 obs
+2026-05-18 15:19:59,832 INFO   OECD_GDP_REAL_CA: 261 obs
+2026-05-18 15:20:03,729 INFO   OECD_CPI_YOY_CA: 915 obs
+2026-05-18 15:20:07,830 INFO   OECD_UNEMP_CA: 856 obs
+2026-05-18 15:20:11,453 INFO   OECD_CLI_CA: 844 obs
+2026-05-18 15:20:14,636 INFO   OECD_LTIR_CA: 857 obs
+2026-05-18 15:20:18,962 INFO   OECD_STIR_CA: 844 obs
+2026-05-18 15:20:21,888 INFO   OECD_CPI_YOY_CN: 472 obs
+2026-05-18 15:20:25,228 INFO   OECD_CLI_CN: 408 obs
+2026-05-18 15:20:27,530 INFO   OECD_LTIR_CN: 147 obs
+2026-05-18 15:20:30,570 INFO   OECD_STIR_CN: 345 obs
+2026-05-19 11:35:09,822 INFO   OECD_GDP_REAL_US: 317 obs
+2026-05-19 11:35:14,189 INFO   OECD_CPI_YOY_US: 843 obs
+2026-05-19 11:35:18,760 INFO   OECD_UNEMP_US: 855 obs
+2026-05-19 11:35:22,450 INFO   OECD_CLI_US: 856 obs
+2026-05-19 11:35:23,386 INFO   OECD_LTIR_US: 868 obs
+2026-05-19 11:35:24,266 INFO   OECD_STIR_US: 742 obs
+2026-05-19 11:35:28,581 INFO   OECD_CPI_YOY_EA: 420 obs
+2026-05-19 11:35:32,929 INFO   OECD_GDP_REAL_JP: 265 obs
+2026-05-19 11:35:35,715 INFO   OECD_CPI_YOY_JP: 786 obs
+2026-05-19 11:35:40,585 INFO   OECD_UNEMP_JP: 855 obs
+2026-05-19 11:35:48,223 INFO   OECD_CLI_JP: 808 obs
+2026-05-19 11:35:52,055 INFO   OECD_LTIR_JP: 448 obs
+2026-05-19 11:35:52,851 INFO   OECD_STIR_JP: 288 obs
+2026-05-19 11:35:57,142 INFO   OECD_GDP_REAL_GB: 285 obs
+2026-05-19 11:36:02,078 INFO   OECD_CPI_YOY_GB: 843 obs
+2026-05-19 11:36:06,190 INFO   OECD_UNEMP_GB: 516 obs
+2026-05-19 11:36:10,663 INFO   OECD_CLI_GB: 821 obs
+2026-05-19 11:36:15,536 INFO   OECD_LTIR_GB: 796 obs
+2026-05-19 11:36:19,450 INFO   OECD_STIR_GB: 482 obs
+2026-05-19 11:36:24,124 INFO   OECD_GDP_REAL_DE: 265 obs
+2026-05-19 11:36:27,900 INFO   OECD_CPI_YOY_DE: 844 obs
+2026-05-19 11:36:31,493 INFO   OECD_UNEMP_DE: 423 obs
+2026-05-19 11:36:35,915 INFO   OECD_CLI_DE: 784 obs
+2026-05-19 11:36:40,783 INFO   OECD_LTIR_DE: 840 obs
+2026-05-19 11:36:42,077 INFO   OECD_STIR_DE: 796 obs
+2026-05-19 11:36:46,984 INFO   OECD_GDP_REAL_CA: 261 obs
+2026-05-19 11:36:51,784 INFO   OECD_CPI_YOY_CA: 915 obs
+2026-05-19 11:36:56,237 INFO   OECD_UNEMP_CA: 856 obs
+2026-05-19 11:37:00,944 INFO   OECD_CLI_CA: 844 obs
+2026-05-19 11:37:05,049 INFO   OECD_LTIR_CA: 857 obs
+2026-05-19 11:37:10,459 INFO   OECD_STIR_CA: 844 obs
+2026-05-19 11:37:14,094 INFO   OECD_CPI_YOY_CN: 472 obs
+2026-05-19 11:37:17,453 INFO   OECD_CLI_CN: 408 obs
+2026-05-19 11:37:21,292 INFO   OECD_LTIR_CN: 147 obs
+2026-05-19 11:37:25,601 INFO   OECD_STIR_CN: 345 obs
+2026-05-20 14:17:34,435 INFO   OECD_GDP_REAL_US: 317 obs
+2026-05-20 14:18:26,836 INFO   OECD_CPI_YOY_US: 843 obs
+2026-05-20 14:19:40,019 INFO   OECD_UNEMP_US: 855 obs
+2026-05-20 14:20:11,394 INFO   OECD_CLI_US: 856 obs
+2026-05-20 14:20:53,030 INFO   OECD_LTIR_US: 868 obs
+2026-05-20 14:21:24,824 INFO   OECD_STIR_US: 742 obs
+2026-05-20 14:22:21,878 INFO   OECD_CPI_YOY_EA: 420 obs
+2026-05-20 14:23:24,261 INFO   OECD_GDP_REAL_JP: 265 obs
+2026-05-20 14:24:47,473 INFO   OECD_CPI_YOY_JP: 786 obs
+2026-05-20 14:25:32,825 INFO   OECD_UNEMP_JP: 855 obs
+2026-05-20 14:26:22,238 INFO   OECD_CLI_JP: 808 obs
+2026-05-20 14:27:06,135 INFO   OECD_LTIR_JP: 448 obs
+2026-05-20 14:27:20,476 INFO   OECD_STIR_JP: 288 obs
+2026-05-20 14:27:41,179 INFO   OECD_GDP_REAL_GB: 285 obs
+2026-05-20 14:27:56,709 INFO   OECD_CPI_YOY_GB: 843 obs
+2026-05-20 14:28:19,836 INFO   OECD_UNEMP_GB: 517 obs
+2026-05-20 14:28:53,494 INFO   OECD_CLI_GB: 821 obs
+2026-05-20 14:29:23,333 INFO   OECD_LTIR_GB: 796 obs
+2026-05-20 14:29:41,386 INFO   OECD_STIR_GB: 482 obs
+2026-05-20 14:29:51,403 INFO   OECD_GDP_REAL_DE: 265 obs
+2026-05-20 14:30:11,346 INFO   OECD_CPI_YOY_DE: 844 obs
+2026-05-20 14:30:30,226 INFO   OECD_UNEMP_DE: 423 obs
+2026-05-20 14:30:44,509 INFO   OECD_CLI_DE: 784 obs
+2026-05-20 14:31:05,063 INFO   OECD_LTIR_DE: 840 obs
+2026-05-20 14:31:22,175 INFO   OECD_STIR_DE: 796 obs
+2026-05-20 14:31:31,115 INFO   OECD_GDP_REAL_CA: 261 obs
+2026-05-20 14:31:57,548 INFO   OECD_CPI_YOY_CA: 916 obs
+2026-05-20 14:32:21,792 INFO   OECD_UNEMP_CA: 856 obs
+2026-05-20 14:32:45,654 INFO   OECD_CLI_CA: 844 obs
+2026-05-20 14:33:09,961 INFO   OECD_LTIR_CA: 857 obs
+2026-05-20 14:33:31,691 INFO   OECD_STIR_CA: 844 obs
+2026-05-20 14:33:59,372 INFO   OECD_CPI_YOY_CN: 472 obs
+2026-05-20 14:34:15,118 INFO   OECD_CLI_CN: 408 obs
+2026-05-20 14:34:24,659 INFO   OECD_LTIR_CN: 147 obs
+2026-05-20 14:34:35,438 INFO   OECD_STIR_CN: 345 obs
+2026-05-21 15:59:58,869 INFO   OECD_GDP_REAL_US: 317 obs
+2026-05-21 16:00:54,621 INFO   OECD_CPI_YOY_US: 843 obs
+2026-05-21 16:02:03,582 INFO   OECD_UNEMP_US: 855 obs
+2026-05-21 16:03:21,822 INFO   OECD_CLI_US: 856 obs
+2026-05-21 16:04:17,076 INFO   OECD_LTIR_US: 868 obs
+2026-05-21 16:05:04,465 INFO   OECD_STIR_US: 742 obs
+2026-05-21 16:05:37,657 INFO   OECD_CPI_YOY_EA: 420 obs
+2026-05-21 16:06:04,195 INFO   OECD_GDP_REAL_JP: 265 obs
+2026-05-21 16:07:06,270 INFO   OECD_CPI_YOY_JP: 786 obs
+2026-05-21 16:08:01,679 INFO   OECD_UNEMP_JP: 855 obs
+2026-05-21 16:09:13,253 INFO   OECD_CLI_JP: 808 obs
+2026-05-21 16:09:59,181 INFO   OECD_LTIR_JP: 448 obs
+2026-05-21 16:10:46,226 INFO   OECD_STIR_JP: 288 obs
+2026-05-21 16:11:19,480 INFO   OECD_GDP_REAL_GB: 285 obs
+2026-05-21 16:11:51,924 INFO   OECD_CPI_YOY_GB: 844 obs
+2026-05-21 16:12:29,944 INFO   OECD_UNEMP_GB: 517 obs
+2026-05-21 16:13:19,194 INFO   OECD_CLI_GB: 821 obs
+2026-05-21 16:14:29,725 INFO   OECD_LTIR_GB: 796 obs
+2026-05-21 16:14:55,509 INFO   OECD_STIR_GB: 482 obs
+2026-05-21 16:15:28,829 INFO   OECD_GDP_REAL_DE: 265 obs
+2026-05-21 16:16:05,052 INFO   OECD_CPI_YOY_DE: 844 obs
+2026-05-21 16:16:29,597 INFO   OECD_UNEMP_DE: 423 obs
+2026-05-21 16:17:21,465 INFO   OECD_CLI_DE: 784 obs
+2026-05-21 16:17:50,322 INFO   OECD_LTIR_DE: 840 obs
+2026-05-21 16:18:21,662 INFO   OECD_STIR_DE: 796 obs
+2026-05-21 16:18:38,467 INFO   OECD_GDP_REAL_CA: 261 obs
+2026-05-21 16:18:52,626 INFO   OECD_CPI_YOY_CA: 916 obs
+2026-05-21 16:19:26,988 INFO   OECD_UNEMP_CA: 856 obs
+2026-05-21 16:20:05,736 INFO   OECD_CLI_CA: 844 obs
+2026-05-21 16:20:41,727 INFO   OECD_LTIR_CA: 857 obs
+2026-05-21 16:21:22,093 INFO   OECD_STIR_CA: 844 obs
+2026-05-21 16:21:53,818 INFO   OECD_CPI_YOY_CN: 472 obs
+2026-05-21 16:22:27,215 INFO   OECD_CLI_CN: 408 obs
+2026-05-21 16:22:44,461 INFO   OECD_LTIR_CN: 147 obs
+2026-05-21 16:23:11,395 INFO   OECD_STIR_CN: 345 obs
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 219, in main
+    series, obs = fetcher.fetch_all()
+                  ~~~~~~~~~~~~~~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 198, in fetch_all
+    s, o = self._store_series(series_id, title, freq, units, cat,
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              scale, data)
+                              ^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 139, in _store_series
+    c.executemany(
+    ~~~~~~~~~~~~~^
+        "INSERT OR REPLACE INTO observations VALUES (?,?,?)", obs_list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+sqlite3.OperationalError: database is locked

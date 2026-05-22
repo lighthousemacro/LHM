@@ -108,9 +108,18 @@ def parse_nested_column(csv_path, preferred_cols=None):
     return pd.DataFrame(rows)
 
 
+def _read_csv_flat_or_nested(path, nested_keys, flat_key):
+    if path is None:
+        return pd.DataFrame()
+    raw = pd.read_csv(path)
+    if flat_key in raw.columns:
+        return raw
+    return parse_nested_column(path, nested_keys)
+
+
 def load_soma():
     path = latest(os.path.join(base_dir, 'soma_holdings_*.csv'))
-    df = parse_nested_column(path, ['summary'])
+    df = _read_csv_flat_or_nested(path, ['summary'], 'asOfDate')
     if 'asOfDate' in df.columns:
         df['asOfDate'] = pd.to_datetime(df['asOfDate'], errors='coerce')
     for c in ['mbs','cmbs','tips','tipsInflationCompensation','notesbonds','bills','agencies','total']:
@@ -121,7 +130,7 @@ def load_soma():
 
 def load_repo():
     path = latest(os.path.join(base_dir, 'repo_operations_*.csv'))
-    df = parse_nested_column(path, ['operations'])
+    df = _read_csv_flat_or_nested(path, ['operations'], 'operationDate')
     for dc in ['operationDate','settlementDate','maturityDate','lastUpdated']:
         if dc in df.columns:
             df[dc] = pd.to_datetime(df[dc], errors='coerce')
@@ -133,7 +142,7 @@ def load_repo():
 
 def load_rrp():
     path = latest(os.path.join(base_dir, 'reverse_repo_detailed_*.csv'))
-    df = parse_nested_column(path, ['operations'])
+    df = _read_csv_flat_or_nested(path, ['operations'], 'operationDate')
     for dc in ['operationDate','settlementDate','maturityDate','lastUpdated']:
         if dc in df.columns:
             df[dc] = pd.to_datetime(df[dc], errors='coerce')
@@ -298,13 +307,26 @@ def render_content(tab):
         ])
     return html.Div()
 
+def ensure_data():
+    data_path = Path(base_dir)
+    data_path.mkdir(parents=True, exist_ok=True)
+    if list(data_path.glob("*.csv")):
+        return
+    fetch_script = _REPO_ROOT / "Scripts" / "fetch_ny_fed_data.py"
+    print("No ny_fed_data CSVs found — pulling fresh from NY Fed API...")
+    import subprocess
+    subprocess.run([sys.executable, str(fetch_script)], check=True, cwd=str(_REPO_ROOT))
+    global ref, soma, repo, rrp
+    ref = load_reference_rates()
+    soma = load_soma()
+    repo = load_repo()
+    rrp = load_rrp()
+
+
 if __name__ == '__main__':
     data_path = Path(base_dir)
-    if not data_path.is_dir():
-        data_path.mkdir(parents=True, exist_ok=True)
-        print(f"Created data directory (add NY Fed CSV exports here): {data_path}")
-    else:
-        n = len(list(data_path.glob("*.csv")))
-        print(f"NY Fed dashboard — loading CSVs from {data_path} ({n} files)")
+    ensure_data()
+    n = len(list(data_path.glob("*.csv")))
+    print(f"NY Fed dashboard — {n} CSV(s) in {data_path}")
     print("Open http://127.0.0.1:8050/ in a browser (Ctrl+C to stop)")
     app.run(debug=True, host="127.0.0.1", port=8050)

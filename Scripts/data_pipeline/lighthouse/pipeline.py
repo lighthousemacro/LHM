@@ -20,6 +20,7 @@ from .crypto_free_fetchers import FreeCryptoFetcher  # Replaced TokenTerminal wi
 from .breadth_fetcher import BreadthDataFetcher  # New: DIY breadth from S&P 500 components
 from .zillow_fetcher import ZillowFetcher  # Zillow ZHVI + ZORI (free public CSVs)
 from .tradingview_fetcher import TradingViewFetcher  # TradingView ECONOMICS: series (NAHB, MBA, etc.)
+from .openbb_oecd_feed import OECDOpenBBFetcher  # OpenBB inbound feed: OECD international macro
 from .quality import update_quality_flags
 
 # Configure logging
@@ -274,6 +275,19 @@ def run_daily_update(
             logger.error(f"TRADINGVIEW failed: {e}")
             errors.append(f"TRADINGVIEW: {e}")
             results["TRADINGVIEW"] = (0, 0)
+
+    if "OECD" in sources:
+        print("\n--- OECD (OpenBB inbound: GDP, CPI, unemp, CLI, rates) ---")
+        try:
+            fetcher = OECDOpenBBFetcher(conn)
+            oecd_series, oecd_obs = fetcher.fetch_all()
+            results["OECD"] = (oecd_series, oecd_obs)
+            total_series += oecd_series
+            total_obs += oecd_obs
+        except Exception as e:
+            logger.error(f"OECD failed: {e}")
+            errors.append(f"OECD: {e}")
+            results["OECD"] = (0, 0)
 
     # Run quality checks
     if not skip_quality:

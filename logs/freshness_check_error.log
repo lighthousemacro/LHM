@@ -644,3 +644,58 @@
   INDPRO: db=2026-03-01 -> fred=2026-04-01
 2026-05-15 12:35:41 [INFO]   INDPRO: refreshed (+1288 obs)
 2026-05-15 12:35:42 [INFO] Freshness check done: 1 series refreshed, 1,288 obs added.
+2026-05-15 16:36:56 [WARNING] Attempt 1 failed: 502 Server Error: Bad Gateway for url: https://api.stlouisfed.org/fred/series?series_id=PERMIT&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-05-15 16:37:14 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-18 15:18:30 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-18 16:35:40 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-19 11:35:01 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-19 12:35:44 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-19 16:40:09 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSAFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 2s...
+2026-05-19 16:56:37 [WARNING] Attempt 2 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSAFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 4s...
+2026-05-19 16:56:42 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series
+2026-05-19 16:56:42 [WARNING] RSAFS: FRED /series call failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSAFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-05-19 16:56:42 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSXFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 2s...
+2026-05-19 17:09:51 [WARNING] Attempt 2 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSXFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 4s...
+2026-05-19 17:10:55 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-20 14:14:47 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSAFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 2s...
+2026-05-20 14:14:49 [WARNING] Attempt 2 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSAFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 4s...
+2026-05-20 14:14:53 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series
+2026-05-20 14:14:53 [WARNING] RSAFS: FRED /series call failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSAFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-05-20 14:14:53 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSXFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 2s...
+2026-05-20 14:14:55 [WARNING] Attempt 2 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSXFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 4s...
+2026-05-20 14:14:59 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series
+2026-05-20 14:14:59 [WARNING] RSXFS: FRED /series call failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSXFS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-05-20 14:14:59 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSFSDP&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 2s...
+2026-05-20 14:15:02 [WARNING] Attempt 2 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSFSDP&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 4s...
+2026-05-20 14:15:06 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series
+2026-05-20 14:15:06 [WARNING] RSFSDP: FRED /series call failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSFSDP&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-05-20 14:15:06 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSMVPD&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 2s...
+2026-05-20 14:15:08 [WARNING] Attempt 2 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSMVPD&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 4s...
+2026-05-20 14:15:13 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series
+2026-05-20 14:15:13 [WARNING] RSMVPD: FRED /series call failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSMVPD&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-05-20 14:15:13 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Max retries exceeded with url: /fred/series?series_id=RSGASS&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json (Caused by NameResolutionError("HTTPSConnection(host='api.stlouisfed.org', port=443): Failed to resolve 'api.stlouisfed.org' ([Errno 8] nodename nor servname provided, or not known)")). Retrying in 2s...
+2026-05-20 14:16:23 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-21 15:53:37 [INFO] Stale series (7):
+  ICSA: db=2026-05-09 -> fred=2026-05-16
+  CCSA: db=2026-05-02 -> fred=2026-05-09
+  HOUST: db=2026-03-01 -> fred=2026-04-01
+  PERMIT: db=2026-03-01 -> fred=2026-04-01
+  PERMIT1: db=2026-03-01 -> fred=2026-04-01
+  COMPUTSA: db=2026-03-01 -> fred=2026-04-01
+  UNDCONTSA: db=2026-03-01 -> fred=2026-04-01
+2026-05-21 15:54:34 [INFO]   ICSA: refreshed (+3098 obs)
+2026-05-21 15:56:27 [INFO]   CCSA: refreshed (+3097 obs)
+2026-05-21 15:56:42 [INFO]   HOUST: refreshed (+808 obs)
+2026-05-21 15:57:01 [INFO]   PERMIT: refreshed (+796 obs)
+2026-05-21 15:58:11 [INFO]   PERMIT1: refreshed (+796 obs)
+2026-05-21 15:58:29 [INFO]   COMPUTSA: refreshed (+700 obs)
+2026-05-21 15:59:02 [INFO]   UNDCONTSA: refreshed (+676 obs)
+2026-05-21 15:59:16 [INFO] Freshness check done: 7 series refreshed, 9,971 obs added.
+2026-05-21 16:37:43 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-22 13:56:47 [INFO] Stale series (2):
+  UMCSENT: db=2026-03-01 -> fred=2026-04-01
+  MICH: db=2026-03-01 -> fred=2026-04-01
+2026-05-22 13:59:02 [INFO]   UMCSENT: refreshed (+672 obs)
+2026-05-22 14:00:57 [ERROR]   MICH: fetch failed: database is locked
+2026-05-22 14:02:45 [WARNING] update_log insert failed: database is locked
+2026-05-22 14:02:48 [INFO] Freshness check done: 1 series refreshed, 672 obs added.

@@ -1,6 +1,6 @@
 # LIGHTHOUSE MACRO — MASTER CONTEXT
 
-**LAST_SYNC:** 2026-05-15
+**LAST_SYNC:** 2026-05-22
 **Version:** 6.0
 **Purpose:** Single source of truth for all AI assistants (Claude, Gemini, ChatGPT)
 
@@ -51,7 +51,9 @@ Paid tier launched ~Apr 13–20 at $320/yr (36% off), 5 external paid subs Apr 2
 **Robert Brown Sheehan, CFA, CMT** ("Bob")
 Founder & Chief Investment Officer, Lighthouse Macro, LLC (Delaware)
 
-**Background:** Former VP Data & Analytics, EquiLend (Short Squeeze Score, proprietary indices) → Associate PM, BoA Private Bank ($4.5B multi-asset, SGS sleeve ~$1.2B at peak, 2.35 Sortino, 103/76 capture vs S&P 500) → Senior Research Analyst, Strom Capital → Trahan Macro Research. CFA, CMT, BrainStation Data Science. Providence College, D1 lacrosse.
+**Background (chronological, order matters — BoA first, EquiLend last before LHM):** BoA Private Bank (summer intern 2014, full-time 2015, up to Associate PM) on the Strategic Growth Strategy (SGS) macro equities sleeve, ~$1.2B peak within a $4.5B multi-asset platform → Trahan Macro Research → BrainStation Data Science → Senior Research Analyst, Strom Capital → VP Data & Analytics, EquiLend (built proprietary indicators on short-sale data — did NOT build the Short Squeeze Score; it predated him, he published research on it) → Founder & CIO, Lighthouse Macro. CFA, CMT. Providence College, D1 lacrosse.
+
+**Track-record guardrail (recurring error — get this right):** SGS inception is 2009, which PREDATES Bob (intern 2014, full-time 2015). Never present since-inception / ITD figures as his. Cite only his-tenure window, the tearsheet 3-year period 02/2017–01/2020: SGS 21.73% ann. vs S&P 500 14.54% (+719bps), Sortino 2.35 vs 1.57, Sharpe 1.54 vs 1.08, ann. alpha +5.32%, beta 1.06, upside/downside capture 102.97%/75.84%, info ratio 1.57, R² 93.18. Also clean within tenure: 1yr 31.40% vs 21.68%, FY2019 38.58%. Same error class as the Short Squeeze Score — do not credit Bob with anything pre-tenure.
 
 **Contact:**
 | Type | Value |

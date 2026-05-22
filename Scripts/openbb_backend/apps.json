@@ -12,13 +12,34 @@
         "paramName": "index_id",
         "defaultValue": "MRI",
         "options": [
-          { "value": "MRI", "label": "MRI — Macro Risk Index" },
-          { "value": "LFI", "label": "LFI — Labor Fragility" },
-          { "value": "LCI", "label": "LCI — Liquidity Cushion" },
-          { "value": "FCI", "label": "FCI — Financial Conditions" },
-          { "value": "MSI", "label": "MSI — Market Structure" },
-          { "value": "SPI", "label": "SPI — Sentiment & Positioning" },
-          { "value": "CLG", "label": "CLG — Credit-Labor Gap" }
+          {
+            "value": "MRI",
+            "label": "MRI \u2014 Macro Risk Index"
+          },
+          {
+            "value": "LFI",
+            "label": "LFI \u2014 Labor Fragility"
+          },
+          {
+            "value": "LCI",
+            "label": "LCI \u2014 Liquidity Cushion"
+          },
+          {
+            "value": "FCI",
+            "label": "FCI \u2014 Financial Conditions"
+          },
+          {
+            "value": "MSI",
+            "label": "MSI \u2014 Market Structure"
+          },
+          {
+            "value": "SPI",
+            "label": "SPI \u2014 Sentiment & Positioning"
+          },
+          {
+            "value": "CLG",
+            "label": "CLG \u2014 Credit-Labor Gap"
+          }
         ]
       }
     ],
@@ -28,39 +49,109 @@
           "id": "pulse",
           "name": "Pulse",
           "layout": [
-            { "i": "lhm_health",            "x": 0,  "y": 0,  "w": 20, "h": 5 },
-            { "i": "lhm_engine_summary",    "x": 0,  "y": 5,  "w": 20, "h": 12 },
-            { "i": "lhm_pillar_heatmap",    "x": 20, "y": 0,  "w": 20, "h": 20 },
-            { "i": "lhm_mri_history",       "x": 0,  "y": 17, "w": 20, "h": 15 },
-            { "i": "lhm_composite_history", "x": 0,  "y": 32, "w": 20, "h": 15 },
-            { "i": "lhm_pulse_tiles",       "x": 20, "y": 20, "w": 20, "h": 15 }
+            {
+              "i": "lhm_health",
+              "x": 0,
+              "y": 0,
+              "w": 20,
+              "h": 5
+            },
+            {
+              "i": "lhm_engine_summary",
+              "x": 0,
+              "y": 5,
+              "w": 20,
+              "h": 12
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 20,
+              "y": 0,
+              "w": 20,
+              "h": 20
+            },
+            {
+              "i": "lhm_mri_history",
+              "x": 0,
+              "y": 17,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_composite_history",
+              "x": 0,
+              "y": 32,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_pulse_tiles",
+              "x": 20,
+              "y": 20,
+              "w": 20,
+              "h": 15
+            }
           ]
         }
       }
     }
   },
-
   "lhm_asset_flow": {
     "name": "02 Asset Flow",
-    "description": "Cross-asset reads — rates, credit, plumbing, breadth, sentiment — sourced direct from the LHM master DB.",
+    "description": "Cross-asset reads \u2014 rates, credit, plumbing, breadth, sentiment \u2014 sourced direct from the LHM master DB.",
     "tabs": {
       "tabs": {
         "Flow": {
           "id": "flow",
           "name": "Flow",
           "layout": [
-            { "i": "lhm_rates_panel",       "x": 0,  "y": 0,  "w": 20, "h": 15 },
-            { "i": "lhm_credit_panel",      "x": 20, "y": 0,  "w": 20, "h": 15 },
-            { "i": "lhm_plumbing_panel",    "x": 0,  "y": 15, "w": 20, "h": 15 },
-            { "i": "lhm_breadth_panel",     "x": 20, "y": 15, "w": 20, "h": 15 },
-            { "i": "lhm_sentiment_panel",   "x": 0,  "y": 30, "w": 20, "h": 15 },
-            { "i": "lhm_pulse_tiles",       "x": 20, "y": 30, "w": 20, "h": 15 }
+            {
+              "i": "lhm_rates_panel",
+              "x": 0,
+              "y": 0,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_credit_panel",
+              "x": 20,
+              "y": 0,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_plumbing_panel",
+              "x": 0,
+              "y": 15,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_breadth_panel",
+              "x": 20,
+              "y": 15,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_sentiment_panel",
+              "x": 0,
+              "y": 30,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_pulse_tiles",
+              "x": 20,
+              "y": 30,
+              "w": 20,
+              "h": 15
+            }
           ]
         }
       }
     }
   },
-
   "lhm_chain": {
     "name": "03 The Chain",
     "description": "Transmission chains. Pick a chain, watch the lead/lag z-scores hop step by step.",
@@ -71,9 +162,18 @@
         "paramName": "chain_id",
         "defaultValue": "plumbing_credit_labor",
         "options": [
-          { "value": "plumbing_credit_labor",   "label": "Plumbing → Credit → Labor" },
-          { "value": "rates_housing_consumer",  "label": "Rates → Housing → Consumer" },
-          { "value": "sentiment_structure_risk", "label": "Sentiment → Structure → Risk" }
+          {
+            "value": "plumbing_credit_labor",
+            "label": "Plumbing \u2192 Credit \u2192 Labor"
+          },
+          {
+            "value": "rates_housing_consumer",
+            "label": "Rates \u2192 Housing \u2192 Consumer"
+          },
+          {
+            "value": "sentiment_structure_risk",
+            "label": "Sentiment \u2192 Structure \u2192 Risk"
+          }
         ]
       }
     ],
@@ -83,15 +183,32 @@
           "id": "chain",
           "name": "Chain",
           "layout": [
-            { "i": "lhm_transmission_chain", "x": 0,  "y": 0,  "w": 40, "h": 18 },
-            { "i": "lhm_pillar_heatmap",     "x": 0,  "y": 18, "w": 20, "h": 20 },
-            { "i": "lhm_composite_history",  "x": 20, "y": 18, "w": 20, "h": 20 }
+            {
+              "i": "lhm_transmission_chain",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 18
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 18,
+              "w": 20,
+              "h": 20
+            },
+            {
+              "i": "lhm_composite_history",
+              "x": 20,
+              "y": 18,
+              "w": 20,
+              "h": 20
+            }
           ]
         }
       }
     }
   },
-
   "lhm_real_check": {
     "name": "04 Real Check",
     "description": "Real-economy reads against market expectations. The gap between price and the data underneath.",
@@ -102,12 +219,30 @@
         "paramName": "index_id",
         "defaultValue": "LFI",
         "options": [
-          { "value": "LFI", "label": "LFI — Labor Fragility" },
-          { "value": "GCI", "label": "GCI — Growth" },
-          { "value": "CCI", "label": "CCI — Consumer" },
-          { "value": "HCI", "label": "HCI — Housing" },
-          { "value": "BCI", "label": "BCI — Business" },
-          { "value": "TCI", "label": "TCI — Trade" }
+          {
+            "value": "LFI",
+            "label": "LFI \u2014 Labor Fragility"
+          },
+          {
+            "value": "GCI",
+            "label": "GCI \u2014 Growth"
+          },
+          {
+            "value": "CCI",
+            "label": "CCI \u2014 Consumer"
+          },
+          {
+            "value": "HCI",
+            "label": "HCI \u2014 Housing"
+          },
+          {
+            "value": "BCI",
+            "label": "BCI \u2014 Business"
+          },
+          {
+            "value": "TCI",
+            "label": "TCI \u2014 Trade"
+          }
         ]
       }
     ],
@@ -117,15 +252,32 @@
           "id": "real_check",
           "name": "Real Check",
           "layout": [
-            { "i": "lhm_pillar_heatmap",     "x": 0,  "y": 0,  "w": 20, "h": 20 },
-            { "i": "lhm_composite_history",  "x": 20, "y": 0,  "w": 20, "h": 20 },
-            { "i": "lhm_divergence_grid",    "x": 0,  "y": 20, "w": 40, "h": 18 }
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 0,
+              "w": 20,
+              "h": 20
+            },
+            {
+              "i": "lhm_composite_history",
+              "x": 20,
+              "y": 0,
+              "w": 20,
+              "h": 20
+            },
+            {
+              "i": "lhm_divergence_grid",
+              "x": 0,
+              "y": 20,
+              "w": 40,
+              "h": 18
+            }
           ]
         }
       }
     }
   },
-
   "lhm_divergence": {
     "name": "05 Divergence",
     "description": "Where market-side composites disagree with real-economy composites. The risk screen.",
@@ -149,10 +301,574 @@
           "id": "divergence",
           "name": "Divergence",
           "layout": [
-            { "i": "lhm_divergence_pair",   "x": 0,  "y": 0,  "w": 20, "h": 12 },
-            { "i": "lhm_divergence_grid",   "x": 20, "y": 0,  "w": 20, "h": 18 },
-            { "i": "lhm_pillar_heatmap",    "x": 0,  "y": 12, "w": 20, "h": 20 },
-            { "i": "lhm_composite_history", "x": 20, "y": 18, "w": 20, "h": 14 }
+            {
+              "i": "lhm_divergence_pair",
+              "x": 0,
+              "y": 0,
+              "w": 20,
+              "h": 12
+            },
+            {
+              "i": "lhm_divergence_grid",
+              "x": 20,
+              "y": 0,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 12,
+              "w": 20,
+              "h": 20
+            },
+            {
+              "i": "lhm_composite_history",
+              "x": 20,
+              "y": 18,
+              "w": 20,
+              "h": 14
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p01_labor": {
+    "name": "06 Labor \u2014 Pillar 1",
+    "description": "Pillar 1 (Labor, Macro Dynamics engine). LFI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Labor anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Labor": {
+          "id": "labor",
+          "name": "Labor",
+          "layout": [
+            {
+              "i": "lhm_labor_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_labor_keyseries",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p02_prices": {
+    "name": "07 Prices \u2014 Pillar 2",
+    "description": "Pillar 2 (Prices, Macro Dynamics engine). PCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Prices anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Prices": {
+          "id": "prices",
+          "name": "Prices",
+          "layout": [
+            {
+              "i": "lhm_prices_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_prices_keyseries",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p03_growth": {
+    "name": "08 Growth \u2014 Pillar 3",
+    "description": "Pillar 3 (Growth, Macro Dynamics engine). GCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Growth anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Growth": {
+          "id": "growth",
+          "name": "Growth",
+          "layout": [
+            {
+              "i": "lhm_growth_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_growth_keyseries",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p04_housing": {
+    "name": "09 Housing \u2014 Pillar 4",
+    "description": "Pillar 4 (Housing, Macro Dynamics engine). HCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Housing anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Housing": {
+          "id": "housing",
+          "name": "Housing",
+          "layout": [
+            {
+              "i": "lhm_housing_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_housing_keyseries",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p05_consumer": {
+    "name": "10 Consumer \u2014 Pillar 5",
+    "description": "Pillar 5 (Consumer, Macro Dynamics engine). CCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Consumer anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Consumer": {
+          "id": "consumer",
+          "name": "Consumer",
+          "layout": [
+            {
+              "i": "lhm_consumer_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_consumer_keyseries",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p06_business": {
+    "name": "11 Business \u2014 Pillar 6",
+    "description": "Pillar 6 (Business, Macro Dynamics engine). BCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Business anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Business": {
+          "id": "business",
+          "name": "Business",
+          "layout": [
+            {
+              "i": "lhm_business_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_business_keyseries",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p07_trade": {
+    "name": "12 Trade \u2014 Pillar 7",
+    "description": "Pillar 7 (Trade, Macro Dynamics engine). TCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Trade anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Trade": {
+          "id": "trade",
+          "name": "Trade",
+          "layout": [
+            {
+              "i": "lhm_trade_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_trade_keyseries",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p08_government": {
+    "name": "13 Government \u2014 Pillar 8",
+    "description": "Pillar 8 (Government, Monetary Mechanics engine). FPI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Government anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Government": {
+          "id": "government",
+          "name": "Government",
+          "layout": [
+            {
+              "i": "lhm_government_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_rates_panel",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p09_financial": {
+    "name": "14 Financial \u2014 Pillar 9",
+    "description": "Pillar 9 (Financial, Monetary Mechanics engine). FCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Financial anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Financial": {
+          "id": "financial",
+          "name": "Financial",
+          "layout": [
+            {
+              "i": "lhm_financial_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_credit_panel",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p10_plumbing": {
+    "name": "15 Plumbing \u2014 Pillar 10",
+    "description": "Pillar 10 (Plumbing, Monetary Mechanics engine). LCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Plumbing anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Plumbing": {
+          "id": "plumbing",
+          "name": "Plumbing",
+          "layout": [
+            {
+              "i": "lhm_plumbing_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_plumbing_panel",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p11_structure": {
+    "name": "16 Structure \u2014 Pillar 11",
+    "description": "Pillar 11 (Structure, Market Structure engine). MSI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Structure anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Structure": {
+          "id": "structure",
+          "name": "Structure",
+          "layout": [
+            {
+              "i": "lhm_structure_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_breadth_panel",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "p12_sentiment": {
+    "name": "17 Sentiment \u2014 Pillar 12",
+    "description": "Pillar 12 (Sentiment, Market Structure engine). SPI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Sentiment anchor series.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Sentiment": {
+          "id": "sentiment",
+          "name": "Sentiment",
+          "layout": [
+            {
+              "i": "lhm_sentiment_composite",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 16
+            },
+            {
+              "i": "lhm_pillar_heatmap",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_composites_latest",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 18
+            },
+            {
+              "i": "lhm_sentiment_panel",
+              "x": 0,
+              "y": 34,
+              "w": 40,
+              "h": 15
+            }
           ]
         }
       }

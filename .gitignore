@@ -25,6 +25,9 @@ Data/csv/
 Archive/
 Working/
 
+# Hackathon / standalone projects (own git repos, keep out of LHM daily sync)
+Projects/
+
 # IDE
 .vscode/
 .idea/

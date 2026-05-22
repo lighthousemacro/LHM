@@ -1214,3 +1214,177 @@ rsync(41690): error: unexpected end of file
 === 2026-05-15 13:30:07 mirror end (exit 0) ===
 === 2026-05-15 14:00:01 mirror start ===
 === 2026-05-15 14:00:05 mirror end (exit 0) ===
+=== 2026-05-15 14:30:01 mirror start ===
+=== 2026-05-15 14:30:05 mirror end (exit 0) ===
+=== 2026-05-15 15:00:00 mirror start ===
+=== 2026-05-15 15:00:04 mirror end (exit 0) ===
+=== 2026-05-15 16:00:02 mirror start ===
+=== 2026-05-15 16:01:00 mirror end (exit 0) ===
+=== 2026-05-15 16:30:04 mirror start ===
+=== 2026-05-15 16:30:50 mirror end (exit 0) ===
+=== 2026-05-15 17:00:01 mirror start ===
+=== 2026-05-15 17:00:04 mirror end (exit 0) ===
+=== 2026-05-15 17:30:01 mirror start ===
+=== 2026-05-15 17:30:07 mirror end (exit 0) ===
+=== 2026-05-15 18:00:02 mirror start ===
+=== 2026-05-15 18:00:56 mirror end (exit 0) ===
+=== 2026-05-15 18:30:02 mirror start ===
+=== 2026-05-15 18:30:15 mirror end (exit 0) ===
+=== 2026-05-15 19:00:00 mirror start ===
+=== 2026-05-15 19:00:04 mirror end (exit 0) ===
+=== 2026-05-15 19:30:00 mirror start ===
+=== 2026-05-15 19:30:19 mirror end (exit 0) ===
+=== 2026-05-15 20:00:01 mirror start ===
+=== 2026-05-15 20:00:09 mirror end (exit 0) ===
+=== 2026-05-15 20:30:00 mirror start ===
+=== 2026-05-15 20:30:04 mirror end (exit 0) ===
+=== 2026-05-15 21:00:00 mirror start ===
+=== 2026-05-15 21:00:04 mirror end (exit 0) ===
+=== 2026-05-15 21:30:01 mirror start ===
+=== 2026-05-15 21:30:59 mirror end (exit 0) ===
+=== 2026-05-15 22:00:02 mirror start ===
+=== 2026-05-15 22:00:51 mirror end (exit 0) ===
+=== 2026-05-15 22:30:03 mirror start ===
+=== 2026-05-15 22:30:53 mirror end (exit 0) ===
+=== 2026-05-16 16:30:01 mirror start ===
+=== 2026-05-16 16:31:18 mirror end (exit 0) ===
+=== 2026-05-16 17:00:00 mirror start ===
+=== 2026-05-16 17:00:06 mirror end (exit 0) ===
+=== 2026-05-16 17:30:01 mirror start ===
+=== 2026-05-16 17:30:07 mirror end (exit 0) ===
+=== 2026-05-16 18:00:01 mirror start ===
+=== 2026-05-16 18:00:06 mirror end (exit 0) ===
+=== 2026-05-16 18:30:01 mirror start ===
+=== 2026-05-16 18:30:10 mirror end (exit 0) ===
+=== 2026-05-16 19:00:02 mirror start ===
+=== 2026-05-16 19:01:15 mirror end (exit 0) ===
+=== 2026-05-16 19:30:01 mirror start ===
+=== 2026-05-16 19:31:01 mirror end (exit 0) ===
+=== 2026-05-16 20:00:02 mirror start ===
+=== 2026-05-16 20:01:15 mirror end (exit 0) ===
+=== 2026-05-16 20:30:00 mirror start ===
+=== 2026-05-16 20:30:30 mirror end (exit 0) ===
+=== 2026-05-16 21:00:02 mirror start ===
+rsync(6759): error: /Users/bob/LHM/Deliverables/Macro_HF_Application_2026-05-16/_qc/pg-12.png: open (2) in /Users/bob: No such file or directory
+=== 2026-05-16 21:00:29 mirror end (exit 0) ===
+=== 2026-05-16 21:30:00 mirror start ===
+=== 2026-05-16 21:30:19 mirror end (exit 0) ===
+=== 2026-05-16 22:00:00 mirror start ===
+=== 2026-05-16 22:00:13 mirror end (exit 0) ===
+=== 2026-05-16 22:30:00 mirror start ===
+=== 2026-05-16 22:30:14 mirror end (exit 0) ===
+=== 2026-05-17 07:00:00 mirror start ===
+=== 2026-05-17 07:00:38 mirror end (exit 0) ===
+=== 2026-05-17 07:30:02 mirror start ===
+=== 2026-05-17 07:30:47 mirror end (exit 0) ===
+=== 2026-05-17 08:00:01 mirror start ===
+=== 2026-05-17 08:00:24 mirror end (exit 0) ===
+=== 2026-05-17 08:30:01 mirror start ===
+rsync(70208): error: /Users/bob/LHM/Outputs/.tmp.driveupload/42802: open (2) in /Users/bob: No such file or directory
+=== 2026-05-17 08:30:25 mirror end (exit 0) ===
+=== 2026-05-17 09:00:01 mirror start ===
+=== 2026-05-17 09:00:05 mirror end (exit 0) ===
+=== 2026-05-17 09:30:01 mirror start ===
+=== 2026-05-17 09:30:05 mirror end (exit 0) ===
+=== 2026-05-17 10:00:00 mirror start ===
+=== 2026-05-17 10:00:12 mirror end (exit 0) ===
+=== 2026-05-17 10:30:00 mirror start ===
+=== 2026-05-17 10:30:12 mirror end (exit 0) ===
+=== 2026-05-17 11:00:00 mirror start ===
+=== 2026-05-17 11:00:03 mirror end (exit 0) ===
+=== 2026-05-17 11:30:00 mirror start ===
+=== 2026-05-17 11:30:03 mirror end (exit 0) ===
+=== 2026-05-17 12:00:00 mirror start ===
+=== 2026-05-17 12:00:04 mirror end (exit 0) ===
+=== 2026-05-17 12:30:00 mirror start ===
+=== 2026-05-17 12:30:03 mirror end (exit 0) ===
+=== 2026-05-17 13:00:01 mirror start ===
+=== 2026-05-17 13:00:25 mirror end (exit 0) ===
+=== 2026-05-17 13:30:01 mirror start ===
+=== 2026-05-17 13:30:38 mirror end (exit 0) ===
+=== 2026-05-17 14:00:00 mirror start ===
+=== 2026-05-17 14:00:10 mirror end (exit 0) ===
+=== 2026-05-17 14:30:01 mirror start ===
+rsync(8736): error: /Users/bob/LHM/Projects/pharos/web/.next/static/HvTdSrXD3PZI-Mjd8tuy7/_buildManifest.js: open (2) in /Users/bob: No such file or directory
+rsync(8736): error: /Users/bob/LHM/Projects/pharos/web/.next/static/HvTdSrXD3PZI-Mjd8tuy7/_ssgManifest.js: open (2) in /Users/bob: No such file or directory
+rsync(8736): error: /Users/bob/LHM/Projects/pharos/web/.next/static/chunks/app/page-1ff36898014a2dc3.js: open (2) in /Users/bob: No such file or directory
+=== 2026-05-17 14:30:55 mirror end (exit 0) ===
+=== 2026-05-17 15:00:00 mirror start ===
+=== 2026-05-17 15:00:12 mirror end (exit 0) ===
+=== 2026-05-17 15:30:01 mirror start ===
+=== 2026-05-17 15:30:38 mirror end (exit 0) ===
+=== 2026-05-17 16:00:00 mirror start ===
+=== 2026-05-17 16:00:05 mirror end (exit 0) ===
+=== 2026-05-17 16:30:00 mirror start ===
+=== 2026-05-17 16:30:05 mirror end (exit 0) ===
+=== 2026-05-17 17:00:00 mirror start ===
+=== 2026-05-17 17:00:06 mirror end (exit 0) ===
+=== 2026-05-18 15:30:01 mirror start ===
+=== 2026-05-18 15:32:27 mirror end (exit 0) ===
+=== 2026-05-18 16:00:00 mirror start ===
+=== 2026-05-18 16:00:34 mirror end (exit 0) ===
+=== 2026-05-18 16:30:00 mirror start ===
+=== 2026-05-18 16:30:25 mirror end (exit 0) ===
+=== 2026-05-18 17:00:00 mirror start ===
+=== 2026-05-18 17:00:34 mirror end (exit 0) ===
+=== 2026-05-18 17:30:00 mirror start ===
+=== 2026-05-18 17:30:31 mirror end (exit 0) ===
+=== 2026-05-18 18:30:01 mirror start ===
+=== 2026-05-18 18:35:15 mirror end (exit 0) ===
+=== 2026-05-19 12:00:01 mirror start ===
+=== 2026-05-19 12:00:23 mirror end (exit 0) ===
+=== 2026-05-19 12:30:07 mirror start ===
+=== 2026-05-19 12:32:47 mirror end (exit 0) ===
+=== 2026-05-19 13:00:00 mirror start ===
+=== 2026-05-19 13:00:17 mirror end (exit 0) ===
+=== 2026-05-19 13:30:00 mirror start ===
+=== 2026-05-19 13:30:33 mirror end (exit 0) ===
+=== 2026-05-19 14:00:01 mirror start ===
+=== 2026-05-19 14:00:40 mirror end (exit 0) ===
+=== 2026-05-19 18:00:00 mirror start ===
+=== 2026-05-19 18:00:28 mirror end (exit 0) ===
+=== 2026-05-19 18:30:00 mirror start ===
+=== 2026-05-19 18:30:38 mirror end (exit 0) ===
+=== 2026-05-19 19:00:01 mirror start ===
+=== 2026-05-19 19:01:21 mirror end (exit 0) ===
+=== 2026-05-19 19:30:00 mirror start ===
+=== 2026-05-19 19:30:55 mirror end (exit 0) ===
+=== 2026-05-19 20:00:01 mirror start ===
+=== 2026-05-19 20:02:01 mirror end (exit 0) ===
+=== 2026-05-19 20:30:01 mirror start ===
+=== 2026-05-19 20:30:51 mirror end (exit 0) ===
+=== 2026-05-20 14:30:04 mirror start ===
+=== 2026-05-20 14:32:17 mirror end (exit 0) ===
+=== 2026-05-20 15:00:26 mirror start ===
+=== 2026-05-20 15:02:27 mirror end (exit 0) ===
+=== 2026-05-21 16:00:04 mirror start ===
+=== 2026-05-21 16:03:45 mirror end (exit 0) ===
+=== 2026-05-21 16:30:01 mirror start ===
+=== 2026-05-21 16:32:16 mirror end (exit 0) ===
+=== 2026-05-21 17:00:01 mirror start ===
+=== 2026-05-21 17:02:26 mirror end (exit 0) ===
+=== 2026-05-21 17:30:01 mirror start ===
+=== 2026-05-21 17:32:40 mirror end (exit 0) ===
+=== 2026-05-21 18:00:01 mirror start ===
+=== 2026-05-21 18:02:52 mirror end (exit 0) ===
+=== 2026-05-21 18:30:00 mirror start ===
+=== 2026-05-21 18:31:48 mirror end (exit 0) ===
+=== 2026-05-21 19:00:00 mirror start ===
+=== 2026-05-21 19:01:26 mirror end (exit 0) ===
+=== 2026-05-21 19:30:01 mirror start ===
+=== 2026-05-21 19:30:50 mirror end (exit 0) ===
+=== 2026-05-21 20:00:00 mirror start ===
+=== 2026-05-21 20:00:36 mirror end (exit 0) ===
+=== 2026-05-21 20:35:21 mirror start ===
+=== 2026-05-21 20:37:09 mirror end (exit 0) ===
+=== 2026-05-21 21:00:00 mirror start ===
+=== 2026-05-21 21:00:35 mirror end (exit 0) ===
+=== 2026-05-22 14:00:05 mirror start ===
+=== 2026-05-22 14:02:35 mirror end (exit 0) ===
+=== 2026-05-22 14:30:01 mirror start ===
+=== 2026-05-22 14:33:07 mirror end (exit 0) ===
+=== 2026-05-22 15:00:02 mirror start ===
+rsync(42693): error: /Users/bob/LHM/Projects/pharos/web/out/_next/static/Zuf4eIZxxyZ6fsqvldpnD/_buildManifest.js: open (2) in /Users/bob: No such file or directory
+rsync(42693): error: /Users/bob/LHM/Projects/pharos/web/out/_next/static/Zuf4eIZxxyZ6fsqvldpnD/_ssgManifest.js: open (2) in /Users/bob: No such file or directory
+=== 2026-05-22 15:04:05 mirror end (exit 0) ===
+=== 2026-05-22 15:30:00 mirror start ===

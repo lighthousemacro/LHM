@@ -20,6 +20,7 @@ changes, update THIS file and every downstream chart generator inherits it.
 """
 
 import os
+import textwrap
 from datetime import datetime
 
 import matplotlib.image as mpimg
@@ -193,13 +194,64 @@ def style_single_ax(ax, fmt='{:.1f}'):
 # ============================================
 # ANNOTATIONS
 # ============================================
-def add_annotation_box(ax, text, x=0.50, y=0.95, ha='center'):
+def _wrap_to_frac(ax, text, max_width_frac, fontsize, fontweight, fontstyle):
+    """Greedy word-wrap so no rendered line exceeds `max_width_frac` of the
+    axes width in pixels. Measures real text extents with the canvas renderer
+    so the box width is font/dpi/figsize-independent. Intentional newlines in
+    the source text are preserved as hard paragraph breaks."""
+    fig = ax.figure
+    fig.canvas.draw()  # force a renderer + final-ish layout for measurement
+    renderer = fig.canvas.get_renderer()
+    ax_w = ax.get_window_extent(renderer).width
+    limit = max_width_frac * ax_w
+
+    def _w(s):
+        t = ax.text(0, 0, s, transform=ax.transAxes, fontsize=fontsize,
+                    fontweight=fontweight, style=fontstyle)
+        bb = t.get_window_extent(renderer)
+        t.remove()
+        return bb.width
+
+    out_lines = []
+    for para in text.split('\n'):
+        words = para.split()
+        if not words:
+            out_lines.append('')
+            continue
+        cur = ''
+        for word in words:
+            trial = word if not cur else cur + ' ' + word
+            if not cur or _w(trial) <= limit:
+                cur = trial
+            else:
+                out_lines.append(cur)
+                cur = word
+        out_lines.append(cur)
+    return '\n'.join(out_lines)
+
+
+def add_annotation_box(ax, text, x=0.50, y=0.055, ha='center', va='bottom',
+                       max_width_frac=0.52, wrap=None):
     """White callout box with Ocean border and Ocean text.
     Clean, neutral, reads on any background. Larger font.
-    High zorder so bars/lines never bleed through."""
+    High zorder so bars/lines never bleed through.
+
+    LHM standard (locked 2026-05-17): every callout is anchored low and
+    centered (x=0.50, y=0.055, va='bottom' so it grows UP from the floor)
+    and kept WIDE-AND-SHORT — text wraps only when a line would exceed
+    `max_width_frac` of the axes width (0.52 -> the box spans roughly
+    x 0.24 to 0.76). Wide so it stays 2-3 lines tall and lives in the dead
+    space along the bottom, out of the data, instead of a tall tower up the
+    middle. Pass an explicit char count via `wrap` for legacy char wrapping."""
+    if wrap:
+        text = textwrap.fill(text, width=wrap,
+                             break_long_words=False, break_on_hyphens=False)
+    elif max_width_frac:
+        text = _wrap_to_frac(ax, text, max_width_frac,
+                             fontsize=14, fontweight='bold', fontstyle='italic')
     ax.text(x, y, text, transform=ax.transAxes,
             fontsize=14, fontweight='bold', color=COLORS['ocean'],
-            ha=ha, va='top', style='italic', zorder=20,
+            ha=ha, va=va, style='italic', zorder=20,
             bbox=dict(boxstyle='round,pad=0.5',
                       facecolor='#ffffff', edgecolor=COLORS['ocean'],
                       linewidth=1.5, alpha=1.0))

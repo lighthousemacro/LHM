@@ -511,12 +511,19 @@ class WarningSystem:
         self._data_cache = {}
 
     def _get_series_value(self, series_name: str, date: str = None) -> Optional[float]:
-        """Get latest value for a series from horizon_dataset."""
-        cache_key = f"series_{series_name}"
+        """Get the value for a series from horizon_dataset, as-of `date`.
+
+        date=None -> latest available (unchanged live behavior). When a date is
+        given, returns the most recent observation on or before that date.
+        """
+        cache_key = f"series_{series_name}_{date or 'latest'}"
 
         if cache_key not in self._data_cache:
             try:
-                query = f"SELECT date, {series_name} FROM horizon_dataset WHERE {series_name} IS NOT NULL ORDER BY date DESC LIMIT 1"
+                asof = f" AND date <= '{date}'" if date else ""
+                query = (f"SELECT date, {series_name} FROM horizon_dataset "
+                         f"WHERE {series_name} IS NOT NULL{asof} "
+                         f"ORDER BY date DESC LIMIT 1")
                 result = pd.read_sql(query, self.conn)
                 if not result.empty:
                     self._data_cache[cache_key] = float(result.iloc[0][series_name])
@@ -529,11 +536,14 @@ class WarningSystem:
 
     def _get_index_value(self, index_name: str, date: str = None) -> Optional[float]:
         """Get latest value for an index from lighthouse_indices."""
-        cache_key = f"index_{index_name}"
+        cache_key = f"index_{index_name}_{date or 'latest'}"
 
         if cache_key not in self._data_cache:
             try:
-                query = f"SELECT date, value FROM lighthouse_indices WHERE index_id = '{index_name}' ORDER BY date DESC LIMIT 1"
+                asof = f" AND date <= '{date}'" if date else ""
+                query = (f"SELECT date, value FROM lighthouse_indices "
+                         f"WHERE index_id = '{index_name}'{asof} "
+                         f"ORDER BY date DESC LIMIT 1")
                 result = pd.read_sql(query, self.conn)
                 if not result.empty:
                     self._data_cache[cache_key] = float(result.iloc[0]['value'])
@@ -544,7 +554,7 @@ class WarningSystem:
 
         return self._data_cache.get(cache_key)
 
-    def _assess_reserve_management(self) -> ReserveManagementAssessment:
+    def _assess_reserve_management(self, date: str = None) -> ReserveManagementAssessment:
         """
         Assess Fed reserve management operations (RMP).
 
@@ -557,7 +567,8 @@ class WarningSystem:
         LCLOR = 2800  # $2.8T estimate in billions
 
         # Get current reserves
-        reserves_current = self._get_series_value("Bank_Reserves")
+        asof = f" AND date <= '{date}'" if date else ""
+        reserves_current = self._get_series_value("Bank_Reserves", date)
         if reserves_current is None:
             reserves_current = 2879  # Fallback to recent known value
 
@@ -565,12 +576,10 @@ class WarningSystem:
 
         # Get reserve history to calculate drain rate (last 30 days)
         try:
-            reserve_history = pd.read_sql("""
-                SELECT date, Bank_Reserves
-                FROM horizon_dataset
-                WHERE Bank_Reserves IS NOT NULL
-                ORDER BY date DESC LIMIT 30
-            """, self.conn)
+            reserve_history = pd.read_sql(
+                "SELECT date, Bank_Reserves FROM horizon_dataset "
+                f"WHERE Bank_Reserves IS NOT NULL{asof} "
+                "ORDER BY date DESC LIMIT 30", self.conn)
 
             if len(reserve_history) >= 2:
                 # Calculate monthly drain rate from recent data
@@ -590,12 +599,11 @@ class WarningSystem:
 
         # Get Fed balance sheet changes (proxy for RMP activity)
         try:
-            fed_bs = pd.read_sql("""
-                SELECT date, Fed_Balance_Sheet, Fed_Balance_Sheet_wow_diff
-                FROM horizon_dataset
-                WHERE Fed_Balance_Sheet IS NOT NULL
-                ORDER BY date DESC LIMIT 8
-            """, self.conn)
+            fed_bs = pd.read_sql(
+                "SELECT date, Fed_Balance_Sheet, Fed_Balance_Sheet_wow_diff "
+                "FROM horizon_dataset "
+                f"WHERE Fed_Balance_Sheet IS NOT NULL{asof} "
+                "ORDER BY date DESC LIMIT 8", self.conn)
 
             if not fed_bs.empty:
                 # Average weekly change
@@ -671,13 +679,14 @@ class WarningSystem:
             risk_modifier=risk_modifier
         )
 
-    def _evaluate_threshold(self, flag_name: str, config: dict, category: str) -> ThresholdFlag:
-        """Evaluate a single threshold flag."""
+    def _evaluate_threshold(self, flag_name: str, config: dict, category: str,
+                            date: str = None) -> ThresholdFlag:
+        """Evaluate a single threshold flag (as-of `date` when provided)."""
         # Get current value
         if "series" in config:
-            current_value = self._get_series_value(config["series"])
+            current_value = self._get_series_value(config["series"], date)
         elif "index" in config:
-            current_value = self._get_index_value(config["index"])
+            current_value = self._get_index_value(config["index"], date)
         else:
             current_value = None
 
@@ -729,7 +738,7 @@ class WarningSystem:
         for category, flags in THRESHOLDS.items():
             category_flags[category] = []
             for flag_name, config in flags.items():
-                flag = self._evaluate_threshold(flag_name, config, category)
+                flag = self._evaluate_threshold(flag_name, config, category, date)
                 all_flags.append(flag)
                 category_flags[category].append(flag)
 
@@ -782,7 +791,7 @@ class WarningSystem:
                     override_reason = rule["description"]
 
         # Assess Reserve Management Operations
-        rmp_assessment = self._assess_reserve_management()
+        rmp_assessment = self._assess_reserve_management(date)
 
         # Generate narrative and action items
         narrative = self._generate_narrative(overall_level, categories, triggered_flags)

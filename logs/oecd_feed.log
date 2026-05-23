@@ -151,3 +151,41 @@ OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
 
 DONE: 35 series, 21,998 observations upserted.
 OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+  OECD_GDP_REAL_US: 317 obs
+  OECD_CPI_YOY_US: 843 obs
+  OECD_UNEMP_US: 855 obs
+  OECD_CLI_US: 856 obs
+  OECD_LTIR_US: 868 obs
+  OECD_STIR_US: 742 obs
+  OECD_CPI_YOY_EA: 420 obs
+  OECD_GDP_REAL_JP: 265 obs
+  OECD_CPI_YOY_JP: 786 obs
+  OECD_UNEMP_JP: 855 obs
+  OECD_CLI_JP: 808 obs
+  OECD_LTIR_JP: 448 obs
+  OECD_STIR_JP: 288 obs
+  OECD_GDP_REAL_GB: 285 obs
+  OECD_CPI_YOY_GB: 844 obs
+  OECD_UNEMP_GB: 517 obs
+  OECD_CLI_GB: 821 obs
+  OECD_LTIR_GB: 796 obs
+  OECD_STIR_GB: 482 obs
+  OECD_GDP_REAL_DE: 265 obs
+  OECD_CPI_YOY_DE: 844 obs
+  OECD_UNEMP_DE: 423 obs
+  OECD_CLI_DE: 784 obs
+  OECD_LTIR_DE: 840 obs
+  OECD_STIR_DE: 796 obs
+  OECD_GDP_REAL_CA: 261 obs
+  OECD_CPI_YOY_CA: 916 obs
+  OECD_UNEMP_CA: 856 obs
+  OECD_CLI_CA: 844 obs
+  OECD_LTIR_CA: 857 obs
+  OECD_STIR_CA: 844 obs
+  OECD_CPI_YOY_CN: 472 obs
+  OECD_CLI_CN: 408 obs
+  OECD_LTIR_CN: 147 obs
+  OECD_STIR_CN: 345 obs
+
+DONE: 35 series, 21,998 observations upserted.

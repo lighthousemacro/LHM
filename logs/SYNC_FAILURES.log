@@ -2015,3 +2015,11 @@ fatal: Unable to process path Charts/1f2295e6-2c0d-46cd-88ee-1f475567c674
 Cannot save the current worktree state
 fatal: Cannot autostash
 
+[2026-05-24 19:40:36] git push failed: Push to origin/main was rejected. If it says 'non-fast-forward', the remote moved again — rerun the sync (it will rebase) or:
+  cd /Users/bob/LHM && git pull --rebase origin main && git push
+git said:
+error: RPC failed; curl 56 Recv failure: Connection reset by peer
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+Everything up-to-date
+

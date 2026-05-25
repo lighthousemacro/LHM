@@ -2038,3 +2038,5 @@ error: failed to push some refs to 'https://github.com/lighthousemacro/LHM.git'
 git said:
 fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': Recv failure: Connection reset by peer
 
+[2026-05-25 19:30:01] git fetch failed: fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': Could not resolve host: github.com
+

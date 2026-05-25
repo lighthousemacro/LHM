@@ -1983,3 +1983,13 @@ send-pack: unexpected disconnect while reading sideband packet
 fatal: the remote end hung up unexpectedly
 Everything up-to-date
 
+[2026-05-25 05:06:00] git push failed: Push to origin/main was rejected. If it says 'non-fast-forward', the remote moved again — rerun the sync (it will rebase) or:
+  cd /Users/bob/LHM && git pull --rebase origin main && git push
+git said:
+remote: Internal Server Error        
+remote: Request ID C02B:309A01:41789FB:53B639D:6A1410F7        
+remote: Time 2026-05-25T09:06:00Z
+To https://github.com/lighthousemacro/LHM.git
+ ! [remote rejected]   main -> main (Internal Server Error)
+error: failed to push some refs to 'https://github.com/lighthousemacro/LHM.git'
+

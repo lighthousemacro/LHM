@@ -2033,3 +2033,8 @@ To https://github.com/lighthousemacro/LHM.git
  ! [remote rejected]   main -> main (Internal Server Error)
 error: failed to push some refs to 'https://github.com/lighthousemacro/LHM.git'
 
+[2026-05-25 17:49:54] git push failed: Push to origin/main was rejected. If it says 'non-fast-forward', the remote moved again — rerun the sync (it will rebase) or:
+  cd /Users/bob/LHM && git pull --rebase origin main && git push
+git said:
+fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': Recv failure: Connection reset by peer
+

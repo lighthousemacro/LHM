@@ -36,7 +36,7 @@ Paid tier launched ~Apr 13–20 at $320/yr (36% off), 5 external paid subs Apr 2
 - **Data:** Never fabricate or approximate. Real sourced data only.
 - **Breadth thrust:** Bob uses 20-day AND 50-day as separate indicators — don't flag the 50-day as wrong. Real flag = internal threshold inconsistency within one piece.
 - **Gmail drafts via API:** Omit signature block. Use "Best,\nBob" placeholder. HTML signature does NOT auto-append (master context rule was wrong).
-- **Paid pricing:** Public. $320/yr launch rate is live.
+- **Paid pricing:** Public. $400/yr is the current floor (was $320 launch rate Apr 13–~mid-Apr, that deal is dead — never cite the $320 again). Standard rate $500/yr, $50/mo. Active discount window currently $400/yr ("20% off standard $500").
 - **Founding member rates (locked, 3 external):** Michael Zhang $300, Josh Giordano $400, Ryan Salah $400. New comps (e.g., Tim Pierotti) are gifts unless Bob says otherwise.
 - **Tania lessons (Apr 28):** (1) Engagement ≠ conversion; cleanest predictor = paid the public tier within 30 days of being told it exists. (2) Soft no's = current no's. Max 2 warm follow-ups, then back-burner. (3) Trials need explicit kill dates + deliverable count. (4) The proposal IS the SOW — going pricing-live with a champion produces free deliverables.
 - **Tim Pierotti:** Comp founding sub. Paid chart work = separate consulting engagement.

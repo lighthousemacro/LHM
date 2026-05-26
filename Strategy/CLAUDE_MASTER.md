@@ -321,7 +321,7 @@ The portfolio is a single book. The distinction is what drives a position.
 
 # SECTION 11: BUSINESS & RELATIONSHIPS
 
-**Public pricing:** $320/yr launch (36% off standard $500). $50/mo also live.
+**Public pricing:** $400/yr current floor (20% off standard $500), $50/mo also live. The $320/yr launch deal closed ~mid-Apr 2026 and is dead — do not cite it. Founding member rates locked separately (see below).
 
 **Founding members (locked for life):** Michael Zhang $300, Josh Giordano $400, Ryan Salah $400.
 

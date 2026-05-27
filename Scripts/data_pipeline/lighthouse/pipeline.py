@@ -21,6 +21,7 @@ from .breadth_fetcher import BreadthDataFetcher  # New: DIY breadth from S&P 500
 from .zillow_fetcher import ZillowFetcher  # Zillow ZHVI + ZORI (free public CSVs)
 from .tradingview_fetcher import TradingViewFetcher  # TradingView ECONOMICS: series (NAHB, MBA, etc.)
 from .openbb_oecd_feed import OECDOpenBBFetcher  # OpenBB inbound feed: OECD international macro
+from .umich_5y_fetcher import UMichFetcher  # UMich 5-yr inflation expectations (not on FRED)
 from .quality import update_quality_flags
 
 # Configure logging
@@ -288,6 +289,19 @@ def run_daily_update(
             logger.error(f"OECD failed: {e}")
             errors.append(f"OECD: {e}")
             results["OECD"] = (0, 0)
+
+    if "UMICH" in sources:
+        print("\n--- UMICH (5-yr inflation expectations, Table 33) ---")
+        try:
+            fetcher = UMichFetcher(conn)
+            umich_series, umich_obs = fetcher.fetch_all()
+            results["UMICH"] = (umich_series, umich_obs)
+            total_series += umich_series
+            total_obs += umich_obs
+        except Exception as e:
+            logger.error(f"UMICH failed: {e}")
+            errors.append(f"UMICH: {e}")
+            results["UMICH"] = (0, 0)
 
     # Run quality checks
     if not skip_quality:

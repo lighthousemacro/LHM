@@ -717,3 +717,4 @@
 2026-05-25 16:34:51,906 [WARNING] missing CSV types: arr, audience_location, email_stats, emails, followers, growth_sources, paid_subscriber_growth, free_subscriber_growth, subscribers, traffic, traffic_sources, unsubscribes
 2026-05-26 04:34:44,052 [WARNING] missing CSV types: arr, audience_location, email_stats, emails, followers, growth_sources, paid_subscriber_growth, free_subscriber_growth, subscribers, traffic, traffic_sources, unsubscribes
 2026-05-26 16:30:32,245 [WARNING] missing CSV types: arr, audience_location, email_stats, emails, followers, growth_sources, paid_subscriber_growth, free_subscriber_growth, subscribers, traffic, traffic_sources, unsubscribes
+2026-05-27 04:30:04,521 [WARNING] missing CSV types: arr, audience_location, email_stats, emails, followers, growth_sources, paid_subscriber_growth, free_subscriber_growth, subscribers, traffic, traffic_sources, unsubscribes

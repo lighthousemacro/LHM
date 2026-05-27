@@ -136,7 +136,7 @@ def run_daily_update(
 
     # Default to all sources
     if sources is None:
-        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW"]
+        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW", "UMICH"]
 
     # Track totals
     total_series = 0

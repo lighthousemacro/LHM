@@ -33,3 +33,6 @@ Documentation is available at /docs.
 [32mINFO[0m:     127.0.0.1:58122 - "[1mGET /composite_history?index_id=PCI HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:58123 - "[1mGET /latest?series_ids=UNRATE,PAYEMS,ICSA,CCSA,JTSQUR,AHETPI HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:58124 - "[1mGET /credit_panel HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:51992 - "[1mGET /apps.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:51997 - "[1mGET /widgets.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:51998 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m

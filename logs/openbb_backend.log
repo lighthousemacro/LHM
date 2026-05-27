@@ -36,3 +36,5 @@ Documentation is available at /docs.
 [32mINFO[0m:     127.0.0.1:51992 - "[1mGET /apps.json HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:51997 - "[1mGET /widgets.json HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:51998 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52109 - "[1mGET / HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:52109 - "[1mGET /favicon.ico HTTP/1.1[0m" [31m404 Not Found[0m

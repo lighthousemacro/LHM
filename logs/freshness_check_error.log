@@ -716,3 +716,39 @@
 2026-05-27 18:10:45 [ERROR] All 3 attempts failed for https://api.stlouisfed.org/fred/series
 2026-05-27 18:10:45 [WARNING] TOTALSL: FRED /series call failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series?series_id=TOTALSL&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json
 2026-05-27 18:10:46 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-05-28 15:29:42 [INFO] Stale series (17):
+  PCEPI: db=2026-03-01 -> fred=2026-04-01
+  PCEPILFE: db=2026-03-01 -> fred=2026-04-01
+  PCE: db=2026-03-01 -> fred=2026-04-01
+  PCEDG: db=2026-03-01 -> fred=2026-04-01
+  PCEND: db=2026-03-01 -> fred=2026-04-01
+  PCES: db=2026-03-01 -> fred=2026-04-01
+  PSAVERT: db=2026-03-01 -> fred=2026-04-01
+  DSPIC96: db=2026-03-01 -> fred=2026-04-01
+  ICSA: db=2026-05-16 -> fred=2026-05-23
+  CCSA: db=2026-05-09 -> fred=2026-05-16
+  HSN1F: db=2026-03-01 -> fred=2026-04-01
+  MSPNHSUS: db=2026-03-01 -> fred=2026-04-01
+  MSACSR: db=2026-03-01 -> fred=2026-04-01
+  DGORDER: db=2026-03-01 -> fred=2026-04-01
+  ADXTNO: db=2026-03-01 -> fred=2026-04-01
+  NEWORDER: db=2026-03-01 -> fred=2026-04-01
+  ANDENO: db=2026-03-01 -> fred=2026-04-01
+2026-05-28 15:29:44 [INFO]   PCEPI: refreshed (+808 obs)
+2026-05-28 15:29:49 [INFO]   PCEPILFE: refreshed (+808 obs)
+2026-05-28 15:29:49 [INFO]   PCE: refreshed (+808 obs)
+2026-05-28 15:29:50 [INFO]   PCEDG: refreshed (+808 obs)
+2026-05-28 15:29:50 [INFO]   PCEND: refreshed (+808 obs)
+2026-05-28 15:29:51 [INFO]   PCES: refreshed (+808 obs)
+2026-05-28 15:29:51 [INFO]   PSAVERT: refreshed (+808 obs)
+2026-05-28 15:29:52 [INFO]   DSPIC96: refreshed (+808 obs)
+2026-05-28 15:29:52 [INFO]   ICSA: refreshed (+3099 obs)
+2026-05-28 15:29:53 [INFO]   CCSA: refreshed (+3098 obs)
+2026-05-28 15:29:53 [INFO]   HSN1F: refreshed (+760 obs)
+2026-05-28 15:29:54 [INFO]   MSPNHSUS: refreshed (+760 obs)
+2026-05-28 15:29:54 [INFO]   MSACSR: refreshed (+760 obs)
+2026-05-28 15:29:54 [INFO]   DGORDER: refreshed (+411 obs)
+2026-05-28 15:29:55 [INFO]   ADXTNO: refreshed (+411 obs)
+2026-05-28 15:29:56 [INFO]   NEWORDER: refreshed (+411 obs)
+2026-05-28 15:29:56 [INFO]   ANDENO: refreshed (+411 obs)
+2026-05-28 15:29:56 [INFO] Freshness check done: 17 series refreshed, 16,585 obs added.

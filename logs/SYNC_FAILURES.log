@@ -2040,3 +2040,10 @@ fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': Recv fail
 
 [2026-05-25 19:30:01] git fetch failed: fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': Could not resolve host: github.com
 
+[2026-05-29 17:15:49] git push failed: Push to origin/main was rejected. If it says 'non-fast-forward', the remote moved again — rerun the sync (it will rebase) or:
+  cd /Users/bob/LHM && git pull --rebase origin main && git push
+git said:
+To https://github.com/lighthousemacro/LHM.git
+ ! [remote rejected]   main -> main (cannot lock ref 'refs/heads/main': is at 36d822d197baf22a13d93f03d03e52e112705883 but expected 779907f1f4524f8174b2f9d7c53d7f0ed8ed5951)
+error: failed to push some refs to 'https://github.com/lighthousemacro/LHM.git'
+

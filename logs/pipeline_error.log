@@ -30205,3 +30205,11 @@ error: failed to push some refs to 'https://github.com/lighthousemacro/LHM.git'
 2026-05-30 14:30:46 [INFO]    MATIC: 3 observations
 2026-05-30 14:30:48 [INFO]    UNI: 93 observations
 2026-05-30 14:30:50 [WARNING] Rate limited, waiting 60s...
+2026-05-30 14:32:17 [INFO]    AAVE: 93 observations
+2026-05-30 14:32:19 [INFO]    GMX: 93 observations
+2026-05-30 14:32:21 [INFO]    LDO: 93 observations
+2026-05-30 14:32:24 [INFO]    RPL: 93 observations
+2026-05-30 14:32:26 [INFO]    LINK: 93 observations
+2026-05-30 14:32:28 [WARNING] Rate limited, waiting 60s...
+2026-05-30 14:45:23 [ERROR]    MKR: Error - ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2026-05-30 14:45:26 [INFO] Fetching global crypto metrics...

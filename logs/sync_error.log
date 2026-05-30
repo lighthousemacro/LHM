@@ -2000,3 +2000,11 @@ fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': Recv fail
 
 [2026-05-25 19:30:01] git fetch failed: fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': Could not resolve host: github.com
 
+[2026-05-30 18:30:21] git push failed: Push to origin/main was rejected. If it says 'non-fast-forward', the remote moved again — rerun the sync (it will rebase) or:
+  cd /Users/bob/LHM && git pull --rebase origin main && git push
+git said:
+error: RPC failed; curl 56 Recv failure: Connection reset by peer
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+Everything up-to-date
+

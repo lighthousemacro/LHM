@@ -30199,3 +30199,9 @@ error: failed to push some refs to 'https://github.com/lighthousemacro/LHM.git'
 2026-05-30 14:24:08 [INFO]    AVAX: 93 observations
 2026-05-30 14:24:10 [INFO]    NEAR: 93 observations
 2026-05-30 14:24:12 [WARNING] Rate limited, waiting 60s...
+2026-05-30 14:30:39 [INFO]    APT: 93 observations
+2026-05-30 14:30:41 [INFO]    ARB: 93 observations
+2026-05-30 14:30:44 [INFO]    OP: 93 observations
+2026-05-30 14:30:46 [INFO]    MATIC: 3 observations
+2026-05-30 14:30:48 [INFO]    UNI: 93 observations
+2026-05-30 14:30:50 [WARNING] Rate limited, waiting 60s...

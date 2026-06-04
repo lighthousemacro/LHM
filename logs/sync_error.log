@@ -2008,3 +2008,4 @@ send-pack: unexpected disconnect while reading sideband packet
 fatal: the remote end hung up unexpectedly
 Everything up-to-date
 
+[2026-06-03 23:03:34] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260603.db'

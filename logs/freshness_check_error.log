@@ -754,3 +754,23 @@
 2026-05-28 15:29:56 [INFO] Freshness check done: 17 series refreshed, 16,585 obs added.
 2026-05-28 16:35:41 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-05-29 16:39:43 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-06-03 22:54:16 [INFO] Stale series (9):
+  JTSJOL: db=2026-03-01 -> fred=2026-04-01
+  JTSHIL: db=2026-03-01 -> fred=2026-04-01
+  JTSQUL: db=2026-03-01 -> fred=2026-04-01
+  JTSQUR: db=2026-03-01 -> fred=2026-04-01
+  JTSHIR: db=2026-03-01 -> fred=2026-04-01
+  JTSTSR: db=2026-03-01 -> fred=2026-04-01
+  JTS1000JOR: db=2026-03-01 -> fred=2026-04-01
+  JTS1000QUR: db=2026-03-01 -> fred=2026-04-01
+  JTS1000HIR: db=2026-03-01 -> fred=2026-04-01
+2026-06-03 22:54:34 [INFO]   JTSJOL: refreshed (+305 obs)
+2026-06-03 22:54:41 [INFO]   JTSHIL: refreshed (+305 obs)
+2026-06-03 22:55:04 [INFO]   JTSQUL: refreshed (+305 obs)
+2026-06-03 22:55:08 [INFO]   JTSQUR: refreshed (+305 obs)
+2026-06-03 22:55:52 [INFO]   JTSHIR: refreshed (+305 obs)
+2026-06-03 22:56:07 [INFO]   JTSTSR: refreshed (+305 obs)
+2026-06-03 22:56:11 [INFO]   JTS1000JOR: refreshed (+305 obs)
+2026-06-03 22:56:19 [INFO]   JTS1000QUR: refreshed (+305 obs)
+2026-06-03 22:56:34 [INFO]   JTS1000HIR: refreshed (+305 obs)
+2026-06-03 22:57:29 [INFO] Freshness check done: 9 series refreshed, 2,745 obs added.

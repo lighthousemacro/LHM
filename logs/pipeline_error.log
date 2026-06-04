@@ -32052,3 +32052,60 @@ Breadth total: 13 series, 9,763 observations
 2026-06-04 07:50:15 [INFO]    RPL: 93 observations
 2026-06-04 07:50:18 [INFO]    LINK: 93 observations
 2026-06-04 07:50:20 [INFO]    GRT: 93 observations
+2026-06-04 07:50:22 [INFO]    MKR: 93 observations
+2026-06-04 07:50:22 [INFO] Fetching global crypto metrics...
+2026-06-04 07:50:24 [INFO] 
+Crypto total: 434 series, 28,264 observations
+2026-06-04 07:50:25 [INFO] Found 503 S&P 500 constituents
+2026-06-04 07:50:25 [INFO] Fetching prices for 503 tickers...
+2026-06-04 07:50:25 [INFO]    Batch 1/11: 50 tickers
+2026-06-04 07:50:28 [INFO]    Batch 2/11: 50 tickers
+2026-06-04 07:50:30 [INFO]    Batch 3/11: 50 tickers
+2026-06-04 07:50:32 [INFO]    Batch 4/11: 50 tickers
+2026-06-04 07:50:34 [INFO]    Batch 5/11: 50 tickers
+2026-06-04 07:50:36 [INFO]    Batch 6/11: 50 tickers
+2026-06-04 07:50:38 [INFO]    Batch 7/11: 50 tickers
+2026-06-04 07:50:40 [INFO]    Batch 8/11: 50 tickers
+2026-06-04 07:50:42 [INFO]    Batch 9/11: 50 tickers
+2026-06-04 07:50:44 [INFO]    Batch 10/11: 50 tickers
+2026-06-04 07:50:46 [INFO]    Batch 11/11: 3 tickers
+2026-06-04 08:00:00 [ERROR] 
+3 Failed downloads:
+2026-06-04 08:00:00 [ERROR] ['ZBRA', 'ZBH', 'ZTS']: TypeError("'NoneType' object is not subscriptable")
+2026-06-04 08:00:01 [INFO]    Got prices for 500 stocks, 752 days
+2026-06-04 08:00:01 [INFO] Computing % above MAs...
+2026-06-04 08:00:01 [INFO] Computing A/D line...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:116: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-06-04 08:00:01 [INFO] Computing NH-NL...
+2026-06-04 08:00:01 [INFO] Computing McClellan...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:156: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-06-04 08:00:01 [INFO] Computing breadth thrust...
+2026-06-04 08:00:01 [INFO] Storing metrics in database...
+2026-06-04 08:00:02 [INFO]    SPX_PCT_ABOVE_20D: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_PCT_ABOVE_50D: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_PCT_ABOVE_200D: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_ADVANCES: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_DECLINES: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_AD_LINE: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_AD_RATIO: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_NEW_HIGHS: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_NEW_LOWS: 752 observations
+2026-06-04 08:00:02 [INFO]    SPX_NET_NEW_HIGHS: 752 observations
+2026-06-04 08:00:03 [INFO]    SPX_MCCLELLAN_OSC: 752 observations
+2026-06-04 08:00:03 [INFO]    SPX_MCCLELLAN_SUM: 752 observations
+2026-06-04 08:00:03 [INFO]    SPX_BREADTH_THRUST: 752 observations
+2026-06-04 08:00:05 [INFO] 
+Breadth total: 13 series, 9,776 observations
+2026-06-04 08:00:05 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-06-04 08:00:07 [INFO]   ZHVI: 21 series, 6,633 observations
+2026-06-04 08:00:07 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-06-04 08:00:08 [INFO]   ZORI: 21 series, 2,856 observations
+2026-06-04 08:00:08 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-06-04 08:00:08 [INFO]     TV_USHMI: 497 observations
+2026-06-04 08:00:10 [INFO]   Fetching ECONOMICS:USPIND -> TV_USPIND...
+2026-06-04 08:00:10 [INFO]     TV_USPIND: 437 observations
+2026-06-04 08:00:11 [INFO]   Fetching ECONOMICS:USMRI -> TV_USMRI...
+2026-06-04 08:00:12 [INFO]     TV_USMRI: 437 observations
+2026-06-04 08:00:13 [INFO]   Fetching ECONOMICS:USPHSIYY -> TV_USPHSIYY...

@@ -780,3 +780,5 @@
 2026-06-04 08:36:54 [INFO]   ICSA: refreshed (+3100 obs)
 2026-06-04 08:36:56 [INFO]   CCSA: refreshed (+3099 obs)
 2026-06-04 08:36:56 [INFO] Freshness check done: 2 series refreshed, 6,199 obs added.
+2026-06-04 13:06:15 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Read timed out. (read timeout=30). Retrying in 2s...
+2026-06-04 13:06:39 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

@@ -32011,3 +32011,44 @@ Breadth total: 13 series, 9,763 observations
 2026-06-04 07:27:09 [WARNING]    Polygon: HTTP 400
 2026-06-04 07:27:33 [INFO]    Uniswap: 2,772 observations
 2026-06-04 07:27:41 [INFO]    Curve: 2,302 observations
+2026-06-04 07:30:28 [ERROR]    PancakeSwap: Error - HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-06-04 07:30:28 [INFO]    Raydium: 1,907 observations
+2026-06-04 07:30:34 [INFO]    Aerodrome: 1,012 observations
+2026-06-04 07:30:34 [INFO]    Aave: 2,208 observations
+2026-06-04 07:30:35 [WARNING]    Compound: HTTP 400
+2026-06-04 07:30:40 [INFO]    Morpho: 1,387 observations
+2026-06-04 07:30:41 [INFO]    Spark: 1,132 observations
+2026-06-04 07:30:42 [INFO]    GMX: 1,739 observations
+2026-06-04 07:30:42 [INFO]    dYdX: 2,035 observations
+2026-06-04 07:30:43 [INFO]    Hyperliquid: 1,093 observations
+2026-06-04 07:30:43 [INFO]    Synthetix: 2,493 observations
+2026-06-04 07:30:45 [INFO]    Lido: 1,994 observations
+2026-06-04 07:30:46 [INFO]    Rocket Pool: 1,708 observations
+2026-06-04 07:39:13 [ERROR]    Jito: Error - ("Connection broken: ConnectionResetError(54, 'Connection reset by peer')", ConnectionResetError(54, 'Connection reset by peer'))
+2026-06-04 07:39:14 [WARNING]    Marinade: HTTP 400
+2026-06-04 07:39:14 [INFO]    Chainlink: 3 observations
+2026-06-04 07:39:16 [INFO]    MakerDAO: 2,710 observations
+2026-06-04 07:39:19 [INFO] Fetching fees/revenue from DefiLlama...
+2026-06-04 07:39:19 [INFO]    Fees/revenue: 0 protocols, 0 observations
+2026-06-04 07:39:19 [INFO] Fetching chain TVL from DefiLlama...
+2026-06-04 07:39:20 [INFO]    Chain TVL: 371 chains
+2026-06-04 07:39:20 [INFO] Fetching stablecoin data from DefiLlama...
+2026-06-04 07:39:20 [INFO] Fetching 30d price history from CoinGecko...
+2026-06-04 07:39:21 [INFO]    BTC: 93 observations
+2026-06-04 07:39:23 [INFO]    ETH: 93 observations
+2026-06-04 07:39:25 [INFO]    SOL: 93 observations
+2026-06-04 07:39:27 [INFO]    AVAX: 93 observations
+2026-06-04 07:39:29 [INFO]    NEAR: 93 observations
+2026-06-04 07:39:32 [WARNING] Rate limited, waiting 60s...
+2026-06-04 07:40:45 [INFO]    APT: 93 observations
+2026-06-04 07:40:47 [INFO]    ARB: 93 observations
+2026-06-04 07:40:49 [INFO]    OP: 93 observations
+2026-06-04 07:40:51 [INFO]    MATIC: 3 observations
+2026-06-04 07:40:54 [INFO]    UNI: 93 observations
+2026-06-04 07:40:56 [INFO]    CRV: 93 observations
+2026-06-04 07:40:58 [WARNING] Rate limited, waiting 60s...
+2026-06-04 07:50:11 [ERROR]    GMX: Error - ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2026-06-04 07:50:13 [INFO]    LDO: 93 observations
+2026-06-04 07:50:15 [INFO]    RPL: 93 observations
+2026-06-04 07:50:18 [INFO]    LINK: 93 observations
+2026-06-04 07:50:20 [INFO]    GRT: 93 observations

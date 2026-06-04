@@ -774,3 +774,9 @@
 2026-06-03 22:56:19 [INFO]   JTS1000QUR: refreshed (+305 obs)
 2026-06-03 22:56:34 [INFO]   JTS1000HIR: refreshed (+305 obs)
 2026-06-03 22:57:29 [INFO] Freshness check done: 9 series refreshed, 2,745 obs added.
+2026-06-04 08:36:51 [INFO] Stale series (2):
+  ICSA: db=2026-05-23 -> fred=2026-05-30
+  CCSA: db=2026-05-16 -> fred=2026-05-23
+2026-06-04 08:36:54 [INFO]   ICSA: refreshed (+3100 obs)
+2026-06-04 08:36:56 [INFO]   CCSA: refreshed (+3099 obs)
+2026-06-04 08:36:56 [INFO] Freshness check done: 2 series refreshed, 6,199 obs added.

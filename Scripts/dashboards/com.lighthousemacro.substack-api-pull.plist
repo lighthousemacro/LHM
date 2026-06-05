@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    LHM SUBSTACK API PULL
+    =====================
+    Authenticates against Substack's logged-in session cookie and pulls the
+    full per-subscriber engagement list (email opens / clicks / last seen)
+    into the most recent snapshot folder as subscriber_list.csv. The
+    downstream substack_dashboard.py and substack_outreach.py jobs then read
+    it to populate the Warm Free Subs and Top Engagers tabs.
+
+    Schedule:
+        04:20 and 16:20 local time, every day. Fires 10 minutes BEFORE
+        substack-dashboard (04:30 / 16:30) so the fresh subscriber CSV is
+        already on disk when the dashboard runs.
+
+    Cookie expires roughly every 30 days. When it does, the script prints
+    a clear "do this" message to the log and exits 2. The dashboard will
+    still build, just without the Warm Free Subs and Top Engagers tabs.
+
+    To install:
+        cp /Users/bob/LHM/Scripts/dashboards/com.lighthousemacro.substack-api-pull.plist \
+           ~/Library/LaunchAgents/
+        launchctl unload ~/Library/LaunchAgents/com.lighthousemacro.substack-api-pull.plist 2>/dev/null
+        launchctl load ~/Library/LaunchAgents/com.lighthousemacro.substack-api-pull.plist
+
+    To run immediately:
+        launchctl start com.lighthousemacro.substack-api-pull
+
+    Logs:
+        /Users/bob/LHM/Scripts/dashboards/logs/substack_api_pull.log
+        /Users/bob/LHM/Scripts/dashboards/logs/substack_api_pull_stdout.log
+        /Users/bob/LHM/Scripts/dashboards/logs/substack_api_pull_stderr.log
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.lighthousemacro.substack-api-pull</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/bob/LHM/.venv/bin/python</string>
+        <string>/Users/bob/LHM/Scripts/dashboards/substack_api_pull.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/bob/LHM</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>/Users/bob/LHM</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>4</integer><key>Minute</key><integer>20</integer></dict>
+        <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>20</integer></dict>
+    </array>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/bob/LHM/Scripts/dashboards/logs/substack_api_pull_stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/bob/LHM/Scripts/dashboards/logs/substack_api_pull_stderr.log</string>
+</dict>
+</plist>

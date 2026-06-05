@@ -784,3 +784,11 @@
 2026-06-04 13:06:39 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-06-04 16:36:54 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-06-05 09:13:04 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-06-05 13:07:00 [WARNING] Attempt 1 failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer')). Retrying in 2s...
+2026-06-05 13:07:53 [INFO] Stale series (6):
+  PAYEMS: db=2026-04-01 -> fred=2026-05-01
+  UNRATE: db=2026-04-01 -> fred=2026-05-01
+  U6RATE: db=2026-04-01 -> fred=2026-05-01
+  CIVPART: db=2026-04-01 -> fred=2026-05-01
+  AWHAETP: db=2026-04-01 -> fred=2026-05-01
+  CES0500000003: db=2026-04-01 -> fred=2026-05-01

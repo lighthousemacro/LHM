@@ -792,3 +792,10 @@
   CIVPART: db=2026-04-01 -> fred=2026-05-01
   AWHAETP: db=2026-04-01 -> fred=2026-05-01
   CES0500000003: db=2026-04-01 -> fred=2026-05-01
+2026-06-05 13:41:34 [INFO]   PAYEMS: refreshed (+1049 obs)
+2026-06-05 13:43:01 [INFO]   UNRATE: refreshed (+940 obs)
+2026-06-05 13:43:25 [INFO]   U6RATE: refreshed (+388 obs)
+2026-06-05 13:44:13 [INFO]   CIVPART: refreshed (+940 obs)
+2026-06-05 13:44:19 [INFO]   AWHAETP: refreshed (+243 obs)
+2026-06-05 13:44:29 [INFO]   CES0500000003: refreshed (+243 obs)
+2026-06-05 13:44:30 [INFO] Freshness check done: 6 series refreshed, 3,803 obs added.

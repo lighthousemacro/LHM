@@ -514,6 +514,40 @@ def legend_style():
         labelcolor=THEME['legend_fg'],
     )
 
+def add_smart_legend(ax, fontsize=10, prefer=None):
+    """Place the legend in the EMPTIEST region using the same occupancy logic as
+    the annotation auto-placer, considering ALL series (including dual-axis
+    twins), drawn on the FRONT axis, opaque, in front of the data.
+
+    matplotlib's loc='best' only inspects ONE axis on a twin, so on dual-axis
+    charts it routinely covers the other series. This fixes that."""
+    front = max(_twin_axes(ax), key=lambda a: ax.figure.axes.index(a))
+    H, L = [], []
+    for a in _twin_axes(ax):
+        h, l = a.get_legend_handles_labels()
+        H += h; L += l
+    if not H:
+        return None
+    # draw once to measure the legend box, then remove and place into empty space
+    leg = front.legend(H, L, loc='upper left', fontsize=fontsize, **legend_style())
+    fig = ax.figure
+    fig.canvas.draw()
+    r = fig.canvas.get_renderer()
+    bb = leg.get_window_extent(r)
+    axbb = front.get_window_extent(r)
+    w = min(0.9, bb.width / axbb.width)
+    h = min(0.9, bb.height / axbb.height)
+    leg.remove()
+    cx, cy = _best_anchor(_axes_occupancy(ax), w, h, prefer=prefer)
+    m = 0.02
+    cx = min(max(cx, w / 2 + m), 1 - w / 2 - m)
+    cy = min(max(cy, h / 2 + m), 1 - h / 2 - m)
+    leg = front.legend(H, L, loc='center', bbox_to_anchor=(cx, cy),
+                       fontsize=fontsize, **legend_style())
+    leg.set_zorder(1000)
+    return leg
+
+
 def align_yaxis_zero(a1, a2):
     """Align both y-axes at zero for dual-axis charts.
 

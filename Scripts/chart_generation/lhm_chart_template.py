@@ -417,8 +417,10 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
         text = _wrap_to_frac(ax, text, max_width_frac, fontsize=fontsize,
                              fontweight='bold', fontstyle='italic')
 
-    bbox = dict(boxstyle='round,pad=0.5', facecolor='#ffffff',
-                edgecolor=OCEAN, linewidth=1.5, alpha=1.0)
+    # Callout style (locked 2026-06-06): offwhite fill, Deep (#123456) outline,
+    # Ocean (#2389BB) italic text.
+    bbox = dict(boxstyle='round,pad=0.5', facecolor=COLORS['offwhite'],
+                edgecolor=COLORS['deep'], linewidth=1.5, alpha=1.0)
 
     if x is None and y is None:
         w_frac, h_frac = _measure_box_frac(ax, text, fontsize=fontsize)
@@ -435,17 +437,24 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
         ha = ha or 'center'
         va = va or 'bottom'
 
+    # Draw on the FRONTMOST axis (twin-safe) at very high zorder so the callout
+    # is always in front of the data AND the legend, never caught behind a line.
+    # On dual-axis charts the twin is drawn on top of the primary, so a box on
+    # the primary would hide behind the twin's data — drawing on the front axis
+    # fixes that.
+    front = max(_twin_axes(ax), key=lambda a: ax.figure.axes.index(a))
     if point_to is not None:
-        ax.annotate(text, xy=point_to, xycoords='data',
-                    xytext=(x, y), textcoords='axes fraction',
-                    fontsize=fontsize, fontweight='bold', color=OCEAN,
-                    ha=ha, va=va, style='italic', zorder=21, bbox=bbox,
-                    arrowprops=dict(arrowstyle='->', color=OCEAN, lw=1.6,
-                                    shrinkA=4, shrinkB=6))
+        front.annotate(text, xy=point_to, xycoords='data',
+                       xytext=(x, y), textcoords='axes fraction',
+                       fontsize=fontsize, fontweight='bold', color=OCEAN,
+                       ha=ha, va=va, style='italic', zorder=1000, bbox=bbox,
+                       clip_on=False,
+                       arrowprops=dict(arrowstyle='->', color=OCEAN, lw=1.6,
+                                       shrinkA=4, shrinkB=6))
     else:
-        ax.text(x, y, text, transform=ax.transAxes, fontsize=fontsize,
-                fontweight='bold', color=OCEAN, ha=ha, va=va, style='italic',
-                zorder=21, bbox=bbox)
+        front.text(x, y, text, transform=front.transAxes, fontsize=fontsize,
+                   fontweight='bold', color=OCEAN, ha=ha, va=va, style='italic',
+                   zorder=1000, bbox=bbox, clip_on=False)
     return (x, y)
 
 def add_last_value_label(ax, y_data, color, fmt='{:.1f}', side='right', fontsize=9, pad=0.3):
@@ -494,9 +503,11 @@ def set_xlim_to_data(ax, *indices, right_frac=0.06):
     ax.set_xlim(start, end + right_pad)
 
 def legend_style():
-    """Legend styling dict for ax.legend(**legend_style())."""
+    """Legend styling dict for ax.legend(**legend_style()). OPAQUE (framealpha 1.0)
+    so data never shows through. On dual-axis charts, draw the legend on the
+    FRONT (twin) axis and call leg.set_zorder(1000) so it sits over the data."""
     return dict(
-        framealpha=0.95,
+        framealpha=1.0,
         facecolor=THEME['legend_bg'],
         edgecolor='#23BBFF' if THEME['mode'] == 'dark' else THEME['spine'],
         labelcolor=THEME['legend_fg'],

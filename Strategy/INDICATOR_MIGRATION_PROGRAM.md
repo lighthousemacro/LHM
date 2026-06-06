@@ -413,8 +413,12 @@ Structure optimization. `OFR_NYPD-PD_RP_TOT-A` stale (ends 2021).
       artifact). Pairwise interaction = honest NULL (noise pairs hit
       +0.60; method has no resolution at monthly non-overlap). See
       PHASE B-2 RESULT above.
-- [ ] **NEXT (REVISED per SCOPE RECONCILIATION): honest full-registry
-      re-run.** Re-run the entire multi-role v3-v6 registry
+- [x] **DONE 2026-06-06 (was NEXT): honest full-registry re-run.**
+      `registry_honest_v4.py` -> `registry_honest_v4.json` (600 cells).
+      Reproduces every B-1/B-2 anchor; RAW counts inflated, see PHASE B-3
+      RESULT below. (Re-run after a crash lost the original output — the
+      script had survived on disk, the JSON was never written.) Re-run the
+      entire multi-role v3-v6 registry
       (`pillar_specs_v2.py` baskets × {diagnostic ref-excluded,
       macro/asset/relative predictive purged + non-overlap, lead-lag
       event study}) through the leak-corrected harness. This SUPERSEDES

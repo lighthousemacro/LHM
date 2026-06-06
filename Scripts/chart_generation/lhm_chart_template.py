@@ -25,6 +25,7 @@ from datetime import datetime
 
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from matplotlib.ticker import FuncFormatter
 
@@ -230,31 +231,222 @@ def _wrap_to_frac(ax, text, max_width_frac, fontsize, fontweight, fontstyle):
     return '\n'.join(out_lines)
 
 
-def add_annotation_box(ax, text, x=0.50, y=0.055, ha='center', va='bottom',
-                       max_width_frac=0.52, wrap=None):
-    """White callout box with Ocean border and Ocean text.
-    Clean, neutral, reads on any background. Larger font.
-    High zorder so bars/lines never bleed through.
+def _twin_axes(ax):
+    """Return ax plus any overlaid twin axes sharing its position (dual-axis),
+    so the occupancy scan sees BOTH series, not just the primary one."""
+    bx = ax.get_position().bounds
+    out = []
+    for a in ax.figure.axes:
+        b = a.get_position().bounds
+        if (abs(b[0] - bx[0]) < 1e-3 and abs(b[1] - bx[1]) < 1e-3 and
+                abs(b[2] - bx[2]) < 1e-3 and abs(b[3] - bx[3]) < 1e-3):
+            out.append(a)
+    if ax not in out:
+        out.append(ax)
+    return out
 
-    LHM standard (locked 2026-05-17): every callout is anchored low and
-    centered (x=0.50, y=0.055, va='bottom' so it grows UP from the floor)
-    and kept WIDE-AND-SHORT — text wraps only when a line would exceed
-    `max_width_frac` of the axes width (0.52 -> the box spans roughly
-    x 0.24 to 0.76). Wide so it stays 2-3 lines tall and lives in the dead
-    space along the bottom, out of the data, instead of a tall tower up the
-    middle. Pass an explicit char count via `wrap` for legacy char wrapping."""
+
+def _axes_occupancy(ax, nx=64, ny=40):
+    """Rasterize plotted data (lines, bars, scatter, fills) plus the legend
+    into an (ny, nx) occupancy grid in axes-fraction space, so a callout can
+    auto-place into the emptiest region.
+
+    Full-height background shading (NBER recession / regime axvspans) is
+    intentionally ignored — an opaque white box over faint shading reads
+    fine. Dual-axis twins are folded in. Row 0 = bottom of axes, row ny-1 =
+    top (matches axes-fraction y)."""
+    fig = ax.figure
+    fig.canvas.draw()
+    r = fig.canvas.get_renderer()
+    inv = ax.transAxes.inverted()
+    occ = np.zeros((ny, nx), dtype=float)
+
+    def mark_frac(frac, weight=1.0, densify=True):
+        if frac is None or len(frac) == 0:
+            return
+        arr = np.asarray(frac, dtype=float)
+        fx, fy = arr[:, 0], arr[:, 1]
+        good = np.isfinite(fx) & np.isfinite(fy)
+        fx, fy = fx[good], fy[good]
+        if fx.size == 0:
+            return
+        # Densify sparse polylines so a 12-point line still fills its cells.
+        if densify and 1 < fx.size < nx * 2:
+            tt = np.linspace(0, 1, nx * 3)
+            base = np.linspace(0, 1, fx.size)
+            fx, fy = np.interp(tt, base, fx), np.interp(tt, base, fy)
+        inb = (fx >= 0) & (fx <= 1) & (fy >= 0) & (fy <= 1)
+        fx, fy = fx[inb], fy[inb]
+        if fx.size == 0:
+            return
+        ix = np.clip((fx * nx).astype(int), 0, nx - 1)
+        iy = np.clip((fy * ny).astype(int), 0, ny - 1)
+        np.add.at(occ, (iy, ix), weight)
+
+    def mark_box(bb, weight):
+        (x0, y0) = inv.transform((bb.x0, bb.y0))
+        (x1, y1) = inv.transform((bb.x1, bb.y1))
+        if abs(y1 - y0) > 0.9:          # full-height -> background shading
+            return
+        xa, xb = sorted((max(0.0, min(1.0, x0)), max(0.0, min(1.0, x1))))
+        ya, yb = sorted((max(0.0, min(1.0, y0)), max(0.0, min(1.0, y1))))
+        ixa, ixb = int(xa * nx), min(nx, int(xb * nx) + 1)
+        iya, iyb = int(ya * ny), min(ny, int(yb * ny) + 1)
+        if ixb > ixa and iyb > iya:
+            occ[iya:iyb, ixa:ixb] += weight
+
+    for a in _twin_axes(ax):
+        td = a.transData
+        for ln in a.get_lines():
+            if ln.get_visible():
+                xy = ln.get_xydata()
+                if xy is not None and len(xy):
+                    mark_frac(inv.transform(td.transform(xy)))
+        for coll in a.collections:
+            if not coll.get_visible():
+                continue
+            try:
+                offs = coll.get_offsets()
+                if offs is not None and len(offs):
+                    mark_frac(inv.transform(coll.get_offset_transform().transform(offs)),
+                              densify=False)
+            except Exception:
+                pass
+            try:
+                ct = coll.get_transform()
+                for path in coll.get_paths():
+                    if len(path.vertices):
+                        mark_frac(inv.transform(ct.transform(path.vertices)))
+            except Exception:
+                pass
+        for p in a.patches:
+            if p.get_visible():
+                try:
+                    mark_box(p.get_window_extent(r), weight=2.0)
+                except Exception:
+                    pass
+        leg = a.get_legend()
+        if leg is not None and leg.get_visible():
+            try:
+                mark_box(leg.get_window_extent(r), weight=6.0)
+            except Exception:
+                pass
+    return occ
+
+
+def _measure_box_frac(ax, text, fontsize=14, pad_pts=7):
+    """Rendered size of the (wrapped) callout as a fraction of the axes."""
+    fig = ax.figure
+    r = fig.canvas.get_renderer()
+    t = ax.text(0.5, 0.5, text, transform=ax.transAxes, fontsize=fontsize,
+                fontweight='bold', style='italic', ha='center', va='center')
+    bb = t.get_window_extent(r)
+    t.remove()
+    axbb = ax.get_window_extent(r)
+    pad = 2 * pad_pts * fig.dpi / 72.0
+    return (min(0.94, (bb.width + pad) / axbb.width),
+            min(0.94, (bb.height + pad) / axbb.height))
+
+
+def _best_anchor(occ, w_frac, h_frac, margin=0.025, prefer=None):
+    """Center (cx, cy) in axes-fraction of the emptiest box-sized window.
+
+    Occupancy dominates; small tie-breakers lean toward the top and toward a
+    side (so an empty middle isn't chosen over an equally-empty corner). A
+    `prefer` hint adds a soft pull but never overrides data avoidance."""
+    ny, nx = occ.shape
+    wc = min(nx, max(1, int(round(w_frac * nx))))
+    hc = min(ny, max(1, int(round(h_frac * ny))))
+    mx, my = int(round(margin * nx)), int(round(margin * ny))
+    S = np.zeros((ny + 1, nx + 1))
+    S[1:, 1:] = np.cumsum(np.cumsum(occ, axis=0), axis=1)
+
+    targets = {
+        'top-left': (0.18, 0.84), 'top-right': (0.82, 0.84),
+        'bottom-left': (0.18, 0.16), 'bottom-right': (0.82, 0.16),
+        'top': (0.5, 0.86), 'bottom': (0.5, 0.14),
+        'left': (0.2, 0.5), 'right': (0.8, 0.5), 'center': (0.5, 0.5),
+    }
+    tgt = targets.get(prefer)
+
+    ix_lo, ix_hi = max(0, mx), max(max(0, mx), nx - wc - mx)
+    iy_lo, iy_hi = max(0, my), max(max(0, my), ny - hc - my)
+
+    best, best_cost = (0.5, 0.5), None
+    for iy in range(iy_lo, iy_hi + 1):
+        for ix in range(ix_lo, ix_hi + 1):
+            s = S[iy + hc, ix + wc] - S[iy, ix + wc] - S[iy + hc, ix] + S[iy, ix]
+            cx = (ix + wc / 2) / nx
+            cy = (iy + hc / 2) / ny
+            cost = float(s) + 0.4 * (1 - cy) + 0.25 * (0.5 - abs(cx - 0.5))
+            if tgt is not None:
+                cost += 3.0 * ((cx - tgt[0]) ** 2 + (cy - tgt[1]) ** 2)
+            if best_cost is None or cost < best_cost:
+                best_cost, best = cost, (cx, cy)
+    return best
+
+
+def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
+                       max_width_frac=0.52, wrap=None, point_to=None,
+                       prefer=None, fontsize=14):
+    """White callout box, Ocean border + Ocean italic text, AUTO-PLACED.
+
+    Placement upgrade (2026-06-06): by default the callout finds its own home.
+    It rasterizes the plotted data (lines, bars, scatter, fills, legend, and
+    any dual-axis twin) into an occupancy grid, then drops the box in the
+    emptiest rectangle that fits and clamps it fully inside the frame. So it
+    never clips a spine, never sits on the legend or a value pill, and never
+    needs a hand-guessed coordinate again.
+
+        add_annotation_box(ax, "Spreads ignore the labor reality")  # full auto
+        add_annotation_box(ax, "...", prefer='top-left')            # soft corner hint
+        add_annotation_box(ax, "...", point_to=(x_date, y_val))     # pointer arrow
+        add_annotation_box(ax, "...", x=0.5, y=0.055)               # manual override
+
+    `prefer` ('top-left','top-right','bottom-left','bottom-right','top',
+    'bottom','left','right','center') is a soft pull — data avoidance still
+    wins. `point_to` is in DATA coords and draws an arrow from the box to that
+    feature. Passing explicit x/y (axes fraction) forces the position and
+    skips auto-placement. Text wraps so no line exceeds `max_width_frac` of
+    the axes width."""
+    OCEAN = COLORS['ocean']
     if wrap:
         text = textwrap.fill(text, width=wrap,
                              break_long_words=False, break_on_hyphens=False)
     elif max_width_frac:
-        text = _wrap_to_frac(ax, text, max_width_frac,
-                             fontsize=14, fontweight='bold', fontstyle='italic')
-    ax.text(x, y, text, transform=ax.transAxes,
-            fontsize=14, fontweight='bold', color=COLORS['ocean'],
-            ha=ha, va=va, style='italic', zorder=20,
-            bbox=dict(boxstyle='round,pad=0.5',
-                      facecolor='#ffffff', edgecolor=COLORS['ocean'],
-                      linewidth=1.5, alpha=1.0))
+        text = _wrap_to_frac(ax, text, max_width_frac, fontsize=fontsize,
+                             fontweight='bold', fontstyle='italic')
+
+    bbox = dict(boxstyle='round,pad=0.5', facecolor='#ffffff',
+                edgecolor=OCEAN, linewidth=1.5, alpha=1.0)
+
+    if x is None and y is None:
+        w_frac, h_frac = _measure_box_frac(ax, text, fontsize=fontsize)
+        cx, cy = _best_anchor(_axes_occupancy(ax), w_frac, h_frac, prefer=prefer)
+        m = 0.025
+        x = min(max(cx, w_frac / 2 + m), 1 - w_frac / 2 - m)
+        y = min(max(cy, h_frac / 2 + m), 1 - h_frac / 2 - m)
+        ha, va = 'center', 'center'
+    else:
+        if x is None:
+            x = 0.50
+        if y is None:
+            y = 0.055
+        ha = ha or 'center'
+        va = va or 'bottom'
+
+    if point_to is not None:
+        ax.annotate(text, xy=point_to, xycoords='data',
+                    xytext=(x, y), textcoords='axes fraction',
+                    fontsize=fontsize, fontweight='bold', color=OCEAN,
+                    ha=ha, va=va, style='italic', zorder=21, bbox=bbox,
+                    arrowprops=dict(arrowstyle='->', color=OCEAN, lw=1.6,
+                                    shrinkA=4, shrinkB=6))
+    else:
+        ax.text(x, y, text, transform=ax.transAxes, fontsize=fontsize,
+                fontweight='bold', color=OCEAN, ha=ha, va=va, style='italic',
+                zorder=21, bbox=bbox)
+    return (x, y)
 
 def add_last_value_label(ax, y_data, color, fmt='{:.1f}', side='right', fontsize=9, pad=0.3):
     """Colored pill label on axis edge. y_data is a Series or list."""

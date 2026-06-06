@@ -147,7 +147,7 @@ The portfolio is a single book. The distinction is what drives a position.
 
 **Sizing:** `Position = Base × Conviction × Regime Multiplier`. Tier 1 (16-19pts) 20% / Tier 2 (12-15) 12% / Tier 3 (8-11) 7% / Tier 4 0%.
 
-**Dual stops (framework positions):** Thesis stop OR price stop, whichever first. Price stop = below 200d, Z-RoC <-1.0, or 15% drawdown.
+**Dual stops (framework positions):** Thesis stop OR price stop, whichever first. Price stop (updated 2026-06-06) = 200d break, a vol-adjusted/ATR stop, or negative relative-trend (optimized), whichever first. Z-RoC <-1.0 stays a momentum-broken FLAG, not a price stop. (Old "Z-RoC<-1.0 / 15% drawdown" price-stop language retired.)
 
 **Full strategy + tables:** `/Users/bob/LHM/Strategy/LIGHTHOUSE MACRO TRADING STRATEGY - MASTER.md`
 

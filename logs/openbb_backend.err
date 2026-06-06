@@ -108,3 +108,13 @@ Documentation is available at /docs.
 [32mINFO[0m:     Waiting for application startup.
 [32mINFO[0m:     Application startup complete.
 [32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:6900[0m (Press CTRL+C to quit)
+
+
+To access this data from OpenBB Workspace, use the link displayed after the application startup completes.
+Chrome is the recommended browser. Other browsers may conflict or require additional configuration.
+Documentation is available at /docs.
+
+[32mINFO[0m:     Started server process [[36m975[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://127.0.0.1:6900[0m (Press CTRL+C to quit)

@@ -104,8 +104,11 @@ def precompute(data):
         below200 = {X: (c < sma200 * (1 - X)).values for X in X_GRID}
         atrk = {k: (c < (trail - k * a)).values for k in K_GRID}
         rsl = {L: (rs < rs.rolling(L).mean()).values for L in L_GRID}
+        # relative-strength MOMENTUM (6-mo change in RS-to-QAI) — comparable across
+        # names for ranking which trends to hold. Raw RS level is NOT comparable.
+        mom = (rs / rs.shift(126) - 1).values
         pre[t] = dict(cls=asset_class(t), index=idx, close=c.values,
-                      ret=c.pct_change().fillna(0).values, rs=rs.values,
+                      ret=c.pct_change().fillna(0).values, rs=rs.values, mom=mom,
                       entry=entry, below200=below200, atrk=atrk, rsl=rsl)
     return pre
 
@@ -166,36 +169,56 @@ def metrics(book, trades, lo=None, hi=None):
 
 
 def concentrated_book(pre, exit_of, K=K_BOOK):
-    """Top-K-by-RS concentrated long-only book. exit_of: ticker->bool exit array."""
+    """Top-K concentrated long-only book that COMPOUNDS (lets winners run).
+
+    Selection: rank fresh signals by relative-strength MOMENTUM, hold the top K.
+    Accounting: track cash + per-position VALUE. A held name's value grows with
+    its return (no daily rebalance), so a winner becomes a bigger share of the
+    book until it stops out and its capital returns to cash for redeployment.
+    exit_of: ticker -> bool exit array (the name's class-specific stop)."""
     dates = pd.DatetimeIndex(sorted(set().union(*[set(p["index"]) for p in pre.values()])))
     di = {d: i for i, d in enumerate(dates)}
     n, m = len(dates), len(pre); tks = list(pre)
-    RET = np.full((n, m), np.nan); ENT = np.zeros((n, m)); RS = np.full((n, m), np.nan)
+    RET = np.full((n, m), np.nan); ENT = np.zeros((n, m)); MOM = np.full((n, m), np.nan)
     EX = np.zeros((n, m)); CL = np.full((n, m), np.nan)
     for j, t in enumerate(tks):
         p = pre[t]; rows = [di[d] for d in p["index"]]
-        RET[rows, j] = p["ret"]; ENT[rows, j] = p["entry"]; RS[rows, j] = p["rs"]
+        RET[rows, j] = p["ret"]; ENT[rows, j] = p["entry"]; MOM[rows, j] = p["mom"]
         CL[rows, j] = p["close"]; EX[rows, j] = exit_of[t]
-    held = {}; cd = {}; prev = []; port = np.zeros(n); trades = []
+    cash = 1.0; posval = {}; entry_px = {}; cd = {}
+    equity_curve = np.zeros(n); trades = []
     for i in range(n):
-        if prev:
-            rr = RET[i, prev]; rr = rr[~np.isnan(rr)]
-            port[i] = rr.mean() if len(rr) else 0.0
-        for t in list(cd):
-            cd[t] -= 1
-            if cd[t] <= 0: del cd[t]
-        for j in list(held):
+        # 1) positions held coming into today earn today's return (compounding)
+        for j in list(posval):
+            r = RET[i, j]
+            if not np.isnan(r):
+                posval[j] *= (1 + r)
+        equity = cash + sum(posval.values())
+        equity_curve[i] = equity
+        # 2) cooldowns
+        for j in list(cd):
+            cd[j] -= 1
+            if cd[j] <= 0: del cd[j]
+        # 3) exits at today's close (free capital back to cash)
+        for j in list(posval):
             if np.isnan(CL[i, j]) or EX[i, j] == 1 or i == n - 1:
-                if not np.isnan(CL[i, j]): trades.append(CL[i, j] / held[j] - 1)
-                del held[j]; cd[j] = 3
-        if len(held) < K:
-            cand = [(RS[i, j], j) for j in range(m)
-                    if j not in held and j not in cd and ENT[i, j] == 1 and not np.isnan(RS[i, j])]
+                if not np.isnan(CL[i, j]):
+                    trades.append(CL[i, j] / entry_px[j] - 1)
+                cash += posval[j]; del posval[j]; del entry_px[j]; cd[j] = 3
+        # 4) fills — strongest fresh momentum signals, sized at equity/K (let
+        #    winners stay oversized; new money targets an equal-weight-at-entry slice)
+        if len(posval) < K and cash > 1e-6:
+            cand = [(MOM[i, j], j) for j in range(m)
+                    if j not in posval and j not in cd and ENT[i, j] == 1 and not np.isnan(MOM[i, j])]
             cand.sort(reverse=True)
-            for _, j in cand[:K - len(held)]:
-                held[j] = CL[i, j]
-        prev = list(held)
-    return pd.Series(port, index=dates), np.array(trades)
+            for _, j in cand[:K - len(posval)]:
+                alloc = min(equity / K, cash)
+                if alloc <= 1e-6: break
+                posval[j] = alloc; cash -= alloc; entry_px[j] = CL[i, j]
+    eqc = pd.Series(equity_curve, index=dates)
+    eqc = eqc.loc[eqc.ne(eqc.iloc[0]).idxmax():] if (eqc != eqc.iloc[0]).any() else eqc
+    book = eqc.pct_change().fillna(0.0)
+    return book, np.array(trades)
 
 
 def objective(m):

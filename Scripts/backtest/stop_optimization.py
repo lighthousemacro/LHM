@@ -1,27 +1,30 @@
 """
-LHM Stop Optimization Backtest
-==============================
-Optimize the three LHM technical stops to maximize risk/reward (downside
-minimization AND upside capture), scored on Sortino / Calmar / Omega.
+LHM Stop Optimization Backtest  (v2 — concentrated book, per-asset-class)
+========================================================================
+Find the BEST stop (or combination) PER ASSET CLASS for the Crosscurrents book,
+maximizing risk/reward while PRESERVING the fat right tail (the high payoff
+ratio from letting winners run). Cash-only / long-only / no leverage.
 
-The three technical stops (each a parameter to optimize):
-  1. 200d break  — exit when close < 200d_SMA * (1 - X). TIGHT buffer (~1%).
-  2. ATR chandelier — exit when close < (trailing-22d high) - k * ATR(14).
-  3. Negative relative-trend vs QAI — exit when RS = close/QAI falls below its
-     L-day SMA (the position stops beating the benchmark).
+The three stops are CANDIDATES to test, not a mandate to use all three:
+  1. 200d break    — close < 200d_SMA * (1 - X)        [X tight: 0.5% / 2%]
+  2. ATR chandelier— close < trailing-22d-high - k*ATR [k: 2.0 .. 3.5]
+  3. Rel-trend QAI — RS = close/QAI < its L-day SMA     [L: 21 / 63 / 126]
+We search every non-empty subset {200d, atr, rs} x its params, per asset class.
 
-Technical stops are the only exit here (thesis stop is discretionary, not
-backtestable). Entry is held FIXED so the optimization is about the STOPS:
-  entry = close > 200d_SMA AND RS(vs QAI) > RS_63d_SMA  (a trend + relative-
-  strength entry), with a 3-day cooldown after a stop to limit churn.
+Two stages:
+  STAGE 1 — per asset class, equal-weight-ACTIVE across ALL class names (many
+            trades -> robust stop estimate). Rank stop-sets by a payoff-
+            preserving blend (Sortino, Calmar, Omega, Payoff, Expectancy).
+  STAGE 2 — the real CONCENTRATED book: hold the top-10 names by relative
+            strength across the whole universe, applying each name's
+            class-specific best stop. Compare to a plain-200d top-10 baseline.
+            This is the "10 holdings / concentration" read, with payoff.
 
-Benchmark = QAI (IQ Hedge Multi-Strategy Tracker ETF). Walk-forward: optimize
-on the in-sample window, validate out-of-sample. No look-ahead (all signals use
-trailing windows; positions earn next-day returns).
-
+Entry is fixed so the search is about STOPS: close>200d AND RS(vs QAI)>RS_63d.
+Walk-forward: optimize IS (<=2020), validate OOS (2021+). No look-ahead.
 OOS numbers are NOT externally citable until separately verified.
 """
-import os, sys, pickle, itertools, warnings
+import os, pickle, itertools, warnings
 import numpy as np
 import pandas as pd
 warnings.filterwarnings("ignore")
@@ -29,11 +32,10 @@ warnings.filterwarnings("ignore")
 OUT = "/Users/bob/LHM/Outputs/stop_optimization"
 os.makedirs(OUT, exist_ok=True)
 CACHE = f"{OUT}/price_cache.pkl"
-ANN = 252
-IS_END = "2020-12-31"      # in-sample through 2020; OOS 2021+
-START = "2013-01-01"
+ANN, IS_END, START = 252, "2020-12-31", "2013-01-01"
+OOS_LO, OOS_HI = "2021-01-01", "2026-12-31"
+BENCH, K_BOOK = "QAI", 10
 
-BENCH = "QAI"
 ETFS = ("XLK XLF XLV XLY XLP XLE XLI XLB XLU XLRE XLC SPY QQQ DIA IWM MDY EEM "
         "EFA VEA VWO TLT IEF SHY LQD HYG TIP GLD SLV GDX DBC USO MTUM QUAL VLUE "
         "USMV SPLV VTV VUG SMH XBI ITB KRE XHB XOP").split()
@@ -44,19 +46,25 @@ STOCKS = ("AAPL MSFT NVDA AMZN GOOGL META TSLA AVGO JPM V MA UNH HD PG XOM CVX "
           "CVS LIN").split()
 UNIVERSE = ETFS + STOCKS
 
-# Stop parameter grids
-X_GRID = [0.0, 0.005, 0.01, 0.015, 0.02, 0.03]   # 200d buffer (tight)
-K_GRID = [2.0, 2.5, 3.0, 3.5, 4.0]               # ATR chandelier multiple
-L_GRID = [21, 42, 63, 126]                        # relative-trend SMA lookback
+BONDS = set("TLT IEF SHY LQD HYG TIP".split())
+COMMOD = set("GLD SLV GDX DBC USO".split())
+INTL = set("EEM EFA VEA VWO".split())
+def asset_class(t):
+    if t in BONDS: return "bonds"
+    if t in COMMOD: return "commodities"
+    if t in INTL: return "intl_equity"
+    return "us_equity"
+
+SUBSETS = [("200d",), ("atr",), ("rs",), ("200d", "atr"), ("200d", "rs"),
+           ("atr", "rs"), ("200d", "atr", "rs")]
+X_GRID, K_GRID, L_GRID = [0.005, 0.02], [2.0, 2.5, 3.0, 3.5], [21, 63, 126]
 
 
 def fetch():
     if os.path.exists(CACHE):
-        with open(CACHE, "rb") as f:
-            return pickle.load(f)
+        return pickle.load(open(CACHE, "rb"))
     import yfinance as yf
     tickers = sorted(set(UNIVERSE + [BENCH]))
-    print(f"Downloading {len(tickers)} tickers via yfinance...")
     raw = yf.download(tickers, start=START, auto_adjust=True, progress=False,
                       group_by="ticker", threads=True)
     data = {}
@@ -67,9 +75,7 @@ def fetch():
                 data[t] = df
         except Exception:
             pass
-    with open(CACHE, "wb") as f:
-        pickle.dump(data, f)
-    print(f"Cached {len(data)} tickers with usable history.")
+    pickle.dump(data, open(CACHE, "wb"))
     return data
 
 
@@ -81,214 +87,200 @@ def atr(df, n=14):
 
 
 def precompute(data):
-    """Per-ticker: aligned close, entry signal, and the per-param stop-trigger
-    boolean arrays (all vectorized, trailing-window only)."""
     qai = data[BENCH]["Close"]
     pre = {}
     for t in UNIVERSE:
         if t not in data:
             continue
-        df = data[t]
-        c = df["Close"]
+        df = data[t]; c = df["Close"]
         sma200 = c.rolling(200).mean()
         rs = (c / qai.reindex(c.index)).dropna()
-        c = c.loc[rs.index]; df = df.loc[rs.index]; sma200 = sma200.loc[rs.index]
+        idx = rs.index
+        c, df, sma200 = c.loc[idx], df.loc[idx], sma200.loc[idx]
         if len(c) < 400:
             continue
-        rs63 = rs.rolling(63).mean()
-        a = atr(df)
-        trail_hi = c.rolling(22).max()
-        entry = (c > sma200) & (rs > rs63)
-        # per-param stop booleans
-        stop200 = {X: (c < sma200 * (1 - X)).values for X in X_GRID}
-        atrk = {k: (c < (trail_hi - k * a)).values for k in K_GRID}
+        a, trail = atr(df), c.rolling(22).max()
+        entry = ((c > sma200) & (rs > rs.rolling(63).mean())).values
+        below200 = {X: (c < sma200 * (1 - X)).values for X in X_GRID}
+        atrk = {k: (c < (trail - k * a)).values for k in K_GRID}
         rsl = {L: (rs < rs.rolling(L).mean()).values for L in L_GRID}
-        ret = c.pct_change().values
-        pre[t] = dict(index=c.index, ret=ret, entry=entry.values.astype(bool),
-                      stop200=stop200, atrk=atrk, rsl=rsl, close=c.values)
+        pre[t] = dict(cls=asset_class(t), index=idx, close=c.values,
+                      ret=c.pct_change().fillna(0).values, rs=rs.values,
+                      entry=entry, below200=below200, atrk=atrk, rsl=rsl)
     return pre
 
 
-def simulate(p, X, k, L, cooldown=3):
-    """Return (daily position array, list of per-trade returns) for one combo."""
-    entry = p["entry"]
-    exit_sig = p["stop200"][X] | p["atrk"][k] | p["rsl"][L]
-    n = len(entry)
-    pos = np.zeros(n)
-    trades = []
-    in_pos = False; cd = 0; ent_i = -1
-    close = p["close"]
+def exit_array(p, subset, X, k, L):
+    n = len(p["close"]); ex = np.zeros(n, dtype=bool)
+    if "200d" in subset: ex |= p["below200"][X]
+    if "atr" in subset:  ex |= p["atrk"][k]
+    if "rs" in subset:   ex |= p["rsl"][L]
+    return ex
+
+
+def simulate(entry, exit_sig, close, cooldown=3):
+    n = len(entry); pos = np.zeros(n); trades = []
+    in_pos = False; cd = 0; ei = -1
     for i in range(n):
         if in_pos:
             pos[i] = 1
             if exit_sig[i] or i == n - 1:
-                in_pos = False; cd = cooldown
-                trades.append(close[i] / close[ent_i] - 1.0)
-        else:
-            if cd > 0:
-                cd -= 1
-            elif entry[i] and not (np.isnan(close[i])):
-                in_pos = True; pos[i] = 1; ent_i = i
+                in_pos = False; cd = cooldown; trades.append(close[i] / close[ei] - 1)
+        elif cd > 0:
+            cd -= 1
+        elif entry[i]:
+            in_pos = True; pos[i] = 1; ei = i
     return pos, trades
 
 
-def strat_returns(pre, X, k, L):
-    """Equal-weight daily book return across the universe + pooled trades."""
-    cols = {}
-    all_trades = []
-    for t, p in pre.items():
-        pos, trades = simulate(p, X, k, L)
-        # position decided at close t earns return t+1
-        sr = pd.Series(np.r_[0.0, pos[:-1]] * np.nan_to_num(p["ret"]), index=p["index"])
-        cols[t] = sr
-        all_trades.extend(trades)
-    book = pd.DataFrame(cols).mean(axis=1).dropna()   # equal-weight, cash when flat
-    return book, np.array(all_trades)
+def book_eq_active(class_pre, subset, X, k, L):
+    cols = {}; trades = []
+    for t, p in class_pre.items():
+        pos, tr = simulate(p["entry"], exit_array(p, subset, X, k, L), p["close"])
+        posS = np.r_[0.0, pos[:-1]]
+        cols[t] = pd.Series(np.where(posS > 0, posS * p["ret"], np.nan), index=p["index"])
+        trades.extend(tr)
+    book = pd.DataFrame(cols).mean(axis=1).fillna(0.0)
+    book = book.loc[book.ne(0).idxmax():] if (book != 0).any() else book
+    return book, np.array(trades)
 
 
-def metrics(book, trades):
-    if len(book) < 50:
-        return None
-    eq = (1 + book).cumprod()
-    yrs = len(book) / ANN
+def metrics(book, trades, lo=None, hi=None):
+    b = book
+    if lo: b = b[(b.index >= lo) & (b.index <= hi)]
+    if len(b) < 50: return None
+    eq = (1 + b).cumprod(); yrs = len(b) / ANN
     cagr = eq.iloc[-1] ** (1 / yrs) - 1
     dd = (eq / eq.cummax() - 1).min()
-    downside = book[book < 0]
-    sortino = (book.mean() * ANN) / (downside.std() * np.sqrt(ANN)) if len(downside) else np.nan
+    ds = b[b < 0]
+    sortino = (b.mean() * ANN) / (ds.std() * np.sqrt(ANN)) if len(ds) else np.nan
     calmar = cagr / abs(dd) if dd < 0 else np.nan
-    pos_sum = book[book > 0].sum(); neg_sum = -book[book < 0].sum()
-    omega = pos_sum / neg_sum if neg_sum > 0 else np.nan
-    wins = trades[trades > 0]; losses = trades[trades < 0]
-    win_rate = len(wins) / len(trades) if len(trades) else np.nan
-    payoff = wins.mean() / abs(losses.mean()) if len(wins) and len(losses) else np.nan
-    expectancy = trades.mean() if len(trades) else np.nan
+    omega = b[b > 0].sum() / (-b[b < 0].sum()) if (b < 0).any() else np.nan
+    tr = np.asarray(trades); w = tr[tr > 0]; l = tr[tr < 0]
+    payoff = w.mean() / abs(l.mean()) if len(w) and len(l) else np.nan
+    pf = w.sum() / abs(l.sum()) if len(l) and l.sum() != 0 else np.nan
     return dict(CAGR=cagr, MaxDD=dd, Sortino=sortino, Calmar=calmar, Omega=omega,
-                WinRate=win_rate, Payoff=payoff, Expectancy=expectancy,
-                NTrades=len(trades))
+                Payoff=payoff, Expectancy=tr.mean() if len(tr) else np.nan,
+                ProfitFactor=pf, WinRate=len(w)/len(tr) if len(tr) else np.nan,
+                NTrades=len(tr))
 
 
-def window(book, trades, lo, hi):
-    b = book[(book.index >= lo) & (book.index <= hi)]
-    return b
+def concentrated_book(pre, exit_of, K=K_BOOK):
+    """Top-K-by-RS concentrated long-only book. exit_of: ticker->bool exit array."""
+    dates = pd.DatetimeIndex(sorted(set().union(*[set(p["index"]) for p in pre.values()])))
+    di = {d: i for i, d in enumerate(dates)}
+    n, m = len(dates), len(pre); tks = list(pre)
+    RET = np.full((n, m), np.nan); ENT = np.zeros((n, m)); RS = np.full((n, m), np.nan)
+    EX = np.zeros((n, m)); CL = np.full((n, m), np.nan)
+    for j, t in enumerate(tks):
+        p = pre[t]; rows = [di[d] for d in p["index"]]
+        RET[rows, j] = p["ret"]; ENT[rows, j] = p["entry"]; RS[rows, j] = p["rs"]
+        CL[rows, j] = p["close"]; EX[rows, j] = exit_of[t]
+    held = {}; cd = {}; prev = []; port = np.zeros(n); trades = []
+    for i in range(n):
+        if prev:
+            rr = RET[i, prev]; rr = rr[~np.isnan(rr)]
+            port[i] = rr.mean() if len(rr) else 0.0
+        for t in list(cd):
+            cd[t] -= 1
+            if cd[t] <= 0: del cd[t]
+        for j in list(held):
+            if np.isnan(CL[i, j]) or EX[i, j] == 1 or i == n - 1:
+                if not np.isnan(CL[i, j]): trades.append(CL[i, j] / held[j] - 1)
+                del held[j]; cd[j] = 3
+        if len(held) < K:
+            cand = [(RS[i, j], j) for j in range(m)
+                    if j not in held and j not in cd and ENT[i, j] == 1 and not np.isnan(RS[i, j])]
+            cand.sort(reverse=True)
+            for _, j in cand[:K - len(held)]:
+                held[j] = CL[i, j]
+        prev = list(held)
+    return pd.Series(port, index=dates), np.array(trades)
+
+
+def objective(m):
+    """Payoff-preserving blend: reward Sortino, Calmar, Omega, Payoff, Expectancy."""
+    if m is None or m["NTrades"] < 20: return -1e9
+    vals = [m["Sortino"], m["Calmar"], m["Omega"], np.log1p(max(m["Payoff"], 0)),
+            m["Expectancy"] * 100]
+    return float(np.nansum(vals))
 
 
 def run():
-    data = fetch()
-    print(f"Universe with data: {sum(1 for t in UNIVERSE if t in data)}/{len(UNIVERSE)}")
-    pre = precompute(data)
-    print(f"Precomputed {len(pre)} tickers. Grid = {len(X_GRID)*len(K_GRID)*len(L_GRID)} combos.\n")
-
-    rows = []
-    series_cache = {}
-    combos = list(itertools.product(X_GRID, K_GRID, L_GRID))
-    for n, (X, k, L) in enumerate(combos, 1):
-        book, trades = strat_returns(pre, X, k, L)
-        series_cache[(X, k, L)] = book
-        m_is = metrics(window(book, trades, START, IS_END), trades)
-        if m_is is None:
-            continue
-        rows.append(dict(X=X, k=k, L=L, **{f"IS_{kk}": vv for kk, vv in m_is.items()}))
-        if n % 20 == 0:
-            print(f"  {n}/{len(combos)} combos done")
-
-    res = pd.DataFrame(rows)
-    # rank-blend the three objective metrics on IS (higher better)
-    for col in ["IS_Sortino", "IS_Calmar", "IS_Omega"]:
-        res[col + "_rank"] = res[col].rank(ascending=True)
-    res["IS_blend"] = res[["IS_Sortino_rank", "IS_Calmar_rank", "IS_Omega_rank"]].mean(axis=1)
-    res = res.sort_values("IS_blend", ascending=False).reset_index(drop=True)
-
-    # OOS metrics for the top IS combos + baseline
-    def full_metrics(X, k, L, lo, hi):
-        book = series_cache[(X, k, L)]
-        # recompute trades windowed is overkill; use full-trade metrics on windowed book
-        b = window(book, np.array([]), lo, hi)
-        if len(b) < 50:
-            return None
-        eq = (1 + b).cumprod(); yrs = len(b) / ANN
-        cagr = eq.iloc[-1] ** (1 / yrs) - 1
-        dd = (eq / eq.cummax() - 1).min()
-        ds = b[b < 0]
-        sortino = (b.mean() * ANN) / (ds.std() * np.sqrt(ANN)) if len(ds) else np.nan
-        calmar = cagr / abs(dd) if dd < 0 else np.nan
-        omega = b[b > 0].sum() / (-b[b < 0].sum()) if (b < 0).any() else np.nan
-        return dict(CAGR=cagr, MaxDD=dd, Sortino=sortino, Calmar=calmar, Omega=omega)
-
-    oos_lo = "2021-01-01"; oos_hi = "2026-12-31"
-    top = res.head(5).copy()
-    for _, r in top.iterrows():
-        m = full_metrics(r.X, r.k, r.L, oos_lo, oos_hi)
-        for kk, vv in (m or {}).items():
-            res.loc[r.name, f"OOS_{kk}"] = vv
-
-    # baseline: plain 200d-close stop only (X=0, ATR off via huge k, RS off via L=huge)
-    # emulate "200d only" by using X=0 and disabling the other two:
-    base_book, base_trades = strat_returns_baseline(pre)
-    base_is = metrics(window(base_book, base_trades, START, IS_END), base_trades)
-    base_oos = full_metrics_series(base_book, oos_lo, oos_hi)
-
-    res.to_csv(f"{OUT}/grid_results.csv", index=False)
-
-    print("\n" + "=" * 78)
-    print("TOP 5 STOP PARAM SETS  (ranked by IS blend of Sortino/Calmar/Omega)")
-    print("=" * 78)
-    show = ["X", "k", "L", "IS_Sortino", "IS_Calmar", "IS_Omega", "IS_CAGR",
-            "IS_MaxDD", "IS_WinRate", "IS_Payoff", "OOS_Sortino", "OOS_Calmar",
-            "OOS_Omega", "OOS_CAGR", "OOS_MaxDD"]
-    with pd.option_context("display.width", 200, "display.max_columns", 30):
-        print(res[show].head(5).round(3).to_string(index=False))
-
-    print("\nBASELINE (plain 200d-close stop only, same entry):")
-    print("  IS :", {kk: round(vv, 3) for kk, vv in base_is.items()
-                     if kk in ("Sortino", "Calmar", "Omega", "CAGR", "MaxDD", "WinRate", "Payoff")})
-    print("  OOS:", {kk: round(vv, 3) for kk, vv in (base_oos or {}).items()})
-
-    best = res.iloc[0]
-    print("\n" + "=" * 78)
-    print(f"WINNER (IS-optimal): X={best.X:.3f} ({best.X*100:.1f}% below 200d), "
-          f"k={best.k} ATR, L={int(best.L)}d relative-trend")
-    print(f"  IS  Sortino {best.IS_Sortino:.2f} | Calmar {best.IS_Calmar:.2f} | "
-          f"Omega {best.IS_Omega:.2f} | CAGR {best.IS_CAGR*100:.1f}% | MaxDD {best.IS_MaxDD*100:.1f}%")
-    if "OOS_Sortino" in best and pd.notna(best.OOS_Sortino):
-        print(f"  OOS Sortino {best.OOS_Sortino:.2f} | Calmar {best.OOS_Calmar:.2f} | "
-              f"Omega {best.OOS_Omega:.2f} | CAGR {best.OOS_CAGR*100:.1f}% | MaxDD {best.OOS_MaxDD*100:.1f}%")
-    print(f"\nvs baseline IS Sortino {base_is['Sortino']:.2f} / Calmar {base_is['Calmar']:.2f} "
-          f"/ Omega {base_is['Omega']:.2f}")
-    print(f"Results CSV: {OUT}/grid_results.csv")
-    return res, best, base_is, base_oos, series_cache
-
-
-def strat_returns_baseline(pre):
-    """200d-close stop only (X=0), ATR and RS stops disabled."""
-    cols = {}; all_trades = []
+    data = fetch(); pre = precompute(data)
+    classes = {}
     for t, p in pre.items():
-        entry = p["entry"]; exit_sig = p["stop200"][0.0]
-        n = len(entry); pos = np.zeros(n); close = p["close"]
-        in_pos = False; cd = 0; ent_i = -1
-        for i in range(n):
-            if in_pos:
-                pos[i] = 1
-                if exit_sig[i] or i == n - 1:
-                    in_pos = False; cd = 3; all_trades.append(close[i]/close[ent_i]-1)
-            else:
-                if cd > 0: cd -= 1
-                elif entry[i]: in_pos = True; pos[i] = 1; ent_i = i
-        cols[t] = pd.Series(np.r_[0.0, pos[:-1]] * np.nan_to_num(p["ret"]), index=p["index"])
-    book = pd.DataFrame(cols).mean(axis=1).dropna()
-    return book, np.array(all_trades)
+        classes.setdefault(p["cls"], {})[t] = p
+    print(f"Universe: {len(pre)} names across {len(classes)} classes: "
+          + ", ".join(f"{c}({len(v)})" for c, v in classes.items()) + "\n")
 
+    # ---------- STAGE 1: best stop per asset class ----------
+    best_by_class = {}; rows = []
+    for cls, cp in classes.items():
+        scored = []
+        for subset in SUBSETS:
+            xs = X_GRID if "200d" in subset else [None]
+            ks = K_GRID if "atr" in subset else [None]
+            ls = L_GRID if "rs" in subset else [None]
+            for X, k, L in itertools.product(xs, ks, ls):
+                book, trades = book_eq_active(cp, subset, X, k, L)
+                m_is = metrics(book, trades, START, IS_END)
+                sc = objective(m_is)
+                scored.append((sc, subset, X, k, L, book, trades, m_is))
+        scored.sort(key=lambda z: z[0], reverse=True)
+        sc, subset, X, k, L, book, trades, m_is = scored[0]
+        m_oos = metrics(book, trades, OOS_LO, OOS_HI)
+        best_by_class[cls] = (subset, X, k, L)
+        # baseline for this class: 200d-only, tight 0.5%
+        bbook, btr = book_eq_active(cp, ("200d",), 0.005, None, None)
+        b_is = metrics(bbook, btr, START, IS_END)
+        rows.append((cls, subset, X, k, L, m_is, m_oos, b_is))
 
-def full_metrics_series(book, lo, hi):
-    b = book[(book.index >= lo) & (book.index <= hi)]
-    if len(b) < 50: return None
-    eq = (1 + b).cumprod(); yrs = len(b)/ANN
-    cagr = eq.iloc[-1]**(1/yrs)-1; dd = (eq/eq.cummax()-1).min()
-    ds = b[b < 0]
-    return dict(Sortino=(b.mean()*ANN)/(ds.std()*np.sqrt(ANN)) if len(ds) else np.nan,
-                Calmar=cagr/abs(dd) if dd < 0 else np.nan,
-                Omega=b[b > 0].sum()/(-b[b < 0].sum()) if (b < 0).any() else np.nan,
-                CAGR=cagr, MaxDD=dd)
+    print("=" * 92)
+    print("STAGE 1 — BEST STOP PER ASSET CLASS (equal-weight-active, payoff-preserving objective)")
+    print("=" * 92)
+    for cls, subset, X, k, L, m_is, m_oos, b_is in rows:
+        tag = "+".join(subset)
+        params = []
+        if "200d" in subset: params.append(f"X={X:.3f}")
+        if "atr" in subset: params.append(f"k={k}")
+        if "rs" in subset: params.append(f"L={int(L)}")
+        print(f"\n[{cls}]  BEST: {tag}  ({', '.join(params)})")
+        print(f"   IS : Sortino {m_is['Sortino']:.2f} | Calmar {m_is['Calmar']:.2f} | "
+              f"Omega {m_is['Omega']:.2f} | Payoff {m_is['Payoff']:.1f}x | "
+              f"CAGR {m_is['CAGR']*100:.1f}% | MaxDD {m_is['MaxDD']*100:.0f}% | n={m_is['NTrades']}")
+        if m_oos:
+            print(f"   OOS: Sortino {m_oos['Sortino']:.2f} | Calmar {m_oos['Calmar']:.2f} | "
+                  f"Omega {m_oos['Omega']:.2f} | Payoff {m_oos['Payoff']:.1f}x | CAGR {m_oos['CAGR']*100:.1f}%")
+        print(f"   vs 200d-only baseline IS: Sortino {b_is['Sortino']:.2f} | "
+              f"Calmar {b_is['Calmar']:.2f} | Payoff {b_is['Payoff']:.1f}x | CAGR {b_is['CAGR']*100:.1f}%")
+
+    # ---------- STAGE 2: concentrated top-10 book ----------
+    exit_best = {t: exit_array(p, *best_by_class[p["cls"]]) for t, p in pre.items()}
+    exit_200 = {t: exit_array(p, ("200d",), 0.005, None, None) for t, p in pre.items()}
+    cb, ctr = concentrated_book(pre, exit_best)
+    bb, btr = concentrated_book(pre, exit_200)
+    cm_is, cm_oos = metrics(cb, ctr, START, IS_END), metrics(cb, ctr, OOS_LO, OOS_HI)
+    bm_is, bm_oos = metrics(bb, btr, START, IS_END), metrics(bb, btr, OOS_LO, OOS_HI)
+
+    print("\n" + "=" * 92)
+    print(f"STAGE 2 — CONCENTRATED TOP-{K_BOOK} BOOK (RS-ranked, long-only, cash-only)")
+    print("=" * 92)
+    def line(tag, m):
+        print(f"  {tag:32s} Sortino {m['Sortino']:.2f} | Calmar {m['Calmar']:.2f} | "
+              f"Omega {m['Omega']:.2f} | Payoff {m['Payoff']:.1f}x | PF {m['ProfitFactor']:.2f} | "
+              f"Win {m['WinRate']*100:.0f}% | CAGR {m['CAGR']*100:.1f}% | MaxDD {m['MaxDD']*100:.0f}% | n={m['NTrades']}")
+    print("\nIN-SAMPLE (<=2020):")
+    line("per-class optimized stops", cm_is); line("plain 200d-only baseline", bm_is)
+    print("\nOUT-OF-SAMPLE (2021+):")
+    line("per-class optimized stops", cm_oos); line("plain 200d-only baseline", bm_oos)
+
+    # save equity curves
+    pd.DataFrame({"optimized": (1+cb).cumprod(), "baseline_200d": (1+bb).cumprod()}).to_csv(
+        f"{OUT}/concentrated_equity.csv")
+    print(f"\nEquity curves: {OUT}/concentrated_equity.csv")
+    return best_by_class, cb, bb
 
 
 if __name__ == "__main__":
-    res, best, base_is, base_oos, series = run()
+    run()

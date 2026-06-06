@@ -387,8 +387,8 @@ def _best_anchor(occ, w_frac, h_frac, margin=0.025, prefer=None):
 
 
 def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
-                       max_width_frac=0.52, wrap=None, point_to=None,
-                       prefer=None, fontsize=14):
+                       max_width_frac=0.40, wrap=None, point_to=None,
+                       prefer=None, fontsize=11):
     """White callout box, Ocean border + Ocean italic text, AUTO-PLACED.
 
     Placement upgrade (2026-06-06): by default the callout finds its own home.
@@ -417,10 +417,10 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
         text = _wrap_to_frac(ax, text, max_width_frac, fontsize=fontsize,
                              fontweight='bold', fontstyle='italic')
 
-    # Callout style (locked 2026-06-06): offwhite fill, Deep (#123456) outline,
-    # Ocean (#2389BB) italic text.
-    bbox = dict(boxstyle='round,pad=0.5', facecolor=COLORS['offwhite'],
-                edgecolor=COLORS['deep'], linewidth=1.5, alpha=1.0)
+    # Callout style (locked 2026-06-06): offwhite fill, Deep (#123456) outline AND
+    # text, small font, tight box. Kept small + optional so it never dominates.
+    bbox = dict(boxstyle='round,pad=0.32', facecolor=COLORS['offwhite'],
+                edgecolor=COLORS['deep'], linewidth=1.1, alpha=1.0)
 
     if x is None and y is None:
         w_frac, h_frac = _measure_box_frac(ax, text, fontsize=fontsize)
@@ -443,17 +443,18 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
     # the primary would hide behind the twin's data — drawing on the front axis
     # fixes that.
     front = max(_twin_axes(ax), key=lambda a: ax.figure.axes.index(a))
+    DEEP = COLORS['deep']
     if point_to is not None:
         front.annotate(text, xy=point_to, xycoords='data',
                        xytext=(x, y), textcoords='axes fraction',
-                       fontsize=fontsize, fontweight='bold', color=OCEAN,
+                       fontsize=fontsize, fontweight='bold', color=DEEP,
                        ha=ha, va=va, style='italic', zorder=1000, bbox=bbox,
                        clip_on=False,
-                       arrowprops=dict(arrowstyle='->', color=OCEAN, lw=1.6,
+                       arrowprops=dict(arrowstyle='->', color=DEEP, lw=1.4,
                                        shrinkA=4, shrinkB=6))
     else:
         front.text(x, y, text, transform=front.transAxes, fontsize=fontsize,
-                   fontweight='bold', color=OCEAN, ha=ha, va=va, style='italic',
+                   fontweight='bold', color=DEEP, ha=ha, va=va, style='italic',
                    zorder=1000, bbox=bbox, clip_on=False)
     return (x, y)
 

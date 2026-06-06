@@ -1687,3 +1687,4 @@ rsync(27997): error: /Users/bob/LHM/Strategy/.tmp.driveupload/1087: open (2) in 
 === 2026-06-06 19:00:01 mirror start ===
 === 2026-06-06 19:00:04 mirror end (exit 0) ===
 === 2026-06-06 19:30:01 mirror start ===
+=== 2026-06-06 19:30:03 mirror end (exit 0) ===

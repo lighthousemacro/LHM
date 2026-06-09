@@ -799,3 +799,7 @@
 2026-06-05 13:44:19 [INFO]   AWHAETP: refreshed (+243 obs)
 2026-06-05 13:44:29 [INFO]   CES0500000003: refreshed (+243 obs)
 2026-06-05 13:44:30 [INFO] Freshness check done: 6 series refreshed, 3,803 obs added.
+2026-06-08 20:31:14 [INFO] Stale series (1):
+  TOTALSL: db=2026-03-01 -> fred=2026-04-01
+2026-06-08 20:32:22 [INFO]   TOTALSL: refreshed (+1000 obs)
+2026-06-08 20:32:24 [INFO] Freshness check done: 1 series refreshed, 1,000 obs added.

@@ -32978,3 +32978,10 @@ Breadth total: 13 series, 9,763 observations
 2026-06-08 21:22:52 [INFO]    suspect: 29
 2026-06-08 21:22:52 [INFO]    warning: 10
 2026-06-08 21:22:53 [INFO] Quality flags updated in database.
+2026-06-09 14:25:33 [INFO] Database initialized: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+2026-06-09 14:25:33 [INFO] --- FRED: Category Discovery ---
+2026-06-09 14:25:33 [INFO]    Employment_Situation...
+2026-06-09 14:25:34 [INFO]    Employment_Situation: 0 series, 0 obs
+2026-06-09 14:25:35 [INFO]    CPI_Urban_Consumers...
+2026-06-09 14:25:36 [INFO]    CPI_Urban_Consumers: 0 series, 0 obs
+2026-06-09 14:25:36 [INFO]    Industrial_Production...

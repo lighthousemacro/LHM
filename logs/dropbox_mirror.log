@@ -1719,3 +1719,8 @@ rsync(21036): error: Scripts/utilities/voice_lint.py: utimensat (2): No such fil
 rsync(21034): error: unexpected end of file
 === 2026-06-09 18:30:03 mirror end (exit 0) ===
 === 2026-06-09 19:00:01 mirror start ===
+rsync(21358): error: logs/.sync.log.0bxbxedOjo: write: No space left on device
+rsync(21358): error: buf_copy
+rsync(21358): error: logs/.sync.log.0bxbxedOjo: write: No space left on device
+rsync(21355): error: unexpected end of file
+=== 2026-06-09 19:00:11 mirror end (exit 0) ===

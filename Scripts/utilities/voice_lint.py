@@ -47,6 +47,9 @@ WARN = [
     ("not-X-its-Y STRUCTURE",
         re.compile(r"\b(is|are|was|were|it'?s|that'?s|there'?s)\s+not\b[^.?!\n]{0,90}?[.?!]\s+(It|That|They|It'?s|That'?s|They'?re)\b\s+(is|are|'?s|does|do|was|were|about)\b", re.I),
         "Banned 'X is not A. It is B.' structural pivot. Cap 0-2/piece, never as a closer."),
+    ("not-X-its-Y (comma-split)",
+        re.compile(r"\b(is|are|was|were)\s+not\b[^.?!\n]{0,80}?,\s+(it|that|they)\s+(is|are|'?s|was|were)\b", re.I),
+        "Banned 'X is not A, it is B.' comma-split pivot. Same rule, cap 0-2/piece, never a closer."),
     # recycled offenders the corpus audit caught propagating verbatim
     ("recycled-antithesis",
         re.compile(r"not a curve responding to growth|Not because [^.]{0,40} is one indicator among many", re.I),

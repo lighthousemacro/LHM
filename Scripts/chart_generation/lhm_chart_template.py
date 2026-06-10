@@ -331,6 +331,19 @@ def _axes_occupancy(ax, nx=64, ny=40):
                 mark_box(leg.get_window_extent(r), weight=6.0)
             except Exception:
                 pass
+        # Boxed text artists (auto-placed callouts + value pills) are obstacles
+        # too, so legend/annotation placement is order-independent: whichever is
+        # drawn second now avoids the first instead of landing on top of it.
+        for t in a.texts:
+            if not t.get_visible():
+                continue
+            patch = t.get_bbox_patch()
+            if patch is None:
+                continue
+            try:
+                mark_box(patch.get_window_extent(r), weight=5.0)
+            except Exception:
+                pass
     return occ
 
 

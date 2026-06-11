@@ -2014,3 +2014,9 @@ Everything up-to-date
 [2026-06-08 20:33:01] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260608.db'
 [2026-06-11 03:00:13] git fetch failed: error: cannot open '.git/FETCH_HEAD': No space left on device
 
+[2026-06-11 11:30:06] git push failed: Push to origin/main was rejected. If it says 'non-fast-forward', the remote moved again — rerun the sync (it will rebase) or:
+  cd /Users/bob/LHM && git pull --rebase origin main && git push
+git said:
+remote: Internal Server Error
+fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': The requested URL returned error: 500
+

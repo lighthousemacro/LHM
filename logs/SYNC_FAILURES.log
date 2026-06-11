@@ -2059,3 +2059,5 @@ Everything up-to-date
 [2026-06-05 00:00:12] cloud sync [iCloud] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Library/Mobile Documents/com~apple~CloudDocs/LHM_Backups/Lighthouse_Master_20260605.db'
 [2026-06-05 00:00:12] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260605.db'
 [2026-06-08 20:33:01] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260608.db'
+[2026-06-11 03:00:13] git fetch failed: error: cannot open '.git/FETCH_HEAD': No space left on device
+

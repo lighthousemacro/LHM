@@ -837,3 +837,15 @@
   CORESTICKM159SFRBATL: db=2026-04-01 -> fred=2026-05-01
 2026-06-10 16:38:00 [INFO]   CORESTICKM159SFRBATL: refreshed (+701 obs)
 2026-06-10 16:38:00 [INFO] Freshness check done: 1 series refreshed, 701 obs added.
+2026-06-11 12:35:46 [INFO] Stale series (5):
+  PPIFIS: db=2026-04-01 -> fred=2026-05-01
+  PPIDSS: db=2026-04-01 -> fred=2026-05-01
+  PPIFDS: db=2026-04-01 -> fred=2026-05-01
+  ICSA: db=2026-05-30 -> fred=2026-06-06
+  CCSA: db=2026-05-23 -> fred=2026-05-30
+2026-06-11 12:35:47 [INFO]   PPIFIS: refreshed (+199 obs)
+2026-06-11 12:35:47 [INFO]   PPIDSS: refreshed (+199 obs)
+2026-06-11 12:35:48 [INFO]   PPIFDS: refreshed (+199 obs)
+2026-06-11 12:35:52 [INFO]   ICSA: refreshed (+3101 obs)
+2026-06-11 12:35:53 [INFO]   CCSA: refreshed (+3100 obs)
+2026-06-11 12:35:53 [INFO] Freshness check done: 5 series refreshed, 6,798 obs added.

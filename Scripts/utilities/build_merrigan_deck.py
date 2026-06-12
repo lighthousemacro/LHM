@@ -204,11 +204,10 @@ c.drawString(66, yy-30, "\"The framework does the work so the analysis stays hon
 c.showPage()
 
 # 7 — ENGAGEMENT & PRICING
-frame(c, 7); head(c, "ENGAGEMENT & PRICING", "Flexible tiers. No AUM fees. No lock-in.")
-tiers = [("RESEARCH", ["Full Substack research suite.", "Beacon, Beam, Chartbook,", "Horizon, composites."], "$50/mo  ·  $500/yr", OCEAN),
-         ("ADVISORY", ["Research suite included.", "Monthly strategy calls.", "Client-facing + white-label materials."], "$2,500/mo", OCEAN),
-         ("FRACTIONAL CIO", ["Everything in Advisory, plus:", "IC participation. Model review.", "Crisis access. Quarterly outlook."], "Custom retainer", OCEAN)]
-x, w, h, y = 48, 280, 250, H-388
+frame(c, 7); head(c, "ENGAGEMENT & PRICING", "The advisory engagement. No AUM fees. No lock-in.")
+tiers = [("ADVISORY", ["The research suite, included.", "Monthly strategy calls.", "Client-facing + white-label materials.", "Direct access when volatility hits."], "$2,500/mo", OCEAN),
+         ("FRACTIONAL CIO", ["Everything in Advisory, plus:", "IC participation. Model review.", "Crisis access. Quarterly outlook ghostwriting."], "Custom retainer", OCEAN)]
+x, w, h, y = 48, 420, 250, H-388
 for (lab, lines, price, col) in tiers:
     c.setFillColor(CARD); c.rect(x, y, w, h, fill=1, stroke=0)
     c.setFillColor(col); c.rect(x, y+h-5, w, 5, fill=1, stroke=0)
@@ -216,8 +215,8 @@ for (lab, lines, price, col) in tiers:
     ly = y+h-58
     for ln in lines:
         c.setFont(F_B, 10.5); c.setFillColor(WHITE); c.drawString(x+18, ly, ln); ly -= 16
-    c.setFont(F_BB, 14); c.setFillColor(WHITE); c.drawString(x+18, y+16, price)
-    x += w + 15
+    c.setFont(F_BB, 16); c.setFillColor(WHITE); c.drawString(x+18, y+18, price)
+    x += w + 24
 c.setFont(F_B, 11.5); c.setFillColor(MUTE)
 c.drawCentredString(W/2, y-26, "A full-time CIO runs $300K+ a year. This is institutional depth at a fraction of it.")
 c.showPage()

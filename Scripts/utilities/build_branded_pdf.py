@@ -209,7 +209,7 @@ def _page(canvas, doc):
     canvas.rect(M_LR + bw, by, CONTENT_W - bw, 3, fill=1, stroke=0)
     canvas.setFont(F_BODY, 7); canvas.setFillColor(MUTED)
     canvas.drawString(M_LR, by - 12,
-                      "Lighthouse Macro  |  LighthouseMacro.com  |  @LHMacro")
+                      "Lighthouse Macro  |  Research  |  @LHMacro")
     canvas.drawCentredString(PAGE_W / 2, by - 12, f"Page {doc.page}")
     canvas.setFont(F_H, 7); canvas.setFillColor(OCEAN)
     canvas.drawRightString(PAGE_W - M_LR, by - 12, "MACRO, ILLUMINATED.")

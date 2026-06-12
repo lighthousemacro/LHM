@@ -850,3 +850,4 @@
 2026-06-11 12:35:53 [INFO]   CCSA: refreshed (+3100 obs)
 2026-06-11 12:35:53 [INFO] Freshness check done: 5 series refreshed, 6,798 obs added.
 2026-06-11 16:35:49 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-06-12 08:35:43 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

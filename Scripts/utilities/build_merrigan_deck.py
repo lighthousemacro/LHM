@@ -204,21 +204,30 @@ c.drawString(66, yy-30, "\"The framework does the work so the analysis stays hon
 c.showPage()
 
 # 7 — ENGAGEMENT & PRICING
-frame(c, 7); head(c, "ENGAGEMENT & PRICING", "The advisory engagement. No AUM fees. No lock-in.")
-tiers = [("ADVISORY", ["The research suite, included.", "Monthly strategy calls.", "Client-facing + white-label materials.", "Direct access when volatility hits."], "$2,500/mo", OCEAN),
-         ("FRACTIONAL CIO", ["Everything in Advisory, plus:", "IC participation. Model review.", "Crisis access. Quarterly outlook ghostwriting."], "Custom retainer", OCEAN)]
-x, w, h, y = 48, 420, 250, H-388
-for (lab, lines, price, col) in tiers:
+frame(c, 7); head(c, "ENGAGEMENT & PRICING", "Same framework. Tailored to where you are.")
+tiers = [("ADVISORY", "RIAs, family offices, smaller advisory firms",
+          ["Full research suite", "Monthly strategy calls", "Client-facing materials",
+           "White-label commentary", "Direct strategist access"],
+          "$3-5K / month", "$36-60K / yr equivalent"),
+         ("FRACTIONAL CIO", "Larger RIAs, multi-family offices, OCIO seats",
+          ["Everything in Advisory", "IC participation", "Model allocation review",
+           "Priority crisis access", "Quarterly outlook ghostwriting"],
+          "$6-10K / month", "Quarterly minimum")]
+x, w, h, y = 48, 420, 265, 125
+for (lab, who, lines, price, sub) in tiers:
     c.setFillColor(CARD); c.rect(x, y, w, h, fill=1, stroke=0)
-    c.setFillColor(col); c.rect(x, y+h-5, w, 5, fill=1, stroke=0)
-    c.setFont(F_BB, 13); c.setFillColor(col); c.drawString(x+18, y+h-30, lab)
-    ly = y+h-58
+    c.setFillColor(OCEAN); c.rect(x, y+h-5, w, 5, fill=1, stroke=0)
+    c.setFont(F_BB, 14); c.setFillColor(OCEAN); c.drawString(x+20, y+h-32, lab)
+    c.setFont(F_B, 9.5); c.setFillColor(MUTE); c.drawString(x+20, y+h-48, who)
+    c.setFont(F_T, 23); c.setFillColor(WHITE); c.drawString(x+20, y+h-84, price)
+    c.setFont(F_B, 9.5); c.setFillColor(MUTE); c.drawString(x+20, y+h-100, sub)
+    ly = y+h-128
     for ln in lines:
-        c.setFont(F_B, 10.5); c.setFillColor(WHITE); c.drawString(x+18, ly, ln); ly -= 16
-    c.setFont(F_BB, 16); c.setFillColor(WHITE); c.drawString(x+18, y+18, price)
+        c.setFillColor(OCEAN); c.circle(x+24, ly+3, 1.9, fill=1, stroke=0)
+        c.setFont(F_B, 10.5); c.setFillColor(WHITE); c.drawString(x+34, ly, ln); ly -= 19
     x += w + 24
-c.setFont(F_B, 11.5); c.setFillColor(MUTE)
-c.drawCentredString(W/2, y-26, "A full-time CIO runs $300K+ a year. This is institutional depth at a fraction of it.")
+c.setFont(F_B, 11); c.setFillColor(MUTE)
+c.drawCentredString(W/2, y-22, "A full-time CIO runs $300K+ a year. This is the macro overlay at a fraction of it.")
 c.showPage()
 
 # 8 — CLOSE

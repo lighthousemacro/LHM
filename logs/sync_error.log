@@ -2020,3 +2020,4 @@ git said:
 remote: Internal Server Error
 fatal: unable to access 'https://github.com/lighthousemacro/LHM.git/': The requested URL returned error: 500
 
+[2026-06-12 01:32:18] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260612.db'

@@ -1,0 +1,8 @@
+# Development & test dependencies for the LHM monorepo.
+# Install with: pip install -r requirements-dev.txt
+#
+# Runtime deps used by the modules under test. Versions are left unpinned to
+# track whatever Bob runs locally; pin here if CI starts drifting.
+pandas
+numpy
+pytest

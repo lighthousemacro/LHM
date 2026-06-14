@@ -12,6 +12,7 @@ Path layout this enables:
 """
 
 import sys
+import types
 from pathlib import Path
 
 import numpy as np
@@ -25,6 +26,27 @@ for p in (REPO_ROOT, PIPELINE_DIR):
     sp = str(p)
     if sp not in sys.path:
         sys.path.insert(0, sp)
+
+# Register a lightweight stub for the ``lighthouse`` package *before* anything
+# imports its submodules.
+#
+# The real ``Scripts/data_pipeline/lighthouse/__init__.py`` eagerly imports the
+# pipeline -> fetchers chain, which pulls in heavy runtime-only deps (e.g.
+# ``requests``). The modules under test (transforms, quality, config) and the
+# compute_indices import chain don't need any of that. We give the package a
+# ``__path__`` pointing at the real directory but an empty ``__init__`` body, so
+# ``import lighthouse.transforms`` / ``from lighthouse.config import ...`` (and
+# quality's relative ``from .config import ...``) resolve the individual source
+# files directly without executing the eager package init.
+#
+# If the suite grows to cover the fetcher/pipeline stack itself, add the runtime
+# deps to requirements-dev.txt and import those modules explicitly instead.
+_LIGHTHOUSE_DIR = PIPELINE_DIR / "lighthouse"
+if "lighthouse" not in sys.modules and _LIGHTHOUSE_DIR.is_dir():
+    _pkg = types.ModuleType("lighthouse")
+    _pkg.__path__ = [str(_LIGHTHOUSE_DIR)]
+    _pkg.__package__ = "lighthouse"
+    sys.modules["lighthouse"] = _pkg
 
 
 @pytest.fixture

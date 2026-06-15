@@ -359,11 +359,23 @@ def build_horizon_dataset():
         first_obs = df.index.min()
         last_obs = min(df.index.max(), pd.Timestamp(YESTERDAY))
 
-        # Interpolate gaps (only between first obs and yesterday)
-        df_interp = interpolate_series(df, first_obs, last_obs)
-
-        # Apply transformations
-        df_transformed = apply_transforms(df_interp, transforms, freq)
+        # Transform on NATIVE frequency, THEN forward-fill to daily.
+        # Previously this interpolated to a daily grid BEFORE transforming, so
+        # freq="M" period counts (yoy=12, z_window=24) became DAY counts:
+        # Retail_Sales_yoy_pct read 0.19% (12-day change) vs the true ~4.9%
+        # 12-month change, and every monthly _z column used a ~24-day window.
+        # Transforming on the native series fixes the period counts; the
+        # forward-fill onto the daily grid carries the latest print until the
+        # next release lands (daily-FF / nowcast), instead of fabricating
+        # linearly-interpolated intermediate values.
+        s_native = df["value"]
+        s_native = s_native[(s_native.index >= first_obs) & (s_native.index <= last_obs)]
+        s_native = s_native[~s_native.index.duplicated(keep="last")]
+        df_transformed_native = apply_transforms(s_native, transforms, freq)
+        daily_idx = pd.date_range(start=first_obs, end=last_obs, freq="D")
+        df_transformed = (df_transformed_native
+                          .reindex(df_transformed_native.index.union(daily_idx))
+                          .sort_index().ffill().reindex(daily_idx))
 
         # Rename columns with series name prefix
         for col in df_transformed.columns:

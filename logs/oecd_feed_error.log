@@ -829,3 +829,57 @@ sqlite3.OperationalError: database is locked
 2026-06-14 11:29:29,273 INFO   OECD_CLI_CN: 409 obs
 2026-06-14 11:29:32,575 INFO   OECD_LTIR_CN: 148 obs
 2026-06-14 11:29:35,739 INFO   OECD_STIR_CN: 346 obs
+2026-06-15 06:31:37,445 INFO   OECD_GDP_REAL_US: 317 obs
+2026-06-15 06:31:41,689 INFO   OECD_CPI_YOY_US: 844 obs
+2026-06-15 06:31:45,966 INFO   OECD_UNEMP_US: 856 obs
+2026-06-15 06:31:56,057 INFO   OECD_CLI_US: 857 obs
+2026-06-15 06:31:59,954 INFO   OECD_LTIR_US: 869 obs
+2026-06-15 06:32:01,402 INFO   OECD_STIR_US: 743 obs
+2026-06-15 06:32:03,888 INFO   OECD_CPI_YOY_EA: 420 obs
+2026-06-15 06:32:06,913 INFO   OECD_GDP_REAL_JP: 265 obs
+2026-06-15 06:32:10,717 INFO   OECD_CPI_YOY_JP: 786 obs
+2026-06-15 06:32:16,530 INFO   OECD_UNEMP_JP: 856 obs
+2026-06-15 06:32:21,348 INFO   OECD_CLI_JP: 809 obs
+2026-06-15 06:32:24,928 INFO   OECD_LTIR_JP: 449 obs
+2026-06-15 06:32:25,957 INFO   OECD_STIR_JP: 289 obs
+2026-06-15 06:32:29,550 INFO   OECD_GDP_REAL_GB: 285 obs
+2026-06-15 06:32:32,522 INFO   OECD_CPI_YOY_GB: 844 obs
+2026-06-15 06:32:35,946 INFO   OECD_UNEMP_GB: 517 obs
+2026-06-15 06:32:41,938 INFO   OECD_CLI_GB: 822 obs
+2026-06-15 06:32:51,553 INFO   OECD_LTIR_GB: 797 obs
+2026-06-15 06:32:59,588 INFO   OECD_STIR_GB: 482 obs
+2026-06-15 06:33:03,333 INFO   OECD_GDP_REAL_DE: 265 obs
+2026-06-15 06:33:06,478 INFO   OECD_CPI_YOY_DE: 844 obs
+2026-06-15 06:33:11,245 INFO   OECD_UNEMP_DE: 424 obs
+2026-06-15 06:33:16,671 INFO   OECD_CLI_DE: 785 obs
+2026-06-15 06:33:23,652 INFO   OECD_LTIR_DE: 841 obs
+2026-06-15 06:33:34,919 INFO   OECD_STIR_DE: 797 obs
+2026-06-15 06:33:54,056 INFO   OECD_GDP_REAL_CA: 261 obs
+2026-06-15 06:33:57,536 INFO   OECD_CPI_YOY_CA: 916 obs
+2026-06-15 06:34:01,464 INFO   OECD_UNEMP_CA: 857 obs
+2026-06-15 06:34:09,830 INFO   OECD_CLI_CA: 845 obs
+2026-06-15 06:34:16,221 INFO   OECD_LTIR_CA: 857 obs
+2026-06-15 06:34:21,265 INFO   OECD_STIR_CA: 845 obs
+2026-06-15 06:34:24,497 INFO   OECD_CPI_YOY_CN: 473 obs
+2026-06-15 06:35:18,133 INFO   OECD_CLI_CN: 409 obs
+2026-06-15 06:35:23,135 INFO   OECD_LTIR_CN: 148 obs
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 219, in main
+    series, obs = fetcher.fetch_all()
+                  ~~~~~~~~~~~~~~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 198, in fetch_all
+    s, o = self._store_series(series_id, title, freq, units, cat,
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              scale, data)
+                              ^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 139, in _store_series
+    c.executemany(
+    ~~~~~~~~~~~~~^
+        "INSERT OR REPLACE INTO observations VALUES (?,?,?)", obs_list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+sqlite3.OperationalError: database is locked

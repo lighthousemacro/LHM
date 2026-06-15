@@ -1,1 +1,127 @@
 START Mon Jun 15 06:49:35 EDT 2026
+/Users/bob/LHM/Scripts/data_pipeline/compute_indices.py:2256: FutureWarning: The default fill_method='pad' in Series.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  v = m.pct_change(12) * 100.0
+/Users/bob/LHM/Scripts/data_pipeline/compute_indices.py:2256: FutureWarning: The default fill_method='pad' in Series.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  v = m.pct_change(12) * 100.0
+======================================================================
+LIGHTHOUSE MACRO - PROPRIETARY INDEX COMPUTATION
+Database: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+Started: 2026-06-15 06:49:39
+======================================================================
+
+--- Loading Horizon Dataset ---
+   Loaded 45639 rows, 385 columns
+   Date range: 1901-06-30 to 2026-06-12
+
+--- Extending intraday quotes (yfinance) ---
+   intraday extend: Treasury_10Y carried to 2026-06-12 via yfinance
+   intraday extend: Treasury_30Y carried to 2026-06-12 via yfinance
+   intraday extend: Treasury_5Y carried to 2026-06-12 via yfinance
+   intraday extend: Treasury_3M carried to 2026-06-12 via yfinance
+   intraday extend: VIX carried to 2026-06-15 via yfinance
+   Extended date range: 1901-06-30 to 2026-06-15
+
+--- Loading Layer-1 Nowcast Overlays ---
+   Growth_Nowcast_WEI_z: latest 2026-06-15, 6675 non-NaN obs
+
+--- Computing Indices (strict anchor + Layer-1 bridge) ---
+   Computing Labor Pressure (LPI)...
+      bridge: LPI 2026-04-01→2026-06-15 OOS corr=+0.77 sign=82% σ=0.43 n=8889 noos=8133 · model=LinearRegression · noise=0%
+   Computing Inflation Heat (PCI)...
+      bridge: PCI 2026-06-12→2026-06-15 OOS corr=+0.06 sign=48% σ=n/a n=7944 noos=7188 · FALLBACK=low_oos_skill (held last value)
+   Computing Activity Pulse (GCI)...
+   Computing Housing Tide (HCI)...
+      bridge: HCI 2026-04-01→2026-06-15 OOS corr=+0.37 sign=65% σ=0.62 n=17630 noos=16874 · model=ElasticNet · noise=0%
+   Computing Consumer Pulse (CCI)...
+      bridge: CCI 2026-01-01→2026-06-15 OOS corr=+0.26 sign=61% σ=0.72 n=9987 noos=9231 · model=ElasticNet · noise=0%
+   Computing Capex Thrust (BCI)...
+      bridge: BCI 2026-06-11→2026-06-15 OOS corr=+0.36 sign=57% σ=0.87 n=10148 noos=9392 · model=ElasticNet · noise=0%
+   Computing Global Risk Tide (TCI)...
+      bridge: TCI 2026-06-05→2026-06-15 OOS corr=+0.94 sign=92% σ=0.49 n=6795 noos=6039 · model=ElasticNet · noise=0%
+   Computing Fiscal Pressure (FPI)...
+      bridge: FPI 2026-06-05→2026-06-15 OOS corr=+0.67 sign=72% σ=0.60 n=12687 noos=11931 · model=ElasticNet · noise=0%
+   Computing Labor Fragility (LFI)...
+      bridge: LFI 2026-05-13→2026-06-15 OOS corr=+0.54 sign=72% σ=0.39 n=8911 noos=8155 · model=ElasticNet · noise=0%
+   Computing Liquidity Cushion (LCI)...
+      bridge: LCI 2026-06-05→2026-06-15 OOS corr=+0.75 sign=70% σ=0.48 n=2861 noos=2105 · model=LinearRegression · noise=2%
+   Computing Credit Tide (FCI)...
+      bridge: FCI 2026-06-05→2026-06-15 OOS corr=+0.97 sign=92% σ=0.23 n=2861 noos=2105 · model=LinearRegression · noise=0%
+   Computing Credit-Labor Gap (CLG)...
+   Computing Macro Risk Index (MRI)...
+   Computing Labor Dynamism (LDI)...
+      bridge: LDI 2026-04-01→2026-06-15 OOS corr=+0.70 sign=80% σ=0.46 n=8889 noos=8133 · model=ElasticNet · noise=0%
+   Computing Yield-Funding Stress (YFS)...
+   Computing SVI (Spread-Volatility Imbalance)...
+   Computing EMD (Equity Momentum Divergence)...
+   Computing Liquidity Stage...
+   Computing Bill-SOFR Spread...
+   Computing RMP Index (placeholder - needs Treasury data)...
+   Computing MSI (Market Structure Index)...
+   Computing SBD (Structure-Breadth Divergence)...
+   Computing SPI (Sentiment & Positioning Index)...
+   Computing SSD (Sentiment-Structure Divergence)...
+   Computing REC_PROB (Recession Probability)...
+      Generated 13315 probability estimates
+   Computing WARNING_LEVEL (Threshold Warning System)...
+   Computing ENSEMBLE_RISK (Risk Ensemble)...
+      Warning Level: RED
+      Ensemble Regime: CRISIS
+      Adjusted Probability: 95.0%
+      Discontinuity Premium: +45.0%
+      Allocation Multiplier: 0.0x
+
+--- Building Output ---
+   Computing allocation-impact composites (validated 2026-06-15)...
+   Generated 428850 index observations
+
+--- Writing to Database ---
+   Cleaned and rewrote 428850 rows across 38 index_ids in lighthouse_indices
+
+--- Verification: Latest Index Values ---
+
+Latest values (2026-06-15):
+--------------------------------------------------
+   ALLOC_CONS_ROTATION   -1.088  [INVERSE             ]  
+   ALLOC_CREDIT_LABOR_GAP    0.351  [NEUTRAL             ]  
+   ALLOC_CURVE_STEEPENER    0.351  [NEUTRAL             ]  
+   ALLOC_CYCLICAL_DEFENSIVE   -0.035  [NEUTRAL             ]  
+   ALLOC_DOLLAR_EM    0.032  [NEUTRAL             ]  
+   ALLOC_ENERGY_MOMENTUM    0.518  [SIGNAL              ]  
+   ALLOC_INCOME_DEPLETION    0.636  [SIGNAL              ]  
+   ALLOC_INVENTORY_DESTOCK    1.126  [SIGNAL              ]  
+   ALLOC_MULTIPLIER    0.000  [CAPITAL PRESERVATION]  
+   ALLOC_REALYIELD_GOLD   -0.369  [NEUTRAL             ]  
+   BASE_REC_PROB    0.927  [HIGH RISK           ]  
+   BCI           1.435  [BUSINESS BOOM       ]  
+   BILL_SOFR     0.180  [BILLS VERY RICH     ]  
+   CCI           0.007  [FATIGUED            ]  
+   CLG          -0.354  [MISPRICED           ] ✓ ~-1.84 (Mispriced)
+   DISCONTINUITY_PREMIUM    0.450  [EXTREME             ]  
+   EMD          -0.177  [OVERSOLD            ]  
+   ENSEMBLE_RISK    0.950  [CRISIS              ]  
+   FCI           0.317  [NEUTRAL             ]  
+   FPI           1.765  [FISCAL CRISIS       ]  
+   GCI           0.763  [ABOVE TREND         ]  
+   HCI          -0.240  [FROZEN              ]  
+   LCI          -0.141  [TIGHT               ] ⚠ ~-0.8 (Scarce)
+   LDI          -0.206  [SLUGGISH            ]  
+   LFI           0.166  [NEUTRAL             ] ⚠ ~0.93 (Elevated)
+   LIQ_STAGE     1.000  [STAGE 1 - RRP DEPLETION]  
+   LPI          -0.387  [NEUTRAL             ]  
+   MRI           1.114  [HIGH RISK           ] ✓ ~1.1 (High Risk)
+   MSI          -0.473  [TRANSITIONAL        ]  
+   PCI           0.726  [ELEVATED            ]  
+   REC_PROB      0.417  [ELEVATED            ]  
+   SBD          -0.598  [ACCUMULATION        ]  
+   SPI           1.786  [EXTREME FEAR        ]  
+   SSD           0.510  [FEAR + WEAK         ]  
+   SVI           0.493  [BALANCED            ]  
+   TCI          -1.742  [TRADE CRISIS        ]  
+   WARNING_LEVEL    4.000  [RED                 ]  
+   YFS           0.188  [NORMAL              ]  
+--------------------------------------------------
+
+======================================================================
+INDEX COMPUTATION COMPLETE
+======================================================================
+EXITCODE 0 END Mon Jun 15 07:02:12 EDT 2026

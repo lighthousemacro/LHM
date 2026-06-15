@@ -82,6 +82,26 @@ The detail files stay in place. This document is the index, the live state, and 
 | **REGIME / DESCRIPTOR** | Honest state read. Failed predictive OOS — never cite as a predictor. |
 | **USABLE-PROXY** | Composite ≈ its single best component (no lift). Fine to use; the single series is just as good. |
 
+### Pillar-doc expansion — +11 to 50 (2026-06-15)
+
+A full read of all 12 detailed pillar docs surfaced 69 candidate indicators; after deduping against the 39 live and dropping data-mined filler, **11 legitimate additions** went live (→ **50 total**, all real-time, 0 stale). All honest by construction — descriptive composites / diagnostics / divergences that combine real DB series into one meaningful read, no predictive overclaim. Module: `Scripts/data_pipeline/descriptive_indicators.py` (native-freq z, coverage-weighted, standardized, daily-FF). Full synthesis: `Outputs/mri_optimization/pillar_expansion_selected_20260615.json`.
+
+| Code | Category | What it measures | Live read |
+|---|---|---|---|
+| **SUPERCORE_HEAT** | descriptive (Prices) | services-ex-shelter inflation (Fed supercore) — wage-driven persistence stripped of the shelter lag | +0.19 NEUTRAL |
+| **PERSISTENCE_GAP** | descriptive (Prices) | sticky-minus-flexible CPI — how much inflation is structural vs transitory | −0.40 NEUTRAL |
+| **PIPELINE_IMPULSE** | macro-impact (Prices) | PPI running ahead of CPI — upstream inflation lead 3-6m | +0.43 NEUTRAL |
+| **TREND_HEAT** | descriptive (Prices) | trimmed-mean/median underlying inflation (outliers stripped) | −0.38 NEUTRAL |
+| **AFFORD_PRESSURE** | descriptive (Housing) | true cost of homeownership — payment-to-income (rate × price vs wage) | **+1.44 ELEVATED** |
+| **FROZEN_DIVERGENCE** | descriptive (Housing) | rate-frozen market — prices firm while sales volume collapses | −0.97 LOW |
+| **INTEREST_CROWDOUT** | macro-impact (Govt) | federal interest expense outrunning the economy | −0.51 LOW |
+| **QUALITY_PRESSURE** | market-regime (Financial) | within-IG quality premium (BAA−AAA) | **−1.33 LOW** (tight) |
+| **VOL_TERM_GAP** | market-regime (Sentiment) | equity-vol term structure (spot VIX vs 3-month) | −0.19 NEUTRAL |
+| **FCI_CHANNELS** | market-regime (Financial) | financial-conditions sub-channels (risk+credit+leverage) | −0.11 NEUTRAL |
+| **CAPACITY_SLACK** | descriptive (Growth) | spare industrial/manufacturing capacity (disinflationary) | +0.43 NEUTRAL |
+
+**Parked (real, but not built — by design):** NET_LIQ_TIDE and a SOFR-IORB funding-stress read (both touch the RRP/plumbing story we've retired — available if wanted); Treasury AUCTION_PULSE + FOREIGN_DEMAND_DIV (need the TreasuryDirect feed re-run past Feb-2026); XASSET_RISK_TIDE / FLIGHT_QUALITY / CONCENTRATION_PRESSURE (need the stalled ETF `_Close` feed repaired). These clear the count to ~57 once their feeds are fixed.
+
 ### Category 1 — Allocation Impact
 
 *Proven to move asset returns — any asset class, cross-asset relative, sector relative, curve, FX, commodity. **REBUILT 2026-06-15 from the full pillar docs + asset-class frameworks.** The earlier "thin bucket" call was a measurement error, not a property of the framework: it tested broad-index direction (dominated by liquidity/positioning), the WRONG target. Macro drives asset prices through SPECIFIC channels — the curve, sector rotations, relative pairs — and there the signal is sharp. 34 candidates were mined from the documented transmission mechanisms and validated honestly (purged non-overlap walk-forward OOS, noise-pair false-discovery control, n-gated). Result: 10 real allocation signals, not 3. Full inventory + cross-pillar composites: `Outputs/mri_optimization/allocation_rebuild_synthesis_20260615.json`; validation: `allocation_validation_results_20260615.json`.*

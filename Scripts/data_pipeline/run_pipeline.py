@@ -181,6 +181,13 @@ def main():
         except Exception as e:
             print(f"WARNING: CDLI computation failed: {e}")
 
+        # Descriptive / diagnostic indicators (pillar-doc expansion, 39->50).
+        try:
+            from descriptive_indicators import main as _desc_main
+            _desc_main()
+        except Exception as e:
+            print(f"WARNING: descriptive indicators failed: {e}")
+
         # Freshness guard: prove every composite is real-time through yesterday,
         # or name exactly what isn't. Catches a silent-staleness regression the
         # moment it happens (the 2026-05-17 incident ran undetected for a month).

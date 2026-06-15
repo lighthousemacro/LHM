@@ -1,0 +1,973 @@
+# LIGHTHOUSE MACRO — INDICATORS MASTER
+
+> # ⚓ THIS IS THE INDICATOR SOURCE DOC.
+>
+> One file. Every proprietary measurement, composite, threshold, formula, audit finding, and live state lives here.
+>
+> **The additive iteration rule.** Anything Bob brings forward from past conversations, prior drafts, scratch notes, or new sessions — even if it represents a full reframe — gets merged INTO this file. Never a sibling, never a "v2" alongside, never a separate "new" doc. If the new framing replaces what's here, edit it in. If it adds, append. If it deprecates, mark and supersede inline. **When two docs disagree, this one wins. There is no other.**
+>
+> **Companion source docs (the volume series):** `INDICATORS_MASTER.md` (this file) → `STRATEGY_MASTER.md` (planned) → `RISK_MASTER.md` (planned). All three eventually consolidate into "LHM Macro Strategy & Cross-Asset Trading — Volume 1: The 12 Pillars."
+
+**Last consolidated:** 2026-06-15 (five-category final lineup + real-time daily fix + MRI rebuild). Prior: 2026-05-09 (v4/v5/v6 rebuild + naming lock + methodology v2)
+**DB snapshot:** 2,498 series · 4.15M observations · 45 live composites in `lighthouse_indices`
+**Replaces / consolidates:**
+- `Strategy/LIGHTHOUSE MACRO - PROPRIETARY INDICATORS REFERENCE.md` (39 numbered indicators, formulas + thresholds)
+- `Outputs/mri_optimization/PILLAR_DOCS/` (12 per-pillar audit writeups, Apr 30)
+- `Outputs/mri_optimization/{LIVE_STATUS,DECISIONS,CANDIDATE_NEW_INDICATORS,PHASE_1_FINDINGS,PILLAR_BASKET_AUDIT,PILLAR_BASKET_CURATED,SIGNAL_SERIES_PLAN,BEAM_PLAN_BY_ASSET}.md`
+- `Outputs/mri_optimization/descriptive/PILLAR_DESCRIPTIVE_ANALYSIS.md`
+- `Outputs/mri_optimization/predictive/PILLAR_PREDICTIVE_GRID.md`
+- `Outputs/mri_optimization/*.json` (8 optimization runs through v6)
+- `Outputs/mri_optimization/pillar_registry_v{2,3,4,5,6}*.{json,md}` (May 8-9 rebuild)
+
+The detail files stay in place. This document is the index, the live state, and the canonical names + formulas + thresholds. When information conflicts, this file wins.
+
+---
+
+## TABLE OF CONTENTS
+
+**★ [THE FINAL LINEUP — FIVE CATEGORIES (START HERE)](#the-final-lineup--five-categories-2026-06-15)**
+
+1. [How to read this document](#how-to-read-this-document)
+2. [May 2026 rebuild state — methodology v2 + v3/v4/v5/v6 results](#may-2026-rebuild-state)
+3. [Live composite snapshot (45 indices)](#live-composite-snapshot)
+4. [Master Composite — MRI](#master-composite-mri)
+5. [12-Pillar Diagnostic Dozen](#12-pillar-diagnostic-dozen)
+   - [Macro Dynamics (1-7)](#macro-dynamics-17)
+   - [Monetary Mechanics (8-10)](#monetary-mechanics-810)
+   - [Market Structure (11-12)](#market-structure-1112)
+6. [Cross-pillar derived indices](#cross-pillar-derived-indices)
+7. [Risk regime outputs](#risk-regime-outputs)
+8. [Crypto sector composites](#crypto-sector-composites)
+9. [Treasury microstructure indicators](#treasury-microstructure-indicators)
+10. [Advanced trading frameworks](#advanced-trading-frameworks)
+11. [Audit findings & live trading whitelist (Apr 30, partly superseded)](#audit-findings--live-trading-whitelist)
+12. [Candidate indicators (proposed, unbuilt)](#candidate-indicators-proposed-unbuilt)
+13. [Naming conventions and aliases](#naming-conventions-and-aliases)
+
+---
+
+## HOW TO READ THIS DOCUMENT
+
+**Three states a composite can be in:**
+
+- **LIVE** — exists in `lighthouse_indices` table, refreshed by the pipeline, currently driving decisions. 45 of these.
+- **DOCUMENTED** — has a formula in the proprietary indicators reference but no row in `lighthouse_indices` yet. Build candidate.
+- **PROPOSED** — surfaced during the Apr 30 audit as a future indicator. Not built. Not approved.
+
+**Three layers per indicator:**
+
+1. **What it is** — one-line claim, the canonical name and abbreviation.
+2. **Formula** — components and weights as documented in CLAUDE_MASTER or the reference doc.
+3. **State** — LIVE / DOCUMENTED / PROPOSED, current value if live, audit notes if relevant.
+
+**When a name appears in two places with two formulas** (e.g. LFI vs LPI, the optimized CCI vs the documented 7-component CCI), this document flags the divergence and names the canonical version.
+
+---
+
+## THE FINAL LINEUP — FIVE CATEGORIES (2026-06-15)
+
+**This is the trusted view. Start here.** Every proprietary indicator, placed in one of five categories by *what it actually does* (Bob's framing, 2026-06-15), each tagged with the role it was validated in, the out-of-sample evidence behind it, a confidence tier, the transform it should be shown in, and the overlay chart that proves it. The honesty principle: nothing here claims skill the data does not support. Indicators that failed out-of-sample prediction are kept as honest **regime/descriptor** reads, not buried and not oversold.
+
+**Freshness guarantee (live as of 2026-06-15):** every indicator below except crypto is recomputed daily through yesterday's close by the full-recompute pipeline (`run_pipeline.py` → `compute_indices.py`, ~2 min) and checked by the freshness guard (`indicator_freshness_audit.py`). The month-long silent-staleness incident (macro composites frozen 2026-05-17, the pipeline limping in `latest_only` mode) is fixed at the root. Crypto composites are FEED-DOWN since 2026-02-02 pending a fetcher repair.
+
+**Evidence keys:** OOS = purged/embargoed non-overlap walk-forward IC (the honest number). Sources: migration program Phases A–B3 (`INDICATOR_MIGRATION_PROGRAM.md`, `Outputs/mri_optimization/*.json`).
+
+### Confidence tiers (legend)
+
+| Tier | Meaning |
+|---|---|
+| **VALIDATED** | OOS-confirmed in its stated role (purged WF, n≥50, noise-controlled). Trade off it. |
+| **PROVISIONAL** | Real signal, lighter evidence (small-n / single-grid / re-run owed). Use with care. |
+| **CANDIDATE** | Promising but untested in *this* role; build-queue validation owed. |
+| **REGIME / DESCRIPTOR** | Honest state read. Failed predictive OOS — never cite as a predictor. |
+| **USABLE-PROXY** | Composite ≈ its single best component (no lift). Fine to use; the single series is just as good. |
+
+### Pillar-doc expansion — +11 to 50 (2026-06-15)
+
+A full read of all 12 detailed pillar docs surfaced 69 candidate indicators; after deduping against the 39 live and dropping data-mined filler, **11 legitimate additions** went live (→ **50 total**, all real-time, 0 stale). All honest by construction — descriptive composites / diagnostics / divergences that combine real DB series into one meaningful read, no predictive overclaim. Module: `Scripts/data_pipeline/descriptive_indicators.py` (native-freq z, coverage-weighted, standardized, daily-FF). Full synthesis: `Outputs/mri_optimization/pillar_expansion_selected_20260615.json`.
+
+| Code | Category | What it measures | Live read |
+|---|---|---|---|
+| **SUPERCORE_HEAT** | descriptive (Prices) | services-ex-shelter inflation (Fed supercore) — wage-driven persistence stripped of the shelter lag | +0.19 NEUTRAL |
+| **PERSISTENCE_GAP** | descriptive (Prices) | sticky-minus-flexible CPI — how much inflation is structural vs transitory | −0.40 NEUTRAL |
+| **PIPELINE_IMPULSE** | macro-impact (Prices) | PPI running ahead of CPI — upstream inflation lead 3-6m | +0.43 NEUTRAL |
+| **TREND_HEAT** | descriptive (Prices) | trimmed-mean/median underlying inflation (outliers stripped) | −0.38 NEUTRAL |
+| **AFFORD_PRESSURE** | descriptive (Housing) | true cost of homeownership — payment-to-income (rate × price vs wage) | **+1.44 ELEVATED** |
+| **FROZEN_DIVERGENCE** | descriptive (Housing) | rate-frozen market — prices firm while sales volume collapses | −0.97 LOW |
+| **INTEREST_CROWDOUT** | macro-impact (Govt) | federal interest expense outrunning the economy | −0.51 LOW |
+| **QUALITY_PRESSURE** | market-regime (Financial) | within-IG quality premium (BAA−AAA) | **−1.33 LOW** (tight) |
+| **VOL_TERM_GAP** | market-regime (Sentiment) | equity-vol term structure (spot VIX vs 3-month) | −0.19 NEUTRAL |
+| **FCI_CHANNELS** | market-regime (Financial) | financial-conditions sub-channels (risk+credit+leverage) | −0.11 NEUTRAL |
+| **CAPACITY_SLACK** | descriptive (Growth) | spare industrial/manufacturing capacity (disinflationary) | +0.43 NEUTRAL |
+
+**Parked (real, but not built — by design):** NET_LIQ_TIDE and a SOFR-IORB funding-stress read (both touch the RRP/plumbing story we've retired — available if wanted); Treasury AUCTION_PULSE + FOREIGN_DEMAND_DIV (need the TreasuryDirect feed re-run past Feb-2026); XASSET_RISK_TIDE / FLIGHT_QUALITY / CONCENTRATION_PRESSURE (need the stalled ETF `_Close` feed repaired). These clear the count to ~57 once their feeds are fixed.
+
+### Category 1 — Allocation Impact
+
+*Proven to move asset returns — any asset class, cross-asset relative, sector relative, curve, FX, commodity. **REBUILT 2026-06-15 from the full pillar docs + asset-class frameworks.** The earlier "thin bucket" call was a measurement error, not a property of the framework: it tested broad-index direction (dominated by liquidity/positioning), the WRONG target. Macro drives asset prices through SPECIFIC channels — the curve, sector rotations, relative pairs — and there the signal is sharp. 34 candidates were mined from the documented transmission mechanisms and validated honestly (purged non-overlap walk-forward OOS, noise-pair false-discovery control, n-gated). Result: 10 real allocation signals, not 3. Full inventory + cross-pillar composites: `Outputs/mri_optimization/allocation_rebuild_synthesis_20260615.json`; validation: `allocation_validation_results_20260615.json`.*
+
+**VALIDATED (OOS-confirmed, n≥50, noise-clean, overlap-confirmed):**
+
+| Indicator | Target | OOS IC | overlap | noise | n | Mechanism |
+|---|---|---|---|---|---|---|
+| **Labor-Led Curve Steepener** (LFI basket) | 2s10s (T10Y2Y), 6m | **+0.27** | +0.28 | 0.00 | 80 | Labor fragility leads Fed recognition 6-9m → front end falls faster than long → bull steepener |
+| **Consumer Goods-Services Rotation** | XLY/XLP, 3m | **0.12** | 0.12 | 0.00 | 97 | Labor-income + durables-minus-services impulse leads discretionary vs staples |
+| **Cyclical-Defensive Rotation** (employment+IP+surveys) | XLI/XLP, 3m | **0.30** | 0.10 | clean | 97 | Real-economy breadth migrating defensive leads the equity rotation |
+| **Energy CPI Pass-Through** | XLE/SPY, 3m | **+0.21** | +0.20 | 0.10 | 97 | Oil + energy-CPI momentum leads energy sector vs market |
+
+**PROVISIONAL (real signal, smaller-n or re-test owed):**
+
+| Indicator | Target | OOS IC | overlap | n | Mechanism |
+|---|---|---|---|---|---|
+| **Real-Yield Gold Engine** | GLD, 6m | +0.15 | +0.17 | 38 | Gold inverse to 10y real yield (DFII10 / DGS10−T10YIE) |
+| **Credit-Labor Gap** | HY-OAS, 6m | +0.11 | +0.13 | 39 | Labor stress leads credit spreads (income→delinquency) |
+| **Strong-Dollar EM Stress** | EEM, 6m | −0.15 | −0.16 | 41 | Strong broad dollar → EM equity underperformance |
+| **Income-Depletion Rotation** | XLY/XLP, 6m | −0.18 | −0.17 | 48 | Falling saving rate + real-income drain leads discretionary underperformance |
+| **Inventory Destocking** | XLB/SPY, 6m | +0.20 | +0.23 | 48 | Inventory overhang leads materials underperformance |
+| **Housing Pipeline/Affordability** | XHB/SPY, 6m | −0.25 | +0.05 | 35 | Mortgage-rate/permits lead homebuilders (overlap disagrees — re-test horizon) |
+
+**Cross-pillar composites (build queue, strongest multi-pillar ideas):** Pre-Recession Duration/Curve (Labor+Growth+Inflation → TLT & 2s10s), Real-Yield+Inflation Gold (Prices+Labor → GLD), Risk-On/Risk-Off Regime gate (Growth+Credit+Liquidity → SPY/TLT — the master allocation gate the prior pass missed), Two-Pillar Recession Rotation (Consumer+Labor → defensives & duration), Dollar+Growth-Differential EM/DM (Trade+Growth → EEM/EFA), Inflation-Surprise Credit Widener (Prices+Financial → HY-OAS).
+
+**Demoted honestly (no OOS skill at the tested target/horizon — the discipline working):** Shelter→TLT direction (mechanism real — ZORI leads CPI-shelter 12-18m — but ZORI history too short, n=17, untestable now; revisit as it accrues), Inflation-Regime→TLT direction, Capex-Orders→XLI/SPY, Hi-Freq-Labor→SPY/TLT, Consumer-Credit→HY-OAS, Consumer-Squeeze→XLY/XLP (likely needs a forward-*consumption* target, not the equity ratio — re-test).
+
+**Transform:** z-score + canonical bands for the composites; overlay each against its asset target (e.g. Labor-Curve composite vs the 2s10s; Cyclical-Defensive vs XLI/XLP).
+
+**LIVE (2026-06-15):** all 4 VALIDATED + 5 PROVISIONAL are now computed daily in `lighthouse_indices` as `ALLOC_*` (native-frequency z, coverage-weighted, standardized, daily-forward-filled — correct YoY/z windows, not the legacy daily-grid bug), recomputed each morning by the pipeline. Overlay charts: `Outputs/allocation_charts/`. `ALLOCATION_BASKETS` lives in `compute_indices.py`.
+
+### Category 2 — Macro Impact
+
+*X moves another major macro variable — within or across pillars (e.g. inflation → consumer spending). This is the STRONGEST, most defensible bucket: where the framework genuinely earns it.*
+
+| Indicator | Predicts | OOS evidence | Confidence | Transform | Overlay chart |
+|---|---|---|---|---|---|
+| **PCI** (Inflation Heat) | forward core PCE, 6m | +0.36 (B-3) / +0.62 blend (B-1) | VALIDATED (strongest) | z-score; or native YoY% | PCI vs forward core PCE |
+| **GCI** (Activity Pulse) | forward PAYEMS, 6m | +0.25 (B-3, n=94) / +0.37 (B-1) | VALIDATED | z-score | GCI vs forward payrolls |
+| **FPI** (Fiscal Pressure) | DGS10 / 10y term premium | +0.29 (B-3) | VALIDATED | z-score | FPI vs 10y term premium |
+| **LPI** (Labor Pressure) | forward PAYEMS | +0.25 (B-3, n=66) | VALIDATED | z-score | LPI vs forward payrolls |
+| **BCI** (Capex Thrust) | forward INDPRO | +0.17 (B-1) | PROVISIONAL | z-score | BCI vs forward industrial production |
+| **CLG** | forward HY-OAS | (cross-listed, Cat 1) | VALIDATED | z-score | — |
+
+### Category 3 — Descriptive
+
+*Combined-metric reads of the state right now — not necessarily forward-looking. The "we fused several series into one honest measurement" composites (e.g. true cost of homeownership). REAL = adds lift over its best single component.*
+
+| Indicator | Measures | OOS evidence | Confidence | Transform | Overlay chart |
+|---|---|---|---|---|---|
+| **HCI** (Housing Tide) | housing health (vs Case-Shiller YoY) | r +0.87, **+0.09 lift** — REAL | VALIDATED (real composite) | z-score, ±1.5/±2σ | HCI vs Case-Shiller YoY |
+| **FPI** (Fiscal Pressure) | fiscal/term-premium stress | +0.87, **+0.12 lift** — REAL | VALIDATED (dual: also Cat 2) | z-score | FPI vs term premium |
+| **BCI** (Capex Thrust) | business investment (capex orders YoY) | +0.70, **+0.13 lift** — REAL | VALIDATED (dual: also Cat 2) | z-score | BCI vs capex orders YoY |
+| **PCI** (Inflation Heat) | inflation (core PCE YoY) | +0.91 but **no lift** | USABLE-PROXY | native YoY% | — |
+| **MSI** (Market Breadth Pulse) | trend (SPX vs 200d) | no lift | USABLE-PROXY | z-score | — |
+| **CCI / TCI / LCI** | consumer / dollar / reserves | descriptively BROKEN (B-2) | DESCRIPTOR-WEAK — use single-component proxy (RSXFS / DTWEXBGS / reserves) | — | — |
+
+### Category 4 — Macro Regime
+
+*Where are we in the cycle. The classification layer that drives allocation and sizing.*
+
+| Indicator | Reads | State | Confidence | Transform / bands | Overlay chart |
+|---|---|---|---|---|---|
+| **MRI** (Macro Risk Index) | aggregate cycle/risk regime | **Rebuilt 2026-06-15**: standardized z-scale, ~25y history (2000→), canonical bands. Validates vs 2008 (+3.6 CRISIS), 2009 (+2.1), COVID (+1.1). Current +1.0 HIGH RISK. | REGIME — structural design audit-clean; weights pending the program rebuild | z-score; bands `<-0.5` Low / `+0.5` Elevated / `+1.0` High / `+1.5` Crisis | MRI vs SPX drawdowns + NBER bands |
+| **REC_PROB** | recession probability 3/6/12m | **smoothed 2026-06-15** (3-month rolling mean — the daily 0↔100 flips are gone; current ~0.43) | REGIME | 0–100%, smoothed | REC_PROB vs NBER |
+| **ENSEMBLE_RISK / WARNING_LEVEL / ALLOC_MULTIPLIER** | risk ensemble → sizing | short live history (~3wk) | REGIME — operational | level | — |
+| **LIQ_STAGE** | liquidity regime, stages 1–7 | live | REGIME — descriptive | stage ladder | — |
+
+### Category 5 — Market Regime
+
+*State of the market itself — structure and sentiment. Kept as honest descriptors: each failed predictive OOS, so none is cited as a forward signal. They tell you the weather, not tomorrow's forecast.*
+
+| Indicator | Reads | OOS evidence | Confidence | Transform | Overlay chart |
+|---|---|---|---|---|---|
+| **MSI** (Market Breadth Pulse) | structure / trend | predictive +0.02 → null | REGIME-DESCRIPTOR | z-score, ±2σ lines | MSI vs SPX |
+| **SPI** (Sentiment Tide) | positioning / sentiment | predictive null | REGIME-DESCRIPTOR | z-score | SPI vs SPX |
+| **SBD** (Structure-Breadth Divergence) | distribution / accumulation | honest null | REGIME-DESCRIPTOR | z-score + 3mo MA (always) | SBD vs SPX |
+| **SSD** (Sentiment-Structure Divergence) | capitulation / blow-off | honest null | REGIME-DESCRIPTOR | z-score + 3mo MA | SSD vs SPX |
+
+### Stacked / interaction composites — BUILD QUEUE
+
+*Bob's "weak alone, strong together" idea. The program proved a BLIND pairwise sweep just manufactures noise (noise-pairs hit OOS +0.60), so each of these is ONE economically pre-specified hypothesis, to be validated purged-WF OOS with a noise-pair control and n≥50 before it earns a tier.*
+
+| # | Proposed composite | Stack (the condition) | Predicts | Category |
+|---|---|---|---|---|
+| 1 | **Consumer Squeeze Index (CSI)** *[flagship — Bob's example]* | inverted real-wage-growth + inverted saving rate + rising revolving credit + debt-service ratio | forward real PCE / RSXFS, 3–6m | Macro impact |
+| 2 | **Stagflation Quadrant** | PCI high AND GCI low *simultaneously* | regime flag | Macro regime |
+| 3 | **Late-Cycle Equity Drag** | GCI inputs + capacity utilization + capex momentum + employment diffusion | SPX 252d fwd (expected −) | Allocation |
+| 4 | **Liquidity-Credit-Breadth Risk-On** | LCI rising + HY-OAS tight + breadth improving | SPY fwd | Allocation (program found this class thin — needs strong pre-spec) |
+
+### Transform & visualization standard
+
+- **z-score + canonical bands** — default for composites. Rare-z bands 1.28 / 1.645 / 1.96; chart reference lines at **±2σ only** (never ±1σ — 1σ is common noise).
+- **0–100 diffusion / oscillator** — breadth/participation internals and probabilities (REC_PROB).
+- **Raw level + reference lines** — rates / spreads / inflation in native units (PCI as YoY%, HY-OAS in bps, CLG as the z-gap).
+- **Noisy divergence composites (SBD / SSD / EMD)** → 3-month MA always. A raw spike is not a regime.
+- **Every indicator ships an overlay chart** against the thing it tracks or predicts — the proof, not a bare line.
+
+### Open operational items (tracked)
+
+**Done 2026-06-15:** real-time daily fix (full-recompute pipeline + freshness guard, 0 stale) · MRI rebuilt (standardized z, ~25y history, canonical bands, validates vs 2008 +3.6 / COVID +2.3) · HCI/GCI backfilled · REC_PROB smoothed · allocation category rebuilt + 9 `ALLOC_*` composites live + overlay charts · stacked-composite validation run · **transform/z bug FIXED** — `build_horizon_dataset` now transforms on native frequency then forward-fills to daily, and `compute_zscore(freq=)` resamples macro series to their native cadence (window=24 = 24 MONTHS not 24 rows). Validated: Retail_Sales_yoy 0.19%→4.87%, all composites healthy z-scaled (no NaN/explosion), values shifted to honest reads (GCI 2.67→0.76, CCI 1.57→0.01, PCI −0.15→+0.73), MRI crisis-validation held + improved. Pre-fix backup: `Data/databases/backups/Lighthouse_Master_pre_transform_fix_20260615.db`. (Rebuild now ~12 min vs 2 min — the per-call resampling; acceptable for the 06:00 batch, optimize if it creeps.)
+
+**Done 2026-06-15 (cont.):** **crypto rewired on free data** (Bob's call) — new `CRYPTO_DEFI_LIQUIDITY` (CDLI) index live: total DeFi TVL momentum z-scored, built from the 17 `DEFI_*_TVL` DefiLlama series with multi-year history (Uniswap 2018+), 1,735 obs back to ~2019, daily, current −1.27 CONTRACTING. `Scripts/data_pipeline/crypto_defi_liquidity.py`, wired into the pipeline. The retired paid-fundamentals indices (CFI/CVI/CTI/CDI/CRYPTO_*_HEALTH, which read the dead `crypto_scores` table) are **deprecated** — they need a paid feed (TokenTerminal/Santiment/Dune) Bob declined; don't chart or cite them.
+
+**Still open:**
+- **Crypto (optional extras)** — `CRYPTO_BTC_PRICE` only keeps ~6mo history (free fetcher window); SLI (stablecoin) needs the `STABLE_*` fetch repaired. CDLI covers the core liquidity read; these are nice-to-haves.
+- **MRI weight rebuild** (program) — weights still the v2.0 set. Bob: propose evidence-based reweight for review (don't auto-apply).
+- **Allocation build-queue** — the 6 cross-pillar composites + re-test the demoted ideas at better targets (Consumer-Squeeze→forward consumption; Shelter→TLT as ZORI history accrues).
+
+---
+
+## MAY 2026 REBUILD STATE
+
+**This section reflects the current authoritative state of the framework after the May 8–9 rebuild. It supersedes the relevant parts of the Apr 30 Audit Findings section below.**
+
+### What the rebuild fixed
+
+The Apr 30 audit found a real bug: the original optimizer (`pillar_weight_optimization.py`) used a sign-agnostic |IC| objective with a single 90/10 in-sample/out-of-sample split. Result: 7 of 12 reported pillar OOS ICs had the wrong sign and magnitudes were inflated 2–7×. This was a *weight-fitting* bug, not a framework bug. The pillars themselves, the threshold rules, the regime mapping, and the price-with-trend trading hierarchy were always sound and never touched the broken weights.
+
+**Methodology v2** (`Scripts/backtest/pillar_rebuild_v2.py`, May 8): replaces the broken optimizer with 5-fold expanding-window walk-forward `TimeSeriesSplit` + signed IC reporting. Output: `pillar_rebuild_v2.json` + `pillar_v1_vs_v2_comparison.md`. Cite this only.
+
+**Multi-role registry v3** (`Scripts/backtest/pillar_rebuild_v3_registry.py`, May 8): each pillar's basket can feed multiple composites with role-specific weights — diagnostic, asset-predictive, relative-predictive, lead-lag — instead of one-best-target collapse. Output: `pillar_registry_v3.json` + `pillar_registry_v3_summary.md`. **10 of 12 diagnostic companions real**; **66 of 288 relative-perf cells real**.
+
+**Expanded baskets v4** (`Scripts/backtest/pillar_rebuild_v4_expanded.py` + `pillar_specs_v2.py`, May 9): re-runs v3 with Tier 1 basket additions (CCI ground-up, BCI ANDENO, LCI EFFR/TGCR, etc.). Output: `pillar_registry_v4.json` + `pillar_registry_v4_summary.md` + `pillar_v3_vs_v4_basket_diff.md`. **8 of 10 diagnostics real** (FPI/LCI mixed at 60% dom); **68 of 240 relperf real** (post-LCI-fix, 2026-05-09 re-run).
+
+**Asset-predictive grid v5** (`Scripts/backtest/pillar_rebuild_v5_assets.py`, May 9): 130 cells (10 pillars × 13 asset targets) with weights re-optimized per target. Output: `pillar_registry_v5_assets.json` + `_summary.md`. **53 of 130 OK cells real** (post-LCI-fix, 2026-05-09 re-run).
+
+**Lead-lag event study v6** (`Scripts/backtest/pillar_rebuild_v6_leadlag.py`, May 9): equal-weight composite z-score breach → forward asset return vs baseline, t-tested. Output: `pillar_registry_v6_leadlag.json` + `_summary.md`. **609 of 776 patterns significant** (p<0.05, n_breaches≥30).
+
+### Names locked (2026-05-08 — supersedes "X Conditions Index" pattern)
+
+| Code | Locked name | Family |
+|---|---|---|
+| LPI | Labor Pressure | Pressure |
+| LFI | Labor Fragility | Fragility |
+| PCI | **Inflation Heat** | Heat |
+| GCI | **Activity Pulse** | Pulse |
+| HCI | **Housing Tide** | Tide |
+| CCI | **Consumer Pulse** | Pulse |
+| BCI | **Capex Thrust** | Thrust |
+| TCI | **Global Risk Tide** | Tide |
+| FPI (was GCI_Gov) | **Fiscal Pressure** | Pressure |
+| FCI | **Credit Tide** | Tide |
+| LCI | Liquidity Cushion | Cushion |
+| MSI | **Market Breadth Pulse** | Pulse |
+| SPI | **Sentiment Tide** | Tide |
+| MRI | Macro Risk Index | Risk |
+
+Code IDs (PCI, GCI, etc.) remain as legacy identifiers in scripts. Published surfaces use the locked names. Vocabulary palette: Pulse / Heat / Gauge / Tide / Pressure / Stress / Strain / Compression / Squeeze / Contraction / Fragility / Cushion / Thrust / Impulse / Flow / Drift / Phase / Scale / Scope / Transmission / Loop / Bridge / Cascade / Confluence / Gap / Divergence / Dispersion. Never default to "X Conditions Index."
+
+### Top per-asset signals (v5, real cells, sorted by |WF mean|)
+
+| Pillar | Target | WF mean | Dom% | Read |
+|---|---|---:|---:|---|
+| Inflation Heat | T10Y2Y 252d | -0.600 | 100% | Curve indicator |
+| Global Risk Tide | DXY 252d | -0.464 | 80% | Dollar dial |
+| Housing Tide | DGS2 252d | +0.442 | 100% | Front-end leader |
+| Activity Pulse | T10Y2Y 252d | -0.438 | 100% | Curve leader |
+| Activity Pulse | DXY 252d | +0.433 | 80% | Dollar leader |
+| Credit Tide | VIX 63d | -0.429 | 100% | Vol leader (3mo) |
+| Consumer Pulse | DGS2 252d | -0.416 | 100% | Short rates leader |
+| Credit Tide | DXY 252d | -0.413 | 100% | Dollar leader |
+| Capex Thrust | T10Y2Y 252d | -0.390 | 100% | Curve leader |
+| Credit Tide | T10Y2Y 252d | +0.377 | 100% | Curve leader |
+| Global Risk Tide | HYOAS 126d | -0.351 | 100% | Credit-spread leader (6mo) |
+| Housing Tide | DGS10 252d | +0.351 | 100% | Long-end leader |
+| Global Risk Tide | SPX 252d | +0.336 | 80% | Equity 1y leader |
+| Credit Tide | DGS2 252d | -0.333 | 80% | Short rates leader |
+| Credit Tide | VIX 21d | -0.298 | 100% | Vol leader (1mo) |
+| Liquidity Cushion | T10Y2Y 252d | -0.417 | 80% | Curve flattener when liquidity drains |
+| Liquidity Cushion | USDJPY 252d | +0.297 | 80% | FX carry leader |
+| Liquidity Cushion | DXY 252d | -0.240 | 80% | Dollar leader |
+
+Real signals by pillar (of OK in v5, post-LCI-fix): Global Risk Tide 10, Credit Tide 8, Housing Tide 7, Activity Pulse 6, Inflation Heat 6, Labor Pressure 5, **Liquidity Cushion 5** (was 0), Capex Thrust 3, Fiscal Pressure 2, Consumer Pulse 1.
+
+### Top lead-lag patterns (v6, sorted by |excess|)
+
+Read: "When [pillar] z-score [breaches threshold], [asset] over the next [horizon] does X% in excess of baseline."
+
+| Pillar | Asset | Horizon | Threshold | Excess | t-stat | Hit% |
+|---|---|---:|---|---:|---:|---:|
+| Credit Tide | VIX | 252d | z > +2.0 | -70.2% | -59.6 | 100% |
+| Consumer Pulse | VIX | 252d | z < -2.0 | -66.8% | -43.4 | 100% |
+| Credit Tide | VIX | 252d | z > +1.5 | -63.1% | -43.0 | 99% |
+| Inflation Heat | VIX | 252d | z < -1.5 | -53.9% | -13.4 | 96% |
+| Liquidity Cushion | VIX | 252d | z > +1.5 | -48.0% | -13.7 | 100% |
+
+Significant patterns by asset: DGS10 105, DGS2 88, HYOAS 77, VIX 74, GLD 72, DXY 70, SPY 68, TLT 55. **Rates carry the most pillar lead-lag content.**
+
+### Open issues from the rebuild
+
+- **🟢 Liquidity Cushion fixed (2026-05-09 re-run).** IORB dropped from the basket — its 2021-07 start collapsed the alignment window below 1500 obs. New basket: TOTRESNS, RRPONTSYD, WALCL, WTREGEN, SOFR, EFFR, NYFED_TGCR, OFR MMF Repo, OFR MMF Total. Diagnostic: WF +0.104, dom 60% (mixed, soft signal). **Relperf: 9 of 24 real** — LCI is a rotation engine: small_vs_large 252d +0.447, em_vs_dm 252d +0.396, homebuilders_vs_broad 252d +0.360, us_vs_intl 252d -0.358. **Asset-predictive: 5 of 13 real** — t10y2y_252d -0.417 (curve flattener), usdjpy_252d +0.297, dxy_252d -0.240, vix_63d -0.127, spx_252d +0.123. **TODO:** ingest a spliced IOER (2008-07 → 2021-07) + IORB (2021-07 →) continuous series (`IORB_FULL`) so we can re-add a continuous reserves rate.
+- **🟡 Fiscal Pressure mixed.** Term-premium diagnostic at 60% dominant pct (below 80% real threshold). Either accept as soft signal or reweight basket to lift dom%.
+- **🟡 Liquidity Cushion diagnostic mixed.** Same 60% dom issue as FPI — basket reads coherently against forward HY OAS but doesn't dominate. Soft signal use OK; not a rate-the-current-state composite.
+- **🟡 Market Breadth Pulse + Sentiment Tide still blocked.** MSI breadth components only Feb 2023+ (need survivorship-bias-aware S&P 500 backfill). SPI documented components (NAAIM, II, Put/Call, ETF flows, VIX backwardation) not ingested. Same as Apr 30 — not addressed in rebuild.
+
+### What this means for live trading
+
+**Use unchanged:**
+- All threshold-based signals (RRP, EFFR-IORB, HY OAS, breadth thrust, % > 200d, AAII, etc.) — these never depended on the optimized weights.
+- The MRI regime → equity allocation table, conviction-weighted sizing tiers, dual stops, "cash is a position."
+- The price-with-trend technical hierarchy: Price (panel 1) → Relative trend (panel 2) → Z-RoC (panel 3).
+- The 12-pillar synthesis read for macro thesis development.
+
+**Now usable (newly validated):**
+- v5 top per-asset signals as the cross-asset translator: which pillar reads predict which asset class at which horizon.
+- v6 breach patterns as event-study confirmation when a pillar z hits ±1.5 / ±2.0.
+
+**Still avoid for now:**
+- Citing prior optimization JSON OOS IC numbers (Apr 30 audit).
+- Optimized Consumer Pulse / Capex Thrust / Credit Tide as descriptive levels (use single-component proxies: RSXFS, NEWORDER, IG OAS) — until Tier 1 production weights are locked from v5.
+- Liquidity Cushion v4/v5 outputs (broken).
+
+---
+
+## LIVE COMPOSITE SNAPSHOT
+
+**As of 2026-05-01.** All 45 composites in `lighthouse_indices`. Latest reading per index_id.
+
+### Master & risk regime
+
+| Index | Latest | Value | Status |
+|---|---|---|---|
+| MRI (Macro Risk Index) | 2026-04-30 | 0.030 | MID-CYCLE |
+| ENSEMBLE_RISK | 2026-04-30 | 0.629 | PRE_CRISIS |
+| WARNING_LEVEL | 2026-04-30 | 4.0 | RED |
+| ALLOC_MULTIPLIER | 2026-04-30 | 0.15 | CAPITAL PRESERVATION |
+| BASE_REC_PROB | 2026-04-30 | 0.179 | LOW RISK |
+| REC_PROB | 2026-04-30 | 0.179 | LOW RISK |
+| LIQ_STAGE | 2026-04-30 | 2.0 | STAGE 2 — RESERVE DRAIN |
+
+### 12-pillar composites
+
+| Pillar | Index | Latest | Value | Status |
+|---|---|---|---|---|
+| 1. Labor | LPI | 2026-02-28 | 0.017 | NEUTRAL |
+| 2. Prices | PCI | 2026-04-30 | 0.058 | ON TARGET |
+| 3. Growth | GCI | 2026-01-01 | 0.022 | TREND |
+| 4. Housing | HCI | 2026-02-01 | 0.204 | FROZEN |
+| 5. Consumer | CCI | 2026-01-01 | 0.569 | HEALTHY |
+| 6. Business | BCI | 2026-04-21 | 0.143 | SLOWING |
+| 7. Trade | TCI | 2026-03-06 | -2.502 | TRADE CRISIS |
+| 8. Government | GCI_Gov | 2026-03-06 | 0.035 | NORMAL |
+| 9. Financial | FCI | 2026-04-30 | 0.017 | NEUTRAL |
+| 10. Plumbing | LCI | 2026-04-30 | -0.207 | TIGHT |
+| 11. Market Structure | MSI | 2026-04-30 | 0.942 | BULLISH |
+| 12. Sentiment | SPI | 2026-04-29 | -0.304 | NEUTRAL |
+
+### Sub-indices and derived
+
+| Index | Latest | Value | Status |
+|---|---|---|---|
+| LFI (Labor Fragility) | 2026-03-10 | 0.186 | NEUTRAL |
+| LDI (Labor Dynamism) | 2025-12-01 | 0.832 | HEALTHY |
+| CLG (Credit-Labor Gap) | 2026-03-10 | -1.681 | SEVERELY MISPRICED |
+| YFS (Yield-Funding Stress) | 2026-04-30 | 0.770 | ELEVATED |
+| SVI (Spread-Vol Imbalance) | 2026-03-09 | 0.647 | BALANCED |
+| EMD (Equity Momentum Divergence) | 2026-04-21 | -0.070 | OVERSOLD |
+| BILL_SOFR (3M Bill-SOFR Spread) | 2026-03-09 | 0.060 | BILLS RICH |
+| SBD (Structure-Breadth Divergence) | 2026-04-29 | 0.599 | ALIGNED |
+| SSD (Sentiment-Structure Divergence) | 2026-04-29 | 0.992 | FEAR + WEAK |
+| DISCONTINUITY_PREMIUM | 2026-04-30 | 0.450 | EXTREME |
+
+### Crypto / stablecoin
+
+| Index | Latest | Value | Status |
+|---|---|---|---|
+| SLI (Stablecoin Liquidity Impulse) | 2026-01-19 | 1.336 | EXPANSION |
+| SLI_MCAP | 2026-01-12 | 187.046 | — |
+| SLI_ROC_30D | 2026-01-12 | 0.400 | — |
+| SLI_ROC_90D_ANN | 2026-01-12 | 15.400 | — |
+| CDI (Crypto Demand Index) | 2026-02-02 | 1.209 | HIGH ACTIVITY |
+| CFI (Crypto Fundamental Index) | 2026-02-02 | 61.350 | HEALTHY |
+| CTI (Crypto Technical Index) | 2026-02-02 | 0.382 | CAUTIOUS |
+| CVI (Crypto Valuation Index) | 2026-02-02 | -0.344 | FAIR VALUE |
+| Crypto DeFi Derivatives Health | 2026-02-02 | 73.0 | HEALTHY |
+| Crypto DeFi DEX Health | 2026-02-02 | 78.25 | HEALTHY |
+| Crypto DeFi Lending Health | 2026-02-02 | 60.0 | NEUTRAL |
+| Crypto Infrastructure Health | 2026-02-02 | 48.33 | WEAK |
+| Crypto Layer 1 (Settlement) Health | 2026-02-02 | 55.0 | NEUTRAL |
+| Crypto Layer 2 (Scaling) Health | 2026-02-02 | 73.0 | HEALTHY |
+| Crypto Liquid Staking Health | 2026-02-02 | 56.25 | NEUTRAL |
+| Crypto Uncategorized Health | 2026-02-02 | 51.29 | NEUTRAL |
+
+---
+
+## MASTER COMPOSITE — MRI
+
+### Macro Risk Index (MRI) v2.0 — 12-pillar formula
+
+**Status:** LIVE. `lighthouse_indices.index_id = 'MRI'`. Refreshed daily.
+
+**Claim:** Single number capturing aggregate macro risk across all twelve Diagnostic Dozen pillars. The output that drives the equity allocation table and the position-sizing regime multiplier.
+
+**Formula (v2.0, sign-corrected):**
+
+```
+MRI = 0.12 × (-LPI)
+    + 0.08 × PCI
+    + 0.12 × (-GCI)
+    + 0.06 × (-HCI)
+    + 0.08 × (-CCI)
+    + 0.08 × (-BCI)
+    + 0.05 × (-TCI)
+    + 0.10 × GCI_Gov
+    + 0.05 × (-FCI)
+    + 0.10 × (-LCI)
+    + 0.08 × (-MSI)
+    + 0.08 × SPI
+```
+
+Weights sum to 1.00.
+
+**Sign convention:** MRI rises with risk. Bad-when-elevated pillars enter with negative coefficients. PCI, GCI_Gov, and SPI enter positively (high prices, high fiscal pressure, high sentiment all = risk up). The earlier all-positive formulation in v2.0 documentation was a transcription error against the regime table — the live engine in `compute_indices.py` already inverts these signs, so this is a documentation correction, not a behavior change. The published `lighthouse_indices.MRI` value tracks the regime table directionally (rises with risk) and has done so since the composite went live.
+
+**Daily nowcast architecture:** MRI is computed daily as a forward-fill nowcast. Each pillar contributes its most recent available value at the publication timestamp. Daily-cadence pillars (FCI, LCI, MSI, SPI; PCI when its underlying daily proxies refresh) carry to the most recent trading day. Monthly and quarterly pillars (LPI, GCI, HCI, CCI, BCI, TCI, GCI_Gov when its monthly inputs lead) carry forward their last release. Each MRI publication should include the per-pillar vintage table to disclose which inputs are live and which are carried, and the operative read for sizing is the ALLOC_MULTIPLIER ensemble (which incorporates dispersion and regime stability), not the raw MRI alone.
+
+**Regime classification → equity allocation table:**
+
+| MRI z-score | Regime | Equity allocation | Position multiplier |
+|---|---|---|---|
+| < -0.5 | Low Risk | 65-70% | 1.2x |
+| -0.5 to +0.5 | Neutral | 55-60% | 1.0x |
+| +0.5 to +1.0 | Elevated | 45-55% | 0.6x |
+| +1.0 to +1.5 | High Risk | 35-45% | 0.3x |
+| > +1.5 | Crisis | 25-35% | 0.0x |
+
+**Audit findings (Apr 30):**
+- The MRI structural decisions (regime sizing, dual stops, conviction tiers) survive the audit untouched. Independent of OOS IC numbers.
+- Three component pillars (CCI, BCI, FCI) failed descriptive integrity checks. The MRI weighting itself is sound but those three component composites need rebuilding before the MRI carries the same conviction it did pre-audit.
+- See `Outputs/mri_optimization/LIVE_STATUS.md` for the full whitelist of what's safe for live trading.
+
+---
+
+## 12-PILLAR DIAGNOSTIC DOZEN
+
+Twelve pillars across three engines. Pillars = inputs. Engines = processors.
+
+### Macro Dynamics (1-7)
+
+#### 1. Labor Pressure Index (LPI) / Labor Fragility Index (LFI)
+
+**Status:** LIVE (both LPI and LFI rows in `lighthouse_indices`).
+
+**Naming note:** CLAUDE_MASTER uses LPI as the pillar identifier and LFI as the labor sub-composite. The optimization JSON treats them as one indicator. For external publication use the full name on first reference: "Labor Pressure Index (LPI)" or "Labor Fragility Index (LFI)" depending on what's being measured.
+
+**Documented LFI formula (CLAUDE_MASTER):**
+```
+LFI = 0.35*z(LongTermUnemp%) + 0.35*z(-Quits) + 0.30*z(-Hires/Quits)
+```
+
+**Optimized LPI basket (`pillar_multiasset_optimization.json`):**
+| Component | Weight |
+|---|---|
+| UNRATE | 0.300 |
+| UEMP27OV | 0.300 |
+| JTSQUR (Quits rate) | 0.140 |
+| TEMPHELPS | 0.123 |
+| JTSHIR (Hires rate) | 0.070 |
+| JTSJOL (Job openings) | 0.067 |
+
+**Documented thresholds:**
+- Quits Rate < 2.0% → Pre-recessionary
+- LFI z > +0.5 → Fragility elevated
+- Temp Help YoY < -3% → Recession signal
+- Long-Term Unemployed > 22% of total → Structural fragility
+
+**Audit (Apr 30):** Drop UNRATE from input basket — it's the target, not a flow. Documented LFI excludes UNRATE because the pillar is supposed to LEAD it. Composite tracks UNRATE concurrently at +0.88 Pearson; best single component (UEMP27OV) at 0.84 — marginal +0.04 from compositing. See `Outputs/mri_optimization/PILLAR_DOCS/01_LPI.md`.
+
+#### 2. Price Conditions Index (PCI)
+
+**Status:** LIVE.
+
+**Documented formula:**
+```
+PCI = 0.30*z(CoreCPI YoY) + 0.25*z(CorePCE YoY) + 0.20*z(StickyCPI) + 0.15*z(TrimmedMeanCPI) + 0.10*z(CPIShelter)
+```
+
+**Documented thresholds:**
+- Core PCE > 3.0% → Above target, restrictive policy implied
+- Core PCE 2.0-3.0% → Last-mile zone
+- Sticky CPI > 4.0% → Service inflation entrenched
+- Shelter contribution > 50% of core → Lagging measurement masking real disinflation
+
+**Audit:** Optimization for 2y yield prediction has only +0.81 r with core PCE YoY. Single-best component (CPIAUCSL alone) hits +0.90. Pillar isn't doing the descriptive job. Candidate A1 (Concurrent Inflation Lens) proposed as descriptive sibling. See `Outputs/mri_optimization/PILLAR_DOCS/02_PCI.md`.
+
+#### 3. Growth Conditions Index (GCI)
+
+**Status:** LIVE.
+
+**Documented formula:**
+```
+GCI = 0.25*z(TCU) + 0.25*z(INDPRO YoY) + 0.20*z(CFNAIMA3) + 0.15*z(NewOrders 3m) + 0.15*z(PMI Composite)
+```
+
+**Documented thresholds:**
+- CFNAIMA3 < -0.7 → Recession underway
+- TCU < 76% → Slack rising
+- INDPRO YoY < 0% → Industrial contraction
+- CFNAIMA3 > +0.5 → Above-trend growth
+
+**Audit:** GCI has only 0.43 r with CFNAIMA3 itself; TCU alone hits 0.47. Descriptive growth-tracking job done worse by GCI than by single component. Candidate A2 (Concurrent Activity Tracker) proposed. See `Outputs/mri_optimization/PILLAR_DOCS/03_GCI.md`.
+
+#### 4. Housing Conditions Index (HCI)
+
+**Status:** LIVE.
+
+**Documented formula:**
+```
+HCI = 0.25*z(MortgageRate30Y - 6) + 0.20*z(-CaseShillerYoY) + 0.20*z(-NHSDemand) + 0.20*z(-Affordability) + 0.15*z(InventoryMonths - 6)
+```
+
+**Documented thresholds:**
+- 30Y Mortgage > 7.0% → Demand crushed
+- Case-Shiller YoY < -2% → Asset deflation risk
+- NHS Demand < 600k SAAR → Stalled
+- Affordability Index < 100 → Locked out
+- Inventory > 9 months → Buyer's market
+
+**Audit:** See `Outputs/mri_optimization/PILLAR_DOCS/04_HCI.md`.
+
+#### 5. Consumer Conditions Index (CCI) — UPDATED FEB 2026 (7-component)
+
+**Status:** LIVE but DESCRIPTIVELY BROKEN (audit Apr 30).
+
+**Documented formula (Feb 2026):**
+```
+CCI = 0.25*z(Real PCE YoY) + 0.20*z(-RetailSales 3m) + 0.15*z(SavingsRate - 5%)
+    + 0.10*z(-CC Delinquency) + 0.10*z(-DSR) + 0.10*z(UMCSENT z) + 0.10*z(-PSAVRT)
+```
+
+**Optimized basket (post-Apr-30 audit, NOT canonical):** Missing Real PCE entirely; includes REVOLSL and PCEDG that aren't in documented spec.
+
+**Canonical version:** Documented 7-component formula above. The optimization needs to be re-run with the documented basket plus Tier 1 must-adds, targeted on Real PCE YoY (not SPX 252d).
+
+**Documented thresholds:**
+- Real PCE YoY < 1.5% → Consumer weakening
+- CC Delinquency > 3.0% → Stress emerging
+- Savings Rate < 4% → Buffer depleted
+- UMCSENT < 70 → Recession-level pessimism
+
+**Audit:** Decision required — rebuild ground-up. Optimized basket tests fundamentally different indicator than documented one. See `Outputs/mri_optimization/PILLAR_DOCS/05_CCI.md` and `DECISIONS.md` §7.
+
+#### 6. Business Conditions Index (BCI)
+
+**Status:** LIVE but DESCRIPTIVELY BROKEN (audit Apr 30).
+
+**Documented formula:**
+```
+BCI = 0.25*z(NewOrders YoY) + 0.20*z(NDCAPNW YoY) + 0.20*z(-InventoryRatio) + 0.15*z(ISM Mfg) + 0.10*z(ISM Svc) + 0.10*z(SLOOS C&I)
+```
+
+**Documented thresholds:**
+- ISM Mfg < 48 → Contraction
+- New Orders YoY < 0% → Forward demand falling
+- NDCAPNW YoY < 0% → Capex retrenchment
+- SLOOS C&I tightening > 30% → Credit constrained
+
+**Audit:** Decision — rebuild ground-up. Add ANDENO (standard capex proxy, currently missing entirely). Drop or downweight BUSINV. See `Outputs/mri_optimization/PILLAR_DOCS/06_BCI.md`.
+
+#### 7. Trade Conditions Index (TCI)
+
+**Status:** LIVE.
+
+**Documented formula:**
+```
+TCI = 0.30*z(-DXY 6mo Δ) + 0.25*z(-USIMPORT YoY) + 0.20*z(-USEXPORT YoY) + 0.15*z(-TradeBalance/GDP) + 0.10*z(USTRADE)
+```
+
+**Documented thresholds:**
+- DXY > 110 → Strong dollar headwind
+- DXY < 90 → Weak dollar tailwind
+- Trade Balance / GDP < -4% → External imbalance
+- China PMI < 48 → Global manufacturing contraction
+
+**Audit:** Currently in TRADE CRISIS state (-2.502, 2026-03-06). See `Outputs/mri_optimization/PILLAR_DOCS/07_TCI.md`.
+
+### Monetary Mechanics (8-10)
+
+#### 8. Government Conditions Index (GCI-Gov)
+
+**Status:** LIVE. **Naming note:** GCI / GCI-Gov collision is annoying. Decision required — retire "GCI-Gov" in favor of "Fiscal Pressure Index (FPI)" anytime; no external cost. Pending Bob approval.
+
+**Documented formula:**
+```
+GCI_Gov = 0.30*z(Deficit/GDP - 5%) + 0.25*z(Debt/GDP - 100%) + 0.20*z(TermPremium 10y) + 0.15*z(Treasury Issuance pace) + 0.10*z(NetInterest/Receipts)
+```
+
+**Documented thresholds:**
+- Deficit / GDP > 6% → Fiscal dominance regime
+- Debt / GDP > 120% → Sustainability concern
+- Term Premium > +1.0% → Bond market demanding compensation
+- Net Interest / Receipts > 18% → Crowding-out threshold
+
+**Audit:** See `Outputs/mri_optimization/PILLAR_DOCS/08_GCI_Gov.md`.
+
+#### 9. Financial Conditions Index (FCI)
+
+**Status:** LIVE but DESCRIPTIVELY BROKEN (audit Apr 30).
+
+**Documented formula:**
+```
+FCI = 0.30*z(IG OAS) + 0.25*z(HY OAS) + 0.20*z(VIX) + 0.15*z(Baa10Y) + 0.10*z(MOVE)
+```
+
+**Documented thresholds:**
+- IG OAS > 200 bps → Elevated risk pricing
+- HY OAS > 600 bps → Distress
+- HY OAS < 300 bps → Complacent
+- VIX > 30 → Equity stress
+- Baa10Y > +3.5% → Credit stress
+
+**Audit:** FCI drops from +0.88 r (IG OAS alone) to +0.48 r when we add HY/VIX/Baa. Spreads alone do the implied-stress job. Open question — should FCI exist as a composite, or should the pillar's role be documented threshold rules on individual spread series? See `Outputs/mri_optimization/PILLAR_DOCS/09_FCI.md` and `DECISIONS.md` §8.
+
+Candidate A3 (Realized Credit Stress Index) proposed as a separate sibling that captures realized delinquencies/charge-offs vs FCI's implied spreads.
+
+#### 10. Liquidity Cushion Index (LCI) — UPDATED PLUMBING FORMULA
+
+**Status:** LIVE. Documented formula has 7 components; optimized version has only 2 of those documented components plus WALCL/TGA additions. Decision required — keep LCI as the documented 7-component plumbing-stress composite, build Net Liquidity as a separate construct.
+
+**Documented formula (7-component):**
+```
+LCI = 0.25*z(RRP - 200) + 0.20*z(-EFFR-IORB) + 0.20*z(Reserves - LCLOR)
+    + 0.15*z(SOFR-IORB) + 0.10*z(SRF Usage) + 0.05*z(Repo Vol) + 0.05*z(BillSOFR Spread)
+```
+
+**Documented thresholds:**
+- RRP < $200B → Buffer exhausted
+- EFFR-IORB > +8 bps → Acute funding stress
+- LCI z < -0.5 → Scarce regime
+- Reserves vs LCLOR < $300B → Scarcity threshold
+- SOFR-IORB > +5 bps → Funding tight
+
+**Audit:** See `Outputs/mri_optimization/PILLAR_DOCS/10_LCI.md` and `DECISIONS.md` §9.
+
+### Market Structure (11-12)
+
+#### 11. Market Structure Index (MSI) — NEW IN v2.0
+
+**Status:** LIVE but BASKET INCOMPLETE (audit Apr 30).
+
+**Documented formula (11 components):**
+```
+MSI = w1*z(%>20d MA) + w2*z(%>50d MA) + w3*z(%>200d MA) + w4*z(NH-NL) + w5*z(AD Line)
+    + w6*z(McClellan Sum) + w7*z(MOVE inverse) + w8*z(Breadth Thrust) + w9*z(Vol Compression)
+    + w10*z(Z-RoC) + w11*z(SBD inverse)
+```
+
+**Optimization audit:** Only 5 of 11 documented components were tested. The 6 missing (% above MAs, NH/NL, AD line, McClellan summation) are all in the database — just not in the basket. Easy fix; rebuild this week.
+
+**Documented thresholds:**
+- Price < 200d MA → Below trend
+- % > 20d MA < 25% → Washed
+- % > 20d MA > 80% → Crowded
+- Breadth thrust: 30 → 70 in 10 days → Powerful regime change
+- Z-RoC < -1.0 → Momentum broken
+- MSI z < -1.0 → Structure broken
+
+**Breadth thrust detection:** Both 20-day AND 50-day are tracked as separate indicators. Don't flag the 50-day as wrong.
+
+See `Outputs/mri_optimization/PILLAR_DOCS/11_MSI.md` and `DECISIONS.md` §6.
+
+#### 12. Sentiment & Positioning Index (SPI) — NEW IN v2.0
+
+**Status:** LIVE but BASKET INCOMPLETE (audit Apr 30).
+
+**Documented formula (8 components):**
+```
+SPI = w1*z(AAII Bull-Bear) + w2*z(NAAIM) + w3*z(II Bull-Bear) + w4*z(Put/Call inverse)
+    + w5*z(VIX Backwardation) + w6*z(ETF Flow z) + w7*z(Position Crowding) + w8*z(SSD)
+```
+
+**Optimization audit:** Only 3 of 8 documented components tested. The 5 missing (put/call, NAAIM, Investors Intelligence, ETF flows, VIX backwardation) — at least 4 may not be ingested. Requires data-pipeline work before rebuild.
+
+**Documented thresholds:**
+- AAII Bull-Bear > +30 → Euphoric (fade)
+- AAII Bull-Bear < -20 → Capitulation (contrarian buy)
+- NAAIM > 100 → Fully invested (caution)
+- NAAIM < 30 → Defensive (potential bottom)
+- SPI z > +1.5 → Crowded long (fade)
+- SPI z < -1.0 → Capitulation (contrarian)
+
+**Sentiment-Structure Divergence (SSD):** LIVE. Latest 0.992 = "FEAR + WEAK" (sentiment bearish, structure also weak — alignment, no divergence trade).
+
+See `Outputs/mri_optimization/PILLAR_DOCS/12_SPI.md` and `DECISIONS.md` §6.
+
+---
+
+## CROSS-PILLAR DERIVED INDICES
+
+Indices that combine multiple pillar components or measure relationships between pillars.
+
+### Credit-Labor Gap (CLG)
+
+**Status:** LIVE. Latest -1.681 (2026-03-10) = SEVERELY MISPRICED.
+
+**Formula:**
+```
+CLG = z(HY OAS) - z(LFI)
+```
+
+**Reading:** Negative = credit spreads tight relative to labor stress (credit ignoring fundamentals). Positive = credit panicking ahead of labor (over-pricing risk).
+
+**Documented threshold:** CLG < -1.0 → Credit ignoring labor fundamentals (warning).
+
+### Yield-Funding Stress (YFS)
+
+**Status:** LIVE. Latest 0.770 (2026-04-30) = ELEVATED.
+
+**Formula:**
+```
+YFS = 0.40*z(SOFR-IORB) + 0.30*z(MOVE) + 0.30*z(EFFR-IORB)
+```
+
+**Reading:** Composite of money-market funding stress and rate volatility. Elevated = funding markets and rate vol both signaling stress.
+
+### Spread-Volatility Imbalance (SVI)
+
+**Status:** LIVE. Latest 0.647 (2026-03-09) = BALANCED.
+
+**Formula:**
+```
+SVI = z(HY OAS / VIX) - z(historical median HY/VIX ratio)
+```
+
+**Reading:** When HY OAS is low but VIX is high, equities are pricing risk that credit isn't. Strong divergence = one of them is wrong.
+
+### Equity Momentum Divergence (EMD)
+
+**Status:** LIVE. Latest -0.070 (2026-04-21) = OVERSOLD.
+
+**Formula:**
+```
+EMD = z(SPX 5d return) - z(NYSE A/D Line 5d Δ) - z(NH-NL 5d Δ)
+```
+
+**Reading:** Index moving up while internals deteriorate = distribution. Index down while internals firm = oversold bounce setup.
+
+### Structure-Breadth Divergence (SBD)
+
+**Status:** LIVE. Latest 0.599 (2026-04-29) = ALIGNED.
+
+**Formula:**
+```
+SBD = z(Price relative to 200d) - z(% stocks > 50d MA)
+```
+
+**Reading:** Price above 200d but breadth weak = late-cycle distribution. Price below 200d but breadth firm = washout bottom.
+
+### Sentiment-Structure Divergence (SSD)
+
+**Status:** LIVE. Latest 0.992 (2026-04-29) = FEAR + WEAK.
+
+**Formula:**
+```
+SSD = z(AAII Bull-Bear) - z(MSI)
+```
+
+**Reading:** Sentiment crashed but structure intact = contrarian buy setup. Sentiment euphoric but structure broken = top.
+
+### Discontinuity Premium
+
+**Status:** LIVE. Latest 0.450 (2026-04-30) = EXTREME.
+
+**Reading:** Custom regime indicator capturing the gap between market-implied conditions and macro-fundamental conditions. EXTREME = priced reality and observed reality have diverged enough to warrant repricing risk.
+
+---
+
+## RISK REGIME OUTPUTS
+
+These are decision outputs derived from the underlying composites. Not independent indicators — they're the rule outputs.
+
+| Index | Latest | Value | Status | Source |
+|---|---|---|---|---|
+| ALLOC_MULTIPLIER | 2026-04-30 | 0.15 | CAPITAL PRESERVATION | f(MRI regime) |
+| BASE_REC_PROB | 2026-04-30 | 0.179 | LOW RISK | Yield curve + LFI + LCI ensemble |
+| REC_PROB | 2026-04-30 | 0.179 | LOW RISK | Conditional ensemble (BASE + adjustments) |
+| ENSEMBLE_RISK | 2026-04-30 | 0.629 | PRE_CRISIS | Multi-model risk aggregate |
+| WARNING_LEVEL | 2026-04-30 | 4.0 | RED | Threshold-breach count → ordinal scale |
+| LIQ_STAGE | 2026-04-30 | 2.0 | STAGE 2 — RESERVE DRAIN | Plumbing regime classification (4 stages) |
+
+**Liquidity stage definitions:**
+- Stage 1: Abundant — RRP > $1T, reserves comfortable, no funding stress
+- Stage 2: Reserve Drain — RRP draining, EFFR-IORB benign, no acute stress yet
+- Stage 3: Scarce — RRP exhausted, reserves below LCLOR threshold, funding stress emerging
+- Stage 4: Crisis — Acute funding stress, repo dysfunction, Fed intervention required
+
+**Warning level scale:** 1 (GREEN) → 5 (CRITICAL). Count of breached thresholds across all 12 pillars, weighted by pillar.
+
+---
+
+## CRYPTO SECTOR COMPOSITES
+
+Eight sector-health composites + four crypto-specific aggregates. Not yet integrated into MRI v2.0; tracked independently.
+
+### Crypto aggregates
+
+- **CDI (Crypto Demand Index)** — 1.209, HIGH ACTIVITY (2026-02-02)
+- **CFI (Crypto Fundamental Index)** — 61.35, HEALTHY (2026-02-02)
+- **CTI (Crypto Technical Index)** — 0.382, CAUTIOUS (2026-02-02)
+- **CVI (Crypto Valuation Index)** — -0.344, FAIR VALUE (2026-02-02)
+
+These four are documented internally but not in the proprietary indicators reference. Need formula write-ups before public use.
+
+### Sector health composites (DefiLlama-derived, 2026-02-02 latest)
+
+- **DeFi Derivatives Health** — 73.0 HEALTHY
+- **DeFi DEX Health** — 78.25 HEALTHY
+- **DeFi Lending Health** — 60.0 NEUTRAL
+- **Infrastructure Health** — 48.33 WEAK
+- **Layer 1 (Settlement) Health** — 55.0 NEUTRAL
+- **Layer 2 (Scaling) Health** — 73.0 HEALTHY
+- **Liquid Staking Health** — 56.25 NEUTRAL
+- **Uncategorized Health** — 51.29 NEUTRAL
+
+**Scale:** 0-100. Composite of TVL momentum, fee accrual, active address growth, and protocol concentration per sector.
+
+### Stablecoin Liquidity Impulse (SLI)
+
+**Status:** LIVE. Latest 1.336 (2026-01-19) = EXPANSION.
+
+**Formula:**
+```
+SLI = z(Stablecoin Mcap 30d Δ) + z(USDT/USDC issuance) + z(Stablecoin transfer volume)
+```
+
+**Variants:**
+- SLI_MCAP — raw market cap
+- SLI_ROC_30D — 30-day rate of change
+- SLI_ROC_90D_ANN — 90-day annualized RoC
+
+---
+
+## TREASURY MICROSTRUCTURE INDICATORS
+
+**Status: 6 of 7 DOCUMENTED, NOT BUILT.**
+
+These appear in the proprietary indicators reference (sections 25-31) but have no rows in `lighthouse_indices`. Building requires source data for auction results, dealer flow, and stablecoin Treasury holdings.
+
+### Built and live
+
+- **3M Bill-SOFR Spread (BILL_SOFR)** — LIVE. Latest 0.060 (2026-03-09) = BILLS RICH. The single Treasury microstructure indicator currently in the DB.
+
+### Documented but not built
+
+- **Treasury Auction Tailing Metric** — How many bps the auction tailed (or stopped through) the when-issued yield. Reference §25.
+- **Bid-to-Cover Ratio Analysis** — Track B/C ratios across maturities; flag values < 2.0x as soft demand. Reference §26.
+- **Dealer Allotment Percentage** — Primary dealer take-down as % of total. > 30% = soft demand from indirect bidders. Reference §27.
+- **Dealer Accumulation Momentum** — 4-week trend in dealer Treasury holdings. Rising dealer inventory while issuance high = absorption strain. Reference §28.
+- **Treasury Stress Dashboard (4-metric system)** — Composite of tail/BC/dealer-share/dealer-momentum. Reference §29.
+- **Bill-Bond Divergence Analysis** — Spread between bill yields and equivalent-tenor bond yields adjusted for term premium. Reference §30.
+- **Treasury Composition Shift Index** — Rolling Δ in bills-as-%-of-marketable-debt. Rising = funding stress/issuance flexibility limit. Reference §31.
+
+**Build priority:** Auction tailing + B/C are easiest (TreasuryDirect publishes). Dealer flow requires NY Fed FR-2004 data (already partial in DB). Stablecoin Treasury holdings require Tether/Circle attestation parsing.
+
+---
+
+## ADVANCED TRADING FRAMEWORKS
+
+**Status: ALL DOCUMENTED, NOT BUILT.**
+
+Reference §36-39. These are basis-trade and microstructure frameworks used in the technical sleeve.
+
+- **Z-Score Positioning Index (Basis Trades)** — Rolling z-score of cash-futures basis vs 252-day distribution. Reference §36.
+- **Compression Function Model** — Maps basis tightness to expected reversion speed using historical compression decay curves. Reference §37.
+- **Recovery Half-Life Metric** — Time for basis dislocation to compress 50% from entry. Reference §38.
+- **Market-Neutral Basis Sharpe Ratio** — Risk-adjusted return on basis trades net of carry and financing. Reference §39.
+
+**Build priority:** Lower than Treasury microstructure. These require live execution data we don't have until PiTrade is funded.
+
+### Documented frameworks (concepts, not single indicators)
+
+- **Liquidity Transmission Framework** (§21) — Mapping of how Fed plumbing changes transmit to risk assets via the four chains (Labor → Credit → Equity, Liquidity → Crypto, Plumbing → Asset Prices, Fiscal Dominance → Term Premium). Mechanism claim, not a single indicator.
+- **Leverage Capacity Matrix** (§22) — Cross-asset leverage room calculator. Maps current margin posture to historical distribution per asset class.
+- **Liquidity Composite Index** (§23) — Distinct from LCI. The proprietary indicators reference describes a separate broader liquidity composite combining LCI + global central bank balance sheet aggregates + USD funding markets. Not built.
+- **Collateral Shortage Index** (§24) — Composite of repo specials, GC-OIS spread, and Treasury fails-to-deliver. Not built.
+
+---
+
+## AUDIT FINDINGS & LIVE TRADING WHITELIST
+
+> **Note (2026-05-09):** This section is the **Apr 30 audit snapshot**. The "What's broken or suspect" list and the "Decisions required" list have been partly superseded by the May 2026 rebuild — see [May 2026 rebuild state](#may-2026-rebuild-state) for the current status of CCI / BCI / FCI optimized composites, naming decisions, GCI-Gov→FPI rename, methodology v2, and LCI's new (different) failure mode.
+
+**Source:** `Outputs/mri_optimization/LIVE_STATUS.md` (Apr 30, 2026)
+
+### What survives the audit untouched
+
+**Framework structure:**
+- Three engines × twelve pillars (taxonomy, not quantitative claim)
+- Four Chains (mechanism claims, supported by historical episodes)
+- One book / two ways of taking risk
+
+**Position sizing and risk management:**
+- MRI regime → equity allocation table
+- Conviction-weighted sizing tiers (Tier 1 20% / Tier 2 12% / Tier 3 7% / Tier 4 0%)
+- Dual stops (thesis + price, whichever first)
+- Cash is a position
+- Strong views, weakly held
+
+**Documented threshold signals (all usable today):**
+
+Labor: Quits < 2.0% · LFI z > +0.5 · Temp Help YoY < -3% · Long-term Unemployed > 22%
+Liquidity: RRP < $200B · EFFR-IORB > +8 bps · LCI z < -0.5 · Reserves vs LCLOR < $300B
+Credit: HY OAS < 300 bps (complacent) · CLG < -1.0
+Market Structure: Price < 200d · % > 20d MA < 25% / > 80% · Breadth thrust 30→70 in 10d · % > 50d MA < 35% / > 85% · Z-RoC < -1.0 · MSI z < -1.0
+Sentiment: AAII Bull-Bear > +30 / < -20 · NAAIM > 100 · SPI z > +1.5 / < -1.0
+
+### What's broken or suspect (DO NOT trade off of)
+
+- **Optimized CCI** — Missing Real PCE, includes spec-divergent components. Use threshold rules only.
+- **Optimized BCI** — Missing ANDENO. Rebuild required.
+- **Optimized FCI** — IG OAS alone tracks Chicago Fed FCI better (+0.88 vs +0.48 composite). Use IG OAS as sole proxy until rebuild.
+- **OOS IC numbers from any optimization JSON** — 30-70 percentage-point divergence from full-sample IC. Do not cite. Use full-sample IC only (strongest signals are +0.30 to +0.40).
+
+### Decisions required
+
+See `Outputs/mri_optimization/DECISIONS.md` for full text. Summary:
+1. Lock the "what we trust" list for live trading (recommendation: threshold signals + single-component proxies, avoid optimized composites for CCI/BCI/FCI)
+2. Stop using OOS IC numbers in any communication (status: confirmed nothing cited externally)
+3. Naming pass — defer or commit (recommendation: defer; one exception is GCI-Gov → FPI rename)
+4. Pause Pascal blueprint live commitments until spot-data points are re-pulled
+5. Verify OOS IC walk-forward methodology (~half day)
+6. Reconstruct MSI and SPI baskets to match documented formulas (MSI mechanical this week; SPI requires data ingestion audit)
+7. Reconcile optimized CCI with documented Feb 2026 CCI (decision: documented is canonical, re-run optimization)
+8. Decide CCI/BCI/FCI rebuild approach (recommendation: ground-up for all three)
+9. Reconcile LCI optimization with CLAUDE_MASTER LCI formula (decision: keep LCI documented, build Net Liquidity separately)
+
+---
+
+## CANDIDATE INDICATORS (PROPOSED, UNBUILT)
+
+**Source:** `Outputs/mri_optimization/CANDIDATE_NEW_INDICATORS.md` (Apr 30, 2026)
+
+None of these are built. None should be built without explicit Bob approval. The list is meant to be filtered aggressively, not expanded.
+
+### Tier A — Surfaced from descriptive analysis
+
+**A1. Concurrent Inflation Lens** — Pure descriptive composite of concurrent inflation. Doesn't try to predict 2y yields; tracks core PCE today. Components: Core PCE, headline PCE, trimmed-mean CPI, median CPI, sticky core. Fills the gap left by PCI optimizing for 2y yield prediction.
+
+**A2. Concurrent Activity Tracker** — Real-time GDP nowcast analog, descriptive only. Components: INDPRO, PAYEMS, RSXFS, RPI, PCEC96, CFNAIMA3. Fills the gap left by GCI's 0.43 r with CFNAIMA3.
+
+**A3. Realized Credit Stress Index** — Credit stress measured by realized delinquencies and charge-offs, not implied spreads. Components: All-loans delinquency, CC charge-offs, C&I delinquency, mortgage delinquency, SLOOS lending standards. Captures the part of credit risk not priced in HY OAS.
+
+### Tier B — Surfaced from predictive grid
+
+(See `CANDIDATE_NEW_INDICATORS.md` for full Tier B list — cross-pillar relationships that surfaced in the predictive grid.)
+
+---
+
+## NAMING CONVENTIONS AND ALIASES
+
+**Public-facing rule:** Use full name on first reference, abbreviation after.
+- "Labor Pressure Index (LPI)" then LPI
+- "Macro Risk Index (MRI)" then MRI
+- Never lead cold with the acronym for external readers.
+
+**Internal collisions:**
+- **GCI vs GCI-Gov** — Growth Conditions Index vs Government Conditions Index. Causes code-level confusion. Decision pending: retire GCI-Gov in favor of "Fiscal Pressure Index (FPI)" anytime.
+- **LPI vs LFI** — Labor Pressure Index (pillar identifier) vs Labor Fragility Index (sub-composite). Used somewhat interchangeably in CLAUDE_MASTER. Optimization JSON treats them as one. For external publication, pick one per piece.
+- **LCI vs Net Liquidity** — Liquidity Cushion Index (documented 7-component plumbing-stress composite) vs Net Liquidity (WALCL - TGA - RRP, the broader Fed-balance-sheet-net construct). Different things; don't merge.
+
+**Reader-facing publication names:** "The Beam" / "The Beacon" / "The Horizon" / "The Diagnostic Dozen" — never bare. Internal shorthand can stay casual.
+
+---
+
+**END OF INDICATORS MASTER**
+
+*This document consolidates the proprietary indicators reference, the Apr 30 audit findings, the 12 pillar audit docs, the candidate new indicators list, and the live `lighthouse_indices` snapshot into one canonical reference. Source files remain in place as detail/audit trails. When information conflicts, this file wins.*

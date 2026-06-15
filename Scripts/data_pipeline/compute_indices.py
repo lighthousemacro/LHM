@@ -2291,6 +2291,12 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
     try:
         rec_prob = compute_recession_probability(conn)
         print(f"      Generated {len(rec_prob)} probability estimates")
+        # Smooth: the raw model flips 0<->100% on a near-daily basis (known
+        # 2026-06 defect — unusable raw). A ~3-month rolling mean turns it into a
+        # stable, chartable probability without shifting the underlying level.
+        if isinstance(rec_prob, pd.Series) and rec_prob.dropna().shape[0] > 63:
+            rec_prob = rec_prob.rolling(63, min_periods=10).mean()
+            rec_prob.name = "REC_PROB"
     except Exception as e:
         print(f"      WARNING: Recession probability computation failed: {e}")
         rec_prob = pd.Series(dtype=float, name="REC_PROB")

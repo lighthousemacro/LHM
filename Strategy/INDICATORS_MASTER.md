@@ -9,7 +9,7 @@
 > **Companion source docs (the volume series):** `INDICATORS_MASTER.md` (this file) → `STRATEGY_MASTER.md` (planned) → `RISK_MASTER.md` (planned). All three eventually consolidate into "LHM Macro Strategy & Cross-Asset Trading — Volume 1: The 12 Pillars."
 
 **Last consolidated:** 2026-06-15 (five-category final lineup + real-time daily fix + MRI rebuild). Prior: 2026-05-09 (v4/v5/v6 rebuild + naming lock + methodology v2)
-**DB snapshot:** 2,498 series · 4.15M observations · 45 live composites in `lighthouse_indices`
+**DB snapshot:** 2,600+ series · 4.15M observations · **50 live indicators** in `lighthouse_indices` (all real-time through yesterday, 0 stale)
 **Replaces / consolidates:**
 - `Strategy/LIGHTHOUSE MACRO - PROPRIETARY INDICATORS REFERENCE.md` (39 numbered indicators, formulas + thresholds)
 - `Outputs/mri_optimization/PILLAR_DOCS/` (12 per-pillar audit writeups, Apr 30)

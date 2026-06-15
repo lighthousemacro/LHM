@@ -84,13 +84,33 @@ The detail files stay in place. This document is the index, the live state, and 
 
 ### Category 1 — Allocation Impact
 
-*Proven to move asset returns — any asset class, cross-asset relative, sector relative, or curve. The honest read: this is the THINNEST bucket. The framework historically over-asserted asset-return skill; OOS validation keeps only what survives. Rotation / sector / curve targets (SPY/TLT, XLY/XLP, IWF/IWD, IAU/SGOV, SHY/TLT) are the build-queue — they need the monthly-grid re-validation the program flagged.*
+*Proven to move asset returns — any asset class, cross-asset relative, sector relative, curve, FX, commodity. **REBUILT 2026-06-15 from the full pillar docs + asset-class frameworks.** The earlier "thin bucket" call was a measurement error, not a property of the framework: it tested broad-index direction (dominated by liquidity/positioning), the WRONG target. Macro drives asset prices through SPECIFIC channels — the curve, sector rotations, relative pairs — and there the signal is sharp. 34 candidates were mined from the documented transmission mechanisms and validated honestly (purged non-overlap walk-forward OOS, noise-pair false-discovery control, n-gated). Result: 10 real allocation signals, not 3. Full inventory + cross-pillar composites: `Outputs/mri_optimization/allocation_rebuild_synthesis_20260615.json`; validation: `allocation_validation_results_20260615.json`.*
 
-| Indicator | Predicts | OOS evidence | Confidence | Transform / bands | Overlay chart |
+**VALIDATED (OOS-confirmed, n≥50, noise-clean, overlap-confirmed):**
+
+| Indicator | Target | OOS IC | overlap | noise | n | Mechanism |
+|---|---|---|---|---|---|---|
+| **Labor-Led Curve Steepener** (LFI basket) | 2s10s (T10Y2Y), 6m | **+0.27** | +0.28 | 0.00 | 80 | Labor fragility leads Fed recognition 6-9m → front end falls faster than long → bull steepener |
+| **Consumer Goods-Services Rotation** | XLY/XLP, 3m | **0.12** | 0.12 | 0.00 | 97 | Labor-income + durables-minus-services impulse leads discretionary vs staples |
+| **Cyclical-Defensive Rotation** (employment+IP+surveys) | XLI/XLP, 3m | **0.30** | 0.10 | clean | 97 | Real-economy breadth migrating defensive leads the equity rotation |
+| **Energy CPI Pass-Through** | XLE/SPY, 3m | **+0.21** | +0.20 | 0.10 | 97 | Oil + energy-CPI momentum leads energy sector vs market |
+
+**PROVISIONAL (real signal, smaller-n or re-test owed):**
+
+| Indicator | Target | OOS IC | overlap | n | Mechanism |
 |---|---|---|---|---|---|
-| **CLG** (Credit-Labor Gap) | forward HY-OAS (credit) | +0.16 construct-intact (B-2); robust −0.19 (B-3) | VALIDATED | z-score, ±1.5/±2σ | CLG vs forward HY-OAS |
-| **FCI** (Credit Tide) | VIX / equity vol, 63d | +0.37 (B-3 2nd-tier, light) | PROVISIONAL | z-score | FCI vs VIX |
-| **CCI** (Consumer Pulse) | XLY/XLP rotation, 6m | +0.16 (Phase A, n=9,279); monthly re-run owed | CANDIDATE | z-score | CCI vs XLY/XLP ratio |
+| **Real-Yield Gold Engine** | GLD, 6m | +0.15 | +0.17 | 38 | Gold inverse to 10y real yield (DFII10 / DGS10−T10YIE) |
+| **Credit-Labor Gap** | HY-OAS, 6m | +0.11 | +0.13 | 39 | Labor stress leads credit spreads (income→delinquency) |
+| **Strong-Dollar EM Stress** | EEM, 6m | −0.15 | −0.16 | 41 | Strong broad dollar → EM equity underperformance |
+| **Income-Depletion Rotation** | XLY/XLP, 6m | −0.18 | −0.17 | 48 | Falling saving rate + real-income drain leads discretionary underperformance |
+| **Inventory Destocking** | XLB/SPY, 6m | +0.20 | +0.23 | 48 | Inventory overhang leads materials underperformance |
+| **Housing Pipeline/Affordability** | XHB/SPY, 6m | −0.25 | +0.05 | 35 | Mortgage-rate/permits lead homebuilders (overlap disagrees — re-test horizon) |
+
+**Cross-pillar composites (build queue, strongest multi-pillar ideas):** Pre-Recession Duration/Curve (Labor+Growth+Inflation → TLT & 2s10s), Real-Yield+Inflation Gold (Prices+Labor → GLD), Risk-On/Risk-Off Regime gate (Growth+Credit+Liquidity → SPY/TLT — the master allocation gate the prior pass missed), Two-Pillar Recession Rotation (Consumer+Labor → defensives & duration), Dollar+Growth-Differential EM/DM (Trade+Growth → EEM/EFA), Inflation-Surprise Credit Widener (Prices+Financial → HY-OAS).
+
+**Demoted honestly (no OOS skill at the tested target/horizon — the discipline working):** Shelter→TLT direction (mechanism real — ZORI leads CPI-shelter 12-18m — but ZORI history too short, n=17, untestable now; revisit as it accrues), Inflation-Regime→TLT direction, Capex-Orders→XLI/SPY, Hi-Freq-Labor→SPY/TLT, Consumer-Credit→HY-OAS, Consumer-Squeeze→XLY/XLP (likely needs a forward-*consumption* target, not the equity ratio — re-test).
+
+**Transform:** z-score + canonical bands for the composites; overlay each against its asset target (e.g. Labor-Curve composite vs the 2s10s; Cyclical-Defensive vs XLI/XLP).
 
 ### Category 2 — Macro Impact
 

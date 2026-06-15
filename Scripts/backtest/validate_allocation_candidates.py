@@ -80,11 +80,46 @@ def build_feat(conn, comps, grid, znmp, ff):
     return feat, pnames, sig_idx, dropped
 
 
+def _load_close(conn, sid):
+    """Accept 'GLD' or 'GLD_Close'; return the DB close series (network-free)."""
+    name = sid if sid.endswith("_Close") else sid + "_Close"
+    return load_db_series(conn, name)
+
+
+def build_db_target(conn, spec, sig_idx):
+    """DB-based forward targets so we never depend on yfinance (offline here).
+    db_asset_fwd_ret: forward log return of one ETF close.
+    db_ratio_fwd_ret: forward log return of an A/B close ratio (rotation)."""
+    kind, tgt, h = spec["kind"], spec["tgt"], spec["h"]
+    if kind == "db_asset_fwd_ret":
+        p = _load_close(conn, tgt)
+        if p is None or p.empty:
+            return None, h
+        p = to_grid(p, "B").ffill(limit=FFILL_B).reindex(sig_idx)
+        lp = np.log(p.where(p > 0))
+        return lp.shift(-h) - lp, h
+    if kind == "db_ratio_fwd_ret":
+        a, b = tgt.split("/")
+        pa, pb = _load_close(conn, a), _load_close(conn, b)
+        if pa is None or pb is None or pa.empty or pb.empty:
+            return None, h
+        pa = to_grid(pa, "B").ffill(limit=FFILL_B)
+        pb = to_grid(pb, "B").ffill(limit=FFILL_B)
+        r = (pa / pb).reindex(sig_idx)
+        lr = np.log(r.where(r > 0))
+        return lr.shift(-h) - lr, h
+    return None, h
+
+
+DB_TARGET_KINDS = {"db_asset_fwd_ret", "db_ratio_fwd_ret"}
+
+
 def validate_one(conn, cand):
     name = cand["name"]
     comps = [(c[0], int(c[1]), c[2]) for c in cand["components"]]
     spec = cand["target"]
-    grid = grid_of(spec["kind"])
+    # Allocation candidates target daily-observable assets/rates -> business grid.
+    grid = "B" if spec["kind"] in DB_TARGET_KINDS else grid_of(spec["kind"])
     mt, rf = ((MIN_TRAIN_M, REFIT_M) if grid == "M" else (MIN_TRAIN_B, REFIT_B))
     znmp = 24 if grid == "M" else 252
     ff = FFILL_M if grid == "M" else FFILL_B
@@ -92,7 +127,10 @@ def validate_one(conn, cand):
     feat, pnames, sig_idx, dropped = build_feat(conn, comps, grid, znmp, ff)
     if feat is None or len(pnames) < 1:
         return dict(name=name, status="degenerate", dropped=dropped)
-    tgt, h_steps = build_target(conn, spec, sig_idx, grid)
+    if spec["kind"] in DB_TARGET_KINDS:
+        tgt, h_steps = build_db_target(conn, spec, sig_idx)
+    else:
+        tgt, h_steps = build_target(conn, spec, sig_idx, grid)
     if tgt is None or tgt.dropna().empty:
         return dict(name=name, status="no_target", target=spec, dropped=dropped)
 

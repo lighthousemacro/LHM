@@ -35194,3 +35194,7 @@ Breadth total: 13 series, 9,750 observations
 2026-06-15 06:48:56 [INFO]    suspect: 32
 2026-06-15 06:48:56 [INFO]    warning: 13
 2026-06-15 06:52:54 [INFO] Quality flags updated in database.
+/Users/bob/LHM/Scripts/data_pipeline/compute_indices.py:2238: FutureWarning: The default fill_method='pad' in Series.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  
+/Users/bob/LHM/Scripts/data_pipeline/compute_indices.py:2238: FutureWarning: The default fill_method='pad' in Series.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  

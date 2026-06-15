@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Lighthouse Macro">
   <!-- background -->
-  <rect x="0" y="0" width="512" height="512" rx="16" fill="#22324B"/>
+  <rect x="0" y="0" width="512" height="512" rx="16" fill="#123456"/>
   <!-- inner border frame -->
-  <rect x="22" y="22" width="468" height="468" rx="10" fill="none" stroke="#3C5070" stroke-width="10"/>
+  <rect x="22" y="22" width="468" height="468" rx="10" fill="none" stroke="#2C5485" stroke-width="10"/>
 
   <!-- light beams (bowtie), pinched at the lamp -->
   <polygon points="256,152 84,84 84,220" fill="#5B4A47"/>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Lighthouse Macro">
+  <rect x="0" y="0" width="512" height="512" rx="16" fill="#123456"/>
+  <rect x="22" y="22" width="468" height="468" rx="10" fill="none" stroke="#2389BB" stroke-width="10"/>
+  <polygon points="256,152 84,84 84,220" fill="#2389BB"/>
+  <polygon points="256,152 428,84 428,220" fill="#FF2389"/>
+  <polygon points="240,98 272,98 298,384 214,384" fill="#89CCFF"/>
+  <circle cx="256" cy="152" r="31" fill="#FFFFFF"/>
+  <rect x="204" y="384" width="104" height="32" rx="3" fill="#FFFFFF"/>
+</svg>

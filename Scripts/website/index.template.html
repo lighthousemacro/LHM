@@ -539,8 +539,8 @@
         <div class="sec-eyebrow mono reveal"><span class="num">// THE PACT</span><span class="rule"></span></div>
         <div class="pact-line reveal">
             <span class="b1">A current reading for every indicator.</span>
-            <span class="b2">Every business day.</span>
-            <span class="b3">No NaN.</span>
+            <span class="b2">No break between official releases.</span>
+            <span class="b3">Every business day.</span>
         </div>
         <div class="tier-row">
             <div class="tier-box reveal"><div class="h"><span class="a">// TIER 01</span><span class="b">ANCHOR</span></div><p>Official statistics. BLS, FRED, BEA. The source of truth when fresh.</p></div>
@@ -710,37 +710,13 @@
     </div>
 </section>
 
-<!-- // 06 ENDORSEMENTS -->
-<section class="navy-sec">
-    <div class="wrap">
-        <div class="sec-head reveal">
-            <div class="sec-eyebrow mono"><span class="num">// 06</span><span class="rule"></span><span class="lbl">The Reception</span></div>
-            <h2 class="sec-title">SELECTED ENDORSEMENTS</h2>
-            <p class="sec-intro">From institutional CIOs, sell-side desks, academic economists, and the practitioners who watch the tape every day.</p>
-        </div>
-        <div class="quote-stage reveal" id="quoteStage">
-            <div class="mark">&ldquo;</div>
-            <div class="qmeta" id="qMeta">// 01 / 05 &middot; DESK</div>
-            <blockquote id="qText">An excellent and deeply revealing piece. It connects plumbing to price in a way most macro writers simply do not attempt.</blockquote>
-            <div class="who"><span class="nm" id="qName">Leon Liao</span> &nbsp; <span class="rl" id="qRole">MD, Global Investment Bank</span></div>
-        </div>
-        <div class="voices" id="voices"></div>
-        <div class="signal-feed reveal">
-            <div class="sh"><div class="dots"><i style="background:var(--venus)"></i><i style="background:var(--dusk)"></i><i style="background:var(--sea)"></i></div><span class="lbl">LIGHTHOUSE-MACRO // SIGNAL-FEED</span><span class="lbl">AUTHORITY LOG</span></div>
-            <div class="sb">
-                <div class="ln"><span class="g">$ RESTACKED BY</span> &nbsp;<b>V&iacute;tor Const&acirc;ncio</b> &nbsp; &middot; Former Vice-President, European Central Bank</div>
-                <div class="ln"><span class="g">$ RESTACKED BY</span> &nbsp;<b>Celeritas Capital</b> &nbsp; &middot; On 'Foundations to Fault Lines'</div>
-                <div class="ln"><span class="blink">&#9642;</span> awaiting-next-signal</div>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- Selected Endorsements section removed: fabricated quotes + thin signal feed. Recognition handled in the log below. -->
 
 <!-- // 07 RECOGNITION & MEDIA -->
 <section id="media">
     <div class="wrap">
         <div class="sec-head reveal">
-            <div class="sec-eyebrow mono"><span class="num">// 07</span><span class="rule"></span><span class="lbl">The Log</span></div>
+            <div class="sec-eyebrow mono"><span class="num">// 06</span><span class="rule"></span><span class="lbl">The Log</span></div>
             <h2 class="sec-title">RECOGNITION &amp; MEDIA</h2>
             <p class="sec-intro">A non-exhaustive list of the desks, podcasts, and publications that have engaged with the work.</p>
         </div>
@@ -765,7 +741,7 @@
 <section id="about" class="mist">
     <div class="wrap">
         <div class="sec-head reveal">
-            <div class="sec-eyebrow mono"><span class="num">// 08</span><span class="rule"></span><span class="lbl">The Author</span></div>
+            <div class="sec-eyebrow mono"><span class="num">// 07</span><span class="rule"></span><span class="lbl">The Author</span></div>
             <h2 class="sec-title">BOB SHEEHAN</h2>
         </div>
         <div class="auth-grid">
@@ -792,7 +768,7 @@
 <section id="contact">
     <div class="wrap">
         <div class="sec-head reveal">
-            <div class="sec-eyebrow mono"><span class="num">// 09</span><span class="rule"></span><span class="lbl">Get in Touch</span></div>
+            <div class="sec-eyebrow mono"><span class="num">// 08</span><span class="rule"></span><span class="lbl">Get in Touch</span></div>
             <h2 class="sec-title">START A CONVERSATION</h2>
             <p class="sec-intro">Whether you are an advisory firm exploring research access, a business leader making capital decisions, or an allocator looking for a strategist on call, pick the line that fits.</p>
         </div>
@@ -873,35 +849,7 @@
     }, { threshold:0.12 });
     document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-    // endorsement carousel
-    var QUOTES = [
-        { meta:'// 01 / 05 · CIO', text:'The cross-pillar synthesis is the rare part. Most macro is a single thread. This is the whole weave.', name:'Tim Pierotti', role:'CIO, WealthVest' },
-        { meta:'// 02 / 05 · DESK', text:'An excellent and deeply revealing piece. It connects plumbing to price in a way most macro writers simply do not attempt.', name:'Leon Liao', role:'MD, Global Investment Bank' },
-        { meta:'// 03 / 05 · ANALYST', text:'Rigorous, independent, and willing to publish the invalidation criteria up front. That last part is rare.', name:'Alan P. Shaw', role:'Independent Analyst' },
-        { meta:'// 04 / 05 · ACADEMIC', text:'The framework holds together. The labor and credit work in particular reads like someone who has actually sat in the chair.', name:'Mondayswife', role:'PhD Economist' },
-        { meta:'// 05 / 05 · READER', text:'On The Honest Level: this is the clearest read of term premium I have seen outside a central bank working paper.', name:'Sam Shiffman', role:"On 'The Honest Level'" }
-    ];
-    var qi = 0, voicesEl = document.getElementById('voices');
-    function renderVoices(){
-        voicesEl.innerHTML = '';
-        QUOTES.forEach(function(q, i){
-            var d = document.createElement('div');
-            d.className = 'voice' + (i===qi ? ' on' : '');
-            d.innerHTML = '<div><div class="nm">'+q.name+'</div><div class="rl">'+q.role+'</div></div><span class="sq"></span>';
-            d.addEventListener('click', function(){ qi = i; paint(); });
-            voicesEl.appendChild(d);
-        });
-    }
-    function paint(){
-        var q = QUOTES[qi];
-        document.getElementById('qMeta').textContent = q.meta;
-        document.getElementById('qText').textContent = q.text;
-        document.getElementById('qName').textContent = q.name;
-        document.getElementById('qRole').textContent = q.role;
-        renderVoices();
-    }
-    renderVoices();
-    setInterval(function(){ qi = (qi+1) % QUOTES.length; paint(); }, 7000);
+    // endorsement carousel removed — only verified, sourced quotes go here
 </script>
 {% endraw %}
 </body>

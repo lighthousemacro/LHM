@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse Macro | Macro, Illuminated.</title>
+    <meta name="description" content="Institutional-grade macro and economic intelligence, built on framework and process. The Diagnostic Dozen: 12 pillars, 3 engines, explicit invalidation criteria.">
+    <meta property="og:title" content="Lighthouse Macro | Macro, Illuminated.">
+    <meta property="og:description" content="Institutional-grade macro and economic intelligence, built on framework and process.">
+    <meta property="og:image" content="https://lighthousemacro.com/og-image.png">
+    <meta property="og:url" content="https://lighthousemacro.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@LHMacro">
+    <meta name="twitter:title" content="Lighthouse Macro | Macro, Illuminated.">
+    <meta name="twitter:description" content="Institutional-grade macro and economic intelligence, built on framework and process.">
+    <meta name="twitter:image" content="https://lighthousemacro.com/og-image.png">
+    <link rel="canonical" href="https://lighthousemacro.com">
+{% raw %}
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@graph":[
+      {"@type":"Organization","@id":"https://lighthousemacro.com/#org","name":"Lighthouse Macro","url":"https://lighthousemacro.com","email":"advisory@lighthousemacro.com","description":"Institutional-grade macro and economic intelligence, built on framework and process.","slogan":"Macro, Illuminated.","sameAs":["https://x.com/LHMacro","https://research.lighthousemacro.com"],"founder":{"@id":"https://lighthousemacro.com/#bob"}},
+      {"@type":"Person","@id":"https://lighthousemacro.com/#bob","name":"Bob Sheehan","honorificSuffix":"CFA, CMT","jobTitle":"Founder & Chief Investment Officer","worksFor":{"@id":"https://lighthousemacro.com/#org"},"sameAs":["https://x.com/LHMacro"]},
+      {"@type":"WebSite","@id":"https://lighthousemacro.com/#site","url":"https://lighthousemacro.com","name":"Lighthouse Macro","publisher":{"@id":"https://lighthousemacro.com/#org"}}
+    ]}
+    </script>
+{% endraw %}
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#2389BB">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+{% raw %}
+    <style>
+        :root {
+            --ocean:#2389BB; --dusk:#FF6723; --sky:#23BBFF; --sea:#00BB89;
+            --venus:#FF2389; --doldrums:#898989; --starboard:#238923; --port:#892323;
+            --fog:#D1D1D1; --navy:#0A2A43; --navy2:#0F3354; --ink:#0F2233;
+            --paper:#FFFFFF; --mist:#F4F7F9; --line:#E3E8EC; --body:#36424C;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            color:var(--body); background:var(--paper); line-height:1.6;
+            -webkit-font-smoothing:antialiased;
+        }
+        a { color:inherit; }
+        .mono {
+            font-family:'Source Code Pro',monospace; letter-spacing:0.12em;
+            text-transform:uppercase; font-size:0.72rem; color:#6b7280;
+        }
+        .wrap { max-width:1120px; margin:0 auto; padding:0 2rem; }
+
+        /* accent bar */
+        .accent-bar { height:5px; background:linear-gradient(90deg,var(--ocean) 66%,var(--dusk) 66%); }
+
+        /* announce + nav */
+        .announce {
+            display:block; background:var(--navy); color:#fff; text-decoration:none;
+            text-align:center; padding:0.6rem 1rem; font-size:0.85rem;
+            border-bottom:1px solid rgba(255,255,255,0.08);
+        }
+        .announce strong { color:var(--dusk); font-family:'Montserrat',sans-serif; letter-spacing:1.5px; }
+        .announce .go { color:var(--sky); font-weight:600; }
+        nav { background:rgba(255,255,255,0.92); backdrop-filter:blur(8px);
+              border-bottom:1px solid var(--line); position:sticky; top:0; z-index:100; }
+        .nav-inner { max-width:1120px; margin:0 auto; padding:0 2rem; display:flex;
+                     align-items:center; justify-content:space-between; height:62px; }
+        .nav-logo { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.05rem;
+                    color:var(--ink); text-decoration:none; letter-spacing:0.3px; }
+        .nav-logo span { color:var(--ocean); }
+        .nav-links { display:flex; gap:1.6rem; list-style:none; align-items:center; }
+        .nav-links a { font-size:0.82rem; font-weight:500; color:var(--body); text-decoration:none; transition:color .2s; }
+        .nav-links a:hover { color:var(--ocean); }
+        .nav-cta { background:var(--ocean); color:#fff !important; padding:0.45rem 1.1rem;
+                   border-radius:4px; font-weight:600 !important; }
+        .nav-cta:hover { background:var(--ocean); filter:brightness(0.85); }
+        .nav-toggle { display:none; background:none; border:none; cursor:pointer; padding:0.4rem; }
+        .nav-toggle span { display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; transition:.3s; }
+
+        /* hero */
+        .hero { padding:4.5rem 0 3rem; background:
+                radial-gradient(1100px 380px at 80% -10%, rgba(35,137,187,0.08), transparent 60%), var(--paper); }
+        .hero-meta { display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;
+                     border-bottom:1px solid var(--line); padding-bottom:1.4rem; margin-bottom:2.4rem; }
+        .hero-meta .coord { color:var(--ocean); }
+        .hero-eyebrow { color:var(--ocean); margin-bottom:1rem; }
+        .wordmark { font-family:'Montserrat',sans-serif; font-weight:800; line-height:0.92;
+                    font-size:clamp(3.2rem,11vw,7.2rem); letter-spacing:-0.02em; color:var(--ink); }
+        .wordmark .blue { color:var(--ocean); }
+        .wordmark .dot { color:var(--dusk); }
+        .hero-sub { font-size:1.18rem; color:var(--body); max-width:680px; line-height:1.55; margin:1.6rem 0 2rem; }
+        .hero-ctas { display:flex; flex-direction:column; gap:0.8rem; max-width:680px; }
+        .bigbtn { display:flex; align-items:center; justify-content:space-between; text-decoration:none;
+                  padding:1.05rem 1.4rem; border-radius:5px; font-weight:600; font-size:0.95rem; transition:all .2s; }
+        .bigbtn.solid { background:var(--dusk); color:#fff; }
+        .bigbtn.solid:hover { background:var(--dusk); filter:brightness(0.92); }
+        .bigbtn.ghost { border:1px solid var(--line); color:var(--ink); }
+        .bigbtn.ghost:hover { border-color:var(--ocean); color:var(--ocean); }
+        .stat-strip { display:flex; flex-wrap:wrap; gap:2.2rem; margin-top:2.6rem;
+                      padding-top:1.6rem; border-top:1px solid var(--line); }
+        .stat-strip .col .k { color:var(--doldrums); }
+        .stat-strip .col .v { font-family:'Source Code Pro',monospace; font-weight:600;
+                              font-size:0.82rem; letter-spacing:0.06em; color:var(--ocean); margin-top:0.25rem; }
+        .stat-strip .col .v.dusk { color:var(--dusk); }
+        .ticker { overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+                  background:var(--mist); margin-top:2.6rem; }
+        .ticker-track { display:inline-flex; gap:2.5rem; white-space:nowrap; padding:0.7rem 0;
+                        animation:scroll 32s linear infinite; }
+        .ticker-track span { font-family:'Source Code Pro',monospace; font-size:0.72rem; letter-spacing:0.12em;
+                             text-transform:uppercase; color:var(--body); }
+        .ticker-track b { color:var(--dusk); margin-right:2.5rem; }
+        @keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+        /* section scaffolding */
+        section { padding:5rem 0; }
+        .sec-head { margin-bottom:2.6rem; }
+        .sec-eyebrow { display:flex; align-items:center; gap:1rem; margin-bottom:1.1rem; }
+        .sec-eyebrow .num { color:var(--ocean); font-weight:600; }
+        .sec-eyebrow .rule { flex:0 0 70px; height:1px; background:linear-gradient(90deg,var(--ocean),transparent); }
+        .sec-eyebrow .lbl { color:var(--doldrums); }
+        .sec-title { font-family:'Montserrat',sans-serif; font-weight:800; letter-spacing:-0.01em;
+                     font-size:clamp(2rem,4.4vw,3.1rem); color:var(--ink); line-height:1.02; }
+        .sec-intro { font-size:1.05rem; color:#5b6770; max-width:760px; line-height:1.65; margin-top:1.1rem; }
+        .mist { background:var(--mist); }
+
+        /* audience cards */
+        .aud-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+        .aud-card { border:1px solid var(--line); border-left:4px solid var(--ocean); border-radius:6px;
+                    padding:2.2rem; background:var(--paper); transition:box-shadow .2s, transform .2s; }
+        .aud-card.dusk { border-left-color:var(--dusk); }
+        .aud-card:hover { box-shadow:0 14px 40px rgba(15,34,51,0.08); transform:translateY(-2px); }
+        .aud-card .tag { color:var(--ocean); margin-bottom:0.6rem; }
+        .aud-card.dusk .tag { color:var(--dusk); }
+        .aud-card h3 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.15rem; color:var(--ink); }
+        .aud-card .big { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.45rem;
+                         color:var(--ink); margin:0.7rem 0 0.9rem; line-height:1.2; }
+        .aud-card p { font-size:0.93rem; color:#5b6770; }
+        .aud-card .more { display:inline-block; margin-top:1.3rem; font-family:'Source Code Pro',monospace;
+                          font-size:0.74rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ocean);
+                          text-decoration:none; font-weight:600; }
+        .aud-card.dusk .more { color:var(--dusk); }
+
+        /* engines */
+        .engine-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.6rem; }
+        .engine { border:1px solid var(--line); border-radius:6px; padding:2rem; background:var(--paper); }
+        .engine .top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:1rem; }
+        .engine .top .n { color:var(--ocean); }
+        .engine .top .ct { color:var(--dusk); }
+        .engine h3 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.2rem; color:var(--ink); margin-bottom:0.7rem; }
+        .engine p { font-size:0.9rem; color:#5b6770; }
+        .engine ul { list-style:none; margin-top:1.2rem; border-top:1px solid var(--line); padding-top:1.1rem; }
+        .engine li { font-size:0.85rem; color:var(--body); padding:0.3rem 0 0.3rem 1rem; position:relative; }
+        .engine li::before { content:''; position:absolute; left:0; top:0.7rem; width:6px; height:6px; background:var(--ocean); }
+        .principle-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+        .engine .psub { font-family:'Source Code Pro',monospace; font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ocean); margin:0.2rem 0 0.8rem; }
+        .op-notes { margin-top:2rem; padding-top:1.4rem; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:1.6rem; }
+        .op-notes span { font-family:'Source Code Pro',monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--doldrums); }
+        .op-notes span b { color:var(--dusk); }
+        .qf-block { margin-top:3rem; padding-top:2.4rem; border-top:1px solid var(--line); }
+        .qf-title { font-family:'Montserrat',sans-serif; font-weight:800; font-size:clamp(1.5rem,3vw,2.1rem); color:var(--ink); line-height:1.05; margin-top:0.4rem; }
+        .qf-sub { font-family:'Source Code Pro',monospace; font-size:0.8rem; letter-spacing:0.06em; color:var(--ocean); margin:0.6rem 0 0.9rem; }
+        .qf-intro { font-size:1.02rem; color:#5b6770; max-width:760px; line-height:1.6; margin-bottom:1.8rem; }
+        .qf-block .engine-grid { margin-top:0; }
+
+        /* dashboard */
+        .master-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.6rem; }
+        .mtile { border:1px solid var(--line); border-radius:6px; padding:1.4rem; background:var(--paper); }
+        .mtile .label { color:var(--doldrums); margin-bottom:0.7rem; }
+        .mtile .value { font-family:'Montserrat',sans-serif; font-weight:800; font-size:2.1rem; color:var(--ink); line-height:1; }
+        .chip { display:inline-block; margin-top:0.8rem; font-family:'Source Code Pro',monospace;
+                font-size:0.66rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.22rem 0.6rem;
+                border:1px solid currentColor; border-radius:3px; font-weight:600; }
+        .pillar-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+                       border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+        .ptile { background:var(--paper); padding:1.15rem 1.2rem; }
+        .ptile .top { display:flex; justify-content:space-between; align-items:center; }
+        .ptile .top .n { font-family:'Source Code Pro',monospace; font-size:0.7rem; color:var(--doldrums); }
+        .ptile .sq { width:9px; height:9px; border-radius:2px; }
+        .ptile .name { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1rem; color:var(--ink); margin:0.5rem 0 0.15rem; }
+        .ptile .z { font-family:'Source Code Pro',monospace; font-weight:600; font-size:1.05rem; }
+        .ptile .st { font-family:'Source Code Pro',monospace; font-size:0.6rem; letter-spacing:0.06em;
+                     color:var(--doldrums); margin-top:0.3rem; }
+        .dash-foot { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-top:1.6rem; }
+
+        /* tone colors */
+        .tone-good    { color:var(--starboard); } .tone-good .sq{ background:var(--starboard);}
+        .tone-caution { color:var(--dusk); }      .tone-caution .sq{ background:var(--dusk);}
+        .tone-alert   { color:var(--port); }      .tone-alert .sq{ background:var(--port);}
+        .tone-neutral { color:var(--doldrums); }  .tone-neutral .sq{ background:var(--doldrums);}
+        .mtile.tone-good .value, .mtile.tone-caution .value, .mtile.tone-alert .value, .mtile.tone-neutral .value { color:var(--ink); }
+        .ptile .z { color:var(--ink); }
+
+        /* navy sections */
+        .navy-sec { background:var(--navy); color:#fff; }
+        .navy-sec .sec-title, .navy-sec .pact-line b { color:#fff; }
+        .navy-sec .sec-eyebrow .lbl, .navy-sec .sec-intro { color:#9fb3c4; }
+        .navy-sec .sec-eyebrow .num { color:var(--sky); }
+        .pact-line { font-family:'Montserrat',sans-serif; font-weight:800; line-height:1.12;
+                     font-size:clamp(1.8rem,4vw,2.9rem); letter-spacing:-0.01em; }
+        .pact-line .b1 { color:#fff; } .pact-line .b2 { color:var(--sky); } .pact-line .b3 { color:var(--dusk); }
+        .tier-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:2.4rem; }
+        .tier-box { border:1px solid rgba(255,255,255,0.16); border-radius:6px; padding:1.6rem; }
+        .tier-box .h { display:flex; justify-content:space-between; margin-bottom:0.8rem; }
+        .tier-box .h .a { color:var(--sky); font-family:'Source Code Pro',monospace; font-size:0.7rem; letter-spacing:0.1em; }
+        .tier-box .h .b { color:var(--doldrums); font-family:'Source Code Pro',monospace; font-size:0.66rem; letter-spacing:0.1em; }
+        .tier-box p { font-size:0.9rem; color:#c7d4de; }
+
+        /* book showcase */
+        .book-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:2.4rem; align-items:center; }
+        .book-metrics { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+        .metric { border:1px solid var(--line); border-radius:6px; padding:1.3rem; background:var(--paper); }
+        .metric .k { color:var(--doldrums); margin-bottom:0.5rem; }
+        .metric .v { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.7rem; color:var(--ink); line-height:1; }
+        .metric .v.sync { color:var(--doldrums); font-size:1.05rem; }
+        .metric .sub { font-size:0.74rem; color:#5b6770; margin-top:0.4rem; }
+        .syncing { display:inline-block; font-family:'Source Code Pro',monospace; font-size:0.66rem;
+                   letter-spacing:0.1em; text-transform:uppercase; color:var(--dusk);
+                   border:1px solid var(--dusk); border-radius:3px; padding:0.2rem 0.55rem; }
+
+        /* services */
+        .svc-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+        .svc { border:1px solid var(--line); border-radius:6px; padding:2.2rem; background:var(--paper); position:relative; transition:box-shadow .2s; }
+        .svc:hover { box-shadow:0 12px 34px rgba(15,34,51,0.08); }
+        .svc.feat { border:2px solid var(--ocean); }
+        .svc .badge { position:absolute; top:-11px; left:2rem; background:var(--ocean); color:#fff;
+                      font-family:'Source Code Pro',monospace; font-size:0.62rem; letter-spacing:0.1em;
+                      padding:0.22rem 0.7rem; border-radius:3px; }
+        .svc .seg { color:var(--ocean); margin-bottom:0.45rem; }
+        .svc h3 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.25rem; color:var(--ink); }
+        .svc .who { font-size:0.82rem; color:var(--doldrums); margin:0.2rem 0 1rem; }
+        .svc p { font-size:0.9rem; color:#5b6770; margin-bottom:1.1rem; }
+        .svc ul { list-style:none; }
+        .svc li { font-size:0.86rem; color:var(--body); padding:0.38rem 0 0.38rem 1.5rem; position:relative; }
+        .svc li::before { content:'\2713'; position:absolute; left:0; color:var(--sea); font-weight:700; }
+        .svc .inq { display:inline-flex; align-items:center; gap:0.5rem; margin-top:1.4rem; padding:0.6rem 1.4rem;
+                    border:1.5px solid var(--ocean); color:var(--ocean); border-radius:4px; font-size:0.85rem;
+                    font-weight:600; text-decoration:none; transition:all .2s; }
+        .svc .inq:hover { background:var(--ocean); color:#fff; }
+        .svc.feat .inq { background:var(--ocean); color:#fff; }
+
+        /* research feed */
+        .feat-card { display:block; border:1px solid var(--line); border-radius:8px; padding:2.2rem;
+                     background:var(--paper); text-decoration:none; margin-bottom:1.6rem; transition:box-shadow .2s; }
+        .feat-card:hover { box-shadow:0 14px 40px rgba(15,34,51,0.08); }
+        .feat-card .row { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+        .feat-card h3 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.7rem; color:var(--ink); line-height:1.1; }
+        .feat-card p { font-size:1rem; color:#5b6770; margin:0.7rem 0 1rem; }
+        .read-link { font-family:'Source Code Pro',monospace; font-size:0.72rem; letter-spacing:0.1em;
+                     text-transform:uppercase; color:var(--ocean); font-weight:600; }
+        .chip.fmt { color:var(--ocean); }
+        .feat-date { font-family:'Source Code Pro',monospace; font-size:0.72rem; color:var(--doldrums); letter-spacing:0.08em; }
+        .rgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+        .rcard { display:block; border:1px solid var(--line); border-radius:6px; padding:1.5rem;
+                 background:var(--paper); text-decoration:none; transition:box-shadow .2s, transform .2s; }
+        .rcard:hover { box-shadow:0 12px 30px rgba(15,34,51,0.08); transform:translateY(-2px); }
+        .rcard .row { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.9rem; }
+        .rcard h4 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.02rem; color:var(--ink); line-height:1.25; }
+        .rcard p { font-size:0.84rem; color:#5b6770; margin-top:0.5rem; }
+
+        /* publish stack */
+        .stack-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+        .pub { border:1px solid var(--line); border-radius:6px; padding:1.6rem; background:var(--paper); }
+        .pub.paid { border-top:3px solid var(--dusk); } .pub.free { border-top:3px solid var(--sea); }
+        .pub .ph { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.7rem; }
+        .pub .freq { font-family:'Source Code Pro',monospace; font-size:0.66rem; letter-spacing:0.08em; color:var(--ocean); }
+        .pub .pill { font-family:'Source Code Pro',monospace; font-size:0.6rem; letter-spacing:0.08em; padding:0.16rem 0.5rem; border:1px solid currentColor; border-radius:3px; }
+        .pub.paid .pill { color:var(--dusk); } .pub.free .pill { color:var(--sea); }
+        .pub h4 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.1rem; color:var(--ink); margin-bottom:0.5rem; }
+        .pub p { font-size:0.85rem; color:#5b6770; }
+
+        /* endorsements */
+        .quote-stage { border:1px solid rgba(255,255,255,0.16); border-radius:8px; padding:2.6rem; min-height:200px; }
+        .quote-stage .mark { font-family:'Montserrat',sans-serif; font-size:2.6rem; color:var(--sky); line-height:0.6; }
+        .quote-stage .qmeta { color:var(--dusk); font-family:'Source Code Pro',monospace; font-size:0.7rem; letter-spacing:0.1em; margin:0.6rem 0 1.2rem; }
+        .quote-stage blockquote { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.5rem; line-height:1.3; color:#fff; }
+        .quote-stage .who { margin-top:1.4rem; }
+        .quote-stage .who .nm { font-weight:700; color:#fff; }
+        .quote-stage .who .rl { font-family:'Source Code Pro',monospace; font-size:0.68rem; letter-spacing:0.08em; color:#9fb3c4; }
+        .voices { display:flex; flex-direction:column; gap:0.4rem; margin-top:1.6rem; }
+        .voice { display:flex; justify-content:space-between; align-items:center; padding:0.85rem 1.1rem;
+                 border:1px solid rgba(255,255,255,0.1); border-radius:5px; cursor:pointer; transition:background .2s; }
+        .voice:hover, .voice.on { background:rgba(255,255,255,0.06); }
+        .voice .nm { font-weight:600; color:#fff; font-size:0.92rem; }
+        .voice .rl { font-family:'Source Code Pro',monospace; font-size:0.64rem; letter-spacing:0.08em; color:#9fb3c4; }
+        .voice .sq { width:8px; height:8px; border-radius:2px; background:var(--doldrums); }
+        .voice.on .sq { background:var(--dusk); }
+        .signal-feed { margin-top:2.2rem; border:1px solid rgba(255,255,255,0.14); border-radius:6px; overflow:hidden; }
+        .signal-feed .sh { display:flex; justify-content:space-between; align-items:center;
+                           background:rgba(0,0,0,0.2); padding:0.7rem 1.1rem; }
+        .signal-feed .sh .dots { display:flex; gap:6px; }
+        .signal-feed .sh .dots i { width:9px; height:9px; border-radius:50%; display:inline-block; }
+        .signal-feed .sh .lbl { font-family:'Source Code Pro',monospace; font-size:0.66rem; letter-spacing:0.12em; color:#9fb3c4; }
+        .signal-feed .sb { padding:1.1rem; font-family:'Source Code Pro',monospace; font-size:0.78rem; }
+        .signal-feed .sb .ln { color:#c7d4de; padding:0.25rem 0; }
+        .signal-feed .sb .ln .g { color:var(--sea); }
+        .signal-feed .sb .ln b { color:#fff; }
+        .blink { animation:blink 1.4s steps(2,start) infinite; color:var(--sky); }
+        @keyframes blink { to { visibility:hidden; } }
+
+        /* recognition log */
+        .log-row { display:grid; grid-template-columns:60px 150px 1fr; gap:1rem; align-items:start;
+                   padding:1.1rem 0; border-top:1px solid var(--line); }
+        .log-row .ix { font-family:'Source Code Pro',monospace; color:var(--doldrums); font-size:0.8rem; }
+        .log-row .kind { font-family:'Source Code Pro',monospace; font-size:0.66rem; letter-spacing:0.1em; color:var(--ocean); }
+        .log-row .kind.dusk { color:var(--dusk); }
+        .log-row .src { font-family:'Montserrat',sans-serif; font-weight:700; color:var(--ink); font-size:1rem; }
+        .log-row .desc { font-size:0.85rem; color:#5b6770; margin-top:0.2rem; }
+        .log-row a.src { text-decoration:none; }
+        .log-row a:hover .src { text-decoration:underline; }
+        .endorse-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin-bottom:2.6rem; }
+        .endorse-card { display:block; border:1px solid var(--line); border-left:4px solid var(--ocean); border-radius:6px; padding:1.8rem; background:var(--paper); text-decoration:none; transition:box-shadow .2s, transform .2s; }
+        a.endorse-card:hover { box-shadow:0 12px 30px rgba(15,34,51,0.08); transform:translateY(-2px); }
+        .endorse-card .eq { font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.12rem; line-height:1.42; color:var(--ink); }
+        .endorse-card .ea { margin-top:1.1rem; }
+        .endorse-card .en { display:block; font-weight:700; color:var(--ink); font-size:0.92rem; }
+        .endorse-card .er { display:block; font-family:'Source Code Pro',monospace; font-size:0.68rem; letter-spacing:0.05em; color:var(--ocean); margin-top:0.25rem; }
+
+        /* author */
+        .auth-grid { display:grid; grid-template-columns:1.3fr 0.7fr; gap:3rem; align-items:start; }
+        .auth-text p { font-size:0.95rem; color:#4b5563; margin-bottom:1.1rem; }
+        .roles { margin-top:1.6rem; border-top:1px solid var(--line); }
+        .role { display:grid; grid-template-columns:0.8fr 1.2fr; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--line); }
+        .role .rn { font-family:'Montserrat',sans-serif; font-weight:700; color:var(--ink); font-size:0.95rem; }
+        .role .rc { font-family:'Source Code Pro',monospace; font-size:0.66rem; letter-spacing:0.06em; color:var(--ocean); margin-top:0.2rem; }
+        .role .rd { font-size:0.85rem; color:#5b6770; }
+        .auth-stats { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+        .astat { background:var(--navy); border-radius:6px; padding:1.4rem; }
+        .astat .num { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.9rem; color:var(--sky); }
+        .astat .lab { font-size:0.74rem; color:#9fb3c4; margin-top:0.3rem; }
+
+        /* contact */
+        .contact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+        .ccard { border:1px solid var(--line); border-top:3px solid var(--ocean); border-radius:6px; padding:1.8rem; background:var(--paper); }
+        .ccard:nth-child(1){ border-top-color:var(--dusk);} .ccard:nth-child(3){ border-top-color:var(--sea);}
+        .ccard .seg { color:var(--doldrums); margin-bottom:0.6rem; }
+        .ccard a { font-family:'Montserrat',sans-serif; font-weight:700; color:var(--ocean); text-decoration:none; font-size:1.02rem; word-break:break-word; }
+        .ccard p { font-size:0.84rem; color:#5b6770; margin-top:0.5rem; }
+
+        /* closing + footer */
+        .closing { background:var(--mist); }
+        .closing .big { font-family:'Montserrat',sans-serif; font-weight:800; font-size:clamp(2.4rem,6vw,4.2rem);
+                        line-height:1; letter-spacing:-0.01em; color:var(--ink); }
+        .closing .big .blue { color:var(--ocean); } .closing .big .dot { color:var(--dusk); }
+        .sub-box { margin-top:2.2rem; border:1px solid var(--line); border-radius:8px; padding:2rem; background:var(--paper); max-width:680px; }
+        .sub-box p { font-size:0.95rem; color:#5b6770; margin-bottom:1.3rem; }
+        .sub-box .go { display:inline-block; background:var(--ocean); color:#fff; text-decoration:none;
+                       padding:0.9rem 2rem; border-radius:5px; font-weight:600; }
+        .sub-box .fine { margin-top:1rem; }
+        footer { background:var(--navy); color:#9fb3c4; padding:3.4rem 0 0; }
+        .foot-grid { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:2rem; }
+        .foot-brand { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.3rem; color:#fff; }
+        .foot-brand .dot { color:var(--dusk); }
+        .foot-tag { font-family:'Source Code Pro',monospace; font-size:0.7rem; letter-spacing:0.14em; color:var(--sky); margin:0.4rem 0 1rem; }
+        .foot-grid p { font-size:0.85rem; }
+        .foot-col h5 { font-family:'Source Code Pro',monospace; font-size:0.68rem; letter-spacing:0.1em; color:var(--doldrums); margin-bottom:0.9rem; }
+        .foot-col a { display:block; color:#c7d4de; text-decoration:none; font-size:0.88rem; padding:0.25rem 0; }
+        .foot-col a:hover { color:#fff; }
+        .foot-sig { margin-top:2.4rem; padding:1.4rem 0; border-top:1px solid rgba(255,255,255,0.1);
+                    display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; align-items:center; }
+        .foot-sig .lhm-sig a { color:var(--ocean); text-decoration:none; font-weight:600; font-size:0.85rem; }
+        .foot-sig .lhm-sig { font-size:0.85rem; color:var(--doldrums); }
+        .foot-disclaimer { font-size:0.7rem; color:#6b7d8c; line-height:1.6; padding-bottom:2rem; }
+        .foot-bar { height:5px; background:linear-gradient(90deg,var(--ocean) 66%,var(--dusk) 66%); }
+
+        /* reveal */
+        .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+        .reveal.in { opacity:1; transform:none; }
+
+        /* responsive */
+        @media (max-width:900px) {
+            .aud-grid,.engine-grid,.principle-grid,.svc-grid,.book-grid,.auth-grid,.foot-grid,.endorse-grid { grid-template-columns:1fr; }
+            .master-grid { grid-template-columns:1fr 1fr; }
+            .pillar-grid { grid-template-columns:1fr 1fr; }
+            .tier-row,.rgrid,.stack-grid,.contact-grid { grid-template-columns:1fr; }
+            .nav-links { display:none; position:absolute; top:62px; left:0; right:0; background:#fff;
+                         flex-direction:column; padding:1rem 2rem; border-bottom:1px solid var(--line); gap:0.9rem; }
+            .nav-links.open { display:flex; }
+            .nav-toggle { display:block; }
+            .log-row { grid-template-columns:40px 1fr; }
+            .log-row .kind { grid-column:2; }
+        }
+        @media (max-width:520px) {
+            .master-grid,.pillar-grid,.book-metrics,.auth-stats { grid-template-columns:1fr; }
+            .hero-meta { font-size:0.62rem; }
+        }
+    </style>
+{% endraw %}
+</head>
+<body>
+
+<div class="accent-bar"></div>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">LIGHTHOUSE <span>MACRO</span></a>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="this.setAttribute('aria-expanded', document.querySelector('.nav-links').classList.toggle('open'))">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="framework.html">The Diagnostic Dozen</a></li>
+            <li><a href="methodology.html">Methodology</a></li>
+            <li><a href="#dashboard">Live Read</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#subscribe">Subscribe</a></li>
+            <li><a href="https://research.lighthousemacro.com" class="nav-cta">Read the Research</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="wrap">
+        <div class="hero-meta mono">
+            <span>LIVE &middot; INDEPENDENT MACRO &middot; FIRM EST. 2026</span>
+            <span><span class="coord">ARCHIVE SINCE 2024 &nbsp;&nbsp; N 41.4&deg; W 70.5&deg;</span></span>
+        </div>
+        <div class="hero-eyebrow mono">// BOB SHEEHAN, CFA, CMT</div>
+        <h1 class="wordmark">LIGHTHOUSE<br><span class="blue">MACRO</span><span class="dot">.</span></h1>
+        <p class="hero-sub">Institutional-grade macro and economic intelligence, built on framework and process, with the intellectual honesty the sell-side has forgotten.</p>
+        <div class="hero-ctas">
+            <a href="https://research.lighthousemacro.com/subscribe" class="bigbtn solid">JOIN THE WATCH.<span>&#8599;</span></a>
+            <a href="#framework" class="bigbtn ghost">READ THE FRAMEWORK<span>&darr;</span></a>
+        </div>
+        <div class="stat-strip mono">
+            <div class="col"><div class="k">Disciplines</div><div class="v">Macro / Technical</div></div>
+            <div class="col"><div class="k">Posture</div><div class="v dusk">Strong &middot; Weakly Held</div></div>
+            <div class="col"><div class="k">Mode</div><div class="v dusk">One Framework &middot; Two Economies</div></div>
+            <div class="col"><div class="k">Tagline</div><div class="v">Macro, Illuminated.</div></div>
+        </div>
+    </div>
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+            <span><b>&#9642;</b>FRAMEWORK &gt; FORECAST<b>&#9642;</b>INVALIDATION CRITERIA EXPLICIT<b>&#9642;</b>K-SHAPED CREDIT<b>&#9642;</b>FLOWS OVER LEVELS<b>&#9642;</b>PROCESS OVER OUTCOME<b>&#9642;</b></span>
+            <span><b>&#9642;</b>FRAMEWORK &gt; FORECAST<b>&#9642;</b>INVALIDATION CRITERIA EXPLICIT<b>&#9642;</b>K-SHAPED CREDIT<b>&#9642;</b>FLOWS OVER LEVELS<b>&#9642;</b>PROCESS OVER OUTCOME<b>&#9642;</b></span>
+        </div>
+    </div>
+</header>
+
+<!-- // 00 TWO ECONOMIES -->
+<section id="start">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 00</span><span class="rule"></span><span class="lbl">Who We Serve</span></div>
+            <h2 class="sec-title">TWO ECONOMIES, ONE FRAMEWORK</h2>
+            <p class="sec-intro">There are two economies now. The one that trades the cycle, and the one that lives inside it. We built one framework for both.</p>
+        </div>
+        <div class="aud-grid">
+            <div class="aud-card reveal">
+                <div class="tag mono">Advisors &middot; Allocators &middot; CIOs</div>
+                <h3>The economy that trades</h3>
+                <div class="big">You position capital against the cycle.</div>
+                <p>Hedge funds, RIAs, family offices, and endowments who need the read and the risk posture, from published research to a strategist on call.</p>
+                <a href="#services" class="more">See advisor / CIO services &rarr;</a>
+            </div>
+            <div class="aud-card dusk reveal">
+                <div class="tag mono">Operators &middot; Leadership</div>
+                <h3>The economy that operates</h3>
+                <div class="big">You make the calls inside the cycle.</div>
+                <p>CEOs, CFOs, and founders whose capex, hiring, and pricing decisions hinge on the macro. We translate the framework into your decisions.</p>
+                <a href="#services" class="more">See operator service &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- // 01 THE DIAGNOSTIC DOZEN -->
+<section id="framework" class="mist">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 01</span><span class="rule"></span><span class="lbl">The Framework</span></div>
+            <h2 class="sec-title">THE DIAGNOSTIC DOZEN</h2>
+            <p class="sec-intro">Twelve macro pillars, organized into three engines. Each captures a distinct dimension of the cycle. Together they feed a layered risk architecture that combines quantitative rigor with experienced judgment.</p>
+        </div>
+        <div class="engine-grid">
+            <div class="engine reveal">
+                <div class="top mono"><span class="n">// 01</span><span class="ct">7 Pillars</span></div>
+                <h3>Macro Dynamics</h3>
+                <p>The real economy. Labor flows, price composition, growth momentum, and the four end-markets that move underneath the cycle.</p>
+                <ul><li>Labor &middot; Prices &middot; Growth</li><li>Housing &middot; Consumer &middot; Business &middot; Trade</li><li>Real-economy signals before they hit the print</li></ul>
+            </div>
+            <div class="engine reveal">
+                <div class="top mono"><span class="n">// 02</span><span class="ct">3 Pillars</span></div>
+                <h3>Monetary Mechanics</h3>
+                <p>The plumbing. Treasury fiscal dynamics, credit and financial conditions, and the Fed liquidity regime that sits upstream of every risk asset.</p>
+                <ul><li>Government &middot; fiscal dynamics, debt sustainability</li><li>Financial &middot; credit conditions, cross-domain gaps</li><li>Plumbing &middot; reserves, liquidity regime</li></ul>
+            </div>
+            <div class="engine reveal">
+                <div class="top mono"><span class="n">// 03</span><span class="ct">2 Pillars</span></div>
+                <h3>Market Structure</h3>
+                <p>Price-action internals and positioning. Breadth, leadership, divergence, sentiment, and the tape's read on what is consensus versus variant.</p>
+                <ul><li>Market Structure &middot; breadth, momentum, participation</li><li>Sentiment &middot; crowding, positioning, term-structure</li></ul>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:2.4rem;">
+            <a href="framework.html" class="mono" style="color:var(--dusk); font-weight:600; text-decoration:none;">Explore all 12 pillars &rarr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- // 01B LIVE DASHBOARD -->
+<section id="dashboard">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 01B</span><span class="rule"></span><span class="lbl">Nowcast &middot; Live Read</span></div>
+            <h2 class="sec-title">THE LIVE DASHBOARD</h2>
+            <p class="sec-intro">A public read of the engine. Master tiles set the regime. The twelve pillars show where the cycle is breathing. Subscribers get the full indicator stack, proxy tiers, and confidence bands.</p>
+        </div>
+        <div class="master-grid reveal">
+            {% for t in dashboard.master %}
+            <div class="mtile tone-{{ t.tone }}">
+                <div class="label mono">{{ t.label }}</div>
+                <div class="value">{{ t.value }}</div>
+                <span class="chip">{{ t.status }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mono" style="color:var(--doldrums); margin:0 0 0.9rem;">// The Diagnostic Dozen &middot; Current Z-Scores</div>
+        <div class="pillar-grid reveal">
+            {% for p in dashboard.pillars %}
+            <div class="ptile tone-{{ p.tone }}">
+                <div class="top"><span class="n">{{ p.n }}</span><span class="sq"></span></div>
+                <div class="name">{{ p.name }}</div>
+                <div class="z">{{ p.value }}</div>
+                <div class="st">{{ p.status }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="dash-foot">
+            <div class="mono" style="color:var(--doldrums);">// AS OF &middot; {{ dashboard.as_of }} &middot; LIVE FROM LIGHTHOUSE_MASTER</div>
+            <a href="framework.html" class="bigbtn solid" style="display:inline-flex; gap:0.8rem; padding:0.7rem 1.3rem;">OPEN THE FULL ARCHITECTURE <span>&#8599;</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- THE PACT -->
+<section class="navy-sec">
+    <div class="wrap">
+        <div class="sec-eyebrow mono reveal"><span class="num">// THE PACT</span><span class="rule"></span></div>
+        <div class="pact-line reveal">
+            <span class="b1">A current reading for every indicator.</span>
+            <span class="b2">No break between official releases.</span>
+            <span class="b3">Every business day.</span>
+        </div>
+        <div class="tier-row">
+            <div class="tier-box reveal"><div class="h"><span class="a">// TIER 01</span><span class="b">ANCHOR</span></div><p>Official statistics. BLS, FRED, BEA. The source of truth when fresh.</p></div>
+            <div class="tier-box reveal"><div class="h"><span class="a">// TIER 02-03</span><span class="b">PROXY</span></div><p>Real-time market and public nowcast feeds. They step in between official releases.</p></div>
+            <div class="tier-box reveal"><div class="h"><span class="a">// TIER 04</span><span class="b">MODELED</span></div><p>Bayesian persistence when proxies thin out. The confidence band widens. The reading still ships.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- // 02 PHILOSOPHY -->
+<section id="philosophy">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 02</span><span class="rule"></span><span class="lbl">The Philosophy</span></div>
+            <h2 class="sec-title">STRONG VIEWS, WEAKLY HELD</h2>
+            <p class="sec-intro">State a thesis. State the conditions that would break it. That tension, conviction and humility held together, is the whole discipline. Six principles run underneath everything we publish.</p>
+        </div>
+        <div class="engine-grid">
+            <div class="engine reveal"><div class="top mono"><span class="n">// 01</span></div><h3>Process Over Outcome</h3><p>A good process with a bad outcome is acceptable. A bad process with a good outcome is dangerous. We judge decisions at the time they are made, with the information available. Results are feedback, not validation.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 02</span></div><h3>Framework Over Forecast</h3><p>We do not predict. We read the cycle and position accordingly. The framework tells us which regime we are in. The regime tells us how to size risk.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 03</span></div><h3>Flows Over Stocks</h3><p>The level matters less than the direction. We track flows through labor, credit, and the financial system. Change, not state, is what moves prices.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 04</span></div><h3>Transparency Over Mystique</h3><p>Some shops cultivate an air of mystery. We show our work. We explain what we are watching, why it matters, and what would change our mind.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 05</span></div><h3>Conviction Over Diversification</h3><p>Diversification is for capital preservation. Alpha comes from concentration. We run concentrated, high-conviction books. Thirty positions is thirty opinions you are not sure about.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 06</span></div><h3>Variant Perception Over Consensus</h3><p>Being right and consensus is low value. Being right and non-consensus is where the returns come from. We look for the gaps between market pricing and the framework's signal.</p></div>
+        </div>
+
+        <div class="qf-block reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 02B</span><span class="rule"></span><span class="lbl">The Process</span></div>
+            <h3 class="qf-title">Quantitative Foundation, Human Judgment</h3>
+            <p class="qf-sub">The machine builds the map. The judgment makes the call.</p>
+            <p class="qf-intro">The Diagnostic Dozen is the systematic base: twelve pillars, one regime read, computed every day. The discretion sits on top. The base keeps us honest. The judgment keeps us adaptive.</p>
+            <div class="engine-grid">
+                <div class="engine reveal"><h3>Macro-Driven Positioning</h3><p>Thesis-driven. Three-engine convergence finds the opportunity, conviction scoring sets the size, and dual stops manage the risk. When the macro picture is clear, we lean in.</p></div>
+                <div class="engine reveal"><h3>Technical Adaptability</h3><p>Markets do not wait for the macro to catch up. When the framework signals caution and strong trends are running, we participate through price, with tighter risk management.</p></div>
+                <div class="engine reveal"><h3>Cash as a Position</h3><p>When neither the thesis nor the technical picture supports risk, we hold cash. A meaningful cash allocation is discipline, not a failure of imagination. The best trade is sometimes no trade.</p></div>
+            </div>
+        </div>
+
+        <div class="op-notes">
+            <span><b>&#9642;</b> Views published with invalidation criteria</span>
+            <span><b>&#9642;</b> Process metrics precede outcome metrics</span>
+            <span><b>&#9642;</b> No retro-fitted narratives</span>
+        </div>
+    </div>
+</section>
+
+<!-- // 01C BOOK SHOWCASE -->
+<section id="book" class="mist">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 01C</span><span class="rule"></span><span class="lbl">The Book &middot; Live &amp; Public</span></div>
+            <h2 class="sec-title">EATING OUR OWN COOKING</h2>
+            <p class="sec-intro">The framework runs a real book. It is funded and live, auditable in real time, and judged the way it should be: risk-adjusted, against QAI. The edge is downside protection, not a return-chase. Dollar amounts are withheld by design.</p>
+        </div>
+        <div class="book-grid">
+            <div class="book-metrics reveal">
+                <div class="metric"><div class="k mono">Downside Capture vs QAI</div><div class="v sync">Syncing</div><div class="sub">The money shot. Capture the trend, sit out the drawdown.</div></div>
+                <div class="metric"><div class="k mono">Sortino</div><div class="v sync">Syncing</div><div class="sub">Return per unit of downside risk.</div></div>
+                <div class="metric"><div class="k mono">Calmar</div><div class="v sync">Syncing</div><div class="sub">Return over max drawdown.</div></div>
+                <div class="metric"><div class="k mono">Omega</div><div class="v sync">Syncing</div><div class="sub">Probability-weighted gains over losses.</div></div>
+            </div>
+            <div class="reveal">
+                <span class="syncing">Live feed syncing</span>
+                <p style="font-size:0.95rem; color:#5b6770; margin:1.2rem 0;">The book is positioned with the Diagnostic Dozen and benchmarked against QAI on the metrics that reward surviving the tape, not just riding it. The full position book, thesis tags, and live performance publish on the model portfolio.</p>
+                <a href="https://research.lighthousemacro.com" class="bigbtn solid" style="display:inline-flex; gap:0.8rem; padding:0.8rem 1.4rem;">SEE THE LIVE BOOK <span>&#8599;</span></a>
+                <p class="mono" style="font-size:0.62rem; color:var(--doldrums); margin-top:1.4rem; line-height:1.7;">// Allocation and performance figures publish as percentages and risk-adjusted ratios only. Position size, dollar amounts, and account equity are withheld by design. Not investment advice.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- // 03 ENGAGEMENT -->
+<section id="services">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 03</span><span class="rule"></span><span class="lbl">Research &amp; Advisory</span></div>
+            <h2 class="sec-title">ENGAGEMENT</h2>
+            <p class="sec-intro">From published research to a strategist on retainer. Same framework, different depth of engagement.</p>
+        </div>
+        <div class="svc-grid">
+            <div class="svc feat reveal">
+                <span class="badge">MOST FLEXIBLE</span>
+                <div class="seg mono">RIAs &middot; Family Offices</div>
+                <h3>Advisor</h3>
+                <div class="who">RIAs, family offices, advisory firms</div>
+                <p>Macro intelligence for firms that need sophisticated research and a strategist on call. Structured to fit your workflow, not the other way around.</p>
+                <ul><li>Full research suite</li><li>Model allocation guidance</li><li>Regular strategy calls</li><li>Client-facing presentation materials</li><li>Direct strategist access for economic questions</li></ul>
+                <a href="mailto:advisory@lighthousemacro.com" class="inq">Inquire &#9993;</a>
+            </div>
+            <div class="svc reveal">
+                <div class="seg mono">Funds &middot; Allocators &middot; Endowments</div>
+                <h3>Institutional</h3>
+                <div class="who">Hedge funds, allocators, endowments</div>
+                <p>Boutique macro research and advisory. Non-consensus variant perception with direct strategist access.</p>
+                <ul><li>Complete research suite with priority delivery</li><li>Quarterly strategy calls</li><li>Priority email access</li><li>Bespoke research projects</li><li>CSA / soft-dollar payment compatible</li></ul>
+                <a href="mailto:advisory@lighthousemacro.com" class="inq">Inquire &#9993;</a>
+            </div>
+            <div class="svc reveal">
+                <div class="seg mono">RIAs $200M-$2B AUM</div>
+                <h3>Fractional CIO</h3>
+                <div class="who">RIAs, multi-family offices</div>
+                <p>A part-time member of your leadership team. Investment-committee participation, asset allocation, and client-facing macro strategy.</p>
+                <ul><li>Investment-committee prep and attendance</li><li>Model portfolio review</li><li>Quarterly market outlook ghostwriting</li><li>Crisis access during volatility events</li><li>Prospect meeting participation</li></ul>
+                <a href="mailto:advisory@lighthousemacro.com" class="inq">Inquire &#9993;</a>
+            </div>
+            <div class="svc reveal">
+                <div class="seg mono">CEOs &middot; CFOs &middot; Founders &middot; Ops Leaders</div>
+                <h3>Operator</h3>
+                <div class="who">Leadership teams making capital and hiring calls</div>
+                <p>Macro intelligence for leadership teams making capital, hiring, and strategy decisions. We translate framework signals into the commercial implications that drive your P&amp;L.</p>
+                <ul><li>Quarterly cycle briefing tailored to your sector</li><li>Capex and hiring guidance against the labor and credit pillars</li><li>Demand and pricing outlook for your end markets</li><li>Board and management presentation support</li><li>Direct strategist access for time-sensitive decisions</li></ul>
+                <a href="mailto:advisory@lighthousemacro.com" class="inq">Inquire &#9993;</a>
+            </div>
+        </div>
+        <div class="mono reveal" style="margin-top:1.8rem; color:var(--doldrums);">// Inquire &middot; advisory@lighthousemacro.com</div>
+    </div>
+</section>
+
+<!-- // 04 FEATURED RESEARCH -->
+<section id="research" class="mist">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 04</span><span class="rule"></span><span class="lbl">The Archive &middot; Live Feed</span></div>
+            <h2 class="sec-title">FEATURED RESEARCH</h2>
+            <p class="sec-intro">Pulled live from the publication feed: Horizon, Beacon, Beam, Chartbook, and the Diagnostic Dozen pillars. Click through to read each piece natively on-site.</p>
+        </div>
+        {% if featured %}
+        <a class="feat-card reveal" href="{{ featured.url }}" target="_blank" rel="noopener">
+            <div class="row"><span class="chip fmt">{{ featured.type }}{% if featured.read %} &middot; {{ featured.read }}{% endif %}</span><span class="feat-date">{{ featured.date }}</span></div>
+            <h3>{{ featured.title }}</h3>
+            <p>{{ featured.dek }}</p>
+            <span class="read-link">Read on-site &rarr;</span>
+        </a>
+        {% endif %}
+        <div class="rgrid">
+            {% for r in research %}
+            <a class="rcard reveal" href="{{ r.url }}" target="_blank" rel="noopener">
+                <div class="row"><span class="chip fmt">{{ r.type }}</span><span class="feat-date">{{ r.date }}</span></div>
+                <h4>{{ r.title }}</h4>
+                <p>{{ r.dek }}</p>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="dash-foot">
+            <div class="mono" style="color:var(--doldrums);">// AUTO-UPDATES &middot; SOURCE &middot; research.lighthousemacro.com</div>
+            <a href="https://research.lighthousemacro.com" class="bigbtn ghost" style="display:inline-flex; gap:0.8rem; padding:0.7rem 1.3rem;">OPEN THE READING ROOM <span>&#8599;</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- // 05 WHAT WE PUBLISH -->
+<section id="stack">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 05</span><span class="rule"></span><span class="lbl">The Stack</span></div>
+            <h2 class="sec-title">WHAT WE PUBLISH</h2>
+            <p class="sec-intro">Systematic macro analysis built on the Diagnostic Dozen. A free educational base, plus a full paid stack: the Note, the Beam, the Beacon, the Chartbook, and the Horizon.</p>
+        </div>
+        <div class="stack-grid">
+            <div class="pub free reveal"><div class="ph"><span class="freq">Free Series</span><span class="pill">FREE</span></div><h4>The Diagnostic Dozen</h4><p>Educational series teaching the complete macro framework. One deep-dive per pillar with 8 to 10 charts.</p></div>
+            <div class="pub free reveal"><div class="ph"><span class="freq">3x Weekly</span><span class="pill">FREE</span></div><h4>The Note</h4><p>One observation, one chart, the data behind it. 150 words built for breadth and quick reads. The free-tier entry point.</p></div>
+            <div class="pub paid reveal"><div class="ph"><span class="freq">2x Weekly</span><span class="pill">PAID</span></div><h4>The Beam</h4><p>Mid-week paid insight pressure-testing a single thread from the cycle. 750 words and five charts in a fixed six-section template.</p></div>
+            <div class="pub paid reveal"><div class="ph"><span class="freq">Weekly &middot; Flagship</span><span class="pill">PAID</span></div><h4>The Beacon</h4><p>Long-form Sunday analysis. 3,000 to 4,000 words synthesizing what moved across the 12 pillars and what it means for positioning.</p></div>
+            <div class="pub paid reveal"><div class="ph"><span class="freq">Bi-weekly</span><span class="pill">PAID</span></div><h4>The Chartbook</h4><p>50 to 75 institutional-quality charts covering the full macro landscape. A visual diagnostic across all 12 pillars.</p></div>
+            <div class="pub paid reveal"><div class="ph"><span class="freq">Monthly</span><span class="pill">PAID</span></div><h4>The Horizon</h4><p>Strategic forward outlook. Key themes, risk matrix, invalidation criteria, and tactical implications. The first Monday of each month.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Selected Endorsements section removed: fabricated quotes + thin signal feed. Recognition handled in the log below. -->
+
+<!-- // 07 RECOGNITION & MEDIA -->
+<section id="media">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 06</span><span class="rule"></span><span class="lbl">The Log</span></div>
+            <h2 class="sec-title">RECOGNITION &amp; MEDIA</h2>
+            <p class="sec-intro">Where the work has landed, in the words of the people who read it.</p>
+        </div>
+        <div class="endorse-grid reveal">
+            <div class="endorse-card">
+                <div class="eq">&ldquo;This valuable (highly readable!) piece takes the next step by connecting other views of wealth to their implications for spending.&rdquo;</div>
+                <div class="ea"><span class="en">Jeff Horwich</span><span class="er">Senior Economics Writer, Federal Reserve Bank of Minneapolis</span></div>
+            </div>
+            <a class="endorse-card" href="https://x.com/timpierotti1/status/2046332843341574525" target="_blank" rel="noopener">
+                <div class="eq">&ldquo;The best analysis I&rsquo;ve ever read on the k-shaped bifurcation of the US consumer.&rdquo;</div>
+                <div class="ea"><span class="en">Tim Pierotti</span><span class="er">CIO, WealthVest</span></div>
+            </a>
+        </div>
+        <div class="reveal">
+            <div class="log-row"><div class="ix">01</div><div class="kind">PROMOTED BY</div><div><div class="src">V&iacute;tor Const&acirc;ncio</div><div class="desc">Promoted and praised the work publicly. Former Vice-President of the European Central Bank.</div></div></div>
+            <div class="log-row"><div class="ix">02</div><div class="kind">FEATURED IN</div><div><div class="src">Financial Times Alphaville</div><div class="desc">"Banking on Nonbanks" featured in FT Alphaville's curated reading list (Nov 2025).</div></div></div>
+            <div class="log-row"><div class="ix">03</div><div class="kind dusk">PODCAST</div><div><a class="src" href="https://play.acast.com/s/5ceef7c6e5d72f4c1011c00d/699f86c91eb5ccf45649bce0" target="_blank" rel="noopener">WealthVest Weekly Bull &amp; Bear</a><div class="desc">With Tim Pierotti, CIO of WealthVest. Labor, consumer health, and cycle fragility (Feb 2026).</div>
+                <iframe title="WealthVest Weekly Bull &amp; Bear featuring Bob Sheehan" width="100%" height="180" src="https://embed.acast.com/5ceef7c6e5d72f4c1011c00d/699f86c91eb5ccf45649bce0" scrolling="no" frameborder="0" style="border:none;overflow:hidden;border-radius:6px;margin:0.7rem 0 0.2rem;"></iframe></div></div>
+            <div class="log-row"><div class="ix">04</div><div class="kind">FEATURED IN</div><div><div class="src">Forward Guidance (Blockworks)</div><div class="desc">Charts and analysis on-screen during podcast recording (Aug 2025).</div></div></div>
+            <div class="log-row"><div class="ix">05</div><div class="kind dusk">PODCAST</div><div><div class="src">Less Noise More Signal</div><div class="desc">Repo, Fed plumbing, and crypto/Treasury transmission with Pascal H&uuml;gli (Oct 2025).</div></div></div>
+            <div class="log-row"><div class="ix">06</div><div class="kind">FEATURED IN</div><div><a class="src" href="https://www.lessnoise-moresignal.com/report" target="_blank" rel="noopener">LNMS Bitcoin Report</a><div class="desc">"What Really Drives the Bitcoin Price." Macro liquidity and crypto/Treasury transmission (Mar 2026).</div></div></div>
+            <div class="log-row"><div class="ix">07</div><div class="kind">FEATURED IN</div><div><div class="src">LNMS Year-End Report 2025/2026</div><div class="desc">Featured among macro contributors alongside Michael Howell, Willy Woo, and others.</div></div></div>
+            <div class="log-row"><div class="ix">08</div><div class="kind">FEATURED IN</div><div><div class="src">The Chart Report</div><div class="desc">Featured analysis and chart contributions.</div></div></div>
+            <div class="log-row"><div class="ix">09</div><div class="kind">FEATURED IN</div><div><div class="src">Spilled Coffee</div><div class="desc">Work featured in Eric Soda's investing newsletter.</div></div></div>
+            <div class="log-row"><div class="ix">10</div><div class="kind">FEATURED IN</div><div><div class="src">The Memo</div><div class="desc">Research featured and linked.</div></div></div>
+            <div class="log-row"><div class="ix">11</div><div class="kind">FEATURED IN</div><div><div class="src">Featured Research</div><div class="desc">"Macro, Illuminated: Building Signal in an Overfit World" (Nov 2025).</div></div></div>
+            <div class="log-row"><div class="ix">12</div><div class="kind">PICKED UP BY</div><div><a class="src" href="https://substack.com/@chinasasystem/note/c-246666117" target="_blank" rel="noopener">Leon Liao</a><div class="desc">Former MD at a global investment bank, writes "China as a System." Connected the Two Economies piece to US-vs-China wealth dynamics.</div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- // 08 AUTHOR -->
+<section id="about" class="mist">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 07</span><span class="rule"></span><span class="lbl">The Author</span></div>
+            <h2 class="sec-title">BOB SHEEHAN</h2>
+        </div>
+        <div class="auth-grid">
+            <div class="auth-text reveal">
+                <p>"The Lighthouse" was the name of Bob's house in college, where he first began studying finance and economics. Over the years it evolved into a research firm built on quantitative rigor and systematic macro analysis, serving portfolio managers, advisory firms, and business leaders who need to understand what is actually happening beneath the headlines.</p>
+                <p>Bob's neurodivergent wiring is core to the firm's edge. Most analysts specialize in one domain. His ADHD-driven intellectual restlessness pushes him across the full macro landscape, from Fed plumbing to labor economics to credit markets to Treasury microstructure to crypto integration and quantitative modeling. The result is depth across domains. And with it, the ability to see connections specialists miss by staying in silos.</p>
+                <div class="roles">
+                    <div class="role"><div><div class="rn">VP, Data &amp; Analytics</div><div class="rc">EQUILEND</div></div><div class="rd">Securities-finance data and analytics leadership.</div></div>
+                    <div class="role"><div><div class="rn">Senior Research Analyst</div><div class="rc">STROM CAPITAL MANAGEMENT</div></div><div class="rd">Fundamental and quantitative equity research.</div></div>
+                    <div class="role"><div><div class="rn">Associate Portfolio Manager</div><div class="rc">BANK OF AMERICA PRIVATE BANK</div></div><div class="rd">$4.5B multi-asset platform. SGS equity sleeve ~$1.2B at peak. Track-record window 2017-2020: 2.35 Sortino, 103% upside / 76% downside capture vs S&amp;P 500.</div></div>
+                </div>
+            </div>
+            <div class="auth-stats reveal">
+                <div class="astat"><div class="num">12</div><div class="lab">Macro pillars in the Diagnostic Dozen</div></div>
+                <div class="astat"><div class="num">3</div><div class="lab">Engines: Macro &middot; Monetary &middot; Structure</div></div>
+                <div class="astat"><div class="num">6</div><div class="lab">Asset classes covered</div></div>
+                <div class="astat"><div class="num">CFA &middot; CMT</div><div class="lab">Dual charterholder credentials</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- // 09 CONTACT -->
+<section id="contact">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 08</span><span class="rule"></span><span class="lbl">Get in Touch</span></div>
+            <h2 class="sec-title">START A CONVERSATION</h2>
+            <p class="sec-intro">Whether you are an advisory firm exploring research access, a business leader making capital decisions, or an allocator looking for a strategist on call, pick the line that fits.</p>
+        </div>
+        <div class="contact-grid">
+            <div class="ccard reveal"><div class="seg mono">Advisory</div><a href="mailto:advisory@lighthousemacro.com">advisory@lighthousemacro.com</a><p>For service inquiries: Operator, Advisor, Institutional, Fractional CIO.</p></div>
+            <div class="ccard reveal"><div class="seg mono">General</div><a href="mailto:bob@lighthousemacro.com">bob@lighthousemacro.com</a><p>Direct line for general questions and media.</p></div>
+            <div class="ccard reveal"><div class="seg mono">Research</div><a href="mailto:research@lighthousemacro.com">research@lighthousemacro.com</a><p>For research-specific questions and subscription support.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing" id="subscribe">
+    <div class="wrap">
+        <div class="sec-eyebrow mono reveal"><span class="num">// THE STACK</span><span class="rule"></span></div>
+        <div class="big reveal">DON'T NAVIGATE<br><span class="blue">IN THE DARK</span><span class="dot">.</span></div>
+        <div class="sub-box reveal">
+            <p>The Beacon every Sunday, free. Beams twice a week, the Horizon monthly, and the Chartbook for subscribers. Institutional-grade macro, in your inbox.</p>
+            <a href="https://research.lighthousemacro.com/subscribe" class="go">Join the reading &rarr;</a>
+            <div class="mono fine" style="color:var(--doldrums);">// Powered by Substack &middot; Unsubscribe any time</div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="wrap">
+        <div class="foot-grid">
+            <div>
+                <div class="foot-brand">LIGHTHOUSE<span class="dot">.</span></div>
+                <div class="foot-tag">MACRO, ILLUMINATED.</div>
+                <p>Independent macro research and advisory built on the Diagnostic Dozen framework. Read by CIOs, central bankers, and the practitioners who watch the tape.</p>
+            </div>
+            <div class="foot-col">
+                <h5>// Sections</h5>
+                <a href="#framework">Framework</a>
+                <a href="methodology.html">Methodology</a>
+                <a href="#dashboard">Live Read</a>
+                <a href="#services">Services</a>
+                <a href="#research">Research</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="pharos.html">Pharos</a>
+            </div>
+            <div class="foot-col">
+                <h5>// Elsewhere</h5>
+                <a href="https://research.lighthousemacro.com" target="_blank" rel="noopener">research.lighthousemacro.com &rarr;</a>
+                <a href="https://x.com/LHMacro" target="_blank" rel="noopener">@LHMacro</a>
+                <a href="mailto:advisory@lighthousemacro.com">advisory@lighthousemacro.com</a>
+                <a href="mailto:bob@lighthousemacro.com">bob@lighthousemacro.com</a>
+            </div>
+        </div>
+        <div class="foot-sig">
+            <div class="lhm-sig">
+                <a href="https://lighthousemacro.com">Lighthouse Macro</a> |
+                <a href="https://research.lighthousemacro.com">Research</a> |
+                <a href="https://x.com/LHMacro">@LHMacro</a>
+            </div>
+            <div class="mono" style="color:var(--doldrums);">&copy; {{ year }} Lighthouse Macro, LLC</div>
+        </div>
+        <div class="foot-disclaimer">
+            Lighthouse Macro, LLC provides research and advisory services that are informational and educational in nature. Nothing published or communicated by Lighthouse Macro constitutes personalized investment advice, a solicitation, or a recommendation to buy, sell, or hold any security. All investment decisions are the sole responsibility of the reader or client. Past performance is not indicative of future results. Lighthouse Macro, LLC is not a registered investment advisor. Advisory engagements involving personalized portfolio guidance are structured as model portfolio guidance, not account management.
+        </div>
+    </div>
+</footer>
+<div class="foot-bar"></div>
+
+{% raw %}
+<script>
+    // mobile nav close on link tap
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+        a.addEventListener('click', function(){ document.querySelector('.nav-links').classList.remove('open'); });
+    });
+
+    // scroll reveal
+    var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+    // endorsement carousel removed — only verified, sourced quotes go here
+</script>
+{% endraw %}
+</body>
+</html>

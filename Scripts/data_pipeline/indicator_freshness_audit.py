@@ -73,9 +73,12 @@ def audit(db_path: str = DB_PATH):
         tol = tolerance_for(index_id)
         is_crypto = any(index_id.startswith(p) for p in CRYPTO_PREFIXES)
 
-        # flat-tail check (daily-native only)
+        # flat-tail check (daily-native only). Exempt daily-FF'd monthly
+        # composites (macro pillars + ALLOC_*): they're legitimately flat
+        # between monthly releases by design.
         flat = False
-        if not is_crypto and index_id not in MACRO_COMPOSITES:
+        if (not is_crypto and index_id not in MACRO_COMPOSITES
+                and not index_id.startswith("ALLOC_")):
             tail = conn.execute(
                 "SELECT value FROM lighthouse_indices WHERE index_id=? "
                 "ORDER BY date DESC LIMIT 10",

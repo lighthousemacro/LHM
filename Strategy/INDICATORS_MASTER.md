@@ -112,6 +112,8 @@ The detail files stay in place. This document is the index, the live state, and 
 
 **Transform:** z-score + canonical bands for the composites; overlay each against its asset target (e.g. Labor-Curve composite vs the 2s10s; Cyclical-Defensive vs XLI/XLP).
 
+**LIVE (2026-06-15):** all 4 VALIDATED + 5 PROVISIONAL are now computed daily in `lighthouse_indices` as `ALLOC_*` (native-frequency z, coverage-weighted, standardized, daily-forward-filled — correct YoY/z windows, not the legacy daily-grid bug), recomputed each morning by the pipeline. Overlay charts: `Outputs/allocation_charts/`. `ALLOCATION_BASKETS` lives in `compute_indices.py`.
+
 ### Category 2 — Macro Impact
 
 *X moves another major macro variable — within or across pillars (e.g. inflation → consumer spending). This is the STRONGEST, most defensible bucket: where the framework genuinely earns it.*

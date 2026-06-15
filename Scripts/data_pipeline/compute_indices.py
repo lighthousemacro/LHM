@@ -267,6 +267,19 @@ STATUS_THRESHOLDS = {
     ],
 }
 
+# Allocation-impact composites (validated 2026-06-15): standardized z-signals.
+# High z = the documented channel is firing in the expected direction.
+_ALLOC_BANDS = [
+    (1.5, "STRONG SIGNAL"), (0.5, "SIGNAL"), (-0.5, "NEUTRAL"),
+    (-1.5, "INVERSE"), (-999, "STRONG INVERSE"),
+]
+for _aid in ("ALLOC_CURVE_STEEPENER", "ALLOC_CONS_ROTATION",
+             "ALLOC_CYCLICAL_DEFENSIVE", "ALLOC_ENERGY_MOMENTUM",
+             "ALLOC_REALYIELD_GOLD", "ALLOC_CREDIT_LABOR_GAP",
+             "ALLOC_DOLLAR_EM", "ALLOC_INCOME_DEPLETION",
+             "ALLOC_INVENTORY_DESTOCK"):
+    STATUS_THRESHOLDS[_aid] = _ALLOC_BANDS
+
 
 def get_status(index_name: str, value: float) -> str:
     """Get status label for an index value."""
@@ -2167,6 +2180,81 @@ def compute_ssd(spi: pd.Series, msi: pd.Series) -> pd.Series:
 # MAIN COMPUTATION ENGINE
 # ==========================================
 
+# ==========================================
+# ALLOCATION-IMPACT COMPOSITES (validated 2026-06-15)
+# ==========================================
+# Built from the full pillar docs + asset-class frameworks, validated honestly
+# (purged non-overlap walk-forward OOS, noise-controlled). These target the
+# SPECIFIC transmission channels the pillars actually drive (curve, sector
+# rotation, relative pairs) — not broad-index direction. OOS IC in comments.
+# Validation: Outputs/mri_optimization/allocation_validation_results_20260615.json
+# Computed on NATIVE monthly frequency (correct YoY/z windows), then daily-FF.
+ALLOCATION_BASKETS = {
+    # VALIDATED (OOS-confirmed, n>=50, noise-clean)
+    "ALLOC_CURVE_STEEPENER": [          # Labor -> 2s10s bull steepener, OOS +0.27
+        ("UEMP27OV", 1, "level"), ("JTSQUR", -1, "level"), ("JTSHIL", -1, "level"),
+        ("TEMPHELPS", -1, "yoy"), ("ICSA", 1, "yoy")],
+    "ALLOC_CONS_ROTATION": [            # Consumer -> XLY/XLP, OOS 0.12
+        ("JTSQUR", 1, "level"), ("FRBATLWGT12MMUMHWGJSW", 1, "level"),
+        ("PCDG", 1, "yoy"), ("PCESV", -1, "yoy"), ("RSXFS", 1, "yoy"),
+        ("TOTALSA", 1, "yoy")],
+    "ALLOC_CYCLICAL_DEFENSIVE": [       # -> XLI/XLP cyclical vs defensive, OOS +0.30
+        ("MANEMP", 1, "yoy"), ("USCONS", 1, "yoy"), ("INDPRO", 1, "yoy"),
+        ("IPMAN", 1, "yoy"), ("GACDFSA066MSFRBPHI", 1, "level"),
+        ("GACDISA066MSFRBNY", 1, "level")],
+    "ALLOC_ENERGY_MOMENTUM": [          # -> XLE/SPY, OOS +0.21
+        ("DCOILWTICO", 1, "yoy"), ("T5YIE", 1, "level")],
+    # PROVISIONAL (real signal, smaller-n; live but lower-conviction)
+    "ALLOC_REALYIELD_GOLD": [           # -> GLD, OOS +0.15
+        ("DFII10", -1, "level"), ("T10YIE", 1, "level")],
+    "ALLOC_CREDIT_LABOR_GAP": [         # -> HY OAS, OOS +0.11
+        ("UEMP27OV", 1, "level"), ("JTSQUR", -1, "level"), ("JTSHIL", -1, "level"),
+        ("TEMPHELPS", -1, "yoy"), ("ICSA", 1, "yoy")],
+    "ALLOC_DOLLAR_EM": [                # -> EEM, OOS -0.15
+        ("DTWEXBGS", -1, "yoy"), ("DGS10", -1, "level")],
+    "ALLOC_INCOME_DEPLETION": [         # -> XLY/XLP, OOS -0.18
+        ("PSAVERT", -1, "level"), ("DSPIC96", 1, "yoy")],
+    "ALLOC_INVENTORY_DESTOCK": [        # -> XLB/SPY, OOS +0.20
+        ("ISRATIO", -1, "level"), ("DGORDER", 1, "yoy")],
+}
+
+
+def compute_allocation_composite(basket: list, target_index: pd.DatetimeIndex,
+                                 z_window: int = 60) -> pd.Series:
+    """Native-monthly z-composite of a validated allocation basket, daily-FF.
+
+    Each component is resampled to month-end (native), transformed (yoy =
+    12-month pct change, the CORRECT window), z-scored on the monthly grid,
+    signed, coverage-weighted-averaged (>=50% present), standardized, then
+    forward-filled onto the daily target index (nowcast). Avoids the legacy
+    daily-grid z-window bug by transforming on native frequency."""
+    cols = {}
+    for sid, sign, tf in basket:
+        s = _gci_raw_series(sid)
+        if s is None or s.empty:
+            continue
+        m = s.resample("ME").last()
+        if tf == "yoy":
+            v = m.pct_change(12) * 100.0
+        elif tf == "delta":
+            v = m.diff(1)
+        else:
+            v = m
+        mu = v.rolling(z_window, min_periods=24).mean()
+        sd = v.rolling(z_window, min_periods=24).std().replace(0, np.nan)
+        cols[sid] = ((v - mu) / sd) * sign
+    if not cols:
+        return pd.Series(dtype=float)
+    Z = pd.DataFrame(cols)
+    present = Z.notna().sum(axis=1)
+    comp = Z.mean(axis=1, skipna=True).where(present >= max(1, 0.5 * Z.shape[1]))
+    cd = comp.dropna()
+    if len(cd) > 24 and cd.std() > 0:
+        comp = (comp - cd.mean()) / cd.std()
+    full = comp.index.union(target_index)
+    return comp.reindex(full).sort_index().ffill().reindex(target_index)
+
+
 def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> pd.DataFrame:
     """
     Compute all proprietary indices from horizon_dataset.
@@ -2357,6 +2445,17 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
         # Recession Probability
         "REC_PROB": rec_prob,
     }
+
+    # Allocation-impact composites (validated 2026-06-15). Built from
+    # observations on native frequency (correct YoY/z windows), daily-FF onto
+    # the horizon grid. These target the specific channels the pillars drive
+    # (curve, sector rotation, relative pairs), not broad-index direction.
+    print("   Computing allocation-impact composites (validated 2026-06-15)...")
+    for aid, basket in ALLOCATION_BASKETS.items():
+        try:
+            indices[aid] = compute_allocation_composite(basket, df.index)
+        except Exception as e:  # noqa: BLE001
+            print(f"      WARNING: {aid} failed: {e}")
 
     # Ensure every macro composite carries a value through today via
     # persistence. Daily-native composites (MSI, SPI, SBD, SSD, EMD, SVI,

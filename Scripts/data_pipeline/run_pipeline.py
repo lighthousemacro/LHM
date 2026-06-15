@@ -172,6 +172,22 @@ def main():
         except Exception as e:
             print(f"ERROR computing crypto indices: {e}")
 
+        # Freshness guard: prove every composite is real-time through yesterday,
+        # or name exactly what isn't. Catches a silent-staleness regression the
+        # moment it happens (the 2026-05-17 incident ran undetected for a month).
+        try:
+            from indicator_freshness_audit import audit as _freshness_audit
+            _fr = _freshness_audit()
+            _stale = [r for r in _fr if r["verdict"] == "STALE"]
+            _ok = sum(1 for r in _fr if r["verdict"] == "OK")
+            if _stale:
+                print("FRESHNESS ALERT: " + str(len(_stale)) + " indicators STALE: "
+                      + ", ".join(r["index_id"] for r in _stale))
+            else:
+                print(f"Freshness OK: {_ok} indicators current through yesterday.")
+        except Exception as e:
+            print(f"WARNING: freshness audit failed: {e}")
+
     get_stats()
 
     # Backup to LHM folder

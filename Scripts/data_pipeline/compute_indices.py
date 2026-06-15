@@ -70,19 +70,15 @@ STATUS_THRESHOLDS = {
         (-999, "SEVERELY MISPRICED")
     ],
     "MRI": [
-        # Recalibrated thresholds based on actual MRI distribution (2026-01-19)
-        # Cycle-based naming convention for economic regimes
-        # Thresholds based on percentile analysis:
-        #   Recession: top 1% (>0.50)
-        #   Pre-Recession: 90th-99th percentile (0.25-0.50)
-        #   Late Cycle: 75th-90th percentile (0.10-0.25)
-        #   Mid-Cycle: 25th-75th percentile (-0.20 to 0.10)
-        #   Early Expansion: bottom 25% (<-0.20)
-        (0.50, "RECESSION"),
-        (0.25, "PRE-RECESSION"),
-        (0.10, "LATE CYCLE"),
-        (-0.20, "MID-CYCLE"),
-        (-999, "EARLY EXPANSION")
+        # Canonical z-bands. MRI is now standardized (z-score over its own
+        # history), so these match the documented master-context regime ladder
+        # (CLAUDE_MASTER Section 3) instead of the old raw-distribution
+        # percentiles that never reached +/-1.
+        (1.5, "CRISIS"),
+        (1.0, "HIGH RISK"),
+        (0.5, "ELEVATED"),
+        (-0.5, "NEUTRAL"),
+        (-999, "LOW RISK")
     ],
     "SLI": [
         (1.0, "EXPANDING"),
@@ -348,6 +344,36 @@ def weighted_sum_strict(components: list) -> pd.Series:
 # Back-compat alias. Both names point at the strict implementation so we don't
 # have to rename every call site.
 nan_weighted_sum = weighted_sum_strict
+
+
+def weighted_sum_coverage(components: list, min_weight: float = 0.5) -> pd.Series:
+    """
+    History-preserving weighted sum of z-score components.
+
+    Unlike weighted_sum_strict (NaN if ANY input is missing), this imputes a
+    missing component to its NEUTRAL value (0 for a z-score) while keeping the
+    published weights fixed, and emits a value only at dates where the present
+    components carry at least `min_weight` of total weight. This stops a single
+    short-history input from truncating a composite whose other inputs span
+    decades — e.g. Existing Home Sales (2024+) was gating 60 years of HCI, and
+    the plumbing-era pillars (FCI/LCI, 2018+) were gating MRI to 2024.
+
+    Impute-absent-to-neutral matches the migration-program methodology (no
+    survivorship). Trailing-tail freshness still comes from the bridge /
+    persistence layer.
+    """
+    if not components:
+        return pd.Series(dtype=float)
+    series_list, weights = zip(*components)
+    df = pd.concat(series_list, axis=1)
+    df.columns = range(len(series_list))
+    w = np.asarray(weights, dtype=float)
+    total_w = w.sum()
+    present_w = df.notna().to_numpy().astype(float) @ w
+    weighted_sum = df.fillna(0).to_numpy() @ w  # missing contribute 0 (neutral)
+    out = pd.Series(weighted_sum, index=df.index, dtype=float)
+    enough = pd.Series(present_w >= (min_weight * total_w), index=df.index)
+    return out.where(enough)
 
 
 def all_present_mean(*serieses: pd.Series) -> pd.Series:
@@ -1129,7 +1155,11 @@ def compute_hci(df: pd.DataFrame) -> pd.Series:
     mortgage = df.get("Mortgage_30Y", pd.Series(dtype=float))
     z_mortgage = -compute_zscore(mortgage, window=52)
 
-    hci = nan_weighted_sum([
+    # Coverage-weighted: Existing Home Sales only exists from 2024-11, but
+    # Starts/Supply/Case-Shiller/Mortgage span 1959-1987+. Strict weighting let
+    # the one short series truncate 60 years of housing history. Coverage
+    # weighting keeps full history (computes once >=50% of weight is present).
+    hci = weighted_sum_coverage([
         (z_starts, 0.25),
         (z_sales, 0.25),
         (z_supply, 0.20),
@@ -1291,7 +1321,10 @@ def compute_mri(lpi: pd.Series, pci: pd.Series, gci: pd.Series,
         - LCI and TCI show higher importance than originally weighted
         - BCI and GCI_Gov remain important leading indicators
     """
-    mri = nan_weighted_sum([
+    # Coverage-weighted so MRI spans its real history (~2000+, gated by the
+    # 0.33 LPI anchor) instead of 2024+ (strict weighting required the
+    # plumbing-era pillars FCI/LCI which only start 2018). Weights unchanged.
+    mri = weighted_sum_coverage([
         (-lpi,    0.33),   # Labor
         (pci,     0.03),   # Prices
         (-gci,    0.02),   # Growth
@@ -1303,6 +1336,15 @@ def compute_mri(lpi: pd.Series, pci: pd.Series, gci: pd.Series,
         (-fci,    0.07),   # Financial
         (-lci,    0.14),   # Plumbing
     ])
+
+    # Standardize to a z-scale so the documented regime bands (master context:
+    # <-0.5 Low Risk / -0.5..+0.5 Neutral / +0.5..+1.0 Elevated /
+    # +1.0..+1.5 High Risk / >+1.5 Crisis) are meaningful. The raw weighted sum
+    # of z-scores has sub-unit variance and never reached +/-1 (the "MRI stinks"
+    # defect Bob flagged). Full-sample standardization over MRI's own history.
+    valid = mri.dropna()
+    if len(valid) > 30 and valid.std(skipna=True) > 0:
+        mri = (mri - valid.mean()) / valid.std(skipna=True)
 
     return mri
 

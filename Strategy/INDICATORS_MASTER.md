@@ -62,6 +62,109 @@ The detail files stay in place. This document is the index, the live state, and 
 
 ---
 
+## THE FINAL LINEUP — FIVE CATEGORIES (2026-06-15)
+
+**This is the trusted view. Start here.** Every proprietary indicator, placed in one of five categories by *what it actually does* (Bob's framing, 2026-06-15), each tagged with the role it was validated in, the out-of-sample evidence behind it, a confidence tier, the transform it should be shown in, and the overlay chart that proves it. The honesty principle: nothing here claims skill the data does not support. Indicators that failed out-of-sample prediction are kept as honest **regime/descriptor** reads, not buried and not oversold.
+
+**Freshness guarantee (live as of 2026-06-15):** every indicator below except crypto is recomputed daily through yesterday's close by the full-recompute pipeline (`run_pipeline.py` → `compute_indices.py`, ~2 min) and checked by the freshness guard (`indicator_freshness_audit.py`). The month-long silent-staleness incident (macro composites frozen 2026-05-17, the pipeline limping in `latest_only` mode) is fixed at the root. Crypto composites are FEED-DOWN since 2026-02-02 pending a fetcher repair.
+
+**Evidence keys:** OOS = purged/embargoed non-overlap walk-forward IC (the honest number). Sources: migration program Phases A–B3 (`INDICATOR_MIGRATION_PROGRAM.md`, `Outputs/mri_optimization/*.json`).
+
+### Confidence tiers (legend)
+
+| Tier | Meaning |
+|---|---|
+| **VALIDATED** | OOS-confirmed in its stated role (purged WF, n≥50, noise-controlled). Trade off it. |
+| **PROVISIONAL** | Real signal, lighter evidence (small-n / single-grid / re-run owed). Use with care. |
+| **CANDIDATE** | Promising but untested in *this* role; build-queue validation owed. |
+| **REGIME / DESCRIPTOR** | Honest state read. Failed predictive OOS — never cite as a predictor. |
+| **USABLE-PROXY** | Composite ≈ its single best component (no lift). Fine to use; the single series is just as good. |
+
+### Category 1 — Allocation Impact
+
+*Proven to move asset returns — any asset class, cross-asset relative, sector relative, or curve. The honest read: this is the THINNEST bucket. The framework historically over-asserted asset-return skill; OOS validation keeps only what survives. Rotation / sector / curve targets (SPY/TLT, XLY/XLP, IWF/IWD, IAU/SGOV, SHY/TLT) are the build-queue — they need the monthly-grid re-validation the program flagged.*
+
+| Indicator | Predicts | OOS evidence | Confidence | Transform / bands | Overlay chart |
+|---|---|---|---|---|---|
+| **CLG** (Credit-Labor Gap) | forward HY-OAS (credit) | +0.16 construct-intact (B-2); robust −0.19 (B-3) | VALIDATED | z-score, ±1.5/±2σ | CLG vs forward HY-OAS |
+| **FCI** (Credit Tide) | VIX / equity vol, 63d | +0.37 (B-3 2nd-tier, light) | PROVISIONAL | z-score | FCI vs VIX |
+| **CCI** (Consumer Pulse) | XLY/XLP rotation, 6m | +0.16 (Phase A, n=9,279); monthly re-run owed | CANDIDATE | z-score | CCI vs XLY/XLP ratio |
+
+### Category 2 — Macro Impact
+
+*X moves another major macro variable — within or across pillars (e.g. inflation → consumer spending). This is the STRONGEST, most defensible bucket: where the framework genuinely earns it.*
+
+| Indicator | Predicts | OOS evidence | Confidence | Transform | Overlay chart |
+|---|---|---|---|---|---|
+| **PCI** (Inflation Heat) | forward core PCE, 6m | +0.36 (B-3) / +0.62 blend (B-1) | VALIDATED (strongest) | z-score; or native YoY% | PCI vs forward core PCE |
+| **GCI** (Activity Pulse) | forward PAYEMS, 6m | +0.25 (B-3, n=94) / +0.37 (B-1) | VALIDATED | z-score | GCI vs forward payrolls |
+| **FPI** (Fiscal Pressure) | DGS10 / 10y term premium | +0.29 (B-3) | VALIDATED | z-score | FPI vs 10y term premium |
+| **LPI** (Labor Pressure) | forward PAYEMS | +0.25 (B-3, n=66) | VALIDATED | z-score | LPI vs forward payrolls |
+| **BCI** (Capex Thrust) | forward INDPRO | +0.17 (B-1) | PROVISIONAL | z-score | BCI vs forward industrial production |
+| **CLG** | forward HY-OAS | (cross-listed, Cat 1) | VALIDATED | z-score | — |
+
+### Category 3 — Descriptive
+
+*Combined-metric reads of the state right now — not necessarily forward-looking. The "we fused several series into one honest measurement" composites (e.g. true cost of homeownership). REAL = adds lift over its best single component.*
+
+| Indicator | Measures | OOS evidence | Confidence | Transform | Overlay chart |
+|---|---|---|---|---|---|
+| **HCI** (Housing Tide) | housing health (vs Case-Shiller YoY) | r +0.87, **+0.09 lift** — REAL | VALIDATED (real composite) | z-score, ±1.5/±2σ | HCI vs Case-Shiller YoY |
+| **FPI** (Fiscal Pressure) | fiscal/term-premium stress | +0.87, **+0.12 lift** — REAL | VALIDATED (dual: also Cat 2) | z-score | FPI vs term premium |
+| **BCI** (Capex Thrust) | business investment (capex orders YoY) | +0.70, **+0.13 lift** — REAL | VALIDATED (dual: also Cat 2) | z-score | BCI vs capex orders YoY |
+| **PCI** (Inflation Heat) | inflation (core PCE YoY) | +0.91 but **no lift** | USABLE-PROXY | native YoY% | — |
+| **MSI** (Market Breadth Pulse) | trend (SPX vs 200d) | no lift | USABLE-PROXY | z-score | — |
+| **CCI / TCI / LCI** | consumer / dollar / reserves | descriptively BROKEN (B-2) | DESCRIPTOR-WEAK — use single-component proxy (RSXFS / DTWEXBGS / reserves) | — | — |
+
+### Category 4 — Macro Regime
+
+*Where are we in the cycle. The classification layer that drives allocation and sizing.*
+
+| Indicator | Reads | State | Confidence | Transform / bands | Overlay chart |
+|---|---|---|---|---|---|
+| **MRI** (Macro Risk Index) | aggregate cycle/risk regime | **Rebuilt 2026-06-15**: standardized z-scale, ~25y history (2000→), canonical bands. Validates vs 2008 (+3.6 CRISIS), 2009 (+2.1), COVID (+1.1). Current +1.0 HIGH RISK. | REGIME — structural design audit-clean; weights pending the program rebuild | z-score; bands `<-0.5` Low / `+0.5` Elevated / `+1.0` High / `+1.5` Crisis | MRI vs SPX drawdowns + NBER bands |
+| **REC_PROB** | recession probability 3/6/12m | fresh but raw-volatile (flips 0↔100) | REGIME — needs smoothing (build-queue) | 0–100%, smoothed | REC_PROB vs NBER |
+| **ENSEMBLE_RISK / WARNING_LEVEL / ALLOC_MULTIPLIER** | risk ensemble → sizing | short live history (~3wk) | REGIME — operational | level | — |
+| **LIQ_STAGE** | liquidity regime, stages 1–7 | live | REGIME — descriptive | stage ladder | — |
+
+### Category 5 — Market Regime
+
+*State of the market itself — structure and sentiment. Kept as honest descriptors: each failed predictive OOS, so none is cited as a forward signal. They tell you the weather, not tomorrow's forecast.*
+
+| Indicator | Reads | OOS evidence | Confidence | Transform | Overlay chart |
+|---|---|---|---|---|---|
+| **MSI** (Market Breadth Pulse) | structure / trend | predictive +0.02 → null | REGIME-DESCRIPTOR | z-score, ±2σ lines | MSI vs SPX |
+| **SPI** (Sentiment Tide) | positioning / sentiment | predictive null | REGIME-DESCRIPTOR | z-score | SPI vs SPX |
+| **SBD** (Structure-Breadth Divergence) | distribution / accumulation | honest null | REGIME-DESCRIPTOR | z-score + 3mo MA (always) | SBD vs SPX |
+| **SSD** (Sentiment-Structure Divergence) | capitulation / blow-off | honest null | REGIME-DESCRIPTOR | z-score + 3mo MA | SSD vs SPX |
+
+### Stacked / interaction composites — BUILD QUEUE
+
+*Bob's "weak alone, strong together" idea. The program proved a BLIND pairwise sweep just manufactures noise (noise-pairs hit OOS +0.60), so each of these is ONE economically pre-specified hypothesis, to be validated purged-WF OOS with a noise-pair control and n≥50 before it earns a tier.*
+
+| # | Proposed composite | Stack (the condition) | Predicts | Category |
+|---|---|---|---|---|
+| 1 | **Consumer Squeeze Index (CSI)** *[flagship — Bob's example]* | inverted real-wage-growth + inverted saving rate + rising revolving credit + debt-service ratio | forward real PCE / RSXFS, 3–6m | Macro impact |
+| 2 | **Stagflation Quadrant** | PCI high AND GCI low *simultaneously* | regime flag | Macro regime |
+| 3 | **Late-Cycle Equity Drag** | GCI inputs + capacity utilization + capex momentum + employment diffusion | SPX 252d fwd (expected −) | Allocation |
+| 4 | **Liquidity-Credit-Breadth Risk-On** | LCI rising + HY-OAS tight + breadth improving | SPY fwd | Allocation (program found this class thin — needs strong pre-spec) |
+
+### Transform & visualization standard
+
+- **z-score + canonical bands** — default for composites. Rare-z bands 1.28 / 1.645 / 1.96; chart reference lines at **±2σ only** (never ±1σ — 1σ is common noise).
+- **0–100 diffusion / oscillator** — breadth/participation internals and probabilities (REC_PROB).
+- **Raw level + reference lines** — rates / spreads / inflation in native units (PCI as YoY%, HY-OAS in bps, CLG as the z-gap).
+- **Noisy divergence composites (SBD / SSD / EMD)** → 3-month MA always. A raw spike is not a regime.
+- **Every indicator ships an overlay chart** against the thing it tracks or predicts — the proof, not a bare line.
+
+### Open operational items (tracked, not yet done)
+
+- **Crypto fetcher repair** — SLI/CTI/CVI/CDI/CFI/CRYPTO_* feed-down since 2026-02-02 (DefiLlama/CoinGecko).
+- **horizon_dataset transform bug** — `build_horizon_dataset` reindexes to calendar-daily *before* transforms, so `_yoy_pct` and `_z` columns for monthly series use day-counts not month-counts. High blast radius (feeds every composite's z inputs); fix = transform on native frequency, then forward-fill to daily. Validate before shipping.
+- **REC_PROB smoothing**, **MRI weight rebuild** (program), **stacked-composite validation** (above).
+
+---
+
 ## MAY 2026 REBUILD STATE
 
 **This section reflects the current authoritative state of the framework after the May 8–9 rebuild. It supersedes the relevant parts of the Apr 30 Audit Findings section below.**

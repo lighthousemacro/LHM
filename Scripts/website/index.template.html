@@ -157,6 +157,11 @@
         .engine ul { list-style:none; margin-top:1.2rem; border-top:1px solid var(--line); padding-top:1.1rem; }
         .engine li { font-size:0.85rem; color:var(--body); padding:0.3rem 0 0.3rem 1rem; position:relative; }
         .engine li::before { content:''; position:absolute; left:0; top:0.7rem; width:6px; height:6px; background:var(--ocean); }
+        .principle-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+        .engine .psub { font-family:'Source Code Pro',monospace; font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ocean); margin:0.2rem 0 0.8rem; }
+        .op-notes { margin-top:2rem; padding-top:1.4rem; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:1.6rem; }
+        .op-notes span { font-family:'Source Code Pro',monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--doldrums); }
+        .op-notes span b { color:var(--dusk); }
 
         /* dashboard */
         .master-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.6rem; }
@@ -357,7 +362,7 @@
 
         /* responsive */
         @media (max-width:900px) {
-            .aud-grid,.engine-grid,.svc-grid,.book-grid,.auth-grid,.foot-grid { grid-template-columns:1fr; }
+            .aud-grid,.engine-grid,.principle-grid,.svc-grid,.book-grid,.auth-grid,.foot-grid { grid-template-columns:1fr; }
             .master-grid { grid-template-columns:1fr 1fr; }
             .pillar-grid { grid-template-columns:1fr 1fr; }
             .tier-row,.rgrid,.stack-grid,.contact-grid { grid-template-columns:1fr; }
@@ -387,11 +392,12 @@
         </button>
         <ul class="nav-links">
             <li><a href="framework.html">The Diagnostic Dozen</a></li>
+            <li><a href="methodology.html">Methodology</a></li>
             <li><a href="#dashboard">Live Read</a></li>
             <li><a href="#services">Services</a></li>
-            <li><a href="#research">Research</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="#subscribe">Subscribe</a></li>
             <li><a href="https://research.lighthousemacro.com" class="nav-cta">Read the Research</a></li>
         </ul>
     </div>
@@ -426,25 +432,27 @@
     </div>
 </header>
 
-<!-- // 00 WHO ARE YOU -->
+<!-- // 00 TWO ECONOMIES -->
 <section id="start">
     <div class="wrap">
         <div class="sec-head reveal">
-            <div class="sec-eyebrow mono"><span class="num">// 00</span><span class="rule"></span><span class="lbl">Start Here &middot; Who Are You?</span></div>
+            <div class="sec-eyebrow mono"><span class="num">// 00</span><span class="rule"></span><span class="lbl">Who We Serve</span></div>
+            <h2 class="sec-title">TWO ECONOMIES, ONE FRAMEWORK</h2>
+            <p class="sec-intro">There are two economies now. The one that trades the cycle, and the one that lives inside it. We built one framework for both.</p>
         </div>
         <div class="aud-grid">
             <div class="aud-card reveal">
                 <div class="tag mono">Advisors &middot; Allocators &middot; CIOs</div>
-                <h3>I run capital</h3>
-                <div class="big">Macro intelligence for portfolio positioning.</div>
-                <p>From published research to a strategist on call. Research suite, model allocation guidance, investment-committee participation, and bespoke work for hedge funds, RIAs, family offices, and endowments.</p>
+                <h3>The economy that trades</h3>
+                <div class="big">You position capital against the cycle.</div>
+                <p>Hedge funds, RIAs, family offices, and endowments who need the read and the risk posture, from published research to a strategist on call.</p>
                 <a href="#services" class="more">See advisor / CIO services &rarr;</a>
             </div>
             <div class="aud-card dusk reveal">
                 <div class="tag mono">Operators &middot; Leadership</div>
-                <h3>I run a business</h3>
-                <div class="big">Macro for capital, hiring, and capex windows.</div>
-                <p>The cycle drives capex windows, hiring conditions, end-market demand, and input pricing. We translate framework signals into the commercial calls that follow: capex timing, hiring windows, demand and pricing.</p>
+                <h3>The economy that operates</h3>
+                <div class="big">You make the calls inside the cycle.</div>
+                <p>CEOs, CFOs, and founders whose capex, hiring, and pricing decisions hinge on the macro. We translate the framework into your decisions.</p>
                 <a href="#services" class="more">See operator service &rarr;</a>
             </div>
         </div>
@@ -544,11 +552,16 @@
             <div class="sec-eyebrow mono"><span class="num">// 02</span><span class="rule"></span><span class="lbl">The Method</span></div>
             <h2 class="sec-title">THE PHILOSOPHY</h2>
         </div>
-        <div class="engine-grid">
-            <div class="engine reveal"><div class="top mono"><span class="n">// 01</span><span class="ct">The Core</span></div><h3>Framework over Forecast</h3><p>The map is the value. The forecast is downstream. Twelve pillars, three engines, one map. We publish the lens, not the lottery ticket.</p></div>
-            <div class="engine reveal"><div class="top mono"><span class="n">// 02</span><span class="ct">Principle</span></div><h3>Process over Outcome</h3><p>Outcomes are noisy and luck-laden. We grade ourselves on whether the framework was applied, not on whether the print agreed.</p></div>
-            <div class="engine reveal"><div class="top mono"><span class="n">// 03</span><span class="ct">Principle</span></div><h3>Strong Views, Weakly Held</h3><p>Every view ships with the conditions that would break it. Explicit invalidation criteria, published in advance, never retro-fitted.</p></div>
-            <div class="engine reveal"><div class="top mono"><span class="n">// 04</span><span class="ct">Principle</span></div><h3>One Book, Two Ways</h3><p>A macro framework read paired with a technical read of price. Macro and market can diverge. Same book, one consistent risk posture.</p></div>
+        <div class="principle-grid">
+            <div class="engine reveal"><div class="top mono"><span class="n">// 01</span><span class="ct">The Core</span></div><h3>Framework over Forecast</h3><div class="psub">The map is the value. The forecast is downstream.</div><p>A structured way of seeing. Twelve pillars, three engines, one map. We publish the lens, not the lottery ticket. Get the framework right and the forecasts get easier. Get them wrong and no number of guesses ever stick.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 02</span><span class="ct">Principle</span></div><h3>Process over Outcome</h3><div class="psub">Hold the process to account.</div><p>Outcomes are noisy and luck-laden. The only signal worth tracking is the rigor of the inputs. We grade ourselves on whether the framework was applied, not on whether the print agreed.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 03</span><span class="ct">Principle</span></div><h3>Strong Views, Weakly Held</h3><div class="psub">Every view ships with the conditions that would break it.</div><p>Explicit use of invalidation criteria, published in advance, never retro-fitted. The discipline of being willing to be wrong out loud is what separates a thesis from a marketing line.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 04</span><span class="ct">Principle</span></div><h3>One Book, Two Ways</h3><div class="psub">Macro thesis and technical setup.</div><p>A macro framework read paired with a technical read of price. Macro and market can diverge. Same book, one consistent risk posture.</p></div>
+        </div>
+        <div class="op-notes">
+            <span><b>&#9642;</b> Views published with invalidation criteria</span>
+            <span><b>&#9642;</b> Process metrics precede outcome metrics</span>
+            <span><b>&#9642;</b> No retro-fitted narratives</span>
         </div>
     </div>
 </section>
@@ -713,12 +726,16 @@
         <div class="reveal">
             <div class="log-row"><div class="ix">01</div><div class="kind">RESTACKED BY</div><div><div class="src">V&iacute;tor Const&acirc;ncio</div><div class="desc">Work shared by the former Vice-President of the European Central Bank.</div></div></div>
             <div class="log-row"><div class="ix">02</div><div class="kind">FEATURED IN</div><div><div class="src">Financial Times Alphaville</div><div class="desc">"Banking on Nonbanks" featured in FT Alphaville's curated reading list (Nov 2025).</div></div></div>
-            <div class="log-row"><div class="ix">03</div><div class="kind dusk">PODCAST</div><div><a class="src" href="https://play.acast.com/s/5ceef7c6e5d72f4c1011c00d/699f86c91eb5ccf45649bce0" target="_blank" rel="noopener">WealthVest Weekly Bull &amp; Bear</a><div class="desc">With Tim Pierotti, CIO of WealthVest. Labor, consumer health, and cycle fragility (Feb 2026).</div></div></div>
+            <div class="log-row"><div class="ix">03</div><div class="kind dusk">PODCAST</div><div><a class="src" href="https://play.acast.com/s/5ceef7c6e5d72f4c1011c00d/699f86c91eb5ccf45649bce0" target="_blank" rel="noopener">WealthVest Weekly Bull &amp; Bear</a><div class="desc">With Tim Pierotti, CIO of WealthVest. Labor, consumer health, and cycle fragility (Feb 2026).</div>
+                <iframe title="WealthVest Weekly Bull &amp; Bear featuring Bob Sheehan" width="100%" height="180" src="https://embed.acast.com/5ceef7c6e5d72f4c1011c00d/699f86c91eb5ccf45649bce0" scrolling="no" frameborder="0" style="border:none;overflow:hidden;border-radius:6px;margin:0.7rem 0 0.2rem;"></iframe></div></div>
             <div class="log-row"><div class="ix">04</div><div class="kind">FEATURED IN</div><div><div class="src">Forward Guidance (Blockworks)</div><div class="desc">Charts and analysis on-screen during podcast recording (Aug 2025).</div></div></div>
             <div class="log-row"><div class="ix">05</div><div class="kind dusk">PODCAST</div><div><div class="src">Less Noise More Signal</div><div class="desc">Repo, Fed plumbing, and crypto/Treasury transmission with Pascal H&uuml;gli (Oct 2025).</div></div></div>
             <div class="log-row"><div class="ix">06</div><div class="kind">FEATURED IN</div><div><a class="src" href="https://www.lessnoise-moresignal.com/report" target="_blank" rel="noopener">LNMS Bitcoin Report</a><div class="desc">"What Really Drives the Bitcoin Price." Macro liquidity and crypto/Treasury transmission (Mar 2026).</div></div></div>
             <div class="log-row"><div class="ix">07</div><div class="kind">FEATURED IN</div><div><div class="src">LNMS Year-End Report 2025/2026</div><div class="desc">Featured among macro contributors alongside Michael Howell, Willy Woo, and others.</div></div></div>
-            <div class="log-row"><div class="ix">08</div><div class="kind">FEATURED IN</div><div><div class="src">The Chart Report &middot; Spilled Coffee</div><div class="desc">Recurring chart and research features across independent newsletters.</div></div></div>
+            <div class="log-row"><div class="ix">08</div><div class="kind">FEATURED IN</div><div><div class="src">The Chart Report</div><div class="desc">Featured analysis and chart contributions.</div></div></div>
+            <div class="log-row"><div class="ix">09</div><div class="kind">FEATURED IN</div><div><div class="src">Spilled Coffee</div><div class="desc">Work featured in Eric Soda's investing newsletter.</div></div></div>
+            <div class="log-row"><div class="ix">10</div><div class="kind">FEATURED IN</div><div><div class="src">The Memo</div><div class="desc">Research featured and linked.</div></div></div>
+            <div class="log-row"><div class="ix">11</div><div class="kind">FEATURED IN</div><div><div class="src">Featured Research</div><div class="desc">"Macro, Illuminated: Building Signal in an Overfit World" (Nov 2025).</div></div></div>
         </div>
     </div>
 </section>
@@ -767,12 +784,12 @@
 </section>
 
 <!-- CLOSING -->
-<section class="closing">
+<section class="closing" id="subscribe">
     <div class="wrap">
         <div class="sec-eyebrow mono reveal"><span class="num">// THE STACK</span><span class="rule"></span></div>
         <div class="big reveal">DON'T NAVIGATE<br><span class="blue">IN THE DARK</span><span class="dot">.</span></div>
         <div class="sub-box reveal">
-            <p>The Beacon every Sunday, free. Beams twice a week, the Horizon monthly, and the Chartbook for subscribers. One book. Two ways. No NaN.</p>
+            <p>The Beacon every Sunday, free. Beams twice a week, the Horizon monthly, and the Chartbook for subscribers. Institutional-grade macro, in your inbox.</p>
             <a href="https://research.lighthousemacro.com/subscribe" class="go">Join the reading &rarr;</a>
             <div class="mono fine" style="color:var(--doldrums);">// Powered by Substack &middot; Unsubscribe any time</div>
         </div>
@@ -791,11 +808,13 @@
             <div class="foot-col">
                 <h5>// Sections</h5>
                 <a href="#framework">Framework</a>
+                <a href="methodology.html">Methodology</a>
                 <a href="#dashboard">Live Read</a>
                 <a href="#services">Services</a>
                 <a href="#research">Research</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact</a>
+                <a href="pharos.html">Pharos</a>
             </div>
             <div class="foot-col">
                 <h5>// Elsewhere</h5>

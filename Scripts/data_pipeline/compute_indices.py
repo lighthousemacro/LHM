@@ -2253,7 +2253,7 @@ def compute_allocation_composite(basket: list, target_index: pd.DatetimeIndex,
             continue
         m = s.resample("ME").last()
         if tf == "yoy":
-            v = m.pct_change(12) * 100.0
+            v = m.pct_change(12, fill_method=None) * 100.0
         elif tf == "delta":
             v = m.diff(1)
         else:

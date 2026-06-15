@@ -48,7 +48,7 @@ def compute_cdli(conn) -> pd.Series:
     if total.empty:
         return pd.Series(dtype=float)
     # YoY momentum (liquidity expanding/contracting), z-scored over a rolling 2y.
-    yoy = total.pct_change(365) * 100.0
+    yoy = total.pct_change(365, fill_method=None) * 100.0
     z = (yoy - yoy.rolling(504, min_periods=120).mean()) \
         / yoy.rolling(504, min_periods=120).std().replace(0, np.nan)
     return z.dropna()

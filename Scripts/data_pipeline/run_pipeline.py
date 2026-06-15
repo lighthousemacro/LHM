@@ -172,6 +172,15 @@ def main():
         except Exception as e:
             print(f"ERROR computing crypto indices: {e}")
 
+        # Crypto DeFi Liquidity Index (CDLI) — free-data rewire that replaces the
+        # retired paid-fundamentals crypto indices (crypto_scores feed dead since
+        # 2026-02-02). Built from DefiLlama DEFI_*_TVL with multi-year history.
+        try:
+            from crypto_defi_liquidity import main as _cdli_main
+            _cdli_main()
+        except Exception as e:
+            print(f"WARNING: CDLI computation failed: {e}")
+
         # Freshness guard: prove every composite is real-time through yesterday,
         # or name exactly what isn't. Catches a silent-staleness regression the
         # moment it happens (the 2026-05-17 incident ran undetected for a month).

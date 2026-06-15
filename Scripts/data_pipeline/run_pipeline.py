@@ -133,10 +133,16 @@ def main():
         print("=" * 70)
         try:
             conn = sqlite3.connect(INDICES_DB_PATH)
-            indices_df = compute_all_indices(conn, latest_only=True)
-            # Incremental run: upsert today's row, never delete history. A full
-            # rebuild (compute_indices.py, no --latest) still rewrites cleanly.
-            write_indices_to_db(conn, indices_df, replace_history=False)
+            # FULL daily recompute (latest_only=False, replace_history=True).
+            # latest_only=True slices horizon_dataset to ONE row, so the
+            # history-dependent macro composites (z-scores + walk-forward
+            # bridges need full history) computed nothing and the incremental
+            # write saved nothing for them — freezing the entire macro lineup
+            # at the last full rebuild (the 2026-05-17 -> 2026-06-15 staleness
+            # incident). A full recompute is ~2 min / ~920MB and rewrites
+            # cleanly, so every composite stays real-time through yesterday.
+            indices_df = compute_all_indices(conn, latest_only=False)
+            write_indices_to_db(conn, indices_df, replace_history=True)
             verify_indices(conn)
             conn.close()
             print("Index computation complete.")

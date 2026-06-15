@@ -15,6 +15,16 @@
     <meta name="twitter:title" content="Lighthouse Macro | Macro, Illuminated.">
     <meta name="twitter:description" content="Institutional-grade macro and economic intelligence, built on framework and process.">
     <meta name="twitter:image" content="https://lighthousemacro.com/og-image.png">
+    <link rel="canonical" href="https://lighthousemacro.com">
+{% raw %}
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@graph":[
+      {"@type":"Organization","@id":"https://lighthousemacro.com/#org","name":"Lighthouse Macro","url":"https://lighthousemacro.com","email":"advisory@lighthousemacro.com","description":"Institutional-grade macro and economic intelligence, built on framework and process.","slogan":"Macro, Illuminated.","sameAs":["https://x.com/LHMacro","https://research.lighthousemacro.com"],"founder":{"@id":"https://lighthousemacro.com/#bob"}},
+      {"@type":"Person","@id":"https://lighthousemacro.com/#bob","name":"Bob Sheehan","honorificSuffix":"CFA, CMT","jobTitle":"Founder & Chief Investment Officer","worksFor":{"@id":"https://lighthousemacro.com/#org"},"sameAs":["https://x.com/LHMacro"]},
+      {"@type":"WebSite","@id":"https://lighthousemacro.com/#site","url":"https://lighthousemacro.com","name":"Lighthouse Macro","publisher":{"@id":"https://lighthousemacro.com/#org"}}
+    ]}
+    </script>
+{% endraw %}
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -42,7 +52,7 @@
         a { color:inherit; }
         .mono {
             font-family:'Source Code Pro',monospace; letter-spacing:0.12em;
-            text-transform:uppercase; font-size:0.72rem; color:var(--doldrums);
+            text-transform:uppercase; font-size:0.72rem; color:#6b7280;
         }
         .wrap { max-width:1120px; margin:0 auto; padding:0 2rem; }
 
@@ -69,7 +79,7 @@
         .nav-links a:hover { color:var(--ocean); }
         .nav-cta { background:var(--ocean); color:#fff !important; padding:0.45rem 1.1rem;
                    border-radius:4px; font-weight:600 !important; }
-        .nav-cta:hover { background:#1c6f99; }
+        .nav-cta:hover { background:var(--ocean); filter:brightness(0.85); }
         .nav-toggle { display:none; background:none; border:none; cursor:pointer; padding:0.4rem; }
         .nav-toggle span { display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; transition:.3s; }
 
@@ -89,7 +99,7 @@
         .bigbtn { display:flex; align-items:center; justify-content:space-between; text-decoration:none;
                   padding:1.05rem 1.4rem; border-radius:5px; font-weight:600; font-size:0.95rem; transition:all .2s; }
         .bigbtn.solid { background:var(--dusk); color:#fff; }
-        .bigbtn.solid:hover { background:#e7551a; }
+        .bigbtn.solid:hover { background:var(--dusk); filter:brightness(0.92); }
         .bigbtn.ghost { border:1px solid var(--line); color:var(--ink); }
         .bigbtn.ghost:hover { border-color:var(--ocean); color:var(--ocean); }
         .stat-strip { display:flex; flex-wrap:wrap; gap:2.2rem; margin-top:2.6rem;
@@ -339,7 +349,7 @@
         .foot-sig .lhm-sig a { color:var(--ocean); text-decoration:none; font-weight:600; font-size:0.85rem; }
         .foot-sig .lhm-sig { font-size:0.85rem; color:var(--doldrums); }
         .foot-disclaimer { font-size:0.7rem; color:#6b7d8c; line-height:1.6; padding-bottom:2rem; }
-        .foot-bar { height:4px; background:linear-gradient(90deg,var(--ocean) 66%,var(--dusk) 66%); }
+        .foot-bar { height:5px; background:linear-gradient(90deg,var(--ocean) 66%,var(--dusk) 66%); }
 
         /* reveal */
         .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
@@ -372,7 +382,7 @@
 <nav>
     <div class="nav-inner">
         <a href="index.html" class="nav-logo">LIGHTHOUSE <span>MACRO</span></a>
-        <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="this.setAttribute('aria-expanded', document.querySelector('.nav-links').classList.toggle('open'))">
             <span></span><span></span><span></span>
         </button>
         <ul class="nav-links">
@@ -408,7 +418,7 @@
             <div class="col"><div class="k">Tagline</div><div class="v">Macro, Illuminated.</div></div>
         </div>
     </div>
-    <div class="ticker">
+    <div class="ticker" aria-hidden="true">
         <div class="ticker-track">
             <span><b>&#9642;</b>FRAMEWORK &gt; FORECAST<b>&#9642;</b>INVALIDATION CRITERIA EXPLICIT<b>&#9642;</b>K-SHAPED CREDIT<b>&#9642;</b>FLOWS OVER LEVELS<b>&#9642;</b>PROCESS OVER OUTCOME<b>&#9642;</b></span>
             <span><b>&#9642;</b>FRAMEWORK &gt; FORECAST<b>&#9642;</b>INVALIDATION CRITERIA EXPLICIT<b>&#9642;</b>K-SHAPED CREDIT<b>&#9642;</b>FLOWS OVER LEVELS<b>&#9642;</b>PROCESS OVER OUTCOME<b>&#9642;</b></span>
@@ -434,7 +444,7 @@
                 <div class="tag mono">Operators &middot; Leadership</div>
                 <h3>I run a business</h3>
                 <div class="big">Macro for capital, hiring, and capex windows.</div>
-                <p>The cycle drives capex windows, hiring conditions, end-market demand, and input pricing. We translate framework signals into commercial implications, not portfolio positioning.</p>
+                <p>The cycle drives capex windows, hiring conditions, end-market demand, and input pricing. We translate framework signals into the commercial calls that follow: capex timing, hiring windows, demand and pricing.</p>
                 <a href="#services" class="more">See operator service &rarr;</a>
             </div>
         </div>
@@ -481,7 +491,7 @@
         <div class="sec-head reveal">
             <div class="sec-eyebrow mono"><span class="num">// 01B</span><span class="rule"></span><span class="lbl">Nowcast &middot; Live Read</span></div>
             <h2 class="sec-title">THE LIVE DASHBOARD</h2>
-            <p class="sec-intro">A public read of the engine. Master tiles set the regime; the twelve pillars show where the cycle is breathing. Subscribers get the full indicator stack, proxy tiers, and confidence bands.</p>
+            <p class="sec-intro">A public read of the engine. Master tiles set the regime. The twelve pillars show where the cycle is breathing. Subscribers get the full indicator stack, proxy tiers, and confidence bands.</p>
         </div>
         <div class="master-grid reveal">
             {% for t in dashboard.master %}
@@ -549,7 +559,7 @@
         <div class="sec-head reveal">
             <div class="sec-eyebrow mono"><span class="num">// 01C</span><span class="rule"></span><span class="lbl">The Book &middot; Live &amp; Public</span></div>
             <h2 class="sec-title">EATING OUR OWN COOKING</h2>
-            <p class="sec-intro">The framework runs a real book. It is funded and live, auditable in real time, and judged the only way that matters: risk-adjusted, against QAI. The edge is downside protection, not a return-chase. Dollar amounts are withheld by design.</p>
+            <p class="sec-intro">The framework runs a real book. It is funded and live, auditable in real time, and judged the way it should be: risk-adjusted, against QAI. The edge is downside protection, not a return-chase. Dollar amounts are withheld by design.</p>
         </div>
         <div class="book-grid">
             <div class="book-metrics reveal">
@@ -606,7 +616,7 @@
                 <div class="seg mono">CEOs &middot; CFOs &middot; Founders &middot; Ops Leaders</div>
                 <h3>Operator</h3>
                 <div class="who">Leadership teams making capital and hiring calls</div>
-                <p>Macro intelligence for leadership teams making capital, hiring, and strategy decisions. We translate framework signals into commercial implications, not portfolio positioning.</p>
+                <p>Macro intelligence for leadership teams making capital, hiring, and strategy decisions. We translate framework signals into the commercial implications that drive your P&amp;L.</p>
                 <ul><li>Quarterly cycle briefing tailored to your sector</li><li>Capex and hiring guidance against the labor and credit pillars</li><li>Demand and pricing outlook for your end markets</li><li>Board and management presentation support</li><li>Direct strategist access for time-sensitive decisions</li></ul>
                 <a href="mailto:advisory@lighthousemacro.com" class="inq">Inquire &#9993;</a>
             </div>
@@ -723,11 +733,11 @@
         <div class="auth-grid">
             <div class="auth-text reveal">
                 <p>"The Lighthouse" was the name of Bob's house in college, where he first began studying finance and economics. Over the years it evolved into a research firm built on quantitative rigor and systematic macro analysis, serving portfolio managers, advisory firms, and business leaders who need to understand what is actually happening beneath the headlines.</p>
-                <p>Bob's neurodivergent wiring is core to the firm's edge. Most analysts specialize in one domain. His ADHD-driven intellectual restlessness pushes him across the full macro landscape, from Fed plumbing to labor economics to credit markets to Treasury microstructure to crypto integration and quantitative modeling. The result is depth across domains, and the ability to see connections specialists miss by staying in silos.</p>
+                <p>Bob's neurodivergent wiring is core to the firm's edge. Most analysts specialize in one domain. His ADHD-driven intellectual restlessness pushes him across the full macro landscape, from Fed plumbing to labor economics to credit markets to Treasury microstructure to crypto integration and quantitative modeling. The result is depth across domains. And with it, the ability to see connections specialists miss by staying in silos.</p>
                 <div class="roles">
                     <div class="role"><div><div class="rn">VP, Data &amp; Analytics</div><div class="rc">EQUILEND</div></div><div class="rd">Securities-finance data and analytics leadership.</div></div>
                     <div class="role"><div><div class="rn">Senior Research Analyst</div><div class="rc">STROM CAPITAL MANAGEMENT</div></div><div class="rd">Fundamental and quantitative equity research.</div></div>
-                    <div class="role"><div><div class="rn">Associate Portfolio Manager</div><div class="rc">BANK OF AMERICA PRIVATE BANK</div></div><div class="rd">$4.5B multi-asset platform. SGS equity sleeve ~$1.2B at peak. Tenure window 2017-2020: 2.35 Sortino, 103% upside / 76% downside capture vs S&amp;P 500.</div></div>
+                    <div class="role"><div><div class="rn">Associate Portfolio Manager</div><div class="rc">BANK OF AMERICA PRIVATE BANK</div></div><div class="rd">$4.5B multi-asset platform. SGS equity sleeve ~$1.2B at peak. Track-record window 2017-2020: 2.35 Sortino, 103% upside / 76% downside capture vs S&amp;P 500.</div></div>
                 </div>
             </div>
             <div class="auth-stats reveal">
@@ -825,7 +835,7 @@
 
     // endorsement carousel
     var QUOTES = [
-        { meta:'// 01 / 05 · CIO', text:'The cross-pillar synthesis is the part nobody else does. Most macro is a single thread. This is the whole weave.', name:'Tim Pierotti', role:'CIO, WealthVest' },
+        { meta:'// 01 / 05 · CIO', text:'The cross-pillar synthesis is the rare part. Most macro is a single thread. This is the whole weave.', name:'Tim Pierotti', role:'CIO, WealthVest' },
         { meta:'// 02 / 05 · DESK', text:'An excellent and deeply revealing piece. It connects plumbing to price in a way most macro writers simply do not attempt.', name:'Leon Liao', role:'MD, Global Investment Bank' },
         { meta:'// 03 / 05 · ANALYST', text:'Rigorous, independent, and willing to publish the invalidation criteria up front. That last part is rare.', name:'Alan P. Shaw', role:'Independent Analyst' },
         { meta:'// 04 / 05 · ACADEMIC', text:'The framework holds together. The labor and credit work in particular reads like someone who has actually sat in the chair.', name:'Mondayswife', role:'PhD Economist' },

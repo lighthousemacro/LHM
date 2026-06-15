@@ -5,7 +5,7 @@
   <rect x="22" y="22" width="468" height="468" rx="10" fill="none" stroke="#2C5485" stroke-width="10"/>
 
   <!-- light beams (bowtie), pinched at the lamp -->
-  <polygon points="256,152 84,84 84,220" fill="#5B4A47"/>
+  <polygon points="256,152 84,84 84,220" fill="#2389BB"/>
   <polygon points="256,152 428,84 428,220" fill="#C2682F"/>
 
   <!-- lighthouse tower (bright sky #89CCFF) -->

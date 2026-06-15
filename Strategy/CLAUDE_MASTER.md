@@ -289,6 +289,8 @@ The portfolio is a single book. The distinction is what drives a position.
 
 **Canonical indicator reference:** `/Users/bob/LHM/Strategy/INDICATORS_MASTER.md` — formulas, thresholds, audit findings, live values, candidates. Single source of truth. Quick-reference table below.
 
+**Lineup status (2026-06-15):** 50 live indicators, all real-time through yesterday's close (0 stale), recomputed daily by the full-recompute pipeline + `indicator_freshness_audit.py` guard. Organized into 5 categories (Allocation impact / Macro impact / Descriptive / Macro regime / Market regime). Allocation rebuilt on OOS evidence (9 live `ALLOC_*`), MRI rebuilt (standardized z, ~25y, canonical bands, crisis-validated), z/YoY transform bug fixed, +11 descriptive indicators from the full pillar docs, crypto rewired to free data (`CRYPTO_DEFI_LIQUIDITY`; paid-fundamentals retired). See the "FINAL LINEUP — FIVE CATEGORIES" section in INDICATORS_MASTER.
+
 **Naming convention (locked 2026-05-08):** Cool descriptive vocabulary — Pulse / Tide / Thrust / Heat / Pressure / Fragility / Cushion / Impulse / Gap / Divergence. Each name describes what the indicator captures, not generic "X Conditions Index." Code IDs (PCI, GCI, etc.) remain as legacy identifiers in scripts; published/reader-facing surfaces use the new names. GCI-Gov → FPI rename authorized in code.
 
 | Code | Name | Family |

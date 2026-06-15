@@ -162,6 +162,11 @@
         .op-notes { margin-top:2rem; padding-top:1.4rem; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:1.6rem; }
         .op-notes span { font-family:'Source Code Pro',monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--doldrums); }
         .op-notes span b { color:var(--dusk); }
+        .qf-block { margin-top:3rem; padding-top:2.4rem; border-top:1px solid var(--line); }
+        .qf-title { font-family:'Montserrat',sans-serif; font-weight:800; font-size:clamp(1.5rem,3vw,2.1rem); color:var(--ink); line-height:1.05; margin-top:0.4rem; }
+        .qf-sub { font-family:'Source Code Pro',monospace; font-size:0.8rem; letter-spacing:0.06em; color:var(--ocean); margin:0.6rem 0 0.9rem; }
+        .qf-intro { font-size:1.02rem; color:#5b6770; max-width:760px; line-height:1.6; margin-bottom:1.8rem; }
+        .qf-block .engine-grid { margin-top:0; }
 
         /* dashboard */
         .master-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.6rem; }
@@ -407,8 +412,8 @@
 <header class="hero">
     <div class="wrap">
         <div class="hero-meta mono">
-            <span>LIVE &middot; INDEPENDENT MACRO</span>
-            <span><span class="coord">EST. ARCHIVE &middot; 2024 &nbsp;&nbsp; N 41.4&deg; W 70.5&deg;</span></span>
+            <span>LIVE &middot; INDEPENDENT MACRO &middot; FIRM EST. 2026</span>
+            <span><span class="coord">ARCHIVE SINCE 2024 &nbsp;&nbsp; N 41.4&deg; W 70.5&deg;</span></span>
         </div>
         <div class="hero-eyebrow mono">// BOB SHEEHAN, CFA, CMT</div>
         <h1 class="wordmark">LIGHTHOUSE<br><span class="blue">MACRO</span><span class="dot">.</span></h1>
@@ -418,9 +423,9 @@
             <a href="#framework" class="bigbtn ghost">READ THE FRAMEWORK<span>&darr;</span></a>
         </div>
         <div class="stat-strip mono">
-            <div class="col"><div class="k">Disciplines</div><div class="v">Macro / CMT</div></div>
+            <div class="col"><div class="k">Disciplines</div><div class="v">Macro / Technical</div></div>
             <div class="col"><div class="k">Posture</div><div class="v dusk">Strong &middot; Weakly Held</div></div>
-            <div class="col"><div class="k">Mode</div><div class="v dusk">One Book &middot; Two Ways</div></div>
+            <div class="col"><div class="k">Mode</div><div class="v dusk">One Framework &middot; Two Economies</div></div>
             <div class="col"><div class="k">Tagline</div><div class="v">Macro, Illuminated.</div></div>
         </div>
     </div>
@@ -549,15 +554,31 @@
 <section id="philosophy">
     <div class="wrap">
         <div class="sec-head reveal">
-            <div class="sec-eyebrow mono"><span class="num">// 02</span><span class="rule"></span><span class="lbl">The Method</span></div>
-            <h2 class="sec-title">THE PHILOSOPHY</h2>
+            <div class="sec-eyebrow mono"><span class="num">// 02</span><span class="rule"></span><span class="lbl">The Philosophy</span></div>
+            <h2 class="sec-title">STRONG VIEWS, WEAKLY HELD</h2>
+            <p class="sec-intro">State a thesis. State the conditions that would break it. That tension, conviction and humility held together, is the whole discipline. Six principles run underneath everything we publish.</p>
         </div>
-        <div class="principle-grid">
-            <div class="engine reveal"><div class="top mono"><span class="n">// 01</span><span class="ct">The Core</span></div><h3>Framework over Forecast</h3><div class="psub">The map is the value. The forecast is downstream.</div><p>A structured way of seeing. Twelve pillars, three engines, one map. We publish the lens, not the lottery ticket. Get the framework right and the forecasts get easier. Get them wrong and no number of guesses ever stick.</p></div>
-            <div class="engine reveal"><div class="top mono"><span class="n">// 02</span><span class="ct">Principle</span></div><h3>Process over Outcome</h3><div class="psub">Hold the process to account.</div><p>Outcomes are noisy and luck-laden. The only signal worth tracking is the rigor of the inputs. We grade ourselves on whether the framework was applied, not on whether the print agreed.</p></div>
-            <div class="engine reveal"><div class="top mono"><span class="n">// 03</span><span class="ct">Principle</span></div><h3>Strong Views, Weakly Held</h3><div class="psub">Every view ships with the conditions that would break it.</div><p>Explicit use of invalidation criteria, published in advance, never retro-fitted. The discipline of being willing to be wrong out loud is what separates a thesis from a marketing line.</p></div>
-            <div class="engine reveal"><div class="top mono"><span class="n">// 04</span><span class="ct">Principle</span></div><h3>One Book, Two Ways</h3><div class="psub">Macro thesis and technical setup.</div><p>A macro framework read paired with a technical read of price. Macro and market can diverge. Same book, one consistent risk posture.</p></div>
+        <div class="engine-grid">
+            <div class="engine reveal"><div class="top mono"><span class="n">// 01</span></div><h3>Process Over Outcome</h3><p>A good process with a bad outcome is acceptable. A bad process with a good outcome is dangerous. We judge decisions at the time they are made, with the information available. Results are feedback, not validation.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 02</span></div><h3>Framework Over Forecast</h3><p>We do not predict. We read the cycle and position accordingly. The framework tells us which regime we are in. The regime tells us how to size risk.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 03</span></div><h3>Flows Over Stocks</h3><p>The level matters less than the direction. We track flows through labor, credit, and the financial system. Change, not state, is what moves prices.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 04</span></div><h3>Transparency Over Mystique</h3><p>Some shops cultivate an air of mystery. We show our work. We explain what we are watching, why it matters, and what would change our mind.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 05</span></div><h3>Conviction Over Diversification</h3><p>Diversification is for capital preservation. Alpha comes from concentration. We run concentrated, high-conviction books. Thirty positions is thirty opinions you are not sure about.</p></div>
+            <div class="engine reveal"><div class="top mono"><span class="n">// 06</span></div><h3>Variant Perception Over Consensus</h3><p>Being right and consensus is low value. Being right and non-consensus is where the returns come from. We look for the gaps between market pricing and the framework's signal.</p></div>
         </div>
+
+        <div class="qf-block reveal">
+            <div class="sec-eyebrow mono"><span class="num">// 02B</span><span class="rule"></span><span class="lbl">The Process</span></div>
+            <h3 class="qf-title">Quantitative Foundation, Human Judgment</h3>
+            <p class="qf-sub">The machine builds the map. The judgment makes the call.</p>
+            <p class="qf-intro">The Diagnostic Dozen is the systematic base: twelve pillars, one regime read, computed every day. The discretion sits on top. The base keeps us honest. The judgment keeps us adaptive.</p>
+            <div class="engine-grid">
+                <div class="engine reveal"><h3>Macro-Driven Positioning</h3><p>Thesis-driven. Three-engine convergence finds the opportunity, conviction scoring sets the size, and dual stops manage the risk. When the macro picture is clear, we lean in.</p></div>
+                <div class="engine reveal"><h3>Technical Adaptability</h3><p>Markets do not wait for the macro to catch up. When the framework signals caution and strong trends are running, we participate through price, with tighter risk management.</p></div>
+                <div class="engine reveal"><h3>Cash as a Position</h3><p>When neither the thesis nor the technical picture supports risk, we hold cash. A meaningful cash allocation is discipline, not a failure of imagination. The best trade is sometimes no trade.</p></div>
+            </div>
+        </div>
+
         <div class="op-notes">
             <span><b>&#9642;</b> Views published with invalidation criteria</span>
             <span><b>&#9642;</b> Process metrics precede outcome metrics</span>

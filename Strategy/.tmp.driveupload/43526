@@ -147,7 +147,7 @@ The detail files stay in place. This document is the index, the live state, and 
 | Indicator | Reads | State | Confidence | Transform / bands | Overlay chart |
 |---|---|---|---|---|---|
 | **MRI** (Macro Risk Index) | aggregate cycle/risk regime | **Rebuilt 2026-06-15**: standardized z-scale, ~25y history (2000→), canonical bands. Validates vs 2008 (+3.6 CRISIS), 2009 (+2.1), COVID (+1.1). Current +1.0 HIGH RISK. | REGIME — structural design audit-clean; weights pending the program rebuild | z-score; bands `<-0.5` Low / `+0.5` Elevated / `+1.0` High / `+1.5` Crisis | MRI vs SPX drawdowns + NBER bands |
-| **REC_PROB** | recession probability 3/6/12m | fresh but raw-volatile (flips 0↔100) | REGIME — needs smoothing (build-queue) | 0–100%, smoothed | REC_PROB vs NBER |
+| **REC_PROB** | recession probability 3/6/12m | **smoothed 2026-06-15** (3-month rolling mean — the daily 0↔100 flips are gone; current ~0.43) | REGIME | 0–100%, smoothed | REC_PROB vs NBER |
 | **ENSEMBLE_RISK / WARNING_LEVEL / ALLOC_MULTIPLIER** | risk ensemble → sizing | short live history (~3wk) | REGIME — operational | level | — |
 | **LIQ_STAGE** | liquidity regime, stages 1–7 | live | REGIME — descriptive | stage ladder | — |
 

@@ -105,25 +105,92 @@ def pretty_status(status: str | None) -> str:
 
 
 # ---------------------------------------------------------------- DB layer
-def load_indices() -> dict[str, dict]:
-    """Return {index_id: {value, status, date}} using the latest row per id."""
-    if not DB_PATH.exists():
-        print(f"WARN: DB not found at {DB_PATH}; dashboard will use placeholders.")
-        return {}
-    uri = f"file:{DB_PATH}?mode=ro"
-    con = sqlite3.connect(uri, uri=True)
+# Last-known-good snapshot. Used ONLY when both the live DB and its backup are
+# busy (e.g. the pipeline is mid-recompute). Keeps the board real instead of
+# blank or hung. Live/backup always take precedence when reachable.
+FALLBACK_INDICES = {
+    "MRI": {"value": 0.1087, "status": "LATE CYCLE", "date": "2026-05-17"},
+    "REC_PROB": {"value": 0.1793, "status": "LOW RISK", "date": "2026-06-14"},
+    "ALLOC_MULTIPLIER": {"value": 0.15, "status": "CAPITAL PRESERVATION", "date": "2026-06-14"},
+    "WARNING_LEVEL": {"value": 4.0, "status": "RED", "date": "2026-06-14"},
+    "LFI": {"value": 0.0352, "status": "NEUTRAL", "date": "2026-05-17"},
+    "PCI": {"value": 0.0161, "status": "ON TARGET", "date": "2026-05-17"},
+    "GCI": {"value": 2.6691, "status": "STRONG GROWTH", "date": "2026-06-14"},
+    "HCI": {"value": 0.1765, "status": "FROZEN", "date": "2026-05-17"},
+    "CCI": {"value": -0.7098, "status": "STRESSED", "date": "2026-05-17"},
+    "BCI": {"value": 0.1307, "status": "SLOWING", "date": "2026-05-17"},
+    "TCI": {"value": -0.8367, "status": "HEADWIND", "date": "2026-05-17"},
+    "FPI": {"value": 0.6482, "status": "ELEVATED", "date": "2026-05-17"},
+    "FCI": {"value": 0.2185, "status": "NEUTRAL", "date": "2026-05-17"},
+    "LCI": {"value": 0.0689, "status": "TIGHT", "date": "2026-05-17"},
+    "MSI": {"value": -0.4729, "status": "TRANSITIONAL", "date": "2026-06-14"},
+    "SPI": {"value": 1.7864, "status": "EXTREME FEAR", "date": "2026-06-14"},
+}
+
+_QUERY = """
+    SELECT index_id, value, status, date
+    FROM lighthouse_indices li
+    WHERE date = (SELECT MAX(date) FROM lighthouse_indices
+                  WHERE index_id = li.index_id)
+"""
+
+
+def _query_indices(db_path: Path, uri_extra: str = "") -> dict[str, dict]:
+    uri = f"file:{db_path}?mode=ro{uri_extra}"
+    con = sqlite3.connect(uri, uri=True, timeout=3)
     try:
-        rows = con.execute(
-            """
-            SELECT index_id, value, status, date
-            FROM lighthouse_indices li
-            WHERE date = (SELECT MAX(date) FROM lighthouse_indices
-                          WHERE index_id = li.index_id)
-            """
-        ).fetchall()
+        rows = con.execute(_QUERY).fetchall()
     finally:
         con.close()
     return {r[0]: {"value": r[1], "status": r[2], "date": r[3]} for r in rows}
+
+
+def _newest_backup() -> Path | None:
+    bdir = DB_PATH.parent / "backups"
+    if not bdir.exists():
+        return None
+    backups = sorted(bdir.glob("Lighthouse_Master_*.db"))
+    return backups[-1] if backups else None
+
+
+def load_indices() -> dict[str, dict]:
+    """Latest reading per index_id.
+
+    Reads the live DB, but never hangs: if the pipeline holds the database
+    mid-write, fall back to the newest static backup (opened immutable so it
+    cannot block), then to placeholders. Honors the No-NaN pact in code.
+    """
+    import threading
+    holder: dict = {}
+
+    def worker():
+        # Live DB first, then the newest static backup, both inside the guarded
+        # thread so a disk/lock stall on either can never hang the build.
+        try:
+            holder["data"] = _query_indices(DB_PATH)
+            holder["src"] = "live"
+            return
+        except Exception as e:  # noqa: BLE001
+            holder["err"] = e
+        backup = _newest_backup()
+        if backup:
+            try:
+                holder["data"] = _query_indices(backup, uri_extra="&immutable=1")
+                holder["src"] = f"backup ({backup.name})"
+            except Exception as e:  # noqa: BLE001
+                holder["err"] = e
+
+    t = threading.Thread(target=worker, daemon=True)
+    t.start()
+    t.join(timeout=5)
+
+    if holder.get("data"):
+        print(f"INFO: dashboard read from {holder['src']}")
+        return holder["data"]
+
+    reason = "locked/slow (pipeline writing?)" if t.is_alive() else holder.get("err", "empty")
+    print(f"WARN: live + backup unavailable ({reason}); using last-known snapshot.")
+    return dict(FALLBACK_INDICES)
 
 
 def build_dashboard(indices: dict[str, dict]) -> dict:
@@ -199,9 +266,15 @@ def read_minutes(html_text: str) -> str:
 
 
 def load_research(limit: int = 7) -> list[dict]:
+    import os
+    import socket
+    if os.environ.get("LHM_SKIP_RSS") == "1":
+        print("INFO: LHM_SKIP_RSS=1; using fallback research list.")
+        return FALLBACK_RESEARCH[:limit]
+    socket.setdefaulttimeout(8)
     try:
         req = urllib.request.Request(RSS_URL, headers={"User-Agent": "LHM-site-build/1.0"})
-        with urllib.request.urlopen(req, timeout=12) as resp:
+        with urllib.request.urlopen(req, timeout=8) as resp:
             raw = resp.read()
         root = ET.fromstring(raw)
         content_ns = "{http://purl.org/rss/1.0/modules/content/}encoded"

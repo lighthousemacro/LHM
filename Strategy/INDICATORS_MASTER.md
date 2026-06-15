@@ -181,11 +181,15 @@ The detail files stay in place. This document is the index, the live state, and 
 - **Noisy divergence composites (SBD / SSD / EMD)** → 3-month MA always. A raw spike is not a regime.
 - **Every indicator ships an overlay chart** against the thing it tracks or predicts — the proof, not a bare line.
 
-### Open operational items (tracked, not yet done)
+### Open operational items (tracked)
 
-- **Crypto fetcher repair** — SLI/CTI/CVI/CDI/CFI/CRYPTO_* feed-down since 2026-02-02 (DefiLlama/CoinGecko).
-- **horizon_dataset transform bug** — `build_horizon_dataset` reindexes to calendar-daily *before* transforms, so `_yoy_pct` and `_z` columns for monthly series use day-counts not month-counts. High blast radius (feeds every composite's z inputs); fix = transform on native frequency, then forward-fill to daily. Validate before shipping.
-- **REC_PROB smoothing**, **MRI weight rebuild** (program), **stacked-composite validation** (above).
+**Done 2026-06-15:** real-time daily fix (full-recompute pipeline + freshness guard, 0 stale) · MRI rebuilt (standardized z, ~25y history, canonical bands, validates vs 2008/COVID) · HCI/GCI backfilled · REC_PROB smoothed · allocation category rebuilt + 9 `ALLOC_*` composites live + overlay charts · stacked-composite validation run (Consumer-Squeeze→XLY/XLP demoted; Income-Depletion validated).
+
+**Still open:**
+- **Crypto fetcher repair** — SLI/CTI/CVI/CDI/CFI/CRYPTO_* feed-down since 2026-02-02. Diagnosed: free price/TVL data flows to `observations` (fresh) but the index layer reads the retired `crypto_scores`/`crypto_metrics` tables; fundamentals (P/E, active-devs) are paid-feed-blocked. Fix = rewire onto free data + DefiLlama historical backfill; retire/flag the fundamentals.
+- **horizon_dataset transform bug** — `build_horizon_dataset` reindexes to calendar-daily *before* transforms, so `_yoy_pct`/`_z` columns for monthly series use day-counts not month-counts. High blast radius (feeds the legacy macro composites' z inputs — the NEW `ALLOC_*` composites already sidestep it). Fix = transform on native frequency, then forward-fill to daily. Validate against the Phase-B anchors before shipping (supervised).
+- **MRI weight rebuild** (program) — weights still the v2.0 set; the program's evidence-based reweight awaits Bob.
+- **Allocation build-queue** — the 6 cross-pillar composites + re-test the demoted ideas at better targets (Consumer-Squeeze→forward consumption; Shelter→TLT as ZORI history accrues).
 
 ---
 

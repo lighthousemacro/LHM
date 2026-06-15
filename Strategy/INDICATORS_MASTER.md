@@ -25,6 +25,8 @@ The detail files stay in place. This document is the index, the live state, and 
 
 ## TABLE OF CONTENTS
 
+**★ [THE FINAL LINEUP — FIVE CATEGORIES (START HERE)](#the-final-lineup--five-categories-2026-06-15)**
+
 1. [How to read this document](#how-to-read-this-document)
 2. [May 2026 rebuild state — methodology v2 + v3/v4/v5/v6 results](#may-2026-rebuild-state)
 3. [Live composite snapshot (45 indices)](#live-composite-snapshot)

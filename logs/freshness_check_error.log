@@ -858,3 +858,4 @@
   INDPRO: db=2026-04-01 -> fred=2026-05-01
 2026-06-15 12:36:04 [INFO]   INDPRO: refreshed (+1289 obs)
 2026-06-15 12:36:05 [INFO] Freshness check done: 1 series refreshed, 1,289 obs added.
+2026-06-15 16:35:49 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

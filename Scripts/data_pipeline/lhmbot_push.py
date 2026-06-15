@@ -115,11 +115,9 @@ def _load_push_state() -> dict:
     return {}
 
 
-def _save_push_state(pushed: dict[str, str]) -> None:
-    PUSH_STATE_PATH.write_text(json.dumps(
-        {"pushed": pushed, "last_push": datetime.now().isoformat()},
-        indent=2,
-    ) + "\n")
+def _save_push_state(state: dict) -> None:
+    state["last_push"] = datetime.now().isoformat()
+    PUSH_STATE_PATH.write_text(json.dumps(state, indent=2) + "\n")
 
 
 def _sev(alert: dict) -> str:
@@ -189,8 +187,27 @@ def cmd_alerts(token, chat_id, dry_run) -> None:
         print("\n(state NOT written in dry-run)")
         return
     tg_send_message(token, chat_id, digest)
-    _save_push_state(new_pushed)
+    state["pushed"] = new_pushed
+    _save_push_state(state)
     print(f"alerts digest sent to {chat_id}")
+
+
+# --------------------------------------------------------------------------- #
+# Morning — the cohesive daily message (live values + regime-change diff)
+# --------------------------------------------------------------------------- #
+def cmd_morning(token, chat_id, dry_run) -> None:
+    state = _load_push_state()
+    prev = state.get("statuses") or None
+    text, cur = fw.format_morning_html(prev_statuses=prev)
+    if dry_run:
+        print("=== MORNING (dry-run) ===\n")
+        print(text)
+        print("\n(state NOT written in dry-run)")
+        return
+    tg_send_message(token, chat_id, text)
+    state["statuses"] = cur
+    _save_push_state(state)
+    print(f"morning sent to {chat_id}")
 
 
 # --------------------------------------------------------------------------- #
@@ -224,7 +241,8 @@ def cmd_brief(token, chat_id, dry_run) -> None:
 # --------------------------------------------------------------------------- #
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["snapshot", "alerts", "brief", "all"])
+    ap.add_argument("command",
+                    choices=["snapshot", "alerts", "brief", "all", "morning"])
     ap.add_argument("--chat-id", default=None)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -240,6 +258,8 @@ def main() -> None:
         cmd_snapshot(token, chat_id, args.dry_run)
     if args.command in ("alerts", "all"):
         cmd_alerts(token, chat_id, args.dry_run)
+    if args.command == "morning":
+        cmd_morning(token, chat_id, args.dry_run)
     if args.command == "brief":
         cmd_brief(token, chat_id, args.dry_run)
 

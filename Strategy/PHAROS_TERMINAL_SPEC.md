@@ -43,6 +43,23 @@ is unrelated and will be retired.
   data-terminal engine for the dashboards (white-label TBD — Bob to ask Didier Lopes whether Workspace
   can be white-labeled + subscriber-gated as Pharos; that answer could save months).
 
+## Data engine
+"Build our own terminal" = our own frontend + auth, NOT throwing away OpenBB. Pharos's data
+layer is the **OpenBB Platform** (the Python SDK, same engine the `:6900` backend already uses)
+plus **`Lighthouse_Master.db`** (the proprietary composites). The OpenBB API keys Bob acquired all
+flow into Pharos.
+
+- **Keys SET (in `~/.openbb_platform/user_settings.json`):** FRED, BLS, BEA, EIA, Alpha Vantage,
+  Congress.gov. Plus in `Scripts/data_pipeline/.env`: BEA, BLS, FRED, CoinDesk, TradingView.
+- **No-key OpenBB providers also available:** Yahoo Finance, SEC, Treasury, etc.
+- **Empty / gaps (premium equity-options depth):** FMP, Polygon, Tiingo, Nasdaq, Benzinga,
+  Intrinio, Tradier api_key, TradingEconomics. Grab these only if Pharos needs deep single-name
+  equity / options data.
+- Note: the OpenBB "Open Data Platform" desktop app rejects `lhm_backend.py` because its sandbox
+  scanner flags normal SQL `.execute()` calls. NOT a dead end if we want the official OpenBB /
+  Didier route: a 3-line clean wrapper script that imports the backend passes the scanner (only the
+  referenced file is scanned). Custom terminal is the chosen path, but the OpenBB door stays open.
+
 ## Build phases
 1. **Foundation + hook:** FastAPI auth (magic-link) + Stripe verification + data API; the Reading Room
    (full research on-site); the core macro dashboard (MRI + 12 pillars + 25-yr charts); the

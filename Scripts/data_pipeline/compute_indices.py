@@ -296,14 +296,21 @@ def get_status(index_name: str, value: float) -> str:
 # Z-SCORE COMPUTATION
 # ==========================================
 
-def compute_zscore(series: pd.Series, window: int = 24, min_periods: int = None) -> pd.Series:
+def compute_zscore(series: pd.Series, window: int = 24, min_periods: int = None,
+                   freq: str = None) -> pd.Series:
     """
     Compute rolling z-score for a series.
 
     Args:
         series: Input series
-        window: Rolling window (default 24 for monthly = 2 years)
+        window: Rolling window in units of `freq` (default 24)
         min_periods: Minimum periods required (default: window // 2)
+        freq: If set (e.g. "ME"/"W"/"QE"), resample the series to that NATIVE
+            frequency before the rolling window, then forward-fill the z-score
+            back onto the input index. This is the correct behavior for monthly/
+            quarterly macro series that arrive daily-forward-filled: window=24
+            then means 24 MONTHS, not 24 rows. When freq is None (daily market
+            series) the original row-based window is used unchanged.
 
     Returns:
         Z-score series. Returns NaN where std is zero (constant values in window).
@@ -312,6 +319,17 @@ def compute_zscore(series: pd.Series, window: int = 24, min_periods: int = None)
         min_periods = max(1, window // 2)
     else:
         min_periods = min(min_periods, window)
+
+    if freq is not None:
+        s = series.dropna()
+        if s.empty:
+            return pd.Series(index=series.index, dtype=float)
+        m = s.resample(freq).last()
+        rmean = m.rolling(window, min_periods=min_periods).mean()
+        rstd = m.rolling(window, min_periods=min_periods).std().replace(0, np.nan)
+        z = (m - rmean) / rstd
+        return (z.reindex(z.index.union(series.index))
+                .sort_index().ffill().reindex(series.index))
 
     rolling_mean = series.rolling(window, min_periods=min_periods).mean()
     rolling_std = series.rolling(window, min_periods=min_periods).std()
@@ -893,7 +911,7 @@ def compute_lfi(df: pd.DataFrame) -> pd.Series:
     hires = df.get("JOLTS_Hires_Rate", pd.Series(dtype=float))
     quits = df.get("JOLTS_Quits_Rate", pd.Series(dtype=float))
     hires_quits_ratio = hires / quits.replace(0, np.nan)
-    z_hires_quits = -compute_zscore(hires_quits_ratio, window=24)
+    z_hires_quits = -compute_zscore(hires_quits_ratio, window=24, freq="ME")
 
     lfi = nan_weighted_sum([
         (z_longterm, 0.15),
@@ -935,7 +953,7 @@ def compute_lci(df: pd.DataFrame) -> pd.Series:
     """
     # Bank reserves z-score (proxy for reserves vs LCLOR)
     reserves = df.get("Bank_Reserves", pd.Series(dtype=float))
-    z_reserves = compute_zscore(reserves, window=24)
+    z_reserves = compute_zscore(reserves, window=24, freq="ME")
 
     # RRP Usage z-score
     z_rrp = df.get("RRP_Usage_z", pd.Series(dtype=float))
@@ -977,7 +995,7 @@ def compute_clg(df: pd.DataFrame, lfi: pd.Series) -> pd.Series:
     z_hy_oas = df.get("HY_OAS_z", pd.Series(dtype=float))
 
     # Z-score the LFI itself to put on same scale
-    z_lfi = compute_zscore(lfi, window=24)
+    z_lfi = compute_zscore(lfi, window=24, freq="ME")
 
     clg = z_hy_oas - z_lfi
 
@@ -1010,7 +1028,7 @@ def compute_lpi(df: pd.DataFrame) -> pd.Series:
     hires = df.get("JOLTS_Hires_Rate", pd.Series(dtype=float))
     quits = df.get("JOLTS_Quits_Rate", pd.Series(dtype=float))
     hires_quits_ratio = hires / quits.replace(0, np.nan)
-    z_hires_quits = compute_zscore(hires_quits_ratio, window=24)
+    z_hires_quits = compute_zscore(hires_quits_ratio, window=24, freq="ME")
 
     # Long-term unemployed (INVERTED)
     z_longterm = -df.get("Unemployed_27wks_Plus_z", pd.Series(dtype=float))
@@ -1046,15 +1064,15 @@ def compute_pci(df: pd.DataFrame) -> pd.Series:
     """
     # Core PCE 3M annualized
     pce_3m = df.get("PCE_Core_3m_ann", pd.Series(dtype=float))
-    z_pce_3m = compute_zscore(pce_3m, window=24)
+    z_pce_3m = compute_zscore(pce_3m, window=24, freq="ME")
 
     # Shelter CPI
     shelter = df.get("CPI_Shelter_yoy_pct", pd.Series(dtype=float))
-    z_shelter = compute_zscore(shelter, window=24)
+    z_shelter = compute_zscore(shelter, window=24, freq="ME")
 
     # Sticky CPI
     sticky = df.get("Sticky_Core_CPI_yoy_pct", pd.Series(dtype=float))
-    z_sticky = compute_zscore(sticky, window=24)
+    z_sticky = compute_zscore(sticky, window=24, freq="ME")
 
     # 5Y5Y Forward Inflation
     z_5y5y = df.get("Forward_Inflation_5Y_z", pd.Series(dtype=float))
@@ -1132,7 +1150,7 @@ def compute_gci(df: pd.DataFrame) -> pd.Series:
             sig = _gci_diff_trend(m)
         else:
             sig = m
-        z = compute_zscore(sig, window=24)
+        z = compute_zscore(sig, window=24, freq="ME")
         if z is not None and not z.dropna().empty:
             comps.append(z)
 
@@ -1140,7 +1158,7 @@ def compute_gci(df: pd.DataFrame) -> pd.Series:
         return pd.Series(index=df.index, dtype=float)
 
     gci_m = pd.concat(comps, axis=1).mean(axis=1, skipna=True).dropna()
-    gci_m = compute_zscore(gci_m, window=24).dropna()
+    gci_m = compute_zscore(gci_m, window=24, freq="ME").dropna()
     # Monthly composite carried forward onto the frame's index, exactly how
     # the pipeline treats every monthly pillar.
     return gci_m.reindex(df.index, method="ffill")
@@ -1155,18 +1173,18 @@ def compute_hci(df: pd.DataFrame) -> pd.Series:
 
     # Existing Home Sales
     sales_yoy = df.get("Existing_Home_Sales_yoy_pct", pd.Series(dtype=float))
-    z_sales = compute_zscore(sales_yoy, window=24)
+    z_sales = compute_zscore(sales_yoy, window=24, freq="ME")
 
     # Months Supply (INVERTED)
     z_supply = -df.get("Months_Supply_z", pd.Series(dtype=float))
 
     # Case-Shiller
     cs_yoy = df.get("Case_Shiller_Home_Prices_yoy_pct", pd.Series(dtype=float))
-    z_cs = compute_zscore(cs_yoy, window=24)
+    z_cs = compute_zscore(cs_yoy, window=24, freq="ME")
 
     # Mortgage Rate (INVERTED)
     mortgage = df.get("Mortgage_30Y", pd.Series(dtype=float))
-    z_mortgage = -compute_zscore(mortgage, window=52)
+    z_mortgage = -compute_zscore(mortgage, window=52, freq="W")
 
     # Coverage-weighted: Existing Home Sales only exists from 2024-11, but
     # Starts/Supply/Case-Shiller/Mortgage span 1959-1987+. Strict weighting let
@@ -1211,11 +1229,11 @@ def compute_bci(df: pd.DataFrame) -> pd.Series:
     """
     # CI Loans YoY
     ci_yoy = df.get("CI_Loans_yoy_pct", pd.Series(dtype=float))
-    z_ci = compute_zscore(ci_yoy, window=24)
+    z_ci = compute_zscore(ci_yoy, window=24, freq="ME")
 
     # Business Loans YoY
     bus_yoy = df.get("Business_Loans_yoy_pct", pd.Series(dtype=float))
-    z_bus = compute_zscore(bus_yoy, window=24)
+    z_bus = compute_zscore(bus_yoy, window=24, freq="ME")
 
     # HY Spreads (INVERTED - tight spreads = good for business)
     z_hy = -df.get("HY_OAS_z", pd.Series(dtype=float))
@@ -1256,7 +1274,7 @@ def compute_fpi(df: pd.DataFrame) -> pd.Series:
     """
     # Debt to GDP
     debt_gdp = df.get("Debt_to_GDP", pd.Series(dtype=float))
-    z_debt = compute_zscore(debt_gdp, window=8)  # Quarterly
+    z_debt = compute_zscore(debt_gdp, window=8, freq="QE")  # Quarterly
 
     # Term Premium
     z_term = df.get("Term_Premium_10Y_z", pd.Series(dtype=float))
@@ -1379,12 +1397,12 @@ def compute_ldi(df: pd.DataFrame) -> pd.Series:
     hires = df.get("JOLTS_Hires_Rate", pd.Series(dtype=float))
     quits = df.get("JOLTS_Quits_Rate", pd.Series(dtype=float))
     hires_quits_ratio = hires / quits.replace(0, np.nan)
-    z_hires_quits = compute_zscore(hires_quits_ratio, window=24)
+    z_hires_quits = compute_zscore(hires_quits_ratio, window=24, freq="ME")
 
     # Quits/Layoffs ratio (proxy using quits / claims inverse)
     claims = df.get("Initial_Claims", pd.Series(dtype=float))
     quits_claims_ratio = quits / (claims / 1000).replace(0, np.nan)  # Scale claims
-    z_quits_claims = compute_zscore(quits_claims_ratio, window=24)
+    z_quits_claims = compute_zscore(quits_claims_ratio, window=24, freq="ME")
 
     ldi = nan_mean(z_quits, z_hires_quits, z_quits_claims)
 

@@ -274,6 +274,124 @@ def format_snapshot_html(snap: dict[str, dict] | None = None,
 
 
 # --------------------------------------------------------------------------- #
+# Morning message — cohesive, live-valued, with regime-change detection
+# --------------------------------------------------------------------------- #
+# Friendly labels for the "what changed" diff (index_id -> reader name).
+LABELS = {
+    "MRI": "MRI regime", "REC_PROB": "Recession prob",
+    "BASE_REC_PROB": "Recession prob (base)", "ENSEMBLE_RISK": "Ensemble risk",
+    "WARNING_LEVEL": "Warning system", "LIQ_STAGE": "Liquidity stage",
+    "ALLOC_MULTIPLIER": "Allocation", "DISCONTINUITY_PREMIUM": "Discontinuity premium",
+    "LPI": "Labor", "LFI": "Labor fragility", "PCI": "Prices", "GCI": "Growth",
+    "HCI": "Housing", "CCI": "Consumer", "BCI": "Business", "TCI": "Trade",
+    "FPI": "Fiscal", "FCI": "Credit", "CLG": "Credit-Labor Gap", "LCI": "Plumbing",
+    "MSI": "Structure", "SBD": "Structure-Breadth", "SPI": "Sentiment",
+    "SSD": "Sentiment-Structure",
+}
+
+# One honest lead sentence per regime. No fabrication, no overclaim.
+REGIME_LEAD = {
+    "LOW RISK": "Risk-on. The framework reads Low Risk.",
+    "NEUTRAL": "Balanced. The framework is Neutral.",
+    "ELEVATED": "Caution. The framework is Elevated.",
+    "HIGH RISK": "Risk-off. The framework is in High Risk.",
+    "CRISIS": "Defensive. The framework is in Crisis.",
+}
+
+
+def _band_of(v: float | None) -> str:
+    if v is None:
+        return "UNKNOWN"
+    return mri_regime(v)["name"]
+
+
+def regime_run(conn: sqlite3.Connection) -> tuple[str | None, int]:
+    """(start_date, n_rows) of the current uninterrupted MRI regime band run."""
+    rows = conn.execute(
+        "SELECT date, value FROM lighthouse_indices WHERE index_id='MRI' "
+        "ORDER BY date DESC LIMIT 1000"
+    ).fetchall()
+    if not rows or rows[0]["value"] is None:
+        return None, 0
+    cur_band = _band_of(rows[0]["value"])
+    since, n = rows[0]["date"], 0
+    for r in rows:
+        if r["value"] is None or _band_of(r["value"]) != cur_band:
+            break
+        since, n = r["date"], n + 1
+    return since, n
+
+
+def current_statuses(snap: dict[str, dict]) -> dict[str, str]:
+    return {k: v["status"] for k, v in snap.items() if v.get("status")}
+
+
+def format_morning_html(prev_statuses: dict[str, str] | None = None,
+                        now: datetime | None = None) -> tuple[str, dict[str, str]]:
+    """The daily push. Returns (telegram_html, current_statuses). All values are
+    live from the DB; the 'changed since last look' section is computed by
+    diffing live statuses against what was pushed last time."""
+    now = now or datetime.now()
+    with _conn() as conn:
+        snap = latest_snapshot()
+        mri = snap.get("MRI", {})
+        mri_v = mri.get("value")
+        reg = mri_regime(mri_v) if mri_v is not None else None
+        mri_arrow, _ = direction(conn, "MRI") if mri_v is not None else ("→", None)
+        since, _ = regime_run(conn)
+        plines = pillar_line(snap, conn)
+
+    asof = data_asof(snap)
+    stale = (asof and asof != now.strftime("%Y-%m-%d"))
+    cur = current_statuses(snap)
+
+    parts: list[str] = []
+    hdr = f"<b>LHM MORNING</b>  ·  {now.strftime('%B %d, %Y')}"
+    if stale:
+        hdr += f"  <i>(data as of {asof})</i>"
+    parts.append(hdr)
+    parts.append("")
+
+    if reg:
+        parts.append(REGIME_LEAD.get(reg["name"], f"The framework reads {reg['name']}."))
+        parts.append("")
+        since_txt = f", since {since}" if since else ""
+        parts.append(f"<b>Regime: {reg['name']}</b>  (MRI {mri_v:+.2f}{mri_arrow}{since_txt})")
+        alloc = snap.get("ALLOC_MULTIPLIER", {})
+        if alloc.get("value") is not None:
+            st = html.escape(str(alloc.get("status", "")).lower())
+            parts.append(f"Allocation {alloc['value']:.2f}x — {st}. Band {reg['equity']} equity.")
+        parts.append("")
+
+    parts.append("<b>Changed since last look</b>")
+    if prev_statuses:
+        changes = [
+            f"• {label}: {html.escape(str(prev_statuses[idx]))} → {html.escape(str(cur[idx]))}"
+            for idx, label in LABELS.items()
+            if idx in cur and idx in prev_statuses and cur[idx] != prev_statuses[idx]
+        ]
+        parts.extend(changes[:8] if changes else ["• No regime changes."])
+    else:
+        parts.append("• Baselining today — changes show from the next push.")
+    parts.append("")
+
+    loud = loud_signals(snap)
+    if loud:
+        parts.append("<b>What's loud</b>")
+        for _, line in loud:
+            parts.append(f"• {line}")
+        parts.append("")
+
+    if plines:
+        parts.append("<b>12 pillars</b>")
+        parts.append(plines)
+        parts.append("")
+
+    parts.append(FOOTER)
+    return "\n".join(parts), cur
+
+
+# --------------------------------------------------------------------------- #
 # Alert state (for the delta pusher)
 # --------------------------------------------------------------------------- #
 def read_active_alerts() -> dict[str, dict]:

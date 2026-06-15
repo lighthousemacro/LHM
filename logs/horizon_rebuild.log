@@ -1,0 +1,171 @@
+======================================================================
+LIGHTHOUSE MACRO - HORIZON DATASET BUILDER
+Target: 133 base series
+Cutoff: 2026-06-14
+======================================================================
+
+--- Processing Series ---
+   [1] Unemployment_Rate_U3: 940 obs, 4 cols, 1948-01-01 to 2026-05-01
+   [2] Unemployment_Rate_U6: 388 obs, 4 cols, 1994-01-01 to 2026-05-01
+   [3] Unemployment_Rate_U1: 940 obs, 3 cols, 1948-01-01 to 2026-05-01
+   [4] Unemployment_Rate_U2: 712 obs, 3 cols, 1967-01-01 to 2026-05-01
+   [5] LFPR: 940 obs, 3 cols, 1948-01-01 to 2026-05-01
+   [6] LFPR_Prime_Age_25_54: 940 obs, 3 cols, 1948-01-01 to 2026-05-01
+   [7] Nonfarm_Payrolls: 1049 obs, 4 cols, 1939-01-01 to 2026-05-01
+   [8] Initial_Claims: 3101 obs, 4 cols, 1967-01-07 to 2026-06-06
+   [9] Continued_Claims: 3100 obs, 4 cols, 1967-01-07 to 2026-05-30
+   [10] JOLTS_Openings_Rate: 305 obs, 3 cols, 2000-12-01 to 2026-04-01
+   [11] JOLTS_Quits_Rate: 305 obs, 3 cols, 2000-12-01 to 2026-04-01
+   [12] JOLTS_Hires_Rate: 305 obs, 3 cols, 2000-12-01 to 2026-04-01
+   [13] Mean_Unemployment_Duration: 940 obs, 3 cols, 1948-01-01 to 2026-05-01
+   [14] Unemployed_27wks_Plus: 940 obs, 3 cols, 1948-01-01 to 2026-05-01
+   [15] Part_Time_Economic_Reasons: 852 obs, 3 cols, 1955-05-01 to 2026-05-01
+   [16] Unemployment_White: 868 obs, 3 cols, 1954-01-01 to 2026-05-01
+   [17] Unemployment_Black: 652 obs, 3 cols, 1972-01-01 to 2026-05-01
+   [18] Unemployment_Hispanic: 638 obs, 3 cols, 1973-03-01 to 2026-05-01
+   [19] Unemployment_25_54: 940 obs, 3 cols, 1948-01-01 to 2026-05-01
+   [20] Unemployment_55_Plus: 940 obs, 3 cols, 1948-01-01 to 2026-05-01
+   [21] Jobs_Total_Nonfarm: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [22] Jobs_Construction: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [23] Jobs_Manufacturing: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [24] Jobs_Financial: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [25] Jobs_Professional_Business: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [26] Jobs_Education_Health: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [27] Jobs_Leisure_Hospitality: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [28] Jobs_Government: 437 obs, 3 cols, 1990-01-01 to 2026-05-01
+   [29] CPI_Headline: 952 obs, 5 cols, 1947-01-01 to 2026-05-01
+   [30] CPI_Core: 832 obs, 5 cols, 1957-01-01 to 2026-05-01
+   [31] PCE_Headline: 808 obs, 5 cols, 1959-01-01 to 2026-04-01
+   [32] PCE_Core: 808 obs, 5 cols, 1959-01-01 to 2026-04-01
+   [33] Median_CPI: 521 obs, 3 cols, 1983-01-01 to 2026-05-01
+   [34] Sticky_Core_CPI: 701 obs, 3 cols, 1968-01-01 to 2026-05-01
+   [35] CPI_Shelter: 880 obs, 4 cols, 1953-01-01 to 2026-05-01
+   [36] CPI_Rent_Primary: 544 obs, 3 cols, 1981-01-01 to 2026-05-01
+   [37] CPI_OER: 520 obs, 3 cols, 1983-01-01 to 2026-05-01
+   [38] CPI_Medical_Services: 712 obs, 2 cols, 1967-01-01 to 2026-05-01
+   [39] CPI_Transport_Services: 844 obs, 2 cols, 1956-01-01 to 2026-05-01
+   [40] CPI_Gasoline: 713 obs, 3 cols, 1967-01-01 to 2026-05-01
+   [41] CPI_Used_Cars: 881 obs, 3 cols, 1953-01-01 to 2026-05-01
+   [42] CPI_Food_Home: 892 obs, 2 cols, 1952-01-01 to 2026-05-01
+   [43] CPI_Food_Away: 880 obs, 2 cols, 1953-01-01 to 2026-05-01
+   [44] PCE_Durable_Goods: 808 obs, 2 cols, 1959-01-01 to 2026-04-01
+   [45] PCE_Nondurable_Goods: 808 obs, 2 cols, 1959-01-01 to 2026-04-01
+   [46] PCE_Services: 808 obs, 2 cols, 1959-01-01 to 2026-04-01
+   [47] Breakeven_10Y: 5866 obs, 3 cols, 2003-01-02 to 2026-06-12
+   [48] Breakeven_5Y: 5866 obs, 3 cols, 2003-01-02 to 2026-06-12
+   [49] Forward_Inflation_5Y: 5866 obs, 3 cols, 2003-01-02 to 2026-06-12
+   [50] Fed_Funds: 863 obs, 3 cols, 1954-07-01 to 2026-05-01
+   [51] Treasury_1M: 6218 obs, 2 cols, 2001-07-31 to 2026-06-11
+   [52] Treasury_3M: 11194 obs, 2 cols, 1981-09-01 to 2026-06-11
+   [53] Treasury_6M: 11194 obs, 2 cols, 1981-09-01 to 2026-06-11
+   [54] Treasury_1Y: 16096 obs, 3 cols, 1962-01-02 to 2026-06-11
+   [55] Treasury_2Y: 12504 obs, 3 cols, 1976-06-01 to 2026-06-11
+   [56] Treasury_5Y: 16096 obs, 3 cols, 1962-01-02 to 2026-06-11
+   [57] Treasury_10Y: 16096 obs, 3 cols, 1962-01-02 to 2026-06-11
+   [58] Treasury_30Y: 12326 obs, 3 cols, 1977-02-15 to 2026-06-11
+   [59] Curve_10Y_2Y: 12505 obs, 3 cols, 1976-06-01 to 2026-06-12
+   [60] Curve_10Y_3M: 11114 obs, 3 cols, 1982-01-04 to 2026-06-12
+   [61] Spread_10Y_FF: 16094 obs, 3 cols, 1962-01-02 to 2026-06-11
+   [62] Spread_5Y_FF: 16094 obs, 2 cols, 1962-01-02 to 2026-06-11
+   [63] TIPS_5Y: 5865 obs, 2 cols, 2003-01-02 to 2026-06-11
+   [64] TIPS_10Y: 5865 obs, 2 cols, 2003-01-02 to 2026-06-11
+   [65] Term_Premium_10Y: 9093 obs, 3 cols, 1990-01-02 to 2026-06-05
+   [66] Mortgage_30Y: 2881 obs, 3 cols, 1971-04-02 to 2026-06-11
+   [67] HY_OAS: 7690 obs, 4 cols, 1996-12-31 to 2026-06-11
+   [68] IG_OAS: 7689 obs, 4 cols, 1996-12-31 to 2026-06-11
+   [69] SOFR: 2046 obs, 2 cols, 2018-04-03 to 2026-06-11
+   [70] EFFR: 2057 obs, 2 cols, 2018-04-03 to 2026-06-11
+   [71] OBFR: 2057 obs, 2 cols, 2018-04-03 to 2026-06-11
+   [72] SOFR_Volume: 2046 obs, 3 cols, 2018-04-03 to 2026-06-11
+   [73] Fed_Balance_Sheet: 1226 obs, 3 cols, 2002-12-18 to 2026-06-10
+   [74] RRP_Usage: 3262 obs, 4 cols, 2003-02-07 to 2026-06-12
+   [75] Bank_Reserves: 808 obs, 3 cols, 1959-01-01 to 2026-04-01
+   [76] M2: 808 obs, 3 cols, 1959-01-01 to 2026-04-01
+   [77] Treasury_General_Account: 1226 obs, 3 cols, 2002-12-18 to 2026-06-10
+   [78] Fed_RRP_Outstanding: 1222 obs, 2 cols, 2002-12-18 to 2026-05-13
+   [79] Chicago_NFCI: 2892 obs, 3 cols, 1971-01-08 to 2026-06-05
+   [80] Adjusted_NFCI: 2892 obs, 3 cols, 1971-01-08 to 2026-06-05
+   [81] StLouis_FSI: 1693 obs, 3 cols, 1993-12-31 to 2026-06-05
+   [82] OFR_FSI: 6690 obs, 3 cols, 2000-01-03 to 2026-06-10
+   [83] OFR_FSI_Credit: 6690 obs, 3 cols, 2000-01-03 to 2026-06-10
+   [84] OFR_FSI_Funding: 6690 obs, 3 cols, 2000-01-03 to 2026-06-10
+   [85] OFR_FSI_Volatility: 6690 obs, 3 cols, 2000-01-03 to 2026-06-10
+   [86] OFR_FSI_US: 6690 obs, 3 cols, 2000-01-03 to 2026-06-10
+   [87] GDP_Nominal: 317 obs, 3 cols, 1947-01-01 to 2026-01-01
+   [88] GDP_Real: 317 obs, 3 cols, 1947-01-01 to 2026-01-01
+   [89] Industrial_Production: 1288 obs, 4 cols, 1919-01-01 to 2026-04-01
+   [90] Retail_Sales: 412 obs, 3 cols, 1992-01-01 to 2026-04-01
+   [91] Consumer_Sentiment: 672 obs, 4 cols, 1952-11-01 to 2026-04-01
+   [92] Consumer_Credit: 1000 obs, 2 cols, 1943-01-01 to 2026-04-01
+   [93] Saving_Rate: 808 obs, 3 cols, 1959-01-01 to 2026-04-01
+   [94] Debt_Service_Ratio: 184 obs, 3 cols, 1980-01-01 to 2025-10-01
+   [95] LO_Survey_CI_Tightening: 145 obs, 3 cols, 1990-04-01 to 2026-04-01
+   [96] LO_Survey_CC_Tightening: 122 obs, 3 cols, 1996-01-01 to 2026-04-01
+   [97] CI_Loans: 2788 obs, 2 cols, 1973-01-03 to 2026-06-03
+   [98] Business_Loans: 953 obs, 2 cols, 1947-01-01 to 2026-05-01
+   [99] Consumer_Loans: 953 obs, 2 cols, 1947-01-01 to 2026-05-01
+   [100] Real_Estate_Loans: 953 obs, 2 cols, 1947-01-01 to 2026-05-01
+   [101] Housing_Starts: 808 obs, 4 cols, 1959-01-01 to 2026-04-01
+   [102] Housing_Starts_1Unit: 808 obs, 2 cols, 1959-01-01 to 2026-04-01
+   [103] Building_Permits: 796 obs, 3 cols, 1960-01-01 to 2026-04-01
+   [104] Case_Shiller_Home_Prices: 471 obs, 3 cols, 1987-01-01 to 2026-03-01
+   [105] Median_Home_Price: 253 obs, 2 cols, 1963-01-01 to 2026-01-01
+   [106] New_Home_Sales: 760 obs, 3 cols, 1963-01-01 to 2026-04-01
+   [107] Existing_Home_Sales: 18 obs, 3 cols, 2024-11-01 to 2026-05-01
+   [108] Months_Supply: 760 obs, 3 cols, 1963-01-01 to 2026-04-01
+   [109] Delinquency_All_Loans: 165 obs, 4 cols, 1985-01-01 to 2026-01-01
+   [110] Delinquency_Mortgage: 141 obs, 4 cols, 1991-01-01 to 2026-01-01
+   [111] Delinquency_Credit_Card: 141 obs, 4 cols, 1991-01-01 to 2026-01-01
+   [112] Delinquency_Consumer: 157 obs, 4 cols, 1987-01-01 to 2026-01-01
+   [113] Delinquency_Business: 157 obs, 4 cols, 1987-01-01 to 2026-01-01
+   [114] Delinquency_CRE: 141 obs, 4 cols, 1991-01-01 to 2026-01-01
+   [115] Federal_Debt: 240 obs, 2 cols, 1966-01-01 to 2025-10-01
+   [116] Debt_to_GDP: 240 obs, 2 cols, 1966-01-01 to 2025-10-01
+   [117] Federal_Surplus_Deficit: 125 obs, 2 cols, 1901-06-30 to 2025-09-30
+   [118] Federal_Receipts: 317 obs, 2 cols, 1947-01-01 to 2026-01-01
+   [119] Federal_Expenditures: 317 obs, 2 cols, 1947-01-01 to 2026-01-01
+   [120] VIX: 9206 obs, 4 cols, 1990-01-02 to 2026-06-11
+   [121] WTI_Crude: 10177 obs, 3 cols, 1986-01-02 to 2026-06-08
+   [122] Dollar_Index: 5121 obs, 3 cols, 2006-01-02 to 2026-06-05
+   [123] EUR_USD: 6878 obs, 2 cols, 1999-01-04 to 2026-06-05
+   [124] JPY_USD: 13893 obs, 2 cols, 1971-01-04 to 2026-06-05
+   [125] BEA_GDP: 105 obs, 3 cols, 2000-01-01 to 2026-01-01
+   [126] BEA_PCE: 105 obs, 3 cols, 2000-01-01 to 2026-01-01
+   [127] BEA_Investment: 105 obs, 3 cols, 2000-01-01 to 2026-01-01
+   [128] BEA_Net_Exports: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+   [129] BEA_Govt: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+   [130] BEA_Personal_Income: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+   [SKIP] BEA_DPI: No data found for BEA_Personal_Income_Disposable_personal_income
+   [SKIP] BEA_Personal_Saving: No data found for BEA_Personal_Income_Personal_saving
+   [131] BEA_Corp_Profits: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+
+--- Building Combined Dataset ---
+
+Dataset Shape: 45639 rows x 385 columns
+Date Range: 1901-06-30 to 2026-06-12
+Base Series: 131
+Total Columns (raw + transforms): 385
+
+--- Saving to SQLite ---
+   Saved to: /Users/bob/LHM/Data/databases/Lighthouse_Master.db (table: horizon_dataset)
+
+--- Exporting to CSV ---
+   Saved to: /Users/bob/LHM/Data/databases/Horizon_Dataset.csv
+
+--- Column Summary ---
+Total columns: 385
+   Raw series: 131
+   Transformations: 254
+
+======================================================================
+HORIZON DATASET COMPLETE
+======================================================================
+
+Sample (last 5 rows, first 10 cols):
+            Unemployment_Rate_U3  Unemployment_Rate_U3_yoy_diff  Unemployment_Rate_U3_mom_diff  Unemployment_Rate_U3_z  Unemployment_Rate_U6  Unemployment_Rate_U6_yoy_diff  Unemployment_Rate_U6_mom_diff  Unemployment_Rate_U6_z  Unemployment_Rate_U1  Unemployment_Rate_U1_yoy_diff
+date                                                                                                                                                                                                                                                                                   
+2026-06-08                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN
+2026-06-09                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN
+2026-06-10                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN
+2026-06-11                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN
+2026-06-12                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN                            NaN                     NaN                   NaN                            NaN

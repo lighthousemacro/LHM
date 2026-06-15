@@ -368,10 +368,9 @@ def build_horizon_dataset():
         # forward-fill onto the daily grid carries the latest print until the
         # next release lands (daily-FF / nowcast), instead of fabricating
         # linearly-interpolated intermediate values.
-        s_native = df["value"]
-        s_native = s_native[(s_native.index >= first_obs) & (s_native.index <= last_obs)]
-        s_native = s_native[~s_native.index.duplicated(keep="last")]
-        df_transformed_native = apply_transforms(s_native, transforms, freq)
+        df_native = df[(df.index >= first_obs) & (df.index <= last_obs)]
+        df_native = df_native[~df_native.index.duplicated(keep="last")]
+        df_transformed_native = apply_transforms(df_native, transforms, freq)
         daily_idx = pd.date_range(start=first_obs, end=last_obs, freq="D")
         df_transformed = (df_transformed_native
                           .reindex(df_transformed_native.index.union(daily_idx))

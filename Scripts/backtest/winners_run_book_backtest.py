@@ -88,7 +88,10 @@ def load_prices():
     return px, qai
 
 
-def backtest(px):
+def backtest(px, cap=1.0):
+    """cap = max weight any single position may reach. cap=1.0 is the pure
+    'winners run, never trim' spec; cap=0.25 = winners run UP TO 25%, harvest
+    the excess (the LHM no-single-position-dominates discipline)."""
     idx = px.index[px.index >= START]
     ma = px.rolling(TREND).mean()
     mom = px.shift(MOM_SKIP) / px.shift(MOM_LONG) - 1.0   # 12-1m momentum
@@ -103,14 +106,31 @@ def backtest(px):
                           if not np.isnan(px.at[day, t]))
 
     for day in idx:
+        # 1) cut losers EVERY DAY: the moment a holding closes below its 200d MA,
+        #    sell it. Cutting fast is the whole point of "losers cut" — a monthly
+        #    check rode 2008 down before exiting (MaxDD -54%). Daily exit is the
+        #    faithful version and is what gives the downside protection.
+        for t in TICKERS:
+            if shares[t] > 0:
+                p, m = px.at[day, t], ma.at[day, t]
+                if np.isnan(p) or np.isnan(m) or p < m:
+                    cash += shares[t] * (p if not np.isnan(p) else 0) * (1 - COST)
+                    shares[t] = 0.0
         if day in decide_days:
-            # 1) cut losers: held & below 200d MA -> sell
-            for t in TICKERS:
-                if shares[t] > 0:
-                    p, m = px.at[day, t], ma.at[day, t]
-                    if np.isnan(p) or np.isnan(m) or p < m:
-                        cash += shares[t] * (p if not np.isnan(p) else 0) * (1 - COST)
-                        shares[t] = 0.0
+            # 1b) harvest runaway winners: trim any position above the cap back
+            #     to the cap (excess -> cash for redeployment). Winners still run
+            #     up to the cap; this is what stops a single name (e.g. BTC at
+            #     89%) from owning the book.
+            if cap < 1.0:
+                v_now = value(day)
+                for t in TICKERS:
+                    if shares[t] > 0:
+                        p = px.at[day, t]
+                        w = shares[t] * p / v_now if v_now else 0
+                        if w > cap and not np.isnan(p):
+                            excess_val = (w - cap) * v_now
+                            shares[t] -= (excess_val / p)
+                            cash += excess_val * (1 - COST)
             # 2) refill empty slots with strongest uptrends not held
             held = [t for t in TICKERS if shares[t] > 0]
             empty = MAX_SLOTS - len(held)
@@ -158,10 +178,12 @@ def stats(nav, name):
 
 def main():
     px, qai = load_prices()
-    nav, alloc = backtest(px)
+    nav_pure, _ = backtest(px, cap=1.0)        # literal spec (no position cap)
+    nav, alloc = backtest(px, cap=0.25)        # winners run up to 25% (LHM discipline)
 
     # benchmarks aligned to book NAV dates
-    bench = {"Crosscurrents (winners-run book)": nav}
+    bench = {"Crosscurrents (25% cap)": nav,
+             "Pure winners-run (no cap)": nav_pure}
     spy = px["SPY"].reindex(nav.index).ffill()
     bench["SPY (buy & hold)"] = spy / spy.iloc[0]
     ief = px["IEF"].reindex(nav.index).ffill()
@@ -189,7 +211,8 @@ def main():
     # ---- Chart 1: equity curve (log) ----
     T.set_theme("white")
     fig, ax = T.new_fig(figsize=(14, 7))
-    colors = [T.COLORS["ocean"], T.COLORS["doldrums"], T.COLORS["dusk"], T.COLORS["sea"]]
+    colors = [T.COLORS["ocean"], T.COLORS["port"], T.COLORS["doldrums"],
+              T.COLORS["dusk"], T.COLORS["sea"]]
     for (nm, series), c in zip(bench.items(), colors):
         ax.plot(series.index, series.values, lw=2.0 if nm.startswith("Cross") else 1.3,
                 color=c, label=nm)

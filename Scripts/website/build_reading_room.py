@@ -43,21 +43,85 @@ def cdn_url(s3_url: str) -> str:
     return CDN + quote(s3_url, safe="")
 
 
-# --- series typing -----------------------------------------------------------
-def series_of(subtitle: str, title: str) -> str:
-    s = (subtitle or "") + " " + (title or "")
-    sl = s.lower()
-    if "chartbook" in sl:
-        return "Chartbook"
-    if "the horizon" in sl or "horizon" in sl and "monthly" in sl:
-        return "Horizon"
-    if "the beacon" in sl:
-        return "Beacon"
-    if "the beam" in sl:
-        return "Beam"
-    if "the note" in sl or "monetary monday" in sl:
-        return "Note"
-    return "Research"
+# --- section taxonomy --------------------------------------------------------
+# Reading Room is grouped into named sections (Bob's structure). Each section
+# pairs an "F-word" theme with the publication line it holds.
+SECTIONS = [
+    ("FRAMEWORK",    "Framework",    "The Diagnostic Dozen", "Twelve pillars, three engines. The method itself."),
+    ("FLAGSHIP",     "Flagship",     "The Beacon",           "Long-form. One thesis, taken all the way down."),
+    ("LIVE",         "Live",         "The Beam",             "Fast reads on the print that just hit."),
+    ("FOUNDATION",   "Foundation",   "The Chartbook",        "The data, laid out to be looked at."),
+    ("FORWARD",      "Forward",      "The Horizon",          "The month ahead, and where the risk sits."),
+    ("CROSSCURRENTS","Crosscurrents","The Live Book",        "Positioning, in the open."),
+    ("FIELD_NOTES",  "Field Notes",  "Dispatches",           "Early notes and one-offs from the archive."),
+]
+SECTION_ORDER = [k for k, *_ in SECTIONS]
+SECTION_PUB = {k: pub for k, _f, pub, _b in SECTIONS}
+
+# Per-post tag shown on cards (the reader-facing publication name).
+PUB_TAG = {
+    "FRAMEWORK": "Framework", "FLAGSHIP": "Beacon", "LIVE": "Beam",
+    "FOUNDATION": "Chartbook", "FORWARD": "Horizon",
+    "CROSSCURRENTS": "Positioning", "FIELD_NOTES": "Dispatch",
+}
+
+# Content-read classifications for the 27 posts whose section is not obvious
+# from metadata (reading-room-classify workflow: 27 reader agents + reviewer,
+# each read the actual article text). The other 35 are deterministic via
+# det_section(). Early pre-brand deep-dives land in FLAGSHIP (the analytical
+# line); firm announcements land in FIELD_NOTES.
+AMBIGUOUS_SECTIONS = {
+    "building-the-intelligence-layer": "FIELD_NOTES",
+    "introducing-lighthouse-macro-crypto": "FIELD_NOTES",
+    "the-foundation-is-set-now-we-build": "FIELD_NOTES",
+    "welcome-to-lighthouse-macro": "FIELD_NOTES",
+    "bullion-brilliance": "FLAGSHIP",
+    "collateral-fragility": "FLAGSHIP",
+    "cracks-beneath-the-surface": "FLAGSHIP",
+    "cracks-in-the-foundation-the-us-treasury": "FLAGSHIP",
+    "labor-woes-growth-slows": "FLAGSHIP",
+    "navigating-trade-tensions": "FLAGSHIP",
+    "new-year-new-paradigms": "FLAGSHIP",
+    "seemingly-stable-systemically-stressed": "FLAGSHIP",
+    "the-dollar-vs-gold-and-real-yields": "FLAGSHIP",
+    "the-reflexive-bid": "FLAGSHIP",
+    "the-us-housing-market-in-2025": "FLAGSHIP",
+    "the-vanishing-job-hopper-premium": "FLAGSHIP",
+    "the-widest-page-in-the-book": "FLAGSHIP",
+    "two-economies": "FLAGSHIP",
+    "the-splitting-cycle": "FORWARD",
+    "crypto-liquidity-impulse": "FRAMEWORK",
+    "liquidity-transmission-framework": "FRAMEWORK",
+    "why-most-americans-dont-care-about": "FRAMEWORK",
+    "chaos-in-china": "LIVE",
+    "monetary-monday": "LIVE",
+    "stocks-printed-a-record-bonds-and": "LIVE",
+    "the-silent-capitulation-etf-exodus": "LIVE",
+    "two-prints-in-one-release": "LIVE",
+}
+
+
+def det_section(subtitle: str, title: str):
+    """Deterministic section from the series brand in the metadata, else None."""
+    s = ((subtitle or "") + " " + (title or "")).lower()
+    sub = (subtitle or "").lower()
+    if "diagnostic dozen" in sub:
+        return "FRAMEWORK"
+    if "chartbook" in s:
+        return "FOUNDATION"
+    if "horizon" in s:
+        return "FORWARD"
+    if "the beacon" in s:
+        return "FLAGSHIP"
+    if "the beam" in s:
+        return "LIVE"
+    if "positioning update" in (title or "").lower() or "positioning framework" in sub:
+        return "CROSSCURRENTS"
+    return None
+
+
+def section_for(slug: str, subtitle: str, title: str) -> str:
+    return det_section(subtitle, title) or AMBIGUOUS_SECTIONS.get(slug) or "FIELD_NOTES"
 
 
 # --- html cleaning -----------------------------------------------------------
@@ -171,25 +235,32 @@ def first_image(body_html: str):
 
 
 def make_teaser(body_html: str, max_chars=900):
-    """First paragraphs of a paid piece, up to ~max_chars, ending on a <p>."""
+    """Opening of a paid piece: intro paragraphs (up to ~max_chars) plus the
+    first chart as a hook, then stop. One visual, never the whole deck."""
     soup = BeautifulSoup(body_html, "lxml")
+    root = soup.body or soup
     out, acc = [], 0
-    for el in (soup.body or soup).find_all(recursive=False):
+    for el in root.find_all(recursive=False)[:9]:
         if el.name == "p":
             txt = el.get_text(" ", strip=True)
             if not txt:
                 continue
             out.append(str(el))
             acc += len(txt)
-            if acc >= max_chars:
-                break
+        elif el.name == "figure" and "<figure" not in "".join(out):
+            out.append(str(el))
         elif el.name in ("h2", "h3"):
-            # don't lead the teaser past the first section header
-            if out:
+            if out and acc >= 250:
                 break
-        if len(out) >= 4:
+        if acc >= max_chars and "<figure" in "".join(out):
             break
-    return "".join(out)
+    teaser = "".join(out)
+    # ensure one chart shows as the hook even when figures are nested in divs
+    if "<figure" not in teaser:
+        fig = soup.find("figure")
+        if fig is not None:
+            teaser += str(fig)
+    return teaser
 
 
 def plain_excerpt(body_html: str, n=300):
@@ -338,20 +409,49 @@ def article_page(meta, dek, content_html, is_paid):
 </html>'''
 
 
-def index_page(items):
-    cards = []
-    for m in items:
-        badge = '<span class="badge paid">Members</span>' if m["paid"] else '<span class="badge free">Free</span>'
-        thumb = f'<div class="rc-thumb"><img src="{m["lead_img"]}" loading="lazy" alt=""></div>' if m["lead_img"] else '<div class="rc-thumb rc-noimg"></div>'
-        cards.append(f'''<a class="rcard" href="{m['slug']}.html">
+def _card(m):
+    badge = '<span class="badge paid">Members</span>' if m["paid"] else '<span class="badge free">Free</span>'
+    thumb = f'<div class="rc-thumb"><img src="{m["lead_img"]}" loading="lazy" alt=""></div>' if m["lead_img"] else '<div class="rc-thumb rc-noimg"></div>'
+    return f'''<a class="rcard" href="{m['slug']}.html">
   {thumb}
   <div class="rc-body">
     <div class="rc-meta"><span class="mono">{m['series']} &middot; {m['datestr']}</span>{badge}</div>
     <h3 class="rc-title">{ihtml.escape(m['title'])}</h3>
     <p class="rc-ex">{ihtml.escape(m['excerpt'])}</p>
   </div>
-</a>''')
-    grid = "\n".join(cards)
+</a>'''
+
+
+def index_page(items):
+    # group into the named sections, reverse-chron within each
+    by_sec = {k: [] for k in SECTION_ORDER}
+    for m in items:
+        by_sec.get(m["section"], by_sec["FIELD_NOTES"]).append(m)
+
+    jump, blocks = [], []
+    for key, fname, pub, blurb in SECTIONS:
+        bucket = by_sec.get(key, [])
+        if not bucket:
+            continue
+        anchor = key.lower().replace("_", "-")
+        n = len(bucket)
+        jump.append(f'<a href="#{anchor}"><span>{fname}</span><em>{n}</em></a>')
+        cards = "\n".join(_card(m) for m in bucket)
+        blocks.append(f'''<section class="rr-sec" id="{anchor}">
+  <div class="rr-sec-head">
+    <div class="rr-sec-mark"></div>
+    <div>
+      <div class="rr-sec-kicker"><span class="rr-fname">{fname}</span> <span class="rr-pub">{pub}</span></div>
+      <p class="rr-sec-blurb">{blurb}</p>
+    </div>
+    <div class="rr-sec-count mono">{n} {'piece' if n == 1 else 'pieces'}</div>
+  </div>
+  <div class="rgrid">
+  {cards}
+  </div>
+</section>''')
+    jump_nav = '<nav class="rr-jump">' + "".join(jump) + '</nav>'
+    sections_html = "\n".join(blocks)
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -380,14 +480,13 @@ def index_page(items):
   <div class="wrap">
     <div class="mono" style="color:var(--ocean);">// The Reading Room</div>
     <h1>The research, in full.<br><span class="blue">On our terms</span><span class="dot">.</span></h1>
-    <p>Every Beacon, Beam, Horizon, and Chartbook. Free pieces read in full here. Members research opens in full inside <a href="{PHAROS}">Pharos</a>, alongside the live dashboards and the terminal.</p>
+    <p>Organized the way we publish it. The framework, the flagship, the live reads, the chartbooks, the forward view, and the live book. Free pieces read in full here. Members research opens in full inside <a href="{PHAROS}">Pharos</a>, alongside the live dashboards and the terminal.</p>
     <div class="rr-actions"><a class="rr-rss" href="{SITE}/feed.xml">RSS Feed</a><a class="rr-join" href="{SUBSCRIBE}">Become a member &rarr;</a></div>
+    {jump_nav}
   </div>
 </header>
 <main class="wrap rr-main">
-  <div class="rgrid">
-  {grid}
-  </div>
+  {sections_html}
 </main>
 {footer_html()}
 {NAV_SCRIPT}
@@ -397,7 +496,7 @@ def index_page(items):
 
 def reader_css():
     return '''/* Lighthouse Macro — Reading Room */
-:root{--ocean:#2389BB;--dusk:#FF6723;--sky:#23BBFF;--sea:#00BB89;--venus:#FF2389;--doldrums:#898989;--fog:#D1D1D1;--navy:#0A2A43;--ink:#0F2233;--paper:#FFFFFF;--mist:#F4F7F9;--line:#E3E8EC;--body:#36424C;}
+:root{--ocean:#2389BB;--dusk:#FF6723;--sky:#23BBFF;--bright:#89CCFF;--sea:#00BB89;--venus:#FF2389;--doldrums:#898989;--fog:#D1D1D1;--navy:#0A2A43;--ink:#123456;--paper:#FFFFFF;--mist:#F4F7F9;--line:#E3E8EC;--body:#36424C;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--body);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;}
@@ -434,8 +533,25 @@ nav{background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1p
 .rr-join{background:var(--dusk);color:#fff;text-decoration:none;padding:0.7rem 1.4rem;border-radius:5px;font-weight:600;font-size:0.9rem;}
 .rr-join:hover{filter:brightness(0.92);}
 
+/* section jump-nav */
+.rr-jump{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:2rem;}
+.rr-jump a{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--line);border-radius:999px;padding:0.4rem 0.5rem 0.4rem 0.9rem;text-decoration:none;font-size:0.82rem;font-weight:600;color:var(--ink);background:var(--paper);transition:border-color .2s,color .2s;}
+.rr-jump a:hover{border-color:var(--ocean);color:var(--ocean);}
+.rr-jump a em{font-style:normal;font-family:'Source Code Pro',monospace;font-size:0.7rem;background:var(--mist);color:var(--doldrums);border-radius:999px;padding:0.1rem 0.5rem;}
+
+/* section blocks (subtle paper / mist alternation for differentiation) */
+.rr-main{padding:2.4rem 2rem 4rem;}
+.rr-sec{padding:2.6rem 0;border-top:1px solid var(--line);}
+.rr-sec:first-child{border-top:none;}
+.rr-sec-head{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.8rem;}
+.rr-sec-mark{flex:none;width:5px;align-self:stretch;border-radius:3px;background:linear-gradient(180deg,var(--ocean) 60%,var(--dusk) 60%);min-height:46px;}
+.rr-sec-kicker{display:flex;align-items:baseline;gap:0.7rem;flex-wrap:wrap;}
+.rr-fname{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.01em;color:var(--ink);}
+.rr-pub{font-family:'Source Code Pro',monospace;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ocean);}
+.rr-sec-blurb{font-size:0.95rem;color:#5b6770;margin-top:0.25rem;}
+.rr-sec-count{margin-left:auto;color:var(--doldrums);white-space:nowrap;padding-top:0.3rem;}
+
 /* card grid */
-.rr-main{padding:3rem 2rem 4rem;}
 .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;}
 .rcard{display:flex;flex-direction:column;text-decoration:none;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--paper);transition:transform .2s,box-shadow .2s,border-color .2s;}
 .rcard:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(15,34,51,0.10);border-color:var(--ocean);}
@@ -487,7 +603,7 @@ footer{background:var(--navy);color:#9fb3c4;padding:3.4rem 0 0;margin-top:2rem;}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2rem;}
 .foot-brand{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.3rem;color:#fff;}
 .foot-brand .dot{color:var(--dusk);}
-.foot-tag{font-family:'Source Code Pro',monospace;font-size:0.7rem;letter-spacing:0.14em;color:var(--sky);margin:0.4rem 0 1rem;}
+.foot-tag{font-family:'Source Code Pro',monospace;font-size:0.7rem;letter-spacing:0.14em;color:var(--bright);margin:0.4rem 0 1rem;}
 .foot-grid p{font-size:0.85rem;}
 .foot-col h5{font-family:'Source Code Pro',monospace;font-size:0.68rem;letter-spacing:0.1em;color:var(--doldrums);margin-bottom:0.9rem;}
 .foot-col a{display:block;color:#c7d4de;text-decoration:none;font-size:0.88rem;padding:0.25rem 0;}
@@ -603,8 +719,10 @@ def main():
         lead = first_image(content)
         excerpt = dek[:300] if dek else plain_excerpt(content)
         teaser = make_teaser(content) if paid else ""
+        section = section_for(slug, subtitle, title)
         items.append({
-            "slug": slug, "title": title, "series": series_of(subtitle, title),
+            "slug": slug, "title": title,
+            "section": section, "series": PUB_TAG[section],
             "paid": paid, "dt": dt, "iso": iso,
             "datestr": dt.strftime("%B %-d, %Y"),
             "rfc822": format_datetime(dt),

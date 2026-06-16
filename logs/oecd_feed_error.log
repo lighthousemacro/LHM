@@ -883,3 +883,5 @@ Traceback (most recent call last):
     )
     ^
 sqlite3.OperationalError: database is locked
+2026-06-16 06:31:13,831 INFO   OECD_GDP_REAL_US: 317 obs
+2026-06-16 06:31:23,976 INFO   OECD_CPI_YOY_US: 844 obs

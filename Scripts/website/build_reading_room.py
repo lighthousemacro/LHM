@@ -44,26 +44,21 @@ def cdn_url(s3_url: str) -> str:
 
 
 # --- section taxonomy --------------------------------------------------------
-# Reading Room is grouped into named sections (Bob's structure). Each section
-# pairs an "F-word" theme with the publication line it holds.
+# Reading Room sections = Bob's all-B publication scheme (matches Substack
+# modules). (key, name, short, kicker, blurb)
 SECTIONS = [
-    ("FRAMEWORK",    "Framework",    "The Diagnostic Dozen", "Twelve pillars, three engines. The method itself."),
-    ("FLAGSHIP",     "Flagship",     "The Beacon",           "Long-form. One thesis, taken all the way down."),
-    ("LIVE",         "Live",         "The Beam",             "Fast reads on the print that just hit."),
-    ("FOUNDATION",   "Foundation",   "The Chartbook",        "The data, laid out to be looked at."),
-    ("FORWARD",      "Forward",      "The Horizon",          "The month ahead, and where the risk sits."),
-    ("CROSSCURRENTS","Crosscurrents","The Live Book",        "Positioning, in the open."),
-    ("FIELD_NOTES",  "Field Notes",  "Dispatches",           "Early notes and one-offs from the archive."),
+    ("FRAMEWORK",    "The Blueprint",  "Blueprint",  "The Diagnostic Dozen", "Twelve pillars, three engines. The method itself."),
+    ("FLAGSHIP",     "The Beacon",     "Beacon",     "Flagship analysis",    "Long-form. One thesis, taken all the way down."),
+    ("LIVE",         "The Beam",       "Beam",       "The fast read",        "Fast reads on the print that just hit."),
+    ("CROSSCURRENTS","The Book",       "Book",       "The live book",        "Positioning, in the open."),
+    ("FOUNDATION",   "The Broadsheet", "Broadsheet", "The chartbook",        "The data, laid out to be looked at."),
+    ("FORWARD",      "The Beyond",     "Beyond",     "The forward view",     "The month ahead, and where the risk sits."),
+    ("FIELD_NOTES",  "The Bulletin",   "Bulletin",   "Dispatches",           "Early notes and announcements from the archive."),
 ]
 SECTION_ORDER = [k for k, *_ in SECTIONS]
-SECTION_PUB = {k: pub for k, _f, pub, _b in SECTIONS}
 
-# Per-post tag shown on cards (the reader-facing publication name).
-PUB_TAG = {
-    "FRAMEWORK": "Framework", "FLAGSHIP": "Beacon", "LIVE": "Beam",
-    "FOUNDATION": "Chartbook", "FORWARD": "Horizon",
-    "CROSSCURRENTS": "Positioning", "FIELD_NOTES": "Dispatch",
-}
+# Per-post tag shown on cards = the short section name.
+PUB_TAG = {k: short for k, _n, short, _ki, _b in SECTIONS}
 
 # Content-read classifications for the 27 posts whose section is not obvious
 # from metadata (reading-room-classify workflow: 27 reader agents + reviewer,
@@ -429,19 +424,19 @@ def index_page(items):
         by_sec.get(m["section"], by_sec["FIELD_NOTES"]).append(m)
 
     jump, blocks = [], []
-    for key, fname, pub, blurb in SECTIONS:
+    for key, name, short, kicker, blurb in SECTIONS:
         bucket = by_sec.get(key, [])
         if not bucket:
             continue
         anchor = key.lower().replace("_", "-")
         n = len(bucket)
-        jump.append(f'<a href="#{anchor}"><span>{fname}</span><em>{n}</em></a>')
+        jump.append(f'<a href="#{anchor}"><span>{short}</span><em>{n}</em></a>')
         cards = "\n".join(_card(m) for m in bucket)
         blocks.append(f'''<section class="rr-sec" id="{anchor}">
   <div class="rr-sec-head">
     <div class="rr-sec-mark"></div>
     <div>
-      <div class="rr-sec-kicker"><span class="rr-fname">{fname}</span> <span class="rr-pub">{pub}</span></div>
+      <div class="rr-sec-kicker"><span class="rr-fname">{name}</span> <span class="rr-pub">{kicker}</span></div>
       <p class="rr-sec-blurb">{blurb}</p>
     </div>
     <div class="rr-sec-count mono">{n} {'piece' if n == 1 else 'pieces'}</div>
@@ -480,7 +475,7 @@ def index_page(items):
   <div class="wrap">
     <div class="mono" style="color:var(--ocean);">// The Reading Room</div>
     <h1>The research, in full.<br><span class="blue">On our terms</span><span class="dot">.</span></h1>
-    <p>Organized the way we publish it. The framework, the flagship, the live reads, the chartbooks, the forward view, and the live book. Free pieces read in full here. Members research opens in full inside <a href="{PHAROS}">Pharos</a>, alongside the live dashboards and the terminal.</p>
+    <p>Organized the way we publish it. The Blueprint, the Beacon, the Beam, the Book, the Broadsheet, and the Beyond. Free pieces read in full here. Members research opens in full inside <a href="{PHAROS}">Pharos</a>, alongside the live dashboards and the terminal.</p>
     <div class="rr-actions"><a class="rr-rss" href="{SITE}/feed.xml">RSS Feed</a><a class="rr-join" href="{SUBSCRIBE}">Become a member &rarr;</a></div>
     {jump_nav}
   </div>

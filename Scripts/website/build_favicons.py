@@ -70,10 +70,16 @@ def find_font(bold=True):
 
 def main(svg_path):
     master = render_svg(svg_path, 1024)
+    # opaque Deep version for OS icons that mask + fill corners with black
+    flat = Image.new("RGBA", master.size, DEEP + (255,))
+    flat.alpha_composite(master)
+    # iOS apple-touch + Android maskable want opaque; browser favicons stay transparent
+    OPAQUE = {"apple-touch-icon.png", "android-chrome-192x192.png", "android-chrome-512x512.png"}
 
     # square favicon/app icons
     for name, size in SIZES.items():
-        master.resize((size, size), Image.LANCZOS).save(os.path.join(WEB, name))
+        src = flat if name in OPAQUE else master
+        src.resize((size, size), Image.LANCZOS).save(os.path.join(WEB, name))
 
     # multi-res .ico
     ico = master.resize((64, 64), Image.LANCZOS)

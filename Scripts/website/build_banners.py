@@ -89,7 +89,7 @@ body {{ width:1100px; height:200px; background:{DEEP}; overflow:hidden; position
       </div>
     </div>
     <div class="right">
-      <div class="cta">Don't navigate in the dark. Subscribe.</div>
+      <div class="cta">Don't navigate in the dark.</div>
       <div class="links">lighthousemacro.com&nbsp;&nbsp;&middot;&nbsp;&nbsp;@LHMacro</div>
       <div class="mail">bob@lighthousemacro.com</div>
     </div>

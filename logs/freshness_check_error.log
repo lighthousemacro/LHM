@@ -867,3 +867,9 @@
 2026-06-16 08:35:59 [INFO]   PERMIT1: refreshed (+797 obs)
 2026-06-16 08:36:11 [INFO]   UNDCONTSA: refreshed (+677 obs)
 2026-06-16 08:36:13 [INFO] Freshness check done: 3 series refreshed, 2,271 obs added.
+2026-06-16 12:37:12 [INFO] Stale series (2):
+  HOUST: db=2026-04-01 -> fred=2026-05-01
+  COMPUTSA: db=2026-04-01 -> fred=2026-05-01
+2026-06-16 12:38:00 [INFO]   HOUST: refreshed (+809 obs)
+2026-06-16 12:38:21 [INFO]   COMPUTSA: refreshed (+701 obs)
+2026-06-16 12:38:22 [INFO] Freshness check done: 2 series refreshed, 1,510 obs added.

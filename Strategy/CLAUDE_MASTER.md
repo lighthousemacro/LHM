@@ -190,8 +190,8 @@ The portfolio is a single book. The distinction is what drives a position.
 | **Starboard** | `#238923` | Bullish regime | Regime ONLY — pair w/ lightness/label cue (colorblind safety) |
 | **Port** | `#892323` | Bearish regime | Regime ONLY — pair w/ lightness/label cue (colorblind safety) |
 | **Doldrums** | `#898989` | Neutral | Axis spines, labels, secondary text |
-| **Ice** | `#D4E2EF` | Light tint | Section-background differentiation (bluer/darker than Glacier) |
-| Glacier | `#F4F7F9` | Subtle tint | Cards, table fills, barely-there cool off-white |
+| Glacier | `#F4F7F9` | Light base | PRIMARY light page/section background (low eye strain) |
+| **Ice** | `#D4E2EF` | Light accent | Differentiation / accent background, bluer than Glacier (alternating sections, callouts) |
 | Fog | `#D1D1D1` | Reference | Zero/ghost lines (not in mnemonic) |
 | Foam | `#FFFFFF` | Pure white | Institutional chart backgrounds |
 

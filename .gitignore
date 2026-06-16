@@ -66,3 +66,11 @@ Deliverables/**/*.csv
 Deliverables/**/*.pptx
 *.pptx
 API_KEYS.md
+
+# Pharos — secrets & subscriber PII (code is fine to commit; these never are)
+Pharos/.env
+Pharos/app/allowlist.txt
+Pharos/app/paid_seed.csv
+Pharos/content/
+Pharos/.venv/
+Pharos/**/__pycache__/

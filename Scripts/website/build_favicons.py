@@ -18,6 +18,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = "/Users/bob/LHM"
 WEB = os.path.join(ROOT, "Website")
 DEEP = (0x12, 0x34, 0x56)
+CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 SIZES = {
     "favicon-16x16.png": 16,
@@ -30,13 +31,25 @@ SIZES = {
 
 
 def render_svg(svg_path, px=1024):
-    """SVG -> high-res PNG (transparent) via macOS qlmanage."""
+    """SVG -> high-res PNG with TRUE transparency via Chrome headless.
+    (qlmanage composited the rounded-corner transparency onto white, which
+    baked the '4 white corners' into the mark — Chrome preserves alpha.)"""
+    svg = open(svg_path, encoding="utf-8").read()
+    html = (f"<!DOCTYPE html><html><head><style>*{{margin:0;padding:0}}"
+            f"html,body{{width:{px}px;height:{px}px;overflow:hidden}}"
+            f"svg{{display:block;width:{px}px;height:{px}px}}</style></head>"
+            f"<body>{svg}</body></html>")
     tmp = tempfile.mkdtemp()
-    subprocess.run(["qlmanage", "-t", "-s", str(px), "-o", tmp, svg_path],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-    out = os.path.join(tmp, os.path.basename(svg_path) + ".png")
+    hpath = os.path.join(tmp, "logo.html")
+    out = os.path.join(tmp, "logo.png")
+    with open(hpath, "w", encoding="utf-8") as f:
+        f.write(html)
+    subprocess.run([CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",
+                    f"--screenshot={out}", f"--window-size={px},{px}",
+                    "--default-background-color=00000000", hpath],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if not os.path.exists(out):
-        raise RuntimeError(f"qlmanage produced no PNG for {svg_path}")
+        raise RuntimeError(f"Chrome produced no PNG for {svg_path}")
     return Image.open(out).convert("RGBA")
 
 

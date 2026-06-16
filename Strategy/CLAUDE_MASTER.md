@@ -177,17 +177,23 @@ The portfolio is a single book. The distinction is what drives a position.
 
 ## 23/89/BB Palette (every color contains some combo of 23, 89, BB)
 
+**Palette locked 2026-06-16.** Sky is now `#89CCFF` (old `#23BBFF` and the separate "Bright" retired). Deep `#123456` carries dark canvas + wordmark + headings + the old "Navy" black-replacement in one token. Ice `#D4E2EF` is the visible section-differentiation tint (Glacier was too close to white).
+
 | Name | Hex | Role | Usage |
 |------|-----|------|-------|
 | **Ocean** | `#2389BB` | Protagonist | Primary, headers, borders, chart primary |
 | **Dusk** | `#FF6723` | Antagonist | 2-series overlays, signal vs target, accent bar |
-| **Sky** | `#23BBFF` | Sidekick | 3rd line, supporting visuals (must appear; don't skip to Sea/Venus) |
-| **Sea** | `#00BB89` | Win | 4th line, on-target bands |
-| **Venus** | `#FF2389` | Alert | 4th line, 2% targets, critical alerts |
+| **Sky** | `#89CCFF` | Sidekick | 3rd line, supporting visuals; primary on dark theme (was "Bright") |
+| **Deep** | `#123456` | Dark / ink | Dark canvas, wordmark, headings, high-contrast line on white (replaces black + Navy) |
+| **Sea** | `#00BB89` | Win | On-target bands, positive 4th line |
+| **Venus** | `#FF2389` | Alert | Critical alerts, 2% targets |
+| **Starboard** | `#238923` | Bullish regime | Regime ONLY — pair w/ lightness/label cue (colorblind safety) |
+| **Port** | `#892323` | Bearish regime | Regime ONLY — pair w/ lightness/label cue (colorblind safety) |
 | **Doldrums** | `#898989` | Neutral | Axis spines, labels, secondary text |
-| **Starboard** | `#238923` | Bullish regime | Regime semantics ONLY |
-| **Port** | `#892323` | Bearish regime | Regime semantics ONLY |
+| **Ice** | `#D4E2EF` | Light tint | Section-background differentiation (bluer/darker than Glacier) |
+| Glacier | `#F4F7F9` | Subtle tint | Cards, table fills, barely-there cool off-white |
 | Fog | `#D1D1D1` | Reference | Zero/ghost lines (not in mnemonic) |
+| Foam | `#FFFFFF` | Pure white | Institutional chart backgrounds |
 
 **Hierarchy:** Cycle Ocean→Dusk→Sky→Sea/Venus before regime colors. Starboard/Port are semantic, not palette positions.
 

@@ -873,3 +873,4 @@
 2026-06-16 12:38:00 [INFO]   HOUST: refreshed (+809 obs)
 2026-06-16 12:38:21 [INFO]   COMPUTSA: refreshed (+701 obs)
 2026-06-16 12:38:22 [INFO] Freshness check done: 2 series refreshed, 1,510 obs added.
+2026-06-16 16:35:45 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

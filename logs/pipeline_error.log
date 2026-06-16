@@ -35231,3 +35231,4 @@ Breadth total: 13 series, 9,750 observations
 2026-06-16 06:17:48 [INFO]    Business_Lending...
 2026-06-16 06:17:51 [INFO]    Business_Lending: 4 series, 692 obs
 2026-06-16 06:17:51 [INFO] --- FRED: Curated Series ---
+2026-06-16 06:34:48 [ERROR] Error fetching LNS12500000: database is locked

@@ -30,10 +30,12 @@ The signature mnemonic is 23/89/BB. Every color contains some combination of 23,
 
 | Name | Hex | Usage |
 |------|-----|-------|
-| Foam | `#FFFFFF` | Pure white; institutional chart background |
-| Glacier | `#F4F7F9` | Barely-there cool off-white; cards, table fills, subtle legend fills |
-| Ice | `#D4E2EF` | Visible section-differentiation tint (bluer/darker than Glacier) |
+| Foam | `#FFFFFF` | Pure white. Card/callout insides and institutional chart backgrounds — the things that should pop |
+| Glacier | `#F4F7F9` | Page and large-section base surfaces (replaces pure white for less eye strain) |
+| Ice | `#D4E2EF` | Alternating-section differentiation and small accent callouts (bluer/darker than Glacier) |
 | Fog | `#D1D1D1` | Zero lines, ghost reference lines |
+
+**Web surface scheme (locked 2026-06-16):** page + hero + base sections = Glacier; alternating content sections = Ice; card insides = Foam white. Glacier base lowers eye strain, white cards pop, Ice gives section rhythm.
 
 ### Chart Background
 

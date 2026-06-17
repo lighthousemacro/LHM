@@ -875,3 +875,41 @@
 2026-06-16 12:38:22 [INFO] Freshness check done: 2 series refreshed, 1,510 obs added.
 2026-06-16 16:35:45 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-06-17 08:35:43 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-06-17 12:35:54 [INFO] Stale series (18):
+  RSAFS: db=2026-04-01 -> fred=2026-05-01
+  RSXFS: db=2026-04-01 -> fred=2026-05-01
+  RSFSDP: db=2026-04-01 -> fred=2026-05-01
+  RSMVPD: db=2026-04-01 -> fred=2026-05-01
+  RSGASS: db=2026-04-01 -> fred=2026-05-01
+  RSBMGESD: db=2026-04-01 -> fred=2026-05-01
+  RSFHFS: db=2026-04-01 -> fred=2026-05-01
+  RSEAS: db=2026-04-01 -> fred=2026-05-01
+  RSCCAS: db=2026-04-01 -> fred=2026-05-01
+  RSSGHBMS: db=2026-04-01 -> fred=2026-05-01
+  RSHPCS: db=2026-04-01 -> fred=2026-05-01
+  RSNSR: db=2026-04-01 -> fred=2026-05-01
+  RSGMS: db=2026-04-01 -> fred=2026-05-01
+  RSDBS: db=2026-04-01 -> fred=2026-05-01
+  RSMSR: db=2026-04-01 -> fred=2026-05-01
+  RSGCSN: db=2026-04-01 -> fred=2026-05-01
+  RRSFS: db=2026-04-01 -> fred=2026-05-01
+  RSFSXMV: db=2026-04-01 -> fred=2026-05-01
+2026-06-17 12:35:55 [INFO]   RSAFS: refreshed (+413 obs)
+2026-06-17 12:35:56 [INFO]   RSXFS: refreshed (+413 obs)
+2026-06-17 12:35:57 [INFO]   RSFSDP: refreshed (+413 obs)
+2026-06-17 12:35:58 [INFO]   RSMVPD: refreshed (+413 obs)
+2026-06-17 12:35:58 [INFO]   RSGASS: refreshed (+413 obs)
+2026-06-17 12:36:00 [INFO]   RSBMGESD: refreshed (+413 obs)
+2026-06-17 12:36:02 [INFO]   RSFHFS: refreshed (+413 obs)
+2026-06-17 12:36:03 [INFO]   RSEAS: refreshed (+413 obs)
+2026-06-17 12:36:04 [INFO]   RSCCAS: refreshed (+413 obs)
+2026-06-17 12:36:05 [INFO]   RSSGHBMS: refreshed (+413 obs)
+2026-06-17 12:36:05 [INFO]   RSHPCS: refreshed (+413 obs)
+2026-06-17 12:36:06 [INFO]   RSNSR: refreshed (+413 obs)
+2026-06-17 12:36:07 [INFO]   RSGMS: refreshed (+413 obs)
+2026-06-17 12:36:08 [INFO]   RSDBS: refreshed (+413 obs)
+2026-06-17 12:36:09 [INFO]   RSMSR: refreshed (+413 obs)
+2026-06-17 12:36:10 [INFO]   RSGCSN: refreshed (+413 obs)
+2026-06-17 12:36:11 [INFO]   RRSFS: refreshed (+412 obs)
+2026-06-17 12:36:11 [INFO]   RSFSXMV: refreshed (+413 obs)
+2026-06-17 12:36:12 [INFO] Freshness check done: 18 series refreshed, 7,433 obs added.

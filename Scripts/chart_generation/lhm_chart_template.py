@@ -432,8 +432,12 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
 
     # Callout style (locked 2026-06-06): offwhite fill, Deep (#123456) outline AND
     # text, small font, tight box. Kept small + optional so it never dominates.
-    bbox = dict(boxstyle='round,pad=0.32', facecolor=COLORS['offwhite'],
-                edgecolor=COLORS['deep'], linewidth=1.1, alpha=1.0)
+    if THEME.get('mode') == 'dark':
+        _box_fc, _box_ec, _box_tc = THEME['bg'], '#F4F7F9', '#F4F7F9'
+    else:
+        _box_fc, _box_ec, _box_tc = '#ffffff', COLORS['deep'], COLORS['deep']
+    bbox = dict(boxstyle='round,pad=0.32', facecolor=_box_fc,
+                edgecolor=_box_ec, linewidth=1.1, alpha=1.0)
 
     if x is None and y is None:
         w_frac, h_frac = _measure_box_frac(ax, text, fontsize=fontsize)
@@ -456,7 +460,7 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
     # the primary would hide behind the twin's data — drawing on the front axis
     # fixes that.
     front = max(_twin_axes(ax), key=lambda a: ax.figure.axes.index(a))
-    DEEP = COLORS['deep']
+    DEEP = _box_tc
     if point_to is not None:
         front.annotate(text, xy=point_to, xycoords='data',
                        xytext=(x, y), textcoords='axes fraction',

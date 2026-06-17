@@ -2045,3 +2045,5 @@ rsync(21355): error: unexpected end of file
 === 2026-06-17 08:00:01 mirror start ===
 === 2026-06-17 08:00:06 mirror end (exit 0) ===
 === 2026-06-17 08:30:00 mirror start ===
+rsync(34166): error: /Users/bob/LHM/Scripts/.tmp.driveupload/38366: open (2) in /Users/bob: No such file or directory
+=== 2026-06-17 08:30:08 mirror end (exit 0) ===

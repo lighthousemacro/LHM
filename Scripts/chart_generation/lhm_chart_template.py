@@ -95,9 +95,9 @@ def set_theme(mode='white'):
             'page_bg': COLORS['deep'],     # page/document bg consumers should set themselves
             'fg': COLORS['offwhite'],      # Offwhite text/labels
             'muted': '#9bb1c5',
-            'spine': '#3b5a7a',            # legible spine against Deep-lift
+            'spine': '#D4E2EF',            # Ice spine on dark (not gray)
             'zero_line': COLORS['offwhite'],
-            'recession': '#ffffff', 'recession_alpha': 0.06,
+            'recession': '#D4E2EF', 'recession_alpha': 0.15,
             'ocean': COLORS['ocean'], 'dusk': COLORS['dusk'],
             'sky': COLORS['sky'], 'bright': COLORS['bright'],
             'sea': COLORS['sea'], 'venus': COLORS['venus'],

@@ -401,7 +401,7 @@ def _best_anchor(occ, w_frac, h_frac, margin=0.025, prefer=None):
 
 def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
                        max_width_frac=0.40, wrap=None, point_to=None,
-                       prefer=None, fontsize=11):
+                       prefer=None, fontsize=12.5):
     """White callout box, Ocean border + Ocean italic text, AUTO-PLACED.
 
     Placement upgrade (2026-06-06): by default the callout finds its own home.
@@ -423,6 +423,7 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
     skips auto-placement. Text wraps so no line exceeds `max_width_frac` of
     the axes width."""
     OCEAN = COLORS['ocean']
+    text = text.replace('$', r'\\$')   # avoid matplotlib mathtext on $amounts
     if wrap:
         text = textwrap.fill(text, width=wrap,
                              break_long_words=False, break_on_hyphens=False)

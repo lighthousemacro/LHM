@@ -646,7 +646,7 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
     """
     fig.patch.set_facecolor(THEME['bg'])
 
-    OCEAN = COLORS['ocean']
+    OCEAN = COLORS['sky'] if THEME.get('mode') == 'dark' else COLORS['ocean']
     DUSK = COLORS['dusk']
 
     # Top watermark text

@@ -211,6 +211,34 @@ def cmd_morning(token, chat_id, dry_run) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# Fused brief — real framework + real tape (tvremix MCP) + LLM synthesis.
+# Run under Scripts/.venv/bin/python (needs the mcp client). Falls back to the
+# framework-only morning if the LLM key / tvremix auth isn't set yet.
+# --------------------------------------------------------------------------- #
+def cmd_fused(token, chat_id, dry_run) -> None:
+    state = _load_push_state()
+    prev = state.get("statuses") or None
+    try:
+        import fused_brief
+        text, cur = fused_brief.generate(prev_statuses=prev)
+        source = "fused"
+    except Exception as e:  # noqa: BLE001
+        print(f"fused brief failed ({e}); falling back to framework-only morning",
+              file=sys.stderr)
+        text, cur = fw.format_morning_html(prev_statuses=prev)
+        source = "framework-only fallback"
+    if dry_run:
+        print(f"=== FUSED (dry-run, {source}) ===\n")
+        print(text)
+        print("\n(state NOT written in dry-run)")
+        return
+    tg_send_message(token, chat_id, text)
+    state["statuses"] = cur
+    _save_push_state(state)
+    print(f"fused brief sent to {chat_id} ({source})")
+
+
+# --------------------------------------------------------------------------- #
 # Full brief (delegates to the existing sender with chat override)
 # --------------------------------------------------------------------------- #
 def cmd_brief(token, chat_id, dry_run) -> None:
@@ -242,7 +270,7 @@ def cmd_brief(token, chat_id, dry_run) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("command",
-                    choices=["snapshot", "alerts", "brief", "all", "morning"])
+                    choices=["snapshot", "alerts", "brief", "all", "morning", "fused"])
     ap.add_argument("--chat-id", default=None)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -260,6 +288,8 @@ def main() -> None:
         cmd_alerts(token, chat_id, args.dry_run)
     if args.command == "morning":
         cmd_morning(token, chat_id, args.dry_run)
+    if args.command == "fused":
+        cmd_fused(token, chat_id, args.dry_run)
     if args.command == "brief":
         cmd_brief(token, chat_id, args.dry_run)
 

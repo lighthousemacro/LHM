@@ -55,6 +55,9 @@ EXECBG  = HexColor("#f4f7f9")
 PAGE_W, PAGE_H = letter
 M_LR, M_TOP, M_BOT = 0.62 * inch, 0.62 * inch, 0.66 * inch
 CONTENT_W = PAGE_W - 2 * M_LR
+# Max height for an embedded image. Default keeps charts compact; a caller can
+# raise it (e.g. for full-page tweet montages) before build().
+MAX_IMG_H = 4.9 * inch
 
 # Set from CLI in build(); used by the page furniture.
 RUN = {"label": "Lighthouse Macro", "date": ""}
@@ -262,7 +265,7 @@ def image_block(fig: Tag, ext_caption: Tag = None):
     aspect = h / w
     disp_w = CONTENT_W
     disp_h = disp_w * aspect
-    max_h = 4.9 * inch
+    max_h = MAX_IMG_H
     if disp_h > max_h:
         disp_h = max_h
         disp_w = disp_h / aspect

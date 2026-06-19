@@ -59,8 +59,52 @@ CONTENT_W = PAGE_W - 2 * M_LR
 # raise it (e.g. for full-page tweet montages) before build().
 MAX_IMG_H = 4.9 * inch
 
-# Set from CLI in build(); used by the page furniture.
-RUN = {"label": "Lighthouse Macro", "date": ""}
+# --- Logo treatment ----------------------------------------------------------
+# Hero logo: the current slick navy mark, placed once at the top of page 1 in
+# the title block (first-impression). Watermark: the flat minimalist Ocean
+# lighthouse silhouette, dimmed to a faint corner mark on content pages so it
+# never competes with text or charts. Both are brand-level, not piece-specific,
+# and can be overridden / disabled per-call (CLI flags or build() kwargs).
+_BRAND = "/Users/bob/LHM/Brand"
+HERO_LOGO      = f"{_BRAND}/lighthouse_mark_v2.png"     # hero, full color, page 1
+WATERMARK_ICON = f"{_BRAND}/icon_transparent_128.png"   # subtle content-page mark
+HERO_H         = 0.78 * inch    # rendered hero height (kept clear of the title)
+WM_OPACITY     = 0.10           # watermark alpha (~8-12%)
+WM_H           = 0.62 * inch    # watermark rendered height (small)
+
+# Set from CLI in build(); used by the page furniture. RUN["wm"] holds the
+# prepared (dimmed) watermark ImageReader, or None when disabled.
+RUN = {"label": "Lighthouse Macro", "date": "", "wm": None}
+
+
+def _prep_watermark(path: str, opacity: float):
+    """Load the watermark PNG and bake a low global opacity into its alpha so a
+    faint corner mark can be drawn directly on the canvas. Returns an
+    (ImageReader, aspect_h_over_w) tuple, or (None, 0) if unavailable."""
+    try:
+        from reportlab.lib.utils import ImageReader
+        im = PILImage.open(path).convert("RGBA")
+        r, g, b, a = im.split()
+        a = a.point(lambda px: int(px * opacity))
+        im.putalpha(a)
+        w, h = im.size
+        return ImageReader(im), (h / w)
+    except Exception:
+        return None, 0.0
+
+
+def _hero_flowable(path: str, height: float):
+    """Hero logo as a centered reportlab Image flowable for the title block.
+    Returns None if the asset is missing (build degrades gracefully)."""
+    try:
+        im = PILImage.open(path)
+        w, h = im.size
+        disp_w = height * (w / h)
+        img = Image(path, width=disp_w, height=height)
+        img.hAlign = "LEFT"
+        return img
+    except Exception:
+        return None
 
 
 def _register_fonts() -> dict:
@@ -196,6 +240,20 @@ class TintBox(Flowable):
 
 def _page(canvas, doc):
     canvas.saveState()
+    # Subtle watermark: faint minimalist lighthouse silhouette, low opacity,
+    # small, tucked into the lower-right interior so it never sits under body
+    # text or a chart. Alpha is already baked into the PNG (see _prep_watermark).
+    wm = RUN.get("wm")
+    if wm is not None:
+        reader, asp = wm
+        wm_w = WM_H / asp if asp else WM_H
+        wm_x = PAGE_W - M_LR - wm_w
+        wm_y = M_BOT - 0.10 * inch
+        try:
+            canvas.drawImage(reader, wm_x, wm_y, width=wm_w, height=WM_H,
+                             mask="auto", preserveAspectRatio=True)
+        except Exception:
+            pass
     bw = CONTENT_W * 2 / 3
     ty = PAGE_H - 0.42 * inch
     canvas.setFillColor(OCEAN); canvas.rect(M_LR, ty, bw, 3, fill=1, stroke=0)
@@ -379,7 +437,8 @@ def _detect_root(soup):
 
 
 def build(html_path: str, out_path: str, title: str = None,
-          subtitle: str = None, label: str = None, date: str = None):
+          subtitle: str = None, label: str = None, date: str = None,
+          hero_logo: str = HERO_LOGO, watermark: str = WATERMARK_ICON):
     out = Path(out_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     soup = BeautifulSoup(Path(html_path).read_text(errors="ignore"),
@@ -392,9 +451,22 @@ def build(html_path: str, out_path: str, title: str = None,
         title = h1.get_text(" ", strip=True) if h1 else "Lighthouse Macro"
     RUN["label"] = label or "Lighthouse Macro"
     RUN["date"] = date or ""
+    # Prepare the dimmed watermark once; reused on every page by _page().
+    RUN["wm"] = None
+    if watermark and os.path.exists(watermark):
+        reader, asp = _prep_watermark(watermark, WM_OPACITY)
+        if reader is not None:
+            RUN["wm"] = (reader, asp)
 
-    story = [Spacer(1, 0.05 * inch), AccentBar(CONTENT_W, 5),
-             Spacer(1, 0.16 * inch), Paragraph(title, ST["title"])]
+    # Hero logo sits above the accent bar on page 1 only (first impression),
+    # with breathing room before the title so it never crowds it.
+    hero = _hero_flowable(hero_logo, HERO_H) if (
+        hero_logo and os.path.exists(hero_logo)) else None
+    story = [Spacer(1, 0.04 * inch)]
+    if hero is not None:
+        story += [hero, Spacer(1, 0.12 * inch)]
+    story += [AccentBar(CONTENT_W, 5),
+              Spacer(1, 0.16 * inch), Paragraph(title, ST["title"])]
     if subtitle:
         story += [Paragraph(subtitle, ST["deck"])]
     sub_line = " · ".join(x for x in (RUN["label"], RUN["date"]) if x)
@@ -473,5 +545,10 @@ if __name__ == "__main__":
     ap.add_argument("--subtitle", default=None)
     ap.add_argument("--label", default=None)
     ap.add_argument("--date", default=None)
+    ap.add_argument("--hero-logo", default=HERO_LOGO,
+                    help="hero logo PNG for page 1 ('' to disable)")
+    ap.add_argument("--watermark", default=WATERMARK_ICON,
+                    help="faint content-page watermark PNG ('' to disable)")
     a = ap.parse_args()
-    build(a.html, a.out, a.title, a.subtitle, a.label, a.date)
+    build(a.html, a.out, a.title, a.subtitle, a.label, a.date,
+          hero_logo=a.hero_logo, watermark=a.watermark)

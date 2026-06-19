@@ -274,10 +274,13 @@ def nav_html(prefix=""):
     <ul class="nav-links">
       <li><a href="{prefix}../framework.html">The Diagnostic Dozen</a></li>
       <li><a href="{prefix}../methodology.html">Methodology</a></li>
-      <li><a href="{prefix}index.html">Reading Room</a></li>
+      <li><a href="{prefix}../index.html#dashboard">Live Read</a></li>
       <li><a href="{prefix}../index.html#services">Services</a></li>
       <li><a href="{prefix}../index.html#about">About</a></li>
-      <li><a href="{SUBSCRIBE}" class="nav-cta">Subscribe</a></li>
+      <li><a href="{prefix}../index.html#contact">Contact</a></li>
+      <li><a href="{prefix}../index.html#subscribe">Subscribe</a></li>
+      <li><a href="{prefix}index.html" class="nav-cta alt">Reading Room</a></li>
+      <li><a href="{prefix}../pharos/" class="nav-cta">Pharos</a></li>
     </ul>
   </div>
 </nav>'''
@@ -296,9 +299,11 @@ def footer_html(prefix=""):
         <h5>// Sections</h5>
         <a href="{prefix}../framework.html">Framework</a>
         <a href="{prefix}../methodology.html">Methodology</a>
+        <a href="{prefix}../index.html#dashboard">Live Read</a>
         <a href="{prefix}index.html">Reading Room</a>
-        <a href="{prefix}../index.html#services">Services</a>
-        <a href="{prefix}../pharos.html">Pharos</a>
+        <a href="{prefix}../pharos/">Pharos</a>
+        <a href="{prefix}../index.html#about">About</a>
+        <a href="{prefix}../index.html#contact">Contact</a>
       </div>
       <div class="foot-col">
         <h5>// Elsewhere</h5>
@@ -332,13 +337,15 @@ def article_page(meta, dek, content_html, is_paid):
     datestr = meta["datestr"]
     paywall = ""
     body = content_html
+    robots = ""
     if is_paid:
-        body = make_teaser(content_html)
+        body = ""  # paid pieces are fully blocked on the public site, no teaser, no chart
+        robots = '\n<meta name="robots" content="noindex">'
         paywall = f'''
     <div class="paywall">
       <div class="pw-mono">// Members Research</div>
-      <h3>The rest of this piece is for members.</h3>
-      <p>Full readings, sizing, trade setups, and the forward outlook live behind the membership. Read everything, plus the live dashboards and the terminal, inside Pharos.</p>
+      <h3>This piece is for members.</h3>
+      <p>Members research lives inside Pharos, in full, alongside the live dashboards and the terminal. It is not published on the open site.</p>
       <div class="pw-ctas">
         <a class="pw-go" href="{SUBSCRIBE}">Become a member</a>
         <a class="pw-ghost" href="{PHAROS}">Open Pharos &rarr;</a>
@@ -363,7 +370,7 @@ def article_page(meta, dek, content_html, is_paid):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} | Lighthouse Macro</title>
-<meta name="description" content="{desc}">
+<meta name="description" content="{desc}">{robots}
 <link rel="canonical" href="{canonical}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
@@ -413,6 +420,7 @@ def _card(m):
     <div class="rc-meta"><span class="mono">{m['series']} &middot; {m['datestr']}</span>{badge}</div>
     <h3 class="rc-title">{ihtml.escape(m['title'])}</h3>
     <p class="rc-ex">{ihtml.escape(m['excerpt'])}</p>
+    {'<span class="rc-lock">&#128274; Read in Pharos</span>' if m['paid'] else ''}
   </div>
 </a>'''
 
@@ -503,11 +511,13 @@ nav{background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1p
 .nav-inner{max-width:1120px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px;}
 .nav-logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;color:var(--ink);text-decoration:none;letter-spacing:0.3px;}
 .nav-logo span{color:var(--ocean);}
-.nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center;}
+.nav-links{display:flex;gap:1.25rem;list-style:none;align-items:center;}
 .nav-links a{font-size:0.82rem;font-weight:500;color:var(--body);text-decoration:none;transition:color .2s;}
 .nav-links a:hover{color:var(--ocean);}
-.nav-cta{background:var(--ocean);color:#fff !important;padding:0.45rem 1.1rem;border-radius:4px;font-weight:600 !important;}
+.nav-cta{display:inline-block;white-space:nowrap;background:var(--ocean);color:#fff !important;padding:0.45rem 1.1rem;border-radius:4px;font-weight:600 !important;}
 .nav-cta:hover{filter:brightness(0.85);}
+.nav-cta.alt{background:transparent;color:var(--ocean) !important;border:1px solid var(--ocean);padding:calc(0.45rem - 1px) calc(1.1rem - 1px);}
+.nav-cta.alt:hover{background:var(--ocean);color:#fff !important;filter:none;}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:0.4rem;}
 .nav-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:.3s;}
 
@@ -557,6 +567,7 @@ nav{background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1p
 .rc-meta{display:flex;align-items:center;justify-content:space-between;gap:0.6rem;}
 .rc-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.12rem;line-height:1.2;color:var(--ink);}
 .rc-ex{font-size:0.9rem;color:#5b6770;line-height:1.55;}
+.rc-lock{display:inline-block;margin-top:0.6rem;font-family:'Source Code Pro',monospace;font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dusk);font-weight:600;}
 
 /* article */
 .art{padding:3rem 0 2rem;}
@@ -609,7 +620,7 @@ footer{background:var(--deep);color:#9fb3c4;padding:3.4rem 0 0;margin-top:2rem;}
 .foot-disclaimer{font-size:0.7rem;color:#6b7d8c;line-height:1.6;padding-bottom:2rem;}
 .foot-bar{height:5px;background:linear-gradient(90deg,var(--ocean) 66%,var(--dusk) 66%);}
 
-@media (max-width:900px){
+@media (max-width:1000px){
   .rgrid{grid-template-columns:1fr 1fr;}
   .foot-grid{grid-template-columns:1fr;}
   .nav-links{display:none;position:absolute;top:62px;left:0;right:0;background:#fff;flex-direction:column;padding:1rem 2rem;border-bottom:1px solid var(--line);gap:0.9rem;}
@@ -627,7 +638,7 @@ def build_feed(items):
     for m in items:
         link = f"{SITE}/research/{m['slug']}.html"
         if m["paid"]:
-            body = m["feed_teaser"] + f'<p><strong>Members research.</strong> Read the full piece at <a href="{link}">{link}</a> or open it in <a href="{PHAROS}">Pharos</a>.</p>'
+            body = f'<p>{xesc(m["excerpt"])}</p><p><strong>Members research.</strong> Read it in full inside <a href="{PHAROS}">Pharos</a>, or <a href="{SUBSCRIBE}">become a member</a>.</p>'
         else:
             body = m["feed_full"]
         content = f"<![CDATA[{body}]]>"
@@ -668,15 +679,17 @@ def build_sitemap(items):
     urls = [
         ("/", "daily", "1.0", None),
         ("/research/", "daily", "0.9", None),
+        ("/pharos/", "monthly", "0.8", None),
         ("/framework.html", "monthly", "0.8", None),
         ("/methodology.html", "monthly", "0.6", None),
-        ("/pharos.html", "monthly", "0.6", None),
     ]
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for loc, cf, pr, _ in urls:
         out.append(f"  <url><loc>{SITE}{loc}</loc><changefreq>{cf}</changefreq><priority>{pr}</priority></url>")
     for m in items:
+        if m["paid"]:
+            continue  # paid stubs are noindex, keep them out of the sitemap
         lastmod = m["dt"].strftime("%Y-%m-%d")
         out.append(f'  <url><loc>{SITE}/research/{m["slug"]}.html</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>')
     out.append("</urlset>")
@@ -712,8 +725,12 @@ def main():
         raw = open(fn, encoding="utf-8").read()
         dek, content = clean_body(raw)
         lead = first_image(content)
-        excerpt = dek[:300] if dek else plain_excerpt(content)
-        teaser = make_teaser(content) if paid else ""
+        if paid:
+            # paid is fully blocked on-site: never derive public text from the body
+            excerpt = dek[:300] if dek else "Members research. Read it in full inside Pharos."
+            lead = None  # do not surface a paid lead chart on the public index
+        else:
+            excerpt = dek[:300] if dek else plain_excerpt(content)
         section = section_for(slug, subtitle, title)
         items.append({
             "slug": slug, "title": title,
@@ -722,7 +739,7 @@ def main():
             "datestr": dt.strftime("%B %-d, %Y"),
             "rfc822": format_datetime(dt),
             "lead_img": lead, "excerpt": excerpt, "dek": dek,
-            "full_html": content, "teaser_html": teaser,
+            "full_html": content,
         })
 
     items.sort(key=lambda m: m["dt"], reverse=True)
@@ -731,11 +748,14 @@ def main():
     known = set(seen_slugs.keys())
     feedbase = f"{SITE}/research/"
     for m in items:
-        # feed versions need absolute links; derive before relative rewrite
-        m["feed_full"] = rewrite_crosslinks(m["full_html"], known, base=feedbase)
-        m["feed_teaser"] = rewrite_crosslinks(m["teaser_html"], known, base=feedbase)
-        m["full_html"] = rewrite_crosslinks(m["full_html"], known)
-        m["teaser_html"] = rewrite_crosslinks(m["teaser_html"], known)
+        # feed versions need absolute links; derive before relative rewrite.
+        # paid bodies are never exposed (feed paid item = dek + members CTA only).
+        if not m["paid"]:
+            m["feed_full"] = rewrite_crosslinks(m["full_html"], known, base=feedbase)
+            m["full_html"] = rewrite_crosslinks(m["full_html"], known)
+        else:
+            m["feed_full"] = ""
+            m["full_html"] = ""
 
     # write reader.css
     with open(os.path.join(OUT_DIR, "reader.css"), "w", encoding="utf-8") as f:

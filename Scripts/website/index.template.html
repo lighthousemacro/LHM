@@ -74,12 +74,15 @@
         .nav-logo { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.05rem;
                     color:var(--ink); text-decoration:none; letter-spacing:0.3px; }
         .nav-logo span { color:var(--ocean); }
-        .nav-links { display:flex; gap:1.6rem; list-style:none; align-items:center; }
+        .nav-links { display:flex; gap:1.25rem; list-style:none; align-items:center; }
         .nav-links a { font-size:0.82rem; font-weight:500; color:var(--body); text-decoration:none; transition:color .2s; }
         .nav-links a:hover { color:var(--ocean); }
-        .nav-cta { background:var(--ocean); color:#fff !important; padding:0.45rem 1.1rem;
-                   border-radius:4px; font-weight:600 !important; }
+        .nav-cta { display:inline-block; white-space:nowrap; background:var(--ocean); color:#fff !important;
+                   padding:0.45rem 1.1rem; border-radius:4px; font-weight:600 !important; }
         .nav-cta:hover { background:var(--ocean); filter:brightness(0.85); }
+        .nav-cta.alt { background:transparent; color:var(--ocean) !important;
+                       border:1px solid var(--ocean); padding:calc(0.45rem - 1px) calc(1.1rem - 1px); }
+        .nav-cta.alt:hover { background:var(--ocean); color:#fff !important; filter:none; }
         .nav-toggle { display:none; background:none; border:none; cursor:pointer; padding:0.4rem; }
         .nav-toggle span { display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; transition:.3s; }
 
@@ -376,7 +379,7 @@
         .reveal.in { opacity:1; transform:none; }
 
         /* responsive */
-        @media (max-width:900px) {
+        @media (max-width:1000px) {
             .aud-grid,.engine-grid,.principle-grid,.svc-grid,.book-grid,.auth-grid,.foot-grid,.endorse-grid { grid-template-columns:1fr; }
             .master-grid { grid-template-columns:1fr 1fr; }
             .pillar-grid { grid-template-columns:1fr 1fr; }
@@ -413,7 +416,8 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#subscribe">Subscribe</a></li>
-            <li><a href="research/" class="nav-cta">Reading Room</a></li>
+            <li><a href="research/" class="nav-cta alt">Reading Room</a></li>
+            <li><a href="pharos/" class="nav-cta">Pharos</a></li>
         </ul>
     </div>
 </nav>
@@ -847,10 +851,10 @@
                 <a href="methodology.html">Methodology</a>
                 <a href="#dashboard">Live Read</a>
                 <a href="#services">Services</a>
-                <a href="#research">Research</a>
+                <a href="research/">Reading Room</a>
+                <a href="pharos/">Pharos</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact</a>
-                <a href="pharos.html">Pharos</a>
             </div>
             <div class="foot-col">
                 <h5>// Elsewhere</h5>

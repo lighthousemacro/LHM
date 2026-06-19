@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/static/favicon.ico"><link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+<title>Pharos · Lighthouse Macro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&family=Source+Code+Pro:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{--ocean:#2389BB;--dusk:#FF6723;--sky:#89CCFF;--navy:#123456;--line:rgba(255,255,255,0.14);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:radial-gradient(1200px 600px at 70% -10%, rgba(35,137,187,0.30), transparent 62%), var(--navy);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+  .card{width:100%;max-width:430px;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:2.4rem;}
+  .accent{height:4px;border-radius:4px;background:linear-gradient(90deg,var(--ocean) 66%,var(--dusk) 66%);margin-bottom:1.6rem;}
+  .mono{font-family:'Source Code Pro',monospace;letter-spacing:0.14em;text-transform:uppercase;font-size:0.66rem;color:var(--ocean);}
+  .wm{font-family:'Montserrat',sans-serif;font-weight:800;font-size:2.5rem;letter-spacing:-0.01em;margin:0.45rem 0 0.3rem;}
+  .wm .dot{color:var(--dusk);}
+  .sub{color:#9fb3c4;font-size:0.92rem;line-height:1.5;margin-bottom:1.8rem;}
+  label{display:block;font-size:0.72rem;color:#9fb3c4;text-transform:uppercase;letter-spacing:0.09em;margin-bottom:0.5rem;}
+  input[type=email]{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:7px;padding:0.9rem 1rem;color:#fff;font-size:1rem;font-family:inherit;}
+  input[type=email]:focus{outline:none;border-color:var(--ocean);}
+  button{width:100%;margin-top:1.2rem;background:var(--dusk);color:#fff;border:none;border-radius:7px;padding:1rem;font-weight:600;font-size:0.98rem;cursor:pointer;font-family:inherit;}
+  button:hover{filter:brightness(0.93);}
+  .incl{margin-top:1.6rem;border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem;}
+  .incl .t{font-weight:700;font-size:0.9rem;}
+  .incl .d{color:#9fb3c4;font-size:0.82rem;margin-top:0.2rem;}
+  .foot{margin-top:1.6rem;font-family:'Source Code Pro',monospace;font-size:0.66rem;letter-spacing:0.1em;color:#6b7d8c;text-align:center;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="accent"></div>
+    <div class="mono">// Lighthouse Macro</div>
+    <div class="wm">PHAROS<span class="dot">.</span></div>
+    <div class="sub">The macro terminal. Read the work, watch the engine, pull the dashboards.</div>
+    <form method="post" action="/auth/request">
+      <label for="email">Email on your subscription</label>
+      <input id="email" name="email" type="email" required placeholder="you@email.com" autocomplete="email">
+      <button type="submit">Enter Pharos</button>
+    </form>
+    <div class="incl">
+      <div class="t">Paid Substack subscriber? You are included.</div>
+      <div class="d">Enter the email on your subscription. No password, no inbox. We confirm it is active and let you straight in.</div>
+    </div>
+    <div class="foot">MACRO, ILLUMINATED.</div>
+  </div>
+</body>
+</html>

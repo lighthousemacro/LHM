@@ -1268,5 +1268,182 @@
         }
       }
     }
+  },
+  "lhm_main_street": {
+    "name": "25 Main Street Monitor",
+    "description": "The operator read. Retail, restaurants and local services — the economy most Americans actually live in. Regime verdict up top, then spending, the wage-price squeeze, rent stress, the customer balance sheet, Main Street jobs, the quit signal, and the scorecard.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Main Street": {
+          "id": "main_street",
+          "name": "Main Street",
+          "layout": [
+            {
+              "i": "lhm_ms_regime",
+              "x": 0,
+              "y": 0,
+              "w": 40,
+              "h": 10
+            },
+            {
+              "i": "lhm_ms_spending",
+              "x": 0,
+              "y": 10,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_ms_wage_price",
+              "x": 20,
+              "y": 10,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_ms_rent",
+              "x": 0,
+              "y": 25,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_ms_credit",
+              "x": 20,
+              "y": 25,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_ms_jobs",
+              "x": 0,
+              "y": 40,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_ms_quits",
+              "x": 20,
+              "y": 40,
+              "w": 20,
+              "h": 15
+            },
+            {
+              "i": "lhm_ms_scorecard",
+              "x": 0,
+              "y": 55,
+              "w": 40,
+              "h": 13
+            }
+          ]
+        }
+      }
+    }
+  },
+  "lhm_cost_margin": {
+    "name": "26 Operator Cost & Margin",
+    "description": "What it costs to run the business. Producer prices, energy and materials, the employment cost index, and freight. The input side of the operator's P&L.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Cost & Margin": {
+          "id": "cost_margin",
+          "name": "Cost & Margin",
+          "layout": [
+            {
+              "i": "lhm_cost_ppi",
+              "x": 0,
+              "y": 0,
+              "w": 20,
+              "h": 16
+            },
+            {
+              "i": "lhm_cost_energy",
+              "x": 20,
+              "y": 0,
+              "w": 20,
+              "h": 16
+            },
+            {
+              "i": "lhm_cost_wages",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 14
+            },
+            {
+              "i": "lhm_cost_freight",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 14
+            },
+            {
+              "i": "lhm_cost_tiles",
+              "x": 0,
+              "y": 30,
+              "w": 40,
+              "h": 12
+            }
+          ]
+        }
+      }
+    }
+  },
+  "lhm_hiring_credit": {
+    "name": "27 Operator Hiring & Credit",
+    "description": "Can you staff it and can you fund it. JOLTS labor flows, the cost of capital, bank lending standards (SLOOS), and business-credit growth. The financing side of the operator's world.",
+    "img": "",
+    "img_dark": "",
+    "img_light": "",
+    "tabs": {
+      "tabs": {
+        "Hiring & Credit": {
+          "id": "hiring_credit",
+          "name": "Hiring & Credit",
+          "layout": [
+            {
+              "i": "lhm_hire_flows",
+              "x": 0,
+              "y": 0,
+              "w": 20,
+              "h": 16
+            },
+            {
+              "i": "lhm_hire_financing",
+              "x": 20,
+              "y": 0,
+              "w": 20,
+              "h": 16
+            },
+            {
+              "i": "lhm_hire_sloos",
+              "x": 0,
+              "y": 16,
+              "w": 20,
+              "h": 14
+            },
+            {
+              "i": "lhm_hire_bizcredit",
+              "x": 20,
+              "y": 16,
+              "w": 20,
+              "h": 14
+            },
+            {
+              "i": "lhm_hire_tiles",
+              "x": 0,
+              "y": 30,
+              "w": 40,
+              "h": 12
+            }
+          ]
+        }
+      }
+    }
   }
 }

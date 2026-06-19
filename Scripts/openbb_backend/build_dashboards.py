@@ -55,8 +55,16 @@ def _date_params() -> list[dict]:
     ]
 
 
-def panel_widget(name, desc, sub, series_ids, rebase=False, w=20, h=16) -> dict:
+def panel_widget(name, desc, sub, series_ids, rebase=False, transform="none", periods=12, w=20, h=16) -> dict:
     """Multi-series overlay chart off /series_panel."""
+    params = [
+        {"type": "text", "paramName": "series_ids", "value": series_ids, "show": False},
+        {"type": "text", "paramName": "rebase", "value": "true" if rebase else "false", "show": False},
+    ]
+    if transform != "none":
+        params.append({"type": "text", "paramName": "transform", "value": transform, "show": False})
+        params.append({"type": "number", "paramName": "periods", "value": periods, "show": False})
+    params.extend(_date_params())
     return {
         "name": name,
         "description": desc,
@@ -65,11 +73,21 @@ def panel_widget(name, desc, sub, series_ids, rebase=False, w=20, h=16) -> dict:
         "type": "chart",
         "endpoint": "series_panel",
         "gridData": {"w": w, "h": h},
-        "params": [
-            {"type": "text", "paramName": "series_ids", "value": series_ids, "show": False},
-            {"type": "text", "paramName": "rebase", "value": "true" if rebase else "false", "show": False},
-            *_date_params(),
-        ],
+        "params": params,
+    }
+
+
+def markdown_widget(name, desc, sub, endpoint, w=20, h=16) -> dict:
+    """Markdown widget off an endpoint that returns a markdown string."""
+    return {
+        "name": name,
+        "description": desc,
+        "category": CATEGORY,
+        "subCategory": sub,
+        "type": "markdown",
+        "endpoint": endpoint,
+        "gridData": {"w": w, "h": h},
+        "params": [],
     }
 
 
@@ -258,6 +276,86 @@ NEW_WIDGETS: dict[str, dict] = {
         "Risk — Recession Probability",
         "REC_PROB over history. 6-12 month forward recession odds from the ensemble.",
         "Risk", "REC_PROB"),
+
+    # ---- Main Street Monitor (operators) ----
+    "lhm_ms_regime": markdown_widget(
+        "Main Street — Regime Verdict",
+        "The one-glance operator read. Regime state plus the headline checklist.",
+        "Operators", "ms_regime", w=40, h=10),
+    "lhm_ms_spending": endpoint_widget(
+        "Main Street — Spending Pulse",
+        "Real PCE YoY vs real retail sales YoY. Is the customer still showing up?",
+        "Operators", "ms_spending", wtype="chart", w=20, h=15, params=_date_params()),
+    "lhm_ms_wage_price": endpoint_widget(
+        "Main Street — Wage-Price Squeeze",
+        "Service-sector wages vs CPI. The gap is real purchasing power.",
+        "Operators", "ms_wage_price", wtype="chart", w=20, h=15, params=_date_params()),
+    "lhm_ms_rent": endpoint_widget(
+        "Main Street — Rent Stress",
+        "Zillow market rents lead CPI shelter 9-12 months. What lease renewals will price.",
+        "Operators", "ms_rent", wtype="chart", w=20, h=15, params=_date_params()),
+    "lhm_ms_credit": endpoint_widget(
+        "Main Street — Customer Balance Sheet",
+        "Credit-card delinquency vs personal saving rate. Borrowing or cushioning?",
+        "Operators", "ms_credit", wtype="chart", w=20, h=15, params=_date_params()),
+    "lhm_ms_jobs": endpoint_widget(
+        "Main Street — Jobs",
+        "Retail trade and leisure/hospitality payroll growth. Main Street's employment pulse.",
+        "Operators", "ms_jobs", wtype="chart", w=20, h=15, params=_date_params()),
+    "lhm_ms_quits": endpoint_widget(
+        "Main Street — Quit Signal",
+        "JOLTS quits for retail and hospitality. Confidence to walk away = labor power.",
+        "Operators", "ms_quits", wtype="chart", w=20, h=15, params=_date_params()),
+    "lhm_ms_scorecard": endpoint_widget(
+        "Main Street — Scorecard",
+        "Eight headline operator reads, latest value and direction.",
+        "Operators", "ms_scorecard", wtype="table", w=40, h=13, params=[]),
+
+    # ---- Operator Cost & Margin ----
+    "lhm_cost_ppi": panel_widget(
+        "Cost — Producer Prices YoY",
+        "PPI final demand, intermediate processed goods, all commodities. Input-cost pressure.",
+        "Operators", "PPIFIS,PPIIDC,PPIACO", transform="yoy", periods=12),
+    "lhm_cost_energy": panel_widget(
+        "Cost — Energy & Materials (rebased)",
+        "WTI crude, retail gasoline, copper, softwood lumber rebased to 100.",
+        "Operators", "DCOILWTICO,GASREGW,PCOPPUSDM,WPU0811", rebase=True),
+    "lhm_cost_wages": panel_widget(
+        "Cost — Employment Cost Index YoY",
+        "ECI wages & salaries and total compensation, year-over-year (quarterly).",
+        "Operators", "ECIWAG,ECIALLCIV", transform="yoy", periods=4, h=14),
+    "lhm_cost_freight": panel_widget(
+        "Cost — Freight (Truck Tonnage)",
+        "ATA truck tonnage index. Goods actually moving through the economy.",
+        "Operators", "TRUCKD11", rebase=False, h=14),
+    "lhm_cost_tiles": latest_widget(
+        "Cost — Input Board",
+        "Producer prices, energy, materials, freight, employment cost.",
+        "Operators",
+        "PPIFIS,PPIIDC,PPIACO,DCOILWTICO,GASREGW,PCOPPUSDM,WPU0811,TRUCKD11,ECIWAG", w=40, h=12),
+
+    # ---- Operator Hiring & Credit ----
+    "lhm_hire_flows": panel_widget(
+        "Hiring — Labor Flows (rates)",
+        "JOLTS quits rate and hires rate, total nonfarm. Can you keep and find people?",
+        "Operators", "JTSQUR,JTSHIR", rebase=False),
+    "lhm_hire_financing": panel_widget(
+        "Hiring — Financing Cost",
+        "Bank prime rate, 30Y mortgage, 10Y Treasury. The cost of a dollar of capital.",
+        "Operators", "DPRIME,MORTGAGE30US,DGS10", rebase=False),
+    "lhm_hire_sloos": panel_widget(
+        "Hiring — Lending Standards (SLOOS)",
+        "Net % of banks tightening C&I loans (all firms, small firms) and loan demand.",
+        "Operators", "DRTSCILM,DRTSCIS,DRSDCILM", rebase=False, h=14),
+    "lhm_hire_bizcredit": panel_widget(
+        "Hiring — Business Credit YoY",
+        "Commercial & industrial loan growth, year-over-year. Is credit actually flowing?",
+        "Operators", "BUSLOANS,TOTCI", transform="yoy", periods=12, h=14),
+    "lhm_hire_tiles": latest_widget(
+        "Hiring — Labor & Credit Board",
+        "Openings, quits, hires, layoffs, prime rate, tightening, delinquency, loan growth.",
+        "Operators",
+        "JTSJOL,JTSQUR,JTSHIR,JTSLDL,DPRIME,DRTSCILM,DRBLACBS,BUSLOANS", w=40, h=12),
 }
 
 # Attach table columns to the risk-model table widget.
@@ -378,6 +476,51 @@ NEW_APPS: dict[str, dict] = {
             ("lhm_crypto_tiles", 0, 30, 40, 12),
         ],
     ),
+
+    # ---- Operators (the other economy — non-market participants) ----
+    "lhm_main_street": app(
+        "25 Main Street Monitor",
+        "The operator read. Retail, restaurants and local services — the economy most Americans "
+        "actually live in. Regime verdict up top, then spending, the wage-price squeeze, rent "
+        "stress, the customer balance sheet, Main Street jobs, the quit signal, and the scorecard.",
+        "main_street", "Main Street",
+        [
+            ("lhm_ms_regime", 0, 0, 40, 10),
+            ("lhm_ms_spending", 0, 10, 20, 15),
+            ("lhm_ms_wage_price", 20, 10, 20, 15),
+            ("lhm_ms_rent", 0, 25, 20, 15),
+            ("lhm_ms_credit", 20, 25, 20, 15),
+            ("lhm_ms_jobs", 0, 40, 20, 15),
+            ("lhm_ms_quits", 20, 40, 20, 15),
+            ("lhm_ms_scorecard", 0, 55, 40, 13),
+        ],
+    ),
+    "lhm_cost_margin": app(
+        "26 Operator Cost & Margin",
+        "What it costs to run the business. Producer prices, energy and materials, the employment "
+        "cost index, and freight. The input side of the operator's P&L.",
+        "cost_margin", "Cost & Margin",
+        [
+            ("lhm_cost_ppi", 0, 0, 20, 16),
+            ("lhm_cost_energy", 20, 0, 20, 16),
+            ("lhm_cost_wages", 0, 16, 20, 14),
+            ("lhm_cost_freight", 20, 16, 20, 14),
+            ("lhm_cost_tiles", 0, 30, 40, 12),
+        ],
+    ),
+    "lhm_hiring_credit": app(
+        "27 Operator Hiring & Credit",
+        "Can you staff it and can you fund it. JOLTS labor flows, the cost of capital, bank lending "
+        "standards (SLOOS), and business-credit growth. The financing side of the operator's world.",
+        "hiring_credit", "Hiring & Credit",
+        [
+            ("lhm_hire_flows", 0, 0, 20, 16),
+            ("lhm_hire_financing", 20, 0, 20, 16),
+            ("lhm_hire_sloos", 0, 16, 20, 14),
+            ("lhm_hire_bizcredit", 20, 16, 20, 14),
+            ("lhm_hire_tiles", 0, 30, 40, 12),
+        ],
+    ),
 }
 
 # Renumber the twelve pillar apps from "06 .." to "07 .." so they slot after
@@ -405,6 +548,7 @@ ORDER = [
     "p01_labor", "p02_prices", "p03_growth", "p04_housing", "p05_consumer", "p06_business",
     "p07_trade", "p08_government", "p09_financial", "p10_plumbing", "p11_structure", "p12_sentiment",
     "lhm_equities", "lhm_rates", "lhm_credit", "lhm_currencies", "lhm_commodities", "lhm_crypto",
+    "lhm_main_street", "lhm_cost_margin", "lhm_hiring_credit",
 ]
 
 

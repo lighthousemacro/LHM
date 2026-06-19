@@ -2653,5 +2653,639 @@
         "show": true
       }
     ]
+  },
+  "lhm_ms_regime": {
+    "name": "Main Street — Regime Verdict",
+    "description": "The one-glance operator read. Regime state plus the headline checklist.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "markdown",
+    "endpoint": "ms_regime",
+    "gridData": {
+      "w": 40,
+      "h": 10
+    },
+    "params": []
+  },
+  "lhm_ms_spending": {
+    "name": "Main Street — Spending Pulse",
+    "description": "Real PCE YoY vs real retail sales YoY. Is the customer still showing up?",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "ms_spending",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_ms_wage_price": {
+    "name": "Main Street — Wage-Price Squeeze",
+    "description": "Service-sector wages vs CPI. The gap is real purchasing power.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "ms_wage_price",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_ms_rent": {
+    "name": "Main Street — Rent Stress",
+    "description": "Zillow market rents lead CPI shelter 9-12 months. What lease renewals will price.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "ms_rent",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_ms_credit": {
+    "name": "Main Street — Customer Balance Sheet",
+    "description": "Credit-card delinquency vs personal saving rate. Borrowing or cushioning?",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "ms_credit",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_ms_jobs": {
+    "name": "Main Street — Jobs",
+    "description": "Retail trade and leisure/hospitality payroll growth. Main Street's employment pulse.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "ms_jobs",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_ms_quits": {
+    "name": "Main Street — Quit Signal",
+    "description": "JOLTS quits for retail and hospitality. Confidence to walk away = labor power.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "ms_quits",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_ms_scorecard": {
+    "name": "Main Street — Scorecard",
+    "description": "Eight headline operator reads, latest value and direction.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "table",
+    "endpoint": "ms_scorecard",
+    "gridData": {
+      "w": 40,
+      "h": 13
+    },
+    "params": []
+  },
+  "lhm_cost_ppi": {
+    "name": "Cost — Producer Prices YoY",
+    "description": "PPI final demand, intermediate processed goods, all commodities. Input-cost pressure.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "PPIFIS,PPIIDC,PPIACO",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "transform",
+        "value": "yoy",
+        "show": false
+      },
+      {
+        "type": "number",
+        "paramName": "periods",
+        "value": 12,
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_cost_energy": {
+    "name": "Cost — Energy & Materials (rebased)",
+    "description": "WTI crude, retail gasoline, copper, softwood lumber rebased to 100.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DCOILWTICO,GASREGW,PCOPPUSDM,WPU0811",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "true",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_cost_wages": {
+    "name": "Cost — Employment Cost Index YoY",
+    "description": "ECI wages & salaries and total compensation, year-over-year (quarterly).",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "ECIWAG,ECIALLCIV",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "transform",
+        "value": "yoy",
+        "show": false
+      },
+      {
+        "type": "number",
+        "paramName": "periods",
+        "value": 4,
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_cost_freight": {
+    "name": "Cost — Freight (Truck Tonnage)",
+    "description": "ATA truck tonnage index. Goods actually moving through the economy.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "TRUCKD11",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_cost_tiles": {
+    "name": "Cost — Input Board",
+    "description": "Producer prices, energy, materials, freight, employment cost.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 40,
+      "h": 12
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "PPIFIS,PPIIDC,PPIACO,DCOILWTICO,GASREGW,PCOPPUSDM,WPU0811,TRUCKD11,ECIWAG",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_hire_flows": {
+    "name": "Hiring — Labor Flows (rates)",
+    "description": "JOLTS quits rate and hires rate, total nonfarm. Can you keep and find people?",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "JTSQUR,JTSHIR",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_hire_financing": {
+    "name": "Hiring — Financing Cost",
+    "description": "Bank prime rate, 30Y mortgage, 10Y Treasury. The cost of a dollar of capital.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DPRIME,MORTGAGE30US,DGS10",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_hire_sloos": {
+    "name": "Hiring — Lending Standards (SLOOS)",
+    "description": "Net % of banks tightening C&I loans (all firms, small firms) and loan demand.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DRTSCILM,DRTSCIS,DRSDCILM",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_hire_bizcredit": {
+    "name": "Hiring — Business Credit YoY",
+    "description": "Commercial & industrial loan growth, year-over-year. Is credit actually flowing?",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "BUSLOANS,TOTCI",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "transform",
+        "value": "yoy",
+        "show": false
+      },
+      {
+        "type": "number",
+        "paramName": "periods",
+        "value": 12,
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_hire_tiles": {
+    "name": "Hiring — Labor & Credit Board",
+    "description": "Openings, quits, hires, layoffs, prime rate, tightening, delinquency, loan growth.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Operators",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 40,
+      "h": 12
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "JTSJOL,JTSQUR,JTSHIR,JTSLDL,DPRIME,DRTSCILM,DRBLACBS,BUSLOANS",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
   }
 }

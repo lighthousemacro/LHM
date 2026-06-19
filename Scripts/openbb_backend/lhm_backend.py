@@ -468,6 +468,8 @@ def series_panel(
     start_date: str | None = Query(None),
     end_date: str | None = Query(None),
     rebase: str = Query("false", description="Rebase each series to 100 at window start ('true'/'false')"),
+    transform: str = Query("none", description="'none' or 'yoy' (percent change over `periods` observations)"),
+    periods: int = Query(12, ge=1, le=60, description="Lookback (observations) for the yoy transform. 12=monthly YoY, 4=quarterly YoY"),
 ) -> list[dict[str, Any]]:
     """Generic multi-series overlay. Long format [{date, series_id, value}].
 
@@ -475,6 +477,10 @@ def series_panel(
     use for cross-asset performance overlays (equity indices, sectors, FX, crypto)
     where absolute levels live on different scales. Leave false for like-scaled
     series (yields, spreads, vol) where levels carry the read.
+
+    Set transform=yoy to return year-over-year percent change (percent change over
+    `periods` observations: 12 for monthly series, 4 for quarterly). Use for the
+    operator cost / hiring reads where the rate of change is the story.
     """
     ids = [s.strip() for s in series_ids.split(",") if s.strip()]
     if not ids:
@@ -483,6 +489,24 @@ def series_panel(
         rows = _multi_series(c, ids, start_date, end_date)
     if not rows:
         raise HTTPException(status_code=404, detail=f"No observations for {series_ids}")
+    if transform.strip().lower() == "yoy":
+        from collections import defaultdict
+        seqs: dict[str, list[tuple[str, float]]] = defaultdict(list)
+        for r in rows:  # rows are globally date-ascending, so each sub-sequence is too
+            if r["value"] is not None:
+                seqs[r["series_id"]].append((r["date"], r["value"]))
+        out: list[dict[str, Any]] = []
+        for sid, seq in seqs.items():
+            for i in range(periods, len(seq)):
+                d, v = seq[i]
+                v0 = seq[i - periods][1]
+                if v0 in (None, 0):
+                    continue
+                out.append({"date": d, "series_id": sid, "value": round((v / v0 - 1) * 100.0, 2)})
+        out.sort(key=lambda x: x["date"])
+        if not out:
+            raise HTTPException(status_code=404, detail="Not enough history for YoY transform")
+        return out
     if rebase.strip().lower() in ("1", "true", "yes", "on"):
         base: dict[str, float] = {}
         out: list[dict[str, Any]] = []
@@ -658,3 +682,240 @@ def engine_summary() -> list[dict[str, Any]]:
             "max_abs_z": round(max(abs(z) for z in zs), 3),
         })
     return out
+
+
+# ---------------------------------------------------------------------------
+# Main Street Monitor — the operator read (non-market participants)
+#
+# Two Economies frame: this side of the house serves business owners, operators
+# and corporates whose decisions hinge on the macro environment without trading
+# on it. Mirrors Scripts/build_main_street_monitor.py so the standalone HTML and
+# the OpenBB terminal tell the same story off the same series.
+# ---------------------------------------------------------------------------
+
+def _ms_series(c: sqlite3.Connection, series_id: str) -> list[tuple[str, float]]:
+    rows = c.execute(
+        "SELECT date, value FROM observations WHERE series_id = ? AND value IS NOT NULL ORDER BY date ASC",
+        (series_id,),
+    ).fetchall()
+    return [(r["date"], float(r["value"])) for r in rows]
+
+
+def _ms_yoy(seq: list[tuple[str, float]], periods: int = 12) -> list[tuple[str, float]]:
+    out: list[tuple[str, float]] = []
+    for i in range(periods, len(seq)):
+        v0 = seq[i - periods][1]
+        if v0 == 0:
+            continue
+        out.append((seq[i][0], (seq[i][1] / v0 - 1.0) * 100.0))
+    return out
+
+
+def _ms_real_yoy(nom: list[tuple[str, float]], deflator: list[tuple[str, float]], periods: int = 12) -> list[tuple[str, float]]:
+    """YoY of a nominal series deflated by a price index, aligned on date."""
+    defl = {d: v for d, v in deflator}
+    real = [(d, v / defl[d]) for d, v in nom if d in defl and defl[d]]
+    return _ms_yoy(real, periods)
+
+
+def _ms_long(
+    named: dict[str, list[tuple[str, float]]],
+    start_date: str | None = None,
+    end_date: str | None = None,
+) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for label, seq in named.items():
+        for d, v in seq:
+            if start_date and d < start_date:
+                continue
+            if end_date and d > end_date:
+                continue
+            out.append({"date": d, "series_id": label, "value": round(v, 3)})
+    out.sort(key=lambda x: x["date"])
+    return out
+
+
+def _ms_last(seq: list[tuple[str, float]]) -> float | None:
+    return seq[-1][1] if seq else None
+
+
+def _ms_trend(seq: list[tuple[str, float]], lookback: int = 3) -> str:
+    if len(seq) < lookback + 1:
+        return "stable"
+    vals = [v for _, v in seq]
+    recent = vals[-1] - vals[-1 - lookback]
+    diffs = [vals[i] - vals[i - 1] for i in range(max(1, len(vals) - 24), len(vals))]
+    if len(diffs) < 2:
+        return "stable"
+    mean = sum(diffs) / len(diffs)
+    sd = (sum((x - mean) ** 2 for x in diffs) / len(diffs)) ** 0.5
+    if abs(recent) < 0.3 * sd * lookback:
+        return "stable"
+    return "rising" if recent > 0 else "falling"
+
+
+def _ms_metrics(c: sqlite3.Connection) -> dict[str, Any]:
+    cpi = _ms_series(c, "CPIAUCSL")
+    pce = _ms_yoy(_ms_series(c, "PCEC96"))
+    rsx = _ms_real_yoy(_ms_series(c, "RSXFS"), cpi)
+    wages = _ms_yoy(_ms_series(c, "CES0500000003"))
+    cpi_yoy = _ms_yoy(cpi)
+    core = _ms_yoy(_ms_series(c, "CPILFESL"))
+    cc = _ms_series(c, "DRCCLACBS")
+    save = _ms_series(c, "PSAVERT")
+    retail_jobs = _ms_yoy(_ms_series(c, "USTRADE"))
+    leisure_jobs = _ms_yoy(_ms_series(c, "USLAH"))
+    retail_quits = _ms_series(c, "JTS4400QUR")
+    leisure_quits = _ms_series(c, "JTS7000QUR")
+    return {
+        "pce": pce, "rsx": rsx, "wages": wages, "cpi_yoy": cpi_yoy, "core": core,
+        "cc": cc, "save": save, "retail_jobs": retail_jobs, "leisure_jobs": leisure_jobs,
+        "retail_quits": retail_quits, "leisure_quits": leisure_quits,
+    }
+
+
+def _ms_verdict(m: dict[str, Any]) -> dict[str, Any]:
+    pce = _ms_last(m["pce"]); rsx = _ms_last(m["rsx"]); wages = _ms_last(m["wages"])
+    cpi = _ms_last(m["cpi_yoy"]); cc = _ms_last(m["cc"]); save = _ms_last(m["save"])
+    rj = _ms_last(m["retail_jobs"]); lj = _ms_last(m["leisure_jobs"])
+    rq = _ms_last(m["retail_quits"]); lq = _ms_last(m["leisure_quits"])
+    gap = (wages - cpi) if (wages is not None and cpi is not None) else None
+    checks = [
+        (pce or -9) > 1.5, (rsx or -9) > 1.0, (gap or -9) > 0, (cpi or 9) < 3.0,
+        (cc or 9) < 3.0, (save or -9) > 4.5, (rj or -9) > 0, (lj or -9) > 0,
+        (rq or -9) > 2.0, (lq or -9) > 3.0,
+    ]
+    score = sum(checks) / len(checks)
+    if score >= 0.75:
+        state = "EXPANDING"
+    elif score >= 0.55:
+        state = "STABLE"
+    elif score >= 0.35:
+        state = "COOLING"
+    else:
+        state = "CONTRACTING"
+    text = {
+        "EXPANDING": "Real spending and wages positive, credit clean, quits elevated. Consumers are healthy.",
+        "STABLE": "Mixed but functional. Watch the divergence between wages and delinquencies.",
+        "COOLING": "Flows are softening. Not broken yet, but the margin of safety has thinned.",
+        "CONTRACTING": "Multiple stress points. The last domino is wobbling.",
+    }[state]
+    return {"state": state, "score": round(score, 2), "checks_passed": sum(checks),
+            "checks_total": len(checks), "text": text, "gap": gap}
+
+
+@app.get("/ms_spending")
+def ms_spending(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+    """Real PCE YoY vs real retail sales YoY. Is the customer still showing up?"""
+    with _conn() as c:
+        cpi = _ms_series(c, "CPIAUCSL")
+        return _ms_long({
+            "Real PCE YoY": _ms_yoy(_ms_series(c, "PCEC96")),
+            "Real Retail Sales YoY": _ms_real_yoy(_ms_series(c, "RSXFS"), cpi),
+        }, start_date, end_date)
+
+
+@app.get("/ms_wage_price")
+def ms_wage_price(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+    """Service-sector wages vs CPI. The gap is real purchasing power."""
+    with _conn() as c:
+        return _ms_long({
+            "Wages YoY": _ms_yoy(_ms_series(c, "CES0500000003")),
+            "CPI YoY": _ms_yoy(_ms_series(c, "CPIAUCSL")),
+        }, start_date, end_date)
+
+
+@app.get("/ms_rent")
+def ms_rent(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+    """Zillow market rents lead CPI shelter by 9-12 months. What renewals will price."""
+    with _conn() as c:
+        return _ms_long({
+            "Zillow Market Rents YoY": _ms_yoy(_ms_series(c, "ZILLOW_ZORI_NATIONAL")),
+            "CPI Rent YoY (lagged)": _ms_yoy(_ms_series(c, "CUSR0000SEHA")),
+        }, start_date, end_date)
+
+
+@app.get("/ms_credit")
+def ms_credit(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+    """Credit-card delinquency vs personal saving rate. Borrowing or cushioning?"""
+    with _conn() as c:
+        return _ms_long({
+            "CC Delinquency Rate": _ms_series(c, "DRCCLACBS"),
+            "Personal Saving Rate": _ms_series(c, "PSAVERT"),
+        }, start_date, end_date)
+
+
+@app.get("/ms_jobs")
+def ms_jobs(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+    """Retail trade and leisure/hospitality payroll growth. Main Street's employment pulse."""
+    with _conn() as c:
+        return _ms_long({
+            "Retail Trade YoY": _ms_yoy(_ms_series(c, "USTRADE")),
+            "Leisure & Hospitality YoY": _ms_yoy(_ms_series(c, "USLAH")),
+        }, start_date, end_date)
+
+
+@app.get("/ms_quits")
+def ms_quits(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+    """JOLTS quits rate for retail and hospitality. Confidence to walk away = labor power."""
+    with _conn() as c:
+        return _ms_long({
+            "Retail Trade Quits Rate": _ms_series(c, "JTS4400QUR"),
+            "Leisure & Hospitality Quits Rate": _ms_series(c, "JTS7000QUR"),
+        }, start_date, end_date)
+
+
+@app.get("/ms_scorecard")
+def ms_scorecard() -> list[dict[str, Any]]:
+    """Six headline Main Street reads, latest value + direction. Operator glance card."""
+    with _conn() as c:
+        m = _ms_metrics(c)
+    def row(metric, seq, detail, good_rising):
+        v = _ms_last(seq)
+        tr = _ms_trend(seq)
+        if tr == "stable":
+            health = "Flat"
+        elif (tr == "rising") == good_rising:
+            health = "Improving"
+        else:
+            health = "Deteriorating"
+        return {"metric": metric, "reading": round(v, 2) if v is not None else None,
+                "detail": detail, "trend": tr.capitalize(), "health": health}
+    return [
+        row("Customer Spending", m["pce"], "Real PCE YoY %", True),
+        row("Retail Pulse", m["rsx"], "Real Retail YoY %", True),
+        row("Service Wages", m["wages"], "AHE YoY %", True),
+        row("Core Prices", m["core"], "Core CPI YoY %", False),
+        row("Credit Strain", m["cc"], "CC Delinquency %", False),
+        row("Safety Margin", m["save"], "Saving Rate %", True),
+        row("Retail Quits", m["retail_quits"], "Quits Rate %", True),
+        row("Hospitality Quits", m["leisure_quits"], "Quits Rate %", True),
+    ]
+
+
+@app.get("/ms_regime")
+def ms_regime() -> str:
+    """Main Street regime verdict as markdown. The one-glance operator read."""
+    with _conn() as c:
+        m = _ms_metrics(c)
+    v = _ms_verdict(m)
+    pce = _ms_last(m["pce"]); rsx = _ms_last(m["rsx"]); wages = _ms_last(m["wages"])
+    cpi = _ms_last(m["cpi_yoy"]); cc = _ms_last(m["cc"]); save = _ms_last(m["save"])
+    gap = v["gap"]
+    def f(x, sign=True):
+        if x is None:
+            return "n/a"
+        return f"{x:+.1f}%" if sign else f"{x:.1f}%"
+    return (
+        f"## Main Street Regime — {v['state']}\n\n"
+        f"**{v['text']}**\n\n"
+        f"Health checks passed: **{v['checks_passed']} / {v['checks_total']}** (score {v['score']}).\n\n"
+        f"| Read | Latest |\n|---|---|\n"
+        f"| Real PCE YoY | {f(pce)} |\n"
+        f"| Real Retail YoY | {f(rsx)} |\n"
+        f"| Wage-CPI gap | {f(gap)} |\n"
+        f"| Wages YoY | {f(wages)} |\n"
+        f"| CPI YoY | {f(cpi)} |\n"
+        f"| CC Delinquency | {f(cc, sign=False)} |\n"
+        f"| Saving Rate | {f(save, sign=False)} |\n"
+    )

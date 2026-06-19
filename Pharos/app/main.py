@@ -20,7 +20,7 @@ app.mount("/static", StaticFiles(directory=str(config.PHAROS_DIR / "static")), n
 WEB = config.PHAROS_DIR / "web"
 SESSION_COOKIE = "pharos_session"
 
-SUBSCRIBE_URL = "https://research.lighthousemacro.com/subscribe"
+SUBSCRIBE_URL = config.JOIN_URL
 _NOT_SUBSCRIBER_HTML = f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pharos · Lighthouse Macro</title>
 <style>body{{font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:#123456;color:#cdd9e3;

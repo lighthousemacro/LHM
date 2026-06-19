@@ -462,6 +462,47 @@ def _multi_series(
     return [dict(r) for r in c.execute(sql, params).fetchall()]
 
 
+@app.get("/series_panel")
+def series_panel(
+    series_ids: str = Query(..., description="Comma-separated series IDs to overlay"),
+    start_date: str | None = Query(None),
+    end_date: str | None = Query(None),
+    rebase: str = Query("false", description="Rebase each series to 100 at window start ('true'/'false')"),
+) -> list[dict[str, Any]]:
+    """Generic multi-series overlay. Long format [{date, series_id, value}].
+
+    Set rebase=true to index every series to 100 at its first in-window point —
+    use for cross-asset performance overlays (equity indices, sectors, FX, crypto)
+    where absolute levels live on different scales. Leave false for like-scaled
+    series (yields, spreads, vol) where levels carry the read.
+    """
+    ids = [s.strip() for s in series_ids.split(",") if s.strip()]
+    if not ids:
+        raise HTTPException(status_code=400, detail="No series_ids provided")
+    with _conn() as c:
+        rows = _multi_series(c, ids, start_date, end_date)
+    if not rows:
+        raise HTTPException(status_code=404, detail=f"No observations for {series_ids}")
+    if rebase.strip().lower() in ("1", "true", "yes", "on"):
+        base: dict[str, float] = {}
+        out: list[dict[str, Any]] = []
+        for r in rows:  # already date-ascending
+            sid, val = r["series_id"], r["value"]
+            if val is None:
+                continue
+            if sid not in base:
+                if val == 0:
+                    continue
+                base[sid] = val
+            out.append({
+                "date": r["date"],
+                "series_id": sid,
+                "value": round(val / base[sid] * 100.0, 2),
+            })
+        return out
+    return rows
+
+
 @app.get("/breadth_panel")
 def breadth_panel(
     start_date: str | None = Query(None),

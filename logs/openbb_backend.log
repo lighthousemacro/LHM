@@ -42,3 +42,15 @@ Documentation is available at /docs.
 [32mINFO[0m:     127.0.0.1:55102 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:55103 - "[1mGET /categories HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:57139 - "[1mGET /composites HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56948 - "[1mGET /apps.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56950 - "[1mGET /series_panel?series_ids=DGS10&rebase=false HTTP/1.1[0m" [31m404 Not Found[0m
+[32mINFO[0m:     127.0.0.1:56969 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56975 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56977 - "[1mGET /apps.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56978 - "[1mGET /widgets.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56979 - "[1mGET /series_panel?series_ids=SPY_Close,QQQ_Close&rebase=true HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56980 - "[1mGET /series_panel?series_ids=T10Y2Y,T10Y3M&rebase=false HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56981 - "[1mGET /risk_model HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56982 - "[1mGET /treasury_auctions HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56983 - "[1mGET /composite_history?index_id=CLG HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:56984 - "[1mGET /series_panel?series_ids=SPY_Close,QQQ_Close&rebase=true HTTP/1.1[0m" [32m200 OK[0m

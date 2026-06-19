@@ -12,7 +12,7 @@
     }
   },
   "lhm_composites_latest": {
-    "name": "LHM Composites \u2014 Latest",
+    "name": "LHM Composites — Latest",
     "description": "Latest reading for every LHM proprietary composite. Source of truth: lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Composites",
@@ -57,7 +57,7 @@
     }
   },
   "lhm_composite_history": {
-    "name": "LHM Composite \u2014 History",
+    "name": "LHM Composite — History",
     "description": "Historical time series for a single LHM composite. Pick MRI, LFI, LCI, MSI, SPI, etc.",
     "category": "Lighthouse Macro",
     "subCategory": "Composites",
@@ -152,7 +152,7 @@
     }
   },
   "lhm_series_search": {
-    "name": "LHM Series \u2014 Browse",
+    "name": "LHM Series — Browse",
     "description": "Browse the 2,500+ series in Lighthouse_Master.db. Filter by category, source, or text search.",
     "category": "Lighthouse Macro",
     "subCategory": "Catalog",
@@ -241,7 +241,7 @@
     }
   },
   "lhm_series_chart": {
-    "name": "LHM Series \u2014 Time Series",
+    "name": "LHM Series — Time Series",
     "description": "Plot any single series from Lighthouse_Master.db.",
     "category": "Lighthouse Macro",
     "subCategory": "Series",
@@ -274,7 +274,7 @@
     ]
   },
   "lhm_latest_tile": {
-    "name": "LHM Series \u2014 Latest Values",
+    "name": "LHM Series — Latest Values",
     "description": "Latest observation for one or more series. Comma-separate IDs (e.g. UNRATE,DGS10,SPX).",
     "category": "Lighthouse Macro",
     "subCategory": "Series",
@@ -330,7 +330,7 @@
     }
   },
   "lhm_pillar_heatmap": {
-    "name": "Diagnostic Dozen \u2014 Pillar Heatmap",
+    "name": "Diagnostic Dozen — Pillar Heatmap",
     "description": "Current z-score for all 12 pillar composites, grouped by engine. Sorted by absolute stress.",
     "category": "Lighthouse Macro",
     "subCategory": "Synthesis",
@@ -386,7 +386,7 @@
     }
   },
   "lhm_transmission_chain": {
-    "name": "Transmission Chain \u2014 Lead/Lag Z-Scores",
+    "name": "Transmission Chain — Lead/Lag Z-Scores",
     "description": "Lead/lag normalized z-scores along a predefined transmission chain. Switch chain via the dropdown.",
     "category": "Lighthouse Macro",
     "subCategory": "Synthesis",
@@ -407,15 +407,15 @@
         "options": [
           {
             "value": "plumbing_credit_labor",
-            "label": "Plumbing \u2192 Credit \u2192 Labor"
+            "label": "Plumbing → Credit → Labor"
           },
           {
             "value": "rates_housing_consumer",
-            "label": "Rates \u2192 Housing \u2192 Consumer"
+            "label": "Rates → Housing → Consumer"
           },
           {
             "value": "sentiment_structure_risk",
-            "label": "Sentiment \u2192 Structure \u2192 Risk"
+            "label": "Sentiment → Structure → Risk"
           }
         ]
       }
@@ -466,8 +466,8 @@
     }
   },
   "lhm_divergence_pair": {
-    "name": "Divergence \u2014 Market vs Real Economy",
-    "description": "Z-score gap between a market-side composite (MSI/SPI/FCI) and a real-economy composite (LFI/GCI/CCI/HCI/BCI). |\u0394z| above the threshold flags decoupling.",
+    "name": "Divergence — Market vs Real Economy",
+    "description": "Z-score gap between a market-side composite (MSI/SPI/FCI) and a real-economy composite (LFI/GCI/CCI/HCI/BCI). |Δz| above the threshold flags decoupling.",
     "category": "Lighthouse Macro",
     "subCategory": "Synthesis",
     "type": "markdown",
@@ -485,15 +485,15 @@
         "options": [
           {
             "value": "MSI",
-            "label": "MSI \u2014 Market Structure"
+            "label": "MSI — Market Structure"
           },
           {
             "value": "SPI",
-            "label": "SPI \u2014 Sentiment & Positioning"
+            "label": "SPI — Sentiment & Positioning"
           },
           {
             "value": "FCI",
-            "label": "FCI \u2014 Financial Conditions"
+            "label": "FCI — Financial Conditions"
           }
         ],
         "show": true
@@ -506,31 +506,31 @@
         "options": [
           {
             "value": "LFI",
-            "label": "LFI \u2014 Labor Fragility"
+            "label": "LFI — Labor Fragility"
           },
           {
             "value": "GCI",
-            "label": "GCI \u2014 Growth"
+            "label": "GCI — Growth"
           },
           {
             "value": "CCI",
-            "label": "CCI \u2014 Consumer"
+            "label": "CCI — Consumer"
           },
           {
             "value": "HCI",
-            "label": "HCI \u2014 Housing"
+            "label": "HCI — Housing"
           },
           {
             "value": "BCI",
-            "label": "BCI \u2014 Business"
+            "label": "BCI — Business"
           },
           {
             "value": "CLG",
-            "label": "CLG \u2014 Credit-Labor Gap"
+            "label": "CLG — Credit-Labor Gap"
           },
           {
             "value": "LCI",
-            "label": "LCI \u2014 Liquidity Cushion"
+            "label": "LCI — Liquidity Cushion"
           }
         ],
         "show": true
@@ -539,14 +539,14 @@
         "type": "number",
         "paramName": "threshold",
         "value": 1.0,
-        "label": "Flag threshold (|\u0394z|)",
+        "label": "Flag threshold (|Δz|)",
         "show": true
       }
     ]
   },
   "lhm_divergence_grid": {
-    "name": "Divergence \u2014 Grid",
-    "description": "Pairwise divergence across the canonical market vs real-economy pairs. Flags rows where |\u0394z| \u2265 threshold.",
+    "name": "Divergence — Grid",
+    "description": "Pairwise divergence across the canonical market vs real-economy pairs. Flags rows where |Δz| ≥ threshold.",
     "category": "Lighthouse Macro",
     "subCategory": "Synthesis",
     "type": "table",
@@ -560,7 +560,7 @@
         "type": "number",
         "paramName": "threshold",
         "value": 1.0,
-        "label": "Flag threshold (|\u0394z|)",
+        "label": "Flag threshold (|Δz|)",
         "show": true
       }
     ],
@@ -595,7 +595,7 @@
           },
           {
             "field": "delta_z",
-            "headerName": "\u0394z",
+            "headerName": "Δz",
             "cellDataType": "number",
             "width": 90
           },
@@ -616,7 +616,7 @@
     }
   },
   "lhm_mri_history": {
-    "name": "MRI \u2014 Master Composite",
+    "name": "MRI — Master Composite",
     "description": "Macro Risk Index. Master composite that drives the regime multiplier and equity allocation.",
     "category": "Lighthouse Macro",
     "subCategory": "Pulse",
@@ -636,7 +636,7 @@
     ]
   },
   "lhm_pulse_tiles": {
-    "name": "Pulse \u2014 Headline Series",
+    "name": "Pulse — Headline Series",
     "description": "Anchor reads: MRI driver components (10Y, 2Y, VIX, HY OAS, Mortgage 30Y, RRP).",
     "category": "Lighthouse Macro",
     "subCategory": "Pulse",
@@ -692,8 +692,8 @@
     }
   },
   "lhm_breadth_panel": {
-    "name": "Breadth \u2014 % > 20d / 50d / 200d MA",
-    "description": "S&P 500 breadth panel. Three-line view of percent of constituents above their 20d, 50d, 200d moving average. Pillar 11 \u2014 Structure.",
+    "name": "Breadth — % > 20d / 50d / 200d MA",
+    "description": "S&P 500 breadth panel. Three-line view of percent of constituents above their 20d, 50d, 200d moving average. Pillar 11 — Structure.",
     "category": "Lighthouse Macro",
     "subCategory": "Structure",
     "type": "chart",
@@ -718,8 +718,8 @@
     ]
   },
   "lhm_sentiment_panel": {
-    "name": "Sentiment \u2014 AAII Bull / Bear / Spread",
-    "description": "AAII bullish %, bearish %, and bull-bear spread. Pillar 12 \u2014 Sentiment.",
+    "name": "Sentiment — AAII Bull / Bear / Spread",
+    "description": "AAII bullish %, bearish %, and bull-bear spread. Pillar 12 — Sentiment.",
     "category": "Lighthouse Macro",
     "subCategory": "Sentiment",
     "type": "chart",
@@ -744,8 +744,8 @@
     ]
   },
   "lhm_rates_panel": {
-    "name": "Rates \u2014 Treasury Curve + Mortgage",
-    "description": "2Y, 5Y, 10Y, 30Y Treasury yields plus 30Y mortgage rate. Pillar 8 \u2014 Government / Pillar 4 \u2014 Housing transmission.",
+    "name": "Rates — Treasury Curve + Mortgage",
+    "description": "2Y, 5Y, 10Y, 30Y Treasury yields plus 30Y mortgage rate. Pillar 8 — Government / Pillar 4 — Housing transmission.",
     "category": "Lighthouse Macro",
     "subCategory": "Rates",
     "type": "chart",
@@ -770,8 +770,8 @@
     ]
   },
   "lhm_credit_panel": {
-    "name": "Credit \u2014 HY vs IG OAS",
-    "description": "ICE BofA high-yield and investment-grade option-adjusted spreads. Pillar 9 \u2014 Financial.",
+    "name": "Credit — HY vs IG OAS",
+    "description": "ICE BofA high-yield and investment-grade option-adjusted spreads. Pillar 9 — Financial.",
     "category": "Lighthouse Macro",
     "subCategory": "Credit",
     "type": "chart",
@@ -796,8 +796,8 @@
     ]
   },
   "lhm_plumbing_panel": {
-    "name": "Plumbing \u2014 RRP / WALCL / TGA / IORB",
-    "description": "Reserve management + Fed liquidity stack. Pillar 10 \u2014 Plumbing.",
+    "name": "Plumbing — RRP / WALCL / TGA / IORB",
+    "description": "Reserve management + Fed liquidity stack. Pillar 10 — Plumbing.",
     "category": "Lighthouse Macro",
     "subCategory": "Plumbing",
     "type": "chart",
@@ -822,7 +822,7 @@
     ]
   },
   "lhm_engine_summary": {
-    "name": "Engines \u2014 Mean |z| Summary",
+    "name": "Engines — Mean |z| Summary",
     "description": "Per-engine summary of pillar composite z-scores. Mean, mean |z|, and max |z| across the pillars in each engine. The fastest read on which engine is doing the work.",
     "category": "Lighthouse Macro",
     "subCategory": "Synthesis",
@@ -872,7 +872,7 @@
     }
   },
   "lhm_labor_composite": {
-    "name": "Labor \u2014 LFI History",
+    "name": "Labor — LFI History",
     "description": "Pillar 1 composite (LFI). The Labor read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -904,7 +904,7 @@
     ]
   },
   "lhm_labor_keyseries": {
-    "name": "Labor \u2014 Key Series",
+    "name": "Labor — Key Series",
     "description": "Pillar 1 anchor series, latest reading.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -960,7 +960,7 @@
     }
   },
   "lhm_prices_composite": {
-    "name": "Prices \u2014 PCI History",
+    "name": "Prices — PCI History",
     "description": "Pillar 2 composite (PCI). The Prices read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -992,7 +992,7 @@
     ]
   },
   "lhm_prices_keyseries": {
-    "name": "Prices \u2014 Key Series",
+    "name": "Prices — Key Series",
     "description": "Pillar 2 anchor series, latest reading.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1048,7 +1048,7 @@
     }
   },
   "lhm_growth_composite": {
-    "name": "Growth \u2014 GCI History",
+    "name": "Growth — GCI History",
     "description": "Pillar 3 composite (GCI). The Growth read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1080,7 +1080,7 @@
     ]
   },
   "lhm_growth_keyseries": {
-    "name": "Growth \u2014 Key Series",
+    "name": "Growth — Key Series",
     "description": "Pillar 3 anchor series, latest reading.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1136,7 +1136,7 @@
     }
   },
   "lhm_housing_composite": {
-    "name": "Housing \u2014 HCI History",
+    "name": "Housing — HCI History",
     "description": "Pillar 4 composite (HCI). The Housing read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1168,7 +1168,7 @@
     ]
   },
   "lhm_housing_keyseries": {
-    "name": "Housing \u2014 Key Series",
+    "name": "Housing — Key Series",
     "description": "Pillar 4 anchor series, latest reading.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1224,7 +1224,7 @@
     }
   },
   "lhm_consumer_composite": {
-    "name": "Consumer \u2014 CCI History",
+    "name": "Consumer — CCI History",
     "description": "Pillar 5 composite (CCI). The Consumer read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1256,7 +1256,7 @@
     ]
   },
   "lhm_consumer_keyseries": {
-    "name": "Consumer \u2014 Key Series",
+    "name": "Consumer — Key Series",
     "description": "Pillar 5 anchor series, latest reading.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1312,7 +1312,7 @@
     }
   },
   "lhm_business_composite": {
-    "name": "Business \u2014 BCI History",
+    "name": "Business — BCI History",
     "description": "Pillar 6 composite (BCI). The Business read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1344,7 +1344,7 @@
     ]
   },
   "lhm_business_keyseries": {
-    "name": "Business \u2014 Key Series",
+    "name": "Business — Key Series",
     "description": "Pillar 6 anchor series, latest reading.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1400,7 +1400,7 @@
     }
   },
   "lhm_trade_composite": {
-    "name": "Trade \u2014 TCI History",
+    "name": "Trade — TCI History",
     "description": "Pillar 7 composite (TCI). The Trade read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1432,7 +1432,7 @@
     ]
   },
   "lhm_trade_keyseries": {
-    "name": "Trade \u2014 Key Series",
+    "name": "Trade — Key Series",
     "description": "Pillar 7 anchor series, latest reading.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1488,7 +1488,7 @@
     }
   },
   "lhm_government_composite": {
-    "name": "Government \u2014 FPI History",
+    "name": "Government — FPI History",
     "description": "Pillar 8 composite (FPI). The Government read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1520,7 +1520,7 @@
     ]
   },
   "lhm_financial_composite": {
-    "name": "Financial \u2014 FCI History",
+    "name": "Financial — FCI History",
     "description": "Pillar 9 composite (FCI). The Financial read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1552,7 +1552,7 @@
     ]
   },
   "lhm_plumbing_composite": {
-    "name": "Plumbing \u2014 LCI History",
+    "name": "Plumbing — LCI History",
     "description": "Pillar 10 composite (LCI). The Plumbing read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1584,7 +1584,7 @@
     ]
   },
   "lhm_structure_composite": {
-    "name": "Structure \u2014 MSI History",
+    "name": "Structure — MSI History",
     "description": "Pillar 11 composite (MSI). The Structure read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1616,7 +1616,7 @@
     ]
   },
   "lhm_sentiment_composite": {
-    "name": "Sentiment \u2014 SPI History",
+    "name": "Sentiment — SPI History",
     "description": "Pillar 12 composite (SPI). The Sentiment read over full history, source of truth lighthouse_indices.",
     "category": "Lighthouse Macro",
     "subCategory": "Pillars",
@@ -1631,6 +1631,1013 @@
         "type": "text",
         "paramName": "index_id",
         "value": "SPI",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_eq_indices": {
+    "name": "Equities — Index Map (rebased)",
+    "description": "SPY / QQQ / IWM / EFA / EEM rebased to 100. Large vs tech vs small vs intl vs EM.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Equities",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "SPY_Close,QQQ_Close,IWM_Close,EFA_Close,EEM_Close",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "true",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_eq_sectors": {
+    "name": "Equities — Sector Rotation (rebased)",
+    "description": "GICS sector ETFs rebased to 100. Relative leadership across the eleven sectors.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Equities",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "XLK_Close,XLF_Close,XLE_Close,XLV_Close,XLI_Close,XLY_Close,XLP_Close,XLU_Close,XLB_Close",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "true",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_eq_tiles": {
+    "name": "Equities — Tape & Internals",
+    "description": "S&P level, VIX, % above 200d, RSI, Z-RoC, AAII spread. Pillar 11/12 read.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Equities",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "SPX_Close,VIXCLS,SPX_PCT_ABOVE_200D,SPX_RSI_14d,SPX_Z_RoC_63d,AAII_Bull_Bear_Spread",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_eq_sector_tiles": {
+    "name": "Equities — Sector Levels",
+    "description": "Latest close for each GICS sector ETF.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Equities",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "XLK_Close,XLF_Close,XLE_Close,XLV_Close,XLI_Close,XLY_Close,XLP_Close,XLU_Close,XLB_Close",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_rates_curve": {
+    "name": "Rates — Curve Slope",
+    "description": "10Y-2Y and 10Y-3M spreads. Inversion and re-steepening.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Rates",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "T10Y2Y,T10Y3M",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_rates_real": {
+    "name": "Rates — Real Yield & Breakeven",
+    "description": "10Y TIPS real yield and 10Y breakeven inflation.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Rates",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DFII10,T10YIE",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_rates_tiles": {
+    "name": "Rates — Curve & Policy",
+    "description": "Curve anchors, spreads, real yield, breakeven, mortgage, SOFR, EFFR.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Rates",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DGS2,DGS5,DGS10,DGS30,T10Y2Y,T10Y3M,DFII10,T10YIE,MORTGAGE30US,SOFR,EFFR",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_treasury_auctions": {
+    "name": "Rates — Treasury Auction Quality",
+    "description": "10Y tail, bid-to-cover, indirect share, bills share, weighted-avg maturity.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Rates",
+    "type": "chart",
+    "endpoint": "treasury_auctions",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_credit_etfs": {
+    "name": "Credit — HY vs IG ETFs (rebased)",
+    "description": "HYG and LQD rebased to 100. Price-return proxy for high-yield vs investment-grade.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Credit",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "HYG_Close,LQD_Close",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "true",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_clg_history": {
+    "name": "Credit — Credit-Labor Gap (CLG)",
+    "description": "CLG composite over history. Spreads vs labor fragility. <-1.0 = spreads ignoring labor.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Credit",
+    "type": "chart",
+    "endpoint": "composite_history",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "index_id",
+        "value": "CLG",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_credit_tiles": {
+    "name": "Credit — Spreads & ETFs",
+    "description": "HY OAS, IG OAS, and the HYG / LQD closes.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Credit",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 20,
+      "h": 15
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "BAMLH0A0HYM2,BAMLC0A0CM,HYG_Close,LQD_Close",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_fx_dollar": {
+    "name": "Currencies — Dollar Indices",
+    "description": "Trade-weighted broad dollar and advanced-foreign-economies dollar.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Currencies",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DTWEXBGS,DTWEXAFEGS",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_fx_majors": {
+    "name": "Currencies — Majors (rebased)",
+    "description": "EUR, GBP, JPY, CAD, CNY vs USD rebased to 100. Quote conventions vary; read moves, not levels.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Currencies",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DEXUSEU,DEXUSUK,DEXJPUS,DEXCAUS,DEXCHUS",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "true",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_fx_tiles": {
+    "name": "Currencies — Spot Board",
+    "description": "Broad dollar plus the major USD pairs.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Currencies",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 40,
+      "h": 13
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DTWEXBGS,DEXUSEU,DEXUSUK,DEXJPUS,DEXCAUS,DEXMXUS,DEXCHUS",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_cmdty_energy": {
+    "name": "Commodities — Energy",
+    "description": "WTI and Brent crude, dollars per barrel.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Commodities",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DCOILWTICO,DCOILBRENTEU",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_cmdty_metals": {
+    "name": "Commodities — Metals (rebased)",
+    "description": "Gold, silver, and gold miners rebased to 100.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Commodities",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "GLD_Close,SLV_Close,GDX_Close",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "true",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_cmdty_vol": {
+    "name": "Commodities — Implied Vol",
+    "description": "CBOE gold (GVZ) and crude oil (OVX) volatility indices.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Commodities",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "GVZCLS,OVXCLS",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "false",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_cmdty_tiles": {
+    "name": "Commodities — Board",
+    "description": "WTI, Brent, gold, silver, copper, retail gasoline.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Commodities",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "DCOILWTICO,DCOILBRENTEU,GLD_Close,SLV_Close,PCOPPUSDM,GASREGW",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_crypto_majors": {
+    "name": "Crypto — Majors (rebased)",
+    "description": "BTC, ETH, SOL rebased to 100. Relative performance across the majors.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Crypto",
+    "type": "chart",
+    "endpoint": "series_panel",
+    "gridData": {
+      "w": 40,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "CRYPTO_BTC_PRICE,CRYPTO_ETH_PRICE,CRYPTO_SOL_PRICE",
+        "show": false
+      },
+      {
+        "type": "text",
+        "paramName": "rebase",
+        "value": "true",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_crypto_cdli": {
+    "name": "Crypto — DeFi Liquidity (CDLI)",
+    "description": "Crypto DeFi Liquidity composite. Free-data on-chain liquidity read.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Crypto",
+    "type": "chart",
+    "endpoint": "composite_history",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "index_id",
+        "value": "CRYPTO_DEFI_LIQUIDITY",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_crypto_sli": {
+    "name": "Crypto — Stablecoin Liquidity (SLI)",
+    "description": "Stablecoin Liquidity Impulse. Dollar liquidity entering / leaving the chain.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Crypto",
+    "type": "chart",
+    "endpoint": "composite_history",
+    "gridData": {
+      "w": 20,
+      "h": 14
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "index_id",
+        "value": "SLI",
+        "show": false
+      },
+      {
+        "type": "date",
+        "paramName": "start_date",
+        "label": "Start",
+        "show": true
+      },
+      {
+        "type": "date",
+        "paramName": "end_date",
+        "label": "End",
+        "show": true
+      }
+    ]
+  },
+  "lhm_crypto_tiles": {
+    "name": "Crypto — Majors Board",
+    "description": "BTC / ETH / SOL price and BTC / ETH market cap.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Crypto",
+    "type": "table",
+    "endpoint": "latest",
+    "gridData": {
+      "w": 40,
+      "h": 12
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "series_ids",
+        "value": "CRYPTO_BTC_PRICE,CRYPTO_ETH_PRICE,CRYPTO_SOL_PRICE,CRYPTO_BTC_MCAP,CRYPTO_ETH_MCAP",
+        "label": "Series IDs",
+        "show": true
+      }
+    ],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "series_id",
+            "headerName": "ID",
+            "pinned": "left",
+            "width": 150
+          },
+          {
+            "field": "title",
+            "headerName": "Title",
+            "width": 280
+          },
+          {
+            "field": "date",
+            "headerName": "Date",
+            "cellDataType": "date",
+            "width": 110
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "units",
+            "headerName": "Units",
+            "width": 110
+          }
+        ]
+      }
+    }
+  },
+  "lhm_risk_model": {
+    "name": "Risk — Ensemble Output",
+    "description": "Recession probability, ensemble risk, warning level, allocation multiplier, liquidity stage.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Risk",
+    "type": "table",
+    "endpoint": "risk_model",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [],
+    "data": {
+      "table": {
+        "showAll": true,
+        "columnsDefs": [
+          {
+            "field": "index_id",
+            "headerName": "Model",
+            "pinned": "left",
+            "width": 200
+          },
+          {
+            "field": "as_of",
+            "headerName": "As Of",
+            "cellDataType": "date",
+            "width": 120
+          },
+          {
+            "field": "value",
+            "headerName": "Value",
+            "cellDataType": "number",
+            "width": 120
+          },
+          {
+            "field": "status",
+            "headerName": "Status",
+            "width": 160
+          }
+        ]
+      }
+    }
+  },
+  "lhm_recprob_history": {
+    "name": "Risk — Recession Probability",
+    "description": "REC_PROB over history. 6-12 month forward recession odds from the ensemble.",
+    "category": "Lighthouse Macro",
+    "subCategory": "Risk",
+    "type": "chart",
+    "endpoint": "composite_history",
+    "gridData": {
+      "w": 20,
+      "h": 16
+    },
+    "params": [
+      {
+        "type": "text",
+        "paramName": "index_id",
+        "value": "REC_PROB",
         "show": false
       },
       {

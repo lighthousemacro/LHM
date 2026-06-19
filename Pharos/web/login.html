@@ -22,9 +22,11 @@
   input[type=email]:focus{outline:none;border-color:var(--ocean);}
   button{width:100%;margin-top:1.2rem;background:var(--dusk);color:#fff;border:none;border-radius:7px;padding:1rem;font-weight:600;font-size:0.98rem;cursor:pointer;font-family:inherit;}
   button:hover{filter:brightness(0.93);}
-  .incl{margin-top:1.6rem;border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem;}
-  .incl .t{font-weight:700;font-size:0.9rem;}
-  .incl .d{color:#9fb3c4;font-size:0.82rem;margin-top:0.2rem;}
+  .sub-head{display:flex;gap:0.8rem;align-items:flex-start;margin:0.4rem 0 1.4rem;padding:1rem 1.1rem;background:rgba(35,137,187,0.10);border:1px solid rgba(137,204,255,0.28);border-radius:10px;}
+  .sub-ico{flex:none;width:38px;height:38px;border-radius:8px;background:var(--ocean);display:flex;align-items:center;justify-content:center;}
+  .sub-ico svg{width:20px;height:20px;display:block;}
+  .sub-title{font-weight:700;font-size:0.92rem;color:#fff;line-height:1.25;}
+  .sub-subtext{color:#9fb3c4;font-size:0.82rem;margin-top:0.2rem;}
   .foot{margin-top:1.6rem;font-family:'Source Code Pro',monospace;font-size:0.66rem;letter-spacing:0.1em;color:#6b7d8c;text-align:center;}
 </style>
 </head>
@@ -34,15 +36,18 @@
     <div class="mono">// Lighthouse Macro</div>
     <div class="wm">PHAROS<span class="dot">.</span></div>
     <div class="sub">The macro terminal. Read the work, watch the engine, pull the dashboards.</div>
+    <div class="sub-head">
+      <div class="sub-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.4 4.4L19 7.3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div>
+        <div class="sub-title">Paid Substack subscriber? Pharos is included.</div>
+        <div class="sub-subtext">Use the email on your subscription to activate access.</div>
+      </div>
+    </div>
     <form method="post" action="/auth/request">
       <label for="email">Email on your subscription</label>
       <input id="email" name="email" type="email" required placeholder="you@email.com" autocomplete="email">
       <button type="submit">Enter Pharos</button>
     </form>
-    <div class="incl">
-      <div class="t">Paid Substack subscriber? You are included.</div>
-      <div class="d">Enter the email on your subscription. No password, no inbox. We confirm it is active and let you straight in.</div>
-    </div>
     <div class="foot">MACRO, ILLUMINATED.</div>
   </div>
 </body>

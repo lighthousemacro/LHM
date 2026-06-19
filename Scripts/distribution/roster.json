@@ -1,0 +1,14 @@
+{
+  "_comment": "Lighthouse Macro distribution list. Sends go out BLIND (BCC) so recipients never see each other. Single source of truth — edit this file to add or remove. Mechanism locked 2026-06-18.",
+  "send_mode": "bcc",
+  "recipients": [
+    {
+      "name": "Marc Mishkin",
+      "org": "MJ Research",
+      "to": "info@mjresearch.org",
+      "cc": "marcb@mjresearch.org",
+      "tier": "research_distribution",
+      "added": "2026-06-18"
+    }
+  ]
+}

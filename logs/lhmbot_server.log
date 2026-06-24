@@ -1903,3 +1903,19 @@ getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot8642953979:AAG_eP5grbGxBFoRhflBDbAEP8_5LMJjCbM/getUpdates (Caused by ConnectTimeoutError(<HTTPSConnection(host='api.telegram.org', port=443) at 0x1240334d0>, 'Connection to api.telegram.org timed out. (connect timeout=40)'))
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=40)
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s

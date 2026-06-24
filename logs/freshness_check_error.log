@@ -920,3 +920,4 @@
 2026-06-18 19:36:57 [INFO]   ICSA: refreshed (+3102 obs)
 2026-06-18 19:36:58 [INFO]   CCSA: refreshed (+3101 obs)
 2026-06-18 19:37:06 [INFO] Freshness check done: 2 series refreshed, 6,203 obs added.
+2026-06-23 20:04:28 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

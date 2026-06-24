@@ -817,6 +817,16 @@ def main():
         with open(os.path.join(OUT_DIR, m["slug"] + ".html"), "w", encoding="utf-8") as f:
             f.write(page)
 
+    # drop orphaned pages (anything excluded/removed since the last build)
+    keep = {m["slug"] + ".html" for m in items} | {"index.html"}
+    removed = 0
+    for fn in os.listdir(OUT_DIR):
+        if fn.endswith(".html") and fn not in keep:
+            os.remove(os.path.join(OUT_DIR, fn))
+            removed += 1
+    if removed:
+        print(f"  removed {removed} orphaned page(s)")
+
     # index
     with open(os.path.join(OUT_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(index_page(items))

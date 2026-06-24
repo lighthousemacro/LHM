@@ -922,3 +922,11 @@
 2026-06-18 19:37:06 [INFO] Freshness check done: 2 series refreshed, 6,203 obs added.
 2026-06-23 20:04:28 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-06-24 08:35:46 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-06-24 12:35:47 [INFO] Stale series (3):
+  HSN1F: db=2026-04-01 -> fred=2026-05-01
+  MSPNHSUS: db=2026-04-01 -> fred=2026-05-01
+  MSACSR: db=2026-04-01 -> fred=2026-05-01
+2026-06-24 12:35:48 [INFO]   HSN1F: refreshed (+761 obs)
+2026-06-24 12:35:49 [INFO]   MSPNHSUS: refreshed (+761 obs)
+2026-06-24 12:35:49 [INFO]   MSACSR: refreshed (+761 obs)
+2026-06-24 12:35:49 [INFO] Freshness check done: 3 series refreshed, 2,283 obs added.

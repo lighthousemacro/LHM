@@ -60,6 +60,41 @@ SECTION_ORDER = [k for k, *_ in SECTIONS]
 # Per-post tag shown on cards = the short section name.
 PUB_TAG = {k: short for k, _n, short, _ki, _b in SECTIONS}
 
+# Pieces removed from the Reading Room (firm announcements, not analysis).
+EXCLUDE = {
+    "twelve-hours",
+    "welcome-to-lighthouse-macro",
+    "building-the-intelligence-layer",
+    "introducing-lighthouse-macro-crypto",
+    "the-foundation-is-set-now-we-build",
+}
+
+# Curated order for The Blueprint (FRAMEWORK): the Two Economies primer first,
+# then the twelve pillars 1->12, then the indicator-framework pieces, with the
+# Liquidity Transmission Framework pinned LAST. Anything unlisted slots in by
+# date between the ordered block and the pinned-last piece.
+FRAMEWORK_ORDER = [
+    "why-most-americans-dont-care-about",
+    "labor-the-source-code",
+    "prices-the-transmission-belt",
+    "growth-the-second-derivative",
+    "housing-the-collateral-engine",
+    "consumer-the-last-domino",
+    "business-the-forward-commitment",
+    "trade-the-pipeline",
+    "government-the-fiscal-overhang",
+    "financial-the-cascade",
+    "plumbing-the-invisible-infrastructure",
+    "market-structure-the-weight-of-evidence",
+    "sentiment-and-positioning-the-contrarian-216",
+    "crypto-liquidity-impulse",
+]
+FRAMEWORK_LAST = "liquidity-transmission-framework"
+
+# Fallback card image when a piece has no chart of its own: the branded card,
+# never a blank panel. Every piece shows a chart or the logo.
+LOGO_FALLBACK = "/og-image.png"
+
 # Content-read classifications for the 27 posts whose section is not obvious
 # from metadata (reading-room-classify workflow: 27 reader agents + reviewer,
 # each read the actual article text). The other 35 are deterministic via
@@ -413,7 +448,8 @@ def article_page(meta, dek, content_html, is_paid):
 
 def _card(m):
     badge = '<span class="badge paid">Members</span>' if m["paid"] else '<span class="badge free">Free</span>'
-    thumb = f'<div class="rc-thumb"><img src="{m["lead_img"]}" loading="lazy" alt=""></div>' if m["lead_img"] else '<div class="rc-thumb rc-noimg"></div>'
+    img = m["lead_img"] or LOGO_FALLBACK
+    thumb = f'<div class="rc-thumb"><img src="{img}" loading="lazy" alt=""></div>'
     return f'''<a class="rcard" href="{m['slug']}.html">
   {thumb}
   <div class="rc-body">
@@ -430,6 +466,18 @@ def index_page(items):
     by_sec = {k: [] for k in SECTION_ORDER}
     for m in items:
         by_sec.get(m["section"], by_sec["FIELD_NOTES"]).append(m)
+
+    # The Blueprint runs in a curated order (Two Economies -> pillars 1-12 ->
+    # frameworks -> Liquidity Transmission last), not reverse-chron.
+    fw_idx = {s: i for i, s in enumerate(FRAMEWORK_ORDER)}
+    def _fw_key(m):
+        s = m["slug"]
+        if s == FRAMEWORK_LAST:
+            return (2, 0.0)
+        if s in fw_idx:
+            return (0, float(fw_idx[s]))
+        return (1, -m["dt"].timestamp())  # unlisted: newest first, before the pinned-last piece
+    by_sec["FRAMEWORK"].sort(key=_fw_key)
 
     jump, blocks = [], []
     for key, name, short, kicker, blurb in SECTIONS:
@@ -718,6 +766,8 @@ def main():
         except Exception:
             dt = datetime.now(timezone.utc)
         slug = pid.split(".", 1)[1] if "." in pid else pid
+        if slug in EXCLUDE:
+            continue
         if slug in seen_slugs:
             slug = f"{slug}-{pid.split('.',1)[0]}"
         seen_slugs[slug] = True

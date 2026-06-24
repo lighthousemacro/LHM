@@ -1919,3 +1919,13 @@ getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+net error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+getUpdates 409 (another poller holds the token); retry in 4s
+getUpdates 409 (another poller holds the token); retry in 8s

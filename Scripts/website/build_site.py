@@ -128,10 +128,10 @@ FALLBACK_INDICES = {
 }
 
 _QUERY = """
-    SELECT index_id, value, status, date
+    SELECT li.index_id, li.value, li.status, li.date
     FROM lighthouse_indices li
-    WHERE date = (SELECT MAX(date) FROM lighthouse_indices
-                  WHERE index_id = li.index_id)
+    JOIN (SELECT index_id, MAX(date) AS md FROM lighthouse_indices GROUP BY index_id) m
+      ON li.index_id = m.index_id AND li.date = m.md
 """
 
 

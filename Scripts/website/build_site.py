@@ -137,7 +137,7 @@ _QUERY = """
 
 def _query_indices(db_path: Path, uri_extra: str = "") -> dict[str, dict]:
     uri = f"file:{db_path}?mode=ro{uri_extra}"
-    con = sqlite3.connect(uri, uri=True, timeout=3)
+    con = sqlite3.connect(uri, uri=True, timeout=8)
     try:
         rows = con.execute(_QUERY).fetchall()
     finally:
@@ -182,7 +182,7 @@ def load_indices() -> dict[str, dict]:
 
     t = threading.Thread(target=worker, daemon=True)
     t.start()
-    t.join(timeout=5)
+    t.join(timeout=20)
 
     if holder.get("data"):
         print(f"INFO: dashboard read from {holder['src']}")

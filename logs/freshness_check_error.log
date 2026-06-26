@@ -960,3 +960,4 @@
 2026-06-26 11:50:04 [INFO]   NEWORDER: refreshed (+412 obs)
 2026-06-26 11:52:08 [INFO]   ANDENO: refreshed (+412 obs)
 2026-06-26 11:53:14 [INFO] Freshness check done: 12 series refreshed, 12,707 obs added.
+2026-06-26 12:35:47 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

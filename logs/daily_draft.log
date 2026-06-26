@@ -1,17 +1,24 @@
-[2026-06-24 14:57:14] ════════ DAILY DRAFT RUN START (2026-06-24) ════════
-[2026-06-24 14:57:14] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-Done. The unattended pipeline produced a complete, ready-to-review Beam.
+[2026-06-26 11:35:06] ════════ DAILY DRAFT RUN START (2026-06-26) ════════
+[2026-06-26 11:35:07] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Unattended daily run complete. A finished, branded, review-ready draft is open in the browser.
 
-**What's waiting for Bob:** *The Beam · "Priced Out, Tapped Out"* — the Main-Street read on last week's hawkish Fed. The thread: the cuts that would thaw housing just got priced out, the monthly payment on the median home is up ~76% since 2021 (~$1,156 → ~$2,032) even though the median price has *fallen* 9% from its 2022 peak (the rate did all the work), and the household absorbing it runs a 2.6% saving rate (multi-decade low) and 49.8 sentiment. Two Economies framing, deliberately complementary to today's already-built markets piece (`no-put-no-cushion`) — zero chart or claim overlap.
+## What I built
 
-**Key autonomous decisions (all in the BUILD NOTES banner at the top of the draft):**
-- Chose **The Beam** over Wednesday's default Note (day was data-rich; the Beacon slot was already filled).
-- **Dropped** the existing-home-sales turnover chart — that FRED series has only 18 obs in the DB (since 2024-11), an ingestion gap. Replaced with new-home-sales full history; no published claim depended on it. Flagged for backfill in the chart MANIFEST.
-- **Bigdata.com** was unavailable (subscription paused), so the piece stands on DB data + the Fed's June SEP. No fabrication.
+**Scout decision (one thread, one format):** Format = **The Beam** (Friday default is a Note, but the thread warranted long-form). Thread = **"Real Yields Did the Work"** — gold's correction is a real-rate repricing, not a mood swing. Chosen over the recently-covered Fed-put and consumer-squeeze threads, and grounded entirely in real, sourced data:
+- Gold topped ~$5,300 (early 2026), now ~$4,108 — a 23% give-back, tested $4,000 this week.
+- The driver: 10Y real yield up +52bps (1.76%→2.28%), near the top of its post-GFC range.
+- Breakevens *falling* (2.32→2.21) and UMich 5y expectations down (3.9→3.3) confirm it's a **real-rate** move, not an inflation scare.
+- Verified the central claim: gold ran ~2.7x while real yields stayed restrictive (the decoupling), then reconnected this quarter.
 
-Nothing was published, sent, or pushed — terminal state is the local HTML preview, now open in the browser.
+**Pipeline ran end to end:** scout brief → data pull (5 CSVs) → draft (6-section Beam, ~720 words, Two Economies cohort read) → **9 charts** (5 published + 4 reference, 1.8×, all on `lhm_chart_template`, QC'd visually) → base64-inlined HTML.
 
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-06-24_priced-out-tapped-out/beam_preview.html
-[2026-06-24 15:17:34] claude exited status=0 in 20m 20s
-[2026-06-24 15:17:34] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-06-24_priced-out-tapped-out/beam_preview.html
-[2026-06-24 15:17:34] Opened in browser.
+**All standing gates passed:** no proprietary composites, no em-dashes/semicolons in prose, "not X it's Y" structure scrubbed, "The Beam" definite article, 9 inline base64 images / 0 relative paths, no website pointer, no gated language.
+
+**Honest assumptions (in the BUILD NOTES block atop the draft):** context was stale (LAST_SYNC 06-24); **Bigdata.com connector is paused** (used TradingView + DB instead); **DB gold (GLD_Close) stale since 05-15** so gold was sourced live from COMEX futures. Nothing fabricated, nothing dropped silently.
+
+**Nothing was published, posted, emailed, or pushed.** Terminal state is preview-ready; gating and final edit are Bob's call.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-06-26_real-rates-gold/beam_preview.html
+[2026-06-26 12:07:37] claude exited status=0 in 32m 29s
+[2026-06-26 12:07:37] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-06-26_real-rates-gold/beam_preview.html
+[2026-06-26 12:07:38] Opened in browser.

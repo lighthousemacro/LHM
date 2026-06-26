@@ -2681,3 +2681,25 @@ getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot8642953979:AAG_eP5grbGxBFoRhflBDbAEP8_5LMJjCbM/getUpdates (Caused by NewConnectionError("HTTPSConnection(host='api.telegram.org', port=443): Failed to establish a new connection: [Errno 51] Network is unreachable"))
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s

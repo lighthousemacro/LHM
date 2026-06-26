@@ -930,3 +930,26 @@
 2026-06-24 12:35:49 [INFO]   MSPNHSUS: refreshed (+761 obs)
 2026-06-24 12:35:49 [INFO]   MSACSR: refreshed (+761 obs)
 2026-06-24 12:35:49 [INFO] Freshness check done: 3 series refreshed, 2,283 obs added.
+2026-06-26 11:36:34 [INFO] Stale series (14):
+  PCEPI: db=2026-04-01 -> fred=2026-05-01
+  PCEPILFE: db=2026-04-01 -> fred=2026-05-01
+  PCE: db=2026-04-01 -> fred=2026-05-01
+  PCEDG: db=2026-04-01 -> fred=2026-05-01
+  PCEND: db=2026-04-01 -> fred=2026-05-01
+  PCES: db=2026-04-01 -> fred=2026-05-01
+  PSAVERT: db=2026-04-01 -> fred=2026-05-01
+  DSPIC96: db=2026-04-01 -> fred=2026-05-01
+  ICSA: db=2026-06-13 -> fred=2026-06-20
+  CCSA: db=2026-06-06 -> fred=2026-06-13
+  DGORDER: db=2026-04-01 -> fred=2026-05-01
+  ADXTNO: db=2026-04-01 -> fred=2026-05-01
+  NEWORDER: db=2026-04-01 -> fred=2026-05-01
+  ANDENO: db=2026-04-01 -> fred=2026-05-01
+2026-06-26 11:36:51 [INFO]   PCEPI: refreshed (+809 obs)
+2026-06-26 11:37:05 [INFO]   PCEPILFE: refreshed (+809 obs)
+2026-06-26 11:37:23 [INFO]   PCE: refreshed (+809 obs)
+2026-06-26 11:37:55 [INFO]   PCEDG: refreshed (+809 obs)
+2026-06-26 11:39:32 [ERROR]   PCEND: fetch failed: database is locked
+2026-06-26 11:41:07 [ERROR]   PCES: fetch failed: database is locked
+2026-06-26 11:41:49 [INFO]   PSAVERT: refreshed (+809 obs)
+2026-06-26 11:41:58 [INFO]   DSPIC96: refreshed (+809 obs)

@@ -1060,3 +1060,5 @@ OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
   OECD_STIR_CN: 346 obs
 
 DONE: 35 series, 22,024 observations upserted.
+OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+  OECD_GDP_REAL_US: 317 obs

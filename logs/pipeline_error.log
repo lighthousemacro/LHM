@@ -37543,3 +37543,133 @@ Breadth total: 13 series, 9,789 observations
 2026-06-27 14:59:56 [INFO] === MARKET DATA FETCH ===
 2026-06-27 14:59:56 [INFO] --- Yahoo Finance (S&P 500) ---
 2026-06-27 14:59:56 [INFO]    Fetching S&P 500 from 2000-01-01...
+2026-06-27 15:18:56 [INFO]    S&P 500: 98,653 observations
+2026-06-27 15:18:58 [INFO] --- Breadth Data ---
+2026-06-27 15:18:58 [INFO]    Breadth data requires premium sources (StockCharts, Bloomberg)
+2026-06-27 15:18:58 [INFO]    Using proxy computations where possible...
+2026-06-27 15:18:58 [INFO] --- Sentiment Data ---
+2026-06-27 15:19:16 [INFO]    VIX metrics: 18,132 observations
+2026-06-27 15:19:16 [INFO]    Fetching AAII sentiment...
+2026-06-27 15:19:31 [INFO]    AAII sentiment: 8,116 observations
+2026-06-27 15:19:31 [INFO]    Fetching NAAIM exposure...
+2026-06-27 15:19:31 [INFO]    NAAIM requires web scraping or direct data agreement
+2026-06-27 15:19:31 [INFO] --- Put/Call Ratio ---
+2026-06-27 15:19:31 [INFO]    Put/Call ratio requires CBOE data feed...
+2026-06-27 15:19:31 [INFO] === MARKET DATA COMPLETE: 21 series, 124,901 obs ===
+2026-06-27 15:19:31 [INFO] 
+--- FREE CRYPTO DATA (DefiLlama + CoinGecko) ---
+2026-06-27 15:19:31 [INFO] Fetching TVL data from DefiLlama...
+2026-06-27 15:19:36 [WARNING]    Sui: HTTP 400
+2026-06-27 15:19:38 [WARNING]    Optimism: HTTP 400
+2026-06-27 15:19:38 [WARNING]    Base: HTTP 400
+2026-06-27 15:19:39 [WARNING]    Polygon: HTTP 400
+2026-06-27 15:19:46 [INFO]    Uniswap: 2,795 observations
+2026-06-27 15:19:59 [INFO]    Curve: 2,325 observations
+2026-06-27 15:21:32 [INFO]    PancakeSwap: 1,894 observations
+2026-06-27 15:21:44 [INFO]    Raydium: 1,930 observations
+2026-06-27 15:22:00 [INFO]    Aerodrome: 1,035 observations
+2026-06-27 15:22:15 [INFO]    Aave: 2,231 observations
+2026-06-27 15:22:16 [WARNING]    Compound: HTTP 400
+2026-06-27 15:22:35 [INFO]    Morpho: 1,410 observations
+2026-06-27 15:22:47 [INFO]    Spark: 1,155 observations
+2026-06-27 15:22:51 [INFO]    GMX: 1,762 observations
+2026-06-27 15:22:52 [INFO]    dYdX: 2,058 observations
+2026-06-27 15:23:00 [INFO]    Hyperliquid: 1,116 observations
+2026-06-27 15:23:04 [INFO]    Synthetix: 2,516 observations
+2026-06-27 15:23:05 [INFO]    Lido: 2,017 observations
+2026-06-27 15:23:09 [INFO]    Rocket Pool: 1,731 observations
+2026-06-27 15:23:10 [INFO]    Jito: 1,313 observations
+2026-06-27 15:23:11 [WARNING]    Marinade: HTTP 400
+2026-06-27 15:23:16 [INFO]    Chainlink: 556 observations
+2026-06-27 15:23:22 [INFO]    MakerDAO: 2,733 observations
+2026-06-27 15:23:27 [INFO] Fetching fees/revenue from DefiLlama...
+2026-06-27 15:23:32 [INFO]    Fees/revenue: 0 protocols, 0 observations
+2026-06-27 15:23:32 [INFO] Fetching chain TVL from DefiLlama...
+2026-06-27 15:23:34 [INFO]    Chain TVL: 358 chains
+2026-06-27 15:23:34 [INFO] Fetching stablecoin data from DefiLlama...
+2026-06-27 15:25:13 [ERROR] Stablecoin error: HTTPSConnectionPool(host='api.llama.fi', port=443): Read timed out. (read timeout=30)
+2026-06-27 15:25:13 [ERROR] CRYPTO failed: cannot access local variable 'top_stables' where it is not associated with a value
+2026-06-27 15:25:17 [INFO] Found 503 S&P 500 constituents
+2026-06-27 15:25:17 [INFO] Fetching prices for 503 tickers...
+2026-06-27 15:25:17 [INFO]    Batch 1/11: 50 tickers
+2026-06-27 15:25:26 [INFO]    Batch 2/11: 50 tickers
+2026-06-27 15:25:29 [INFO]    Batch 3/11: 50 tickers
+2026-06-27 15:25:31 [INFO]    Batch 4/11: 50 tickers
+2026-06-27 15:25:34 [INFO]    Batch 5/11: 50 tickers
+2026-06-27 15:25:36 [INFO]    Batch 6/11: 50 tickers
+2026-06-27 15:25:38 [INFO]    Batch 7/11: 50 tickers
+2026-06-27 15:25:41 [INFO]    Batch 8/11: 50 tickers
+2026-06-27 15:25:43 [INFO]    Batch 9/11: 50 tickers
+2026-06-27 15:25:45 [INFO]    Batch 10/11: 50 tickers
+2026-06-27 15:25:47 [INFO]    Batch 11/11: 3 tickers
+2026-06-27 15:25:49 [INFO]    Got prices for 503 stocks, 752 days
+2026-06-27 15:25:49 [INFO] Computing % above MAs...
+2026-06-27 15:25:49 [INFO] Computing A/D line...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:116: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-06-27 15:25:49 [INFO] Computing NH-NL...
+2026-06-27 15:25:49 [INFO] Computing McClellan...
+/Users/bob/LHM/Scripts/data_pipeline/lighthouse/breadth_fetcher.py:156: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = self.prices.pct_change()
+2026-06-27 15:25:49 [INFO] Computing breadth thrust...
+2026-06-27 15:25:49 [INFO] Storing metrics in database...
+2026-06-27 15:25:52 [INFO]    SPX_PCT_ABOVE_20D: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_PCT_ABOVE_50D: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_PCT_ABOVE_200D: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_ADVANCES: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_DECLINES: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_AD_LINE: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_AD_RATIO: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_NEW_HIGHS: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_NEW_LOWS: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_NET_NEW_HIGHS: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_MCCLELLAN_OSC: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_MCCLELLAN_SUM: 752 observations
+2026-06-27 15:25:52 [INFO]    SPX_BREADTH_THRUST: 752 observations
+2026-06-27 15:25:53 [INFO] 
+Breadth total: 13 series, 9,776 observations
+2026-06-27 15:25:53 [INFO]   Downloading Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv...
+2026-06-27 15:25:59 [INFO]   ZHVI: 21 series, 6,654 observations
+2026-06-27 15:25:59 [INFO]   Downloading Metro_zori_uc_sfrcondomfr_sm_sa_month.csv...
+2026-06-27 15:26:04 [INFO]   ZORI: 21 series, 2,877 observations
+2026-06-27 15:26:04 [INFO]   Fetching ECONOMICS:USHMI -> TV_USHMI...
+2026-06-27 15:26:12 [INFO]     TV_USHMI: 498 observations
+2026-06-27 15:26:13 [INFO]   Fetching ECONOMICS:USPIND -> TV_USPIND...
+2026-06-27 15:26:18 [INFO]     TV_USPIND: 438 observations
+2026-06-27 15:26:19 [INFO]   Fetching ECONOMICS:USMRI -> TV_USMRI...
+2026-06-27 15:26:22 [INFO]     TV_USMRI: 438 observations
+2026-06-27 15:26:23 [INFO]   Fetching ECONOMICS:USPHSIYY -> TV_USPHSIYY...
+2026-06-27 15:26:27 [INFO]     TV_USPHSIYY: 292 observations
+2026-06-27 15:26:28 [INFO]   Fetching ECONOMICS:USPHSIMM -> TV_USPHSIMM...
+2026-06-27 15:26:43 [INFO]     TV_USPHSIMM: 304 observations
+2026-06-27 15:26:44 [INFO]   Fetching ECONOMICS:USCONSTS -> TV_USCONSTS...
+2026-06-27 15:26:51 [INFO]     TV_USCONSTS: 747 observations
+2026-06-27 15:26:52 [INFO]   Fetching ECONOMICS:USPRR -> TV_USPRR...
+2026-06-27 15:26:54 [INFO]     TV_USPRR: 220 observations
+2026-06-27 15:26:55 [INFO]   Fetching ECONOMICS:USAMS -> TV_USAMS...
+2026-06-27 15:28:22 [INFO]     TV_USAMS: 434 observations
+2026-06-27 15:28:24 [INFO]   Fetching ECONOMICS:USEHS -> TV_USEHS...
+2026-06-27 15:28:31 [INFO]     TV_USEHS: 701 observations
+2026-06-27 15:28:32 [INFO]   Fetching ECONOMICS:USMAPL -> TV_USMAPL...
+2026-06-27 15:28:45 [INFO]     TV_USMAPL: 438 observations
+2026-06-27 15:28:46 [INFO]   Fetching ECONOMICS:USMMI -> TV_USMMI...
+2026-06-27 15:28:47 [INFO]     TV_USMMI: 438 observations
+2026-06-27 15:28:48 [INFO]   Fetching ECONOMICS:USMOR -> TV_USMOR...
+2026-06-27 15:28:49 [INFO]     TV_USMOR: 93 observations
+2026-06-27 15:28:50 [INFO]   Fetching ECONOMICS:USISMMP -> TV_USISMMP...
+2026-06-27 15:28:50 [INFO]     TV_USISMMP: 9 observations
+2026-06-27 15:28:51 [INFO]   Fetching ECONOMICS:USBCOI -> TV_USBCOI...
+2026-06-27 15:29:05 [INFO]     TV_USBCOI: 941 observations
+2026-06-27 15:29:06 [INFO]   Fetching ECONOMICS:USMNO -> TV_USMNO...
+2026-06-27 15:29:14 [INFO]     TV_USMNO: 917 observations
+2026-06-27 15:29:15 [INFO]   Fetching ECONOMICS:USMEMP -> TV_USMEMP...
+2026-06-27 15:29:32 [INFO]     TV_USMEMP: 917 observations
+2026-06-27 15:29:33 [INFO]   Fetching ECONOMICS:USMPR -> TV_USMPR...
+2026-06-27 15:29:39 [INFO]     TV_USMPR: 281 observations
+2026-06-27 15:29:40 [INFO]   Fetching ECONOMICS:USNMPMI -> TV_USNMPMI...
+2026-06-27 15:30:01 [WARNING]     TV_USNMPMI: No data returned
+2026-06-27 15:30:02 [INFO]   Fetching ECONOMICS:USNMBA -> TV_USNMBA...
+2026-06-27 15:30:05 [INFO]     TV_USNMBA: 347 observations
+2026-06-27 15:30:07 [INFO]   Fetching ECONOMICS:USNMNO -> TV_USNMNO...
+2026-06-27 15:30:08 [INFO]     TV_USNMNO: 347 observations
+2026-06-27 15:30:09 [INFO]   Fetching ECONOMICS:USNMEMP -> TV_USNMEMP...

@@ -3140,3 +3140,12 @@ net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed ou
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+net error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))

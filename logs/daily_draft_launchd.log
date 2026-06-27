@@ -23,3 +23,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-06-26_real-rates-gold/beam_previe
 [2026-06-26 12:07:37] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-06-26_real-rates-gold/beam_preview.html
 [2026-06-26 12:07:38] Opened in browser.
 [2026-06-26 12:07:38] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-06-27 07:50:12] ════════ DAILY DRAFT RUN START (2026-06-27) ════════
+[2026-06-27 07:50:12] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

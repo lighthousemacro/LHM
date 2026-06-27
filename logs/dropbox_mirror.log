@@ -2166,3 +2166,5 @@ rsync(34166): error: /Users/bob/LHM/Scripts/.tmp.driveupload/38366: open (2) in 
 === 2026-06-27 08:30:01 mirror start ===
 === 2026-06-27 08:41:32 mirror end (exit 0) ===
 === 2026-06-27 12:30:04 mirror start ===
+=== 2026-06-27 12:31:14 mirror end (exit 0) ===
+=== 2026-06-27 13:00:24 mirror start ===

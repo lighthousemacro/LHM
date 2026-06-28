@@ -32,3 +32,23 @@ API Error: Connection closed mid-response. The response above may be incomplete.
 [2026-06-27 08:48:25] ════════ DAILY DRAFT RUN END (status=1) ════════
 [2026-06-28 08:23:35] ════════ DAILY DRAFT RUN START (2026-06-28) ════════
 [2026-06-28 08:23:35] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The unattended daily run is complete. A finished, ready-to-review Beacon draft is built and open in the browser.
+
+**What I did (scout → publish, both LHM skills):**
+
+**Step 1 — Scout.** Scanned the macro landscape against the 12-pillar frame. The internal read was loud and coherent: a market sitting a few percent off its early-June high, calm on the surface (VIX ~18, credit unbothered), but with leadership rotating hard underneath. I committed to **one thread** and **one format**: Sunday = **The Beacon**, "The Quiet Rotation." It beat the consumer / gold / Fed angles because those all shipped in the last ten days, and this one is fresh, fully backed by real data, and genuinely Sunday-worthy.
+
+**Step 2 — Publish (full pipeline).**
+- **Data:** DB breadth/structure/VIX backbone (fresh thru 6/26) plus a yfinance ETF/gold pull. Every number is real and sourced.
+- **Integrity catch:** my first draft leaned on "gold near a record." A clean check showed gold is actually **down ~21% over four months** — Friday's pop was a bounce in a downtrend. I cut the gold angle entirely rather than ship a false claim. The thesis stands on clean equity internals alone.
+- **Draft:** ~2,400 words in Bob's voice. Voice-clean (0 em-dashes, 0 semicolons, no "not X, it's Y", no proprietary composites, no gated language, bps lowercase). It holds the honest tension — leadership rotating defensively, but breadth thinned and not broken — with explicit invalidation both ways.
+- **Charts:** 16 rendered on the canonical template (8 in-piece + 8 reference pack, 2× rule). QC'd visually; fixed clipped bar labels and pre-2024 breadth zero-artifacts.
+- **Assembly:** self-contained branded HTML, all 8 charts base64-inlined (0 relative paths), "The Beacon" definite article, unlinked footer, BUILD NOTES shown as a review-only banner.
+
+Nothing was published, sent, or pushed. Terminal state is an HTML preview for Bob's review.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-06-28_quiet-rotation/beacon_preview.html
+[2026-06-28 09:04:18] claude exited status=0 in 40m 42s
+[2026-06-28 09:04:18] PREVIEW READY → /Users/bob/LHM/Outputs/beacon_2026-06-28_quiet-rotation/beacon_preview.html
+[2026-06-28 09:04:19] Opened in browser.
+[2026-06-28 09:04:19] ════════ DAILY DRAFT RUN END (status=0) ════════

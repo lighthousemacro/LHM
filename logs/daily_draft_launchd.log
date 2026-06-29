@@ -54,3 +54,25 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-06-28_quiet-rotation/beacon_pre
 [2026-06-28 09:04:19] ════════ DAILY DRAFT RUN END (status=0) ════════
 [2026-06-29 08:15:24] ════════ DAILY DRAFT RUN START (2026-06-29) ════════
 [2026-06-29 08:15:25] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The full unattended pipeline ran end to end and the branded preview is open in the browser.
+
+## What's ready for review
+
+**The Beam · "Credit Isn't Listening"** (June 29, 2026)
+
+**The thread (picked autonomously):** High-yield spreads closed last week at 278bps, 19bps off the five-year low and below the 300bps complacency line, while the labor market quietly freezes underneath. Quits down to 1.9% (on the 2.0% pre-recessionary line), mean unemployment duration up to 26 weeks, the long-term unemployed +155k in a single month. Credit is paid the least to take default risk in five years at the exact moment the fundamental that drives defaults is turning. It's the Credit-Labor Gap told entirely in real sourced series, framed as the Two Economies in the credit market.
+
+**Why this, why a Beam:** Two Beacons were already drafted 6/28 (No Landing, Quiet Rotation), so the big-picture weekend slot was filled. Today is actually Monday (calendar default would be a Note), but a focused single-pillar Beam advances the franchise without repeating the gold / Fed-put / consumer-squeeze angles shipped 6/24–6/28. That call, and three data-integrity decisions, are logged in a visible BUILD NOTES block at the top of the draft.
+
+**Pipeline artifacts** in `Outputs/beam_2026-06-29_credit-isnt-listening/`:
+- 6-section locked Beam draft (~715 words), voice-scanned clean (0 em-dash, 0 semicolon, 0 "not X it's Y", no proprietary composites, bps lowercase)
+- 10 branded charts (5 in-piece + 5 reference toolkit = the 2x rule), all on the canonical template, all from raw observation-table series, agency-only source lines
+- 10 staged CSVs, data summary, chart manifest
+
+**Honest caveats handled, not papered over:** the raw BLS quits series (1.9%) disagrees with the `horizon_dataset` column (2.1%) — I used the authoritative raw series and flagged the mapping; openings actually ticked *up* in April, so I framed it as "off its peak," not "falling." No fabricated data, nothing published or sent.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-06-29_credit-isnt-listening/beam_preview.html
+[2026-06-29 08:38:18] claude exited status=0 in 22m 53s
+[2026-06-29 08:38:18] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-06-29_credit-isnt-listening/beam_preview.html
+[2026-06-29 08:38:26] Opened in browser.
+[2026-06-29 08:38:26] ════════ DAILY DRAFT RUN END (status=0) ════════

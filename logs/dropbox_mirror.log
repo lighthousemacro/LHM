@@ -2212,3 +2212,5 @@ rsync(34166): error: /Users/bob/LHM/Scripts/.tmp.driveupload/38366: open (2) in 
 === 2026-06-28 17:00:00 mirror start ===
 === 2026-06-28 17:00:04 mirror end (exit 0) ===
 === 2026-06-29 08:30:02 mirror start ===
+rsync(67809): error: /Users/bob/LHM/Outputs/.tmp.driveupload/53289: open (2) in /Users/bob: No such file or directory
+=== 2026-06-29 08:31:17 mirror end (exit 0) ===

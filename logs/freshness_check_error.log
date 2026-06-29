@@ -968,3 +968,4 @@
 2026-06-26 16:49:57 [INFO]   MICH: refreshed (+581 obs)
 2026-06-26 16:49:57 [INFO] Freshness check done: 2 series refreshed, 1,254 obs added.
 2026-06-29 08:37:05 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-06-29 12:35:48 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

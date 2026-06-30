@@ -76,3 +76,10 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-06-29_credit-isnt-listening/beam_
 [2026-06-29 08:38:18] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-06-29_credit-isnt-listening/beam_preview.html
 [2026-06-29 08:38:26] Opened in browser.
 [2026-06-29 08:38:26] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-06-30 07:53:42] ════════ DAILY DRAFT RUN START (2026-06-30) ════════
+[2026-06-30 07:53:42] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+API Error: Connection closed mid-response. The response above may be incomplete.
+[2026-06-30 08:28:04] claude exited status=1 in 34m 22s
+[2026-06-30 08:28:04] No PREVIEW_PATH in output — falling back to newest *preview*.html touched in the last 3h.
+[2026-06-30 08:28:05] WARNING: no preview HTML found. Check the run log: /Users/bob/LHM/logs/daily_draft_2026-06-30.log
+[2026-06-30 08:28:05] ════════ DAILY DRAFT RUN END (status=1) ════════

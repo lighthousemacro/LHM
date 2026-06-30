@@ -971,3 +971,24 @@
 2026-06-29 12:35:48 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-06-29 17:10:07 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-06-30 08:41:31 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-06-30 12:39:52 [INFO] Stale series (9):
+  JTSJOL: db=2026-04-01 -> fred=2026-05-01
+  JTSHIL: db=2026-04-01 -> fred=2026-05-01
+  JTSQUL: db=2026-04-01 -> fred=2026-05-01
+  JTSQUR: db=2026-04-01 -> fred=2026-05-01
+  JTSHIR: db=2026-04-01 -> fred=2026-05-01
+  JTSTSR: db=2026-04-01 -> fred=2026-05-01
+  JTS1000JOR: db=2026-04-01 -> fred=2026-05-01
+  JTS1000QUR: db=2026-04-01 -> fred=2026-05-01
+  JTS1000HIR: db=2026-04-01 -> fred=2026-05-01
+2026-06-30 12:39:52 [INFO]   JTSJOL: refreshed (+306 obs)
+2026-06-30 12:39:53 [INFO]   JTSHIL: refreshed (+306 obs)
+2026-06-30 12:39:54 [INFO]   JTSQUL: refreshed (+306 obs)
+2026-06-30 12:39:54 [INFO]   JTSQUR: refreshed (+306 obs)
+2026-06-30 12:39:55 [INFO]   JTSHIR: refreshed (+306 obs)
+2026-06-30 12:39:56 [INFO]   JTSTSR: refreshed (+306 obs)
+2026-06-30 12:52:14 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Read timed out. (read timeout=30). Retrying in 2s...
+2026-06-30 12:52:16 [INFO]   JTS1000JOR: refreshed (+306 obs)
+2026-06-30 12:52:17 [INFO]   JTS1000QUR: refreshed (+306 obs)
+2026-06-30 12:52:18 [INFO]   JTS1000HIR: refreshed (+306 obs)
+2026-06-30 12:52:18 [INFO] Freshness check done: 9 series refreshed, 2,754 obs added.

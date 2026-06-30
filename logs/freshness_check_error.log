@@ -992,3 +992,4 @@
 2026-06-30 12:52:17 [INFO]   JTS1000QUR: refreshed (+306 obs)
 2026-06-30 12:52:18 [INFO]   JTS1000HIR: refreshed (+306 obs)
 2026-06-30 12:52:18 [INFO] Freshness check done: 9 series refreshed, 2,754 obs added.
+2026-06-30 16:41:22 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

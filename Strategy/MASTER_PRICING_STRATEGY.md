@@ -39,7 +39,7 @@ Clean ascending ladder, zero overlap. Institutional floor sits deliberately abov
 | **Operator** | CEOs, CFOs, founders | $2,500/mo | $4,000/mo | $6,000/mo | 6-mo min, quarterly-billed, annual-prepay −10%. Cash only. 1 briefing call + 1 written "what it means for your business" memo. |
 | **Advisor** | RIAs, family offices (non-discretionary) | $4,000/mo | $6,000/mo | $9,000/mo | 6-mo min. Monthly IC call + regime/allocation read + note tuned to their book + chart pack. Explicitly non-OCIO. |
 | **Fractional CIO** | RIAs $200M–2B AUM | $8,000/mo | **$12,000/mo** | $18,000/mo (or 5–10bps AUM) | 12-mo term. Named outside CIO, IC seat, model oversight. **Target = the Manifest floor; stretch = the Manifest target.** Quote bps above ~$1.5B, whichever is higher. |
-| **Institutional** | Funds, allocators, endowments | **$15,000/mo** | $25,000/mo | $40,000/mo (or $40–150K/yr seat) | 12-mo term. Multi-seat, custom composite build-outs, direct line, team distribution. Same buyer that pays $5K+/hr for expert calls. Stretch clears the ~$36K/mo full-capacity anchor. |
+| **Institutional** | Funds, allocators, endowments | **$15,000/mo** | $25,000/mo | $40,000/mo (or $40–150K/yr seat) | 12-mo term. Multi-seat, custom composite build-outs, direct line, team distribution. Same buyer that pays ~$1,350/hr for expert-network calls. Stretch clears the ~$36K/mo full-capacity anchor. |
 
 *Live-site tier names untouched. Only the bands moved up.*
 

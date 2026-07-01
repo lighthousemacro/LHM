@@ -3549,3 +3549,22 @@ net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries e
 net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=40)
 net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=40)
 net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=40)
+lhmbot_server: online, allowed=['7556962272']
+getUpdates 409 (another poller holds the token); retry in 2s
+getUpdates 409 (another poller holds the token); retry in 4s
+getUpdates 409 (another poller holds the token); retry in 8s
+getUpdates 409 (another poller holds the token); retry in 16s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s

@@ -50,7 +50,7 @@ Clean ascending ladder, zero overlap. Institutional floor sits deliberately abov
 | Stream | Floor | Target | Stretch | Terms |
 |---|---|---|---|---|
 | Hourly — Friend | $300/hr | $350/hr | $400/hr | 1-hr min, verbal only, never the anchor an institution negotiates against. Genuine F&F (Asher, murdakes) get the floor. |
-| Hourly — Institutional | **$500/hr** | $600/hr | $750/hr | $500 is now the *floor*, not the ask (GLG bills this profile at $1,500–2,000/hr). Open $600. Ongoing access → convert to retainer, don't discount the hour. |
+| Hourly — Institutional | **$500/hr** | $600/hr | $750/hr | $500 is now the *floor*, not the ask (a GLG-tier expert call for this profile runs ~$1,350/hr, up to $2,000+ for specialists; the network keeps most of it). Open $600. Ongoing access → convert to retainer, don't discount the hour. |
 | Per-Deck (thesis deck) | $5,000 | $7,500 | $12,000 | 50% up front, 1 revision included. **Price the thesis, not the page count.** Tim's $4–5K becomes the floor; new buyers pay target. Never per-chart. |
 | Per-Project (bespoke study) | $10,000 | $18,000 | $30,000+ | Fixed-fee SOW, 40–50% up front, **explicit deliverable count + kill date** (Tania lesson). Scope creep bills at institutional hourly. |
 
@@ -88,7 +88,7 @@ Clean ascending ladder, zero overlap. Institutional floor sits deliberately abov
 - "Operator advisory starts at $2,500 a month on a six-month term. A monthly briefing call plus a written read on what the macro means for your business."
 - "The Advisor retainer runs $4,000 to $6,000 a month. Same regime read, translated into allocation language for how you run the book. Non-discretionary, you decide and implement."
 - "As your outside CIO I open at $12,000 a month on a twelve-month term. If you'd rather scale it with the book, I'll quote five to ten basis points on AUM, whichever is higher."
-- "For a fund, dedicated macro capacity starts at $15,000 a month. That's below what BCA or MI2 charge, and below one GLG call a week at their rates."
+- "For a fund, dedicated macro capacity starts at $15,000 a month. That's below what BCA or MI2 charge, and it's a standing seat, not a stack of $1,350 expert-network calls."
 - "My institutional rate is $500 an hour, one-hour minimum. Ongoing access, we convert to a retainer rather than discount the hour."
 - "A bespoke thesis deck is $7,500. Full 12-pillar synthesis and custom charts off my daily pipeline, not a design job. Fifty percent up front, one revision included."
 - "A defined research build is $18,000. Fixed scope, explicit deliverable count, and a kill date we agree up front."

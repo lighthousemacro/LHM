@@ -131,7 +131,7 @@ Clean ascending ladder, zero overlap. Institutional floor sits deliberately abov
 ## RISKS & HOW TO HOLD THE LINE
 
 - **"You're a one-man newsletter, why institutional pricing?"** → Boutique scaled by code with an audited PM sheet, a daily 2,500-series pipeline, and a live auditable book. Answer with the sheet and the ECB/FT endorsement, not a discount.
-- **"Prometheus/Doomberg is only $300–500."** → Our $500 sits at the *top* of that band, matched by Prometheus at the identical $500. The missing piece was the premium tier — now the Lighthouse at $1,200.
+- **"Isn't independent macro cheaper than this?"** → Prometheus, the closest profile comp, now charges $100/mo and $960–1,400/yr. Doomberg $300. Our $500 *undercuts* Prometheus with a heavier stack. The missing piece was the premium tier, now the Lighthouse at $1,200, which still sits at or below Prometheus.
 - **Cannibalization** (premium reader / white-label / Pharos vs advisory) → Keep white-label target *inside* the Advisor band, stretch *below* Fractional CIO; Pharos floor above $50/mo; sell Pharos-firm + data licensing to funds as one conversation.
 - **Scarcity discounting** → Friend rate is verbal-only, never the institutional anchor. Open at target, let a too-rich buyer walk.
 - **Free-deliverable leak (Tania)** → Fixed-scope SOW, explicit deliverable count, kill date, deposit up front. Scope creep bills at institutional hourly.

@@ -85,3 +85,25 @@ API Error: Connection closed mid-response. The response above may be incomplete.
 [2026-06-30 08:28:05] ════════ DAILY DRAFT RUN END (status=1) ════════
 [2026-07-02 07:45:03] ════════ DAILY DRAFT RUN START (2026-07-02) ════════
 [2026-07-02 07:45:03] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The pipeline is complete and the preview is open in the browser. Here's what's waiting for Bob this morning.
+
+## The Beam — "Two Labor Markets, One Headline"
+
+**Scout decision (1 thread, 1 format):** Today is jobs day pulled forward to Thursday (July 3 is the observed holiday), so the June payrolls print lands at 8:30 AM ET — *after* this 7:45 build. Rather than bet the piece on a number that isn't in the database yet, I anchored it on the through-May **composition** the headline masks: the labor market has frozen into two economies. Insiders are safe (layoffs near historic lows); outsiders are frozen out (hiring at cycle lows, duration back to 26 weeks, long-term jobless share at a cycle-high 27.2%, growth carried almost entirely by healthcare/education). Fresh angle, distinct from the 6/29 credit-vs-labor Beam and the 6/28 rotation Beacon, and externally corroborated (MUFG, OANDA, Trading Economics).
+
+**Every number is real and sourced** (BLS/DOL through the DB). Nothing fabricated. Where a data gap existed (the June print), I flagged it in BUILD NOTES rather than invent it.
+
+**Pipeline output** in `Outputs/beam_2026-07-02_two-labor-markets/`:
+- 6-section locked Beam, ~750 words, Bob's voice — high paywall after The Setup + first chart
+- **10 branded charts** (5 in-piece + 5 supplementary = the 2× rule), all on the canonical template
+- Base64-inlined self-contained HTML (3.37 MB), definite-article byline, footer unlinked
+
+**QC catches fixed along the way:** missing `brand_fig()` on all charts; COVID-scale distortion windowed out of 5 charts; a chart-3 framing that was quietly dishonest (rebuilt as the long-term-jobless share); duplicate y-axis tick labels on continued claims; two annotations that contradicted their own charts; three `X, not Y` voice constructions; category math on the sector bars (Total rendered as a reference line, not a peer bar).
+
+**BUILD NOTES** sit at the top of the preview flagging the jobs-day timing, the paused Bigdata connector, and the assumptions — so Bob can fold in the actual June number on review. Nothing was published, sent, or pushed anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-02_two-labor-markets/beam_preview.html
+[2026-07-02 08:09:11] claude exited status=0 in 24m 8s
+[2026-07-02 08:09:11] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-02_two-labor-markets/beam_preview.html
+[2026-07-02 08:09:11] Opened in browser.
+[2026-07-02 08:09:11] ════════ DAILY DRAFT RUN END (status=0) ════════

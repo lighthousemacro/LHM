@@ -993,3 +993,9 @@
 2026-06-30 12:52:18 [INFO]   JTS1000HIR: refreshed (+306 obs)
 2026-06-30 12:52:18 [INFO] Freshness check done: 9 series refreshed, 2,754 obs added.
 2026-06-30 16:41:22 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-02 08:35:50 [INFO] Stale series (2):
+  ICSA: db=2026-06-20 -> fred=2026-06-27
+  CCSA: db=2026-06-13 -> fred=2026-06-20
+2026-07-02 08:35:53 [INFO]   ICSA: refreshed (+3104 obs)
+2026-07-02 08:35:54 [INFO]   CCSA: refreshed (+3103 obs)
+2026-07-02 08:35:55 [INFO] Freshness check done: 2 series refreshed, 6,207 obs added.

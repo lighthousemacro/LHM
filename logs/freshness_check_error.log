@@ -999,3 +999,17 @@
 2026-07-02 08:35:53 [INFO]   ICSA: refreshed (+3104 obs)
 2026-07-02 08:35:54 [INFO]   CCSA: refreshed (+3103 obs)
 2026-07-02 08:35:55 [INFO] Freshness check done: 2 series refreshed, 6,207 obs added.
+2026-07-03 16:58:15 [INFO] Stale series (6):
+  PAYEMS: db=2026-05-01 -> fred=2026-06-01
+  UNRATE: db=2026-05-01 -> fred=2026-06-01
+  U6RATE: db=2026-05-01 -> fred=2026-06-01
+  CIVPART: db=2026-05-01 -> fred=2026-06-01
+  AWHAETP: db=2026-05-01 -> fred=2026-06-01
+  CES0500000003: db=2026-05-01 -> fred=2026-06-01
+2026-07-03 17:12:56 [INFO]   PAYEMS: refreshed (+1050 obs)
+2026-07-03 17:12:58 [INFO]   UNRATE: refreshed (+941 obs)
+2026-07-03 17:13:01 [INFO]   U6RATE: refreshed (+389 obs)
+2026-07-03 17:13:02 [INFO]   CIVPART: refreshed (+941 obs)
+2026-07-03 17:13:03 [INFO]   AWHAETP: refreshed (+244 obs)
+2026-07-03 17:13:03 [INFO]   CES0500000003: refreshed (+244 obs)
+2026-07-03 17:13:03 [INFO] Freshness check done: 6 series refreshed, 3,809 obs added.

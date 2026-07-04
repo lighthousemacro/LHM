@@ -107,3 +107,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-02_two-labor-markets/beam_prev
 [2026-07-02 08:09:11] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-02_two-labor-markets/beam_preview.html
 [2026-07-02 08:09:11] Opened in browser.
 [2026-07-02 08:09:11] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-04 18:15:56] ════════ DAILY DRAFT RUN START (2026-07-04) ════════
+[2026-07-04 18:15:57] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

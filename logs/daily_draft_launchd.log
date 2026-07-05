@@ -131,3 +131,22 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-04_wrong-reason/beam_preview.h
 [2026-07-04 18:34:50] ════════ DAILY DRAFT RUN END (status=0) ════════
 [2026-07-05 12:41:52] ════════ DAILY DRAFT RUN START (2026-07-05) ════════
 [2026-07-05 12:41:52] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The unattended build is complete. A finished, ready-to-review **Beacon** is assembled and open in the browser.
+
+## What ran
+
+**Scout (Stage 1)** — Scanned the macro landscape against the 12 pillars and the Two Economies frame. Today is Sunday, the Beacon slot, and the **June jobs report (July 2)** is genuinely new information the June 28 "No Landing" Beacon didn't have — so long-form was warranted. One thread, committed:
+
+> **Caught Both Ways** — The Warsh Fed already closed the only axis the market traded all year (how many cuts) by flipping to a hiking bias in June. The June jobs report then opened the *other* side of the vise: payrolls +57k (weakest of the run, 214→148→129→57), unemployment "down" to 4.2% only because participation fell (61.8%→61.5%), quits at 1.9% below the 2.0 line. Core PCE at 3.4%/3.5% says the Fed can't cut; a cracking labor market says it will have to. The squeezed household (3% saving rate, sentiment 45, record spending on an empty tank) pays for the lag. The tape (S&P near highs, VIX 16, HY OAS 275bps) is priced as if the box isn't there.
+
+**Publish (Stages 2–5)** — All numbers pulled real from `Lighthouse_Master.db` (BLS/BEA/Census/DOL/ICE BofA/Cboe/S&P/ISM). 3,175-word draft in Bob's voice, 14 charts rendered on the canonical template (8 published + 6 reference = 1.75× the chart rule), base64-inlined self-contained HTML.
+
+**Honesty guardrails logged in BUILD NOTES:** dropped the U6–U3-gap angle (it's narrowing, not widening); framed S&P as "near record highs" (it's ~1.7% off the June 2 ATH, not at it); dropped gold and DXY charts (GLD stale since 5/15, DB Dollar_Index is broad-weighted not DXY); markets/live-tape branch skipped (macro piece, unattended).
+
+**Gates — all pass:** 0 em-dashes / semicolons / "not X it's Y" / bare labels / stray figure text / gated framework language / proprietary composites in published copy; every image base64-inlined; footer unlinked; tables as PNG (none needed). Nothing published, sent, or pushed.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-07-05_caught-both-ways/beacon_preview.html
+[2026-07-05 13:12:11] claude exited status=0 in 30m 19s
+[2026-07-05 13:12:11] PREVIEW READY → /Users/bob/LHM/Outputs/beacon_2026-07-05_caught-both-ways/beacon_preview.html
+[2026-07-05 13:12:11] Opened in browser.
+[2026-07-05 13:12:11] ════════ DAILY DRAFT RUN END (status=0) ════════

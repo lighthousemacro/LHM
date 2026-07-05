@@ -129,3 +129,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-04_wrong-reason/beam_preview.h
 [2026-07-04 18:34:48] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-04_wrong-reason/beam_preview.html
 [2026-07-04 18:34:50] Opened in browser.
 [2026-07-04 18:34:50] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-05 12:41:52] ════════ DAILY DRAFT RUN START (2026-07-05) ════════
+[2026-07-05 12:41:52] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

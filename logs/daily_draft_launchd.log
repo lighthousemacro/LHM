@@ -150,3 +150,20 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-07-05_caught-both-ways/beacon_p
 [2026-07-05 13:12:11] PREVIEW READY → /Users/bob/LHM/Outputs/beacon_2026-07-05_caught-both-ways/beacon_preview.html
 [2026-07-05 13:12:11] Opened in browser.
 [2026-07-05 13:12:11] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-06 07:45:05] ════════ DAILY DRAFT RUN START (2026-07-06) ════════
+[2026-07-06 07:45:05] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The July Horizon draft is built and open in the browser. Summary of the run:
+
+**The piece:** "The Vise" — The Horizon · July 2026. First-Monday slot, no July Horizon existed. It takes Sunday's Beacon diagnosis (the Fed boxed between 3.4% core PCE and a 57k payroll print) and maps H2 forward: four themes (the slow-closing vise, fiscal as the inflation floor, Two Economies under one policy rate, a tape priced for calm), a four-branch scenario map, watchlist through the August jobs report, and framework-neutral tactical posture.
+
+**Build details:**
+- 8 published charts + 8 reference renders, all from verified DB series, agency-only source lines, in `charts/` with a manifest.
+- Every number re-verified against Lighthouse_Master.db. One correction surfaced: May quits is **2.1%** and hires **3.5%**, not the 1.9%/3.3% the 7/5 Beacon brief carried — the draft uses the DB values, and the BUILD NOTES flag that the shipped Beacon copy may want a re-check.
+- Paywall after State of Play with one chart free. No composites, no pillar table, no gold/DXY (stale/mislabeled), no SEP dots chart (no data — substituted funds-vs-2Y). Voice scan clean.
+- All artifacts in `Outputs/horizon_2026-07_the-vise/` (scout brief, data summary, CSVs, draft, charts, scripts). Nothing published or sent anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/horizon_2026-07_the-vise/horizon_preview.html
+[2026-07-06 07:54:15] claude exited status=0 in 9m 10s
+[2026-07-06 07:54:15] PREVIEW READY → /Users/bob/LHM/Outputs/horizon_2026-07_the-vise/horizon_preview.html
+[2026-07-06 07:54:15] Opened in browser.
+[2026-07-06 07:54:15] ════════ DAILY DRAFT RUN END (status=0) ════════

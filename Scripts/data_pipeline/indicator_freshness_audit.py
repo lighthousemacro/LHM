@@ -58,6 +58,19 @@ def tolerance_for(index_id: str) -> int:
     return TOLERANCE_DAYS["_daily_default"]
 
 
+# History-depth guards (observations table). A canonical series whose history
+# suddenly starts "recently" means a backfill was lost or a fetcher recreated
+# the series from scratch — the failure mode that made breadth charts start in
+# 2024 three separate times. Splice provenance (2026-07-06): TradingView
+# INDEX:S5TH/S5FI/S5TW history before 2024-05-01, Lighthouse-computed
+# constituent breadth after. min(date) must be on or before these dates.
+DEPTH_GUARDS = {
+    "SPX_PCT_ABOVE_200D": "2008-01-01",
+    "SPX_PCT_ABOVE_50D": "2008-01-01",
+    "SPX_PCT_ABOVE_20D": "2008-01-01",
+}
+
+
 def audit(db_path: str = DB_PATH):
     conn = sqlite3.connect(db_path)
     rows = conn.execute(
@@ -110,6 +123,27 @@ def audit(db_path: str = DB_PATH):
             "tolerance": tol,
             "verdict": verdict,
         })
+    # observations-table history-depth guards (see DEPTH_GUARDS above)
+    for sid, need_start in DEPTH_GUARDS.items():
+        row = conn.execute(
+            "SELECT COUNT(*), MIN(date), MAX(date) FROM observations "
+            "WHERE series_id=?", (sid,)
+        ).fetchone()
+        n, first, last = row
+        if n == 0:
+            verdict, first, last, stale_days = "SHALLOW_HISTORY", "-", "-", 9999
+        else:
+            stale_days = (today - datetime.fromisoformat(last).date()).days
+            verdict = "SHALLOW_HISTORY" if first > need_start else "OK"
+        results.append({
+            "index_id": f"{sid} (obs depth)",
+            "n": n,
+            "first": (first or "-")[:10],
+            "last": (last or "-")[:10],
+            "stale_days": stale_days,
+            "tolerance": 0,
+            "verdict": verdict,
+        })
     conn.close()
     results.sort(key=lambda r: (r["verdict"] == "OK", -r["stale_days"]))
     return results
@@ -148,7 +182,8 @@ def main():
             for r in stale:
                 print(f"   {r['index_id']}  last {r['last']} ({r['stale_days']}d)")
 
-    if args.fail_stale and any(r["verdict"] == "STALE" for r in results):
+    if args.fail_stale and any(r["verdict"] in ("STALE", "SHALLOW_HISTORY")
+                               for r in results):
         sys.exit(1)
 
 

@@ -36,8 +36,8 @@ from matplotlib.ticker import FuncFormatter
 COLORS = {
     'ocean':     '#2389BB',  # primary brand
     'dusk':      '#FF6723',  # secondary / accent (top tier)
-    'sky':       '#23BBFF',  # secondary / lighter blue (top tier)
-    'bright':    '#89ccff',  # secondary / soft sky (top tier) — pops on dark
+    'sky':       '#89CCFF',  # secondary / lighter blue (top tier) — palette locked 2026-06-16, old #23BBFF retired
+    'bright':    '#89CCFF',  # legacy alias for sky ("Bright" retired 2026-06-16)
     'deep':      '#123456',  # secondary / deep navy (top tier) — dark-theme bg
     'venus':     '#FF2389',  # critical alerts / 2% target
     'sea':       '#00BB89',  # tertiary / on-target bands
@@ -692,9 +692,9 @@ def brand_fig(fig, title, subtitle=None, source=None, data_date=None):
         if data_date is not None:
             if isinstance(data_date, str):
                 data_date = pd.Timestamp(data_date)
-            data_str = data_date.strftime('%m.%d.%Y')
+            data_str = data_date.strftime('%B %Y')
             fig.text(0.03, 0.022,
-                     f'Lighthouse Macro | {source} | Data thru {data_str} | Pulled {pull_str}',
+                     f'Lighthouse Macro | {source} | Data through {data_str}',
                      fontsize=9, color=THEME['muted'],
                      ha='left', va='top', style='italic')
         else:

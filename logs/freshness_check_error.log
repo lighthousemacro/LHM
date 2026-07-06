@@ -1013,3 +1013,4 @@
 2026-07-03 17:13:03 [INFO]   AWHAETP: refreshed (+244 obs)
 2026-07-03 17:13:03 [INFO]   CES0500000003: refreshed (+244 obs)
 2026-07-03 17:13:03 [INFO] Freshness check done: 6 series refreshed, 3,809 obs added.
+2026-07-06 08:35:35 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

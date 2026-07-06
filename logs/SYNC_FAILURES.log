@@ -2089,3 +2089,5 @@ Everything up-to-date
 [2026-07-05 12:49:44] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260705.db'
 [2026-07-06 06:29:49] git commit failed: fatal: Unable to create '/Users/bob/LHM/.git/index.lock': No space left on device
 
+[2026-07-06 13:30:07] git fetch failed: error: cannot open '.git/FETCH_HEAD': No space left on device
+

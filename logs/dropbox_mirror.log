@@ -2422,3 +2422,11 @@ rsync(67809): error: /Users/bob/LHM/Outputs/.tmp.driveupload/53289: open (2) in 
 === 2026-07-06 12:01:19 mirror end (exit 0) ===
 === 2026-07-06 12:30:00 mirror start ===
 === 2026-07-06 12:30:03 mirror end (exit 0) ===
+=== 2026-07-06 13:00:00 mirror start ===
+rsync(2459): error: mkstempat: 'logs/.dropbox_mirror.log.6dB85UNMGZ': No space left on device
+rsync(2459): error: mkstempat: 'logs/.freshness_check_error.log.nWbkjFpO9n': No space left on device
+rsync(2459): error: mkstempat: 'logs/.lhmbot_server.log.o5L6eMicD4': No space left on device
+rsync(2459): error: mkstempat: 'logs/.sync.log.Ce2dlpZYv9': No space left on device
+=== 2026-07-06 13:00:03 mirror end (exit 0) ===
+=== 2026-07-06 13:30:01 mirror start ===
+=== 2026-07-06 13:31:03 mirror end (exit 0) ===

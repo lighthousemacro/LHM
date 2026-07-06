@@ -1021,3 +1021,4 @@
 2026-07-06 12:36:00 [WARNING] DB read attempt 5 failed (unable to open database file); waiting 16s.
 2026-07-06 12:36:16 [WARNING] DB read attempt 6 failed (unable to open database file); waiting 32s.
 2026-07-06 12:36:48 [ERROR] Giving up on DB read: unable to open database file
+2026-07-06 16:35:40 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

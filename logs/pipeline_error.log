@@ -40381,3 +40381,9 @@ Breadth total: 13 series, 9,750 observations
 2026-07-07 18:09:35 [ERROR] Error fetching PCEPILFE: database or disk is full
 2026-07-07 18:09:56 [ERROR] Error fetching CUSR0000SACL1E: database or disk is full
 2026-07-07 18:10:12 [ERROR] Error fetching CUSR0000SAS: database or disk is full
+2026-07-07 18:16:41 [ERROR] Error fetching WPSFD4131: disk I/O error
+2026-07-07 18:16:52 [ERROR] Error fetching WPUFD49116: database or disk is full
+2026-07-07 18:16:57 [ERROR] Error fetching WPSFD41312: disk I/O error
+2026-07-07 18:17:03 [ERROR] Error fetching MICH: disk I/O error
+2026-07-07 18:17:11 [ERROR] Error fetching EXPINF1YR: disk I/O error
+2026-07-07 18:25:03 [ERROR] Error fetching DGS5: database or disk is full

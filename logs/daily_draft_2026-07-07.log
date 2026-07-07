@@ -1,2 +1,17 @@
 [2026-07-07 17:53:42] ════════ DAILY DRAFT RUN START (2026-07-07) ════════
 [2026-07-07 17:53:42] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The draft is built and open in the browser.
+
+**What's waiting for you:** The Beam, "The First Thing To Go" (Tuesday slot). The scout picked the sector story inside the June jobs report: leisure & hospitality cut 61k jobs, the largest sector loss in the year's weakest print (+57k). Consensus wrote it off as slower-than-usual seasonal hiring; the piece reads it as demand, cross-checked against the 3.0% saving rate (two months running) and UMich sentiment at 44.8. It deliberately avoids the ground the 7/2 and 7/4 Beams, Sunday's Beacon, and yesterday's Horizon already covered — no participation, no quits/hires, no term premium.
+
+**Build details:** 10 charts rendered (5 in-piece + 5 supplementary per the 2x rule), all from real DB series (USLAH, PAYEMS, USPRIV, PSAVERT, UMCSENT), QC'd visually, source lines agency-only. Voice lint passes clean. Paywall sits right after The Setup and Figure 1. HTML is fully base64-inlined (2.8MB), BUILD NOTES block at the top lists every unattended assumption. Nothing was published or sent anywhere.
+
+**Two flags:**
+- **The disk is critical again.** It hit literally zero bytes free mid-run (the same condition that corrupted the DB on 7/6). I freed ~200MB by purging `~/Library/Caches` and truncating the stale `logs/pipeline.log`, which was just enough to finish, but the data volume is still at 100% (204 of 228GB). The 885MB `.CORRUPT_20260706` file and the 879MB June 24 `.bak` in `Data/databases/` are the obvious first deletions once you're comfortable, and a real cleanup pass is overdue.
+- Several claude.ai connectors (Notion, Linear, LSEG, CoinDesk, IBKR, others) need re-auth in your connector settings if you want them back; nothing in this run needed them.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-07_the-first-thing-to-go/beam_preview.html
+[2026-07-07 18:32:30] claude exited status=0 in 38m 48s
+[2026-07-07 18:32:30] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-07_the-first-thing-to-go/beam_preview.html
+[2026-07-07 18:32:31] Opened in browser.
+[2026-07-07 18:32:31] ════════ DAILY DRAFT RUN END (status=0) ════════

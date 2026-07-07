@@ -1,16 +1,16 @@
-[2026-07-06 07:45:05] ════════ DAILY DRAFT RUN START (2026-07-06) ════════
-[2026-07-06 07:45:05] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-The July Horizon draft is built and open in the browser. Summary of the run:
+[2026-07-07 17:53:42] ════════ DAILY DRAFT RUN START (2026-07-07) ════════
+[2026-07-07 17:53:42] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The draft is built and open in the browser.
 
-**The piece:** "The Vise" — The Horizon · July 2026. First-Monday slot, no July Horizon existed. It takes Sunday's Beacon diagnosis (the Fed boxed between 3.4% core PCE and a 57k payroll print) and maps H2 forward: four themes (the slow-closing vise, fiscal as the inflation floor, Two Economies under one policy rate, a tape priced for calm), a four-branch scenario map, watchlist through the August jobs report, and framework-neutral tactical posture.
+**What's waiting for you:** The Beam, "The First Thing To Go" (Tuesday slot). The scout picked the sector story inside the June jobs report: leisure & hospitality cut 61k jobs, the largest sector loss in the year's weakest print (+57k). Consensus wrote it off as slower-than-usual seasonal hiring; the piece reads it as demand, cross-checked against the 3.0% saving rate (two months running) and UMich sentiment at 44.8. It deliberately avoids the ground the 7/2 and 7/4 Beams, Sunday's Beacon, and yesterday's Horizon already covered — no participation, no quits/hires, no term premium.
 
-**Build details:**
-- 8 published charts + 8 reference renders, all from verified DB series, agency-only source lines, in `charts/` with a manifest.
-- Every number re-verified against Lighthouse_Master.db. One correction surfaced: May quits is **2.1%** and hires **3.5%**, not the 1.9%/3.3% the 7/5 Beacon brief carried — the draft uses the DB values, and the BUILD NOTES flag that the shipped Beacon copy may want a re-check.
-- Paywall after State of Play with one chart free. No composites, no pillar table, no gold/DXY (stale/mislabeled), no SEP dots chart (no data — substituted funds-vs-2Y). Voice scan clean.
-- All artifacts in `Outputs/horizon_2026-07_the-vise/` (scout brief, data summary, CSVs, draft, charts, scripts). Nothing published or sent anywhere.
+**Build details:** 10 charts rendered (5 in-piece + 5 supplementary per the 2x rule), all from real DB series (USLAH, PAYEMS, USPRIV, PSAVERT, UMCSENT), QC'd visually, source lines agency-only. Voice lint passes clean. Paywall sits right after The Setup and Figure 1. HTML is fully base64-inlined (2.8MB), BUILD NOTES block at the top lists every unattended assumption. Nothing was published or sent anywhere.
 
-PREVIEW_PATH: /Users/bob/LHM/Outputs/horizon_2026-07_the-vise/horizon_preview.html
-[2026-07-06 07:54:15] claude exited status=0 in 9m 10s
-[2026-07-06 07:54:15] PREVIEW READY → /Users/bob/LHM/Outputs/horizon_2026-07_the-vise/horizon_preview.html
-[2026-07-06 07:54:15] Opened in browser.
+**Two flags:**
+- **The disk is critical again.** It hit literally zero bytes free mid-run (the same condition that corrupted the DB on 7/6). I freed ~200MB by purging `~/Library/Caches` and truncating the stale `logs/pipeline.log`, which was just enough to finish, but the data volume is still at 100% (204 of 228GB). The 885MB `.CORRUPT_20260706` file and the 879MB June 24 `.bak` in `Data/databases/` are the obvious first deletions once you're comfortable, and a real cleanup pass is overdue.
+- Several claude.ai connectors (Notion, Linear, LSEG, CoinDesk, IBKR, others) need re-auth in your connector settings if you want them back; nothing in this run needed them.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-07_the-first-thing-to-go/beam_preview.html
+[2026-07-07 18:32:30] claude exited status=0 in 38m 48s
+[2026-07-07 18:32:30] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-07_the-first-thing-to-go/beam_preview.html
+[2026-07-07 18:32:31] Opened in browser.

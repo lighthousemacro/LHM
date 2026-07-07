@@ -2042,3 +2042,8 @@ Everything up-to-date
 [2026-07-05 12:49:44] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260705.db'
 [2026-07-06 13:30:07] git fetch failed: error: cannot open '.git/FETCH_HEAD': No space left on device
 
+[2026-07-07 18:00:30] git commit failed: error: unable to create temporary file: No space left on device
+fatal: failed to write commit object
+
+[2026-07-07 18:01:01] cloud sync [iCloud] failed: [Errno 28] No space left on device: '/Users/bob/LHM/Data/databases/Lighthouse_Master.db' -> '/Users/bob/Library/Mobile Documents/com~apple~CloudDocs/LHM_Backups/Lighthouse_Master_20260707.db'
+[2026-07-07 18:01:08] cloud sync [Dropbox] failed: [Errno 28] No space left on device: '/Users/bob/Dropbox/LHM_Backups/Lighthouse_Master_20260707.db'

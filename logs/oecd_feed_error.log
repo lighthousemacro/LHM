@@ -1394,3 +1394,23 @@ sqlite3.OperationalError: database is locked
 2026-07-06 06:31:51,464 INFO   OECD_CLI_CN: 409 obs
 2026-07-06 06:31:54,840 INFO   OECD_LTIR_CN: 149 obs
 2026-07-06 06:31:57,951 INFO   OECD_STIR_CN: 347 obs
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 219, in main
+    series, obs = fetcher.fetch_all()
+                  ~~~~~~~~~~~~~~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 198, in fetch_all
+    s, o = self._store_series(series_id, title, freq, units, cat,
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              scale, data)
+                              ^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 139, in _store_series
+    c.executemany(
+    ~~~~~~~~~~~~~^
+        "INSERT OR REPLACE INTO observations VALUES (?,?,?)", obs_list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+sqlite3.OperationalError: database is locked

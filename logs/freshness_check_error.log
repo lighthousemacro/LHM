@@ -1022,3 +1022,9 @@
 2026-07-06 12:36:16 [WARNING] DB read attempt 6 failed (unable to open database file); waiting 32s.
 2026-07-06 12:36:48 [ERROR] Giving up on DB read: unable to open database file
 2026-07-06 16:35:40 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-07 17:55:08 [INFO] Stale series (2):
+  BOPGSTB: db=2026-04-01 -> fred=2026-05-01
+  BOPGTB: db=2026-04-01 -> fred=2026-05-01
+2026-07-07 17:56:37 [ERROR]   BOPGSTB: fetch failed: database is locked
+2026-07-07 17:58:13 [INFO]   BOPGTB: refreshed (+413 obs)
+2026-07-07 17:58:13 [INFO] Freshness check done: 1 series refreshed, 413 obs added.

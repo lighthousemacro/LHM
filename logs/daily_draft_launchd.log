@@ -167,3 +167,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/horizon_2026-07_the-vise/horizon_preview.ht
 [2026-07-06 07:54:15] PREVIEW READY → /Users/bob/LHM/Outputs/horizon_2026-07_the-vise/horizon_preview.html
 [2026-07-06 07:54:15] Opened in browser.
 [2026-07-06 07:54:15] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-07 17:53:42] ════════ DAILY DRAFT RUN START (2026-07-07) ════════
+[2026-07-07 17:53:42] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

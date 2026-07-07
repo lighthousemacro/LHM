@@ -2459,3 +2459,9 @@ rsync(2459): error: mkstempat: 'logs/.sync.log.Ce2dlpZYv9': No space left on dev
 === 2026-07-06 20:30:00 mirror start ===
 === 2026-07-06 20:30:03 mirror end (exit 0) ===
 === 2026-07-06 21:00:00 mirror start ===
+=== 2026-07-06 21:00:03 mirror end (exit 0) ===
+=== 2026-07-07 18:00:01 mirror start ===
+rsync(10175): error: Outputs/.daily_draft.lock/: mkpathat: No space left on device
+rsync(10175): error: mkstempat: 'Strategy/.CLAUDE_MASTER.md.pswqR71fJY': No space left on device
+rsync(10175): error: mkstempat: 'logs/.alerts.log.n48aKtDlM9': No space left on device
+=== 2026-07-07 18:01:24 mirror end (exit 0) ===

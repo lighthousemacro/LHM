@@ -1405,3 +1405,6 @@ OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
 
 DONE: 35 series, 22,037 observations upserted.
 OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+OECD inbound feed -> /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+  OECD_GDP_REAL_US: 317 obs
+  OECD_CPI_YOY_US: skipped (OpenBBError, 3 tries)

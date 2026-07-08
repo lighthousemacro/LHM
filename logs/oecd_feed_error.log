@@ -1414,3 +1414,7 @@ Traceback (most recent call last):
     )
     ^
 sqlite3.OperationalError: database is locked
+2026-07-08 10:01:34,863 INFO   OECD_GDP_REAL_US: 317 obs
+2026-07-08 10:01:51,850 WARNING   OECD_CPI_YOY_US: OpenBBError: 
+[Unexpected Error] -> OSError -> [Errno 28] No space left on device: '/Users/bob/OpenBBUserData/cache/oecd/economy_cpi_country_united_states-expenditure_total-frequency_monthly-harmonized_False-transform_yoy.csv'
+

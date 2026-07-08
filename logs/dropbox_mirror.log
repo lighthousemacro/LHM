@@ -2474,3 +2474,8 @@ rsync(10175): error: mkstempat: 'logs/.alerts.log.n48aKtDlM9': No space left on 
 === 2026-07-07 21:00:17 mirror start ===
 === 2026-07-07 21:00:19 mirror end (exit 0) ===
 === 2026-07-08 10:00:01 mirror start ===
+rsync(13345): error: logs/.sync.log.eQw3i63JUy: write: No space left on device
+rsync(13345): error: buf_copy
+rsync(13345): error: logs/.sync.log.eQw3i63JUy: write: No space left on device
+rsync(13343): error: unexpected end of file
+=== 2026-07-08 10:01:13 mirror end (exit 0) ===

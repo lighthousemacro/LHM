@@ -1029,3 +1029,4 @@
 2026-07-07 17:58:13 [INFO]   BOPGTB: refreshed (+413 obs)
 2026-07-07 17:58:13 [INFO] Freshness check done: 1 series refreshed, 413 obs added.
 2026-07-08 09:58:45 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-08 12:35:45 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

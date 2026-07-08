@@ -1,16 +1,19 @@
-[2026-07-07 17:53:42] ════════ DAILY DRAFT RUN START (2026-07-07) ════════
-[2026-07-07 17:53:42] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-Done. The draft is built and open in the browser.
+[2026-07-08 09:57:36] ════════ DAILY DRAFT RUN START (2026-07-08) ════════
+[2026-07-08 09:57:36] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The daily draft is built and open in the browser.
 
-**What's waiting for you:** The Beam, "The First Thing To Go" (Tuesday slot). The scout picked the sector story inside the June jobs report: leisure & hospitality cut 61k jobs, the largest sector loss in the year's weakest print (+57k). Consensus wrote it off as slower-than-usual seasonal hiring; the piece reads it as demand, cross-checked against the 3.0% saving rate (two months running) and UMich sentiment at 44.8. It deliberately avoids the ground the 7/2 and 7/4 Beams, Sunday's Beacon, and yesterday's Horizon already covered — no participation, no quits/hires, no term premium.
+**The piece: "Priced as a Rerun" — The Beam, July 8, 2026.** The US-Iran ceasefire collapsed overnight and crude jumped 4.4% to $73.54, yet high-yield spreads sit at 272bps (below the 300bps complacency line and near the tights of the whole April episode), VIX is 17, and the 10Y breakeven is exactly back at its January open. The thesis: the market is pricing the sequel off April's fade, but this shock lands on a stalling economy (+57k payrolls, 3.0% saving rate) with credit charging nothing for it, while gold above $4,000 never bought the all-clear.
 
-**Build details:** 10 charts rendered (5 in-piece + 5 supplementary per the 2x rule), all from real DB series (USLAH, PAYEMS, USPRIV, PSAVERT, UMCSENT), QC'd visually, source lines agency-only. Voice lint passes clean. Paywall sits right after The Setup and Figure 1. HTML is fully base64-inlined (2.8MB), BUILD NOTES block at the top lists every unattended assumption. Nothing was published or sent anywhere.
+Key build notes (also in the preview's BUILD NOTES block):
+- Wednesday's calendar default is a Note; I chose a Beam because the story is the day's dominant, data-rich thread. Yesterday's Beam was labor, so no overlap; the 6/18 energy Beam was passthrough mechanics, this one is risk pricing.
+- Live prints are TradingView as of ~9:45am ET and will be stale by review — re-check the tape before publishing.
+- Gold came from TradingView (DB `GLD_Close` stale since 5/15) — flagged for ingestion; DB WTI ends 6/29, so the Jul 8 live print is a distinct dated marker, never spliced.
+- 10 charts rendered (5 in-piece + 5 for the paid pack), all on the canonical template, QC-clean, manifest in `charts/MANIFEST.md`.
+- **Disk was 100% full at run start** (the harness itself couldn't write). I cleared ~2.5GB of app caches (Spotify, Google, TradingView updater, GeoServices, pip/Homebrew) to complete the run. Only ~1.4GB is free now — this is the same condition that corrupted the DB on 7/6, and it needs a real cleanup soon.
 
-**Two flags:**
-- **The disk is critical again.** It hit literally zero bytes free mid-run (the same condition that corrupted the DB on 7/6). I freed ~200MB by purging `~/Library/Caches` and truncating the stale `logs/pipeline.log`, which was just enough to finish, but the data volume is still at 100% (204 of 228GB). The 885MB `.CORRUPT_20260706` file and the 879MB June 24 `.bak` in `Data/databases/` are the obvious first deletions once you're comfortable, and a real cleanup pass is overdue.
-- Several claude.ai connectors (Notion, Linear, LSEG, CoinDesk, IBKR, others) need re-auth in your connector settings if you want them back; nothing in this run needed them.
+Nothing was published or sent anywhere.
 
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-07_the-first-thing-to-go/beam_preview.html
-[2026-07-07 18:32:30] claude exited status=0 in 38m 48s
-[2026-07-07 18:32:30] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-07_the-first-thing-to-go/beam_preview.html
-[2026-07-07 18:32:31] Opened in browser.
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-08_priced-as-a-rerun/beam_preview.html
+[2026-07-08 10:20:13] claude exited status=0 in 22m 37s
+[2026-07-08 10:20:13] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-08_priced-as-a-rerun/beam_preview.html
+[2026-07-08 10:20:13] Opened in browser.

@@ -186,3 +186,21 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-07_the-first-thing-to-go/beam_
 [2026-07-07 18:32:31] ════════ DAILY DRAFT RUN END (status=0) ════════
 [2026-07-08 09:57:36] ════════ DAILY DRAFT RUN START (2026-07-08) ════════
 [2026-07-08 09:57:36] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The daily draft is built and open in the browser.
+
+**The piece: "Priced as a Rerun" — The Beam, July 8, 2026.** The US-Iran ceasefire collapsed overnight and crude jumped 4.4% to $73.54, yet high-yield spreads sit at 272bps (below the 300bps complacency line and near the tights of the whole April episode), VIX is 17, and the 10Y breakeven is exactly back at its January open. The thesis: the market is pricing the sequel off April's fade, but this shock lands on a stalling economy (+57k payrolls, 3.0% saving rate) with credit charging nothing for it, while gold above $4,000 never bought the all-clear.
+
+Key build notes (also in the preview's BUILD NOTES block):
+- Wednesday's calendar default is a Note; I chose a Beam because the story is the day's dominant, data-rich thread. Yesterday's Beam was labor, so no overlap; the 6/18 energy Beam was passthrough mechanics, this one is risk pricing.
+- Live prints are TradingView as of ~9:45am ET and will be stale by review — re-check the tape before publishing.
+- Gold came from TradingView (DB `GLD_Close` stale since 5/15) — flagged for ingestion; DB WTI ends 6/29, so the Jul 8 live print is a distinct dated marker, never spliced.
+- 10 charts rendered (5 in-piece + 5 for the paid pack), all on the canonical template, QC-clean, manifest in `charts/MANIFEST.md`.
+- **Disk was 100% full at run start** (the harness itself couldn't write). I cleared ~2.5GB of app caches (Spotify, Google, TradingView updater, GeoServices, pip/Homebrew) to complete the run. Only ~1.4GB is free now — this is the same condition that corrupted the DB on 7/6, and it needs a real cleanup soon.
+
+Nothing was published or sent anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-08_priced-as-a-rerun/beam_preview.html
+[2026-07-08 10:20:13] claude exited status=0 in 22m 37s
+[2026-07-08 10:20:13] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-08_priced-as-a-rerun/beam_preview.html
+[2026-07-08 10:20:13] Opened in browser.
+[2026-07-08 10:20:13] ════════ DAILY DRAFT RUN END (status=0) ════════

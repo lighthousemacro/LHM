@@ -40737,3 +40737,10 @@ Python(12452) MallocStackLogging: can't turn off malloc stack logging because it
 Python(12462) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
 Python(12464) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
 Python(12466) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+2026-07-08 09:58:02 [INFO] Database initialized: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+2026-07-08 09:58:02 [INFO] --- FRED: Category Discovery ---
+2026-07-08 09:58:02 [INFO]    Employment_Situation...
+2026-07-08 09:58:02 [INFO]    Employment_Situation: 0 series, 0 obs
+2026-07-08 09:58:02 [INFO]    CPI_Urban_Consumers...
+2026-07-08 09:58:03 [INFO]    CPI_Urban_Consumers: 1 series, 3 obs
+2026-07-08 09:58:04 [INFO]    Industrial_Production...

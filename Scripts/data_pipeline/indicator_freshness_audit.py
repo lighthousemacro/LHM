@@ -135,6 +135,17 @@ def audit(db_path: str = DB_PATH):
         else:
             stale_days = (today - datetime.fromisoformat(last).date()).days
             verdict = "SHALLOW_HISTORY" if first > need_start else "OK"
+            # Interior zero-run guard: a breadth percentage sitting at exactly
+            # 0.0 for 5+ consecutive rows is fetcher warm-up garbage, not data
+            # (2026-07-09: 199/49/19 such rows found INSIDE spliced canonicals
+            # that passed the depth check). Depth alone can't see this.
+            if verdict == "OK":
+                zrow = conn.execute(
+                    "SELECT COUNT(*) FROM observations "
+                    "WHERE series_id=? AND value=0", (sid,)
+                ).fetchone()
+                if zrow[0] >= 5:
+                    verdict = "ZERO_RUN"
         results.append({
             "index_id": f"{sid} (obs depth)",
             "n": n,
@@ -182,7 +193,7 @@ def main():
             for r in stale:
                 print(f"   {r['index_id']}  last {r['last']} ({r['stale_days']}d)")
 
-    if args.fail_stale and any(r["verdict"] in ("STALE", "SHALLOW_HISTORY")
+    if args.fail_stale and any(r["verdict"] in ("STALE", "SHALLOW_HISTORY", "ZERO_RUN")
                                for r in results):
         sys.exit(1)
 

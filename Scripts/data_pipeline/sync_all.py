@@ -54,7 +54,8 @@ def _get_icloud_dir():
 
 
 # Cloud retention (days)
-CLOUD_RETENTION_DAYS = 30
+CLOUD_RETENTION_DAYS = 30  # retired 2026-07-09, kept for reference
+CLOUD_KEEP_COUNT = 7       # newest N dated backups per cloud destination
 LOCAL_RETENTION_DAYS = 7
 
 # Where loud, human-visible failure breadcrumbs go
@@ -296,16 +297,25 @@ def cloud_sync(dry_run=False):
 
 
 def cleanup_cloud_backups(dest_dir, name):
-    """Remove cloud backups older than retention period."""
+    """Keep the newest CLOUD_KEEP_COUNT backups, remove the rest.
+
+    Count-based, matching the local keep-7 convention. The old 30-day policy
+    let ~26GB of daily 880MB copies pile up per destination on a 228GB disk
+    (disk-full incidents 7/6-7/9). Sidecar -shm/-wal files from interrupted
+    copies are removed with their parent.
+    """
     try:
-        cutoff = datetime.now().timestamp() - (CLOUD_RETENTION_DAYS * 24 * 60 * 60)
+        backups = sorted(dest_dir.glob("Lighthouse_Master_*.db"),
+                         key=lambda f: f.stat().st_mtime, reverse=True)
         removed = 0
-        for f in dest_dir.glob("Lighthouse_Master_*.db"):
-            if f.stat().st_mtime < cutoff:
-                f.unlink()
-                removed += 1
+        for f in backups[CLOUD_KEEP_COUNT:]:
+            f.unlink()
+            removed += 1
+            for sidecar in (f.parent / (f.name + "-shm"), f.parent / (f.name + "-wal")):
+                if sidecar.exists():
+                    sidecar.unlink()
         if removed:
-            log(f"CLOUD SYNC [{name}]: Removed {removed} old backup(s) (>{CLOUD_RETENTION_DAYS} days)")
+            log(f"CLOUD SYNC [{name}]: Pruned {removed} old backup(s), kept newest {CLOUD_KEEP_COUNT}")
     except Exception as e:
         log(f"CLOUD SYNC [{name}]: Cleanup error: {e}")
 

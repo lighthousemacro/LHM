@@ -1050,3 +1050,4 @@
 2026-07-09 12:36:21 [INFO]   EXHOSLUSM495S: refreshed (+13 obs)
 2026-07-09 12:36:21 [INFO]   HOSINVUSM495N: refreshed (+13 obs)
 2026-07-09 12:36:22 [INFO] Freshness check done: 4 series refreshed, 6,235 obs added.
+2026-07-09 16:35:51 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

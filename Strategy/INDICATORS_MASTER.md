@@ -791,43 +791,42 @@ These are decision outputs derived from the underlying composites. Not independe
 
 ## CRYPTO SECTOR COMPOSITES
 
-Eight sector-health composites + four crypto-specific aggregates. Not yet integrated into MRI v2.0; tracked independently.
+Live lineup (2026-07-09): CLI + SLI (and variants) + CDLI, all computed daily in the pipeline from free feeds (DefiLlama, CoinGecko, FRED). Not yet integrated into MRI v2.0; tracked independently.
 
-### Crypto aggregates
+### Crypto Liquidity Impulse (CLI)
 
-- **CDI (Crypto Demand Index)** — 1.209, HIGH ACTIVITY (2026-02-02)
-- **CFI (Crypto Fundamental Index)** — 61.35, HEALTHY (2026-02-02)
-- **CTI (Crypto Technical Index)** — 0.382, CAUTIOUS (2026-02-02)
-- **CVI (Crypto Valuation Index)** — -0.344, FAIR VALUE (2026-02-02)
+**Status:** LIVE in the daily pipeline (2026-07-09). Latest -0.042 (2026-07-09) = NEUTRAL. `lighthouse_indices.index_id = 'CLI'`, history 2018-04-24 → present.
 
-These four are documented internally but not in the proprietary indicators reference. Need formula write-ups before public use.
+**What it is:** 4-component liquidity composite for crypto risk — dollar momentum, reserve dynamics (level + momentum), and stablecoin-vs-BTC capital rotation. The production 4-component empirical build from `Scripts/backtest/cli_final.py`; the published article describes the broader 3-tier conceptual architecture and keeps weights proprietary. Weights live in code only (`compute_crypto_indices.py`, `CLI_WEIGHTS`) — never publish them.
 
-### Sector health composites (DefiLlama-derived, 2026-02-02 latest)
+**Method (PINNED 2026-07-09):** each raw component z-scored on a rolling 756d window (min 126), winsorized ±3, then weighted-summed. cli_final.py's per-run z-method re-selection is explicitly NOT part of the daily computation — the method only changes with a deliberate re-validation, here.
 
-- **DeFi Derivatives Health** — 73.0 HEALTHY
-- **DeFi DEX Health** — 78.25 HEALTHY
-- **DeFi Lending Health** — 60.0 NEUTRAL
-- **Infrastructure Health** — 48.33 WEAK
-- **Layer 1 (Settlement) Health** — 55.0 NEUTRAL
-- **Layer 2 (Scaling) Health** — 73.0 HEALTHY
-- **Liquid Staking Health** — 56.25 NEUTRAL
-- **Uncategorized Health** — 51.29 NEUTRAL
+**Inputs (all DB series):** DTWEXBGS, TOTRESNS, WALCL, `CRYPTO_BTC_PRICE` (backfilled to 2014-09-17), `STABLECOIN_TOTAL_MCAP` (DefiLlama USDT+USDC, full daily history each CRYPTO fetch).
 
-**Scale:** 0-100. Composite of TVL momentum, fee accrual, active address growth, and protocol concentration per sector.
+**Status bands (fixed):** ≥ +1.0 STRONG EXPANSION · ≥ +0.3 EXPANDING · ≥ -0.3 NEUTRAL · ≥ -1.0 CONTRACTING · below = STRONG CONTRACTION. (±0.3 approximates the historical terciles that the regime tables in the article are built on; the composite's full-history std is ~0.72.)
+
+**Verification (2026-07-09):** pipeline recompute vs the validated cli_final.py ground-truth run — max abs diff 0.004 (today's intraday BTC drift), mean abs diff 3e-5 over 2,999 overlapping days.
 
 ### Stablecoin Liquidity Impulse (SLI)
 
-**Status:** LIVE. Latest 1.336 (2026-01-19) = EXPANSION.
+**Status:** LIVE, rewired 2026-07-09. Latest -1.040 (2026-07-09) = SEVERE CONTRACTION. History 2018-01-27 → present, recomputed in full from the new feed (the 2018-2026 TVL-proxy history was replaced — pre-rewire values are superseded).
 
-**Formula:**
-```
-SLI = z(Stablecoin Mcap 30d Δ) + z(USDT/USDC issuance) + z(Stablecoin transfer volume)
-```
+**Feed:** `STABLECOIN_TOTAL_MCAP` (DefiLlama USDT+USDC market cap, full daily history refreshed every CRYPTO pipeline run). The original feed (`crypto_metrics` aggregate TVL, a proxy) died 2026-02-01 and froze SLI at 2026-01-19.
 
-**Variants:**
-- SLI_MCAP — raw market cap
-- SLI_ROC_30D — 30-day rate of change
-- SLI_ROC_90D_ANN — 90-day annualized RoC
+**Formula (as implemented):**
+```
+SLI = z(Stablecoin Mcap 30d RoC), rolling 90d z-score (min 30)
+```
+The original doc formula added z(USDT/USDC issuance) and z(stablecoin transfer volume) terms — both need paid on-chain data, so the live SLI is the mcap-RoC term alone (same z-parameters as the TVL-proxy era, now on the mcap the formula always wanted).
+
+**Variants (same feed, daily):**
+- SLI_MCAP — total USDT+USDC market cap, $bn
+- SLI_ROC_30D — 30-day rate of change, %
+- SLI_ROC_90D_ANN — 90-day RoC annualized (×4), %
+
+### Retired: crypto aggregates + sector health (paid-fundamentals lineup)
+
+**Retired 2026-06-15, zombie rows purged from `lighthouse_indices` 2026-07-09.** CDI (Demand), CFI (Fundamental), CTI (Technical), CVI (Valuation), and the eight DefiLlama-derived CRYPTO_*_HEALTH sector composites (Derivatives/DEX/Lending/Infrastructure/L1/L2/Liquid Staking/Uncategorized, 0-100 scale) all read the `crypto_scores` table, whose paid feed died 2026-02-02. Bob declined a paid replacement; CDLI is the free-data successor for the crypto-fundamentals read. Compute functions are kept for reference in `compute_crypto_indices.py` behind `COMPUTE_RETIRED_FUNDAMENTALS = False`. Don't chart or cite them; the freshness audit flags any reappearance as RETIRED_ZOMBIE.
 
 ---
 

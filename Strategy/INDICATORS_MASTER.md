@@ -369,24 +369,18 @@ Significant patterns by asset: DGS10 105, DGS2 88, HYOAS 77, VIX 74, GLD 72, DXY
 
 ### Crypto / stablecoin
 
+*(Updated 2026-07-09 — CLI/SLI live in the daily pipeline, retired lineup purged.)*
+
 | Index | Latest | Value | Status |
 |---|---|---|---|
-| SLI (Stablecoin Liquidity Impulse) | 2026-01-19 | 1.336 | EXPANSION |
-| SLI_MCAP | 2026-01-12 | 187.046 | — |
-| SLI_ROC_30D | 2026-01-12 | 0.400 | — |
-| SLI_ROC_90D_ANN | 2026-01-12 | 15.400 | — |
-| CDI (Crypto Demand Index) | 2026-02-02 | 1.209 | HIGH ACTIVITY |
-| CFI (Crypto Fundamental Index) | 2026-02-02 | 61.350 | HEALTHY |
-| CTI (Crypto Technical Index) | 2026-02-02 | 0.382 | CAUTIOUS |
-| CVI (Crypto Valuation Index) | 2026-02-02 | -0.344 | FAIR VALUE |
-| Crypto DeFi Derivatives Health | 2026-02-02 | 73.0 | HEALTHY |
-| Crypto DeFi DEX Health | 2026-02-02 | 78.25 | HEALTHY |
-| Crypto DeFi Lending Health | 2026-02-02 | 60.0 | NEUTRAL |
-| Crypto Infrastructure Health | 2026-02-02 | 48.33 | WEAK |
-| Crypto Layer 1 (Settlement) Health | 2026-02-02 | 55.0 | NEUTRAL |
-| Crypto Layer 2 (Scaling) Health | 2026-02-02 | 73.0 | HEALTHY |
-| Crypto Liquid Staking Health | 2026-02-02 | 56.25 | NEUTRAL |
-| Crypto Uncategorized Health | 2026-02-02 | 51.29 | NEUTRAL |
+| CLI (Crypto Liquidity Impulse) | 2026-07-09 | -0.042 | NEUTRAL |
+| SLI (Stablecoin Liquidity Impulse) | 2026-07-09 | -1.040 | SEVERE CONTRACTION |
+| SLI_MCAP ($bn, USDT+USDC) | 2026-07-09 | 257.550 | — |
+| SLI_ROC_30D (%) | 2026-07-09 | -2.069 | — |
+| SLI_ROC_90D_ANN (%) | 2026-07-09 | -7.508 | — |
+| CDLI (Crypto DeFi Liquidity) | 2026-07-08 | -1.226 | CONTRACTING |
+
+**Retired 2026-07-09 (rows deleted from `lighthouse_indices`):** CDI, CFI, CTI, CVI, and the eight CRYPTO_*_HEALTH sector composites. All read the dead `crypto_scores` paid feed (frozen 2026-02-02, deprecated 2026-06-15). Compute functions remain in `compute_crypto_indices.py` gated behind `COMPUTE_RETIRED_FUNDAMENTALS = False`; the freshness audit flags any reappearance as RETIRED_ZOMBIE.
 
 ---
 

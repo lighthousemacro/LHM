@@ -166,7 +166,7 @@ The portfolio is a single book. The distinction is what drives a position.
 - **Don't overclaim:** No "nobody else covers," "uniquely positioned," "the only way." Use "for us, this does X" or "what's rare is connecting them with math, not the count."
 
 **Sign-offs:**
-- CTA (all readers): "Don't navigate in the dark. Subscribe."
+- CTA (all readers): "Don't navigate in the dark. Join the Watch." (The Substack button says the "subscribe" part, so the prose never repeats it. Updated 2026-07-09.)
 - Subscribers (Beacon/Horizon): "That's our view from the Watch. We'll keep the light on..." (don't overuse)
 
 **Full voice working guide is in the appendix at the bottom of this file.**

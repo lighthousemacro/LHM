@@ -1418,3 +1418,39 @@ sqlite3.OperationalError: database is locked
 2026-07-08 10:01:51,850 WARNING   OECD_CPI_YOY_US: OpenBBError: 
 [Unexpected Error] -> OSError -> [Errno 28] No space left on device: '/Users/bob/OpenBBUserData/cache/oecd/economy_cpi_country_united_states-expenditure_total-frequency_monthly-harmonized_False-transform_yoy.csv'
 
+2026-07-09 06:55:36,695 INFO   OECD_GDP_REAL_US: 317 obs
+2026-07-09 06:55:37,971 INFO   OECD_CPI_YOY_US: 844 obs
+2026-07-09 06:55:38,966 INFO   OECD_UNEMP_US: 856 obs
+2026-07-09 06:55:41,892 INFO   OECD_CLI_US: 858 obs
+2026-07-09 06:55:42,894 INFO   OECD_LTIR_US: 870 obs
+2026-07-09 06:55:43,823 INFO   OECD_STIR_US: 744 obs
+2026-07-09 06:55:46,790 INFO   OECD_CPI_YOY_EA: 420 obs
+2026-07-09 06:55:50,374 INFO   OECD_GDP_REAL_JP: 265 obs
+2026-07-09 06:55:52,946 INFO   OECD_CPI_YOY_JP: 786 obs
+2026-07-09 06:55:56,958 INFO   OECD_UNEMP_JP: 857 obs
+2026-07-09 06:55:59,918 INFO   OECD_CLI_JP: 810 obs
+2026-07-09 06:56:02,703 INFO   OECD_LTIR_JP: 450 obs
+2026-07-09 06:56:05,684 INFO   OECD_STIR_JP: 290 obs
+2026-07-09 06:56:09,293 INFO   OECD_GDP_REAL_GB: 285 obs
+2026-07-09 06:56:12,674 INFO   OECD_CPI_YOY_GB: 845 obs
+2026-07-09 06:56:18,361 INFO   OECD_UNEMP_GB: 518 obs
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 219, in main
+    series, obs = fetcher.fetch_all()
+                  ~~~~~~~~~~~~~~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 198, in fetch_all
+    s, o = self._store_series(series_id, title, freq, units, cat,
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              scale, data)
+                              ^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 139, in _store_series
+    c.executemany(
+    ~~~~~~~~~~~~~^
+        "INSERT OR REPLACE INTO observations VALUES (?,?,?)", obs_list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+sqlite3.OperationalError: database or disk is full

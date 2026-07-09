@@ -34,3 +34,37 @@ morning sent to 7556962272
 Alerts written to /Users/bob/LHM/Data/alerts.md
 State saved. 0 new alerts, 0 transitions.
 morning sent to 7556962272
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/threshold_alerts.py", line 508, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/threshold_alerts.py", line 424, in main
+    ALERT_MD_PATH.write_text(md_content)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 809, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '/Users/bob/LHM/Data/alerts.md'
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/lhmbot_push.py", line 298, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lhmbot_push.py", line 290, in main
+    cmd_morning(token, chat_id, args.dry_run)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lhmbot_push.py", line 209, in cmd_morning
+    _save_push_state(state)
+    ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lhmbot_push.py", line 120, in _save_push_state
+    PUSH_STATE_PATH.write_text(json.dumps(state, indent=2) + "\n")
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 809, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '/Users/bob/LHM/Data/telegram_push_state.json'

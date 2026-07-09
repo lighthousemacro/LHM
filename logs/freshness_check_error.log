@@ -1034,3 +1034,9 @@
   TOTALSL: db=2026-04-01 -> fred=2026-05-01
 2026-07-08 16:38:47 [INFO]   TOTALSL: refreshed (+1001 obs)
 2026-07-08 16:38:47 [INFO] Freshness check done: 1 series refreshed, 1,001 obs added.
+2026-07-09 08:40:08 [INFO] Stale series (2):
+  ICSA: db=2026-06-27 -> fred=2026-07-04
+  CCSA: db=2026-06-20 -> fred=2026-06-27
+2026-07-09 08:40:11 [ERROR]   ICSA: fetch failed: database or disk is full
+2026-07-09 08:40:11 [ERROR]   CCSA: fetch failed: database or disk is full
+2026-07-09 08:40:53 [INFO] Freshness check done: 0 series refreshed, 0 obs added.

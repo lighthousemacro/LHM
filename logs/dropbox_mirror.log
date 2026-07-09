@@ -2505,3 +2505,21 @@ rsync(13343): error: unexpected end of file
 === 2026-07-08 21:30:29 mirror end (exit 0) ===
 === 2026-07-08 22:03:02 mirror start ===
 === 2026-07-08 22:03:06 mirror end (exit 0) ===
+=== 2026-07-09 08:02:11 mirror start ===
+rsync(17923): error: mkstempat: 'Strategy/.CLAUDE_MASTER.md.PZ6XNzbbqP': No space left on device
+rsync(17923): error: mkstempat: 'logs/.SYNC_FAILURES.log.kpoFD3k5Aj': No space left on device
+rsync(17923): error: mkstempat: 'logs/.daily_draft_launchd.log.86GvGQGiAu': No space left on device
+rsync(17923): error: mkstempat: 'logs/.daily_draft_launchd_error.log.kXc3Oulg1F': No space left on device
+rsync(17923): error: mkstempat: 'logs/.dropbox_mirror.log.egG58xEq2W': No space left on device
+rsync(17923): error: mkstempat: 'logs/.lhmbot_server.log.aidM3wbAVl': No space left on device
+rsync(17923): error: mkstempat: 'logs/.oecd_feed.log.oga6llo4LH': No space left on device
+rsync(17923): error: mkstempat: 'logs/.oecd_feed_error.log.hKYb9tVtjY': No space left on device
+rsync(17923): error: mkstempat: 'logs/.pipeline_error.log.sljzUelPsP': No space left on device
+rsync(17923): error: mkstempat: 'logs/.substack_dashboard.log.guDG39OfUE': No space left on device
+rsync(17923): error: mkstempat: 'logs/.substack_dashboard_stderr.log.JL07gxaMKA': No space left on device
+rsync(17923): error: mkstempat: 'logs/.substack_dashboard_stdout.log.FfhDfUKml2': No space left on device
+rsync(17923): error: mkstempat: 'logs/.sync.log.76urJOg9LL': No space left on device
+rsync(17923): error: mkstempat: 'logs/.sync_error.log.nZHlHvrEtC': No space left on device
+rsync(17923): error: mkstempat: 'logs/.telegram_push.log.8Pf5mgoZG6': No space left on device
+=== 2026-07-09 08:02:14 mirror end (exit 0) ===
+=== 2026-07-09 11:30:00 mirror start ===

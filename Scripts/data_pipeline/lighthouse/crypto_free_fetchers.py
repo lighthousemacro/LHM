@@ -26,6 +26,12 @@ logger = logging.getLogger(__name__)
 # DefiLlama endpoints (no auth required)
 DEFILLAMA_BASE = "https://api.llama.fi"
 DEFILLAMA_COINS = "https://coins.llama.fi"
+DEFILLAMA_STABLECOINS = "https://stablecoins.llama.fi"
+
+# DefiLlama stablecoin asset IDs for the CLI/SLI aggregate (USDT=1, USDC=2).
+# Full history per asset comes from /stablecoin/{id}; summed into
+# STABLECOIN_TOTAL_MCAP each run (idempotent upsert keeps it current).
+STABLECOIN_TOTAL_IDS = {1: 'USDT', 2: 'USDC'}
 
 # CoinGecko endpoints (no auth for basic, 30/min limit)
 COINGECKO_BASE = "https://api.coingecko.com/api/v3"
@@ -345,6 +351,82 @@ class DefiLlamaFetcher:
 
         return len(top_stables), total_obs
 
+    def fetch_stablecoin_total_mcap(self) -> Tuple[int, int]:
+        """
+        Fetch FULL daily history of USDT+USDC total market cap and store as
+        STABLECOIN_TOTAL_MCAP. This is the live feed for CLI (StableBTC_RoC
+        component) and SLI. Unlike fetch_stablecoin_tvl (latest snapshot only),
+        this pulls the complete per-asset history each run, so any gap
+        self-heals on the next pipeline run.
+        """
+        c = self.conn.cursor()
+        total = None
+
+        logger.info("Fetching stablecoin total mcap history (USDT+USDC) from DefiLlama...")
+
+        try:
+            for sid, symbol in STABLECOIN_TOTAL_IDS.items():
+                url = f"{DEFILLAMA_STABLECOINS}/stablecoin/{sid}"
+                r = self.session.get(url, timeout=60)
+
+                if r.status_code != 200:
+                    logger.warning(f"   {symbol}: HTTP {r.status_code}")
+                    continue
+
+                data = r.json()
+                rows = []
+                for pt in data.get('tokens', []):
+                    # Timestamps are 00:00 UTC daily — parse as UTC-naive so the
+                    # calendar date is right (datetime.fromtimestamp would shift
+                    # to local time and land on the previous day).
+                    dt = pd.to_datetime(pt['date'], unit='s')
+                    circ = pt.get('circulating', {})
+                    mc = circ.get('peggedUSD', 0) if isinstance(circ, dict) else 0
+                    if mc > 0:
+                        rows.append({'date': dt, 'mcap': mc})
+
+                if not rows:
+                    logger.warning(f"   {symbol}: no history returned")
+                    continue
+
+                s = pd.DataFrame(rows).set_index('date').sort_index()
+                s = s[~s.index.duplicated(keep='last')]
+
+                if total is None:
+                    total = s.rename(columns={'mcap': 'stable_mcap'})
+                else:
+                    total['stable_mcap'] = total['stable_mcap'].add(
+                        s['mcap'].reindex(total.index, method='ffill'), fill_value=0)
+
+                time.sleep(0.2)  # Rate limiting
+
+            if total is None or total.empty:
+                logger.error("Stablecoin total mcap: no data from any asset")
+                return 0, 0
+
+            obs_count = 0
+            for dt, row in total.iterrows():
+                c.execute(
+                    "INSERT OR REPLACE INTO observations VALUES (?,?,?)",
+                    ("STABLECOIN_TOTAL_MCAP", dt.strftime('%Y-%m-%d'), float(row['stable_mcap']))
+                )
+                obs_count += 1
+
+            c.execute("""INSERT OR REPLACE INTO series_meta
+                        (series_id, title, source, category, frequency, units, last_updated, last_fetched)
+                        VALUES (?,?,?,?,?,?,?,?)""",
+                     ("STABLECOIN_TOTAL_MCAP",
+                      "Stablecoin Total Market Cap (USDT+USDC)", "DefiLlama", "Crypto",
+                      "Daily", "USD", datetime.now().isoformat(), datetime.now().isoformat()))
+
+            self.conn.commit()
+            logger.info(f"   Stablecoin total mcap: {obs_count:,} observations")
+            return 1, obs_count
+
+        except Exception as e:
+            logger.error(f"Stablecoin total mcap error: {e}")
+            return 0, 0
+
 
 # ==========================================
 # COINGECKO FETCHER
@@ -551,6 +633,11 @@ class FreeCryptoFetcher:
 
         # DefiLlama: Stablecoins
         series, obs = self.defillama.fetch_stablecoin_tvl()
+        total_series += series
+        total_obs += obs
+
+        # DefiLlama: Stablecoin total mcap full history (CLI/SLI feed)
+        series, obs = self.defillama.fetch_stablecoin_total_mcap()
         total_series += series
         total_obs += obs
 

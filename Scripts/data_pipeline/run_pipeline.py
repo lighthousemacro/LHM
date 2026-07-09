@@ -155,19 +155,20 @@ def main():
         print("=" * 70)
         try:
             conn = sqlite3.connect(INDICES_DB_PATH)
-            # Check if crypto tables exist
-            c = conn.cursor()
-            c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='crypto_scores'")
-            if c.fetchone():
-                crypto_indices_df = compute_all_crypto_indices(conn, latest_only=True)
-                if not crypto_indices_df.empty:
-                    write_crypto_indices_to_db(conn, crypto_indices_df)
-                    verify_crypto_indices(conn)
-                    print("Crypto index computation complete.")
-                else:
-                    print("No crypto data available for index computation.")
+            # FULL daily recompute (latest_only=False), same rationale as the
+            # macro composites above: CLI/SLI are history-dependent (rolling
+            # z-scores) and a full rewrite is cheap (~10k rows), so every run
+            # heals gaps and keeps the whole history consistent. CLI/SLI read
+            # observations directly (DTWEXBGS, TOTRESNS, WALCL,
+            # CRYPTO_BTC_PRICE, STABLECOIN_TOTAL_MCAP) — no crypto_scores
+            # dependency since the 2026-07-09 rewire.
+            crypto_indices_df = compute_all_crypto_indices(conn, latest_only=False)
+            if not crypto_indices_df.empty:
+                write_crypto_indices_to_db(conn, crypto_indices_df)
+                verify_crypto_indices(conn)
+                print("Crypto index computation complete.")
             else:
-                print("Crypto tables not found - run with --sources CRYPTO to populate.")
+                print("No crypto data available for index computation.")
             conn.close()
         except Exception as e:
             print(f"ERROR computing crypto indices: {e}")

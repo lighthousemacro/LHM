@@ -2,14 +2,23 @@
 """
 LIGHTHOUSE MACRO - CRYPTO INDEX COMPUTATION
 ============================================
-Computes crypto-specific indices from crypto_metrics and crypto_scores tables.
+Computes crypto-specific indices from the observations table (live free feeds).
 
-Indices computed:
+Indices computed (LIVE, daily):
+    - CLI (Crypto Liquidity Impulse) - 4-component liquidity composite
+      (ported from Scripts/backtest/cli_final.py, method PINNED 2026-07-09)
     - SLI (Stablecoin Liquidity Impulse) - rate of change in stablecoin market cap
+      (rewired 2026-07-09 to STABLECOIN_TOTAL_MCAP, DefiLlama USDT+USDC)
+      plus variants SLI_MCAP, SLI_ROC_30D, SLI_ROC_90D_ANN
+
+RETIRED (paid-fundamentals lineup, crypto_scores feed dead 2026-02-02,
+zombie rows purged from lighthouse_indices 2026-07-09 — functions kept for
+reference, gated off by COMPUTE_RETIRED_FUNDAMENTALS):
     - CFI (Crypto Fundamentals Index) - aggregate health of DeFi protocols
     - CDI (Crypto Developer Index) - development activity across protocols
     - CVI (Crypto Valuation Index) - aggregate valuation metrics (P/F, P/S)
     - CTI (Crypto Tier Index) - count/ratio of Tier 1 vs Avoid protocols
+    - CRYPTO_*_HEALTH sector composites
 
 These indices integrate into Pillar 10 (Plumbing) and provide crypto-specific
 signals for the broader macro framework.
@@ -39,10 +48,47 @@ DB_PATH = Path("/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
 
 
 # ==========================================
+# CLI CONFIGURATION (PINNED — no per-run method re-selection)
+# ==========================================
+# Method locked 2026-07-09 from the validated cli_final.py run: rolling 3-year
+# (756d) z-scores on each raw component, winsorized to +/-3, weighted sum.
+# cli_final.py re-selects the z-method every run via in-sample quintile tests;
+# the daily pipeline must NOT do that — one method, forever, until an explicit
+# re-validation changes it here. Component weights are proprietary (in code
+# only, never published).
+CLI_WEIGHTS = {
+    'DollarYoY': 0.20,       # -(DTWEXBGS 252d % change)
+    'ResRatio_RoC': 0.50,    # 63d RoC of TOTRESNS/WALCL
+    'StableBTC_RoC': 0.15,   # -(21d RoC of stablecoin mcap / BTC price)
+    'ResRatio': 0.15,        # TOTRESNS/WALCL level
+}
+CLI_Z_WINDOW = 756           # rolling 3yr
+CLI_Z_MIN_PERIODS = 126
+CLI_WINSORIZE = 3.0
+
+
+# ==========================================
+# RETIRED PAID-FUNDAMENTALS GATE
+# ==========================================
+# CFI/CDI/CVI/CTI/CRYPTO_*_HEALTH read the crypto_scores table, whose paid
+# feed died 2026-02-02 (Bob declined a paid replacement; CDLI is the free-data
+# successor). Zombie rows purged from lighthouse_indices 2026-07-09. Leave
+# this False unless a live fundamentals feed returns.
+COMPUTE_RETIRED_FUNDAMENTALS = False
+
+
+# ==========================================
 # STATUS THRESHOLDS (Crypto-Specific)
 # ==========================================
 
 CRYPTO_STATUS_THRESHOLDS = {
+    "CLI": [
+        (1.0, "STRONG EXPANSION"),
+        (0.3, "EXPANDING"),
+        (-0.3, "NEUTRAL"),
+        (-1.0, "CONTRACTING"),
+        (-999, "STRONG CONTRACTION")
+    ],
     "SLI": [
         (1.5, "RAPID EXPANSION"),
         (0.5, "EXPANSION"),
@@ -117,58 +163,148 @@ def compute_zscore(series: pd.Series, window: int = 30, min_periods: int = 10) -
 
 
 # ==========================================
+# OBSERVATIONS LOADER
+# ==========================================
+
+def load_observation_series(conn: sqlite3.Connection, series_id: str) -> pd.Series:
+    """Load a single series from the observations table as a date-indexed Series."""
+    df = pd.read_sql(
+        "SELECT date, value FROM observations WHERE series_id = ? ORDER BY date",
+        conn, params=(series_id,), parse_dates=['date']
+    )
+    return df.set_index('date')['value'].rename(series_id)
+
+
+# ==========================================
 # CRYPTO INDEX COMPUTATIONS
 # ==========================================
+
+def compute_cli(conn: sqlite3.Connection) -> pd.DataFrame:
+    """
+    Crypto Liquidity Impulse (CLI)
+
+    4-component empirical liquidity composite, ported from
+    Scripts/backtest/cli_final.py (production 4-component v5 subset).
+    Computed entirely from DB series: DTWEXBGS, TOTRESNS, WALCL,
+    CRYPTO_BTC_PRICE, STABLECOIN_TOTAL_MCAP.
+
+    Method (PINNED — see CLI_* constants above):
+        raw components -> rolling 756d z (min 126) -> winsorize +/-3
+        -> weighted sum (weights proprietary, CLI_WEIGHTS).
+
+    High CLI = liquidity expanding = supportive for crypto risk
+    Low CLI = liquidity contracting = headwind
+
+    Returns:
+        DataFrame with columns: date, CLI
+    """
+    try:
+        btc = load_observation_series(conn, 'CRYPTO_BTC_PRICE')
+        stable = load_observation_series(conn, 'STABLECOIN_TOTAL_MCAP')
+        dtwex = load_observation_series(conn, 'DTWEXBGS')
+        totres = load_observation_series(conn, 'TOTRESNS')
+        walcl = load_observation_series(conn, 'WALCL')
+
+        for name, s, min_len in [('CRYPTO_BTC_PRICE', btc, 1000),
+                                 ('STABLECOIN_TOTAL_MCAP', stable, 500),
+                                 ('DTWEXBGS', dtwex, 500),
+                                 ('TOTRESNS', totres, 100),
+                                 ('WALCL', walcl, 500)]:
+            if len(s) < min_len:
+                print(f"      Warning: {name} history too shallow for CLI "
+                      f"({len(s)} obs) — backfill lost?")
+                return pd.DataFrame(columns=["date", "CLI"])
+
+        # Everything on the BTC (7-day crypto) calendar, forward-filled —
+        # matches cli_final.py exactly.
+        idx = btc.index
+        dtwex_d = dtwex.reindex(idx, method='ffill')
+        res = totres.reindex(idx, method='ffill')
+        fed = walcl.reindex(idx, method='ffill')
+        stable_d = stable.reindex(idx, method='ffill')
+
+        comps = {}
+        comps['DollarYoY'] = -(dtwex_d / dtwex_d.shift(252) - 1)
+        comps['ResRatio'] = res / fed
+        rr = comps['ResRatio']
+        comps['ResRatio_RoC'] = rr / rr.shift(63) - 1
+        ratio = stable_d / btc
+        comps['StableBTC_RoC'] = -(ratio / ratio.shift(21) - 1)
+
+        # Pinned z-method: rolling 3yr, winsorized
+        z_comps = {}
+        for k, v in comps.items():
+            m = v.rolling(window=CLI_Z_WINDOW, min_periods=CLI_Z_MIN_PERIODS).mean()
+            sd = v.rolling(window=CLI_Z_WINDOW, min_periods=CLI_Z_MIN_PERIODS).std()
+            z_comps[k] = ((v - m) / sd).clip(lower=-CLI_WINSORIZE, upper=CLI_WINSORIZE)
+
+        cli = sum(CLI_WEIGHTS[k] * z_comps[k] for k in CLI_WEIGHTS).dropna()
+
+        result = cli.rename('CLI').reset_index()
+        result.columns = ['date', 'CLI']
+        return result
+
+    except Exception as e:
+        print(f"      Error computing CLI: {e}")
+        return pd.DataFrame(columns=["date", "CLI"])
+
 
 def compute_sli(conn: sqlite3.Connection) -> pd.DataFrame:
     """
     Stablecoin Liquidity Impulse (SLI)
 
-    Measures rate of change in stablecoin/crypto market cap.
-    Uses aggregate TVL from DeFi protocols as proxy for stablecoin liquidity.
+    Measures rate of change in stablecoin market cap.
+    Rewired 2026-07-09: feeds from STABLECOIN_TOTAL_MCAP (DefiLlama USDT+USDC,
+    live daily). The original crypto_metrics TVL proxy feed died 2026-02-01;
+    stablecoin mcap is what the documented formula wanted in the first place.
+    (The issuance and transfer-volume components in the original doc formula
+    need paid on-chain data — SLI is the mcap-RoC term alone, z-scored, same
+    z-parameters as the TVL-proxy era.)
 
     Formula:
-        SLI = z(TVL_30d_RoC) where TVL_30d_RoC = (TVL_today - TVL_30d_ago) / TVL_30d_ago
+        SLI = z(mcap_30d_RoC), rolling 90d z (min 30)
 
     High SLI = Expanding liquidity = Bullish for risk assets
     Low SLI = Contracting liquidity = Bearish / Risk-off
 
+    Variants:
+        SLI_MCAP        - total stablecoin market cap, $bn
+        SLI_ROC_30D     - 30-day rate of change, percent
+        SLI_ROC_90D_ANN - 90-day rate of change annualized (x4), percent
+
     Returns:
-        DataFrame with columns: date, SLI, TVL_Total, TVL_RoC_30d
+        DataFrame with columns: date, SLI, SLI_MCAP, SLI_ROC_30D, SLI_ROC_90D_ANN
     """
-    # Query TVL data from crypto_metrics
-    query = """
-        SELECT date, SUM(value) as tvl_total
-        FROM crypto_metrics
-        WHERE metric_id = 'tvl'
-        GROUP BY date
-        ORDER BY date
-    """
-
+    cols = ["date", "SLI", "SLI_MCAP", "SLI_ROC_30D", "SLI_ROC_90D_ANN"]
     try:
-        df = pd.read_sql(query, conn, parse_dates=['date'])
-        if df.empty:
-            print("      Warning: No TVL data found for SLI computation")
-            return pd.DataFrame(columns=["date", "SLI", "TVL_Total", "TVL_RoC_30d"])
+        mcap = load_observation_series(conn, 'STABLECOIN_TOTAL_MCAP')
+        if mcap.empty:
+            print("      Warning: No STABLECOIN_TOTAL_MCAP data for SLI computation")
+            return pd.DataFrame(columns=cols)
 
-        df = df.set_index('date').sort_index()
+        # Guarantee calendar-day shifts (DefiLlama is daily-continuous, but
+        # forward-fill any gap so shift(30) is always 30 calendar days)
+        mcap = mcap.reindex(
+            pd.date_range(mcap.index.min(), mcap.index.max(), freq='D'),
+            method='ffill')
 
-        # Compute 30-day rate of change
-        df['tvl_30d_ago'] = df['tvl_total'].shift(30)
-        df['tvl_roc_30d'] = (df['tvl_total'] - df['tvl_30d_ago']) / df['tvl_30d_ago']
+        df = pd.DataFrame({'mcap': mcap})
+        df['roc_30d'] = df['mcap'] / df['mcap'].shift(30) - 1
+        df['roc_90d'] = df['mcap'] / df['mcap'].shift(90) - 1
 
-        # Z-score the rate of change
-        df['SLI'] = compute_zscore(df['tvl_roc_30d'], window=90, min_periods=30)
+        # Z-score the rate of change (same parameters as the TVL-proxy era)
+        df['SLI'] = compute_zscore(df['roc_30d'], window=90, min_periods=30)
 
-        # Prepare output
-        result = df.reset_index()[['date', 'SLI', 'tvl_total', 'tvl_roc_30d']]
-        result.columns = ['date', 'SLI', 'TVL_Total', 'TVL_RoC_30d']
+        df['SLI_MCAP'] = df['mcap'] / 1e9                 # $bn
+        df['SLI_ROC_30D'] = df['roc_30d'] * 100           # percent
+        df['SLI_ROC_90D_ANN'] = df['roc_90d'] * 4 * 100   # percent, simple x4 ann.
 
-        return result.dropna(subset=['SLI'])
+        result = df.reset_index().rename(columns={'index': 'date'})
+        return result[cols].dropna(subset=['SLI'])
 
     except Exception as e:
         print(f"      Error computing SLI: {e}")
-        return pd.DataFrame(columns=["date", "SLI", "TVL_Total", "TVL_RoC_30d"])
+        return pd.DataFrame(columns=cols)
 
 
 def compute_cfi(conn: sqlite3.Connection) -> pd.DataFrame:
@@ -374,35 +510,60 @@ def compute_all_crypto_indices(conn: sqlite3.Connection, latest_only: bool = Fal
     print("\n--- Computing Crypto Indices ---")
 
     # Compute each index
+    print("   Computing CLI (Crypto Liquidity Impulse)...")
+    cli_df = compute_cli(conn)
+
     print("   Computing SLI (Stablecoin Liquidity Impulse)...")
     sli_df = compute_sli(conn)
 
-    print("   Computing CFI (Crypto Fundamentals Index)...")
-    cfi_df = compute_cfi(conn)
+    if COMPUTE_RETIRED_FUNDAMENTALS:
+        print("   Computing CFI (Crypto Fundamentals Index)...")
+        cfi_df = compute_cfi(conn)
 
-    print("   Computing CDI (Crypto Developer Index)...")
-    cdi_df = compute_cdi(conn)
+        print("   Computing CDI (Crypto Developer Index)...")
+        cdi_df = compute_cdi(conn)
 
-    print("   Computing CVI (Crypto Valuation Index)...")
-    cvi_df = compute_cvi(conn)
+        print("   Computing CVI (Crypto Valuation Index)...")
+        cvi_df = compute_cvi(conn)
 
-    print("   Computing CTI (Crypto Tier Index)...")
-    cti_df = compute_cti(conn)
+        print("   Computing CTI (Crypto Tier Index)...")
+        cti_df = compute_cti(conn)
 
-    print("   Computing Sector Health Indices...")
-    sector_df = compute_sector_health(conn)
+        print("   Computing Sector Health Indices...")
+        sector_df = compute_sector_health(conn)
+    else:
+        print("   Skipping retired paid-fundamentals indices (CFI/CDI/CVI/CTI/sector health)")
+        cfi_df = cdi_df = cvi_df = cti_df = sector_df = pd.DataFrame()
 
     # Build output rows
     rows = []
 
-    # Add SLI
-    for _, row in sli_df.iterrows():
+    # Add CLI
+    for _, row in cli_df.iterrows():
         rows.append({
             "date": row['date'].strftime("%Y-%m-%d") if hasattr(row['date'], 'strftime') else str(row['date']),
+            "index_id": "CLI",
+            "value": round(row['CLI'], 4),
+            "status": get_crypto_status("CLI", row['CLI'])
+        })
+
+    # Add SLI + variants
+    for _, row in sli_df.iterrows():
+        date_str = row['date'].strftime("%Y-%m-%d") if hasattr(row['date'], 'strftime') else str(row['date'])
+        rows.append({
+            "date": date_str,
             "index_id": "SLI",
             "value": round(row['SLI'], 4),
             "status": get_crypto_status("SLI", row['SLI'])
         })
+        for variant in ("SLI_MCAP", "SLI_ROC_30D", "SLI_ROC_90D_ANN"):
+            if pd.notna(row[variant]):
+                rows.append({
+                    "date": date_str,
+                    "index_id": variant,
+                    "value": round(row[variant], 4),
+                    "status": None
+                })
 
     # Add CFI
     for _, row in cfi_df.iterrows():
@@ -491,12 +652,16 @@ def verify_crypto_indices(conn: sqlite3.Connection):
     print("\n--- Verification: Latest Crypto Index Values ---")
 
     query = """
-        SELECT index_id, value, status, date
-        FROM lighthouse_indices
-        WHERE index_id IN ('SLI', 'CFI', 'CDI', 'CVI', 'CTI')
-           OR index_id LIKE 'CRYPTO_%_HEALTH'
-        AND date = (SELECT MAX(date) FROM lighthouse_indices WHERE index_id = 'SLI')
-        ORDER BY index_id
+        SELECT li.index_id, li.value, li.status, li.date
+        FROM lighthouse_indices li
+        JOIN (
+            SELECT index_id, MAX(date) AS max_date
+            FROM lighthouse_indices
+            WHERE index_id IN ('CLI', 'SLI', 'SLI_MCAP', 'SLI_ROC_30D',
+                               'SLI_ROC_90D_ANN', 'CRYPTO_DEFI_LIQUIDITY')
+            GROUP BY index_id
+        ) latest ON li.index_id = latest.index_id AND li.date = latest.max_date
+        ORDER BY li.index_id
     """
 
     try:
@@ -539,13 +704,14 @@ def main():
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 70)
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=60)
+    conn.execute("PRAGMA busy_timeout=60000")
 
-    # Check if crypto tables exist
+    # Check the live feed exists (CLI/SLI read observations, not crypto_scores)
     c = conn.cursor()
-    c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='crypto_scores'")
-    if not c.fetchone():
-        print("\nWARNING: crypto_scores table does not exist.")
+    c.execute("SELECT COUNT(*) FROM observations WHERE series_id = 'STABLECOIN_TOTAL_MCAP'")
+    if c.fetchone()[0] == 0:
+        print("\nWARNING: STABLECOIN_TOTAL_MCAP has no observations.")
         print("Run the pipeline with --sources CRYPTO first to populate crypto data.")
         conn.close()
         return

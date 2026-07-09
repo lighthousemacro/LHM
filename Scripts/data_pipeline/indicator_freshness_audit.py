@@ -29,12 +29,15 @@ DB_PATH = "/Users/bob/LHM/Data/databases/Lighthouse_Master.db"
 # Per-indicator tolerance in CALENDAR days before we call it stale. Daily-native
 # composites should never be more than a long weekend behind; monthly-fed
 # composites are daily-forward-filled so they too should track to ~yesterday,
-# but we allow a little slack for release/publish windows. Crypto is on its own
-# (broken feed) cadence until the fetcher is repaired.
+# but we allow a little slack for release/publish windows. Crypto (CLI, SLI +
+# variants, CDLI) is live free-data since the 2026-07-09 rewire — DefiLlama /
+# CoinGecko feeds are daily but can lag a day, so give them macro-style slack.
+# The old 9999 amnesty is GONE: everything still dead was purged, so anything
+# crypto going stale now is a real pipeline break.
 TOLERANCE_DAYS = {
     "_daily_default": 4,     # daily-native: MSI, SPI, SBD, SSD, REC_PROB, etc.
     "_macro_default": 5,     # monthly-fed but daily-FF: LPI, PCI, GCI, ...
-    "_crypto_default": 9999,  # SLI/CTI/CVI/CRYPTO_* — known-broken feed, don't alarm
+    "_crypto_default": 5,    # CLI/SLI*/CRYPTO_DEFI_LIQUIDITY — live DefiLlama+CoinGecko
 }
 
 # Indicators whose freshness is gated by a daily-FF macro nowcast (not a live
@@ -47,7 +50,18 @@ MACRO_COMPOSITES = {
     "AFFORD_PRESSURE", "FROZEN_DIVERGENCE", "INTEREST_CROWDOUT", "QUALITY_PRESSURE",
     "VOL_TERM_GAP", "FCI_CHANNELS", "CAPACITY_SLACK",
 }
-CRYPTO_PREFIXES = ("SLI", "CDI", "CFI", "CTI", "CVI", "CRYPTO_")
+CRYPTO_PREFIXES = ("SLI", "CLI", "CRYPTO_")
+
+# Retired paid-fundamentals lineup (crypto_scores feed died 2026-02-02, Bob
+# declined a paid replacement; zombie rows purged from lighthouse_indices
+# 2026-07-09). These ids should NOT exist — if any reappear, something
+# re-inserted zombies and we flag it loudly instead of amnestying it.
+RETIRED_CRYPTO = ("CDI", "CFI", "CTI", "CVI")
+
+
+def is_retired(index_id: str) -> bool:
+    return (index_id in RETIRED_CRYPTO
+            or (index_id.startswith("CRYPTO_") and index_id.endswith("_HEALTH")))
 
 
 def tolerance_for(index_id: str) -> int:
@@ -68,6 +82,20 @@ DEPTH_GUARDS = {
     "SPX_PCT_ABOVE_200D": "2008-01-01",
     "SPX_PCT_ABOVE_50D": "2008-01-01",
     "SPX_PCT_ABOVE_20D": "2008-01-01",
+    # CLI/SLI feed series (backfilled 2026-07-09: BTC via yfinance history,
+    # stablecoin mcap via DefiLlama full per-asset history). The CoinGecko
+    # daily fetch only writes a trailing 30d window, so lost backfill would
+    # silently gut the rolling 756d z-windows — exactly what this guard is for.
+    "CRYPTO_BTC_PRICE": "2015-01-01",
+    "STABLECOIN_TOTAL_MCAP": "2018-01-01",
+}
+
+# Value-plausibility ceilings for depth-guarded feed series. 2026-07-09: 11
+# CRYPTO_BTC_PRICE rows in Jan 2026 held values near $32M (bad fetcher writes),
+# which silently poisoned CLI's StableBTC z-scores for six weeks. Depth and
+# staleness checks can't see that; a ceiling can.
+VALUE_CEILINGS = {
+    "CRYPTO_BTC_PRICE": 500_000,
 }
 
 
@@ -88,13 +116,13 @@ def audit(db_path: str = DB_PATH):
         last_d = datetime.fromisoformat(last).date()
         stale_days = (today - last_d).days
         tol = tolerance_for(index_id)
-        is_crypto = any(index_id.startswith(p) for p in CRYPTO_PREFIXES)
 
-        # flat-tail check (daily-native only). Exempt daily-FF'd monthly
-        # composites (macro pillars + ALLOC_*): they're legitimately flat
-        # between monthly releases by design.
+        # flat-tail check (daily-native only, crypto included — CLI/SLI move
+        # every day). Exempt daily-FF'd monthly composites (macro pillars +
+        # ALLOC_*): they're legitimately flat between monthly releases by
+        # design.
         flat = False
-        if (not is_crypto and index_id not in MACRO_COMPOSITES
+        if (index_id not in MACRO_COMPOSITES
                 and not index_id.startswith("ALLOC_")):
             tail = conn.execute(
                 "SELECT value FROM lighthouse_indices WHERE index_id=? "
@@ -105,8 +133,8 @@ def audit(db_path: str = DB_PATH):
             if len(vals) >= 5 and len(set(round(v, 6) for v in vals)) == 1:
                 flat = True
 
-        if is_crypto:
-            verdict = "CRYPTO_FEED_DOWN" if stale_days > 30 else "OK"
+        if is_retired(index_id):
+            verdict = "RETIRED_ZOMBIE"
         elif stale_days > tol:
             verdict = "STALE"
         elif flat:
@@ -146,6 +174,15 @@ def audit(db_path: str = DB_PATH):
                 ).fetchone()
                 if zrow[0] >= 5:
                     verdict = "ZERO_RUN"
+            # Value-plausibility ceiling (see VALUE_CEILINGS above)
+            if verdict == "OK" and sid in VALUE_CEILINGS:
+                bad = conn.execute(
+                    "SELECT COUNT(*) FROM observations "
+                    "WHERE series_id=? AND value > ?",
+                    (sid, VALUE_CEILINGS[sid]),
+                ).fetchone()
+                if bad[0] > 0:
+                    verdict = "IMPLAUSIBLE_VALUE"
         results.append({
             "index_id": f"{sid} (obs depth)",
             "n": n,
@@ -184,16 +221,21 @@ def main():
                   f"{r['stale_days']:>5}d {r['n']:>7}  {r['verdict']}{flag}")
         stale = [r for r in results if r["verdict"] == "STALE"]
         flat = [r for r in results if r["verdict"] == "FLAT_TAIL"]
-        down = [r for r in results if r["verdict"] == "CRYPTO_FEED_DOWN"]
+        zombies = [r for r in results if r["verdict"] == "RETIRED_ZOMBIE"]
         print("-" * 78)
         print(f"OK: {sum(1 for r in results if r['verdict']=='OK')} | "
-              f"STALE: {len(stale)} | FLAT: {len(flat)} | CRYPTO_DOWN: {len(down)}")
+              f"STALE: {len(stale)} | FLAT: {len(flat)} | ZOMBIE: {len(zombies)}")
         if stale:
             print("\nSTALE (real-time guarantee broken — fix the pipeline):")
             for r in stale:
                 print(f"   {r['index_id']}  last {r['last']} ({r['stale_days']}d)")
+        if zombies:
+            print("\nRETIRED_ZOMBIE (purged 2026-07-09; something re-inserted them):")
+            for r in zombies:
+                print(f"   {r['index_id']}  last {r['last']}")
 
-    if args.fail_stale and any(r["verdict"] in ("STALE", "SHALLOW_HISTORY", "ZERO_RUN")
+    if args.fail_stale and any(r["verdict"] in ("STALE", "SHALLOW_HISTORY", "ZERO_RUN",
+                                                "RETIRED_ZOMBIE", "IMPLAUSIBLE_VALUE")
                                for r in results):
         sys.exit(1)
 

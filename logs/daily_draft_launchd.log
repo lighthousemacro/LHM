@@ -207,3 +207,21 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-08_priced-as-a-rerun/beam_prev
 [2026-07-09 07:46:31] ANOTHER RUN IS IN PROGRESS (lock: /Users/bob/LHM/Outputs/.daily_draft.lock). Exiting.
 [2026-07-10 07:45:02] ════════ DAILY DRAFT RUN START (2026-07-10) ════════
 [2026-07-10 07:45:02] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+All clean — the semicolons are HTML entities and the fine-print source citations, not prose. The preview is built and opened in the browser.
+
+**Done. The draft waiting for review is a Beam: "The Barrel Isn't Scared."**
+
+**The thread.** The US and Iran exchanged live strikes Wednesday night into Thursday, including attacks on ships in the Strait of Hormuz, and crude closed lower. WTI went into the re-escalation at $69.60 (Jul 6 close) and trades ~$72.58 this morning, 37% below April's $114.58 peak. Retail gasoline has fallen eight straight weeks through driving season ($4.50 → $3.78), HY spreads tightened to 267bps while the missiles flew, and the S&P rose 0.8% Thursday. The piece argues consensus is right about supply but missing the demand half: a 3.0%-saving-rate household is buying less of the marginal gallon, so the coming energy disinflation loosens the Fed's inflation blade for an uncomfortable reason. Sources: [CNBC](https://www.cnbc.com/2026/07/08/stock-market-today-live-updates.html), [TheStreet](https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-july-9-2026), [Yahoo Finance](https://finance.yahoo.com/markets/live/stock-market-today-thursday-july-9-us-strikes-iran-223149196.html), [Motley Fool](https://www.fool.com/coverage/stock-market-today/2026/07/09/stock-market-today-july-9-ai-chip-technology-stocks-rally-overcoming-ceasefire-worries/).
+
+**Key assumptions (also in BUILD NOTES at the top of the preview):**
+- Friday's calendar default is a Note and two Beams already shipped this week — built as a Beam anyway per the run spec since the day wasn't thin. Easy to downgrade or hold.
+- XLE and gold charts dropped (DB stale since 5/15); those numbers appear in prose only, sourced live from TradingView. No fabricated data, no proprietary composites.
+- 10 charts rendered (5 in-piece + 5 supplementary), paywall placed right after The Setup, all images base64-inlined.
+
+Nothing was published or sent anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-10_the-barrel-isnt-scared/beam_preview.html
+[2026-07-10 09:18:17] claude exited status=0 in 93m 15s
+[2026-07-10 09:18:17] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-10_the-barrel-isnt-scared/beam_preview.html
+[2026-07-10 09:18:17] Opened in browser.
+[2026-07-10 09:18:17] ════════ DAILY DRAFT RUN END (status=0) ════════

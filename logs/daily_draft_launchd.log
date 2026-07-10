@@ -205,3 +205,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-08_priced-as-a-rerun/beam_prev
 [2026-07-08 10:20:13] Opened in browser.
 [2026-07-08 10:20:13] ════════ DAILY DRAFT RUN END (status=0) ════════
 [2026-07-09 07:46:31] ANOTHER RUN IS IN PROGRESS (lock: /Users/bob/LHM/Outputs/.daily_draft.lock). Exiting.
+[2026-07-10 07:45:02] ════════ DAILY DRAFT RUN START (2026-07-10) ════════
+[2026-07-10 07:45:02] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

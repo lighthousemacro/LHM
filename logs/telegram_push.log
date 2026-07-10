@@ -68,3 +68,11 @@ Traceback (most recent call last):
     return io.open(self, mode, buffering, encoding, errors, newline)
            ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 OSError: [Errno 28] No space left on device: '/Users/bob/LHM/Data/telegram_push_state.json'
+Alerts written to /Users/bob/LHM/Data/alerts.md
+State saved. 2 new alerts, 1 transitions.
+
+Summary:
+  TRANSITION: SLI EXPANSION -> SEVERE CONTRACTION
+  [HIGH] SLI SEVERE CONTRACTION: Stablecoin liquidity at -1.040. On-chain drying up.
+  [MEDIUM] SLI CONTRACTING: Stablecoin liquidity at -1.040.
+morning sent to 7556962272

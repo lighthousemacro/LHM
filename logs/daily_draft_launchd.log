@@ -225,3 +225,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-10_the-barrel-isnt-scared/beam
 [2026-07-10 09:18:17] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-10_the-barrel-isnt-scared/beam_preview.html
 [2026-07-10 09:18:17] Opened in browser.
 [2026-07-10 09:18:17] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-12 11:52:15] ════════ DAILY DRAFT RUN START (2026-07-12) ════════
+[2026-07-12 11:52:15] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

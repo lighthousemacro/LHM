@@ -1,2 +1,18 @@
 [2026-07-12 11:52:15] ════════ DAILY DRAFT RUN START (2026-07-12) ════════
 [2026-07-12 11:52:15] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The unattended run is complete and the preview is open in the browser.
+
+**What was built:** The Beacon for Sunday, July 13 — **"Two Engines"**. The thread: the "stocks versus the economy" divergence everyone wrote about this week is really two economies inside the same GDP. The capex/AI-buildout engine ran at +15.8% (equipment) and +13.8% (intellectual property) in Q1 while consumer spending grew 0.5% and residential fell 7.8%; payrolls decelerated 214k→148k→129k→57k, quits sit at 1.9%, and the saving rate is 3.0%. The market is wired to the hot engine, households to the cold one, and the piece works through the handoff risk (2000 and 2006 analogues), what would change our mind, and the week-ahead audit (CPI Tuesday, retail sales, bank earnings).
+
+**Integrity notes (also in the BUILD NOTES box at the top of the preview):**
+- The first candidate thread, "everything beats the S&P" US-vs-world rotation, failed data verification (a Jan–Feb artifact) and was killed.
+- "Record real capex" and "first quits breach this cycle" claims were corrected before drafting; the temp-help chart was dropped (nowhere near its threshold); nominal retail strength (+7.5% YoY) is carried honestly against real Q1 PCE.
+- No proprietary composites appear in copy or charts. Voice gates pass (no em-dashes, no semicolons, zero "not X, it's Y" in body copy).
+
+**Artifacts** in `Outputs/beacon_2026-07-13_two-engines/`: scout brief, data summary + 30 CSVs, draft, 16 branded charts (10 published + 6 reference toolkit, MANIFEST.md), and the self-contained base64-inlined preview. Nothing was published anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-07-13_two-engines/beacon_preview.html
+[2026-07-12 12:13:36] claude exited status=0 in 21m 21s
+[2026-07-12 12:13:36] PREVIEW READY → /Users/bob/LHM/Outputs/beacon_2026-07-13_two-engines/beacon_preview.html
+[2026-07-12 12:13:36] Opened in browser.
+[2026-07-12 12:13:36] ════════ DAILY DRAFT RUN END (status=0) ════════

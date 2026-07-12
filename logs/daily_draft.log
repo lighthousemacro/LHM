@@ -1,19 +1,17 @@
-[2026-07-10 07:45:02] ════════ DAILY DRAFT RUN START (2026-07-10) ════════
-[2026-07-10 07:45:02] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-All clean — the semicolons are HTML entities and the fine-print source citations, not prose. The preview is built and opened in the browser.
+[2026-07-12 11:52:15] ════════ DAILY DRAFT RUN START (2026-07-12) ════════
+[2026-07-12 11:52:15] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The unattended run is complete and the preview is open in the browser.
 
-**Done. The draft waiting for review is a Beam: "The Barrel Isn't Scared."**
+**What was built:** The Beacon for Sunday, July 13 — **"Two Engines"**. The thread: the "stocks versus the economy" divergence everyone wrote about this week is really two economies inside the same GDP. The capex/AI-buildout engine ran at +15.8% (equipment) and +13.8% (intellectual property) in Q1 while consumer spending grew 0.5% and residential fell 7.8%; payrolls decelerated 214k→148k→129k→57k, quits sit at 1.9%, and the saving rate is 3.0%. The market is wired to the hot engine, households to the cold one, and the piece works through the handoff risk (2000 and 2006 analogues), what would change our mind, and the week-ahead audit (CPI Tuesday, retail sales, bank earnings).
 
-**The thread.** The US and Iran exchanged live strikes Wednesday night into Thursday, including attacks on ships in the Strait of Hormuz, and crude closed lower. WTI went into the re-escalation at $69.60 (Jul 6 close) and trades ~$72.58 this morning, 37% below April's $114.58 peak. Retail gasoline has fallen eight straight weeks through driving season ($4.50 → $3.78), HY spreads tightened to 267bps while the missiles flew, and the S&P rose 0.8% Thursday. The piece argues consensus is right about supply but missing the demand half: a 3.0%-saving-rate household is buying less of the marginal gallon, so the coming energy disinflation loosens the Fed's inflation blade for an uncomfortable reason. Sources: [CNBC](https://www.cnbc.com/2026/07/08/stock-market-today-live-updates.html), [TheStreet](https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-july-9-2026), [Yahoo Finance](https://finance.yahoo.com/markets/live/stock-market-today-thursday-july-9-us-strikes-iran-223149196.html), [Motley Fool](https://www.fool.com/coverage/stock-market-today/2026/07/09/stock-market-today-july-9-ai-chip-technology-stocks-rally-overcoming-ceasefire-worries/).
+**Integrity notes (also in the BUILD NOTES box at the top of the preview):**
+- The first candidate thread, "everything beats the S&P" US-vs-world rotation, failed data verification (a Jan–Feb artifact) and was killed.
+- "Record real capex" and "first quits breach this cycle" claims were corrected before drafting; the temp-help chart was dropped (nowhere near its threshold); nominal retail strength (+7.5% YoY) is carried honestly against real Q1 PCE.
+- No proprietary composites appear in copy or charts. Voice gates pass (no em-dashes, no semicolons, zero "not X, it's Y" in body copy).
 
-**Key assumptions (also in BUILD NOTES at the top of the preview):**
-- Friday's calendar default is a Note and two Beams already shipped this week — built as a Beam anyway per the run spec since the day wasn't thin. Easy to downgrade or hold.
-- XLE and gold charts dropped (DB stale since 5/15); those numbers appear in prose only, sourced live from TradingView. No fabricated data, no proprietary composites.
-- 10 charts rendered (5 in-piece + 5 supplementary), paywall placed right after The Setup, all images base64-inlined.
+**Artifacts** in `Outputs/beacon_2026-07-13_two-engines/`: scout brief, data summary + 30 CSVs, draft, 16 branded charts (10 published + 6 reference toolkit, MANIFEST.md), and the self-contained base64-inlined preview. Nothing was published anywhere.
 
-Nothing was published or sent anywhere.
-
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-10_the-barrel-isnt-scared/beam_preview.html
-[2026-07-10 09:18:17] claude exited status=0 in 93m 15s
-[2026-07-10 09:18:17] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-10_the-barrel-isnt-scared/beam_preview.html
-[2026-07-10 09:18:17] Opened in browser.
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-07-13_two-engines/beacon_preview.html
+[2026-07-12 12:13:36] claude exited status=0 in 21m 21s
+[2026-07-12 12:13:36] PREVIEW READY → /Users/bob/LHM/Outputs/beacon_2026-07-13_two-engines/beacon_preview.html
+[2026-07-12 12:13:36] Opened in browser.

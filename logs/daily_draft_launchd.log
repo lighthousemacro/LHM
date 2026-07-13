@@ -243,3 +243,10 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-07-13_two-engines/beacon_previe
 [2026-07-12 12:13:36] PREVIEW READY → /Users/bob/LHM/Outputs/beacon_2026-07-13_two-engines/beacon_preview.html
 [2026-07-12 12:13:36] Opened in browser.
 [2026-07-12 12:13:36] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-13 07:59:23] ════════ DAILY DRAFT RUN START (2026-07-13) ════════
+[2026-07-13 07:59:23] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+You're out of usage credits. Run /usage-credits to keep using Fable 5 or /model to switch models.
+[2026-07-13 08:16:47] claude exited status=1 in 17m 24s
+[2026-07-13 08:16:47] No PREVIEW_PATH in output — falling back to newest *preview*.html touched in the last 3h.
+[2026-07-13 08:16:48] WARNING: no preview HTML found. Check the run log: /Users/bob/LHM/logs/daily_draft_2026-07-13.log
+[2026-07-13 08:16:48] ════════ DAILY DRAFT RUN END (status=1) ════════

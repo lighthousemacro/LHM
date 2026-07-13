@@ -2650,3 +2650,10 @@ rsync(17923): error: mkstempat: 'logs/.telegram_push.log.8Pf5mgoZG6': No space l
 === 2026-07-12 22:30:05 mirror end (exit 0) ===
 === 2026-07-13 10:31:01 mirror start ===
 === 2026-07-13 10:31:04 mirror end (exit 0) ===
+=== 2026-07-13 11:00:01 mirror start ===
+rsync(49385): error: logs/.pipeline_error.log.SHjSRFuikq: write: No space left on device
+rsync(49385): error: buf_copy
+rsync(49385): error: logs/.pipeline_error.log.SHjSRFuikq: write: No space left on device
+rsync(49384): error: unexpected end of file
+=== 2026-07-13 11:00:41 mirror end (exit 0) ===
+=== 2026-07-13 12:30:01 mirror start ===

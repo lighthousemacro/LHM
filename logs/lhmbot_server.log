@@ -8614,3 +8614,8 @@ getUpdates 409 (another poller holds the token); retry in 16s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 2s
+getUpdates 409 (another poller holds the token); retry in 4s
+getUpdates 409 (another poller holds the token); retry in 8s
+getUpdates 409 (another poller holds the token); retry in 16s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s

@@ -475,20 +475,26 @@ def add_annotation_box(ax, text, x=None, y=None, ha=None, va=None,
                    zorder=1000, bbox=bbox, clip_on=False)
     return (x, y)
 
-def add_last_value_label(ax, y_data, color, fmt='{:.1f}', side='right', fontsize=9, pad=0.3):
-    """Colored pill label on axis edge. y_data is a Series or list."""
+def add_last_value_label(ax, y_data, color, fmt='{:.1f}', side='right', fontsize=9,
+                         pad=0.3, y_pos=None):
+    """Colored pill label on axis edge. y_data is a Series or list.
+
+    y_pos optionally overrides the vertical placement (data coords) while the
+    label text still shows the true last value — used to spread colliding pills.
+    """
     if len(y_data) == 0:
         return
     last_y = float(y_data.iloc[-1]) if hasattr(y_data, 'iloc') else float(y_data[-1])
     label = fmt.format(last_y)
+    y_at = last_y if y_pos is None else y_pos
     pill = dict(boxstyle=f'round,pad={pad}', facecolor=color, edgecolor=color, alpha=0.95)
     if side == 'right':
-        ax.annotate(label, xy=(1.0, last_y), xycoords=('axes fraction', 'data'),
+        ax.annotate(label, xy=(1.0, y_at), xycoords=('axes fraction', 'data'),
                     fontsize=fontsize, fontweight='bold', color='white',
                     ha='left', va='center', xytext=(6, 0),
                     textcoords='offset points', bbox=pill)
     else:
-        ax.annotate(label, xy=(0.0, last_y), xycoords=('axes fraction', 'data'),
+        ax.annotate(label, xy=(0.0, y_at), xycoords=('axes fraction', 'data'),
                     fontsize=fontsize, fontweight='bold', color='white',
                     ha='right', va='center', xytext=(-6, 0),
                     textcoords='offset points', bbox=pill)

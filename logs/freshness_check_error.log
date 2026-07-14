@@ -1083,3 +1083,7 @@
 2026-07-14 12:41:26 [INFO]   CUSR0000SACL1E: refreshed (+833 obs)
 2026-07-14 12:41:27 [INFO]   MEDCPIM158SFRBCLE: refreshed (+522 obs)
 2026-07-14 12:41:28 [INFO] Freshness check done: 8 series refreshed, 5,933 obs added.
+2026-07-14 16:35:43 [INFO] Stale series (1):
+  CORESTICKM159SFRBATL: db=2026-05-01 -> fred=2026-06-01
+2026-07-14 16:35:44 [INFO]   CORESTICKM159SFRBATL: refreshed (+702 obs)
+2026-07-14 16:35:44 [INFO] Freshness check done: 1 series refreshed, 702 obs added.

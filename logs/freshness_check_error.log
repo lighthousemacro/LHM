@@ -1065,3 +1065,21 @@
 2026-07-14 08:35:49 [WARNING] Attempt 1 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series?series_id=DGORDER&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
 2026-07-14 08:35:51 [WARNING] Attempt 2 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series?series_id=DGORDER&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
 2026-07-14 08:39:51 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-14 12:40:18 [INFO] Stale series (8):
+  CPIAUCSL: db=2026-05-01 -> fred=2026-06-01
+  CPILFESL: db=2026-05-01 -> fred=2026-06-01
+  CUSR0000SAH1: db=2026-05-01 -> fred=2026-06-01
+  CUSR0000SEHA: db=2026-05-01 -> fred=2026-06-01
+  CUSR0000SEHC: db=2026-05-01 -> fred=2026-06-01
+  CUSR0000SAS: db=2026-05-01 -> fred=2026-06-01
+  CUSR0000SACL1E: db=2026-05-01 -> fred=2026-06-01
+  MEDCPIM158SFRBCLE: db=2026-05-01 -> fred=2026-06-01
+2026-07-14 12:40:19 [INFO]   CPIAUCSL: refreshed (+953 obs)
+2026-07-14 12:40:20 [INFO]   CPILFESL: refreshed (+833 obs)
+2026-07-14 12:40:21 [INFO]   CUSR0000SAH1: refreshed (+881 obs)
+2026-07-14 12:40:23 [INFO]   CUSR0000SEHA: refreshed (+545 obs)
+2026-07-14 12:40:23 [INFO]   CUSR0000SEHC: refreshed (+521 obs)
+2026-07-14 12:40:25 [INFO]   CUSR0000SAS: refreshed (+845 obs)
+2026-07-14 12:41:26 [INFO]   CUSR0000SACL1E: refreshed (+833 obs)
+2026-07-14 12:41:27 [INFO]   MEDCPIM158SFRBCLE: refreshed (+522 obs)
+2026-07-14 12:41:28 [INFO] Freshness check done: 8 series refreshed, 5,933 obs added.

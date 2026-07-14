@@ -1,0 +1,7 @@
+[2026-07-14 07:58:18] ════════ DAILY DRAFT RUN START (2026-07-14) ════════
+[2026-07-14 07:58:18] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+API Error: Connection closed mid-response. The response above may be incomplete.
+[2026-07-14 09:10:00] claude exited status=1 in 71m 42s
+[2026-07-14 09:10:00] No PREVIEW_PATH in output — falling back to newest *preview*.html touched in the last 3h.
+[2026-07-14 09:10:01] WARNING: no preview HTML found. Check the run log: /Users/bob/LHM/logs/daily_draft_2026-07-14.log
+[2026-07-14 09:10:01] ════════ DAILY DRAFT RUN END (status=1) ════════

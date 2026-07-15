@@ -1089,3 +1089,11 @@
 2026-07-14 16:35:44 [INFO] Freshness check done: 1 series refreshed, 702 obs added.
 2026-07-15 09:21:15 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Read timed out. (read timeout=30). Retrying in 2s...
 2026-07-15 09:21:52 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-15 12:36:56 [INFO] Stale series (3):
+  PPIFIS: db=2026-05-01 -> fred=2026-06-01
+  PPIDSS: db=2026-05-01 -> fred=2026-06-01
+  PPIFDS: db=2026-05-01 -> fred=2026-06-01
+2026-07-15 12:36:57 [INFO]   PPIFIS: refreshed (+200 obs)
+2026-07-15 12:36:59 [INFO]   PPIDSS: refreshed (+200 obs)
+2026-07-15 12:37:00 [INFO]   PPIFDS: refreshed (+200 obs)
+2026-07-15 12:37:00 [INFO] Freshness check done: 3 series refreshed, 600 obs added.

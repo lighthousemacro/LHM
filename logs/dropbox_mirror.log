@@ -2752,3 +2752,8 @@ rsync(49384): error: unexpected end of file
 === 2026-07-15 14:31:07 mirror end (exit 0) ===
 === 2026-07-15 15:00:00 mirror start ===
 === 2026-07-15 15:00:23 mirror end (exit 0) ===
+=== 2026-07-15 15:30:00 mirror start ===
+rsync(31260): error: mkstempat: 'logs/.dropbox_mirror.log.bUa2kEnlnY': No space left on device
+rsync(31260): error: mkstempat: 'logs/.lhmbot_server.log.BTYxhnj5pB': No space left on device
+rsync(31260): error: mkstempat: 'logs/.sync.log.eDIKDaWRvU': No space left on device
+=== 2026-07-15 15:30:03 mirror end (exit 0) ===

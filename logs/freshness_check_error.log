@@ -1097,3 +1097,4 @@
 2026-07-15 12:36:59 [INFO]   PPIDSS: refreshed (+200 obs)
 2026-07-15 12:37:00 [INFO]   PPIFDS: refreshed (+200 obs)
 2026-07-15 12:37:00 [INFO] Freshness check done: 3 series refreshed, 600 obs added.
+2026-07-15 16:35:36 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

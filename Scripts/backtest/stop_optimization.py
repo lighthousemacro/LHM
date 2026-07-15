@@ -8,7 +8,7 @@ ratio from letting winners run). Cash-only / long-only / no leverage.
 The three stops are CANDIDATES to test, not a mandate to use all three:
   1. 200d break    — close < 200d_SMA * (1 - X)        [X tight: 0.5% / 2%]
   2. ATR chandelier— close < trailing-22d-high - k*ATR [k: 2.0 .. 3.5]
-  3. Rel-trend QAI — RS = close/QAI < its L-day SMA     [L: 21 / 63 / 126]
+  3. Rel-trend SPY — RS = close/SPY < its L-day SMA     [L: 21 / 63 / 126]
 We search every non-empty subset {200d, atr, rs} x its params, per asset class.
 
 Two stages:
@@ -20,7 +20,7 @@ Two stages:
             class-specific best stop. Compare to a plain-200d top-10 baseline.
             This is the "10 holdings / concentration" read, with payoff.
 
-Entry is fixed so the search is about STOPS: close>200d AND RS(vs QAI)>RS_63d.
+Entry is fixed so the search is about STOPS: close>200d AND RS(vs SPY)>RS_63d.
 Walk-forward: optimize IS (<=2020), validate OOS (2021+). No look-ahead.
 OOS numbers are NOT externally citable until separately verified.
 """
@@ -34,7 +34,7 @@ os.makedirs(OUT, exist_ok=True)
 CACHE = f"{OUT}/price_cache.pkl"
 ANN, IS_END, START = 252, "2020-12-31", "2013-01-01"
 OOS_LO, OOS_HI = "2021-01-01", "2026-12-31"
-BENCH, K_BOOK = "QAI", 10
+BENCH, K_BOOK = "SPY", 10
 
 ETFS = ("XLK XLF XLV XLY XLP XLE XLI XLB XLU XLRE XLC SPY QQQ DIA IWM MDY EEM "
         "EFA VEA VWO TLT IEF SHY LQD HYG TIP GLD SLV GDX DBC USO MTUM QUAL VLUE "
@@ -104,7 +104,7 @@ def precompute(data):
         below200 = {X: (c < sma200 * (1 - X)).values for X in X_GRID}
         atrk = {k: (c < (trail - k * a)).values for k in K_GRID}
         rsl = {L: (rs < rs.rolling(L).mean()).values for L in L_GRID}
-        # relative-strength MOMENTUM (6-mo change in RS-to-QAI) — comparable across
+        # relative-strength MOMENTUM (6-mo change in RS-to-SPY) — comparable across
         # names for ranking which trends to hold. Raw RS level is NOT comparable.
         mom = (rs / rs.shift(126) - 1).values
         pre[t] = dict(cls=asset_class(t), index=idx, close=c.values,

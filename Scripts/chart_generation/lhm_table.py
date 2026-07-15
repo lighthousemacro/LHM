@@ -2,7 +2,7 @@
 LHM branded table renderer — for the Telegram bot's /scan (and any ranked list).
 
 Tables in LHM surfaces are ALWAYS a styled PNG, never markdown. This renders a
-ranked scan through the LHM lens (Price vs 200d, Relative trend vs QAI, Z-RoC,
+ranked scan through the LHM lens (Price vs 200d, Relative trend vs SPY, Z-RoC,
 setup, binding stop) in the house style established by scan_visualizer.py:
 hand-placed cells, Ocean header + underline, alternating row shading, regime
 coloring, wrapped in the canonical brand frame.
@@ -40,7 +40,7 @@ COLUMNS = [
     ("Ticker", "ticker", 0.12),
     ("Last", "last", 0.12),
     ("vs 200d", "vs200", 0.13),
-    ("RS vs QAI", "rs", 0.16),
+    ("RS vs SPY", "rs", 0.16),
     ("Z-RoC", "zroc", 0.11),
     ("Setup", "setup", 0.18),
     ("Stop", "stop", 0.16),
@@ -81,7 +81,7 @@ def _fmt_cell(key: str, row: dict) -> tuple[str, str, str]:
 
 def build_scan_table(rows: list[dict], title: str = "LHM Scan",
                      subtitle: str | None = None,
-                     source: str = "Price, relative strength & momentum vs QAI",
+                     source: str = "Price, relative strength & momentum vs SPY",
                      out_path: str | Path | None = None,
                      max_rows: int = 20) -> str:
     """Render a ranked scan as a branded PNG. Returns the file path.
@@ -132,15 +132,15 @@ def build_scan_table(rows: list[dict], title: str = "LHM Scan",
 
 
 if __name__ == "__main__":
-    # Smoke test with REAL data — compute a mini-scan for a few names vs QAI.
-    # No synthetic data: prices and the QAI benchmark come from yfinance.
+    # Smoke test with REAL data — compute a mini-scan for a few names vs SPY.
+    # No synthetic data: prices and the SPY benchmark come from yfinance.
     import yfinance as yf
     import pandas as pd
     sys.path.insert(0, "/Users/bob/LHM/Scripts/chart_generation")
     from lhm_tape_read import compute_z_roc
 
     syms = sys.argv[1:] or ["NVDA", "AAPL", "MSFT", "XLE", "TLT"]
-    bench = yf.download("QAI", period="3y", interval="1d", progress=False, auto_adjust=True)
+    bench = yf.download("SPY", period="3y", interval="1d", progress=False, auto_adjust=True)
     if isinstance(bench.columns, pd.MultiIndex):
         bench.columns = [c[0] for c in bench.columns]
     bclose = bench["Close"].dropna()
@@ -166,7 +166,7 @@ if __name__ == "__main__":
         rows.append({"ticker": s, "last": last, "vs200": vs200, "rs": regime,
                      "zroc": zroc, "setup": "trend" if vs200 > 0 else "below trend",
                      "stop": f"{sma200:,.0f} (200d)"})
-    out = build_scan_table(rows, subtitle="Smoke test · real data vs QAI",
+    out = build_scan_table(rows, subtitle="Smoke test · real data vs SPY",
                            out_path=str(DEFAULT_OUT_DIR / "scan_smoketest.png"))
     import os
     print("WROTE", out, os.path.getsize(out), "bytes")

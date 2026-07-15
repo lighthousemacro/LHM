@@ -4,7 +4,7 @@ crosscurrents_performance.py — risk-adjusted tear sheet for the live Crosscurr
 
 The book went LIVE 2026-05-08 (Fri, funded) and the first trade was 2026-05-11 (Mon).
 This reconstructs daily NAV from an actual trade ledger, marks it against daily
-closes, and computes the LHM objective metrics vs QAI (primary) + secondaries.
+closes, and computes the LHM objective metrics vs SPY (primary) + secondaries.
 
 Give it the real ledger and it produces the audited risk-adjusted record. Until
 then it runs on whatever CSV you point it at.
@@ -26,7 +26,7 @@ from __future__ import annotations
 import argparse, sys, io
 import numpy as np, pandas as pd
 
-BENCHES = {"QAI": "QAI (primary)", "SPY": "SPY", "QQQ": "QQQ", "DIA": "Dow", "BTC-USD": "BTC"}
+BENCHES = {"SPY": "SPY (primary)", "QQQ": "QQQ", "DIA": "Dow", "BTC-USD": "BTC"}
 TRADING_DAYS = 252
 RF_ANNUAL = 0.04            # ~T-bill; used for Sharpe and idle-cash accrual
 
@@ -123,10 +123,10 @@ def report(nav: pd.Series):
         m = metrics(nav, bpx[t], lab)
         rows.append(m)
         print(f"   {lab:<14} a={m['alpha']:+7.2%}  b={m['beta']:+5.2f}  up={m['up']:>6.0%}  dn={m['dn']:>6.0%}  IR={m['ir']:>5.2f}  corr={m['corr']:+.2f}")
-    qai = next((m for m in rows if m['label'].startswith('QAI')), None)
+    spy = next((m for m in rows if m['label'].startswith('SPY')), None)
     print(f"\n  LHM SCORE (Tier-2, geo-mean Sortino/Omega/Calmar): {lhm_score(book):.2f}")
-    if qai:
-        print(f"  vs QAI: alpha {qai['alpha']:+.2%} ann, down-capture {qai['dn']:.0%}, up-capture {qai['up']:.0%}")
+    if spy:
+        print(f"  vs SPY: alpha {spy['alpha']:+.2%} ann, down-capture {spy['dn']:.0%}, up-capture {spy['up']:.0%}")
     print("\n(Idle cash accrued at ~4%/yr bill rate. Provide exact fills for the audited number.)")
 
 

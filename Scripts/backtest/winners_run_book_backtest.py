@@ -12,7 +12,7 @@ What it simulates (Bob's spec, made explicit):
 - Slots refill from the strongest *uptrending* assets (12-1m momentum, above
   200d MA) not already held; freed cash is deployed equally across new entries.
 - Cash is a position (held when fewer than 10 assets are in uptrend).
-Benchmarks: QAI (IQ Hedge Multi-Strat, the Crosscurrents benchmark), SPY, 60/40.
+Benchmarks: SPY (the Crosscurrents benchmark), 60/40, QAI (legacy secondary ref).
 
 Run: PYTHONPATH=/Users/bob/LHM /opt/homebrew/bin/python3 \
        Scripts/backtest/winners_run_book_backtest.py

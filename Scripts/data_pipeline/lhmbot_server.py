@@ -43,7 +43,7 @@ TG = "https://api.telegram.org"
 DEFAULT_CHAT = "7556962272"
 
 HELP = ("<b>LHM desk</b>\n"
-        "/q TICKER — quick read (price, trend, RS vs QAI, Z-RoC)\n"
+        "/q TICKER — quick read (price, trend, RS vs SPY, Z-RoC)\n"
         "/read TICKER — full read + branded chart\n"
         "/scan T1 T2 … — ranked table through the LHM lens\n"
         "/snapshot — live macro regime read\n"
@@ -127,7 +127,7 @@ def fmt_q(r: dict | None) -> str:
             else (f"{z:+.2f}" if z is not None else "n/a"))
     lines = [f"<b>{r['ticker']}</b> {r['last']:,.2f}  ({r['day_chg']:+.1f}%)",
              f"Trend: {fmt_trend(r)}.",
-             f"RS vs QAI: {r['rs']}. Z-RoC: {ztxt}."]
+             f"RS vs SPY: {r['rs']}. Z-RoC: {ztxt}."]
     if r.get("stop"):
         lines.append(f"Binding stop ~{r['stop']:,.2f} (1% under the 200d).")
     return "\n".join(lines)

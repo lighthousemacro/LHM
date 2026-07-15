@@ -1,8 +1,8 @@
 """
 LHM technical read for a symbol — deterministic, no Claude/MCP.
 
-Pulls real price data (yfinance) + the QAI benchmark and computes the LHM read:
-price vs 50d/200d, relative strength regime vs QAI, absolute Z-RoC, and the
+Pulls real price data (yfinance) + the SPY benchmark and computes the LHM read:
+price vs 50d/200d, relative strength regime vs SPY, absolute Z-RoC, and the
 200d-buffer binding stop. Used by the standalone lhmbot (lhmbot_server.py) so
 the reactive reads never depend on the flaky MCP bridge.
 
@@ -21,7 +21,7 @@ sys.path.insert(0, "/Users/bob/LHM/Scripts/chart_generation")
 from lhm_tape_read import compute_z_roc  # noqa: E402
 
 _BENCH_CACHE: dict[str, tuple[float, pd.DataFrame]] = {}
-BENCH_TTL = 600  # 10 min — QAI doesn't move fast enough to re-pull per request
+BENCH_TTL = 600  # 10 min — SPY doesn't move fast enough to re-pull per request
 
 
 def _dl(ticker: str, period: str = "3y") -> pd.DataFrame | None:
@@ -38,7 +38,7 @@ def _dl(ticker: str, period: str = "3y") -> pd.DataFrame | None:
     return d
 
 
-def _bench(name: str = "QAI") -> pd.DataFrame | None:
+def _bench(name: str = "SPY") -> pd.DataFrame | None:
     now = time.time()
     c = _BENCH_CACHE.get(name)
     if c and now - c[0] < BENCH_TTL:
@@ -67,7 +67,7 @@ def _rs_regime(px: pd.Series, bdf: pd.DataFrame | None) -> str:
     return "MIXED"
 
 
-def read_symbol(ticker: str, benchmark: str = "QAI") -> dict | None:
+def read_symbol(ticker: str, benchmark: str = "SPY") -> dict | None:
     """The LHM read for one symbol. None if the ticker can't be pulled."""
     px_df = _dl(ticker)
     if px_df is None or "Close" not in px_df.columns:

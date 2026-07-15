@@ -3,7 +3,7 @@ LHM Tape Read — branded 3-panel technical chart for the Telegram bot.
 
 Renders the LHM technical hierarchy as ONE branded PNG, in order:
   Panel 1  Price + 50d/200d SMA   (load-bearing: most height)
-  Panel 2  Relative strength vs benchmark (QAI), 63d/252d SMAs, regime flag
+  Panel 2  Relative strength vs benchmark (SPY), 63d/252d SMAs, regime flag
   Panel 3  Absolute Z-RoC momentum, canonical bands (1.28/1.645/1.96), zero line
 
 Imports the canonical template (lhm_chart_template.py) for all styling — never
@@ -62,7 +62,7 @@ def _rs_regime(rs_last, rs63_last, rs252_last) -> tuple[str, str]:
 
 def build_tape_read_chart(symbol: str, ohlcv_df: pd.DataFrame,
                           benchmark_df: pd.DataFrame | None = None,
-                          benchmark_name: str = "QAI",
+                          benchmark_name: str = "SPY",
                           out_path: str | Path | None = None) -> str:
     import matplotlib.pyplot as plt
 
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     import yfinance as yf
     sym = sys.argv[1] if len(sys.argv) > 1 else "NVDA"
     px = yf.download(sym, period="3y", interval="1d", progress=False, auto_adjust=True)
-    bx = yf.download("QAI", period="3y", interval="1d", progress=False, auto_adjust=True)
+    bx = yf.download("SPY", period="3y", interval="1d", progress=False, auto_adjust=True)
     if isinstance(px.columns, pd.MultiIndex):
         px.columns = [c[0] for c in px.columns]
     if isinstance(bx.columns, pd.MultiIndex):

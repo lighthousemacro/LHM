@@ -259,3 +259,20 @@ API Error: Connection closed mid-response. The response above may be incomplete.
 [2026-07-14 09:10:01] ════════ DAILY DRAFT RUN END (status=1) ════════
 [2026-07-15 07:45:00] ════════ DAILY DRAFT RUN START (2026-07-15) ════════
 [2026-07-15 07:45:00] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The pipeline ran end to end. Draft is built, branded, base64-embedded, and open in the browser.
+
+**What's ready for review:**
+
+- **Format:** The Beam (Wednesday default is a Note — upgraded because today's PPI release plus the live import-price re-acceleration carry a full 6-section thread).
+- **Thread:** *The Pipeline vs The Print* — tariff pass-through has import prices +6.7% YoY and re-accelerating, producer prices +6.4%, core PPI +4.9%, all running roughly double core CPI at +2.6%. The upstream is hot, the consumer print is cold, and the piece argues the print is the laggard. Ahead of today's 8:30 PPI and the Warsh testimony.
+- **Structure:** locked 6-section Beam, paywall after The Setup + Figure 1 (free = Setup and first chart only).
+- **Charts:** 5 in-piece + 5 reference renders (2x rule), all on the canonical brand template, all from real BLS / University of Michigan data. No proprietary composites.
+- **Voice/brand gates:** no emdashes, no semicolons, "X, not Y" tails trimmed, bps N/A, "The Beam" definite article, base64-inlined images, unlinked footer, agency-only source lines.
+
+**Key BUILD NOTES (also at top of the preview):** today's PPI actual was not out at build time, so the piece uses released data (import/PPI thru May, core CPI thru June) plus the published +5.2% core-PPI forecast, never an unreleased actual. Live 2Y/10Y quotes were unavailable, so yields came from the internal store (7/13) and are not shown in-piece. Nothing was published, sent, or pushed anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/pipeline-vs-print/beam_preview.html
+[2026-07-15 07:51:49] claude exited status=0 in 6m 49s
+[2026-07-15 07:51:49] PREVIEW READY → /Users/bob/LHM/Outputs/pipeline-vs-print/beam_preview.html
+[2026-07-15 07:51:49] Opened in browser.
+[2026-07-15 07:51:49] ════════ DAILY DRAFT RUN END (status=0) ════════

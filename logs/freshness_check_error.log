@@ -1098,3 +1098,9 @@
 2026-07-15 12:37:00 [INFO]   PPIFDS: refreshed (+200 obs)
 2026-07-15 12:37:00 [INFO] Freshness check done: 3 series refreshed, 600 obs added.
 2026-07-15 16:35:36 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-16 08:35:49 [INFO] Stale series (2):
+  ICSA: db=2026-07-04 -> fred=2026-07-11
+  CCSA: db=2026-06-27 -> fred=2026-07-04
+2026-07-16 08:35:52 [INFO]   ICSA: refreshed (+3106 obs)
+2026-07-16 08:35:53 [INFO]   CCSA: refreshed (+3105 obs)
+2026-07-16 08:35:53 [INFO] Freshness check done: 2 series refreshed, 6,211 obs added.

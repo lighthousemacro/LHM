@@ -1142,3 +1142,4 @@
 2026-07-16 12:36:02 [INFO]   RRSFS: refreshed (+413 obs)
 2026-07-16 12:36:03 [INFO]   RSFSXMV: refreshed (+414 obs)
 2026-07-16 12:36:03 [INFO] Freshness check done: 18 series refreshed, 7,451 obs added.
+2026-07-16 16:35:41 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

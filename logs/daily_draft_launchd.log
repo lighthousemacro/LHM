@@ -276,3 +276,19 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/pipeline-vs-print/beam_preview.html
 [2026-07-15 07:51:49] PREVIEW READY → /Users/bob/LHM/Outputs/pipeline-vs-print/beam_preview.html
 [2026-07-15 07:51:49] Opened in browser.
 [2026-07-15 07:51:49] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-16 07:45:05] ════════ DAILY DRAFT RUN START (2026-07-16) ════════
+[2026-07-16 07:45:05] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Build complete. The pipeline ran end to end:
+
+**The Beam · July 16, 2026 — "The Builders Already Stopped"**
+
+- **Thread (scout):** May housing starts at 1,177k, the lowest ex-COVID since Feb 2019, with months' supply of new homes at 10.3 (seen only in 2008-09 and one month of 2022), the under-construction pipeline down 26% from peak, completions exceeding starts, and construction payrolls still at a cycle high of 8.33M with quits at 1.3%. Consensus expects a rebound to 1.31M in tomorrow's June print. The piece argues the starts debate is the wrong number: absorption caps it, and the pipeline drain is the next labor handoff. Timed ahead of today's NAHB (10am) and tomorrow's starts/permits (8:30am).
+- **Charts:** 10 rendered (5 published + 5 reference, 2x rule), QC'd visually. Fixed a doubled source footer and two "X, not Y" annotation violations mid-build.
+- **Data:** All from Census/HUD, Freddie Mac, BLS, NAHB in the master DB, no fabrication. Bigdata connector paused this run (noted in BUILD NOTES). Nothing in the piece depends on this morning's retail sales/claims prints.
+- **Preview:** base64-inlined, single-file HTML with BUILD NOTES box at top, opened in the browser. Final gate scan clean (no emdashes, no semicolons in copy, definite-article byline, no relative image paths).
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-16_the-builders-already-stopped/beam_preview.html
+[2026-07-16 07:53:50] claude exited status=0 in 8m 45s
+[2026-07-16 07:53:50] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-16_the-builders-already-stopped/beam_preview.html
+[2026-07-16 07:53:50] Opened in browser.
+[2026-07-16 07:53:50] ════════ DAILY DRAFT RUN END (status=0) ════════

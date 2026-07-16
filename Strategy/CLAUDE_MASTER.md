@@ -27,7 +27,11 @@ Bob runs Lighthouse Macro (LHM), a Substack-based macro publication: Notes (free
 NYC-based, former D1 athlete, ADHD as a superpower (thrives on diversity, bored by repetition). Sisters: Cayley (older, NYC) and Arden (younger, Denver). Close friend Asher. Living at Cayley's, planning to move out; hardware (Mac Pro M5 + Mac mini M5) and move tied to revenue conversion.
 
 ## Top of mind
-Paid tier launched ~Apr 13–20 at $320/yr (36% off), 5 external paid subs Apr 21. Two Economies Beacon (Apr 20) drove biggest external validation to date — Tim Pierotti restacked, Nixon Apple reposted, Leon Liao engaged, mondayswife engaged. Tim Pierotti ladder: (1) WealthVest podcast solo, (2) paid deck, (3) monthly roundtable w/ Aahan (Prometheus) + ideally Bob Elliott, (4) possible OCIO seat at Tim's new RIA. Tania Reif engagement closed Apr 28, no revenue after 6 months / 3 calls / 11 deliverables; lessons in working principles. Building lhm-publish orchestrator + ad hoc subscriber analytics dashboard.
+**Full month detail: `/Users/bob/LHM/Strategy/CONTEXT_MONTH_2026-06-16_to_2026-07-16.md`.**
+**Forward Guidance podcast (Blockworks, June 2026):** "How To Trade The New Warsh Fed | Bob Sheehan" — biggest external distribution event to date (Warsh structural break, end of the Fed put). FG ran its own tweet/clip promo; permanent proof-of-expertise collateral for GTM and partner pitches. **CoinRabbit (decision by Jul 22):** deal sliced from $7.5-12.5k/mo program to one $4k co-branded piece + option on a second; invoice + 1-page terms sent Jul 16, shoot Jul 24 contingent on signed terms AND payment; internal flags: SVG registration presenting as Canada, no entity name produced yet — prepayment is the protection. **Manifest** open ($18k/mo pitch, $12k floor, +equity+token). **Marc Mishkin/MJ Research** distribution channel live (rev-share 25-35%, GTM packet Jul 1). July Horizon "The Vise" shipped Jul 9; 100-chart Chartbook shipped Jul 13. Crosscurrents live book (eToro): QUAL/SGOV/MOO/XLV, benchmark now SPY. Pharos terminal expanding (28 OpenBB dashboards, subscriber sign-in, Reading Room). Tim Pierotti ladder unchanged: pod → deck → roundtable → possible OCIO. Tania lessons in working principles.
+
+## Voice — casual register expansion (Jul 16)
+More of Bob's casual/real voice — the @thebestpoaster register — on @LHMacro and casual surfaces (Notes, replies). Published research keeps 80/20 institutional; social copy pulls from @thebestpoaster cadence, not Beacon cadence.
 
 ## Working principles (always active)
 

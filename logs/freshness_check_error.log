@@ -1143,3 +1143,15 @@
 2026-07-16 12:36:03 [INFO]   RSFSXMV: refreshed (+414 obs)
 2026-07-16 12:36:03 [INFO] Freshness check done: 18 series refreshed, 7,451 obs added.
 2026-07-16 16:35:41 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-17 08:36:04 [INFO] Stale series (5):
+  HOUST: db=2026-05-01 -> fred=2026-06-01
+  PERMIT: db=2026-05-01 -> fred=2026-06-01
+  PERMIT1: db=2026-05-01 -> fred=2026-06-01
+  COMPUTSA: db=2026-05-01 -> fred=2026-06-01
+  UNDCONTSA: db=2026-05-01 -> fred=2026-06-01
+2026-07-17 08:36:14 [INFO]   HOUST: refreshed (+810 obs)
+2026-07-17 08:36:15 [INFO]   PERMIT: refreshed (+798 obs)
+2026-07-17 08:36:16 [INFO]   PERMIT1: refreshed (+798 obs)
+2026-07-17 08:36:16 [INFO]   COMPUTSA: refreshed (+702 obs)
+2026-07-17 08:36:17 [INFO]   UNDCONTSA: refreshed (+678 obs)
+2026-07-17 08:36:17 [INFO] Freshness check done: 5 series refreshed, 3,786 obs added.

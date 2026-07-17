@@ -1,15 +1,15 @@
-[2026-07-16 07:45:05] ════════ DAILY DRAFT RUN START (2026-07-16) ════════
-[2026-07-16 07:45:05] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-Build complete. The pipeline ran end to end:
+[2026-07-17 08:30:57] ════════ DAILY DRAFT RUN START (2026-07-17) ════════
+[2026-07-17 08:30:58] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+All gates pass: 5 base64 images embedded, no em-dashes or semicolons in prose, definite-article "The Beam" label, no relative image paths, unlinked footer, no proprietary composites named in copy. The draft is built and open in the browser.
 
-**The Beam · July 16, 2026 — "The Builders Already Stopped"**
+Summary of the unattended run:
+- **Scout** picked one thread for Friday 7/17: *"The Two Economies, Priced at Zero Risk"* — May consumer sentiment at 44.8 (lowest in the series since 1952) and a 3.0% saving rate against retail sales +6.7% YoY and HY OAS at 271bps (sub-300 complacent). Cohort-vs-cohort, Pillar 5 primary.
+- **Format:** The Beam (locked 6-section template). Friday defaults to a Note, but the bi-weekly Chartbook already shipped 7/13 and this thread carries long-form — noted in BUILD NOTES.
+- **Data:** All real, sourced from Lighthouse_Master.db (UMich, Census, BEA, BLS, ICE BofA). Dropped the credit-card delinquency chart because delinquencies ticked *down* YoY and would have contradicted the read — noted honestly in the draft.
+- **Charts:** 9 rendered (5 published + 4 reference toolkit), on-brand, QC'd (fixed a pill collision on the divergence chart).
+- Nothing published, posted, or sent.
 
-- **Thread (scout):** May housing starts at 1,177k, the lowest ex-COVID since Feb 2019, with months' supply of new homes at 10.3 (seen only in 2008-09 and one month of 2022), the under-construction pipeline down 26% from peak, completions exceeding starts, and construction payrolls still at a cycle high of 8.33M with quits at 1.3%. Consensus expects a rebound to 1.31M in tomorrow's June print. The piece argues the starts debate is the wrong number: absorption caps it, and the pipeline drain is the next labor handoff. Timed ahead of today's NAHB (10am) and tomorrow's starts/permits (8:30am).
-- **Charts:** 10 rendered (5 published + 5 reference, 2x rule), QC'd visually. Fixed a doubled source footer and two "X, not Y" annotation violations mid-build.
-- **Data:** All from Census/HUD, Freddie Mac, BLS, NAHB in the master DB, no fabrication. Bigdata connector paused this run (noted in BUILD NOTES). Nothing in the piece depends on this morning's retail sales/claims prints.
-- **Preview:** base64-inlined, single-file HTML with BUILD NOTES box at top, opened in the browser. Final gate scan clean (no emdashes, no semicolons in copy, definite-article byline, no relative image paths).
-
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-16_the-builders-already-stopped/beam_preview.html
-[2026-07-16 07:53:50] claude exited status=0 in 8m 45s
-[2026-07-16 07:53:50] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-16_the-builders-already-stopped/beam_preview.html
-[2026-07-16 07:53:50] Opened in browser.
+PREVIEW_PATH: /Users/bob/LHM/Outputs/two-economies-sentiment-spending/beam_preview.html
+[2026-07-17 08:40:29] claude exited status=0 in 9m 30s
+[2026-07-17 08:40:29] PREVIEW READY → /Users/bob/LHM/Outputs/two-economies-sentiment-spending/beam_preview.html
+[2026-07-17 08:40:29] Opened in browser.

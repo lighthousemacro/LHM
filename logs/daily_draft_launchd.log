@@ -292,3 +292,19 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-16_the-builders-already-stoppe
 [2026-07-16 07:53:50] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-16_the-builders-already-stopped/beam_preview.html
 [2026-07-16 07:53:50] Opened in browser.
 [2026-07-16 07:53:50] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-17 08:30:57] ════════ DAILY DRAFT RUN START (2026-07-17) ════════
+[2026-07-17 08:30:58] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+All gates pass: 5 base64 images embedded, no em-dashes or semicolons in prose, definite-article "The Beam" label, no relative image paths, unlinked footer, no proprietary composites named in copy. The draft is built and open in the browser.
+
+Summary of the unattended run:
+- **Scout** picked one thread for Friday 7/17: *"The Two Economies, Priced at Zero Risk"* — May consumer sentiment at 44.8 (lowest in the series since 1952) and a 3.0% saving rate against retail sales +6.7% YoY and HY OAS at 271bps (sub-300 complacent). Cohort-vs-cohort, Pillar 5 primary.
+- **Format:** The Beam (locked 6-section template). Friday defaults to a Note, but the bi-weekly Chartbook already shipped 7/13 and this thread carries long-form — noted in BUILD NOTES.
+- **Data:** All real, sourced from Lighthouse_Master.db (UMich, Census, BEA, BLS, ICE BofA). Dropped the credit-card delinquency chart because delinquencies ticked *down* YoY and would have contradicted the read — noted honestly in the draft.
+- **Charts:** 9 rendered (5 published + 4 reference toolkit), on-brand, QC'd (fixed a pill collision on the divergence chart).
+- Nothing published, posted, or sent.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/two-economies-sentiment-spending/beam_preview.html
+[2026-07-17 08:40:29] claude exited status=0 in 9m 30s
+[2026-07-17 08:40:29] PREVIEW READY → /Users/bob/LHM/Outputs/two-economies-sentiment-spending/beam_preview.html
+[2026-07-17 08:40:29] Opened in browser.
+[2026-07-17 08:40:29] ════════ DAILY DRAFT RUN END (status=0) ════════

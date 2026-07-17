@@ -1155,3 +1155,7 @@
 2026-07-17 08:36:16 [INFO]   COMPUTSA: refreshed (+702 obs)
 2026-07-17 08:36:17 [INFO]   UNDCONTSA: refreshed (+678 obs)
 2026-07-17 08:36:17 [INFO] Freshness check done: 5 series refreshed, 3,786 obs added.
+2026-07-17 12:35:44 [INFO] Stale series (1):
+  INDPRO: db=2026-05-01 -> fred=2026-06-01
+2026-07-17 12:35:45 [INFO]   INDPRO: refreshed (+1290 obs)
+2026-07-17 12:35:45 [INFO] Freshness check done: 1 series refreshed, 1,290 obs added.

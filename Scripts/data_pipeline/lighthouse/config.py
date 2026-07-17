@@ -72,6 +72,12 @@ FRED_CATEGORIES = {
 # ==========================================
 
 FRED_CURATED = {
+    # Coverage gaps closed 2026-07-17 (referenced in published charts, were never ingested)
+    "CE16OV": "Employment Level",
+    "IC4WSA": "Initial Claims 4-Week Moving Average",
+    "JTS2300JOL": "Job Openings: Construction",
+    "GEPUCURRENT": "Global Economic Policy Uncertainty Index",
+    "OPHMFG": "Manufacturing Sector Output Per Hour",
     # Labor Market - Headline
     "UNRATE": "Unemployment Rate U3",
     "U6RATE": "Unemployment Rate U6",

@@ -78,6 +78,12 @@ FRED_CURATED = {
     "JTS2300JOL": "Job Openings: Construction",
     "GEPUCURRENT": "Global Economic Policy Uncertainty Index",
     "OPHMFG": "Manufacturing Sector Output Per Hour",
+    # Atlanta Fed GDPNow (2026-07-18: in DB but was never in config, so wasn't refreshing)
+    "GDPNOW": "GDPNow Real GDP Nowcast",
+    "PCECONTRIBNOW": "GDPNow Contribution: Personal Consumption",
+    "EQUIPCONTRIBNOW": "GDPNow Contribution: Equipment Investment",
+    "CHNGNETEXPORTSCONTRIBNOW": "GDPNow Contribution: Net Exports",
+    "CHNGNETINVENTCONTRIBNOW": "GDPNow Contribution: Inventories",
     # Labor Market - Headline
     "UNRATE": "Unemployment Rate U3",
     "U6RATE": "Unemployment Rate U6",

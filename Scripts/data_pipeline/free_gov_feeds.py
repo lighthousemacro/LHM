@@ -32,13 +32,17 @@ def fetch_gscpi():
 # Registry of active free-gov feeds. Add more fetchers here (each returns (sid, meta, rows)).
 FEEDS = [fetch_gscpi]
 
-# ---- TODO / roadmap (free sources to fold in next; most are already covered via FRED) ----
-# - Atlanta Fed Wage Growth Tracker: switcher/stayer already in DB via FRED (FRBATLWGT*). Direct CSV at
-#   atlantafed.org/chcs/wage-growth-tracker if we want cuts FRED doesn't carry.
-# - OFR: expand beyond current 21 series (financial-stress subindices, repo, MMF) via ofr.treasury.gov API.
-# - Regional Fed surveys/nowcasts: Dallas/KC/Richmond/Philly/NY Empire, Atlanta GDPNow, NY Fed Nowcast —
-#   most flow through FRED; GDPNow/Nowcast need direct pulls.
-# - Treasury (TreasuryDirect): current feed stale since Mar 2026 — needs repair (see project_treasury_direct_module).
+# ---- Roadmap / audit notes (2026-07-18) ----
+# RESOLVED (no direct-pull needed — already covered elsewhere):
+#   - GDPNow: on FRED as GDPNOW + PCECONTRIBNOW/EQUIPCONTRIBNOW/CHNGNETEXPORTSCONTRIBNOW/CHNGNETINVENTCONTRIBNOW.
+#     Added to FRED_CURATED 2026-07-18 (the 10.8MB frbatlanta xlsx is model internals — do NOT parse it).
+#   - OFR Financial Stress Index (headline + 5 subindices + 3 regional): already in DB via the OFR fetcher, fresh.
+#   - Atlanta Fed Wage Growth Tracker switcher/stayer: already in DB via FRED (FRBATLWGT12MMUMHWGJSW/JST).
+#   - TreasuryDirect: repaired + wired as the TREASURY pipeline source (was dark; not stale-by-bug).
+# DEAD AT SOURCE (no fix possible): OFR NYPD primary-dealer repo (NYPD-PD_RP_TOT-A etc.) — OFR discontinued
+#   these ~Dec 2021; their own API returns None past that. Historical only.
+# STILL TO ADD (clean direct pulls, when wanted): NY Fed SCE (consumer expectations), more OFR short-term
+#   funding monitor cuts, regional Fed manufacturing surveys not on FRED.
 
 def run_free_gov_feeds(db_path=DB_DEFAULT, verbose=True):
     c = sqlite3.connect(db_path); now = datetime.datetime.now().isoformat(); done = []

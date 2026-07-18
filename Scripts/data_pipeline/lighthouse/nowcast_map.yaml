@@ -59,7 +59,7 @@ inputs:
   - horizon_column: Unemployed_27wks_Plus_z
     construct: Long-term unemployment z-score
     pillar: 1
-    raw_series_id: LNS13008397
+    raw_series_id: UEMP27OV
     raw_cadence: monthly
     external_nowcast: null
     proxy_daily: ICSA, CCSA (continuing claims tracks long-duration spell formation)
@@ -143,7 +143,7 @@ inputs:
     raw_series_id: INDPRO
     raw_cadence: monthly
     external_nowcast: null
-    proxy_daily: Weekly_Rail_Carloads (FRED: RAILFRTCARLOADSD11), Weekly_Steel_Production
+    proxy_daily: "Weekly_Rail_Carloads (FRED: RAILFRTCARLOADSD11), Weekly_Steel_Production"
     nowcast_strategy: proxy_regression
     confidence: medium
     notes: NY Fed Nowcast also produces an IP component; check.
@@ -206,7 +206,7 @@ inputs:
   - horizon_column: Case_Shiller_Home_Prices_yoy_pct
     construct: Case-Shiller home prices YoY
     pillar: 4
-    raw_series_id: CSUSHPISA
+    raw_series_id: CSUSHPINSA
     raw_cadence: monthly  # 2-month publication lag
     external_nowcast: null
     proxy_daily: Zillow_ZHVI_yoy, Redfin_HPI

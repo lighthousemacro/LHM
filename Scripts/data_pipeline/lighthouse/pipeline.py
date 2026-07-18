@@ -136,7 +136,7 @@ def run_daily_update(
 
     # Default to all sources
     if sources is None:
-        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW", "UMICH", "OECD", "FREEGOV", "TREASURY"]
+        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW", "UMICH", "OECD", "FREEGOV", "TREASURY", "NOWCAST"]
 
     # Track totals
     total_series = 0
@@ -328,6 +328,17 @@ def run_daily_update(
             logger.error(f"TREASURY failed: {e}")
             errors.append(f"TREASURY: {e}")
             results["TREASURY"] = (0, 0)
+
+    if "NOWCAST" in sources:
+        print("\n--- NOWCAST BRIDGE (daily reads between releases) ---")
+        try:
+            import sys as _s, os as _o
+            _s.path.insert(0, _o.path.join(_o.path.dirname(__file__), '..'))
+            from nowcast_bridge import main as _nc
+            built, _sk = _nc(write=True)
+            results["NOWCAST"] = (len(built), 0)
+        except Exception as e:
+            logger.error(f"NOWCAST failed: {e}"); errors.append(f"NOWCAST: {e}"); results["NOWCAST"] = (0, 0)
 
     # Run quality checks
     if not skip_quality:

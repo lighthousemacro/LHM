@@ -308,3 +308,21 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/two-economies-sentiment-spending/beam_previ
 [2026-07-17 08:40:29] PREVIEW READY → /Users/bob/LHM/Outputs/two-economies-sentiment-spending/beam_preview.html
 [2026-07-17 08:40:29] Opened in browser.
 [2026-07-17 08:40:29] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-18 07:45:03] ════════ DAILY DRAFT RUN START (2026-07-18) ════════
+[2026-07-18 07:45:03] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+All gates pass. The 13 semicolons are HTML entities (`&middot;`, `&amp;`), not prose. Zero em-dashes in body copy, 5 charts inlined, paywall after The Setup + first chart, "The Beam" definite article, byline "Bob Sheehan, CFA, CMT."
+
+Done. The overnight pipeline ran end to end:
+
+- **Scout** picked one thread: **"Priced for Perfection"** — HY OAS at 271 bps, the 3.3rd percentile since 1996, near the tightest credit has ever priced, while the equity tape has stalled at the highs. Pillar 9 (Credit), with the fiscal/growth backdrop as the tension. Format committed: **The Beam**.
+- **Publish** built it — 6-section locked template, ~950 words, high paywall (free = The Setup + Figure 1), Two Economies cohort note included, invalidation criteria stated.
+- **9 charts** rendered on the brand template (5 published + 4 reference = 1.8x, satisfies the rule), all from real DB data, public source lines, no proprietary composites.
+- **Two supplementary breadth charts were dropped** after their DB source table hit localized corruption mid-run (the daily pipeline commits mid-session; disk-full corruption is a known standing risk). Their clean single values appear in prose only. Nothing fabricated. This is logged in the BUILD NOTES block at the top of the draft and the preview.
+
+Nothing was published, posted, or pushed. HTML preview is base64-inlined, self-contained, and opened in the browser for review.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/priced-for-perfection/beam_preview.html
+[2026-07-18 07:52:54] claude exited status=0 in 7m 51s
+[2026-07-18 07:52:54] PREVIEW READY → /Users/bob/LHM/Outputs/priced-for-perfection/beam_preview.html
+[2026-07-18 07:52:54] Opened in browser.
+[2026-07-18 07:52:54] ════════ DAILY DRAFT RUN END (status=0) ════════

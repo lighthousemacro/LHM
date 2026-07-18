@@ -136,7 +136,7 @@ def run_daily_update(
 
     # Default to all sources
     if sources is None:
-        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW", "UMICH", "OECD", "FREEGOV"]
+        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW", "UMICH", "OECD", "FREEGOV", "TREASURY"]
 
     # Track totals
     total_series = 0
@@ -317,6 +317,17 @@ def run_daily_update(
             logger.error(f"FREEGOV failed: {e}")
             errors.append(f"FREEGOV: {e}")
             results["FREEGOV"] = (0, 0)
+
+    if "TREASURY" in sources:
+        print("\n--- TREASURYDIRECT (auctions, bills share, WAM) ---")
+        try:
+            from .treasury_direct import backfill as _td_backfill
+            _td_backfill()  # upserts TD_* series into default DB
+            results["TREASURY"] = (5, 0)
+        except Exception as e:
+            logger.error(f"TREASURY failed: {e}")
+            errors.append(f"TREASURY: {e}")
+            results["TREASURY"] = (0, 0)
 
     # Run quality checks
     if not skip_quality:

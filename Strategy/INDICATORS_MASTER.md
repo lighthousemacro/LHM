@@ -962,6 +962,27 @@ None of these are built. None should be built without explicit Bob approval. The
 
 ---
 
+## DOCUMENTATION BACKFILL (2026-07-18)
+
+Two live indicators were in `lighthouse_indices` and in code but missing from this master. Formulas
+recovered from source and documented here so the doc matches the live lineup (55 live measures total).
+
+### LDI — Labor Dynamism Index
+- **Source:** `Scripts/data_pipeline/compute_indices.py::compute_ldi`. Also used in a Fall 2025 report.
+- **Formula:** `LDI = mean( z(JOLTS Quits Rate), z(Hires/Quits ratio), z(Quits/Layoffs proxy) )` — the
+  Quits/Layoffs term uses quits / (initial claims / 1000) as the layoffs proxy. 24-month z-windows.
+- **Transform/units:** z-score. **Class:** descriptive. **Relationship:** real-economy (labor flows).
+- **Describes:** Labor-market fluidity/churn. High = healthy dynamism (workers confident to switch),
+  Low = frozen market. The dynamism counterpart to LFI's fragility read; feeds MRI in the labor stack.
+
+### DISCONTINUITY_PREMIUM — Discontinuity Premium
+- **Source:** `lighthouse_quant/models/risk_ensemble.py` (`ensemble_result.discontinuity_premium = total_premium`),
+  adjusted by `warning_system.py` risk_modifier (-0.1 to +0.1).
+- **Formula:** risk-ensemble output = the premium assigned to non-linear / crisis ("discontinuity") risk from
+  buffer exhaustion, i.e. the gap between market-implied calm and the system's actual capacity to absorb stress.
+- **Transform/units:** premium level (0-1-ish) + status band. **Class:** predictive/prescriptive. **Relationship:** regime.
+- **Describes:** How much extra crisis/non-linear risk the ensemble sees vs what markets are pricing. EXTREME = repricing warranted.
+
 **END OF INDICATORS MASTER**
 
 *This document consolidates the proprietary indicators reference, the Apr 30 audit findings, the 12 pillar audit docs, the candidate new indicators list, and the live `lighthouse_indices` snapshot into one canonical reference. Source files remain in place as detail/audit trails. When information conflicts, this file wins.*

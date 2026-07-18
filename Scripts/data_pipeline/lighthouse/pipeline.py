@@ -136,7 +136,7 @@ def run_daily_update(
 
     # Default to all sources
     if sources is None:
-        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW", "UMICH"]
+        sources = ["FRED", "BLS", "BEA", "NYFED", "OFR", "MARKET", "CRYPTO", "BREADTH", "ZILLOW", "TRADINGVIEW", "UMICH", "OECD", "FREEGOV"]
 
     # Track totals
     total_series = 0
@@ -302,6 +302,21 @@ def run_daily_update(
             logger.error(f"UMICH failed: {e}")
             errors.append(f"UMICH: {e}")
             results["UMICH"] = (0, 0)
+
+    if "FREEGOV" in sources:
+        print("\n--- FREE GOV FEEDS (NY Fed GSCPI, direct-source pulls) ---")
+        try:
+            import sys as _sys, os as _os
+            _sys.path.insert(0, _os.path.join(_os.path.dirname(__file__), '..'))
+            from free_gov_feeds import run_free_gov_feeds
+            done = run_free_gov_feeds(verbose=False)  # writes to default DB path
+            fg_series = len(done); fg_obs = sum(n for _, n, _ in done)
+            results["FREEGOV"] = (fg_series, fg_obs)
+            total_series += fg_series; total_obs += fg_obs
+        except Exception as e:
+            logger.error(f"FREEGOV failed: {e}")
+            errors.append(f"FREEGOV: {e}")
+            results["FREEGOV"] = (0, 0)
 
     # Run quality checks
     if not skip_quality:

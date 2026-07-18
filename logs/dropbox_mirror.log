@@ -2914,3 +2914,5 @@ rsync(31260): error: mkstempat: 'logs/.sync.log.eDIKDaWRvU': No space left on de
 === 2026-07-18 17:30:00 mirror start ===
 === 2026-07-18 17:30:04 mirror end (exit 0) ===
 === 2026-07-18 18:00:01 mirror start ===
+rsync(86654): error: /Users/bob/LHM/Scripts/.tmp.driveupload/2060: open (2) in /Users/bob: No such file or directory
+=== 2026-07-18 18:00:10 mirror end (exit 0) ===

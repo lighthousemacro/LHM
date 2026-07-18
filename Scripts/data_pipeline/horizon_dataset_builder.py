@@ -355,6 +355,25 @@ def build_horizon_dataset():
         df = df.set_index("date")
         df = df[~df.index.duplicated(keep='first')]  # Remove dupe dates
 
+        # NOWCAST SPLICE (2026-07-18): if a <series>_NOWCAST exists (nowcast_bridge.py),
+        # append the current, not-yet-released period(s) as extra native points so the
+        # transform (YoY / z) reflects the nowcast instead of the flat last actual. This
+        # is what makes the predictive composites move between official releases.
+        try:
+            _nc = pd.read_sql(query.replace("series_id = ?", "series_id = ?"), conn,
+                              params=[f"{series_id}_NOWCAST"])
+            if not _nc.empty and freq in ("M", "ME", "monthly", "Q", "QE", "quarterly"):
+                _nc["date"] = pd.to_datetime(_nc["date"])
+                _nc = _nc.set_index("date")["value"]
+                _rule = "MS" if str(freq).lower().startswith(("m",)) else "QS"
+                _ncp = _nc.resample(_rule).last().dropna()
+                _ncp = _ncp[_ncp.index > df.index.max()]  # only periods after last actual
+                if len(_ncp):
+                    df = pd.concat([df, _ncp.rename("value").to_frame()])
+                    df = df[~df.index.duplicated(keep="last")].sort_index()
+        except Exception:
+            pass
+
         # Get first and last observation dates
         first_obs = df.index.min()
         last_obs = min(df.index.max(), pd.Timestamp(YESTERDAY))

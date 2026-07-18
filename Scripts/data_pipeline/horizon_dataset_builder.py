@@ -360,8 +360,7 @@ def build_horizon_dataset():
         # transform (YoY / z) reflects the nowcast instead of the flat last actual. This
         # is what makes the predictive composites move between official releases.
         try:
-            _nc = pd.read_sql(query.replace("series_id = ?", "series_id = ?"), conn,
-                              params=[f"{series_id}_NOWCAST"])
+            _nc = pd.read_sql(query, conn, params=[f"{name}_NOWCAST"])
             if not _nc.empty and freq in ("M", "ME", "monthly", "Q", "QE", "quarterly"):
                 _nc["date"] = pd.to_datetime(_nc["date"])
                 _nc = _nc.set_index("date")["value"]

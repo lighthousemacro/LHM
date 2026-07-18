@@ -84,7 +84,9 @@ def main(write=False):
             meta_src = f"external:{ext_id}"
         else:
             continue
-        out_id = f"{raw_id}_NOWCAST"
+        # Key the nowcast by the horizon_column (shared join key with horizon_dataset_builder),
+        # not raw_series_id — the builder uses different source IDs (BLS JTS1000QUR vs FRED JTSQUR).
+        out_id = f"{col}_NOWCAST"
         gap_days = (nc.index.max() - nc.index.min()).days
         built.append((col, raw_id, out_id, len(nc), gap_days, meta_src))
         if write:

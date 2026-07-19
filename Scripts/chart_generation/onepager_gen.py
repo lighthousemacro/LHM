@@ -27,13 +27,23 @@ ERAS=[("2008-09-15","GFC / Lehman"),("2011-08-01","EU debt · US downgrade"),
       ("2015-12-01","Industrial recession"),("2018-12-01","Vol-mageddon / QT"),
       ("2020-03-01","COVID shock"),("2022-06-01","Fastest hikes in 40y"),("2025-04-01","Tariff shock")]
 
+ORDINAL={'LIQ_STAGE','WARNING_LEVEL'}  # regime stages — never smooth
 def descriptive_card(iid):
     x=s(iid,ind=True)
     if x is None or len(x)<50: return None
     x=x[x.index>='2000-01-01']
     m=META.get(iid,{})
+    # noisy z-score composites get a 3-month MA (standing rule); ordinal stages stay raw
+    chop=float(np.std(np.diff(x.values[-2500:]))/(np.std(x.values[-2500:])+1e-9))
+    smoothed = chop>0.13 and iid not in ORDINAL
     fig,ax=new_fig(figsize=(14,8))
-    ax.plot(x.index,x.values,color=COLORS['ocean'],linewidth=2.1)
+    if smoothed:
+        xs=x.rolling(63,min_periods=20).mean().dropna()
+        ax.plot(x.index,x.values,color=COLORS['sky'],linewidth=0.8,alpha=0.35,label='raw')
+        ax.plot(xs.index,xs.values,color=COLORS['ocean'],linewidth=2.4,label='3-month average')
+        x=xs
+    else:
+        ax.plot(x.index,x.values,color=COLORS['ocean'],linewidth=2.1)
     ax.axhline(0,color=COLORS['fog'],linestyle='--',linewidth=1.0,zorder=0)
     style_single_ax(ax,fmt='{:.2f}'); add_last_value_label(ax,x,COLORS['ocean'],fmt='{:.2f}',side='right')
     set_xlim_to_data(ax,x.index); add_recessions(ax)
@@ -46,8 +56,9 @@ def descriptive_card(iid):
                     fontsize=8,color=DEEP,ha='center',fontweight='bold',
                     bbox=dict(boxstyle='round,pad=0.28',fc='white',ec=COLORS['ocean'],lw=1,alpha=0.92),
                     arrowprops=dict(arrowstyle='-',color=COLORS['dusk'],lw=1.1))
-    brand_fig(fig,title=m.get('full_name',iid),subtitle=(m.get('describes','') or '')[:110],
-              source="Lighthouse Macro",data_date=x.index[-1])
+    if smoothed: add_smart_legend(ax)
+    sub=(m.get('describes','') or '')[:104] + (" · 3-month average" if smoothed else "")
+    brand_fig(fig,title=m.get('full_name',iid),subtitle=sub,source="Lighthouse Macro",data_date=x.index[-1])
     p=f"{OUT}/{iid}.png"; save_fig(fig,p); plt.close('all'); return p
 
 def predictive_card(ncid):
@@ -65,7 +76,7 @@ def predictive_card(ncid):
     ax.axhline(0,color=COLORS['fog'],linestyle='--',linewidth=1.0,zorder=0)
     style_single_ax(ax,fmt='{:.1f}%'); add_last_value_label(ax,ours,COLORS['ocean'],fmt='{:.1f}%',side='right')
     set_xlim_to_data(ax,realized.index); add_recessions(ax); add_smart_legend(ax)
-    brand_fig(fig,title=nc['label']+" — LHM Nowcast",subtitle=f"Ours vs realized  ·  {nc['tier']}  ·  OOS r={nc['oos_r']} (correlation) · OOS R²={nc.get('oos_r2')} · dir {int(nc['dir_hit']*100)}%",
+    brand_fig(fig,title=nc['label']+" — LHM Nowcast",subtitle=f"Ours vs realized  ·  {nc['tier']}  ·  OOS R²={nc.get("oos_r2")} · correlation {nc["oos_r"]} · dir {int(nc['dir_hit']*100)}%",
               source="LHM Nowcast Model",data_date=ours.index[-1])
     p=f"{OUT}/{ncid}.png"; save_fig(fig,p); plt.close('all'); return p
 
@@ -91,7 +102,7 @@ for kind,iid,p in order:
     fn=os.path.basename(p)
     if kind=='pred':
         nc=NCS[iid]; badge=nc['tier']; bc={'STRONG':'#00BB89','USABLE':'#2389BB','NOT READY':'#FF2389'}.get(badge,'#898989')
-        meta=f"<span class='b' style='background:{bc}'>{badge} · OOS {nc['oos_r']}</span> <span class='k'>Predictive nowcast (ours vs realized)</span>"
+        meta=f"<span class='b' style='background:{bc}'>{badge} · R² {nc.get('oos_r2')}</span> <span class='k'>Predictive nowcast (ours vs realized)</span>"
         title=nc['label']+" Nowcast"; body=f"Proxy basket: {esc(nc['basket'])}"
     else:
         m=META.get(iid,{}); cls=m.get('classification','')

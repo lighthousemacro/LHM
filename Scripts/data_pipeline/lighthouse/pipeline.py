@@ -334,6 +334,13 @@ def run_daily_update(
         try:
             import sys as _s, os as _o
             _s.path.insert(0, _o.path.join(_o.path.dirname(__file__), '..'))
+            # refresh ETF closes first — they are the nowcast model's market proxies
+            # (SMH/IYT/HYG/XLI/XLP/XLY/XHB/COPPER etc.); without this they silently rot
+            try:
+                from ingest_etfs import ingest as _etf
+                _etf()
+            except Exception as _e:
+                logger.error(f"ETF_CLOSE refresh failed (nowcast proxies may be stale): {_e}")
             from nowcast_bridge import main as _nc
             built, _sk = _nc(write=True)
             results["NOWCAST"] = (len(built), 0)

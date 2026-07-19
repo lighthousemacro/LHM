@@ -108,7 +108,7 @@ inputs:
     raw_series_id: CUSR0000SAH1
     raw_cadence: monthly
     external_nowcast: null
-    proxy_daily: Zillow_Rent_Index_yoy, Apartment_List_Rent_yoy
+    proxy_daily: ZILLOW_ZORI_NATIONAL
     nowcast_strategy: proxy_regression
     confidence: medium
     notes: 12-18mo lag from market rents → CPI shelter is the structural relationship. Zillow ZORI leads by ~12mo in the framework already.
@@ -179,7 +179,7 @@ inputs:
     raw_series_id: HOUST
     raw_cadence: monthly
     external_nowcast: null
-    proxy_daily: MBA_Mortgage_Applications (weekly), Mortgage_30Y_yoy_change
+    proxy_daily: TV_USMAPL
     nowcast_strategy: proxy_regression
     confidence: medium
 
@@ -189,7 +189,7 @@ inputs:
     raw_series_id: EXHOSLUSM495S
     raw_cadence: monthly
     external_nowcast: null
-    proxy_daily: MBA_Purchase_Applications (weekly), Pending_Home_Sales_yoy
+    proxy_daily: TV_USPHSIYY
     nowcast_strategy: proxy_regression
     confidence: medium
 
@@ -209,7 +209,7 @@ inputs:
     raw_series_id: CSUSHPINSA
     raw_cadence: monthly  # 2-month publication lag
     external_nowcast: null
-    proxy_daily: Zillow_ZHVI_yoy, Redfin_HPI
+    proxy_daily: ZILLOW_ZHVI_NATIONAL
     nowcast_strategy: proxy_regression
     confidence: high
     notes: Zillow/Redfin lead Case-Shiller by ~2 months reliably.
@@ -334,7 +334,7 @@ inputs:
     raw_series_id: GFDEGDQ188S
     raw_cadence: quarterly
     external_nowcast: GDPNOW  # use Atlanta Fed nowcast in the denominator
-    proxy_daily: TreasuryDirect_total_debt (daily)
+    proxy_daily: FEDDT
     nowcast_strategy: proxy_regression
     confidence: high
     notes: Numerator (debt) is daily-available from TreasuryDirect. Denominator (GDP) gets the GDPNow nowcast. Recompute ratio daily.

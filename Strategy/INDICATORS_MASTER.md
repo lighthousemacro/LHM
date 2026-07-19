@@ -1002,19 +1002,21 @@ today's fixes, the honest current stats, and the deeper work needed to make the 
 3. **DB recovered** from this morning's corruption (second event in 13 days; restored from the 06:26
    backup, integrity_check ok). Root cause is the 96%-full disk — see ops item below.
 
-### Current honest stats (walk-forward OOS, re-run 2026-07-19)
+### Current honest stats (WF correlation re-run 2026-07-19; true OOS R² from nowcast_validate.py)
 
-| Target | WF OOS r | OOS R² | Latest nowcast | Last print | Citation status |
+| Target | WF corr (7/19 run) | True OOS R² (1−SSE/SST) | Latest nowcast | Last print | Citation status |
 |---|---|---|---|---|---|
-| GDP YoY (GDPC1) | 0.88 | ~0.77 | +4.02 | +2.68 (Q1) | CITE with number |
-| Case-Shiller YoY | 0.94 | ~0.88 | +1.00 | +0.84 (Apr) | CITE with number (strongest) |
-| INDPRO YoY | 0.78 | ~0.61 | +0.45 | +1.14 (Jun) | CITE with number |
-| Payrolls YoY | 0.85 | ~0.72 | +1.60 | +0.32 (Jun) | THEMATIC ONLY — never the magnitude (see #4) |
-| Core CPI YoY | 0.60 | ~0.36 | +2.97 | +2.81 (Jun) | DO NOT CITE |
+| GDP YoY (GDPC1) | 0.88 | **+0.71** | +4.02 | +2.68 (Q1) | CITE with number |
+| Case-Shiller YoY | 0.94 | **+0.89** | +1.00 | +0.84 (Apr) | CITE with number (strongest; ZHVI-led) |
+| INDPRO YoY | 0.78 | **+0.61** | +0.45 | +1.14 (Jun) | CITE with number |
+| Payrolls YoY | 0.85 | **+0.71** | +1.60 | +0.32 (Jun) | THEMATIC ONLY — never the magnitude (see #4) |
+| Core CPI YoY | 0.60 | **−0.01 (DEAD)** | +2.97 | +2.81 (Jun) | DO NOT CITE — no better than the mean |
 
-Report **R² first** in any external reference ("explains ~three-quarters of the variation out of
-sample"), never bare r. The GDP QoQ-annualized variant was tried and failed (OOS 0.09) — the models
-nowcast the smooth YoY trend, never present them as GDPNow-comparable QoQ figures.
+Report **true OOS R² first** in any external reference ("explains ~seventy percent of the variation
+out of sample"), and call the other number "correlation", never "r". The two diverge because R²
+penalizes level bias — the Core CPI model's 0.60 correlation with −0.01 R² is the cautionary case.
+The GDP QoQ-annualized variant was tried and failed (R²~0) — the models nowcast the smooth YoY
+trend; never present them as GDPNow-comparable QoQ figures.
 
 ### Deep work for excellence (priority order)
 

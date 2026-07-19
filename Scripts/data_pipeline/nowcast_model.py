@@ -18,6 +18,9 @@ GROWTH_BASKET = {
     "NFCI":"level","ICSA":"level","T10Y2Y":"level","DTWEXBGS":"yoy","XLI_XLP":"ratio:XLI_Close/XLP_Close",
 }
 GDP_BASKET = dict(GROWTH_BASKET, **{"XLY_XLP":"ratio:XLY_Close/XLP_Close","RSAFS":"yoy_m"})  # + consumption
+LABOR_BASKET = {"ICSA":"level","CCSA":"level","IC4WSA":"level","TEMPHELPS":"yoy_m","HYG_Close":"yoy","XLI_XLP":"ratio:XLI_Close/XLP_Close"}
+INFLATION_BASKET = {"T5YIE":"level","T10YIE":"level","DCOILWTICO":"yoy","COPPER_Close":"yoy","DTWEXBGS":"yoy","GASREGW":"yoy"}
+HOUSING_BASKET = {"MORTGAGE30US":"level","ZILLOW_ZHVI_NATIONAL":"yoy_m","TV_USMAPL":"level","XHB_Close":"yoy","WPU081":"yoy_m"}
 
 TARGETS = {
     "INDPRO": dict(target="INDPRO", transform="yoy", freq="MS", horizon_col="Industrial_Production",
@@ -26,6 +29,12 @@ TARGETS = {
     # smooth growth-trend far better than the noisy quarterly print, which is GDPNow's turf.)
     "GDP":    dict(target="GDPC1", transform="yoy", freq="QS", horizon_col=None,
                    basket=GDP_BASKET, start="2004-01-01", label="Real GDP YoY"),
+    "LABOR":  dict(target="PAYEMS", transform="yoy", freq="MS", horizon_col=None,
+                   basket=LABOR_BASKET, start="2004-01-01", label="Nonfarm Payrolls YoY"),
+    "INFLATION": dict(target="CPILFESL", transform="yoy", freq="MS", horizon_col=None,
+                   basket=INFLATION_BASKET, start="2004-01-01", label="Core CPI YoY"),
+    "HOUSING": dict(target="CSUSHPINSA", transform="yoy", freq="MS", horizon_col=None,
+                   basket=HOUSING_BASKET, start="2004-01-01", label="Case-Shiller Home Prices YoY"),
 }
 
 def load(c, sid):

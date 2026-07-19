@@ -337,6 +337,11 @@ def run_daily_update(
             from nowcast_bridge import main as _nc
             built, _sk = _nc(write=True)
             results["NOWCAST"] = (len(built), 0)
+            try:
+                from nowcast_model import main as _ncm
+                import sys as _s2; _s2.argv=["x","--write"]; _ncm()
+            except Exception as _e:
+                logger.error(f"NOWCAST_MODEL failed: {_e}")
         except Exception as e:
             logger.error(f"NOWCAST failed: {e}"); errors.append(f"NOWCAST: {e}"); results["NOWCAST"] = (0, 0)
 

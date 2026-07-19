@@ -22,9 +22,10 @@ GDP_BASKET = dict(GROWTH_BASKET, **{"XLY_XLP":"ratio:XLY_Close/XLP_Close","RSAFS
 TARGETS = {
     "INDPRO": dict(target="INDPRO", transform="yoy", freq="MS", horizon_col="Industrial_Production",
                    basket=GROWTH_BASKET, start="2004-01-01", label="Industrial Production YoY"),
-    "GDP":    dict(target="GDPC1", transform="qoq_ann", freq="QS", horizon_col=None,
-                   basket=GDP_BASKET, start="2004-01-01", label="Real GDP QoQ annualized",
-                   benchmark="GDPNOW"),
+    # GDP YoY: OOS r=0.88. (QoQ-annualized was tried — OOS 0.09; market proxies nowcast the
+    # smooth growth-trend far better than the noisy quarterly print, which is GDPNow's turf.)
+    "GDP":    dict(target="GDPC1", transform="yoy", freq="QS", horizon_col=None,
+                   basket=GDP_BASKET, start="2004-01-01", label="Real GDP YoY"),
 }
 
 def load(c, sid):
@@ -43,13 +44,14 @@ def proxy_series(c, spec_name, spec):
     if spec=="yoy_m": return (s.pct_change(12)*100).reindex(pd.date_range(s.index.min(),s.index.max())).ffill()
     return s
 
-def target_transform(s, how):
-    if how=="yoy": return (s.pct_change(12)*100).dropna()
+def target_transform(s, how, freq="MS"):
+    ppy = 4 if str(freq).upper().startswith("Q") else 12   # periods per year
+    if how=="yoy": return (s.pct_change(ppy)*100).dropna()
     if how=="qoq_ann": return ((s.pct_change(1)+1)**4-1).mul(100).dropna()
     return s
 
 def run_target(c, key, cfg, write=False):
-    tgt=load(c, cfg["target"]); ty=target_transform(tgt, cfg["transform"])
+    tgt=load(c, cfg["target"]); ty=target_transform(tgt, cfg["transform"], cfg["freq"])
     rule=cfg["freq"]
     P={}
     for nm,spec in cfg["basket"].items():

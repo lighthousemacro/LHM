@@ -65,7 +65,7 @@ def predictive_card(ncid):
     ax.axhline(0,color=COLORS['fog'],linestyle='--',linewidth=1.0,zorder=0)
     style_single_ax(ax,fmt='{:.1f}%'); add_last_value_label(ax,ours,COLORS['ocean'],fmt='{:.1f}%',side='right')
     set_xlim_to_data(ax,realized.index); add_recessions(ax); add_smart_legend(ax)
-    brand_fig(fig,title=nc['label']+" — LHM Nowcast",subtitle=f"Ours vs realized  ·  {nc['tier']}  ·  OOS r={nc['oos_r']} · dir {int(nc['dir_hit']*100)}%",
+    brand_fig(fig,title=nc['label']+" — LHM Nowcast",subtitle=f"Ours vs realized  ·  {nc['tier']}  ·  OOS r={nc['oos_r']} (correlation) · OOS R²={nc.get('oos_r2')} · dir {int(nc['dir_hit']*100)}%",
               source="LHM Nowcast Model",data_date=ours.index[-1])
     p=f"{OUT}/{ncid}.png"; save_fig(fig,p); plt.close('all'); return p
 

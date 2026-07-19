@@ -44,6 +44,10 @@ def validate(key, cfg, c):
     preds, acts, prev = map(np.array, (preds, acts, prev))
     err = preds - acts
     oos_r = np.corrcoef(preds, acts)[0,1]
+    # true out-of-sample R² (1 - SSE/SST): penalizes LEVEL bias, not just co-movement. Can be
+    # lower than r² (or negative) when a model tracks the shape but sits off on magnitude.
+    sse = float((err**2).sum()); sst = float(((acts - acts.mean())**2).sum())
+    oos_r2 = 1 - sse/sst if sst > 0 else float('nan')
     bias = err.mean(); rmse = np.sqrt((err**2).mean()); mae = np.abs(err).mean()
     dir_hit = np.mean(np.sign(preds - prev) == np.sign(acts - prev))
     recent_bias = err[-12:].mean()
@@ -63,7 +67,7 @@ def validate(key, cfg, c):
         tier = "USABLE"
     else:
         tier = "NOT READY"
-    return dict(id=f"LHM_{key}_NOWCAST", label=cfg["label"], oos_r=round(float(oos_r),2),
+    return dict(id=f"LHM_{key}_NOWCAST", label=cfg["label"], oos_r=round(float(oos_r),2), oos_r2=round(float(oos_r2),2),
                 bias=round(float(bias),2), rmse=round(float(rmse),2), mae=round(float(mae),2),
                 dir_hit=round(float(dir_hit),2), recent_bias=round(float(recent_bias),2), tier=tier,
                 latest_raw=round(float(live_raw),2), latest=round(float(live_cal),2),
@@ -77,7 +81,7 @@ def main(write=False):
     for key, cfg in nm.TARGETS.items():
         try:
             r = validate(key, cfg, c); rows.append(r)
-            print(f"{r['label']:32} OOS r={r['oos_r']:.2f}  bias={r['bias']:+.2f}  RMSE={r['rmse']:.2f}  "
+            print(f"{r['label']:32} OOS r={r['oos_r']:.2f}  R2={r['oos_r2']:+.2f}  bias={r['bias']:+.2f}  RMSE={r['rmse']:.2f}  "
                   f"dir-hit={r['dir_hit']:.0%}  recent-bias={r['recent_bias']:+.2f}")
             print(f"   raw live {r['latest_raw']:+.2f}%  ->  CALIBRATED {r['latest']:+.2f}%  (vs last print {r['last_print']:+.2f}%)  [{r['calib']}]")
         except Exception as e:

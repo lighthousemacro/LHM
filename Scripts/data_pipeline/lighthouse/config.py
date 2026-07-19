@@ -84,6 +84,13 @@ FRED_CURATED = {
     "EQUIPCONTRIBNOW": "GDPNow Contribution: Equipment Investment",
     "CHNGNETEXPORTSCONTRIBNOW": "GDPNow Contribution: Net Exports",
     "CHNGNETINVENTCONTRIBNOW": "GDPNow Contribution: Inventories",
+    # Granular inflation components (ingested 2026-07-18)
+    "CUSR0000SA0L2": "CPI ex Shelter",
+    "CUSR0000SA0L5": "CPI ex Medical",
+    "CUSR0000SAH3": "CPI Household Furnishings",
+    "CUSR0000SEHC01": "CPI OER Residences",
+    "DPCCRV1M225SBEA": "Core PCE MoM? ",
+    "FLEXCPIM159SFRBATL": "Flexible CPI",
     # Labor Market - Headline
     "UNRATE": "Unemployment Rate U3",
     "U6RATE": "Unemployment Rate U6",

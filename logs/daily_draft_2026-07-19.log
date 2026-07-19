@@ -1,2 +1,20 @@
 [2026-07-19 07:45:03] ════════ DAILY DRAFT RUN START (2026-07-19) ════════
 [2026-07-19 07:45:03] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Build complete. The overnight draft is ready for review.
+
+**What got built:** The Beacon for Sunday July 20, "The Dollar Is the Tightening." The scout ranked the dollar re-flip as the day's strongest thread: the street has swung fully dollar-bullish (BofA, SocGen, OCBC all calling for more H2 strength), while our data shows the trade headwind is already extreme — broad dollar back to 120.5 after the late-January low of 117.44, yen at a 40-year low, EM currencies flat all year, import prices reaccelerating while CPI cools. The piece argues dollar strength plus the oil shock is global tightening delivered from outside the Fed, with the import bill landing on the squeezed-economy cohort. Trade was also the audited 60-day coverage gap, and tomorrow is Beacon day, so it got the long form.
+
+**Pipeline notes:**
+- ~2,900 words, 6-section arc, paywall after The Setup and Figure 2.
+- 16 charts rendered (10 published + 6 reference toolkit extras), all on the canonical template with manifest at `charts/MANIFEST.md`. One QC catch fixed before assembly: the "February low" annotation initially pointed at an August 2023 window-edge low; the true 2026 low is January 29 at 117.44, and both the chart and the copy now say so.
+- All numbers are real DB or dated external prints. Gold and Brent were dropped for staleness. Proprietary composites informed the pick but appear nowhere in the copy or charts.
+- Every external quote is sourced and dated in the footer; voice gates (no emdashes/semicolons in prose, no "not X, it's Y", "The Beacon" byline, base64-inlined images, unlinked footer) all pass.
+- A BUILD NOTES box sits at the top of the preview listing the unattended assumptions — delete it before publishing.
+
+Nothing was published or sent anywhere. Artifacts (brief, data summary, draft, charts, render script) are all under `Outputs/beacon_2026-07-20_dollar-is-the-tightening/` for stage-level rework.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beacon_2026-07-20_dollar-is-the-tightening/beacon_preview.html
+[2026-07-19 07:53:08] claude exited status=0 in 8m 5s
+[2026-07-19 07:53:08] PREVIEW READY → /Users/bob/LHM/Outputs/beacon_2026-07-20_dollar-is-the-tightening/beacon_preview.html
+[2026-07-19 07:53:09] Opened in browser.
+[2026-07-19 07:53:09] ════════ DAILY DRAFT RUN END (status=0) ════════

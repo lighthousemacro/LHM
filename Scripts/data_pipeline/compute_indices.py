@@ -1102,6 +1102,11 @@ def _gci_raw_series(series_id: str) -> pd.Series:
     s = pd.Series(d["value"].astype(float).values,
                   index=pd.to_datetime(d["date"])).sort_index()
     return s[~s.index.duplicated(keep="last")]
+    # NOTE (2026-07-18): a nowcast splice was trialed here but GCI's trend-of-monthly-level
+    # architecture reacts non-linearly to a single spliced point (and resamples to monthly, so
+    # it can't move intra-month anyway). The growth nowcast MODEL (growth_nowcast.py, OOS r=0.78)
+    # is validated and lives as INDPRO_NOWCAST; wiring it into GCI needs a trend-aware integration,
+    # not a raw splice. Deferred.
 
 
 def _gci_ann_trend(level: pd.Series, m: int) -> pd.Series:

@@ -983,6 +983,93 @@ recovered from source and documented here so the doc matches the live lineup (55
 - **Transform/units:** premium level (0-1-ish) + status band. **Class:** predictive/prescriptive. **Relationship:** regime.
 - **Describes:** How much extra crisis/non-linear risk the ensemble sees vs what markets are pricing. EXTREME = repricing warranted.
 
+## NOWCAST ENGINE — STATE + DEEP-WORK ROADMAP (2026-07-19)
+
+The nowcast engine (`Scripts/data_pipeline/nowcast_model.py`, wired into the daily pipeline's NOWCAST
+step) is the newest layer of the framework and the first proprietary output cleared for citation in
+published work (it forecasts *public* series, so citing it reveals no formula). This section records
+today's fixes, the honest current stats, and the deeper work needed to make the layer excellent.
+
+### Fixed today (2026-07-19)
+
+1. **ETF `_Close` feed repaired and wired in.** The nowcast baskets lean on ETF closes
+   (SMH/IYT/HYG/XLI/XLP/XLY/XHB/COPPER + ratios). HYG was 7 days stale and a dozen more series were
+   frozen at 5/15; `ingest_etfs.py` re-run brought all 24 through 7/17, and the daily pipeline now
+   calls it inside the NOWCAST block *before* the model runs, so the proxies can no longer rot
+   silently (the standing `_Close`-has-no-daily-fetcher gap is closed).
+2. **All five targets re-run on clean proxies** (`--write`, full daily history + `LHM_*_FITTED`
+   companions for the ours-vs-realized proof charts).
+3. **DB recovered** from this morning's corruption (second event in 13 days; restored from the 06:26
+   backup, integrity_check ok). Root cause is the 96%-full disk — see ops item below.
+
+### Current honest stats (walk-forward OOS, re-run 2026-07-19)
+
+| Target | WF OOS r | OOS R² | Latest nowcast | Last print | Citation status |
+|---|---|---|---|---|---|
+| GDP YoY (GDPC1) | 0.88 | ~0.77 | +4.02 | +2.68 (Q1) | CITE with number |
+| Case-Shiller YoY | 0.94 | ~0.88 | +1.00 | +0.84 (Apr) | CITE with number (strongest) |
+| INDPRO YoY | 0.78 | ~0.61 | +0.45 | +1.14 (Jun) | CITE with number |
+| Payrolls YoY | 0.85 | ~0.72 | +1.60 | +0.32 (Jun) | THEMATIC ONLY — never the magnitude (see #4) |
+| Core CPI YoY | 0.60 | ~0.36 | +2.97 | +2.81 (Jun) | DO NOT CITE |
+
+Report **R² first** in any external reference ("explains ~three-quarters of the variation out of
+sample"), never bare r. The GDP QoQ-annualized variant was tried and failed (OOS 0.09) — the models
+nowcast the smooth YoY trend, never present them as GDPNow-comparable QoQ figures.
+
+### Deep work for excellence (priority order)
+
+1. **Uncertainty bands.** The engine reports a point estimate and nothing else. Compute walk-forward
+   residual quantiles per target and store `LHM_*_NOWCAST_LO/HI` (68% band), so published numbers can
+   carry an honest range ("~4%, ±0.6pp") and so we notice when a realized print lands outside the band.
+2. **Pin the weights.** `--write` currently *refits the elastic net daily* inside the pipeline. Daily
+   weight drift means the indicator is a moving target and yesterday's 4.0 is not computed like
+   today's 4.0. Adopt the CLI discipline: PIN the fitted weights, refit monthly (or on release days)
+   as a deliberate act with a logged diff. This also cuts the pipeline's compute.
+3. **Release re-anchoring behavior.** The INDPRO nowcast jumped −0.48 → +0.38 on 7/16 when the June
+   IP print entered the fit — a 0.85pp one-day move from re-anchoring, not from proxies. That is
+   correct behavior presented dangerously (a handoff nearly shipped the stale −0.5 as current).
+   Document it, and consider a release-aware flag on the series (obs tagged pre/post latest anchor).
+4. **Labor nowcast bias.** +1.60 vs realized +0.32 is a 5x gap. The basket (claims ×3, temp help,
+   HYG, XLI/XLP) is structurally a *no-fire* detector with almost no *hiring-side* signal, so in a
+   frozen no-hire/no-fire market it reads healthy while payrolls stall. The gap is analytically
+   useful (it IS the frozen-market diagnosis, used exactly that way in today's Beacon) but the
+   magnitude must never be published. Fix: add hiring-side proxies (job postings if ingestible,
+   JTSHIR vintage-lagged, small-business hiring plans) and re-validate; until then it stays thematic.
+5. **Inflation nowcast rebuild or retirement.** OOS R² ~0.36 is not citable and the basket (breakevens
+   + commodities + dollar) is a market-inflation read, not a CPI model. Either rebuild on the granular
+   stack we already ingest (sticky/flexible, supercore, ZORI shelter lead ~12-18m, PPI pipeline) or
+   formally retire it from the lineup and stop computing it.
+6. **External benchmark ingestion.** The config has a `benchmark` hook but no benchmark series in the
+   DB. Ingest Atlanta Fed GDPNow (public CSV) so the ours-vs-GDPNow overlay chart exists — that
+   comparison is the single best marketing artifact the engine can produce.
+7. **Proxy staleness guard.** The model silently used 7-day-stale HYG this week. Add a hard check:
+   if any basket proxy is >5 business days stale at run time, log loudly and tag the day's nowcast
+   `degraded` in a companion flag series. Fold into `indicator_freshness_audit.py`.
+8. **Vintage honesty (look-ahead).** Refits use latest-vintage target history, so revisions leak into
+   the "walk-forward" stats. For the paper-grade version: ALFRED vintages for INDPRO/PAYEMS/GDPC1 and
+   a true real-time backtest. Until then, label OOS stats "walk-forward on current-vintage data."
+
+### Standing program items (unchanged, tracked)
+
+- **MRI weight rebuild** — propose evidence-based reweight for Bob's review; don't auto-apply.
+- **MSI/SPI basket completion** — survivorship-aware S&P 500 breadth backfill (pre-2023); SPI data
+  ingestion (NAAIM, II, put/call, ETF flows, VIX term structure).
+- **CCI/BCI/FCI ground-up rebuilds** — still on single-component proxies (RSXFS / NEWORDER / IG OAS).
+- **Allocation build queue** — 6 pre-specified cross-pillar composites + the demoted-idea re-tests.
+- **Feed unlocks now available** — with `_Close` repaired and refreshing daily, the parked
+  XASSET_RISK_TIDE / FLIGHT_QUALITY / CONCENTRATION_PRESSURE builds are unblocked (→ ~57 live).
+  IORB_FULL splice and the TreasuryDirect re-run (AUCTION_PULSE, FOREIGN_DEMAND_DIV) still owed.
+- **Ops: the disk.** Two DB corruptions in 13 days, both with the volume ≥96% full. Until the Mac
+  mini arrives: move the 2 rolling DB backups off-volume (iCloud/Dropbox already mirror) or free
+  ≥20GB. This is the highest-leverage reliability fix on the board.
+
+### Bob's additions (to merge in)
+
+*Bob flagged he has initial thoughts on the deeper indicator work — capture them here on the next
+pass so this section stays the single roadmap.*
+
+---
+
 **END OF INDICATORS MASTER**
 
 *This document consolidates the proprietary indicators reference, the Apr 30 audit findings, the 12 pillar audit docs, the candidate new indicators list, and the live `lighthouse_indices` snapshot into one canonical reference. Source files remain in place as detail/audit trails. When information conflicts, this file wins.*

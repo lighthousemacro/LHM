@@ -326,3 +326,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/priced-for-perfection/beam_preview.html
 [2026-07-18 07:52:54] PREVIEW READY → /Users/bob/LHM/Outputs/priced-for-perfection/beam_preview.html
 [2026-07-18 07:52:54] Opened in browser.
 [2026-07-18 07:52:54] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-19 07:45:03] ════════ DAILY DRAFT RUN START (2026-07-19) ════════
+[2026-07-19 07:45:03] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

@@ -112,7 +112,15 @@ def run_target(c, key, cfg, write=False):
         c.execute("INSERT OR REPLACE INTO series_meta VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                   (val_id,f"LHM {cfg['label']} Nowcast","LHM Nowcast","Nowcast","Daily",cfg["transform"],
                    now,now,"nowcast",rows[-1][1],len(rows)))
-        c.commit(); print(f"  wrote {val_id} ({len(rows)} daily pts)")
+        # full fitted history (model.predict over every aligned period) for the ours-vs-realized chart
+        fit_id=f"LHM_{key}_FITTED"
+        fitted=pd.Series(model.predict(sc.transform(Pm.dropna().values)), index=Pm.dropna().index)
+        frows=[(fit_id,dt.strftime('%Y-%m-%d'),float(v)) for dt,v in fitted.items()]
+        c.executemany("INSERT OR REPLACE INTO observations VALUES(?,?,?)",frows)
+        c.execute("INSERT OR REPLACE INTO series_meta VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                  (fit_id,f"LHM {cfg['label']} Nowcast (full fitted)","LHM Nowcast","Nowcast",cfg["freq"],
+                   cfg["transform"],now,now,"nowcast",frows[-1][1],len(frows)))
+        c.commit(); print(f"  wrote {val_id} ({len(rows)} daily) + {fit_id} ({len(frows)} fitted)")
 
 def main():
     args=[a for a in sys.argv[1:] if not a.startswith("--")]

@@ -10312,3 +10312,10 @@ getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
 getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+getUpdates 409 (another poller holds the token); retry in 30s
+net error: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=40)

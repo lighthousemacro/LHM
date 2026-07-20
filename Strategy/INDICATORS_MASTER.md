@@ -677,8 +677,10 @@ SPI = w1*z(AAII Bull-Bear) + w2*z(NAAIM) + w3*z(II Bull-Bear) + w4*z(Put/Call in
 - AAII Bull-Bear < -20 → Capitulation (contrarian buy)
 - NAAIM > 100 → Fully invested (caution)
 - NAAIM < 30 → Defensive (potential bottom)
-- SPI z > +1.5 → Crowded long (fade)
-- SPI z < -1.0 → Capitulation (contrarian)
+- SPI z > +1.5 → Capitulation, extreme fear (contrarian buy)
+- SPI z < -1.0 → Euphoric, crowded long (contrarian sell)
+
+*Orientation corrected 2026-07-20: SPI is FEAR-UP as computed (the live formula in `compute_indices.py` inverts AAII/NAAIM/flows; 2008-11 read +1.83, 2020-03 +2.29, the 2021-10 mania -2.13). The two lines above previously carried the opposite orientation, which contradicted both the live series and PILLAR 12 SENTIMENT.md.*
 
 **Sentiment-Structure Divergence (SSD):** LIVE. Latest 0.992 = "FEAR + WEAK" (sentiment bearish, structure also weak — alignment, no divergence trade).
 

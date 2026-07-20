@@ -98,7 +98,27 @@ def index_status(index_id: str) -> str:
 
 
 def yoy(s: pd.Series, periods: int = 12) -> pd.Series:
-    return s.pct_change(periods, fill_method=None) * 100
+    """Date-aware year-over-year percent change.
+
+    Each observation is compared against the observation nearest to twelve
+    calendar months earlier, so a skipped release (the Oct 2025 BLS shutdown
+    gap) yields NaN instead of a silent 13-month change the way a positional
+    shift would. `periods` is kept for API compatibility; the row-count
+    conventions that all meant one year (12 monthly, 4 quarterly, 252 daily)
+    map to the same calendar-year offset. Tolerance scales with the series'
+    native spacing.
+    """
+    s = s.dropna()
+    if len(s) < 3:
+        return s * float("nan")
+    spacing = s.index.to_series().diff().median()
+    if spacing <= pd.Timedelta(days=4):
+        tol = pd.Timedelta(days=4)
+    else:
+        tol = max(pd.Timedelta(days=10), spacing * 0.6)
+    base = s.reindex(s.index - pd.DateOffset(months=12), method="nearest", tolerance=tol)
+    out = (s.values / base.values - 1.0) * 100.0
+    return pd.Series(out, index=s.index).dropna()
 
 
 def latest(s: pd.Series) -> tuple[float, pd.Timestamp]:

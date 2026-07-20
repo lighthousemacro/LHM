@@ -23,6 +23,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 import sys
+from datetime import datetime, timedelta
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lhm_brand import line_chart, long_to_chart  # noqa: E402
@@ -508,12 +509,8 @@ def series_panel(
                 seqs[r["series_id"]].append((r["date"], r["value"]))
         out: list[dict[str, Any]] = []
         for sid, seq in seqs.items():
-            for i in range(periods, len(seq)):
-                d, v = seq[i]
-                v0 = seq[i - periods][1]
-                if v0 in (None, 0):
-                    continue
-                out.append({"date": d, "series_id": sid, "value": round((v / v0 - 1) * 100.0, 2)})
+            for d, v in _date_aware_yoy(seq, periods):
+                out.append({"date": d, "series_id": sid, "value": round(v, 2)})
         out.sort(key=lambda x: x["date"])
         if not out:
             raise HTTPException(status_code=404, detail="Not enough history for YoY transform")
@@ -724,14 +721,44 @@ def _ms_series(c: sqlite3.Connection, series_id: str) -> list[tuple[str, float]]
     return [(r["date"], float(r["value"])) for r in rows]
 
 
-def _ms_yoy(seq: list[tuple[str, float]], periods: int = 12) -> list[tuple[str, float]]:
+def _date_aware_yoy(seq: list[tuple[str, float]], periods: int = 12) -> list[tuple[str, float]]:
+    """Year-over-year percent change aligned by calendar date, not row offset.
+
+    A skipped release (the Oct 2025 BLS shutdown gap) yields no output row for
+    the affected date instead of a silent 13-month change. `periods` is kept
+    for API compatibility (12 monthly / 4 quarterly / 252 daily conventions all
+    meant one year); the offset is always ~twelve calendar months, tolerance
+    scaled to the series' native spacing.
+    """
+    if len(seq) < 3:
+        return []
+    dates = [datetime.strptime(d, "%Y-%m-%d") for d, _ in seq]
+    gaps = sorted((dates[i] - dates[i - 1]).days for i in range(1, len(dates)))
+    spacing = gaps[len(gaps) // 2] or 1
+    tol = 4 if spacing <= 4 else max(10, int(spacing * 0.6))
     out: list[tuple[str, float]] = []
-    for i in range(periods, len(seq)):
-        v0 = seq[i - periods][1]
-        if v0 == 0:
+    j = 0
+    for i, d in enumerate(dates):
+        target = d - timedelta(days=365)
+        while j + 1 < len(dates) and dates[j + 1] <= target:
+            j += 1
+        best = None
+        for k in (j, j + 1):
+            if 0 <= k < i:
+                delta = abs((dates[k] - target).days)
+                if delta <= tol and (best is None or delta < best[0]):
+                    best = (delta, k)
+        if best is None:
+            continue
+        v0 = seq[best[1]][1]
+        if v0 in (None, 0):
             continue
         out.append((seq[i][0], (seq[i][1] / v0 - 1.0) * 100.0))
     return out
+
+
+def _ms_yoy(seq: list[tuple[str, float]], periods: int = 12) -> list[tuple[str, float]]:
+    return _date_aware_yoy(seq, periods)
 
 
 def _ms_real_yoy(nom: list[tuple[str, float]], deflator: list[tuple[str, float]], periods: int = 12) -> list[tuple[str, float]]:

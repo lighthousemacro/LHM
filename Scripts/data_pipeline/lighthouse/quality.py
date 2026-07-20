@@ -116,6 +116,27 @@ def check_negative_values(df: pd.DataFrame, series_id: str, allow_negative: bool
     return None
 
 
+# Series where a value <= 0 is physically impossible and always means feed
+# corruption, never data. The July 2023-May 2024 breadth incident (285 literal
+# 0.0 placeholder rows that reached a published chart) is the reason this
+# exists. Match by prefix so spliced siblings (_TV/_HIST) are covered too.
+STRICTLY_POSITIVE_PREFIXES = (
+    "SPX_PCT_ABOVE_",   # percent of index members above an MA: 0 only if the feed died
+)
+
+
+def check_impossible_zeros(df: pd.DataFrame, series_id: str) -> Optional[str]:
+    """Flag value <= 0 for series classes where zero cannot occur in reality."""
+    if not series_id.startswith(STRICTLY_POSITIVE_PREFIXES):
+        return None
+
+    bad = (df["value"] <= 0).sum()
+    if bad > 0:
+        return f"{series_id}: {bad} impossible zero/negative values (feed corruption class)"
+
+    return None
+
+
 def check_duplicates(df: pd.DataFrame, series_id: str) -> Optional[str]:
     """Check for duplicate dates."""
     if "date" in df.columns:
@@ -160,6 +181,10 @@ def validate_series(df: pd.DataFrame, series_id: str, frequency: str = None) -> 
         issues.append(check)
 
     check = check_duplicates(df, series_id)
+    if check:
+        issues.append(check)
+
+    check = check_impossible_zeros(df, series_id)
     if check:
         issues.append(check)
 

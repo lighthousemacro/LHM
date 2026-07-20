@@ -59,7 +59,7 @@ STATUS_THRESHOLDS = {
     "LCI": [
         (1.0, "ABUNDANT"),
         (0.5, "AMPLE"),
-        (-0.5, "TIGHT"),
+        (-0.5, "NEUTRAL"),
         (-1.0, "SCARCE"),
         (-999, "STRESS RISK")
     ],
@@ -214,12 +214,15 @@ STATUS_THRESHOLDS = {
         (-999, "EXTREME ACCUMULATION")
     ],
     # Sentiment & Positioning (Pillar 12)
+    # SPI is FEAR-UP as computed (AAII/NAAIM/flows inverted in the formula;
+    # 2008-11 read +1.83, 2020-03 +2.29, 2021-10 mania -2.13). High SPI =
+    # capitulation (contrarian buy zone above +1.5), low SPI = euphoria
+    # (contrarian sell zone below -1.0). Canon fade lines: +1.5 / -1.0 only.
     "SPI": [
-        (1.5, "EXTREME FEAR"),
+        (1.5, "CAPITULATION"),
         (1.0, "FEARFUL"),
-        (-0.5, "NEUTRAL"),
-        (-1.0, "EUPHORIC"),
-        (-999, "EXTREME EUPHORIA")
+        (-1.0, "NEUTRAL"),
+        (-999, "EUPHORIC")
     ],
     "SSD": [
         (1.5, "CAPITULATION LOW"),

@@ -75,6 +75,16 @@ OVERLAYS={
   'SSD':('SPY_Close','fwd',21,'SPY forward 21d return %'),
   'MRI':('INDPRO','yoy',9,'Industrial production YoY %, led 9m'),
   'CLI':('CRYPTO_BTC_PRICE','fwd',21,'BTC forward 21d return %'),
+  # ALLOC family (Bob 7/20): rolling H-period target return/change, led H, per validated spec
+  'ALLOC_CONS_ROTATION':('XLY_Close/XLP_Close','rollret',3,'XLY/XLP rolling 3m return %, led 3m'),
+  'ALLOC_CYCLICAL_DEFENSIVE':('XLI_Close/XLP_Close','rollret',3,'XLI/XLP rolling 3m return %, led 3m'),
+  'ALLOC_ENERGY_MOMENTUM':('XLE_Close/SPY_Close','rollret',3,'XLE/SPY rolling 3m return %, led 3m'),
+  'ALLOC_INCOME_DEPLETION':('XLY_Close/XLP_Close','rollret',6,'XLY/XLP rolling 6m return %, led 6m'),
+  'ALLOC_INVENTORY_DESTOCK':('XLB_Close/SPY_Close','rollret',6,'XLB/SPY rolling 6m return %, led 6m'),
+  'ALLOC_DOLLAR_EM':('EEM_Close','rollret',6,'EEM rolling 6m return %, led 6m (inverse signal)'),
+  'ALLOC_REALYIELD_GOLD':('GLD_Close','rollret',6,'GLD rolling 6m return %, led 6m'),
+  'ALLOC_CREDIT_LABOR_GAP':('BAMLH0A0HYM2','rollchg',6,'HY OAS rolling 6m change (pp), led 6m'),
+  'ALLOC_CURVE_STEEPENER':('T10Y2Y','rollchg',6,'2s10s rolling 6m change (pp), led 6m'),
   'SLI':('CRYPTO_BTC_PRICE','fwd',21,'BTC forward 21d return %'),
 }
 
@@ -83,11 +93,21 @@ def overlay_card(iid):
     x=s(iid,ind=True)
     if x is None or len(x)<50: return None
     tgt_id,kind,lead,tlabel=OVERLAYS[iid]
-    t=s(tgt_id)
+    if '/' in tgt_id:
+        num,den=tgt_id.split('/'); a=s(num); b=s(den)
+        if a is None or b is None: return None
+        t=(a/b.reindex(a.index).ffill()).dropna()
+    else:
+        t=s(tgt_id)
     if t is None: return None
     xs=_three_mo(x[x.index>='2000-01-01'])
     if kind=='fwd':
         led=((t.shift(-lead)/t-1.0)*100.0).dropna()
+    elif kind in ('rollret','rollchg'):
+        hd={3:63,6:126}[lead]
+        roll=((t/t.shift(hd)-1.0)*100.0) if kind=='rollret' else (t-t.shift(hd))
+        led=roll.dropna()
+        led.index=led.index-pd.DateOffset(months=lead)
     else:
         led=_date_aware_12m(t,kind)
         led.index=led.index-pd.DateOffset(months=lead)
@@ -225,7 +245,10 @@ for kind,iid,p in order:
         title=nc['label']+" Nowcast"; body=f"Proxy basket: {esc(nc['basket'])}"
     elif kind=='ovl':
         m=META.get(iid,{}); _,_,lead,tlabel=OVERLAYS[iid]
-        meta=f"<span class='b' style='background:#FF6723'>PREDICTIVE OVERLAY</span> <span class='k'>{esc(tlabel)}</span>"
+        import re as _re
+        _ic=_re.search(r'OOS IC ([+\-]?[0-9.]+), n=(\d+)', m.get('lead_lag','') or '')
+        _cred=f" <span class='b' style='background:#00BB89'>OOS IC {_ic.group(1)} · n={_ic.group(2)}</span>" if _ic else ''
+        meta=f"<span class='b' style='background:#FF6723'>PREDICTIVE OVERLAY</span>{_cred} <span class='k'>{esc(tlabel)}</span>"
         title=m.get('full_name',iid)
         body=f"<b>Overlay:</b> {esc(iid)} 3m avg vs {esc(tlabel)}<br><b>Reads:</b> {esc(m.get('describes',''))}"
     else:

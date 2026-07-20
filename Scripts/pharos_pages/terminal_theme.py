@@ -181,11 +181,66 @@ def regime_bands(ax):
     ax.axhspan(0.5, 1.0, color=DUSK, alpha=0.12, zorder=0)
     ax.axhspan(-0.5, 0.5, color=SEA, alpha=0.12, zorder=0)
     ax.axhspan(-3.0, -0.5, color=SKY, alpha=0.10, zorder=0)
-    labels = [(1.9, "CRISIS", PORT), (1.25, "HIGH", DUSK), (0.75, "ELEVATED", DUSK),
-              (0.0, "NEUTRAL", SEA), (-1.0, "LOW RISK", SKY)]
-    for y, txt, color in labels:
-        ax.text(0.985, y, txt, transform=ax.get_yaxis_transform(), fontsize=8,
-                color=color, va="center", ha="right", fontweight="bold", alpha=0.85)
+    # Arrow targets sit at each zone's edge NEAREST its label band, so the
+    # pointer stays a short tick instead of a line across the data.
+    ax._regime_band_labels = [
+        (2.2, "CRISIS", PORT, "top"), (1.5, "HIGH", DUSK, "top"),
+        (1.0, "ELEVATED", DUSK, "top"),
+        (-0.5, "NEUTRAL", SEA, "bottom"), (-2.2, "LOW RISK", SKY, "bottom"),
+    ]
+
+
+def flush_regime_labels(ax):
+    """Draw regime-band callouts. Call AFTER limits are final (post set_xlim/ylim)."""
+    for y, txt, color, band in getattr(ax, "_regime_band_labels", []):
+        threshold_callout(ax, txt, y, color, band=band)
+
+
+def threshold_callout(ax, text, y_target, color, band=None):
+    """Boxed label in the top/bottom band with a thin arrow to its line/level.
+
+    Bob 7/20: labels never sit in/on the data. Box anchors in the top ~12% or
+    bottom ~12% of the axes (top if the referenced level is above the current
+    vertical midpoint, unless band= overrides), staggered horizontally so boxes
+    never collide with each other, the legend, or the RHS pill. Arrow points to
+    the referenced level near the right end of the line.
+    """
+    if band is None:
+        lo, hi = ax.get_ylim()
+        span = hi - lo
+        # Prefer the band with less data living in it, so the box never sits
+        # on a line. Tie goes to the band nearest the referenced level.
+        ys = [y for ln in ax.get_lines() for y in ln.get_ydata()
+              if y == y and lo <= y <= hi][:20000]
+        occ_top = sum(1 for y in ys if y >= hi - 0.25 * span)
+        occ_bot = sum(1 for y in ys if y <= lo + 0.25 * span)
+        if occ_top != occ_bot:
+            band = "top" if occ_top < occ_bot else "bottom"
+        else:
+            band = "top" if y_target >= (lo + hi) / 2 else "bottom"
+    slots = getattr(ax, "_callout_slots", None)
+    if slots is None:
+        slots = {"top": 0, "bottom": 0}
+        ax._callout_slots = slots
+    xs = {"top": [0.42, 0.63, 0.22, 0.80], "bottom": [0.32, 0.55, 0.13, 0.74]}[band]
+    x_box = xs[slots[band] % len(xs)]
+    slots[band] += 1
+    y_box = 0.94 if band == "top" else 0.06
+    ax.annotate(
+        text,
+        # Arrow drops a short vertical from the box to the referenced level
+        # directly beneath/above it — never a long diagonal across the data.
+        xy=(x_box + 0.035, y_target), xycoords=ax.get_yaxis_transform(),
+        xytext=(x_box, y_box), textcoords="axes fraction",
+        fontsize=8, fontweight="bold", color=color,
+        ha="left", va="top" if band == "top" else "bottom",
+        bbox=dict(boxstyle="round,pad=0.32", facecolor=DARK_LIFT,
+                  edgecolor=DARK_SPINE, linewidth=0.8, alpha=0.95),
+        arrowprops=dict(arrowstyle="-|>", color=color, linewidth=0.8,
+                        alpha=0.6, shrinkA=3, shrinkB=1,
+                        mutation_scale=8),
+        zorder=6, annotation_clip=False,
+    )
 
 
 def pill(ax, x, y, text, color, side="right"):

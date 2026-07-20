@@ -12,8 +12,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from terminal_theme import (  # noqa: E402
     DUSK, OCEAN, PORT, SEA, SKY, VENUS, DARK_MUTED, DOLDRUMS,
     add_recessions, chart_card, dark_fig, index_status, latest, legend,
-    load_index, load_obs, pill, regime_bands, render_page, section, set_xlim,
-    sigma_refs, style_ax, tile, to_b64, verdict_block, write_page, zero_line,
+    flush_regime_labels, load_index, load_obs, pill, regime_bands, render_page,
+    section, set_xlim, sigma_refs, style_ax, threshold_callout, tile, to_b64,
+    verdict_block, write_page, zero_line,
 )
 
 MRI_BANDS = [
@@ -52,6 +53,7 @@ def chart_mri():
     style_ax(ax)
     set_xlim(ax, start, mri.index.max())
     ax.set_ylim(-2.6, 2.6)
+    flush_regime_labels(ax)
     v, d = latest(smooth)
     pill(ax, d, v, f"{v:+.2f}", SKY)
     legend(ax, loc="lower left")
@@ -71,8 +73,7 @@ def chart_lfi():
     ax.plot(smooth.index, smooth.values, color=DUSK, linewidth=2.2,
             label=f"LFI 21d avg ({smooth.iloc[-1]:+.2f})")
     ax.axhline(0.5, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
-    ax.text(0.985, 0.56, "+0.5 FRAGILE", transform=ax.get_yaxis_transform(),
-            fontsize=8, color=VENUS, ha="right", va="bottom", fontweight="bold", alpha=0.85)
+    threshold_callout(ax, "+0.5 FRAGILE", 0.5, VENUS)
     style_ax(ax)
     set_xlim(ax, start, lfi.index.max())
     v, d = latest(smooth)
@@ -88,8 +89,7 @@ def chart_hy_oas():
     add_recessions(ax, start)
     ax.plot(hy.index, hy.values, color=SKY, linewidth=1.6, label=f"HY OAS ({hy.iloc[-1]:.0f} bps)")
     ax.axhline(300, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
-    ax.text(0.985, 312, "300 bps COMPLACENT", transform=ax.get_yaxis_transform(),
-            fontsize=8, color=VENUS, ha="right", va="bottom", fontweight="bold", alpha=0.85)
+    threshold_callout(ax, "300 bps COMPLACENT", 300, VENUS)
     style_ax(ax)
     set_xlim(ax, start, hy.index.max())
     v, d = latest(hy)

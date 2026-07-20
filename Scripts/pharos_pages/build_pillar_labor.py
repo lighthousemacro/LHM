@@ -9,7 +9,8 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from terminal_theme import (  # noqa: E402
+from terminal_theme import (
+    threshold_callout,  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS, DARK_MUTED,
     add_recessions, chart_card, dark_fig, latest, legend, load_index, load_obs,
     pill, render_page, section, set_xlim, sigma_refs, style_ax, tile, to_b64,
@@ -39,8 +40,7 @@ def chart_lfi():
     ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.2,
             label=f"LFI 21d avg ({smooth.iloc[-1]:+.2f})")
     ax.axhline(0.5, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
-    ax.text(0.985, 0.56, "+0.5 FRAGILE", transform=ax.get_yaxis_transform(),
-            fontsize=8, color=VENUS, ha="right", va="bottom", fontweight="bold", alpha=0.85)
+    threshold_callout(ax, "+0.5 FRAGILE", 0.5, VENUS)
     style_ax(ax)
     set_xlim(ax, start, lfi.index.max())
     v, d = latest(smooth)
@@ -57,8 +57,7 @@ def chart_quits():
     ax.plot(quits.index, quits.values, color=SKY, linewidth=2.0,
             label=f"Quits rate ({quits.iloc[-1]:.1f}%)")
     ax.axhline(2.0, color=VENUS, linewidth=1.2, alpha=0.75, linestyle="--")
-    ax.text(0.985, 2.03, "2.0% PRE-RECESSION FLOOR", transform=ax.get_yaxis_transform(),
-            fontsize=8, color=VENUS, ha="right", va="bottom", fontweight="bold", alpha=0.85)
+    threshold_callout(ax, "2.0% PRE-RECESSION FLOOR", 2.0, VENUS)
     style_ax(ax)
     set_xlim(ax, start, quits.index.max())
     v, d = latest(quits)

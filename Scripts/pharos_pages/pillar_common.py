@@ -12,8 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from terminal_theme import (  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS, DARK_MUTED, DOLDRUMS, FOG,
     add_recessions, chart_card, dark_fig, latest, legend, load_index, load_obs,
-    pill, render_page, section, set_xlim, sigma_refs, style_ax, tile, to_b64,
-    verdict_block, write_page, yoy, zero_line,
+    pill, render_page, section, set_xlim, sigma_refs, style_ax, threshold_callout,
+    tile, to_b64, verdict_block, write_page, yoy, zero_line,
 )
 
 SERIES_COLORS = [SKY, DUSK, SEA, VENUS]
@@ -29,10 +29,11 @@ def band_state(z: float, hi_label: str = "ABOVE TREND", lo_label: str = "BELOW T
 
 
 def hline(ax, y: float, label: str, color=VENUS, ls="--", lw=1.0, va="bottom", dy=0.0):
+    """Threshold line. Label renders as a banded box-and-arrow callout, never on
+    the line itself (Bob 7/20). va/dy kept for signature compatibility, unused."""
     ax.axhline(y, color=color, linewidth=lw, alpha=0.75, linestyle=ls)
     if label:
-        ax.text(0.985, y + dy, label, transform=ax.get_yaxis_transform(), fontsize=8,
-                color=color, ha="right", va=va, fontweight="bold", alpha=0.85)
+        threshold_callout(ax, label, y, color)
 
 
 def chart_composite(index_id: str, display: str, thresholds: list[tuple] | None = None):

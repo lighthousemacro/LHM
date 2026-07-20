@@ -132,6 +132,35 @@ def overlay_card(iid):
               source="LHM calculations; FRED + market data",data_date=xs.index[-1])
     p=f"{OUT}/{iid}.png"; save_fig(fig,p); plt.close('all'); return p
 
+def _era_tags(ax,x):
+    """Era labels live in the top/bottom BANDS of the axes, never on the data
+    (Bob 7/20). Box in the band nearest its target, arrow down/up to the point.
+    Two row levels per band; near-in-time labels stagger to the second row.
+    Top-left is reserved for the legend, so early-date top-band labels flip low."""
+    ymid=(x.min()+x.max())/2.0
+    x0,x1=ax.get_xlim(); xspan=x1-x0
+    TOP=[0.955,0.870]; BOT=[0.045,0.130]
+    last_x={'top':[-1e9,-1e9],'bot':[-1e9,-1e9]}
+    for dt,lbl in ERAS:
+        d=pd.Timestamp(dt)
+        if d<x.index.min() or d>x.index.max(): continue
+        yv=x.reindex([d],method='nearest').iloc[0]
+        xf=(matplotlib.dates.date2num(d)-x0)/xspan
+        band='top' if yv>=ymid else 'bot'
+        if band=='top' and xf<0.24: band='bot'   # legend lives upper-left
+        rows=TOP if band=='top' else BOT
+        row=0
+        if xf-last_x[band][0]<0.15: row=1
+        if row==1 and xf-last_x[band][1]<0.15: row=0  # both rows tight: fall back, accept spread
+        last_x[band][row]=xf
+        tx=min(max(xf,0.05),0.90)
+        ax.annotate(lbl,xy=(d,yv),xytext=(tx,rows[row]),textcoords=ax.transAxes,
+                    fontsize=8,color=DEEP,ha='center',
+                    va='top' if band=='top' else 'bottom',fontweight='bold',
+                    bbox=dict(boxstyle='round,pad=0.28',fc='white',ec=COLORS['ocean'],lw=1,alpha=0.92),
+                    arrowprops=dict(arrowstyle='->',color=COLORS['dusk'],lw=1.1,
+                                    shrinkA=4,shrinkB=3),zorder=6)
+
 def descriptive_card(iid):
     x=s(iid,ind=True)
     if x is None or len(x)<50: return None
@@ -151,15 +180,7 @@ def descriptive_card(iid):
     ax.axhline(0,color=COLORS['fog'],linestyle='--',linewidth=1.0,zorder=0)
     style_single_ax(ax,fmt='{:.2f}'); add_last_value_label(ax,x,COLORS['ocean'],fmt='{:.2f}',side='right')
     set_xlim_to_data(ax,x.index); add_recessions(ax)
-    med=x.median()
-    for dt,lbl in ERAS:
-        d=pd.Timestamp(dt)
-        if d<x.index.min() or d>x.index.max(): continue
-        yv=x.reindex([d],method='nearest').iloc[0]
-        ax.annotate(lbl,xy=(d,yv),xytext=(0,26 if yv<med else -26),textcoords='offset points',
-                    fontsize=8,color=DEEP,ha='center',fontweight='bold',
-                    bbox=dict(boxstyle='round,pad=0.28',fc='white',ec=COLORS['ocean'],lw=1,alpha=0.92),
-                    arrowprops=dict(arrowstyle='-',color=COLORS['dusk'],lw=1.1))
+    _era_tags(ax,x)
     if smoothed: add_smart_legend(ax)
     sub=(m.get('describes','') or '')[:104] + (" · 3-month average" if smoothed else "")
     brand_fig(fig,title=m.get('full_name',iid),subtitle=sub,source="Lighthouse Macro",data_date=x.index[-1])

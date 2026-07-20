@@ -15,7 +15,7 @@ SKY      = HexColor("#89CCFF")
 DEEP     = HexColor("#123456")
 SEA      = HexColor("#00BB89")
 GLACIER  = HexColor("#F4F7F9")
-ICE      = HexColor("#D4E2EF")
+ICE      = HexColor("#D1E1F1")
 DOLDRUMS = HexColor("#898989")
 FOAM     = HexColor("#FFFFFF")
 

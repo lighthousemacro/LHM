@@ -3,7 +3,7 @@
   <rect x="22" y="22" width="468" height="468" rx="10" fill="none" stroke="#2389BB" stroke-width="10"/>
   <polygon points="256,152 84,84 84,220" fill="#89CCFF"/>
   <polygon points="256,152 428,84 428,220" fill="#FF6723"/>
-  <polygon points="240,98 272,98 298,384 214,384" fill="#D4E2EF"/>
-  <circle cx="256" cy="152" r="31" fill="#D4E2EF"/>
-  <rect x="204" y="384" width="104" height="32" rx="3" fill="#D4E2EF"/>
+  <polygon points="240,98 272,98 298,384 214,384" fill="#D1E1F1"/>
+  <circle cx="256" cy="152" r="31" fill="#D1E1F1"/>
+  <rect x="204" y="384" width="104" height="32" rx="3" fill="#D1E1F1"/>
 </svg>

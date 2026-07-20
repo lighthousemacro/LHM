@@ -181,7 +181,7 @@ The portfolio is a single book. The distinction is what drives a position.
 
 ## 23/89/BB Palette (every color contains some combo of 23, 89, BB)
 
-**Palette locked 2026-06-16.** Sky is now `#89CCFF` (old `#23BBFF` and the separate "Bright" retired). Deep `#123456` carries dark canvas + wordmark + headings + the old "Navy" black-replacement in one token. Ice `#D4E2EF` is the visible section-differentiation tint (Glacier was too close to white).
+**Palette locked 2026-06-16.** Sky is now `#89CCFF` (old `#23BBFF` and the separate "Bright" retired). Deep `#123456` carries dark canvas + wordmark + headings + the old "Navy" black-replacement in one token. Ice `#D1E1F1` is the visible section-differentiation tint (Glacier was too close to white).
 
 | Name | Hex | Role | Usage |
 |------|-----|------|-------|
@@ -195,7 +195,7 @@ The portfolio is a single book. The distinction is what drives a position.
 | **Port** | `#892323` | Bearish regime | Regime ONLY — pair w/ lightness/label cue (colorblind safety) |
 | **Doldrums** | `#898989` | Neutral | Axis spines, labels, secondary text |
 | Glacier | `#F4F7F9` | Light base | PRIMARY light page/section background (low eye strain) |
-| **Ice** | `#D4E2EF` | Light accent | Differentiation / accent background, bluer than Glacier (alternating sections, callouts) |
+| **Ice** | `#D1E1F1` | Light accent | Differentiation / accent background, bluer than Glacier (alternating sections, callouts) |
 | Fog | `#D1D1D1` | Reference | Zero/ghost lines (not in mnemonic) |
 | Foam | `#FFFFFF` | Pure white | Institutional chart backgrounds |
 

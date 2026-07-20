@@ -12,7 +12,7 @@
 
 The signature mnemonic is 23/89/BB. Every color contains some combination of 23, 89, and BB — except the surface/contrast utilities (Deep, Ice, Glacier, Foam), which extend the system without breaking it.
 
-**Palette locked 2026-06-16.** Sky is now `#89CCFF` (the old `#23BBFF` and the separate "Bright" are retired — `#89CCFF` reads as a clear lighter companion to Ocean rather than a competing same-hue blue). Deep `#123456` carries dark canvas, wordmark, headings, and the old "Navy" black-replacement in one token. Ice `#D4E2EF` is the visible section-differentiation tint (Glacier was too close to white). Cycle order on white bg: Ocean → Dusk → Sky → Sea → Venus → Doldrums. On dark bg (Deep canvas), Sky is the primary plotting color because Ocean dims against Deep.
+**Palette locked 2026-06-16.** Sky is now `#89CCFF` (the old `#23BBFF` and the separate "Bright" are retired — `#89CCFF` reads as a clear lighter companion to Ocean rather than a competing same-hue blue). Deep `#123456` carries dark canvas, wordmark, headings, and the old "Navy" black-replacement in one token. Ice `#D1E1F1` is the visible section-differentiation tint (Glacier was too close to white). Cycle order on white bg: Ocean → Dusk → Sky → Sea → Venus → Doldrums. On dark bg (Deep canvas), Sky is the primary plotting color because Ocean dims against Deep.
 
 | Layer | Name | Hex | Mnemonic | Usage |
 |-------|------|-----|----------|-------|
@@ -32,7 +32,7 @@ The signature mnemonic is 23/89/BB. Every color contains some combination of 23,
 |------|-----|-------|
 | Foam | `#FFFFFF` | Pure white. Card/callout insides and institutional chart backgrounds — the things that should pop |
 | Glacier | `#F4F7F9` | Page and large-section base surfaces (replaces pure white for less eye strain) |
-| Ice | `#D4E2EF` | Alternating-section differentiation and small accent callouts (bluer/darker than Glacier) |
+| Ice | `#D1E1F1` | Alternating-section differentiation and small accent callouts (bluer/darker than Glacier) |
 | Fog | `#D1D1D1` | Zero lines, ghost reference lines |
 
 **Web surface scheme (locked 2026-06-16):** page + hero + base sections = Glacier; alternating content sections = Ice; card insides = Foam white. Glacier base lowers eye strain, white cards pop, Ice gives section rhythm.

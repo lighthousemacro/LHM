@@ -547,7 +547,7 @@ def index_page(items):
 
 def reader_css():
     return '''/* Lighthouse Macro — Reading Room */
-:root{--ocean:#2389BB;--dusk:#FF6723;--sky:#89CCFF;--sea:#00BB89;--venus:#FF2389;--doldrums:#898989;--fog:#D1D1D1;--deep:#123456;--ink:#123456;--paper:#FFFFFF;--ice:#D4E2EF;--glacier:#F4F7F9;--line:#E3E8EC;--body:#36424C;}
+:root{--ocean:#2389BB;--dusk:#FF6723;--sky:#89CCFF;--sea:#00BB89;--venus:#FF2389;--doldrums:#898989;--fog:#D1D1D1;--deep:#123456;--ink:#123456;--paper:#FFFFFF;--ice:#D1E1F1;--glacier:#F4F7F9;--line:#E3E8EC;--body:#36424C;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--body);background:var(--glacier);line-height:1.6;-webkit-font-smoothing:antialiased;}

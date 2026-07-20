@@ -45,7 +45,7 @@ DOLDRUMS = "#898989"
 FOG = "#D1D1D1"
 FOAM = "#FFFFFF"
 GLACIER = "#F4F7F9"
-ICE = "#D4E2EF"
+ICE = "#D1E1F1"
 
 # dark-theme roles (chart-styling.md May-2026 dark table)
 DARK_BG = DEEP
@@ -276,7 +276,7 @@ CSS = """
   --ocean:#2389BB; --dusk:#FF6723; --sky:#89CCFF; --venus:#FF2389;
   --sea:#00BB89; --doldrums:#898989; --starboard:#238923; --port:#892323;
   --fog:#D1D1D1; --deep:#123456; --lift:#1A3A5A; --spine:#2A4A6A;
-  --fg:#F4F7F9; --muted:#9BB1C5; --ice:#D4E2EF;
+  --fg:#F4F7F9; --muted:#9BB1C5; --ice:#D1E1F1;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Inter',-apple-system,sans-serif;background:var(--deep);color:var(--fg);line-height:1.55;}

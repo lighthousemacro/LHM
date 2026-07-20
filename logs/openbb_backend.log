@@ -744,3 +744,5 @@ Documentation is available at /docs.
 [32mINFO[0m:     127.0.0.1:50368 - "[1mGET /composites HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:53038 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:53039 - "[1mGET /composites HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55945 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:55946 - "[1mGET /composite_history?index_id=MRI HTTP/1.1[0m" [32m200 OK[0m

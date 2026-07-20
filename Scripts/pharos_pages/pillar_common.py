@@ -58,6 +58,31 @@ def chart_composite(index_id: str, display: str, thresholds: list[tuple] | None 
     return to_b64(fig), smooth
 
 
+def chart_composite_monthly(index_id: str, display: str, thresholds: list[tuple] | None = None):
+    """Composite stored as a monthly step forward-filled to daily rows.
+
+    Collapses to the true monthly prints and plots one honest line: no gray
+    daily artifact, no 21d average (which would equal the raw forward-fill).
+    Returns (b64, monthly series).
+    """
+    s = load_index(index_id).resample("MS").first().dropna()
+    start = s.index.min()
+    fig, ax = dark_fig()
+    add_recessions(ax, start)
+    zero_line(ax)
+    sigma_refs(ax)
+    ax.plot(s.index, s.values, color=SKY, linewidth=2.0,
+            label=f"{display} monthly ({s.iloc[-1]:+.2f})")
+    for th in (thresholds or []):
+        hline(ax, *th)
+    style_ax(ax)
+    set_xlim(ax, start, s.index.max())
+    v, d = latest(s)
+    pill(ax, d, v, f"{v:+.2f}", SKY)
+    legend(ax, loc="upper left")
+    return to_b64(fig), s
+
+
 def chart_lines(series: list[tuple[pd.Series, str]], thresholds: list[tuple] | None = None,
                 zero: bool = False, start: pd.Timestamp | None = None,
                 fmt: str = "{:+.1f}", pill_series: int = 0, legend_loc: str = "upper left"):

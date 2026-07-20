@@ -1,10 +1,10 @@
 [
   {
-    "name": "00 The Watch",
+    "name": "Pharos \u2014 The Framework",
     "img": "",
     "img_dark": "",
     "img_light": "",
-    "description": "The cover. Where the whole framework stands right now \u2014 health, engine regime, the Diagnostic Dozen heatmap, the risk-model output, MRI history, and every composite's latest read.",
+    "description": "The engine room. The Watch, the Risk Desk, twelve pillars across three engines, the transmission chains, and the divergence screens.",
     "allowCustomization": true,
     "tabs": {
       "watch": {
@@ -54,18 +54,7 @@
             "h": 19
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "01 The Pulse",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Macro Risk Index, pillar heatmap, and the anchor reads. Where the framework stands right now.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "pulse": {
         "id": "pulse",
         "name": "Pulse",
@@ -113,6 +102,543 @@
             "h": 15
           }
         ]
+      },
+      "risk": {
+        "id": "risk",
+        "name": "Risk Desk",
+        "layout": [
+          {
+            "i": "lhm_risk_model",
+            "x": 0,
+            "y": 0,
+            "w": 20,
+            "h": 16
+          },
+          {
+            "i": "lhm_recprob_history",
+            "x": 20,
+            "y": 0,
+            "w": 20,
+            "h": 16
+          },
+          {
+            "i": "lhm_mri_history",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 15
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 15
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 0,
+            "y": 31,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "labor": {
+        "id": "labor",
+        "name": "Labor",
+        "layout": [
+          {
+            "i": "lhm_labor_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_labor_keyseries",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "prices": {
+        "id": "prices",
+        "name": "Prices",
+        "layout": [
+          {
+            "i": "lhm_prices_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_prices_keyseries",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "growth": {
+        "id": "growth",
+        "name": "Growth",
+        "layout": [
+          {
+            "i": "lhm_growth_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_growth_keyseries",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "housing": {
+        "id": "housing",
+        "name": "Housing",
+        "layout": [
+          {
+            "i": "lhm_housing_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_housing_keyseries",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "consumer": {
+        "id": "consumer",
+        "name": "Consumer",
+        "layout": [
+          {
+            "i": "lhm_consumer_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_consumer_keyseries",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "business": {
+        "id": "business",
+        "name": "Business",
+        "layout": [
+          {
+            "i": "lhm_business_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_business_keyseries",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "trade": {
+        "id": "trade",
+        "name": "Trade",
+        "layout": [
+          {
+            "i": "lhm_trade_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_trade_keyseries",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "government": {
+        "id": "government",
+        "name": "Government",
+        "layout": [
+          {
+            "i": "lhm_government_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_rates_panel",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "financial": {
+        "id": "financial",
+        "name": "Financial",
+        "layout": [
+          {
+            "i": "lhm_financial_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_credit_panel",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "plumbing": {
+        "id": "plumbing",
+        "name": "Plumbing",
+        "layout": [
+          {
+            "i": "lhm_plumbing_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_plumbing_panel",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "structure": {
+        "id": "structure",
+        "name": "Structure",
+        "layout": [
+          {
+            "i": "lhm_structure_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_breadth_panel",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "sentiment": {
+        "id": "sentiment",
+        "name": "Sentiment",
+        "layout": [
+          {
+            "i": "lhm_sentiment_composite",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 16
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_composites_latest",
+            "x": 20,
+            "y": 16,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_sentiment_panel",
+            "x": 0,
+            "y": 34,
+            "w": 40,
+            "h": 15
+          }
+        ]
+      },
+      "chain": {
+        "id": "chain",
+        "name": "Chain",
+        "layout": [
+          {
+            "i": "lhm_transmission_chain",
+            "x": 0,
+            "y": 0,
+            "w": 40,
+            "h": 18
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 18,
+            "w": 20,
+            "h": 20
+          },
+          {
+            "i": "lhm_composite_history",
+            "x": 20,
+            "y": 18,
+            "w": 20,
+            "h": 20
+          }
+        ]
+      },
+      "real_check": {
+        "id": "real_check",
+        "name": "Real Check",
+        "layout": [
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 0,
+            "w": 20,
+            "h": 20
+          },
+          {
+            "i": "lhm_composite_history",
+            "x": 20,
+            "y": 0,
+            "w": 20,
+            "h": 20
+          },
+          {
+            "i": "lhm_divergence_grid",
+            "x": 0,
+            "y": 20,
+            "w": 40,
+            "h": 18
+          }
+        ]
+      },
+      "divergence": {
+        "id": "divergence",
+        "name": "Divergence",
+        "layout": [
+          {
+            "i": "lhm_divergence_pair",
+            "x": 0,
+            "y": 0,
+            "w": 20,
+            "h": 12
+          },
+          {
+            "i": "lhm_divergence_grid",
+            "x": 20,
+            "y": 0,
+            "w": 20,
+            "h": 18
+          },
+          {
+            "i": "lhm_pillar_heatmap",
+            "x": 0,
+            "y": 12,
+            "w": 20,
+            "h": 20
+          },
+          {
+            "i": "lhm_composite_history",
+            "x": 20,
+            "y": 18,
+            "w": 20,
+            "h": 14
+          }
+        ]
       }
     },
     "groups": [
@@ -151,15 +677,47 @@
             "label": "CLG \u2014 Credit-Labor Gap"
           }
         ]
+      },
+      {
+        "name": "Chain",
+        "type": "param",
+        "paramName": "chain_id",
+        "defaultValue": "plumbing_credit_labor",
+        "options": [
+          {
+            "value": "plumbing_credit_labor",
+            "label": "Plumbing \u2192 Credit \u2192 Labor"
+          },
+          {
+            "value": "rates_housing_consumer",
+            "label": "Rates \u2192 Housing \u2192 Consumer"
+          },
+          {
+            "value": "sentiment_structure_risk",
+            "label": "Sentiment \u2192 Structure \u2192 Risk"
+          }
+        ]
+      },
+      {
+        "name": "Pair",
+        "type": "endpointParam",
+        "paramName": "market_node",
+        "defaultValue": "MSI"
+      },
+      {
+        "name": "Real",
+        "type": "endpointParam",
+        "paramName": "real_node",
+        "defaultValue": "LFI"
       }
     ]
   },
   {
-    "name": "02 Asset Flow",
+    "name": "Pharos \u2014 Markets & Main Street",
     "img": "",
     "img_dark": "",
     "img_light": "",
-    "description": "Cross-asset reads \u2014 rates, credit, plumbing, breadth, sentiment \u2014 sourced direct from the LHM master DB.",
+    "description": "The board. Six asset classes from equities to crypto, and the Main Street suite built for operators.",
     "allowCustomization": true,
     "tabs": {
       "flow": {
@@ -209,798 +767,7 @@
             "h": 15
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "03 The Chain",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Transmission chains. Pick a chain, watch the lead/lag z-scores hop step by step.",
-    "allowCustomization": true,
-    "tabs": {
-      "chain": {
-        "id": "chain",
-        "name": "Chain",
-        "layout": [
-          {
-            "i": "lhm_transmission_chain",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 18
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 18,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_composite_history",
-            "x": 20,
-            "y": 18,
-            "w": 20,
-            "h": 20
-          }
-        ]
-      }
-    },
-    "groups": [
-      {
-        "name": "Chain",
-        "type": "param",
-        "paramName": "chain_id",
-        "defaultValue": "plumbing_credit_labor",
-        "options": [
-          {
-            "value": "plumbing_credit_labor",
-            "label": "Plumbing \u2192 Credit \u2192 Labor"
-          },
-          {
-            "value": "rates_housing_consumer",
-            "label": "Rates \u2192 Housing \u2192 Consumer"
-          },
-          {
-            "value": "sentiment_structure_risk",
-            "label": "Sentiment \u2192 Structure \u2192 Risk"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "04 Real Check",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Real-economy reads against market expectations. The gap between price and the data underneath.",
-    "allowCustomization": true,
-    "tabs": {
-      "real_check": {
-        "id": "real_check",
-        "name": "Real Check",
-        "layout": [
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_composite_history",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_divergence_grid",
-            "x": 0,
-            "y": 20,
-            "w": 40,
-            "h": 18
-          }
-        ]
-      }
-    },
-    "groups": [
-      {
-        "name": "Real-economy composite",
-        "type": "param",
-        "paramName": "index_id",
-        "defaultValue": "LFI",
-        "options": [
-          {
-            "value": "LFI",
-            "label": "LFI \u2014 Labor Fragility"
-          },
-          {
-            "value": "GCI",
-            "label": "GCI \u2014 Growth"
-          },
-          {
-            "value": "CCI",
-            "label": "CCI \u2014 Consumer"
-          },
-          {
-            "value": "HCI",
-            "label": "HCI \u2014 Housing"
-          },
-          {
-            "value": "BCI",
-            "label": "BCI \u2014 Business"
-          },
-          {
-            "value": "TCI",
-            "label": "TCI \u2014 Trade"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "05 Divergence",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Where market-side composites disagree with real-economy composites. The risk screen.",
-    "allowCustomization": true,
-    "tabs": {
-      "divergence": {
-        "id": "divergence",
-        "name": "Divergence",
-        "layout": [
-          {
-            "i": "lhm_divergence_pair",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 12
-          },
-          {
-            "i": "lhm_divergence_grid",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 12,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_composite_history",
-            "x": 20,
-            "y": 18,
-            "w": 20,
-            "h": 14
-          }
-        ]
-      }
-    },
-    "groups": [
-      {
-        "name": "Pair",
-        "type": "endpointParam",
-        "paramName": "market_node",
-        "defaultValue": "MSI"
       },
-      {
-        "name": "Real",
-        "type": "endpointParam",
-        "paramName": "real_node",
-        "defaultValue": "LFI"
-      }
-    ]
-  },
-  {
-    "name": "06 The Risk Desk",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "The risk screen. Recession probability and the ensemble risk model on one side, MRI and the pillar heatmap on the other, every composite's latest reading underneath.",
-    "allowCustomization": true,
-    "tabs": {
-      "risk": {
-        "id": "risk",
-        "name": "Risk Desk",
-        "layout": [
-          {
-            "i": "lhm_risk_model",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_recprob_history",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_mri_history",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 0,
-            "y": 31,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "07 Labor \u2014 Pillar 1",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 1 (Labor, Macro Dynamics engine). LFI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Labor anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "labor": {
-        "id": "labor",
-        "name": "Labor",
-        "layout": [
-          {
-            "i": "lhm_labor_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_labor_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "08 Prices \u2014 Pillar 2",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 2 (Prices, Macro Dynamics engine). PCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Prices anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "prices": {
-        "id": "prices",
-        "name": "Prices",
-        "layout": [
-          {
-            "i": "lhm_prices_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_prices_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "09 Growth \u2014 Pillar 3",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 3 (Growth, Macro Dynamics engine). GCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Growth anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "growth": {
-        "id": "growth",
-        "name": "Growth",
-        "layout": [
-          {
-            "i": "lhm_growth_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_growth_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "10 Housing \u2014 Pillar 4",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 4 (Housing, Macro Dynamics engine). HCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Housing anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "housing": {
-        "id": "housing",
-        "name": "Housing",
-        "layout": [
-          {
-            "i": "lhm_housing_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_housing_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "11 Consumer \u2014 Pillar 5",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 5 (Consumer, Macro Dynamics engine). CCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Consumer anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "consumer": {
-        "id": "consumer",
-        "name": "Consumer",
-        "layout": [
-          {
-            "i": "lhm_consumer_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_consumer_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "12 Business \u2014 Pillar 6",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 6 (Business, Macro Dynamics engine). BCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Business anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "business": {
-        "id": "business",
-        "name": "Business",
-        "layout": [
-          {
-            "i": "lhm_business_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_business_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "13 Trade \u2014 Pillar 7",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 7 (Trade, Macro Dynamics engine). TCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Trade anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "trade": {
-        "id": "trade",
-        "name": "Trade",
-        "layout": [
-          {
-            "i": "lhm_trade_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_trade_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "14 Government \u2014 Pillar 8",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 8 (Government, Monetary Mechanics engine). FPI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Government anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "government": {
-        "id": "government",
-        "name": "Government",
-        "layout": [
-          {
-            "i": "lhm_government_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_rates_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "15 Financial \u2014 Pillar 9",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 9 (Financial, Monetary Mechanics engine). FCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Financial anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "financial": {
-        "id": "financial",
-        "name": "Financial",
-        "layout": [
-          {
-            "i": "lhm_financial_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_credit_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "16 Plumbing \u2014 Pillar 10",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 10 (Plumbing, Monetary Mechanics engine). LCI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Plumbing anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "plumbing": {
-        "id": "plumbing",
-        "name": "Plumbing",
-        "layout": [
-          {
-            "i": "lhm_plumbing_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_plumbing_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "17 Structure \u2014 Pillar 11",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 11 (Structure, Market Structure engine). MSI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Structure anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "structure": {
-        "id": "structure",
-        "name": "Structure",
-        "layout": [
-          {
-            "i": "lhm_structure_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_breadth_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "18 Sentiment \u2014 Pillar 12",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Pillar 12 (Sentiment, Market Structure engine). SPI composite over history, the Diagnostic Dozen heatmap for cross-pillar context, all composites, and the Sentiment anchor series.",
-    "allowCustomization": true,
-    "tabs": {
-      "sentiment": {
-        "id": "sentiment",
-        "name": "Sentiment",
-        "layout": [
-          {
-            "i": "lhm_sentiment_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_sentiment_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "19 Equities",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Equity asset class. Index map and sector rotation rebased to 100, market breadth and AAII sentiment underneath, tape internals and sector levels as boards.",
-    "allowCustomization": true,
-    "tabs": {
       "equities": {
         "id": "equities",
         "name": "Equities",
@@ -1048,18 +815,7 @@
             "h": 12
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "20 Rates",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Rates asset class. Treasury curve plus mortgage, curve slope, real yield and breakeven, the curve/policy board, and Treasury auction quality.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "rates": {
         "id": "rates",
         "name": "Rates",
@@ -1100,18 +856,7 @@
             "h": 15
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "21 Credit",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Credit asset class. HY and IG option-adjusted spreads, HY vs IG ETFs rebased, the Credit-Labor Gap composite, and the spread/ETF board.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "credit": {
         "id": "credit",
         "name": "Credit",
@@ -1145,18 +890,7 @@
             "h": 15
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "22 Currencies",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Currency asset class. Trade-weighted dollar indices, the majors rebased to 100, and the spot board.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "currencies": {
         "id": "currencies",
         "name": "Currencies",
@@ -1183,18 +917,7 @@
             "h": 13
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "23 Commodities",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Commodity asset class. Energy (WTI/Brent), metals rebased (gold/silver/miners), gold and oil implied vol, and the commodity board.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "commodities": {
         "id": "commodities",
         "name": "Commodities",
@@ -1228,18 +951,7 @@
             "h": 14
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "24 Crypto",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Crypto asset class. BTC/ETH/SOL rebased, the DeFi Liquidity and Stablecoin Liquidity composites, and the majors board.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "crypto": {
         "id": "crypto",
         "name": "Crypto",
@@ -1273,18 +985,7 @@
             "h": 12
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "25 Main Street Monitor",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "The operator read. Retail, restaurants and local services \u2014 the economy most Americans actually live in. Regime verdict up top, then spending, the wage-price squeeze, rent stress, the customer balance sheet, Main Street jobs, the quit signal, and the scorecard.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "main_street": {
         "id": "main_street",
         "name": "Main Street",
@@ -1346,18 +1047,7 @@
             "h": 13
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "26 Operator Cost & Margin",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "What it costs to run the business. Producer prices, energy and materials, the employment cost index, and freight. The input side of the operator's P&L.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "cost_margin": {
         "id": "cost_margin",
         "name": "Cost & Margin",
@@ -1398,18 +1088,7 @@
             "h": 12
           }
         ]
-      }
-    },
-    "groups": []
-  },
-  {
-    "name": "27 Operator Hiring & Credit",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "Can you staff it and can you fund it. JOLTS labor flows, the cost of capital, bank lending standards (SLOOS), and business-credit growth. The financing side of the operator's world.",
-    "allowCustomization": true,
-    "tabs": {
+      },
       "hiring_credit": {
         "id": "hiring_credit",
         "name": "Hiring & Credit",

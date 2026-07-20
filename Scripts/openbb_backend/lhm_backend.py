@@ -22,6 +22,11 @@ from typing import Any
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lhm_brand import line_chart  # noqa: E402
+
 DB_PATH = Path("/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
 BACKEND_DIR = Path(__file__).resolve().parent
 WIDGETS_PATH = BACKEND_DIR / "widgets.json"
@@ -210,7 +215,7 @@ def composite_history(
     index_id: str = Query(..., description="Composite ID (e.g. MRI, LFI, LCI, FCI)"),
     start_date: str | None = None,
     end_date: str | None = None,
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """Historical time series for a single LHM composite."""
     sql = "SELECT date, value, status FROM lighthouse_indices WHERE index_id = ?"
     params: list[Any] = [index_id]
@@ -228,7 +233,14 @@ def composite_history(
             status_code=404,
             detail=f"Composite '{index_id}' not found or no data in range",
         )
-    return [dict(r) for r in rows]
+    dates = [r["date"] for r in rows]
+    values = [r["value"] for r in rows]
+    return line_chart(
+        dates=dates,
+        series=[{"name": index_id, "values": values}],
+        title=f"{index_id} — History",
+        zscore=True,
+    )
 
 
 # ---------------------------------------------------------------------------

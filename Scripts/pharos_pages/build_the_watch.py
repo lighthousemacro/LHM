@@ -1,0 +1,216 @@
+#!/usr/bin/env python3
+"""Pharos — 00 The Watch. The cover page. All values computed live from the DB."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from terminal_theme import (  # noqa: E402
+    DUSK, OCEAN, PORT, SEA, SKY, VENUS, DARK_MUTED, DOLDRUMS,
+    add_recessions, chart_card, dark_fig, index_status, latest, legend,
+    load_index, load_obs, pill, regime_bands, render_page, section, set_xlim,
+    sigma_refs, style_ax, tile, to_b64, verdict_block, write_page, zero_line,
+)
+
+MRI_BANDS = [
+    (-99.0, -0.5, "LOW RISK", SEA),
+    (-0.5, 0.5, "NEUTRAL", OCEAN),
+    (0.5, 1.0, "ELEVATED", DUSK),
+    (1.0, 1.5, "HIGH RISK", VENUS),
+    (1.5, 99.0, "CRISIS", PORT),
+]
+
+PILLARS = [
+    ("Labor", "LPI"), ("Prices", "PCI"), ("Growth", "GCI"), ("Housing", "HCI"),
+    ("Consumer", "CCI"), ("Business", "BCI"), ("Trade", "TCI"), ("Government", "FPI"),
+    ("Financial", "FCI"), ("Plumbing", "LCI"), ("Structure", "MSI"), ("Sentiment", "SPI"),
+]
+
+
+def mri_regime(z: float) -> tuple[str, str]:
+    for lo, hi, name, color in MRI_BANDS:
+        if lo <= z < hi:
+            return name, color
+    return "NEUTRAL", OCEAN
+
+
+def chart_mri():
+    mri = load_index("MRI")
+    smooth = mri.rolling(63).mean().dropna()  # 3mo of trading days
+    start = mri.index.min()
+    fig, ax = dark_fig()
+    regime_bands(ax)
+    add_recessions(ax, start)
+    ax.plot(mri.index, mri.values, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
+            label=f"MRI daily ({mri.iloc[-1]:+.2f})")
+    ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.2,
+            label=f"MRI 3mo avg ({smooth.iloc[-1]:+.2f})")
+    style_ax(ax)
+    set_xlim(ax, start, mri.index.max())
+    ax.set_ylim(-2.6, 2.6)
+    v, d = latest(smooth)
+    pill(ax, d, v, f"{v:+.2f}", SKY)
+    legend(ax, loc="lower left")
+    return to_b64(fig), smooth
+
+
+def chart_lfi():
+    lfi = load_index("LFI")
+    smooth = lfi.rolling(63).mean().dropna()
+    start = lfi.index.min()
+    fig, ax = dark_fig()
+    add_recessions(ax, start)
+    zero_line(ax)
+    sigma_refs(ax)
+    ax.plot(lfi.index, lfi.values, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
+            label=f"LFI daily ({lfi.iloc[-1]:+.2f})")
+    ax.plot(smooth.index, smooth.values, color=DUSK, linewidth=2.2,
+            label=f"LFI 3mo avg ({smooth.iloc[-1]:+.2f})")
+    ax.axhline(0.5, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
+    ax.text(0.985, 0.56, "+0.5 FRAGILE", transform=ax.get_yaxis_transform(),
+            fontsize=8, color=VENUS, ha="right", va="bottom", fontweight="bold", alpha=0.85)
+    style_ax(ax)
+    set_xlim(ax, start, lfi.index.max())
+    v, d = latest(smooth)
+    pill(ax, d, v, f"{v:+.2f}", DUSK)
+    legend(ax, loc="upper left")
+    return to_b64(fig), smooth
+
+
+def chart_hy_oas():
+    hy = load_obs("BAMLH0A0HYM2") * 100.0  # percent -> bps
+    start = hy.index.min()
+    fig, ax = dark_fig()
+    add_recessions(ax, start)
+    ax.plot(hy.index, hy.values, color=SKY, linewidth=1.6, label=f"HY OAS ({hy.iloc[-1]:.0f} bps)")
+    ax.axhline(300, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
+    ax.text(0.985, 312, "300 bps COMPLACENT", transform=ax.get_yaxis_transform(),
+            fontsize=8, color=VENUS, ha="right", va="bottom", fontweight="bold", alpha=0.85)
+    style_ax(ax)
+    set_xlim(ax, start, hy.index.max())
+    v, d = latest(hy)
+    pill(ax, d, v, f"{v:.0f}", SKY)
+    legend(ax, loc="upper right")
+    return to_b64(fig), hy
+
+
+def chart_pillar_bars():
+    vals = []
+    for name, code in PILLARS:
+        try:
+            s = load_index(code)
+            vals.append((name, code, float(s.iloc[-1])))
+        except ValueError:
+            continue
+    fig, ax = dark_fig(figsize=(7.6, 4.6))
+    fig.subplots_adjust(left=0.15)  # barh labels need the margin
+    names = [f"{n} ({c})" for n, c, _ in vals][::-1]
+    zs = [z for _, _, z in vals][::-1]
+    colors = [DUSK if z >= 0.5 else VENUS if z >= 1.0 else SEA if z <= -0.5 else SKY for z in zs]
+    ax.barh(names, zs, color=colors, height=0.62)
+    ax.axvline(0, color="#D1D1D1", linewidth=0.8, alpha=0.5, linestyle="--")
+    for x in (2, -2):
+        ax.axvline(x, color=DOLDRUMS, linewidth=0.8, alpha=0.55, linestyle=":")
+    style_ax(ax)
+    ax.tick_params(axis="y", labelsize=8.5)
+    ax.set_xlim(-2.6, 2.6)
+    for i, z in enumerate(zs):
+        ax.text(z + (0.06 if z >= 0 else -0.06), i, f"{z:+.2f}", va="center",
+                ha="left" if z >= 0 else "right", fontsize=8, color="#F4F7F9",
+                fontweight="bold")
+    return to_b64(fig), vals
+
+
+def build():
+    mri_b64, mri_smooth = chart_mri()
+    lfi_b64, lfi_smooth = chart_lfi()
+    hy_b64, hy = chart_hy_oas()
+    bars_b64, pillar_vals = chart_pillar_bars()
+
+    mri_z = float(mri_smooth.iloc[-1])
+    regime, regime_color = mri_regime(mri_z)
+    ens = load_index("ENSEMBLE_RISK")
+    ens_v = float(ens.iloc[-1]) * 100.0
+    ens_status = index_status("ENSEMBLE_RISK")
+    lfi_v = float(lfi_smooth.iloc[-1])
+    lci = load_index("LCI")
+    lci_v = float(lci.iloc[-1])
+    hy_v = float(hy.iloc[-1])
+    spi = load_index("SPI")
+    spi_v = float(spi.iloc[-1])
+
+    elevated = [(n, z) for n, _, z in pillar_vals if z >= 0.5]
+    supportive = [(n, z) for n, _, z in pillar_vals if z <= -0.5]
+
+    verdict_text = (
+        f"MRI 3mo average at {mri_z:+.2f}, inside the {regime.lower()} band. "
+        f"Ensemble recession risk reads {ens_v:.0f}% ({ens_status.replace('_', ' ').lower()}). "
+        f"{len(elevated)} of 12 pillars sit at or above +0.5, "
+        f"{len(supportive)} at or below -0.5."
+    )
+
+    tiles = "".join([
+        tile("MRI", f"{mri_z:+.2f}", "", "Macro Risk Index, 3mo avg z", regime,
+             "st-ok" if regime == "LOW RISK" else "st-flat" if regime == "NEUTRAL" else "st-warn" if regime == "ELEVATED" else "st-alert",
+             SKY),
+        tile("Recession Risk", f"{ens_v:.0f}", "%", "Ensemble model, 12m fwd",
+             ens_status.replace("_", " "), "st-alert" if ens_v >= 50 else "st-warn" if ens_v >= 35 else "st-ok", DUSK),
+        tile("Labor Fragility", f"{lfi_v:+.2f}", "", "LFI, 3mo avg z. Fragile above +0.5",
+             "FRAGILE" if lfi_v > 0.5 else "WATCH" if lfi_v > 0.25 else "NEUTRAL",
+             "st-alert" if lfi_v > 0.5 else "st-warn" if lfi_v > 0.25 else "st-flat", VENUS),
+        tile("Liquidity Cushion", f"{lci_v:+.2f}", "", "LCI z. Scarce below -0.5",
+             index_status("LCI"), "st-alert" if lci_v < -0.5 else "st-flat", SEA),
+        tile("HY OAS", f"{hy_v:.0f}", "bps", "Complacent below 300 bps",
+             "COMPLACENT" if hy_v < 300 else "NORMAL", "st-warn" if hy_v < 300 else "st-flat", OCEAN),
+        tile("Sentiment Tide", f"{spi_v:+.2f}", "", "SPI z. Fade above +1.5 or below -1.0",
+             index_status("SPI"), "st-warn" if abs(spi_v) > 1.0 else "st-flat", VENUS),
+    ])
+
+    charts = "".join([
+        chart_card("Macro Risk Index", "The master composite across all twelve pillars, "
+                   "regime bands per the canonical thresholds. Daily series in gray, 3mo average carries the read.", mri_b64),
+        chart_card("Labor Fragility", "The labor stress composite. Flows lead stocks. "
+                   "Readings above +0.5 mark fragility.", lfi_b64),
+        chart_card("High Yield OAS", "Credit spreads lead defaults. Below 300 bps the market "
+                   "is pricing no trouble at all.", hy_b64),
+        chart_card("The Diagnostic Dozen", "Latest z-score for each pillar composite. "
+                   "Orange at or above +0.5, green at or below -0.5.", bars_b64),
+    ])
+
+    wwcm = (
+        f"The MRI 3mo average moving out of its current band in either direction. "
+        f"Ensemble recession risk breaking below 35% or above 75%. "
+        f"HY OAS repricing through 300 bps. "
+        f"Labor Fragility crossing +0.5 with the quits rate still below its 2.0% floor."
+    )
+
+    body = (
+        verdict_block("Framework Regime", regime, verdict_text, regime_color)
+        + f'<div class="tiles">{tiles}</div>'
+        + section("The Read",
+                  f"Every number on this page recomputes from the master database each build. "
+                  f"The elevated pillars right now: "
+                  + (", ".join(f"{n} ({z:+.2f})" for n, z in elevated) if elevated else "none")
+                  + ". The supportive side: "
+                  + (", ".join(f"{n} ({z:+.2f})" for n, z in supportive) if supportive else "none") + ".")
+        + f'<div class="charts">{charts}</div>'
+        + section("What Would Change Our Mind", wwcm)
+    )
+
+    datathru = max(mri_smooth.index.max(), hy.index.max()).strftime("%Y-%m-%d")
+    html = render_page(
+        title="The Watch", h1="THE WATCH", subtitle="The cover. Where the whole framework stands right now.",
+        active="the-watch", body=body,
+        sources="Lighthouse Macro composites; FRED; BLS; Federal Reserve",
+        datathru=datathru,
+    )
+    out = write_page("the_watch.html", html)
+    print(f"Wrote {out} ({out.stat().st_size:,} bytes)")
+
+
+if __name__ == "__main__":
+    build()

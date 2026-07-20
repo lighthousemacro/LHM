@@ -737,3 +737,6 @@ Documentation is available at /docs.
 [32mINFO[0m:     127.0.0.1:59265 - "[1mGET /composite_history?index_id=MRI&theme=light HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:59264 - "[1mGET /composites HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:59263 - "[1mGET /health?theme=light HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49639 - "[1mGET /composite_history?index_id=MRI HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49640 - "[1mGET /ms_spending HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:49641 - "[1mGET /series_panel?series_ids=CPIAUCSL&transform=yoy HTTP/1.1[0m" [32m200 OK[0m

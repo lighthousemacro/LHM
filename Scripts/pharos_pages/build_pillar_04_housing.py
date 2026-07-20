@@ -9,7 +9,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pillar_common import (  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS,
-    assemble, chart_card, chart_composite, chart_lines, latest, load_obs, tile, yoy,
+    assemble, chart_card, chart_composite, chart_lines, chart_nowcast,
+    latest, load_obs, nowcast_tile, tile, yoy,
 )
 
 
@@ -32,6 +33,7 @@ def build():
     mort = load_obs("MORTGAGE30US")
     mort_b64, _ = chart_lines([(mort, "30Y mortgage rate")], fmt="{:.2f}%",
                               legend_loc="upper left")
+    nc_b64, nc_v, nc_d = chart_nowcast("HOUSING")
 
     hci_v = float(hci.iloc[-1])
     state, color = regime(hci_v)
@@ -54,6 +56,7 @@ def build():
              "SOFT" if pm_v < 1300 else "STEADY", "st-warn" if pm_v < 1300 else "st-flat", SEA),
         tile("30Y Mortgage", f"{mo_v:.2f}", "%", "Freddie Mac weekly",
              "RESTRICTIVE" if mo_v > 6.0 else "NEUTRAL", "st-warn" if mo_v > 6.0 else "st-flat", VENUS),
+        nowcast_tile("HOUSING", "Home Price Nowcast"),
     ])
 
     charts = "".join([
@@ -63,6 +66,9 @@ def build():
                    "The front of the housing pipeline.", sp_b64),
         chart_card("The Price of Money", "The 30Y mortgage rate sets the affordability "
                    "constraint for the marginal buyer.", mort_b64),
+        chart_card("The Home Price Nowcast", "Elastic net over mortgage rates, home values, "
+                   "and builder proxies, updated daily between Case-Shiller releases. Solid is "
+                   "the realized print, dashed is the model. OOS R² 0.89.", nc_b64),
     ])
 
     wwcm = (

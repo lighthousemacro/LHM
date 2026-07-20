@@ -111,6 +111,63 @@ def chart_lines(series: list[tuple[pd.Series, str]], thresholds: list[tuple] | N
     return to_b64(fig), s0
 
 
+# Nowcast wiring. Units confirmed in Scripts/data_pipeline/nowcast_model.py TARGETS
+# (lines 26-37): every LHM_*_NOWCAST is the TRANSFORMED read and every transform is
+# "yoy", so all four values below are YoY percents. LHM_*_FITTED is the full fitted
+# history at target frequency (write block, lines 106-123). R-squared figures are the
+# canon out-of-sample numbers and the only ones citable. LHM_INFLATION_NOWCAST is a
+# dead model and is banned from every page.
+NOWCASTS = {
+    "GDP": dict(nowcast="LHM_GDP_NOWCAST", fitted="LHM_GDP_FITTED", target="GDPC1",
+                label="Real GDP YoY", r2="0.71"),
+    "LABOR": dict(nowcast="LHM_LABOR_NOWCAST", fitted="LHM_LABOR_FITTED", target="PAYEMS",
+                  label="Payrolls YoY", r2="0.71"),
+    "HOUSING": dict(nowcast="LHM_HOUSING_NOWCAST", fitted="LHM_HOUSING_FITTED", target="CSUSHPINSA",
+                    label="Case-Shiller YoY", r2="0.89"),
+    "INDPRO": dict(nowcast="LHM_INDPRO_NOWCAST", fitted="LHM_INDPRO_FITTED", target="INDPRO",
+                   label="Industrial Production YoY", r2="0.61"),
+}
+
+
+def chart_nowcast(key: str, legend_loc: str = "upper left"):
+    """Nowcast vs realized chart. Returns (b64, live_value, live_date).
+
+    Solid Dusk = the realized target print. Dashed Sky = the model: full fitted
+    history plus the live daily nowcast tail. Window starts where the model
+    history starts, which is the span where the relationship exists.
+    """
+    cfg = NOWCASTS[key]
+    realized = yoy(load_obs(cfg["target"])).dropna()
+    fitted = load_obs(cfg["fitted"]).dropna()
+    live = load_obs(cfg["nowcast"]).dropna()
+    model = pd.concat([fitted, live]).sort_index()
+    model = model[~model.index.duplicated(keep="last")]
+    start = fitted.index.min()
+    fig, ax = dark_fig()
+    add_recessions(ax, start)
+    zero_line(ax)
+    rw = realized[realized.index >= start]
+    ax.plot(rw.index, rw.values, color=DUSK, linewidth=2.0,
+            label=f"{cfg['label']} realized ({rw.iloc[-1]:+.1f}%)")
+    ax.plot(model.index, model.values, color=SKY, linewidth=1.8, linestyle="--",
+            label=f"LHM nowcast ({model.iloc[-1]:+.1f}%)")
+    style_ax(ax)
+    set_xlim(ax, start, max(model.index.max(), rw.index.max()))
+    v, d = latest(model)
+    pill(ax, d, v, f"{v:+.1f}%", SKY)
+    legend(ax, loc=legend_loc)
+    return to_b64(fig), float(live.iloc[-1]), live.index.max()
+
+
+def nowcast_tile(key: str, tile_label: str, extra_sub: str = "") -> str:
+    """Standard nowcast tile. R-squared cited first per house rule."""
+    cfg = NOWCASTS[key]
+    live = load_obs(cfg["nowcast"]).dropna()
+    v = float(live.iloc[-1])
+    sub = f"OOS R² {cfg['r2']}. {cfg['label']}, live daily read{extra_sub}"
+    return tile(tile_label, f"{v:+.1f}", "%", sub, "MODEL", "st-flat", SKY)
+
+
 def assemble(*, slug: str, filename: str, h1: str, subtitle: str, pillar_no: int,
              verdict_label: str, state: str, state_color: str, verdict_text: str,
              tiles_html: str, read_title: str, read_text: str, charts_html: str,

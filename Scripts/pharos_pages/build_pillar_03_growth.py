@@ -9,7 +9,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pillar_common import (  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS,
-    assemble, chart_card, chart_composite_monthly, chart_lines, latest, load_obs, tile, yoy,
+    assemble, chart_card, chart_composite_monthly, chart_lines, chart_nowcast,
+    latest, load_obs, nowcast_tile, tile, yoy,
 )
 
 
@@ -35,6 +36,7 @@ def build():
     rsx = yoy(load_obs("RSXFS")).dropna()
     rsx_b64, _ = chart_lines([(rsx, "Retail Sales ex Food Services YoY, nominal")], zero=True,
                              fmt="{:+.1f}%", legend_loc="upper right")
+    nc_b64, nc_v, nc_d = chart_nowcast("GDP")
 
     gci_v = float(gci.iloc[-1])
     state, color = regime(gci_v)
@@ -61,6 +63,7 @@ def build():
              "GROWING" if rsx_v > 0 else "SHRINKING", "st-flat" if rsx_v > 0 else "st-warn", VENUS),
         tile("Capacity Util", f"{tcu_v:.1f}", "%", "Total industry",
              "SLACK" if tcu_v < 77 else "NORMAL", "st-warn" if tcu_v < 77 else "st-flat", OCEAN),
+        nowcast_tile("GDP", "GDP Nowcast"),
     ])
 
     charts = "".join([
@@ -72,6 +75,9 @@ def build():
                    "average below -0.70 has marked every modern recession.", cfnai_b64),
         chart_card("Retail Momentum", "Retail sales ex food services, nominal YoY. The "
                    "consumer side of the growth read.", rsx_b64),
+        chart_card("The GDP Nowcast", "Elastic net over market and macro proxies, updated "
+                   "daily between GDP releases. Solid is the realized print, dashed is the "
+                   "model. OOS R² 0.71.", nc_b64),
     ])
 
     if state == "ABOVE TREND":

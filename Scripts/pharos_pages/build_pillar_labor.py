@@ -15,6 +15,7 @@ from terminal_theme import (  # noqa: E402
     pill, render_page, section, set_xlim, sigma_refs, style_ax, tile, to_b64,
     verdict_block, write_page, yoy, zero_line,
 )
+from pillar_common import chart_nowcast, nowcast_tile  # noqa: E402
 
 
 def labor_regime(z: float) -> tuple[str, str]:
@@ -88,6 +89,9 @@ def build():
     lfi_b64, lfi_smooth = chart_lfi()
     quits_b64, quits = chart_quits()
     pay_b64, pay_yoy_s = chart_payrolls()
+    nc_b64, nc_v, nc_d = chart_nowcast("LABOR")
+    quits_nc = load_obs("JTSQUR_NOWCAST").dropna()
+    qnc_v = float(quits_nc.iloc[-1])
 
     lfi_v = float(lfi_smooth.iloc[-1])
     regime, regime_color = labor_regime(lfi_v)
@@ -118,6 +122,11 @@ def build():
              "REAL TEST", "st-flat", SEA),
         tile("Unemployment", f"{un_v:.1f}", "%", "U-3 headline rate",
              "LAGGING READ", "st-flat", OCEAN),
+        nowcast_tile("LABOR", "Payrolls Nowcast"),
+        tile("Quits Nowcast", f"{qnc_v:.1f}", "%", "Bridge estimate for the next JOLTS print. "
+             "Experimental, no OOS record",
+             "BELOW FLOOR" if qnc_v < 2.0 else "ABOVE FLOOR",
+             "st-warn" if qnc_v < 2.0 else "st-flat", DUSK),
     ])
 
     charts = "".join([
@@ -127,6 +136,9 @@ def build():
                    "are confident. The 2.0% floor has preceded every modern recession.", quits_b64),
         chart_card("Payrolls Momentum", "Headline payroll growth YoY. By the time this "
                    "breaks, the story is usually already over.", pay_b64),
+        chart_card("The Payrolls Nowcast", "Elastic net over claims, temp help, and market "
+                   "proxies, updated daily between jobs reports. Solid is the realized print, "
+                   "dashed is the model. OOS R² 0.71.", nc_b64),
     ])
 
     wwcm = (

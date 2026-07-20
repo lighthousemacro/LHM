@@ -9,7 +9,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pillar_common import (  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS,
-    assemble, chart_card, chart_composite, chart_lines, latest, load_obs, tile, yoy,
+    assemble, chart_card, chart_composite, chart_lines, chart_nowcast,
+    latest, load_obs, nowcast_tile, tile, yoy,
 )
 
 
@@ -28,6 +29,7 @@ def build():
     tcu = load_obs("TCU")
     tcu_b64, _ = chart_lines([(tcu, "Capacity utilization")], fmt="{:.1f}%",
                              legend_loc="lower left")
+    nc_b64, nc_v, nc_d = chart_nowcast("INDPRO")
 
     bci_v = float(bci.iloc[-1])
     state, color = regime(bci_v)
@@ -51,6 +53,7 @@ def build():
              "EXPANDING" if ip_v > 0 else "CONTRACTING", "st-flat" if ip_v > 0 else "st-warn", SEA),
         tile("Capacity Util", f"{tc_v:.1f}", "%", "Total industry",
              "SLACK" if tc_v < 77 else "NORMAL", "st-warn" if tc_v < 77 else "st-flat", OCEAN),
+        nowcast_tile("INDPRO", "IP Nowcast"),
     ])
 
     charts = "".join([
@@ -60,6 +63,9 @@ def build():
                    "when they believe in the next two years.", ord_b64),
         chart_card("Capacity", "Utilization says whether the capital stock is working. "
                    "Slack below 77% removes the reason to build more.", tcu_b64),
+        chart_card("The IP Nowcast", "Elastic net over market and macro proxies, updated "
+                   "daily between releases. Solid is the realized print, dashed is the "
+                   "model. OOS R² 0.61.", nc_b64),
     ])
 
     if state == "COMMITTING":

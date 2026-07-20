@@ -443,3 +443,9 @@ Documentation is available at /docs.
 [32mINFO[0m:     127.0.0.1:57335 - "[1mGET /widgets.json HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:57336 - "[1mGET /agents.json HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:57335 - "[1mGET /apps.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57431 - "[1mOPTIONS /widgets.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57431 - "[1mGET /widgets.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57431 - "[1mOPTIONS /apps.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57433 - "[1mOPTIONS /agents.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57433 - "[1mGET /agents.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:57431 - "[1mGET /apps.json HTTP/1.1[0m" [32m200 OK[0m

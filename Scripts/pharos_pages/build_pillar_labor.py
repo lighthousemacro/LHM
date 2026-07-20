@@ -27,7 +27,7 @@ def labor_regime(z: float) -> tuple[str, str]:
 
 def chart_lfi():
     lfi = load_index("LFI")
-    smooth = lfi.rolling(63).mean().dropna()
+    smooth = lfi.rolling(21).mean().dropna()
     start = lfi.index.min()
     fig, ax = dark_fig()
     add_recessions(ax, start)
@@ -36,7 +36,7 @@ def chart_lfi():
     ax.plot(lfi.index, lfi.values, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
             label=f"LFI daily ({lfi.iloc[-1]:+.2f})")
     ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.2,
-            label=f"LFI 3mo avg ({smooth.iloc[-1]:+.2f})")
+            label=f"LFI 21d avg ({smooth.iloc[-1]:+.2f})")
     ax.axhline(0.5, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
     ax.text(0.985, 0.56, "+0.5 FRAGILE", transform=ax.get_yaxis_transform(),
             fontsize=8, color=VENUS, ha="right", va="bottom", fontweight="bold", alpha=0.85)
@@ -100,14 +100,14 @@ def build():
     pay_v = float(pay_yoy_s.iloc[-1])
 
     verdict_text = (
-        f"LFI 3mo average at {lfi_v:+.2f}. "
+        f"LFI 21d average at {lfi_v:+.2f}. "
         f"Quits at {quits_v:.1f}% as of {quits_d}, "
         f"{'below' if quits_v < 2.0 else 'above'} the 2.0% pre-recession floor. "
         f"Payroll growth at {pay_v:+.1f}% YoY, wages at {ahe_v:+.1f}% YoY."
     )
 
     tiles = "".join([
-        tile("Labor Fragility", f"{lfi_v:+.2f}", "", "LFI, 3mo avg z. Fragile above +0.5",
+        tile("Labor Fragility", f"{lfi_v:+.2f}", "", "LFI, 21d avg z. Fragile above +0.5",
              regime, "st-alert" if regime == "FRAGILE" else "st-ok" if regime == "TIGHT" else "st-flat", SKY),
         tile("Quits Rate", f"{quits_v:.1f}", "%", f"JOLTS, {quits_d}. Floor: 2.0%",
              "BELOW FLOOR" if quits_v < 2.0 else "ABOVE FLOOR",
@@ -122,7 +122,7 @@ def build():
 
     charts = "".join([
         chart_card("Labor Fragility Index", "The pressure underneath the labor market. "
-                   "The stuff that moves before the headline. Daily in gray, 3mo average carries the read.", lfi_b64),
+                   "The stuff that moves before the headline. Daily in gray, 21d average carries the read.", lfi_b64),
         chart_card("The Quit Signal", "Quits are truth serum. Workers only walk when they "
                    "are confident. The 2.0% floor has preceded every modern recession.", quits_b64),
         chart_card("Payrolls Momentum", "Headline payroll growth YoY. By the time this "
@@ -131,7 +131,7 @@ def build():
 
     wwcm = (
         f"Quits recovering above 2.0% and holding for two prints. "
-        f"LFI 3mo average turning down through +0.25. "
+        f"LFI 21d average turning down through +0.25. "
         f"Payroll growth reaccelerating above +1.5% YoY with wages outrunning CPI."
     )
 

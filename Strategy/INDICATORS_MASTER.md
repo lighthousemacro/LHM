@@ -64,7 +64,20 @@ The detail files stay in place. This document is the index, the live state, and 
 
 ---
 
-## THE FINAL LINEUP — FIVE CATEGORIES (2026-06-15)
+## THE FOUR TYPES (2026-07-20) — CURRENT TAXONOMY
+
+**2026-07-20: taxonomy consolidated 5→4 per Bob: Descriptive / TAA / RealBC / Market Structure.** (Bob considered "Risk On/Risk Off" for the fourth and settled on Market Structure.) The five-category section below remains the evidence record and is superseded for taxonomy only. Projection: Allocation impact → TAA. Macro impact and Macro regime → RealBC. Market regime → Market Structure. Descriptive → Descriptive. Every live indicator carries exactly one type, stored in the `type` field of `Working/db_overview/batch_a.json` / `batch_b.json` and rendered as the section structure of the one-pager gallery and the DB overview.
+
+| Type | Count | Members |
+|---|---|---|
+| **TAA** | 10 | ALLOC_CURVE_STEEPENER, ALLOC_CONS_ROTATION, ALLOC_CYCLICAL_DEFENSIVE, ALLOC_ENERGY_MOMENTUM, ALLOC_REALYIELD_GOLD, ALLOC_CREDIT_LABOR_GAP, ALLOC_DOLLAR_EM, ALLOC_INCOME_DEPLETION, ALLOC_INVENTORY_DESTOCK, CLI |
+| **RealBC** | 17 | PCI, GCI, FPI, LPI, BCI, LFI, CLG, PIPELINE_IMPULSE, INTEREST_CROWDOUT, MRI, REC_PROB, BASE_REC_PROB, ENSEMBLE_RISK, WARNING_LEVEL, ALLOC_MULTIPLIER, DISCONTINUITY_PREMIUM, LIQ_STAGE |
+| **Market Structure** | 7 | MSI, SPI, SBD, SSD, QUALITY_PRESSURE, VOL_TERM_GAP, FCI_CHANNELS |
+| **Descriptive** | 21 | HCI, CCI, TCI, LCI, FCI, SUPERCORE_HEAT, PERSISTENCE_GAP, TREND_HEAT, AFFORD_PRESSURE, FROZEN_DIVERGENCE, CAPACITY_SLACK, BILL_SOFR, EMD, LDI, SVI, YFS, SLI, SLI_MCAP, SLI_ROC_30D, SLI_ROC_90D_ANN, CRYPTO_DEFI_LIQUIDITY |
+
+**Judgment placements pending Bob's confirmation:** CLI sits in TAA (crypto postdates the five categories; it predicts BTC forward returns like the ALLOC family). ALLOC_MULTIPLIER sits in RealBC via the Macro regime projection despite the TAA-sounding name (it is the ensemble's sizing output). LIQ_STAGE sits in RealBC via Macro regime (arguably Market Structure). SLI and its derivatives stay Descriptive despite the BTC overlay chart. FCI stays Descriptive (the five categories never gave it a predictive home). INTEREST_CROWDOUT goes RealBC per its macro-impact tag in the pillar-expansion table.
+
+## THE FINAL LINEUP — FIVE CATEGORIES (2026-06-15) — superseded for taxonomy, retained as evidence record
 
 **This is the trusted view. Start here.** Every proprietary indicator, placed in one of five categories by *what it actually does* (Bob's framing, 2026-06-15), each tagged with the role it was validated in, the out-of-sample evidence behind it, a confidence tier, the transform it should be shown in, and the overlay chart that proves it. The honesty principle: nothing here claims skill the data does not support. Indicators that failed out-of-sample prediction are kept as honest **regime/descriptor** reads, not buried and not oversold.
 

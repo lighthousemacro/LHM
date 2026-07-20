@@ -183,11 +183,40 @@ print(f"built {len(built)} one-pager charts")
 
 # assemble gallery HTML
 def esc(x): return html.escape(str(x)) if x is not None else ''
+
+# four canonical types (Bob, 2026-07-20): actionable first.
+# Nowcast cards predict real-economy releases, so they sit in RealBC.
+TYPE_ORDER = ["TAA", "RealBC", "Market Structure", "Descriptive"]
+TYPE_SUB = {
+    "TAA": "Tactical asset allocation. Validated or provisional signals on asset targets.",
+    "RealBC": "Real business cycle. Macro impact, regime, and the nowcasts.",
+    "Market Structure": "The state of the market itself. Structure and sentiment reads.",
+    "Descriptive": "Honest state reads. Combined-metric measurements, no forward claim.",
+}
+def card_type(kind, iid):
+    if kind == 'pred':
+        return "RealBC"
+    return META.get(iid, {}).get('type', 'Descriptive')
+
 cards=""
-# nowcasts first, then the predictive overlays, then plain composites
-order=([b for b in built if b[0]=='pred']+[b for b in built if b[0]=='ovl']
-       +[b for b in built if b[0]=='desc'])
+# within each type: nowcasts first, then predictive overlays, then plain composites
+order=[]
+for _t in TYPE_ORDER:
+    for _kind_pass in ('pred', 'ovl', 'desc'):
+        order += [b for b in built if b[0] == _kind_pass and card_type(b[0], b[1]) == _t]
+
+_open_section = None
 for kind,iid,p in order:
+    _t = card_type(kind, iid)
+    if _t != _open_section:
+        if _open_section is not None:
+            cards += "</div></div>"  # close grid + sect
+        n_sec = sum(1 for b in order if card_type(b[0], b[1]) == _t)
+        cards += (f"<div class='sect'><div class='sh'><span class='shn'>{esc(_t)}</span>"
+                  f"<span class='shc'>{n_sec} cards</span>"
+                  f"<span class='shs'>{esc(TYPE_SUB[_t])}</span></div>")
+        cards += "<div class='grid'>"
+        _open_section = _t
     fn=os.path.basename(p)
     if kind=='pred':
         nc=NCS[iid]; badge=nc['tier']; bc={'STRONG':'#00BB89','USABLE':'#2389BB','NOT READY':'#FF2389'}.get(badge,'#898989')
@@ -221,8 +250,13 @@ h1{{margin:0;font-size:24px}} .sub{{color:#89CCFF;font-style:italic;font-size:14
 .k{{color:#898989;font-size:11px;text-transform:uppercase;letter-spacing:.4px}}
 .card img{{width:100%;border-radius:8px;border:1px solid #eef3f7}} .bd{{font-size:12px;color:#33475a;margin-top:8px;line-height:1.5}}
 .bd b{{color:#123456}}
+.sect{{margin:26px 0 6px}}
+.sh{{display:flex;align-items:baseline;gap:14px;border-bottom:3px solid #2389BB;padding:6px 2px;margin-bottom:16px}}
+.shn{{font-weight:800;font-size:18px;color:#123456;text-transform:uppercase;letter-spacing:1.2px}}
+.shc{{font-family:'Source Code Pro',monospace;font-size:11px;color:#2389BB;font-weight:700}}
+.shs{{font-size:12px;color:#898989;font-style:italic}}
 </style></head><body><header><div class="bar"></div>
 <h1>Lighthouse Macro — Indicator One-Pagers</h1><div class="sub">{len(order)} cards · nowcasts (ours vs realized) + composites (annotated history) · MACRO, ILLUMINATED.</div></header>
-<div class="wrap"><div class="grid">{cards}</div></div></body></html>"""
+<div class="wrap">{cards}{"</div></div>" if cards else ""}</div></body></html>"""
 open(f"{D}/LHM_INDICATOR_ONEPAGERS.html","w").write(HTML)
 print("wrote LHM_INDICATOR_ONEPAGERS.html")

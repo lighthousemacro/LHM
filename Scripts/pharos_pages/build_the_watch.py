@@ -133,6 +133,10 @@ def build():
 
     mri_z = float(mri_smooth.iloc[-1])
     regime, regime_color = mri_regime(mri_z)
+    # ENSEMBLE_RISK history (backfilled 7/20) FAILED recession validation:
+    # expansion median 0.52, pinned 0.95 through 2024-25 (post-2021 plumbing
+    # thresholds misfire on earlier eras). NEVER chart its history. Latest-value
+    # tile only, and only while Bob keeps it on the cover.
     ens = load_index("ENSEMBLE_RISK")
     ens_v = float(ens.iloc[-1]) * 100.0
     ens_status = index_status("ENSEMBLE_RISK")

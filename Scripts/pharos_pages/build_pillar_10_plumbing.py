@@ -9,6 +9,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pandas as pd
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pillar_common import (  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS,

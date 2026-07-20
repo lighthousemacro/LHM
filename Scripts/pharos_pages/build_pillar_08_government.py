@@ -47,7 +47,8 @@ def build():
     verdict_text = (
         f"FPI 21d average at {fpi_v:+.2f}. The 10Y at {y10_v:.2f}% and the 30Y at "
         f"{y30_v:.2f}%. The 12-month federal balance runs at {df_v:,.0f}B dollars. "
-        f"Fiscal dominance is a structural read, not a timing signal."
+        f"Fiscal dominance is a structural read. It sets the level of term premium "
+        f"rather than the timing of the next move."
     )
 
     tiles = "".join([
@@ -62,8 +63,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Fiscal Pressure Index", "The composite fiscal read. Structural, not "
-                   "cyclical. Daily in gray, 21d average carries the read.", fpi_b64),
+        chart_card("Fiscal Pressure Index", "The composite fiscal read, structural by "
+                   "nature. Daily in gray, 21d average carries the read.", fpi_b64),
         chart_card("The Long End", "10Y and 30Y Treasury yields. Where fiscal supply "
                    "meets duration demand, term premium lives here.", yields_b64),
         chart_card("The Deficit Run-Rate", "Federal surplus or deficit, 12-month rolling "

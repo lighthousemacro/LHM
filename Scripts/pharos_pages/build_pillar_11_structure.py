@@ -76,11 +76,23 @@ def build():
                    "of the tape is actually in an uptrend.", b200_b64),
     ])
 
-    wwcm = (
-        "A breadth thrust, 30 to 70 on the 20d measure inside ten sessions. "
-        "Participation above the 200d broadening past 65%. "
-        "MSI 21d average reclaiming zero."
-    )
+    if state in ("BROKEN", "WEAKENING"):
+        wwcm = (
+            "A breadth thrust, 30 to 70 on the 20d measure inside ten sessions. "
+            "MSI 21d average reclaiming zero. "
+            "The 50d measure clearing the 80 crowded band on expanding participation."
+        )
+    elif state == "HEALTHY":
+        wwcm = (
+            "MSI 21d average breaking below -1.0. "
+            "The 20d measure washing out below 25. "
+            "Participation above the 200d narrowing below 50% while the index holds near highs."
+        )
+    else:
+        wwcm = (
+            "MSI 21d average breaking below -1.0, or clearing +0.5 with breadth confirming. "
+            "The 20d measure tagging either the 25 washout or the 80 crowded band."
+        )
 
     assemble(
         slug="structure", filename="pillar_11_structure.html", h1="STRUCTURE", pillar_no=11,

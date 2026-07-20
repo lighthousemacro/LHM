@@ -33,7 +33,7 @@ def build():
         zero=True, fmt="{:+.2f}", legend_loc="lower left",
     )
     rsx = yoy(load_obs("RSXFS")).dropna()
-    rsx_b64, _ = chart_lines([(rsx, "Retail Sales ex Autos YoY, nominal")], zero=True,
+    rsx_b64, _ = chart_lines([(rsx, "Retail Sales ex Food Services YoY, nominal")], zero=True,
                              fmt="{:+.1f}%", legend_loc="upper right")
 
     gci_v = float(gci.iloc[-1])
@@ -45,19 +45,19 @@ def build():
     tcu_v, _ = latest(tcu)
 
     verdict_text = (
-        f"GCI 21d average at {gci_v:+.2f}. Industrial production at {ip_v:+.1f}% YoY, "
+        f"GCI monthly composite at {gci_v:+.2f}. Industrial production at {ip_v:+.1f}% YoY, "
         f"CFNAI 3mo average at {cf_v:+.2f} against the -0.7 recession line, "
         f"capacity utilization at {tcu_v:.1f}%."
     )
 
     tiles = "".join([
-        tile("Activity Pulse", f"{gci_v:+.2f}", "", "GCI, 21d avg z",
+        tile("Activity Pulse", f"{gci_v:+.2f}", "", "GCI, monthly z",
              state, "st-ok" if state == "ABOVE TREND" else "st-alert" if state == "BELOW TREND" else "st-flat", SKY),
         tile("Industrial Prod", f"{ip_v:+.1f}", "%", f"YoY, {ip_d.strftime('%b %Y')}",
              "EXPANDING" if ip_v > 0 else "CONTRACTING", "st-ok" if ip_v > 0 else "st-warn", DUSK),
         tile("CFNAI 3mo", f"{cf_v:+.2f}", "", "Recession line: -0.70",
              "CLEAR" if cf_v > -0.7 else "RECESSION READ", "st-flat" if cf_v > -0.7 else "st-alert", SEA),
-        tile("Retail ex Autos", f"{rsx_v:+.1f}", "%", "Nominal YoY",
+        tile("Retail ex Food Svcs", f"{rsx_v:+.1f}", "%", "Nominal YoY",
              "GROWING" if rsx_v > 0 else "SHRINKING", "st-flat" if rsx_v > 0 else "st-warn", VENUS),
         tile("Capacity Util", f"{tcu_v:.1f}", "%", "Total industry",
              "SLACK" if tcu_v < 77 else "NORMAL", "st-warn" if tcu_v < 77 else "st-flat", OCEAN),

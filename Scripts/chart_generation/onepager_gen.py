@@ -187,8 +187,9 @@ def esc(x): return html.escape(str(x)) if x is not None else ''
 # four canonical types (Bob, 2026-07-20): actionable first.
 # Nowcast cards predict real-economy releases, so they sit in RealBC.
 TYPE_ORDER = ["TAA", "RealBC", "Market Structure", "Descriptive"]
+TYPE_DISPLAY = {"TAA": "Alloc"}  # Bob 7/20: display label
 TYPE_SUB = {
-    "TAA": "Tactical asset allocation. Validated or provisional signals on asset targets.",
+    "TAA": "Alloc. Tactical asset allocation, validated or provisional signals on asset targets.",
     "RealBC": "Real business cycle. Macro impact, regime, and the nowcasts.",
     "Market Structure": "The state of the market itself. Structure and sentiment reads.",
     "Descriptive": "Honest state reads. Combined-metric measurements, no forward claim.",
@@ -212,7 +213,7 @@ for kind,iid,p in order:
         if _open_section is not None:
             cards += "</div></div>"  # close grid + sect
         n_sec = sum(1 for b in order if card_type(b[0], b[1]) == _t)
-        cards += (f"<div class='sect'><div class='sh'><span class='shn'>{esc(_t)}</span>"
+        cards += (f"<div class='sect'><div class='sh'><span class='shn'>{esc(TYPE_DISPLAY.get(_t, _t))}</span>"
                   f"<span class='shc'>{n_sec} cards</span>"
                   f"<span class='shs'>{esc(TYPE_SUB[_t])}</span></div>")
         cards += "<div class='grid'>"

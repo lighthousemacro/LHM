@@ -64,21 +64,33 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Activity Pulse Index", "The composite growth read. The second derivative "
-                   "matters. Daily in gray, 21d average carries the read.", gci_b64),
+        chart_card("Activity Pulse Index", "The composite growth read, monthly cadence. "
+                   "The second derivative matters.", gci_b64),
         chart_card("Industrial Production", "YoY growth in output. Zero is the line "
                    "between expansion and contraction.", ip_b64),
         chart_card("Chicago Fed National Activity", "85 indicators in one index. Three-month "
                    "average below -0.70 has marked every modern recession.", cfnai_b64),
-        chart_card("Retail Momentum", "Retail sales ex autos, nominal YoY. The consumer side "
-                   "of the growth read.", rsx_b64),
+        chart_card("Retail Momentum", "Retail sales ex food services, nominal YoY. The "
+                   "consumer side of the growth read.", rsx_b64),
     ])
 
-    wwcm = (
-        "GCI 21d average holding above +0.5. "
-        "Industrial production reaccelerating above +1% YoY. "
-        "CFNAI 3mo average rising back through zero."
-    )
+    if state == "ABOVE TREND":
+        wwcm = (
+            "GCI falling back through +0.5 on a monthly print. "
+            "Industrial production slipping below zero YoY. "
+            "CFNAI 3mo average breaking below the -0.70 recession line."
+        )
+    elif state == "BELOW TREND":
+        wwcm = (
+            "GCI recovering through -0.5. "
+            "Industrial production reaccelerating above +1% YoY. "
+            "CFNAI 3mo average rising back through zero."
+        )
+    else:
+        wwcm = (
+            "GCI breaking out of the -0.5 to +0.5 band in either direction. "
+            "CFNAI 3mo average approaching the -0.70 recession line from above."
+        )
 
     assemble(
         slug="growth", filename="pillar_03_growth.html", h1="GROWTH", pillar_no=3,
@@ -87,9 +99,9 @@ def build():
         verdict_text=verdict_text, tiles_html=tiles,
         read_title="The Read",
         read_text=(
-            f"Activity composite at {gci_v:+.2f} on the 21d average. CFNAI at {cf_v:+.2f} is "
-            f"the cleanest single recession line in the pillar. Everything on this page "
-            f"recomputes from the master database each build."),
+            f"Activity composite at {gci_v:+.2f} on the latest monthly print. CFNAI at "
+            f"{cf_v:+.2f} is the cleanest single recession line in the pillar. Everything "
+            f"on this page recomputes from the master database each build."),
         charts_html=charts, wwcm=wwcm,
         sources="Lighthouse Macro composites; Federal Reserve; Chicago Fed; Census; FRED",
         datathru=ip_d.strftime("%Y-%m-%d"),

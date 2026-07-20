@@ -59,7 +59,7 @@ def widgets_manifest() -> dict[str, Any]:
 
 
 @app.get("/apps.json")
-def apps_manifest() -> dict[str, Any]:
+def apps_manifest() -> list[dict[str, Any]]:
     """Apps (dashboard layout) manifest consumed by OpenBB Workspace."""
     if not APPS_PATH.exists():
         raise HTTPException(status_code=500, detail=f"apps.json missing at {APPS_PATH}")

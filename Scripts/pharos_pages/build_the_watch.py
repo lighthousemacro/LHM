@@ -172,7 +172,7 @@ def build():
 
     charts = "".join([
         chart_card("Macro Risk Index", "The master composite across all twelve pillars, "
-                   "regime bands per the canonical thresholds. Daily series in gray, 3mo average carries the read.", mri_b64),
+                   "regime bands per the canonical thresholds. Daily series in gray, 21d average carries the read.", mri_b64),
         chart_card("Labor Fragility", "The labor stress composite. Flows lead stocks. "
                    "Readings above +0.5 mark fragility.", lfi_b64),
         chart_card("High Yield OAS", "Credit spreads lead defaults. Below 300 bps the market "

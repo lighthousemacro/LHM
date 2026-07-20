@@ -83,3 +83,4 @@ Documentation is available at /docs.
 [32mINFO[0m:     127.0.0.1:57181 - "[1mGET /series_panel?series_ids=BUSLOANS,TOTCI&transform=yoy HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:57182 - "[1mGET /ms_regime HTTP/1.1[0m" [32m200 OK[0m
 [32mINFO[0m:     127.0.0.1:57194 - "[1mGET /apps.json HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     127.0.0.1:53445 - "[1mGET /health HTTP/1.1[0m" [32m200 OK[0m

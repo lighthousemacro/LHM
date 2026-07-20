@@ -8,8 +8,8 @@ import sys, sqlite3, os, json, html
 sys.path.insert(0, '/Users/bob/LHM/Scripts/chart_generation')
 import pandas as pd, numpy as np
 import matplotlib; matplotlib.use("Agg")
-from lhm_chart_template import (COLORS, set_theme, new_fig, style_single_ax, add_last_value_label,
-    add_recessions, set_xlim_to_data, brand_fig, save_fig, add_smart_legend)
+from lhm_chart_template import (COLORS, set_theme, new_fig, style_single_ax, style_dual_ax,
+    add_last_value_label, add_recessions, set_xlim_to_data, brand_fig, save_fig, add_smart_legend)
 import matplotlib.pyplot as plt
 DB='/Users/bob/LHM/Data/databases/Lighthouse_Master.db'
 D='/Users/bob/LHM/Working/db_overview'; OUT=f'{D}/onepagers'; os.makedirs(OUT,exist_ok=True)
@@ -28,17 +28,101 @@ ERAS=[("2008-09-15","GFC / Lehman"),("2011-08-01","EU debt · US downgrade"),
       ("2020-03-01","COVID shock"),("2022-06-01","Fastest hikes in 40y"),("2025-04-01","Tariff shock")]
 
 ORDINAL={'LIQ_STAGE','WARNING_LEVEL'}  # regime stages — never smooth
+
+def _cadence_win(x):
+    """3-month smoothing window in native cadence: 63 obs for daily, 3 for monthly."""
+    gap=x.index.to_series().diff().dt.days.median()
+    return 3 if (gap or 1)>20 else 63
+
+def _three_mo(x):
+    w=_cadence_win(x)
+    return x.rolling(w,min_periods=max(2,w//3)).mean().dropna()
+
+def _monthly_map(t):
+    return {(d.year,d.month):v for d,v in t.items()}
+
+def _date_aware_12m(t, mode):
+    """12-calendar-month YoY %% ('yoy') or 12-month difference in pp ('chg12'). Gap months -> dropped."""
+    mm=_monthly_map(t); out={}
+    for d,v in t.items():
+        base=mm.get((d.year-1,d.month))
+        if base is None: continue
+        if mode=='yoy':
+            if base==0: continue
+            out[d]=(v/base-1.0)*100.0
+        else:
+            out[d]=v-base
+    r=pd.Series(out); r.index=pd.to_datetime(r.index); return r.sort_index()
+
+# CLI-style predictive overlays: indicator (3m avg) vs the thing it predicts, shifted
+# by the documented lead. One target, one horizon (middle of the documented range).
+# kind: 'yoy' 12m %% change | 'chg12' 12m diff (pp) | 'fwd' forward n-trading-day return
+OVERLAYS={
+  'LPI':('UNRATE','chg12',6,'Unemployment rate, 12m change (pp), led 6m'),
+  'LFI':('UNRATE','chg12',6,'Unemployment rate, 12m change (pp), led 6m'),
+  'PCI':('CPIAUCSL','yoy',15,'CPI YoY %, led 15m'),
+  'GCI':('INDPRO','yoy',3,'Industrial production YoY %, led 3m'),
+  'HCI':('HOUST','yoy',7,'Housing starts YoY %, led 7m'),
+  'CCI':('PCEC96','yoy',2,'Real PCE YoY %, led 2m'),
+  'BCI':('NEWORDER','yoy',6,'Core capex orders YoY %, led 6m'),
+  'TCI':('EEM_Close','yoy',4,'EM equities YoY %, led 4m'),
+  'FCI':('UNRATE','chg12',7,'Unemployment rate, 12m change (pp), led 7m'),
+  'CLG':('UNRATE','chg12',7,'Unemployment rate, 12m change (pp), led 7m'),
+  'LCI':('SPY_Close','fwd',21,'SPY forward 21d return %'),
+  'MSI':('SPY_Close','fwd',63,'SPY forward 63d return %'),
+  'SBD':('SPY_Close','fwd',63,'SPY forward 63d return %'),
+  'SPI':('SPY_Close','fwd',21,'SPY forward 21d return %'),
+  'SSD':('SPY_Close','fwd',21,'SPY forward 21d return %'),
+  'MRI':('INDPRO','yoy',9,'Industrial production YoY %, led 9m'),
+  'CLI':('CRYPTO_BTC_PRICE','fwd',21,'BTC forward 21d return %'),
+  'SLI':('CRYPTO_BTC_PRICE','fwd',21,'BTC forward 21d return %'),
+}
+
+def overlay_card(iid):
+    """Indicator (3m avg, RHS Ocean) vs its led target (LHS Dusk), CLI convention."""
+    x=s(iid,ind=True)
+    if x is None or len(x)<50: return None
+    tgt_id,kind,lead,tlabel=OVERLAYS[iid]
+    t=s(tgt_id)
+    if t is None: return None
+    xs=_three_mo(x[x.index>='2000-01-01'])
+    if kind=='fwd':
+        led=((t.shift(-lead)/t-1.0)*100.0).dropna()
+    else:
+        led=_date_aware_12m(t,kind)
+        led.index=led.index-pd.DateOffset(months=lead)
+    # clip only the START to the common window; the indicator runs to its latest print
+    # (the led target ends ~lead ago by construction, CLI convention)
+    lo=max(xs.index.min(),led.index.min())
+    xs=xs[xs.index>=lo]; led=led[led.index>=lo]
+    if len(xs)<30 or len(led)<30: return None
+    m=META.get(iid,{})
+    fig,ax=new_fig(figsize=(14,8))
+    ax2=ax.twinx()
+    l1,=ax.plot(led.index,led.values,color=COLORS['dusk'],linewidth=1.7,label=tlabel)
+    l2,=ax2.plot(xs.index,xs.values,color=COLORS['ocean'],linewidth=2.4,label=f'{iid} 3m avg, z')
+    style_dual_ax(ax,ax2,COLORS['dusk'],COLORS['ocean'])
+    ax2.axhline(0,color=COLORS['fog'],linestyle='--',linewidth=1.0,zorder=0)
+    add_last_value_label(ax2,xs,COLORS['ocean'],fmt='{:.2f}',side='right')
+    span=xs.index if xs.index.max()>=led.index.max() else led.index
+    set_xlim_to_data(ax,span); add_recessions(ax)
+    ax.legend(handles=[l2,l1],loc='upper left',fontsize=9,framealpha=0.9)
+    brand_fig(fig,title=f"{m.get('full_name',iid)} vs What It Predicts",
+              subtitle=f"{iid} 3m avg (RHS) vs {tlabel} (LHS)",
+              source="LHM calculations; FRED + market data",data_date=xs.index[-1])
+    p=f"{OUT}/{iid}.png"; save_fig(fig,p); plt.close('all'); return p
+
 def descriptive_card(iid):
     x=s(iid,ind=True)
     if x is None or len(x)<50: return None
     x=x[x.index>='2000-01-01']
     m=META.get(iid,{})
-    # noisy z-score composites get a 3-month MA (standing rule); ordinal stages stay raw
-    chop=float(np.std(np.diff(x.values[-2500:]))/(np.std(x.values[-2500:])+1e-9))
-    smoothed = chop>0.13 and iid not in ORDINAL
+    # every composite reads off the 3-month average (Bob 7/20: z off the 3m, for all of them);
+    # ordinal regime stages stay raw
+    smoothed = iid not in ORDINAL
     fig,ax=new_fig(figsize=(14,8))
     if smoothed:
-        xs=x.rolling(63,min_periods=20).mean().dropna()
+        xs=_three_mo(x)
         ax.plot(x.index,x.values,color=COLORS['sky'],linewidth=0.8,alpha=0.35,label='raw')
         ax.plot(xs.index,xs.values,color=COLORS['ocean'],linewidth=2.4,label='3-month average')
         x=xs
@@ -84,6 +168,10 @@ def predictive_card(ncid):
 built=[]
 for iid in META:
     try:
+        if iid in OVERLAYS:
+            p=overlay_card(iid)
+            if p: built.append(('ovl',iid,p)); continue
+            print("overlay fell back to plain:",iid)
         p=descriptive_card(iid)
         if p: built.append(('desc',iid,p))
     except Exception as e: print("desc fail",iid,e)
@@ -96,14 +184,20 @@ print(f"built {len(built)} one-pager charts")
 # assemble gallery HTML
 def esc(x): return html.escape(str(x)) if x is not None else ''
 cards=""
-# nowcasts first (the flashy predictive ones), then composites
-order=[b for b in built if b[0]=='pred']+[b for b in built if b[0]=='desc']
+# nowcasts first, then the predictive overlays, then plain composites
+order=([b for b in built if b[0]=='pred']+[b for b in built if b[0]=='ovl']
+       +[b for b in built if b[0]=='desc'])
 for kind,iid,p in order:
     fn=os.path.basename(p)
     if kind=='pred':
         nc=NCS[iid]; badge=nc['tier']; bc={'STRONG':'#00BB89','USABLE':'#2389BB','NOT READY':'#FF2389'}.get(badge,'#898989')
         meta=f"<span class='b' style='background:{bc}'>{badge} · R² {nc.get('oos_r2')}</span> <span class='k'>Predictive nowcast (ours vs realized)</span>"
         title=nc['label']+" Nowcast"; body=f"Proxy basket: {esc(nc['basket'])}"
+    elif kind=='ovl':
+        m=META.get(iid,{}); _,_,lead,tlabel=OVERLAYS[iid]
+        meta=f"<span class='b' style='background:#FF6723'>PREDICTIVE OVERLAY</span> <span class='k'>{esc(tlabel)}</span>"
+        title=m.get('full_name',iid)
+        body=f"<b>Overlay:</b> {esc(iid)} 3m avg vs {esc(tlabel)}<br><b>Reads:</b> {esc(m.get('describes',''))}"
     else:
         m=META.get(iid,{}); cls=m.get('classification','')
         bc='#FF2389' if 'predict' in cls else '#898989'

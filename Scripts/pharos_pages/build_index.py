@@ -12,9 +12,10 @@ from terminal_theme import render_page, write_page  # noqa: E402
 DESKS = [
     ("The Framework", "The engine room. The Watch, the Risk Desk, twelve pillars across three engines, the transmission chains.", [
         ("00 The Watch", "the-watch"), ("01 The Pulse", None), ("06 The Risk Desk", None),
-        ("07 Labor", "labor"), ("08 Prices", None), ("09 Growth", None), ("10 Housing", None),
-        ("11 Consumer", None), ("12 Business", None), ("13 Trade", None), ("14 Government", None),
-        ("15 Financial", None), ("16 Plumbing", None), ("17 Structure", None), ("18 Sentiment", None),
+        ("07 Labor", "labor"), ("08 Prices", "prices"), ("09 Growth", "growth"),
+        ("10 Housing", "housing"), ("11 Consumer", "consumer"), ("12 Business", "business"),
+        ("13 Trade", "trade"), ("14 Government", "government"), ("15 Financial", "financial"),
+        ("16 Plumbing", "plumbing"), ("17 Structure", "structure"), ("18 Sentiment", "sentiment"),
         ("03 The Chain", None), ("04 Real Check", None), ("05 Divergence", None),
     ]),
     ("Markets & Main Street", "The board. Six asset classes from equities to crypto, and the Main Street suite built for operators.", [

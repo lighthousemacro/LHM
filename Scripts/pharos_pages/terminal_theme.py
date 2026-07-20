@@ -291,14 +291,25 @@ PAGE = """<!DOCTYPE html>
 def nav_strip(active: str) -> str:
     items = [
         ("index", "PHAROS", "/d"),
-        ("the-watch", "00 THE WATCH", "/d/the-watch"),
-        ("labor", "07 LABOR", "/d/labor"),
+        ("the-watch", "00 WATCH", "/d/the-watch"),
+        ("labor", "P1 LABOR", "/d/labor"),
+        ("prices", "P2 PRICES", "/d/prices"),
+        ("growth", "P3 GROWTH", "/d/growth"),
+        ("housing", "P4 HOUSING", "/d/housing"),
+        ("consumer", "P5 CONSUMER", "/d/consumer"),
+        ("business", "P6 BUSINESS", "/d/business"),
+        ("trade", "P7 TRADE", "/d/trade"),
+        ("government", "P8 GOVT", "/d/government"),
+        ("financial", "P9 FINANCIAL", "/d/financial"),
+        ("plumbing", "P10 PLUMBING", "/d/plumbing"),
+        ("structure", "P11 STRUCTURE", "/d/structure"),
+        ("sentiment", "P12 SENTIMENT", "/d/sentiment"),
     ]
     out = []
     for slug, label, href in items:
         cls = ' class="active"' if slug == active else ""
         out.append(f'<a href="{href}"{cls}>{label}</a>')
-    out.append("<span>26 MORE IN BUILD</span>")
+    out.append("<span>15 MORE IN BUILD</span>")
     return "".join(out)
 
 

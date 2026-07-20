@@ -1160,3 +1160,4 @@
 2026-07-17 12:35:45 [INFO]   INDPRO: refreshed (+1290 obs)
 2026-07-17 12:35:45 [INFO] Freshness check done: 1 series refreshed, 1,290 obs added.
 2026-07-17 16:35:45 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-20 08:35:45 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

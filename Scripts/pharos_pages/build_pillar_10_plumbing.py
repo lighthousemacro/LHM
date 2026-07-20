@@ -44,7 +44,6 @@ def build():
         zero=True, fmt="{:+.0f}", legend_loc="upper left",
     )
     walcl = load_obs("WALCL") / 1_000_000.0  # $M -> $T
-    tga = load_obs("WTREGEN") / 1_000.0     # $B -> ... check units at runtime
     bs_b64, _ = chart_lines(
         [(walcl, "Fed balance sheet, $T")],
         fmt="{:.2f}", legend_loc="upper left",

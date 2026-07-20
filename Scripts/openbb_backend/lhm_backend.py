@@ -25,7 +25,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from lhm_brand import line_chart  # noqa: E402
+from lhm_brand import line_chart, long_to_chart  # noqa: E402
 
 DB_PATH = Path("/Users/bob/LHM/Data/databases/Lighthouse_Master.db")
 BACKEND_DIR = Path(__file__).resolve().parent
@@ -238,7 +238,6 @@ def composite_history(
     return line_chart(
         dates=dates,
         series=[{"name": index_id, "values": values}],
-        title=f"{index_id} — History",
         zscore=True,
     )
 
@@ -482,7 +481,7 @@ def series_panel(
     rebase: str = Query("false", description="Rebase each series to 100 at window start ('true'/'false')"),
     transform: str = Query("none", description="'none' or 'yoy' (percent change over `periods` observations)"),
     periods: int = Query(12, ge=1, le=60, description="Lookback (observations) for the yoy transform. 12=monthly YoY, 4=quarterly YoY"),
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """Generic multi-series overlay. Long format [{date, series_id, value}].
 
     Set rebase=true to index every series to 100 at its first in-window point —
@@ -518,7 +517,7 @@ def series_panel(
         out.sort(key=lambda x: x["date"])
         if not out:
             raise HTTPException(status_code=404, detail="Not enough history for YoY transform")
-        return out
+        return long_to_chart(out, order=ids, y_title="YoY %")
     if rebase.strip().lower() in ("1", "true", "yes", "on"):
         base: dict[str, float] = {}
         out: list[dict[str, Any]] = []
@@ -535,85 +534,94 @@ def series_panel(
                 "series_id": sid,
                 "value": round(val / base[sid] * 100.0, 2),
             })
-        return out
-    return rows
+        return long_to_chart(out, order=ids, y_title="Indexed to 100")
+    return long_to_chart([dict(r) for r in rows], order=ids)
 
 
 @app.get("/breadth_panel")
 def breadth_panel(
     start_date: str | None = Query(None),
     end_date: str | None = Query(None),
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """% of S&P 500 above its 20d / 50d / 200d MA. Pillar 11 — Structure."""
     ids = ["SPX_PCT_ABOVE_20D", "SPX_PCT_ABOVE_50D", "SPX_PCT_ABOVE_200D"]
     with _conn() as c:
         rows = _multi_series(c, ids, start_date, end_date)
     if not rows:
         raise HTTPException(status_code=404, detail="No breadth observations found")
-    return rows
+    return long_to_chart([dict(r) for r in rows], order=ids, y_title="% above MA",
+                         labels={"SPX_PCT_ABOVE_20D": "% > 20d", "SPX_PCT_ABOVE_50D": "% > 50d",
+                                 "SPX_PCT_ABOVE_200D": "% > 200d"})
 
 
 @app.get("/sentiment_panel")
 def sentiment_panel(
     start_date: str | None = Query(None),
     end_date: str | None = Query(None),
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """AAII bull / bear / spread. Pillar 12 — Sentiment."""
     ids = ["AAII_Bullish", "AAII_Bearish", "AAII_Bull_Bear_Spread"]
     with _conn() as c:
         rows = _multi_series(c, ids, start_date, end_date)
     if not rows:
         raise HTTPException(status_code=404, detail="No sentiment observations found")
-    return rows
+    return long_to_chart([dict(r) for r in rows], order=ids,
+                         labels={"AAII_Bullish": "Bulls", "AAII_Bearish": "Bears",
+                                 "AAII_Bull_Bear_Spread": "Bull-Bear Spread"})
 
 
 @app.get("/rates_panel")
 def rates_panel(
     start_date: str | None = Query(None),
     end_date: str | None = Query(None),
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """Treasury curve anchors: 2Y, 5Y, 10Y, 30Y. Plus 30Y mortgage."""
     ids = ["DGS2", "DGS5", "DGS10", "DGS30", "MORTGAGE30US"]
     with _conn() as c:
         rows = _multi_series(c, ids, start_date, end_date)
     if not rows:
         raise HTTPException(status_code=404, detail="No rates observations found")
-    return rows
+    return long_to_chart([dict(r) for r in rows], order=ids, y_title="%",
+                         labels={"DGS2": "2Y", "DGS5": "5Y", "DGS10": "10Y",
+                                 "DGS30": "30Y", "MORTGAGE30US": "30Y Mortgage"})
 
 
 @app.get("/credit_panel")
 def credit_panel(
     start_date: str | None = Query(None),
     end_date: str | None = Query(None),
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """Credit spread anchors: HY OAS, IG OAS, EMD OAS."""
     ids = ["BAMLH0A0HYM2", "BAMLC0A0CM"]
     with _conn() as c:
         rows = _multi_series(c, ids, start_date, end_date)
     if not rows:
         raise HTTPException(status_code=404, detail="No credit observations found")
-    return rows
+    return long_to_chart([dict(r) for r in rows], order=ids, y_title="OAS (%)",
+                         labels={"BAMLH0A0HYM2": "HY OAS", "BAMLC0A0CM": "IG OAS"})
 
 
 @app.get("/plumbing_panel")
 def plumbing_panel(
     start_date: str | None = Query(None),
     end_date: str | None = Query(None),
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """Plumbing anchors: RRP, WALCL, TGA, IORB."""
     ids = ["RRPONTSYD", "WALCL", "WTREGEN", "IORB"]
     with _conn() as c:
         rows = _multi_series(c, ids, start_date, end_date)
     if not rows:
         raise HTTPException(status_code=404, detail="No plumbing observations found")
-    return rows
+    return long_to_chart([dict(r) for r in rows], order=ids,
+                         labels={"RRPONTSYD": "RRP", "WALCL": "Fed Balance Sheet",
+                                 "WTREGEN": "TGA", "IORB": "IORB"})
 
 
 @app.get("/treasury_auctions")
 def treasury_auctions(
     start_date: str | None = Query(None),
     end_date: str | None = Query(None),
-) -> list[dict[str, Any]]:
+) -> dict[str, Any]:
     """Treasury auction quality + supply mix from fiscaldata.treasury.gov.
 
     10Y note: tail (bp), bid-to-cover, indirect bidder share.
@@ -630,7 +638,10 @@ def treasury_auctions(
         rows = _multi_series(c, ids, start_date, end_date)
     if not rows:
         raise HTTPException(status_code=404, detail="No Treasury auction observations found")
-    return rows
+    return long_to_chart([dict(r) for r in rows], order=ids,
+                         labels={"TD_AUCTION_TAIL_10Y": "10Y Tail (bps)", "TD_AUCTION_BTC_10Y": "10Y Bid-to-Cover",
+                                 "TD_INDIRECT_SHARE_10Y": "10Y Indirect %", "TD_BILLS_SHARE": "Bills Share %",
+                                 "TD_WAM_MARKETABLE": "WAM (months)"})
 
 
 @app.get("/risk_model")
@@ -817,64 +828,64 @@ def _ms_verdict(m: dict[str, Any]) -> dict[str, Any]:
 
 
 @app.get("/ms_spending")
-def ms_spending(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+def ms_spending(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> dict[str, Any]:
     """Real PCE YoY vs real retail sales YoY. Is the customer still showing up?"""
     with _conn() as c:
         cpi = _ms_series(c, "CPIAUCSL")
-        return _ms_long({
+        return long_to_chart(_ms_long({
             "Real PCE YoY": _ms_yoy(_ms_series(c, "PCEC96")),
             "Real Retail Sales YoY": _ms_real_yoy(_ms_series(c, "RSXFS"), cpi),
-        }, start_date, end_date)
+        }, start_date, end_date), y_title="YoY %")
 
 
 @app.get("/ms_wage_price")
-def ms_wage_price(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+def ms_wage_price(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> dict[str, Any]:
     """Service-sector wages vs CPI. The gap is real purchasing power."""
     with _conn() as c:
-        return _ms_long({
+        return long_to_chart(_ms_long({
             "Wages YoY": _ms_yoy(_ms_series(c, "CES0500000003")),
             "CPI YoY": _ms_yoy(_ms_series(c, "CPIAUCSL")),
-        }, start_date, end_date)
+        }, start_date, end_date), y_title="YoY %")
 
 
 @app.get("/ms_rent")
-def ms_rent(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+def ms_rent(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> dict[str, Any]:
     """Zillow market rents lead CPI shelter by 9-12 months. What renewals will price."""
     with _conn() as c:
-        return _ms_long({
+        return long_to_chart(_ms_long({
             "Zillow Market Rents YoY": _ms_yoy(_ms_series(c, "ZILLOW_ZORI_NATIONAL")),
             "CPI Rent YoY (lagged)": _ms_yoy(_ms_series(c, "CUSR0000SEHA")),
-        }, start_date, end_date)
+        }, start_date, end_date), y_title="YoY %")
 
 
 @app.get("/ms_credit")
-def ms_credit(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+def ms_credit(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> dict[str, Any]:
     """Credit-card delinquency vs personal saving rate. Borrowing or cushioning?"""
     with _conn() as c:
-        return _ms_long({
+        return long_to_chart(_ms_long({
             "CC Delinquency Rate": _ms_series(c, "DRCCLACBS"),
             "Personal Saving Rate": _ms_series(c, "PSAVERT"),
-        }, start_date, end_date)
+        }, start_date, end_date), y_title="%")
 
 
 @app.get("/ms_jobs")
-def ms_jobs(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+def ms_jobs(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> dict[str, Any]:
     """Retail trade and leisure/hospitality payroll growth. Main Street's employment pulse."""
     with _conn() as c:
-        return _ms_long({
+        return long_to_chart(_ms_long({
             "Retail Trade YoY": _ms_yoy(_ms_series(c, "USTRADE")),
             "Leisure & Hospitality YoY": _ms_yoy(_ms_series(c, "USLAH")),
-        }, start_date, end_date)
+        }, start_date, end_date), y_title="YoY %")
 
 
 @app.get("/ms_quits")
-def ms_quits(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> list[dict[str, Any]]:
+def ms_quits(start_date: str | None = Query(None), end_date: str | None = Query(None)) -> dict[str, Any]:
     """JOLTS quits rate for retail and hospitality. Confidence to walk away = labor power."""
     with _conn() as c:
-        return _ms_long({
+        return long_to_chart(_ms_long({
             "Retail Trade Quits Rate": _ms_series(c, "JTS4400QUR"),
             "Leisure & Hospitality Quits Rate": _ms_series(c, "JTS7000QUR"),
-        }, start_date, end_date)
+        }, start_date, end_date), y_title="Quits %")
 
 
 @app.get("/ms_scorecard")

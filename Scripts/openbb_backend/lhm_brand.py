@@ -145,6 +145,51 @@ def _last_value_annotation(dates: list[str], values: list[float]) -> dict[str, A
     }
 
 
+def long_to_chart(
+    rows: list[dict[str, Any]],
+    y_title: str | None = None,
+    order: list[str] | None = None,
+    labels: dict[str, str] | None = None,
+    zscore: bool = False,
+) -> dict[str, Any]:
+    """Brand a long-format payload [{date, series_id, value}] as a multi-line chart.
+
+    order: optional series_id ordering for the color cycle (first = Sky).
+    labels: optional series_id -> display-name mapping for the legend.
+    Adds the Fog zero line automatically when values span zero.
+    """
+    seqs: dict[str, tuple[list[str], list[float]]] = {}
+    for r in rows:
+        if r.get("value") is None:
+            continue
+        sid = r["series_id"]
+        if sid not in seqs:
+            seqs[sid] = ([], [])
+        seqs[sid][0].append(r["date"])
+        seqs[sid][1].append(r["value"])
+    sids = [s for s in (order or []) if s in seqs] + [s for s in seqs if s not in (order or [])]
+    series = [
+        {
+            "name": (labels or {}).get(sid, sid),
+            "dates": seqs[sid][0],
+            "values": seqs[sid][1],
+        }
+        for sid in sids
+    ]
+    all_vals = [v for _, (_, vs) in seqs.items() for v in vs]
+    spans_zero = bool(all_vals) and min(all_vals) < 0 < max(all_vals)
+    fig = line_chart(
+        dates=series[0]["dates"] if series else [],
+        series=series,
+        y_title=y_title,
+        zscore=zscore,
+        last_value_pill=len(series) == 1,
+    )
+    if spans_zero and not zscore:
+        fig["layout"].setdefault("shapes", []).append(_zero_line())
+    return fig
+
+
 def line_chart(
     dates: list[str],
     series: list[dict[str, Any]],

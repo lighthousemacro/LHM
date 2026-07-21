@@ -82,3 +82,10 @@ INFO:     69.166.236.87:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1
 INFO:     69.166.236.87:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
 INFO:     69.166.236.87:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
 INFO:     69.166.236.87:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:4bd:d800:7155:33ff:8b3a:1ea4:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     2600:4041:4bd:d800:7155:33ff:8b3a:1ea4:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK

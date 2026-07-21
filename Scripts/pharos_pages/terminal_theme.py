@@ -369,19 +369,19 @@ PAGE = """<!DOCTYPE html>
 def nav_strip(active: str) -> str:
     items = [
         ("index", "PHAROS", "/d"),
-        ("the-watch", "00 WATCH", "/d/the-watch"),
-        ("labor", "P1 LABOR", "/d/labor"),
-        ("prices", "P2 PRICES", "/d/prices"),
-        ("growth", "P3 GROWTH", "/d/growth"),
-        ("housing", "P4 HOUSING", "/d/housing"),
-        ("consumer", "P5 CONSUMER", "/d/consumer"),
-        ("business", "P6 BUSINESS", "/d/business"),
-        ("trade", "P7 TRADE", "/d/trade"),
-        ("government", "P8 GOVT", "/d/government"),
-        ("financial", "P9 FINANCIAL", "/d/financial"),
-        ("plumbing", "P10 PLUMBING", "/d/plumbing"),
-        ("structure", "P11 STRUCTURE", "/d/structure"),
-        ("sentiment", "P12 SENTIMENT", "/d/sentiment"),
+        ("the-watch", "THE WATCH", "/d/the-watch"),
+        ("labor", "LABOR", "/d/labor"),
+        ("prices", "PRICES", "/d/prices"),
+        ("growth", "GROWTH", "/d/growth"),
+        ("housing", "HOUSING", "/d/housing"),
+        ("consumer", "CONSUMER", "/d/consumer"),
+        ("business", "BUSINESS", "/d/business"),
+        ("trade", "TRADE", "/d/trade"),
+        ("government", "GOVERNMENT", "/d/government"),
+        ("financial", "FINANCIAL", "/d/financial"),
+        ("plumbing", "PLUMBING", "/d/plumbing"),
+        ("structure", "STRUCTURE", "/d/structure"),
+        ("sentiment", "SENTIMENT", "/d/sentiment"),
     ]
     out = []
     for slug, label, href in items:

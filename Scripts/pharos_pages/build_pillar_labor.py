@@ -84,11 +84,51 @@ def chart_payrolls():
     return to_b64(fig), pay_yoy
 
 
+def chart_claims():
+    ic = load_obs("ICSA")
+    ma = ic.rolling(4).mean().dropna()
+    start = max(ic.index.min(), pd.Timestamp("2000-01-01"))
+    fig, ax = dark_fig()
+    add_recessions(ax, start)
+    ax.plot(ic.index, ic.values / 1000.0, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
+            label=f"Weekly ({ic.iloc[-1]/1000:.0f}k)")
+    ax.plot(ma.index, ma.values / 1000.0, color=DUSK, linewidth=2.2,
+            label=f"4wk avg ({ma.iloc[-1]/1000:.0f}k)")
+    style_ax(ax)
+    set_xlim(ax, start, ic.index.max())
+    v, d = latest(ma)
+    pill(ax, d, v / 1000.0, f"{v/1000:.0f}k", DUSK)
+    legend(ax, loc="upper left")
+    return to_b64(fig), ma
+
+
+def chart_vu():
+    openings = load_obs("JTSJOL")
+    unemp = load_obs("UNEMPLOY")
+    df = pd.concat([openings.rename("v"), unemp.rename("u")], axis=1).dropna()
+    vu = (df["v"] / df["u"]).dropna()
+    start = vu.index.min()
+    fig, ax = dark_fig()
+    add_recessions(ax, start)
+    ax.axhline(1.0, color=DARK_MUTED, linewidth=1.0, alpha=0.6, linestyle="--")
+    threshold_callout(ax, "1.0 = ONE JOB PER JOBLESS WORKER", 1.0, DARK_MUTED)
+    ax.plot(vu.index, vu.values, color=OCEAN, linewidth=2.2,
+            label=f"Openings per unemployed ({vu.iloc[-1]:.2f})")
+    style_ax(ax)
+    set_xlim(ax, start, vu.index.max())
+    v, d = latest(vu)
+    pill(ax, d, v, f"{v:.2f}", OCEAN)
+    legend(ax, loc="upper left")
+    return to_b64(fig), vu
+
+
 def build():
     lfi_b64, lfi_smooth = chart_lfi()
     quits_b64, quits = chart_quits()
     pay_b64, pay_yoy_s = chart_payrolls()
     nc_b64, nc_v, nc_d = chart_nowcast("LABOR")
+    claims_b64, claims_ma = chart_claims()
+    vu_b64, vu = chart_vu()
     quits_nc = load_obs("JTSQUR_NOWCAST").dropna()
     qnc_v = float(quits_nc.iloc[-1])
 
@@ -138,6 +178,11 @@ def build():
         chart_card("The Payrolls Nowcast", "Elastic net over claims, temp help, and market "
                    "proxies, updated daily between jobs reports. Solid is the realized print, "
                    "dashed is the model. OOS R² 0.71.", nc_b64),
+        chart_card("Initial Jobless Claims", "The highest-frequency labor read we have. Weekly, "
+                   "in gray, with the 4-week average carrying the trend. Claims turn before payrolls do.", claims_b64),
+        chart_card("Openings per Unemployed Worker", "The Fed's tightness gauge. Job openings "
+                   "divided by unemployed workers. Above 1.0 there is more than one opening for every "
+                   "jobless worker. The unwind off the 2022 peak is the whole late-cycle story.", vu_b64),
     ])
 
     wwcm = (

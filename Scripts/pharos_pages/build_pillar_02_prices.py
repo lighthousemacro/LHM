@@ -35,6 +35,31 @@ def build():
     ppi_b64, _ = chart_lines([(ppi, "PPI All Commodities YoY")], zero=True, fmt="{:+.1f}%",
                              legend_loc="upper right")
 
+    sticky = load_obs("CORESTICKM159SFRBATL").dropna()
+    flex = load_obs("FLEXCPIM159SFRBATL").dropna()
+    sf_b64, _ = chart_lines(
+        [(sticky, "Sticky Core CPI YoY"), (flex, "Flexible CPI YoY")],
+        thresholds=[(2.0, "2% TARGET", VENUS, "--", 1.0)],
+        zero=True, fmt="{:+.1f}%",
+    )
+
+    be5 = load_obs("T5YIE").dropna()
+    be10 = load_obs("T10YIE").dropna()
+    be5y5 = load_obs("T5YIFR").dropna()
+    be_b64, _ = chart_lines(
+        [(be5, "5Y breakeven"), (be10, "10Y breakeven"), (be5y5, "5Y5Y forward")],
+        thresholds=[(2.0, "2% TARGET", VENUS, "--", 1.0)],
+        zero=False, fmt="{:.2f}%", legend_loc="upper right",
+    )
+
+    shelter = yoy(load_obs("CPIHOSSL")).dropna()
+    svc = yoy(load_obs("CUSR0000SASLE")).dropna()
+    shel_b64, _ = chart_lines(
+        [(shelter, "Shelter CPI YoY"), (svc, "Services less energy YoY")],
+        thresholds=[(2.0, "2% TARGET", VENUS, "--", 1.0)],
+        zero=False, fmt="{:+.1f}%",
+    )
+
     pci_v = float(pci.iloc[-1])
     state, color = regime(pci_v)
     cpi_v, cpi_d = latest(cpi)
@@ -68,6 +93,12 @@ def build():
                    "Shelter makes the last mile sticky, with a 12 to 18 month lead.", infl_b64),
         chart_card("Pipeline Pressure", "PPI all commodities YoY. What producers pay "
                    "shows up in what consumers pay later.", ppi_b64),
+        chart_card("Sticky vs Flexible", "Sticky core prices reset slowly and carry the "
+                   "trend. Flexible prices swing with demand. The gap is where the last mile lives.", sf_b64),
+        chart_card("What the Market Expects", "Market-based inflation expectations. Five and "
+                   "ten year breakevens with the 5Y5Y forward. Where the bond market prices the 2% target.", be_b64),
+        chart_card("The Shelter Anchor", "Shelter YoY against services less energy. Shelter is "
+                   "the largest and slowest core component, and it leads the services read by quarters.", shel_b64),
     ])
 
     wwcm = (

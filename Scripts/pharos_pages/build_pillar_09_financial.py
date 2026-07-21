@@ -38,6 +38,29 @@ def build():
         zero=True, fmt="{:+.2f}", legend_loc="lower left",
     )
 
+    curve_2s10s = load_obs("T10Y2Y")
+    curve_3m10y = load_obs("T10Y3M")
+    curve_b64, _ = chart_lines(
+        [(curve_2s10s, "10y-2y, %"), (curve_3m10y, "10y-3m, %")],
+        thresholds=[(0.0, "0 INVERSION LINE", VENUS, "--", 1.0)],
+        zero=False, fmt="{:+.2f}", legend_loc="lower right",
+    )
+
+    nfci = load_obs("NFCI")
+    nfci_b64, _ = chart_lines(
+        [(nfci, "NFCI")],
+        thresholds=[(0.0, "0 = AVERAGE CONDITIONS", VENUS, "--", 1.0)],
+        zero=False, fmt="{:+.2f}", legend_loc="upper left",
+    )
+
+    vix = load_obs("VIXCLS")
+    vix_smooth = vix.rolling(5).mean().dropna()
+    vix_b64, _ = chart_lines(
+        [(vix_smooth, "VIX 5d avg")],
+        thresholds=[(20.0, "20 STRESS LINE", VENUS, "--", 1.0)],
+        zero=False, fmt="{:.0f}", legend_loc="upper left",
+    )
+
     fci_v = float(fci.iloc[-1])
     state, color = regime(fci_v)
     hy_v, hy_d = latest(hy)
@@ -68,6 +91,12 @@ def build():
                    "high yield is pricing a world without accidents.", oas_b64),
         chart_card("Credit-Labor Gap", "When spreads price one story and labor tells "
                    "another, the gap goes negative. Below -1.0 is the alert.", clg_b64),
+        chart_card("The Yield Curve", "10y-2y and 10y-3m. Below zero the curve is inverted, "
+                   "the market's oldest recession tell. The re-steepening off inversion is the late-cycle signal.", curve_b64),
+        chart_card("Financial Conditions", "The Chicago Fed's NFCI. Above zero conditions "
+                   "are tighter than average, below zero looser. A broad read across money, debt, and equity markets.", nfci_b64),
+        chart_card("Equity Volatility", "The VIX, 5-day average. Credit and vol usually move "
+                   "together. When spreads stay calm and vol spikes, one of them is wrong.", vix_b64),
     ])
 
     wwcm = (

@@ -30,6 +30,12 @@ def build():
     tcu_b64, _ = chart_lines([(tcu, "Capacity utilization")], fmt="{:.1f}%",
                              legend_loc="lower left")
     nc_b64, nc_v, nc_d = chart_nowcast("INDPRO")
+    capex = yoy(load_obs("NEWORDER")).dropna()
+    capex_b64, _ = chart_lines([(capex, "Core capital goods orders YoY")], zero=True,
+                               fmt="{:+.1f}%")
+    isr = load_obs("ISRATIO")
+    isr_b64, _ = chart_lines([(isr, "Inventories-to-sales ratio")], fmt="{:.2f}",
+                             legend_loc="upper left")
 
     bci_v = float(bci.iloc[-1])
     state, color = regime(bci_v)
@@ -66,6 +72,12 @@ def build():
         chart_card("The IP Nowcast", "Elastic net over market and macro proxies, updated "
                    "daily between releases. Solid is the realized print, dashed is the "
                    "model. OOS R² 0.61.", nc_b64),
+        chart_card("Core Capex Orders", "New orders for core capital goods, nondefense ex "
+                   "aircraft. The cleanest read on what businesses are willing to fund. "
+                   "This is the forward commitment, stripped of the volatile stuff.", capex_b64),
+        chart_card("The Inventory Overhang", "Inventories relative to sales. Rising means goods "
+                   "are piling up faster than they clear, and production gets cut to work it off. "
+                   "Falling means demand is running ahead of the shelf.", isr_b64),
     ])
 
     if state == "COMMITTING":

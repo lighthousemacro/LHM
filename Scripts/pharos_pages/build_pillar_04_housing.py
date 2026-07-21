@@ -33,6 +33,13 @@ def build():
     mort = load_obs("MORTGAGE30US")
     mort_b64, _ = chart_lines([(mort, "30Y mortgage rate")], fmt="{:.2f}%",
                               legend_loc="upper left")
+    csys = yoy(load_obs("CSUSHPINSA")).dropna()
+    cs_b64, _ = chart_lines([(csys, "Case-Shiller national YoY")], zero=True,
+                            fmt="{:+.1f}%", legend_loc="upper left")
+    supply = load_obs("MSACSR")
+    sup_b64, _ = chart_lines([(supply, "Months' supply, new homes")],
+                             thresholds=[(6.0, "6.0 = BALANCED MARKET", VENUS, "--", 1.0)],
+                             fmt="{:.1f}", legend_loc="upper left")
     nc_b64, nc_v, nc_d = chart_nowcast("HOUSING")
 
     hci_v = float(hci.iloc[-1])
@@ -66,6 +73,10 @@ def build():
                    "The front of the housing pipeline.", sp_b64),
         chart_card("The Price of Money", "The 30Y mortgage rate sets the affordability "
                    "constraint for the marginal buyer.", mort_b64),
+        chart_card("Home Price Momentum", "Case-Shiller national YoY. The lagging confirmation "
+                   "of what starts and rates set in motion months earlier.", cs_b64),
+        chart_card("Months of Supply", "New homes for sale divided by the sales pace. Above 6 "
+                   "months is a buyer's market, below is a seller's. Inventory is the pressure valve.", sup_b64),
         chart_card("The Home Price Nowcast", "Elastic net over mortgage rates, home values, "
                    "and builder proxies, updated daily between Case-Shiller releases. Solid is "
                    "the realized print, dashed is the model. OOS R² 0.89.", nc_b64),

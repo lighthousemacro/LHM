@@ -31,6 +31,13 @@ def build():
                               legend_loc="lower left")
     jpy = load_obs("DEXJPUS")
     jpy_b64, _ = chart_lines([(jpy, "USDJPY")], fmt="{:.0f}", legend_loc="upper left")
+    bal = (load_obs("BOPGSTB") / 1000.0).dropna()
+    bal_b64, _ = chart_lines([(bal, "Trade balance")], zero=True, fmt="{:+.0f}B",
+                             legend_loc="lower left")
+    imp_yoy = yoy(load_obs("IR")).dropna()
+    exp_yoy = yoy(load_obs("IQ")).dropna()
+    tot_b64, _ = chart_lines([(exp_yoy, "Export prices"), (imp_yoy, "Import prices")],
+                             zero=True, fmt="{:+.1f}%", legend_loc="upper left")
 
     tci_v = float(tci.iloc[-1])
     state, color = regime(tci_v)
@@ -67,6 +74,10 @@ def build():
                    "carries more signal than the level.", dyoy_b64),
         chart_card("The Yen Cross", "USDJPY. The funding currency the world watches when "
                    "carry unwinds.", jpy_b64),
+        chart_card("The Trade Balance", "Goods and services balance in billions. The deficit "
+                   "is the mirror image of the world's demand for dollar assets.", bal_b64),
+        chart_card("Terms of Trade", "Export against import prices, YoY. Export prices running "
+                   "hotter than import prices is a tailwind for the balance.", tot_b64),
     ])
 
     wwcm = (

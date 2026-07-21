@@ -5,3 +5,25 @@ INFO:     96.232.160.137:0 - "GET / HTTP/1.1" 200 OK
 INFO:     96.232.160.137:0 - "GET /d/the-watch HTTP/1.1" 302 Found
 INFO:     96.232.160.137:0 - "GET / HTTP/1.1" 200 OK
 INFO:     96.232.160.137:0 - "GET /d/the-watch HTTP/1.1" 302 Found
+INFO:     127.0.0.1:63989 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     127.0.0.1:63990 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63991 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63992 - "GET /d/prices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63993 - "GET /d/growth HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63994 - "GET /d/housing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63995 - "GET /d/consumer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63996 - "GET /d/business HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63997 - "GET /d/trade HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63998 - "GET /d/government HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63999 - "GET /d/financial HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64000 - "GET /d/plumbing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64001 - "GET /d/structure HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64002 - "GET /d/sentiment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64003 - "GET /terminal HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64004 - "GET /d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64008 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     127.0.0.1:64009 - "GET / HTTP/1.1" 302 Found
+INFO:     127.0.0.1:64010 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     127.0.0.1:64011 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     127.0.0.1:64011 - "GET /d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64012 - "GET /d HTTP/1.1" 200 OK

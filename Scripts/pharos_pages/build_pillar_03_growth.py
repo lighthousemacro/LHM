@@ -36,6 +36,9 @@ def build():
     rsx = yoy(load_obs("RSXFS")).dropna()
     rsx_b64, _ = chart_lines([(rsx, "Retail Sales ex Food Services YoY, nominal")], zero=True,
                              fmt="{:+.1f}%", legend_loc="upper right")
+    rpi = yoy(load_obs("W875RX1")).dropna()
+    rpi_b64, _ = chart_lines([(rpi, "Real income ex transfers YoY")], zero=True,
+                             fmt="{:+.1f}%", legend_loc="upper right")
     nc_b64, nc_v, nc_d = chart_nowcast("GDP")
 
     gci_v = float(gci.iloc[-1])
@@ -75,6 +78,8 @@ def build():
                    "average below -0.70 has marked every modern recession.", cfnai_b64),
         chart_card("Retail Momentum", "Retail sales ex food services, nominal YoY. The "
                    "consumer side of the growth read.", rsx_b64),
+        chart_card("Real Income Ex Transfers", "Real personal income less transfer receipts, "
+                   "YoY. One of the four coincident indicators the NBER watches to date a cycle.", rpi_b64),
         chart_card("The GDP Nowcast", "Elastic net over market and macro proxies, updated "
                    "daily between GDP releases. Solid is the realized print, dashed is the "
                    "model. OOS R² 0.71.", nc_b64),

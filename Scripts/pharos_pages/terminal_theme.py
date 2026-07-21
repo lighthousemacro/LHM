@@ -147,9 +147,12 @@ def style_ax(ax):
 
 
 def set_xlim(ax, start: pd.Timestamp, end: pd.Timestamp | None = None):
-    """House padding: 0 left, ~180 days right (room for pills)."""
+    """House padding: 0 left, proportional right gap so the last point + pill never
+    collide with the RHS spine. ~5% of the visible span, floored at 180 days."""
     end = end or pd.Timestamp.today()
-    ax.set_xlim(start, end + pd.DateOffset(days=180))
+    span_days = max((end - start).days, 1)
+    right_pad = max(180, int(span_days * 0.05))
+    ax.set_xlim(start, end + pd.DateOffset(days=right_pad))
     span = (end - start).days / 365.25
     base = 5 if span > 25 else 3 if span > 15 else 2 if span > 8 else 1
     ax.xaxis.set_major_locator(mdates.YearLocator(base=base))

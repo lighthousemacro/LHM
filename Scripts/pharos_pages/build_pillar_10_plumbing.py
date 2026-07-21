@@ -53,6 +53,16 @@ def build():
         [(walcl, "Fed balance sheet, $T")],
         fmt="{:.2f}", legend_loc="upper left",
     )
+    reserves = load_obs("WRESBAL") / 1_000_000.0  # $M -> $T
+    res_b64, _ = chart_lines(
+        [(reserves, "Bank reserves, $T")],
+        fmt="{:.2f}", legend_loc="upper left",
+    )
+    tga = load_obs("WTREGEN") / 1_000.0  # $M -> $B
+    tga_b64, _ = chart_lines(
+        [(tga, "Treasury General Account, $B")],
+        fmt="{:,.0f}", legend_loc="upper left",
+    )
 
     lci_v = float(lci.iloc[-1])
     state, color = regime(lci_v)
@@ -86,6 +96,10 @@ def build():
         chart_card("The Corridor", "Effective fed funds minus interest on reserve balances, "
                    "in basis points, with the +8 bps reference marked.", sp_b64),
         chart_card("The Balance Sheet", "Total Federal Reserve assets in trillions.", bs_b64),
+        chart_card("Bank Reserves", "Reserve balances held by depository institutions at the "
+                   "Fed, in trillions. The working fuel of the funding market.", res_b64),
+        chart_card("The Treasury Account", "The Treasury General Account balance in billions. "
+                   "Cash parked at the Fed drains from the private system.", tga_b64),
     ])
 
     wwcm = (

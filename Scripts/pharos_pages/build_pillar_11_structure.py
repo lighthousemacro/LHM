@@ -6,6 +6,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pandas as pd
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pillar_common import (  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS,
@@ -38,6 +40,25 @@ def build():
     b200_b64, _ = chart_lines(
         [(p200, "% of S&P 500 above 200d MA")],
         fmt="{:.0f}%", legend_loc="lower left",
+    )
+
+    adl = load_obs("SPX_AD_LINE")
+    adl_b64, _ = chart_lines(
+        [(adl, "Cumulative advance-decline line")],
+        fmt="{:+,.0f}", legend_loc="upper left",
+    )
+    nnh = load_obs("SPX_NET_NEW_HIGHS")
+    nnh_b64, _ = chart_lines(
+        [(nnh, "Net new 52-week highs")],
+        zero=True, fmt="{:+.0f}", legend_loc="upper left",
+    )
+    rsp = load_obs("RSP_Close")
+    spx = load_obs("SPX_Close")
+    ratio = (pd.concat([rsp.rename("rsp"), spx.rename("spx")], axis=1).dropna()
+             .pipe(lambda d: (d["rsp"] / d["spx"]).dropna()))
+    ew_b64, _ = chart_lines(
+        [(ratio, "Equal-weight vs cap-weight (RSP/SPX)")],
+        fmt="{:.3f}", legend_loc="upper left",
     )
 
     msi_v = float(msi.iloc[-1])
@@ -74,6 +95,12 @@ def build():
                    "with the 25 washed-out and 80 crowded bands.", b50_b64),
         chart_card("Primary Trend Participation", "Percent above the 200d average. How much "
                    "of the tape is actually in an uptrend.", b200_b64),
+        chart_card("Advance-Decline Line", "The cumulative sum of advancers minus decliners. "
+                   "When it rolls over while the index holds, participation is thinning under the tape.", adl_b64),
+        chart_card("Net New Highs", "New 52-week highs minus new lows. Persistent negative "
+                   "readings under a rising index are the classic distribution tell.", nnh_b64),
+        chart_card("Equal-Weight vs Cap-Weight", "The RSP over SPX ratio. Falling means the "
+                   "average stock is lagging the megacaps and leadership is narrowing.", ew_b64),
     ])
 
     if state in ("BROKEN", "WEAKENING"):

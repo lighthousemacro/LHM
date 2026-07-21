@@ -38,6 +38,24 @@ def build():
         zero=True, fmt="{:,.0f}", legend_loc="lower left",
     )
 
+    tp = load_obs("THREEFYTP10")
+    tp_b64, _ = chart_lines(
+        [(tp, "ACM 10Y term premium")],
+        zero=True, fmt="{:+.2f}%", legend_loc="upper right",
+    )
+
+    debt_gdp = load_obs("GFDEGDQ188S")
+    debtgdp_b64, _ = chart_lines(
+        [(debt_gdp, "Federal debt held by public, % of GDP")],
+        fmt="{:.0f}%", legend_loc="lower right",
+    )
+
+    net_int = load_obs("A091RC1Q027SBEA")
+    netint_b64, _ = chart_lines(
+        [(net_int, "Net federal interest outlays, $B annualized")],
+        fmt="{:,.0f}", legend_loc="upper left",
+    )
+
     fpi_v = float(fpi.iloc[-1])
     state, color = regime(fpi_v)
     y10_v, y10_d = latest(y10)
@@ -69,6 +87,14 @@ def build():
                    "meets duration demand, term premium lives here.", yields_b64),
         chart_card("The Deficit Run-Rate", "Federal surplus or deficit, 12-month rolling "
                    "sum in billions. The supply side of the Treasury market.", def_b64),
+        chart_card("Term Premium", "The ACM 10-year term premium. The extra yield "
+                   "investors demand to hold duration. This is where fiscal dominance shows up "
+                   "in the price of the long end.", tp_b64),
+        chart_card("Debt to GDP", "Federal debt held by the public as a share of GDP. "
+                   "The structural backdrop that sets the level of every fiscal read on this page.", debtgdp_b64),
+        chart_card("The Interest Burden", "Net federal interest outlays, annualized in "
+                   "billions. As the debt stock rolls into higher coupons, this line becomes the "
+                   "fastest-growing line in the budget.", netint_b64),
     ])
 
     wwcm = (

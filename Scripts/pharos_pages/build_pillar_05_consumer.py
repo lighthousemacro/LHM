@@ -34,6 +34,15 @@ def build():
     umich = load_obs("UMCSENT")
     um_b64, _ = chart_lines([(umich, "UMich sentiment")], fmt="{:.1f}",
                             legend_loc="upper right")
+    revol = yoy(load_obs("REVOLSL")).dropna()
+    revol_b64, _ = chart_lines([(revol, "Revolving credit YoY")], zero=True,
+                               fmt="{:+.1f}%")
+    dlq = load_obs("DRCCLACBS")
+    dlq_b64, _ = chart_lines(
+        [(dlq, "Credit card delinquency rate")],
+        thresholds=[(3.0, "3.0% STRESS", VENUS, "--", 1.0)],
+        fmt="{:.2f}%", legend_loc="upper left",
+    )
 
     cci_v = float(cci.iloc[-1])
     state, color = regime(cci_v)
@@ -67,6 +76,10 @@ def build():
                    "the cushion between income and spending is thin.", save_b64),
         chart_card("How It Feels", "UMich sentiment. Days-to-weeks signal, contrarian "
                    "at extremes, honest about the mood.", um_b64),
+        chart_card("Credit on the Card", "Revolving credit YoY. When wages stall, the card "
+                   "fills the gap. Acceleration here is borrowed spending, not earned.", revol_b64),
+        chart_card("The Stress Signal", "Credit card delinquency rate. The lagging confirmation "
+                   "that the buffer ran out. Above 3.0% the cracks are real.", dlq_b64),
     ])
 
     wwcm = (

@@ -44,6 +44,22 @@ def build():
         [(bulls, "Bulls %"), (bears, "Bears %")],
         fmt="{:.0f}", legend_loc="upper left",
     )
+    vix = load_obs("VIXCLS").dropna()
+    vix_b64, _ = chart_lines(
+        [(vix, "VIX")],
+        thresholds=[(30, "30 FEAR", VENUS, "--", 1.0), (15, "15 COMPLACENCY", SEA, "--", 1.0, "top", -0.8)],
+        fmt="{:.1f}", legend_loc="upper left",
+    )
+    umcsent = load_obs("UMCSENT").dropna()
+    umc_b64, _ = chart_lines(
+        [(umcsent, "U-Mich sentiment")],
+        fmt="{:.0f}", legend_loc="lower left",
+    )
+    neutral = load_obs("AAII_Neutral") * 100.0
+    neu_b64, _ = chart_lines(
+        [(neutral, "Neutral %")],
+        fmt="{:.0f}", legend_loc="upper left",
+    )
 
     spi_v = float(spi.iloc[-1])
     state, color = regime(spi_v)
@@ -77,6 +93,12 @@ def build():
                    "capitulation extremes marked.", spread_b64),
         chart_card("Bulls and Bears", "The raw survey lines. The spread carries the "
                    "signal, the components carry the texture.", bb_b64),
+        chart_card("The Fear Gauge", "VIX, the options market's price of protection. Below "
+                   "15 is complacency, above 30 is fear. Extremes fade, the middle is noise.", vix_b64),
+        chart_card("Household Mood", "University of Michigan consumer sentiment. The retail "
+                   "read on how households feel, monthly.", umc_b64),
+        chart_card("On the Fence", "The AAII neutral share. When indecision runs high the "
+                   "crowd has no conviction to fade.", neu_b64),
     ])
 
     wwcm = (

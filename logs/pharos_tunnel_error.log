@@ -80,3 +80,5 @@
 2026-07-21T18:47:29Z ERR Request failed error="stream 85 canceled by remote with error code 0" connIndex=2 dest=https://pharos.lighthousemacro.com/d/structure event=0 ip=2606:4700:a8::2 type=http
 2026-07-21T18:51:49Z ERR  error="Incoming request ended abruptly: context canceled" connIndex=3 event=1 ingressRule=0 originService=http://localhost:8800
 2026-07-21T18:51:49Z ERR Request failed error="Incoming request ended abruptly: context canceled" connIndex=3 dest=http://pharos.lighthousemacro.com/ event=0 ip=2606:4700:a0::7 type=http
+2026-07-21T20:20:49Z ERR  error="Incoming request ended abruptly: context canceled" connIndex=3 event=1 ingressRule=0 originService=http://localhost:8800
+2026-07-21T20:20:49Z ERR Request failed error="Incoming request ended abruptly: context canceled" connIndex=3 dest=http://pharos.lighthousemacro.com/ event=0 ip=2606:4700:a0::7 type=http

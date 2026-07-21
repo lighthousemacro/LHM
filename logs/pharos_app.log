@@ -125,3 +125,21 @@ INFO:     98.98.28.124:0 - "GET /d/labor HTTP/1.1" 200 OK
 INFO:     98.98.28.124:0 - "GET /d HTTP/1.1" 200 OK
 INFO:     98.98.28.124:0 - "GET /d/structure HTTP/1.1" 200 OK
 INFO:     98.98.28.124:0 - "GET /d/sentiment HTTP/1.1" 200 OK
+INFO:     199.16.157.183:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     199.16.157.182:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     199.16.157.183:0 - "GET / HTTP/1.1" 200 OK
+INFO:     199.16.157.182:0 - "GET / HTTP/1.1" 200 OK
+INFO:     199.16.157.180:0 - "GET / HTTP/1.1" 200 OK
+INFO:     199.16.157.183:0 - "GET / HTTP/1.1" 200 OK
+INFO:     199.16.157.181:0 - "GET / HTTP/1.1" 200 OK
+INFO:     199.16.157.180:0 - "GET / HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /d/government HTTP/1.1" 200 OK
+INFO:     199.16.157.182:0 - "GET / HTTP/1.1" 200 OK
+INFO:     199.16.157.181:0 - "GET / HTTP/1.1" 200 OK
+INFO:     144.76.23.167:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     144.76.23.167:0 - "GET / HTTP/1.1" 200 OK
+INFO:     17.246.23.103:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     17.246.19.86:0 - "GET / HTTP/1.1" 200 OK
+INFO:     54.39.177.173:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     54.39.177.173:0 - "GET / HTTP/1.1" 200 OK
+INFO:     34.206.217.125:0 - "GET / HTTP/1.1" 200 OK

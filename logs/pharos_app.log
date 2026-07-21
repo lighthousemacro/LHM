@@ -44,3 +44,8 @@ INFO:     2600:4041:5d22:c100:7515:fee7:aa32:122e:0 - "GET /d/business HTTP/1.1"
 INFO:     2600:4041:5d22:c100:7515:fee7:aa32:122e:0 - "GET /d/sentiment HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:7515:fee7:aa32:122e:0 - "GET /d/the-watch HTTP/1.1" 200 OK
 INFO:     43.159.144.16:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:607a:6ffd:4ebf:f27d:0 - "GET / HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:607a:6ffd:4ebf:f27d:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:607a:6ffd:4ebf:f27d:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:607a:6ffd:4ebf:f27d:0 - "GET /d/prices HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:607a:6ffd:4ebf:f27d:0 - "GET /d/the-watch HTTP/1.1" 200 OK

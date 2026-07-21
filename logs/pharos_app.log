@@ -3,3 +3,5 @@ INFO:     96.232.160.137:0 - "GET /healthz HTTP/1.1" 200 OK
 INFO:     96.232.160.137:0 - "GET /healthz HTTP/1.1" 200 OK
 INFO:     96.232.160.137:0 - "GET / HTTP/1.1" 200 OK
 INFO:     96.232.160.137:0 - "GET /d/the-watch HTTP/1.1" 302 Found
+INFO:     96.232.160.137:0 - "GET / HTTP/1.1" 200 OK
+INFO:     96.232.160.137:0 - "GET /d/the-watch HTTP/1.1" 302 Found

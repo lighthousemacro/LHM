@@ -162,3 +162,6 @@ INFO:     200.68.31.82:0 - "GET /d/business HTTP/1.1" 200 OK
 INFO:     200.68.31.82:0 - "GET /d/trade HTTP/1.1" 200 OK
 INFO:     200.68.31.82:0 - "GET /d/financial HTTP/1.1" 200 OK
 INFO:     200.68.31.82:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     54.71.187.124:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     35.173.11.147:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     35.173.11.147:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found

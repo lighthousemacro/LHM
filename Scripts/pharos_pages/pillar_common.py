@@ -37,9 +37,10 @@ def hline(ax, y: float, label: str, color=VENUS, ls="--", lw=1.0, va="bottom", d
 
 
 def chart_composite(index_id: str, display: str, thresholds: list[tuple] | None = None,
-                    window: int = 63):
-    """Composite: one clean smoothed line, no raw daily artifact. `window` sets the
-    flattening (default 63 = ~3mo). Pass a larger window for noisier composites.
+                    window: int = 21):
+    """Composite: one clean smoothed line, no raw daily artifact. We smooth the
+    already-computed z-score for display (21d = house standard); we never recompute
+    the z-score on smoothed data. Pass a larger window for noisier composites.
     Returns (b64, smooth)."""
     s = load_index(index_id)
     smooth = s.rolling(window).mean().dropna()

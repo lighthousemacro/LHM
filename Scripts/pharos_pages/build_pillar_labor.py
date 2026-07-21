@@ -29,7 +29,7 @@ def labor_regime(z: float) -> tuple[str, str]:
 
 def chart_lfi():
     lfi = load_index("LFI")
-    smooth = lfi.rolling(63).mean().dropna()
+    smooth = lfi.rolling(21).mean().dropna()
     start = smooth.index.min()
     fig, ax = dark_fig()
     add_recessions(ax, start)

@@ -30,7 +30,7 @@ def build():
             (1.5, "+1.5 CAPITULATION, FADE", SEA, "--", 1.0),
             (-1.0, "-1.0 EUPHORIA, FADE", VENUS, "--", 1.0, "top", -0.06),
         ],
-        window=126,  # sentiment is the noisiest composite, flatten harder (~6mo)
+        window=63,  # sentiment is the noisiest composite, flatten more than the 21d default (~3mo)
     )
     # AAII stored as decimal fractions in the DB; display in percent
     spread = load_obs("AAII_Bull_Bear_Spread") * 100.0

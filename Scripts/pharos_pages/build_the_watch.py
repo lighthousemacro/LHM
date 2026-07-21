@@ -46,10 +46,8 @@ def chart_mri():
     fig, ax = dark_fig()
     regime_bands(ax)
     add_recessions(ax, start)
-    ax.plot(mri.index, mri.values, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
-            label=f"MRI daily ({mri.iloc[-1]:+.2f})")
-    ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.2,
-            label=f"MRI 21d avg ({smooth.iloc[-1]:+.2f})")
+    ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.0,
+            label=f"MRI ({smooth.iloc[-1]:+.2f})")
     style_ax(ax)
     set_xlim(ax, start, mri.index.max())
     ax.set_ylim(-2.6, 2.6)
@@ -68,10 +66,8 @@ def chart_lfi():
     add_recessions(ax, start)
     zero_line(ax)
     sigma_refs(ax)
-    ax.plot(lfi.index, lfi.values, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
-            label=f"LFI daily ({lfi.iloc[-1]:+.2f})")
-    ax.plot(smooth.index, smooth.values, color=DUSK, linewidth=2.2,
-            label=f"LFI 21d avg ({smooth.iloc[-1]:+.2f})")
+    ax.plot(smooth.index, smooth.values, color=DUSK, linewidth=2.0,
+            label=f"LFI ({smooth.iloc[-1]:+.2f})")
     ax.axhline(0.5, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
     threshold_callout(ax, "+0.5 FRAGILE", 0.5, VENUS)
     style_ax(ax)

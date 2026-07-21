@@ -89,3 +89,39 @@ INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "GET /terminal HTTP/1.1" 3
 INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "GET / HTTP/1.1" 200 OK
 INFO:     2600:4041:4bd:d800:7155:33ff:8b3a:1ea4:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
 INFO:     2600:4041:4bd:d800:7155:33ff:8b3a:1ea4:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET / HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /static/favicon.ico HTTP/1.1" 304 Not Modified
+INFO:     96.246.99.158:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     96.246.99.158:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     96.246.99.158:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     96.246.99.158:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /d/sentiment HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4116:439f:ec43:e297:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4116:439f:ec43:e297:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:4041:5d22:c100:4116:439f:ec43:e297:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:4116:439f:ec43:e297:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     96.246.99.158:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4116:439f:ec43:e297:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4116:439f:ec43:e297:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     43.130.174.37:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2607:fb90:9bcb:4e94:b059:caff:fe2e:bc27:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     158.220.78.89:0 - "GET / HTTP/1.1" 200 OK
+INFO:     158.220.78.89:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     158.220.78.89:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
+INFO:     158.220.78.89:0 - "GET / HTTP/1.1" 200 OK
+INFO:     158.220.78.89:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     98.98.28.124:0 - "GET / HTTP/1.1" 200 OK
+INFO:     98.98.28.124:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     98.98.28.124:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     98.98.28.124:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     98.98.28.124:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     98.98.28.124:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     98.98.28.124:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     98.98.28.124:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     98.98.28.124:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     98.98.28.124:0 - "GET /d/structure HTTP/1.1" 200 OK
+INFO:     98.98.28.124:0 - "GET /d/sentiment HTTP/1.1" 200 OK

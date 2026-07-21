@@ -133,13 +133,18 @@ def build():
 
     mri_z = float(mri_smooth.iloc[-1])
     regime, regime_color = mri_regime(mri_z)
-    # ENSEMBLE_RISK history (backfilled 7/20) FAILED recession validation:
-    # expansion median 0.52, pinned 0.95 through 2024-25 (post-2021 plumbing
-    # thresholds misfire on earlier eras). NEVER chart its history. Latest-value
-    # tile only, and only while Bob keeps it on the cover.
-    ens = load_index("ENSEMBLE_RISK")
-    ens_v = float(ens.iloc[-1]) * 100.0
-    ens_status = index_status("ENSEMBLE_RISK")
+    # DECIDED 2026-07-20: the merged ENSEMBLE_RISK number is OFF the cover.
+    # Its backfilled history failed recession validation (expansion median 0.52,
+    # pinned 0.95 through 2024-25) and its own tear sheet says so. The cover
+    # shows the BASE cycle model (sane through three cycles) and the QT-era
+    # discontinuity premium as a labeled qualitative overlay. NEVER chart
+    # ensemble history, never show the merged number as a headline.
+    base = load_index("BASE_REC_PROB")
+    base_v = float(base.iloc[-1]) * 100.0
+    base_status = index_status("BASE_REC_PROB")
+    prem = load_index("DISCONTINUITY_PREMIUM")
+    prem_v = float(prem.iloc[-1])
+    prem_label = "ELEVATED" if prem_v >= 0.25 else "MODERATE" if prem_v >= 0.10 else "LOW"
     lfi_v = float(lfi_smooth.iloc[-1])
     lci = load_index("LCI")
     lci_v = float(lci.iloc[-1])
@@ -152,7 +157,8 @@ def build():
 
     verdict_text = (
         f"MRI 21d average at {mri_z:+.2f}, inside the {regime.lower()} band. "
-        f"Ensemble recession risk reads {ens_v:.0f}% ({ens_status.replace('_', ' ').lower()}). "
+        f"The base cycle model puts 12-month recession risk at {base_v:.0f}%, "
+        f"with the QT-era plumbing premium {prem_label.lower()} on top of it. "
         f"{len(elevated)} of 12 pillars sit at or above +0.5, "
         f"{len(supportive)} at or below -0.5."
     )
@@ -161,8 +167,10 @@ def build():
         tile("MRI", f"{mri_z:+.2f}", "", "Macro Risk Index, 21d avg z", regime,
              "st-ok" if regime == "LOW RISK" else "st-flat" if regime == "NEUTRAL" else "st-warn" if regime == "ELEVATED" else "st-alert",
              SKY),
-        tile("Recession Risk", f"{ens_v:.0f}", "%", "Ensemble model, 12m fwd",
-             ens_status.replace("_", " "), "st-alert" if ens_v >= 50 else "st-warn" if ens_v >= 35 else "st-ok", DUSK),
+        tile("Recession Risk", f"{base_v:.0f}", "%", "Base cycle model, 12m fwd",
+             base_status.replace("_", " "), "st-alert" if base_v >= 50 else "st-warn" if base_v >= 35 else "st-ok", DUSK),
+        tile("Plumbing Premium", prem_label, "", "QT-era discontinuity overlay, qualitative",
+             "OVERLAY", "st-warn" if prem_label == "ELEVATED" else "st-flat", VENUS),
         tile("Labor Fragility", f"{lfi_v:+.2f}", "", "LFI, 21d avg z. Fragile above +0.5",
              "FRAGILE" if lfi_v > 0.5 else "WATCH" if lfi_v > 0.25 else "NEUTRAL",
              "st-alert" if lfi_v > 0.5 else "st-warn" if lfi_v > 0.25 else "st-flat", VENUS),

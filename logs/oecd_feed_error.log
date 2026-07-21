@@ -1817,3 +1817,24 @@ sqlite3.OperationalError: database or disk is full
 2026-07-21 14:10:59,681 INFO   OECD_CLI_JP: 810 obs
 2026-07-21 14:12:41,717 INFO   OECD_LTIR_JP: 450 obs
 2026-07-21 14:14:45,535 INFO   OECD_STIR_JP: 290 obs
+2026-07-21 14:18:31,723 INFO   OECD_GDP_REAL_GB: 285 obs
+Traceback (most recent call last):
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 226, in <module>
+    main()
+    ~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 219, in main
+    series, obs = fetcher.fetch_all()
+                  ~~~~~~~~~~~~~~~~~^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 198, in fetch_all
+    s, o = self._store_series(series_id, title, freq, units, cat,
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              scale, data)
+                              ^^^^^^^^^^^^
+  File "/Users/bob/LHM/Scripts/data_pipeline/lighthouse/openbb_oecd_feed.py", line 139, in _store_series
+    c.executemany(
+    ~~~~~~~~~~~~~^
+        "INSERT OR REPLACE INTO observations VALUES (?,?,?)", obs_list
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+sqlite3.OperationalError: database is locked

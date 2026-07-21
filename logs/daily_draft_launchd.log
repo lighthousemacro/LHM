@@ -363,3 +363,14 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-20_real-impulse-narrow-express
 [2026-07-20 08:17:29] ════════ DAILY DRAFT RUN END (status=0) ════════
 [2026-07-21 14:02:43] ════════ DAILY DRAFT RUN START (2026-07-21) ════════
 [2026-07-21 14:02:43] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Done. The unattended pipeline ran end to end and the preview is built and opened in the browser.
+
+**What's waiting for Bob:** a full Beam draft, **"Nobody Flinched"**, built as the Tuesday Beam a day early. The thread: last week's 1.55% SPX decline (semis-led, Nasdaq -2.9%) was met with zero fear. Citadel Securities' flow data shows the strongest dip-buying regime in their dataset (3.5x average buying on down days, no net retail selling day all July per [Citadel](https://www.citadelsecurities.com/news-and-insights/global-market-intelligence/1h-2026-market-structure-flows/) and [Bloomberg](https://www.bloomberg.com/news/articles/2026-07-13/citadel-securities-says-retail-pours-into-stocks-but-hedges-bets)), AAII bulls jumped to 45% from 36% during the down week itself, and VIX closed the week lower than it started. Meanwhile the Market Breadth Pulse broke 1.06 points in five sessions and the Sentiment Tide is drifting toward the -1.0 fade line. Pillar 12 lead, Pillar 11 secondary — the flagged sentiment coverage gap, and deliberately distinct from Sunday's capex Beam and dollar Beacon.
+
+Build details: locked 6-section Beam template, 5 published charts + 5 toolkit renders (2x rule, MANIFEST.md written), two charts re-rendered after QC caught dropped annotation boxes, all levels from the DB (Friday 7/17 closes, 7/16 AAII survey, 7/20 composites — no live tape in unattended mode, flagged in BUILD NOTES), Citadel numbers cited externally since the proprietary series can't be ingested. All artifacts in `Outputs/beam_2026-07-21_nobody-flinched/`. Nothing was published anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-21_nobody-flinched/beam_preview.html
+[2026-07-21 14:21:36] claude exited status=0 in 18m 52s
+[2026-07-21 14:21:37] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-21_nobody-flinched/beam_preview.html
+[2026-07-21 14:21:43] Opened in browser.
+[2026-07-21 14:21:43] ════════ DAILY DRAFT RUN END (status=0) ════════

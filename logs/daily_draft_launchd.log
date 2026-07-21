@@ -361,3 +361,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-20_real-impulse-narrow-express
 [2026-07-20 08:17:25] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-20_real-impulse-narrow-expression/beam_preview.html
 [2026-07-20 08:17:28] Opened in browser.
 [2026-07-20 08:17:29] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-21 14:02:43] ════════ DAILY DRAFT RUN START (2026-07-21) ════════
+[2026-07-21 14:02:43] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

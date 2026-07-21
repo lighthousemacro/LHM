@@ -29,16 +29,14 @@ def labor_regime(z: float) -> tuple[str, str]:
 
 def chart_lfi():
     lfi = load_index("LFI")
-    smooth = lfi.rolling(21).mean().dropna()
-    start = lfi.index.min()
+    smooth = lfi.rolling(63).mean().dropna()
+    start = smooth.index.min()
     fig, ax = dark_fig()
     add_recessions(ax, start)
     zero_line(ax)
     sigma_refs(ax)
-    ax.plot(lfi.index, lfi.values, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
-            label=f"LFI daily ({lfi.iloc[-1]:+.2f})")
-    ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.2,
-            label=f"LFI 21d avg ({smooth.iloc[-1]:+.2f})")
+    ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.0,
+            label=f"LFI ({smooth.iloc[-1]:+.2f})")
     ax.axhline(0.5, color=VENUS, linewidth=1.0, alpha=0.7, linestyle="--")
     threshold_callout(ax, "+0.5 FRAGILE", 0.5, VENUS)
     style_ax(ax)

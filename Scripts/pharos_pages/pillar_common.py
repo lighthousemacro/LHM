@@ -36,23 +36,24 @@ def hline(ax, y: float, label: str, color=VENUS, ls="--", lw=1.0, va="bottom", d
         threshold_callout(ax, label, y, color)
 
 
-def chart_composite(index_id: str, display: str, thresholds: list[tuple] | None = None):
-    """Daily composite: raw thin gray + 21d MA carrying the read. Returns (b64, smooth)."""
+def chart_composite(index_id: str, display: str, thresholds: list[tuple] | None = None,
+                    window: int = 63):
+    """Composite: one clean smoothed line, no raw daily artifact. `window` sets the
+    flattening (default 63 = ~3mo). Pass a larger window for noisier composites.
+    Returns (b64, smooth)."""
     s = load_index(index_id)
-    smooth = s.rolling(21).mean().dropna()
-    start = s.index.min()
+    smooth = s.rolling(window).mean().dropna()
+    start = smooth.index.min()
     fig, ax = dark_fig()
     add_recessions(ax, start)
     zero_line(ax)
     sigma_refs(ax)
-    ax.plot(s.index, s.values, color=DARK_MUTED, linewidth=0.7, alpha=0.45,
-            label=f"{display} daily ({s.iloc[-1]:+.2f})")
-    ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.2,
-            label=f"{display} 21d avg ({smooth.iloc[-1]:+.2f})")
+    ax.plot(smooth.index, smooth.values, color=SKY, linewidth=2.0,
+            label=f"{display} ({smooth.iloc[-1]:+.2f})")
     for th in (thresholds or []):
         hline(ax, *th)
     style_ax(ax)
-    set_xlim(ax, start, s.index.max())
+    set_xlim(ax, start, smooth.index.max())
     v, d = latest(smooth)
     pill(ax, d, v, f"{v:+.2f}", SKY)
     legend(ax, loc="upper left")

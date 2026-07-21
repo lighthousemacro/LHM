@@ -139,11 +139,11 @@ def style_ax(ax):
         s.set_color(DARK_SPINE)
         s.set_linewidth(0.5)
     ax.grid(False)
-    ax.tick_params(colors=DARK_MUTED, length=0, labelsize=9)
+    ax.tick_params(colors=ICE, length=0, labelsize=7.5)
     ax.yaxis.tick_right()
     ax.yaxis.set_label_position("right")
     for lbl in ax.get_xticklabels() + ax.get_yticklabels():
-        lbl.set_color(DARK_MUTED)
+        lbl.set_color(ICE)
 
 
 def set_xlim(ax, start: pd.Timestamp, end: pd.Timestamp | None = None):
@@ -327,6 +327,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--deep);color:v
 .footer{border-top:1px solid var(--spine);margin-top:6px;padding:16px 32px 20px;display:flex;justify-content:space-between;gap:16px;
   font-family:'Source Code Pro',monospace;font-size:10px;color:var(--muted);flex-wrap:wrap;}
 .footer .byline{color:var(--ice);}
+.footer a{color:var(--ocean);text-decoration:none;}
+.footer a:hover{text-decoration:underline;}
 .footer-right{font-family:'Montserrat',sans-serif;font-weight:600;letter-spacing:1.5px;color:var(--sky);}
 """
 
@@ -355,7 +357,7 @@ PAGE = """<!DOCTYPE html>
   {body}
   <div class="footer">
     <div>
-      <div class="byline">Bob Sheehan, CFA, CMT | Lighthouse Macro | LighthouseMacro.com | @LHMacro</div>
+      <div class="byline">Bob Sheehan, CFA, CMT | <a href="https://lighthousemacro.com">Lighthouse Macro</a> | <a href="https://research.lighthousemacro.com">Research</a> | <a href="https://x.com/LHMacro">@LHMacro</a>{pitrade}</div>
       <div>Sources: {sources} | Data thru {datathru} | Generated {generated}</div>
     </div>
     <div class="footer-right">LIGHTHOUSE MACRO</div>
@@ -427,13 +429,19 @@ def section(title: str, text: str) -> str:
     return f'<div class="section"><h2>{title}</h2><p>{text}</p></div>'
 
 
+# PiTrade: the live, funded, auditable book. Drop the eToro copy-portfolio URL here to
+# turn on the footer promo across every Pharos page. Left blank = no link rendered.
+PITRADE_URL = ""
+
 def render_page(*, title: str, h1: str, subtitle: str, active: str, body: str,
                 sources: str, datathru: str) -> str:
     now = datetime.today()
+    pitrade = (f' | <a href="{PITRADE_URL}">Follow the live book (PiTrade)</a>'
+               if PITRADE_URL else "")
     return PAGE.format(
         title=title, css=CSS, h1=h1, subtitle=subtitle,
         asof=now.strftime("%b %d, %Y").upper(),
-        nav=nav_strip(active), body=body, sources=sources,
+        nav=nav_strip(active), body=body, sources=sources, pitrade=pitrade,
         datathru=datathru, generated=now.strftime("%Y-%m-%d %H:%M ET"),
     )
 

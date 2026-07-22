@@ -247,3 +247,4 @@ INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /favicon.ico HTTP/1.1"
 INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/growth HTTP/1.1" 200 OK
 INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/housing HTTP/1.1" 200 OK
 INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/financial HTTP/1.1" 200 OK
+INFO:     43.161.233.190:0 - "GET / HTTP/1.1" 200 OK

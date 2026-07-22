@@ -123,3 +123,9 @@
 2026-07-22T01:54:52Z INF Registered tunnel connection connIndex=1 connection=f6fc0fde-1cff-4e5d-8a30-f12cefaf9f7f event=0 ip=2606:4700:a8::9 location=ewr15 protocol=quic
 2026-07-22T01:58:00Z ERR  error="stream 25 canceled by remote with error code 0" connIndex=2 event=1 ingressRule=0 originService=http://localhost:8800
 2026-07-22T01:58:00Z ERR Request failed error="stream 25 canceled by remote with error code 0" connIndex=2 dest=https://pharos.lighthousemacro.com/d/the-watch event=0 ip=2606:4700:a8::2 type=http
+2026-07-22T02:01:29Z ERR  error="stream 49 canceled by remote with error code 0" connIndex=2 event=1 ingressRule=0 originService=http://localhost:8800
+2026-07-22T02:01:29Z ERR  error="stream 53 canceled by remote with error code 0" connIndex=2 event=1 ingressRule=0 originService=http://localhost:8800
+2026-07-22T02:01:29Z ERR Request failed error="stream 49 canceled by remote with error code 0" connIndex=2 dest=https://pharos.lighthousemacro.com/d/consumer event=0 ip=2606:4700:a8::2 type=http
+2026-07-22T02:01:29Z ERR Request failed error="stream 53 canceled by remote with error code 0" connIndex=2 dest=https://pharos.lighthousemacro.com/d/consumer event=0 ip=2606:4700:a8::2 type=http
+2026-07-22T02:01:29Z ERR  error="stream 57 canceled by remote with error code 0" connIndex=2 event=1 ingressRule=0 originService=http://localhost:8800
+2026-07-22T02:01:29Z ERR Request failed error="stream 57 canceled by remote with error code 0" connIndex=2 dest=https://pharos.lighthousemacro.com/d/business event=0 ip=2606:4700:a8::2 type=http

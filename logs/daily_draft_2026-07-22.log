@@ -1,0 +1,13 @@
+[2026-07-22 07:45:04] ════════ DAILY DRAFT RUN START (2026-07-22) ════════
+[2026-07-22 07:45:04] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The overnight draft is built and open in the browser. Summary of what's waiting for Bob:
+
+**The piece: The Beam, "Hiking at What?"** — The market has flipped from pricing cuts to handicapping the first Warsh hike (2Y at 4.21% vs EFFR 3.63%, +58bps of implied tightening, up 33bps since April 30). Our gauges say the hike case has the wrong object: Activity Pulse (GCI) swung from -1.94 in December to +1.46 now and Capex Thrust confirms at +1.20, but Inflation Heat (PCI) peaked at +0.85 in May and has faded to +0.15. A hike here would be a hike at growth with the put retired, which has no priceable stopping rule. Invalidation levels are written into the draft (PCI back through +0.5, GCI rollover, September hike odds collapsing).
+
+**Pipeline:** scout brief, data summary, and draft are in `Outputs/beam_2026-07-22_hiking-at-what/`. All data verified fresh from Lighthouse_Master.db (indices through 7/22, Treasuries through 7/20 close), external hike-odds figure sourced to Crypto Briefing Jul 22 and used qualitatively only. Nine charts rendered on the canonical template (5 published + 4 reference, MANIFEST in `charts/`), QC-checked visually. HTML preview is fully base64-inlined, voice gates passed (no em-dashes or semicolons in prose, definite-article byline, CTA correct). BUILD NOTES block sits at the top of the preview with the unattended-run assumptions, including a flag to ingest fed funds futures if we keep citing hike odds. Nothing was published anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-22_hiking-at-what/beam_preview.html
+[2026-07-22 07:50:49] claude exited status=0 in 5m 45s
+[2026-07-22 07:50:49] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-22_hiking-at-what/beam_preview.html
+[2026-07-22 07:50:49] Opened in browser.
+[2026-07-22 07:50:49] ════════ DAILY DRAFT RUN END (status=0) ════════

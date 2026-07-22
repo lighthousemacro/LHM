@@ -265,3 +265,6 @@ INFO:     181.178.60.126:0 - "GET /d HTTP/1.1" 200 OK
 INFO:     181.178.60.126:0 - "GET /apple-touch-icon-152x152-precomposed.png HTTP/1.1" 404 Not Found
 INFO:     181.178.60.126:0 - "GET /apple-touch-icon-152x152.png HTTP/1.1" 404 Not Found
 INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d HTTP/1.1" 200 OK

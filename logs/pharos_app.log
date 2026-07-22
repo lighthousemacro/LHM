@@ -231,3 +231,10 @@ INFO:     47.39.207.11:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1"
 INFO:     34.44.174.142:0 - "GET / HTTP/1.1" 200 OK
 INFO:     170.106.143.6:0 - "GET / HTTP/1.1" 200 OK
 INFO:     98.84.64.180:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /apple-touch-icon.png HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /d HTTP/1.1" 302 Found
+INFO:     181.178.60.126:0 - "GET / HTTP/1.1" 200 OK
+INFO:     181.178.60.126:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     181.178.60.126:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK

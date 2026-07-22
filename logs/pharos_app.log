@@ -229,3 +229,4 @@ INFO:     2603:6080:e507:a096:2527:8245:4fcc:3480:0 - "GET /?utm_source=substack
 INFO:     2603:6080:e507:a096:2527:8245:4fcc:3480:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
 INFO:     47.39.207.11:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
 INFO:     34.44.174.142:0 - "GET / HTTP/1.1" 200 OK
+INFO:     170.106.143.6:0 - "GET / HTTP/1.1" 200 OK

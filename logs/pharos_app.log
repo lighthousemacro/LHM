@@ -248,3 +248,20 @@ INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/growth HTTP/1.1" 20
 INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/housing HTTP/1.1" 200 OK
 INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/financial HTTP/1.1" 200 OK
 INFO:     43.161.233.190:0 - "GET / HTTP/1.1" 200 OK
+INFO:     181.178.60.126:0 - "GET / HTTP/1.1" 200 OK
+INFO:     181.178.60.126:0 - "GET /static/favicon.ico HTTP/1.1" 304 Not Modified
+INFO:     181.178.60.126:0 - "GET /apple-touch-icon.png HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 304 Not Modified
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET / HTTP/1.1" 302 Found
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/sentiment HTTP/1.1" 200 OK
+INFO:     181.178.60.126:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     181.178.60.126:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     181.178.60.126:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     181.178.60.126:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     181.178.60.126:0 - "GET /apple-touch-icon-152x152-precomposed.png HTTP/1.1" 404 Not Found
+INFO:     181.178.60.126:0 - "GET /apple-touch-icon-152x152.png HTTP/1.1" 404 Not Found
+INFO:     2601:484:c200:11c0:b4e9:ec0a:f01e:f4cf:0 - "GET /d/labor HTTP/1.1" 200 OK

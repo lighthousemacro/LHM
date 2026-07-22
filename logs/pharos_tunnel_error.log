@@ -86,3 +86,40 @@
 2026-07-21T21:14:01Z ERR Request failed error="Incoming request ended abruptly: context canceled" connIndex=3 dest=https://pharos.lighthousemacro.com/d/labor event=0 ip=2606:4700:a0::7 type=http
 2026-07-21T21:35:52Z ERR  error="Error writing response header: stream 105 canceled by remote with error code 0" connIndex=3 event=1 ingressRule=0 originService=http://localhost:8800
 2026-07-21T21:35:52Z ERR Request failed error="Error writing response header: stream 105 canceled by remote with error code 0" connIndex=3 dest=http://pharos.lighthousemacro.com/?utm_source=substack&utm_medium=email event=0 ip=2606:4700:a0::7 type=http
+2026-07-22T01:54:44Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-22T01:54:44Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-22T01:54:44Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-22T01:54:44Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-22T01:54:44Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-22T01:54:44Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-22T01:54:44Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-22T01:54:44Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-22T01:54:44Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-22T01:54:44Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-22T01:54:44Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-22T01:54:44Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-22T01:54:44Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-22T01:54:44Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-22T01:54:44Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-22T01:54:44Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-22T01:54:44Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-22T01:54:44Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-22T01:54:44Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-22T01:54:44Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-22T01:54:45Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:51806->[::1]:53: read: connection refused"
+2026-07-22T01:54:45Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
+2026-07-22T01:54:45Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:59101->[::1]:53: read: connection refused"
+2026-07-22T01:54:45Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=3
+2026-07-22T01:54:45Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:60253->[::1]:53: read: connection refused"
+2026-07-22T01:54:45Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-22T01:54:46Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:61820->[::1]:53: read: connection refused"
+2026-07-22T01:54:46Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=1
+2026-07-22T01:54:50Z INF Registered tunnel connection connIndex=0 connection=23f2180c-3a2c-4169-979d-efdd7f95516e event=0 ip=2606:4700:a0::9 location=ewr05 protocol=quic
+2026-07-22T01:54:51Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-22T01:54:51Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-22T01:54:51Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-22T01:54:51Z INF Registered tunnel connection connIndex=3 connection=89a6d09c-a3dd-472b-9a71-ebb1c744ca60 event=0 ip=2606:4700:a0::7 location=ewr05 protocol=quic
+2026-07-22T01:54:52Z INF Registered tunnel connection connIndex=2 connection=8c564ff8-8672-4c04-9c7f-0cd031e0cb6b event=0 ip=2606:4700:a8::2 location=ewr12 protocol=quic
+2026-07-22T01:54:52Z INF Registered tunnel connection connIndex=1 connection=f6fc0fde-1cff-4e5d-8a30-f12cefaf9f7f event=0 ip=2606:4700:a8::9 location=ewr15 protocol=quic
+2026-07-22T01:58:00Z ERR  error="stream 25 canceled by remote with error code 0" connIndex=2 event=1 ingressRule=0 originService=http://localhost:8800
+2026-07-22T01:58:00Z ERR Request failed error="stream 25 canceled by remote with error code 0" connIndex=2 dest=https://pharos.lighthousemacro.com/d/the-watch event=0 ip=2606:4700:a8::2 type=http

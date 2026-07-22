@@ -215,3 +215,6 @@ INFO:     201.221.228.213:0 - "GET /apple-touch-icon-120x120.png HTTP/1.1" 404 N
 INFO:     2600:4041:5d22:c100:c54b:5f96:8846:a209:0 - "GET /d/government HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:c54b:5f96:8846:a209:0 - "GET /d/financial HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:c54b:5f96:8846:a209:0 - "GET /d/plumbing HTTP/1.1" 200 OK
+INFO:     182.239.90.154:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     182.239.90.154:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
+INFO:     182.239.90.154:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK

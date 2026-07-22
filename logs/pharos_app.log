@@ -166,3 +166,5 @@ INFO:     54.71.187.124:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1
 INFO:     35.173.11.147:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
 INFO:     35.173.11.147:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
 INFO:     52.32.240.62:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.1" 200 OK
+INFO:     2a04:4e41:300a:f1f::83ef:ff1f:0 - "GET / HTTP/1.1" 200 OK
+INFO:     43.155.162.41:0 - "GET / HTTP/1.1" 200 OK

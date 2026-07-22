@@ -219,3 +219,5 @@ INFO:     182.239.90.154:0 - "GET /?utm_source=substack&utm_medium=email HTTP/1.
 INFO:     182.239.90.154:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
 INFO:     182.239.90.154:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
 INFO:     43.173.76.39:0 - "GET / HTTP/1.1" 200 OK
+INFO:     129.226.195.146:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2a02:2455:31d:9b00:940d:6521:10a0:8ef:0 - "GET / HTTP/1.1" 200 OK

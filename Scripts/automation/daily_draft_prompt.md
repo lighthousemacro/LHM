@@ -34,17 +34,29 @@ inline images, "The Beam" / "The Beacon" definite article, etc.). Write artifact
 # UNATTENDED-RUN RULES (these override the skills' interactive STOP-ASK gates)
 
 - **Never stop to ask Bob anything.** Every place a skill would normally STOP-ASK,
-  instead make the safe, conservative default choice, write one line about the
-  assumption into a short `BUILD NOTES` block at the very top of the draft, and keep
-  going. The whole point is that a finished draft exists by morning.
+  instead make the safe, conservative default choice, log one line about the
+  assumption to `Outputs/{slug}/build_notes.md` (a sidecar file, NEVER inside the
+  draft or preview HTML itself), and keep going. The whole point is that a finished
+  draft exists by morning. The preview must be the FINAL PRODUCT ONLY — no build
+  notes, assumptions, caveats, or meta commentary anywhere in the piece.
 - **Never fabricate or approximate data.** If a data gap would normally trigger a
-  stop, DROP the affected chart or claim, note it in `BUILD NOTES`, and continue
+  stop, DROP the affected chart or claim, log it in the sidecar file, and continue
   with what is real. A smaller honest piece beats a fabricated one. This rule is not
   overridden by anything above.
 - **Never publish, email, post, schedule, or push anywhere.** No Substack, no social,
   no Telegram, no Gmail send. The terminal state is "HTML preview ready." Bob reviews.
 - This is a *potential* piece. Treat it as a strong first draft for review, not a
   final shipped artifact. Bob may discard it. That is expected and fine.
+
+# VOICE / AI-DETECTION GATE (mandatory, Substack runs Pangram detection)
+
+The prose must read fully human, pure Bob. After drafting and BEFORE assembly, run a
+dedicated adversarial pass over the draft body hunting AI tells and fix them in place:
+uniform sentence/paragraph rhythm, tidy topic sentences everywhere, parallel triads,
+balanced antitheses repeating, every section landing a quotable line, emdashes,
+semicolons, "not X, it's Y" / "X, not Y", AI transition phrases. Target register:
+varied cadence, long building sentences with mid-thought pivots, short punches, wry
+asides. If a line could appear in any generic macro newsletter, rewrite it.
 
 # FINISH
 

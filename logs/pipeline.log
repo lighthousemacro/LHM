@@ -11044,3 +11044,717 @@ PILLAR DATABASE STATS
   Pillar 12: Sentiment    |   16 series |   69,261 obs |  9 indices |   9.9 MB | built 2026-07-22T06:29:04
 
   Total size: 415.9 MB
+======================================================================
+LIGHTHOUSE MACRO - MASTER DATABASE UPDATE
+Database: /Users/bob/LHM/Data/databases/Lighthouse_Master.db
+Started: 2026-07-23 06:00:06
+======================================================================
+
+--- FRED ---
+
+--- BLS ---
+
+--- BEA ---
+
+--- NY FED ---
+
+--- OFR ---
+
+--- MARKET DATA (MSI/SPI) ---
+
+--- CRYPTO (DefiLlama + CoinGecko) ---
+
+--- MARKET BREADTH (S&P 500 Components) ---
+
+--- ZILLOW (ZHVI + ZORI) ---
+
+--- TRADINGVIEW (NAHB, MBA, Pending Home Sales) ---
+  Fetching ECONOMICS:USHMI...
+    TV_USHMI: 499 observations
+  Fetching ECONOMICS:USPIND...
+    TV_USPIND: 439 observations
+  Fetching ECONOMICS:USMRI...
+    TV_USMRI: 439 observations
+  Fetching ECONOMICS:USPHSIYY...
+    TV_USPHSIYY: 293 observations
+  Fetching ECONOMICS:USPHSIMM...
+    TV_USPHSIMM: 305 observations
+  Fetching ECONOMICS:USCONSTS...
+    TV_USCONSTS: 748 observations
+  Fetching ECONOMICS:USPRR...
+    TV_USPRR: 220 observations
+  Fetching ECONOMICS:USAMS...
+    TV_USAMS: 434 observations
+  Fetching ECONOMICS:USEHS...
+    TV_USEHS: 702 observations
+  Fetching ECONOMICS:USMAPL...
+    TV_USMAPL: 439 observations
+  Fetching ECONOMICS:USMMI...
+    TV_USMMI: 439 observations
+  Fetching ECONOMICS:USMOR...
+    TV_USMOR: 93 observations
+  Fetching ECONOMICS:USISMMP...
+    TV_USISMMP: 10 observations
+  Fetching ECONOMICS:USBCOI...
+    TV_USBCOI: 942 observations
+  Fetching ECONOMICS:USMNO...
+    TV_USMNO: 918 observations
+  Fetching ECONOMICS:USMEMP...
+    TV_USMEMP: 918 observations
+  Fetching ECONOMICS:USMPR...
+    TV_USMPR: 282 observations
+  Fetching ECONOMICS:USNMPMI...
+    TV_USNMPMI: No data returned
+  Fetching ECONOMICS:USNMBA...
+    TV_USNMBA: 348 observations
+  Fetching ECONOMICS:USNMNO...
+    TV_USNMNO: 348 observations
+  Fetching ECONOMICS:USNMEMP...
+    TV_USNMEMP: 348 observations
+  Fetching ECONOMICS:USNMPR...
+    TV_USNMPR: 348 observations
+  Fetching ECONOMICS:USRFMI...
+    TV_USRFMI: 392 observations
+  Fetching ECONOMICS:USKFMI...
+    TV_USKFMI: 300 observations
+  Fetching ECONOMICS:USLEI...
+    TV_USLEI: 809 observations
+  Fetching ECONOMICS:USBOI...
+    TV_USBOI: 530 observations
+  Fetching ECONOMICS:USFO...
+    TV_USFO: 417 observations
+  Fetching ECONOMICS:USBOT...
+    TV_USBOT: 917 observations
+  Fetching ECONOMICS:USCA...
+    TV_USCA: 265 observations
+  Fetching ECONOMICS:USGTB...
+    TV_USGTB: 857 observations
+  Fetching ECONOMICS:USIMP...
+    TV_USIMP: 917 observations
+  Fetching ECONOMICS:USEXP...
+    TV_USEXP: 917 observations
+  Fetching ECONOMICS:USCAG...
+    TV_USCAG: 46 observations
+  Fetching ECONOMICS:USCURAG...
+    TV_USCURAG: 265 observations
+  Fetching ECONOMICS:USCURAS...
+    TV_USCURAS: 4 observations
+  Fetching ECONOMICS:USTA...
+    TV_USTA: 363 observations
+  Fetching ECONOMICS:USCF...
+    TV_USCF: 577 observations
+  Fetching ECONOMICS:USTICNLF...
+    TV_USTICNLF: 577 observations
+  Fetching ECONOMICS:USFDI...
+    TV_USFDI: 129 observations
+  Fetching ECONOMICS:USED...
+    TV_USED: 92 observations
+  Fetching ECONOMICS:USTI...
+    TV_USTI: 24 observations
+  Fetching ECONOMICS:USTOT...
+    TV_USTOT: 237 observations
+  Fetching ECONOMICS:USCOP...
+    TV_USCOP: 916 observations
+  Fetching ECONOMICS:USWCOP...
+    TV_USWCOP: 485 observations
+  Fetching ECONOMICS:USOE...
+    TV_USOE: 449 observations
+  Fetching ECONOMICS:USGRES...
+    TV_USGRES: 106 observations
+  Fetching ECONOMICS:USTR...
+    TV_USTR: 329 observations
+  Fetching ECONOMICS:USWES...
+    TV_USWES: 76 observations
+
+--- OECD (OpenBB inbound: GDP, CPI, unemp, CLI, rates) ---
+  OECD: openbb unavailable in this env (No module named 'openbb')
+
+--- UMICH (5-yr inflation expectations, Table 33) ---
+
+--- FREE GOV FEEDS (NY Fed GSCPI, direct-source pulls) ---
+
+--- TREASURYDIRECT (auctions, bills share, WAM) ---
+
+--- NOWCAST BRIDGE (daily reads between releases) ---
+Pulling SPY... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling TLT... 6033 obs, 2002-07-30 to 2026-07-22
+Pulling IEF... 6033 obs, 2002-07-30 to 2026-07-22
+Pulling SHY... 6033 obs, 2002-07-30 to 2026-07-22
+Pulling IWM... 6576 obs, 2000-05-26 to 2026-07-22
+Pulling QQQ... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling EEM... 5855 obs, 2003-04-14 to 2026-07-22
+Pulling EFA... 6261 obs, 2001-08-27 to 2026-07-22
+Pulling XLY... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLP... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLF... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLE... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLU... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLI... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLV... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLB... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XLK... 6677 obs, 2000-01-03 to 2026-07-22
+Pulling XHB... 5146 obs, 2006-02-06 to 2026-07-22
+Pulling ITB... 5084 obs, 2006-05-05 to 2026-07-22
+Pulling GDX... 5073 obs, 2006-05-22 to 2026-07-22
+Pulling GLD... 5451 obs, 2004-11-18 to 2026-07-22
+Pulling SLV... 5089 obs, 2006-04-28 to 2026-07-22
+Pulling HYG... 4851 obs, 2007-04-11 to 2026-07-22
+Pulling LQD... 6033 obs, 2002-07-30 to 2026-07-22
+Done.
+WROTE nowcast bridge — built 7, skipped 7
+
+BUILT (daily nowcast fills the gap since last release):
+  JOLTS_Quits_Rate             <- nowcast:ICSA           | 11 gap-days (70d), -> JOLTS_Quits_Rate_NOWCAST
+  JOLTS_Hires_Rate             <- nowcast:ICSA           | 11 gap-days (70d), -> JOLTS_Hires_Rate_NOWCAST
+  Unemployed_27wks_Plus_z      <- nowcast:ICSA           | 6 gap-days (35d), -> Unemployed_27wks_Plus_z_NOWCAST
+  PCE_Core_3m_ann              <- external:T5YIE         | 55 gap-days (79d), -> PCE_Core_3m_ann_NOWCAST
+  Housing_Starts_yoy_pct       <- nowcast:TV_USMAPL      | 1 gap-days (0d), -> Housing_Starts_yoy_pct_NOWCAST
+  Case_Shiller_Home_Prices_yoy <- nowcast:ZILLOW_ZHVI_NATIONAL | 2 gap-days (31d), -> Case_Shiller_Home_Prices_yoy_pct_NOWCAST
+  Debt_to_GDP                  <- nowcast:FEDDT          | 28 gap-days (189d), -> Debt_to_GDP_NOWCAST
+
+SKIPPED (need proxy ingestion or fix):
+  CPI_Shelter_yoy_pct          proxy ZILLOW_ZORI_NATIONAL: no gap or insufficient overlap
+  Industrial_Production_yoy_pc proxy RAILFRTCARLOADSD11: no gap or insufficient overlap
+  Retail_Sales_yoy_pct         no usable proxy in DB for WRBSMI
+  Consumer_Sentiment_z         no usable proxy in DB for AAII_Bull_Bear_Spread, NAAIM_Exposure
+  Existing_Home_Sales_yoy_pct  proxy TV_USPHSIYY: no gap or insufficient overlap
+  Months_Supply_z              no usable proxy in DB for Active_Listings_Realtor_dot_com (weekly, scraped)
+  Dollar_Index_yoy_pct         no usable proxy in DB for DXY (ICE Dollar Index, daily)
+
+=== INDPRO: Industrial Production YoY ===
+  in-sample r=0.87 | walk-forward OOS r=0.78 | n=219
+  proprietary weights: IYT_Close+1.84, NFCI-1.64, SMH_Close-1.39, ICSA-1.08, DCOILWTICO+1.02, XLI_XLP+0.61
+  latest nowcast: 0.83  (last actual print 1.14)
+  wrote LHM_INDPRO_NOWCAST (43 daily) + LHM_INDPRO_FITTED (220 fitted)
+
+=== GDP: Real GDP YoY ===
+  in-sample r=0.96 | walk-forward OOS r=0.88 | n=72
+  proprietary weights: RSAFS+1.60, ICSA-0.80, IYT_Close+0.68, COPPER_Close-0.63, HYG_Close+0.46, XLI_XLP+0.43
+  latest nowcast: 3.99  (last actual print 2.68)
+  wrote LHM_GDP_NOWCAST (194 daily) + LHM_GDP_FITTED (74 fitted)
+
+=== LABOR: Nonfarm Payrolls YoY ===
+  in-sample r=0.91 | walk-forward OOS r=0.85 | n=219
+  proprietary weights: TEMPHELPS+1.26, CCSA-0.95, HYG_Close-0.46, IC4WSA-0.33, ICSA-0.32, XLI_XLP+0.17
+  latest nowcast: 1.64  (last actual print 0.32)
+  wrote LHM_LABOR_NOWCAST (41 daily) + LHM_LABOR_FITTED (220 fitted)
+
+=== INFLATION: Core CPI YoY ===
+  in-sample r=0.71 | walk-forward OOS r=0.60 | n=234
+  proprietary weights: T5YIE+0.81, DTWEXBGS+0.38, COPPER_Close-0.11, GASREGW+0.07, DCOILWTICO+0.03, T10YIE-0.00
+  latest nowcast: 2.99  (last actual print 2.81)
+  wrote LHM_INFLATION_NOWCAST (35 daily) + LHM_INFLATION_FITTED (236 fitted)
+
+=== HOUSING: Case-Shiller Home Prices YoY ===
+  in-sample r=0.98 | walk-forward OOS r=0.94 | n=231
+  proprietary weights: ZILLOW_ZHVI_NATIONAL+6.01, XHB_Close+1.22, WPU081+0.12, MORTGAGE30US-0.00, TV_USMAPL-0.00
+  latest nowcast: 0.95  (last actual print 0.84)
+  wrote LHM_HOUSING_NOWCAST (96 daily) + LHM_HOUSING_FITTED (234 fitted)
+
+--- QUALITY CHECKS ---
+
+======================================================================
+UPDATE COMPLETE
+======================================================================
+
+Database Statistics:
+  Total Observations: 4,743,508
+  Total Series: 2733
+  Date Range: 1854-10-01 to 2036-10-01
+  Duration: 1499.2 seconds
+
+This Update:
+  FRED: 743 series, 1,331,440 observations
+  BLS: 31 series, 12,316 observations
+  BEA: 9 series, 31,080 observations
+  NYFED: 10 series, 20,768 observations
+  OFR: 21 series, 73,072 observations
+  MARKET: 21 series, 125,204 observations
+  CRYPTO: 421 series, 35,752 observations
+  BREADTH: 13 series, 9,776 observations
+  ZILLOW: 42 series, 9,573 observations
+  TRADINGVIEW: 47 series, 20,508 observations
+  OECD: 0 series, 0 observations
+  UMICH: 1 series, 476 observations
+  FREEGOV: 5 series, 970 observations
+  TREASURY: 5 series, 0 observations
+  NOWCAST: 7 series, 0 observations
+======================================================================
+
+======================================================================
+REBUILDING HORIZON DATASET
+======================================================================
+======================================================================
+LIGHTHOUSE MACRO - HORIZON DATASET BUILDER
+Target: 133 base series
+Cutoff: 2026-07-22
+======================================================================
+
+--- Processing Series ---
+   [1] Unemployment_Rate_U3: 941 obs, 4 cols, 1948-01-01 to 2026-06-01
+   [2] Unemployment_Rate_U6: 389 obs, 4 cols, 1994-01-01 to 2026-06-01
+   [3] Unemployment_Rate_U1: 941 obs, 3 cols, 1948-01-01 to 2026-06-01
+   [4] Unemployment_Rate_U2: 713 obs, 3 cols, 1967-01-01 to 2026-06-01
+   [5] LFPR: 941 obs, 3 cols, 1948-01-01 to 2026-06-01
+   [6] LFPR_Prime_Age_25_54: 941 obs, 3 cols, 1948-01-01 to 2026-06-01
+   [7] Nonfarm_Payrolls: 1050 obs, 4 cols, 1939-01-01 to 2026-06-01
+   [8] Initial_Claims: 3106 obs, 4 cols, 1967-01-07 to 2026-07-11
+   [9] Continued_Claims: 3105 obs, 4 cols, 1967-01-07 to 2026-07-04
+   [10] JOLTS_Openings_Rate: 306 obs, 3 cols, 2000-12-01 to 2026-05-01
+   [11] JOLTS_Quits_Rate: 308 obs, 3 cols, 2000-12-01 to 2026-07-01
+   [12] JOLTS_Hires_Rate: 308 obs, 3 cols, 2000-12-01 to 2026-07-01
+   [13] Mean_Unemployment_Duration: 941 obs, 3 cols, 1948-01-01 to 2026-06-01
+   [14] Unemployed_27wks_Plus: 941 obs, 3 cols, 1948-01-01 to 2026-06-01
+   [15] Part_Time_Economic_Reasons: 853 obs, 3 cols, 1955-05-01 to 2026-06-01
+   [16] Unemployment_White: 869 obs, 3 cols, 1954-01-01 to 2026-06-01
+   [17] Unemployment_Black: 653 obs, 3 cols, 1972-01-01 to 2026-06-01
+   [18] Unemployment_Hispanic: 639 obs, 3 cols, 1973-03-01 to 2026-06-01
+   [19] Unemployment_25_54: 941 obs, 3 cols, 1948-01-01 to 2026-06-01
+   [20] Unemployment_55_Plus: 941 obs, 3 cols, 1948-01-01 to 2026-06-01
+   [21] Jobs_Total_Nonfarm: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [22] Jobs_Construction: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [23] Jobs_Manufacturing: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [24] Jobs_Financial: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [25] Jobs_Professional_Business: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [26] Jobs_Education_Health: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [27] Jobs_Leisure_Hospitality: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [28] Jobs_Government: 438 obs, 3 cols, 1990-01-01 to 2026-06-01
+   [29] CPI_Headline: 953 obs, 5 cols, 1947-01-01 to 2026-06-01
+   [30] CPI_Core: 833 obs, 5 cols, 1957-01-01 to 2026-06-01
+   [31] PCE_Headline: 809 obs, 5 cols, 1959-01-01 to 2026-05-01
+   [32] PCE_Core: 809 obs, 5 cols, 1959-01-01 to 2026-05-01
+   [33] Median_CPI: 522 obs, 3 cols, 1983-01-01 to 2026-06-01
+   [34] Sticky_Core_CPI: 702 obs, 3 cols, 1968-01-01 to 2026-06-01
+   [35] CPI_Shelter: 881 obs, 4 cols, 1953-01-01 to 2026-06-01
+   [36] CPI_Rent_Primary: 545 obs, 3 cols, 1981-01-01 to 2026-06-01
+   [37] CPI_OER: 521 obs, 3 cols, 1983-01-01 to 2026-06-01
+   [38] CPI_Medical_Services: 713 obs, 2 cols, 1967-01-01 to 2026-06-01
+   [39] CPI_Transport_Services: 845 obs, 2 cols, 1956-01-01 to 2026-06-01
+   [40] CPI_Gasoline: 714 obs, 3 cols, 1967-01-01 to 2026-06-01
+   [41] CPI_Used_Cars: 882 obs, 3 cols, 1953-01-01 to 2026-06-01
+   [42] CPI_Food_Home: 893 obs, 2 cols, 1952-01-01 to 2026-06-01
+   [43] CPI_Food_Away: 881 obs, 2 cols, 1953-01-01 to 2026-06-01
+   [44] PCE_Durable_Goods: 809 obs, 2 cols, 1959-01-01 to 2026-05-01
+   [45] PCE_Nondurable_Goods: 809 obs, 2 cols, 1959-01-01 to 2026-05-01
+   [46] PCE_Services: 809 obs, 2 cols, 1959-01-01 to 2026-05-01
+   [47] Breakeven_10Y: 5892 obs, 3 cols, 2003-01-02 to 2026-07-22
+   [48] Breakeven_5Y: 5892 obs, 3 cols, 2003-01-02 to 2026-07-22
+   [49] Forward_Inflation_5Y: 5892 obs, 3 cols, 2003-01-02 to 2026-07-22
+   [50] Fed_Funds: 864 obs, 3 cols, 1954-07-01 to 2026-06-01
+   [51] Treasury_1M: 6244 obs, 2 cols, 2001-07-31 to 2026-07-21
+   [52] Treasury_3M: 11220 obs, 2 cols, 1981-09-01 to 2026-07-21
+   [53] Treasury_6M: 11220 obs, 2 cols, 1981-09-01 to 2026-07-21
+   [54] Treasury_1Y: 16122 obs, 3 cols, 1962-01-02 to 2026-07-21
+   [55] Treasury_2Y: 12530 obs, 3 cols, 1976-06-01 to 2026-07-21
+   [56] Treasury_5Y: 16122 obs, 3 cols, 1962-01-02 to 2026-07-21
+   [57] Treasury_10Y: 16122 obs, 3 cols, 1962-01-02 to 2026-07-21
+   [58] Treasury_30Y: 12352 obs, 3 cols, 1977-02-15 to 2026-07-21
+   [59] Curve_10Y_2Y: 12531 obs, 3 cols, 1976-06-01 to 2026-07-22
+   [60] Curve_10Y_3M: 11140 obs, 3 cols, 1982-01-04 to 2026-07-22
+   [61] Spread_10Y_FF: 16120 obs, 3 cols, 1962-01-02 to 2026-07-21
+   [62] Spread_5Y_FF: 16120 obs, 2 cols, 1962-01-02 to 2026-07-21
+   [63] TIPS_5Y: 5891 obs, 2 cols, 2003-01-02 to 2026-07-21
+   [64] TIPS_10Y: 5891 obs, 2 cols, 2003-01-02 to 2026-07-21
+   [65] Term_Premium_10Y: 9121 obs, 3 cols, 1990-01-02 to 2026-07-17
+   [66] Mortgage_30Y: 2886 obs, 3 cols, 1971-04-02 to 2026-07-16
+   [67] HY_OAS: 7718 obs, 4 cols, 1996-12-31 to 2026-07-21
+   [68] IG_OAS: 7717 obs, 4 cols, 1996-12-31 to 2026-07-21
+   [69] SOFR: 2072 obs, 2 cols, 2018-04-03 to 2026-07-21
+   [70] EFFR: 2084 obs, 2 cols, 2018-04-03 to 2026-07-21
+   [71] OBFR: 2084 obs, 2 cols, 2018-04-03 to 2026-07-21
+   [72] SOFR_Volume: 2072 obs, 3 cols, 2018-04-03 to 2026-07-21
+   [73] Fed_Balance_Sheet: 1231 obs, 3 cols, 2002-12-18 to 2026-07-15
+   [74] RRP_Usage: 3288 obs, 4 cols, 2003-02-07 to 2026-07-22
+   [75] Bank_Reserves: 809 obs, 3 cols, 1959-01-01 to 2026-05-01
+   [76] M2: 809 obs, 3 cols, 1959-01-01 to 2026-05-01
+   [77] Treasury_General_Account: 1231 obs, 3 cols, 2002-12-18 to 2026-07-15
+   [78] Fed_RRP_Outstanding: 1222 obs, 2 cols, 2002-12-18 to 2026-05-13
+   [79] Chicago_NFCI: 2898 obs, 3 cols, 1971-01-08 to 2026-07-17
+   [80] Adjusted_NFCI: 2898 obs, 3 cols, 1971-01-08 to 2026-07-17
+   [81] StLouis_FSI: 1699 obs, 3 cols, 1993-12-31 to 2026-07-17
+   [82] OFR_FSI: 6718 obs, 3 cols, 2000-01-03 to 2026-07-20
+   [83] OFR_FSI_Credit: 6718 obs, 3 cols, 2000-01-03 to 2026-07-20
+   [84] OFR_FSI_Funding: 6718 obs, 3 cols, 2000-01-03 to 2026-07-20
+   [85] OFR_FSI_Volatility: 6718 obs, 3 cols, 2000-01-03 to 2026-07-20
+   [86] OFR_FSI_US: 6718 obs, 3 cols, 2000-01-03 to 2026-07-20
+   [87] GDP_Nominal: 317 obs, 3 cols, 1947-01-01 to 2026-01-01
+   [88] GDP_Real: 317 obs, 3 cols, 1947-01-01 to 2026-01-01
+   [89] Industrial_Production: 1291 obs, 4 cols, 1919-01-01 to 2026-07-01
+   [90] Retail_Sales: 414 obs, 3 cols, 1992-01-01 to 2026-06-01
+   [91] Consumer_Sentiment: 673 obs, 4 cols, 1952-11-01 to 2026-05-01
+   [92] Consumer_Credit: 1001 obs, 2 cols, 1943-01-01 to 2026-05-01
+   [93] Saving_Rate: 809 obs, 3 cols, 1959-01-01 to 2026-05-01
+   [94] Debt_Service_Ratio: 185 obs, 3 cols, 1980-01-01 to 2026-01-01
+   [95] LO_Survey_CI_Tightening: 145 obs, 3 cols, 1990-04-01 to 2026-04-01
+   [96] LO_Survey_CC_Tightening: 122 obs, 3 cols, 1996-01-01 to 2026-04-01
+   [97] CI_Loans: 2793 obs, 2 cols, 1973-01-03 to 2026-07-08
+   [98] Business_Loans: 954 obs, 2 cols, 1947-01-01 to 2026-06-01
+   [99] Consumer_Loans: 954 obs, 2 cols, 1947-01-01 to 2026-06-01
+   [100] Real_Estate_Loans: 954 obs, 2 cols, 1947-01-01 to 2026-06-01
+   [101] Housing_Starts: 810 obs, 4 cols, 1959-01-01 to 2026-06-01
+   [102] Housing_Starts_1Unit: 810 obs, 2 cols, 1959-01-01 to 2026-06-01
+   [103] Building_Permits: 798 obs, 3 cols, 1960-01-01 to 2026-06-01
+   [104] Case_Shiller_Home_Prices: 472 obs, 3 cols, 1987-01-01 to 2026-04-01
+   [105] Median_Home_Price: 253 obs, 2 cols, 1963-01-01 to 2026-01-01
+   [106] New_Home_Sales: 761 obs, 3 cols, 1963-01-01 to 2026-05-01
+   [107] Existing_Home_Sales: 702 obs, 3 cols, 1968-01-01 to 2026-06-01
+   [108] Months_Supply: 761 obs, 3 cols, 1963-01-01 to 2026-05-01
+   [109] Delinquency_All_Loans: 165 obs, 4 cols, 1985-01-01 to 2026-01-01
+   [110] Delinquency_Mortgage: 141 obs, 4 cols, 1991-01-01 to 2026-01-01
+   [111] Delinquency_Credit_Card: 141 obs, 4 cols, 1991-01-01 to 2026-01-01
+   [112] Delinquency_Consumer: 157 obs, 4 cols, 1987-01-01 to 2026-01-01
+   [113] Delinquency_Business: 157 obs, 4 cols, 1987-01-01 to 2026-01-01
+   [114] Delinquency_CRE: 141 obs, 4 cols, 1991-01-01 to 2026-01-01
+   [115] Federal_Debt: 241 obs, 2 cols, 1966-01-01 to 2026-01-01
+   [116] Debt_to_GDP: 243 obs, 2 cols, 1966-01-01 to 2026-07-01
+   [117] Federal_Surplus_Deficit: 125 obs, 2 cols, 1901-06-30 to 2025-09-30
+   [118] Federal_Receipts: 317 obs, 2 cols, 1947-01-01 to 2026-01-01
+   [119] Federal_Expenditures: 317 obs, 2 cols, 1947-01-01 to 2026-01-01
+   [120] VIX: 9234 obs, 4 cols, 1990-01-02 to 2026-07-21
+   [121] WTI_Crude: 10205 obs, 3 cols, 1986-01-02 to 2026-07-20
+   [122] Dollar_Index: 5149 obs, 3 cols, 2006-01-02 to 2026-07-17
+   [123] EUR_USD: 6906 obs, 2 cols, 1999-01-04 to 2026-07-17
+   [124] JPY_USD: 13921 obs, 2 cols, 1971-01-04 to 2026-07-17
+   [125] BEA_GDP: 105 obs, 3 cols, 2000-01-01 to 2026-01-01
+   [126] BEA_PCE: 105 obs, 3 cols, 2000-01-01 to 2026-01-01
+   [127] BEA_Investment: 105 obs, 3 cols, 2000-01-01 to 2026-01-01
+   [128] BEA_Net_Exports: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+   [129] BEA_Govt: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+   [130] BEA_Personal_Income: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+   [SKIP] BEA_DPI: No data found for BEA_Personal_Income_Disposable_personal_income
+   [SKIP] BEA_Personal_Saving: No data found for BEA_Personal_Income_Personal_saving
+   [131] BEA_Corp_Profits: 105 obs, 2 cols, 2000-01-01 to 2026-01-01
+
+--- Building Combined Dataset ---
+
+Dataset Shape: 45679 rows x 385 columns
+Date Range: 1901-06-30 to 2026-07-22
+Base Series: 131
+Total Columns (raw + transforms): 385
+
+--- Saving to SQLite ---
+   Saved to: /Users/bob/LHM/Data/databases/Lighthouse_Master.db (table: horizon_dataset)
+
+--- Exporting to CSV ---
+   Saved to: /Users/bob/LHM/Data/databases/Horizon_Dataset.csv
+
+--- Column Summary ---
+Total columns: 385
+   Raw series: 131
+   Transformations: 254
+
+======================================================================
+HORIZON DATASET COMPLETE
+======================================================================
+
+======================================================================
+COMPUTING PROPRIETARY INDICES
+======================================================================
+
+--- Loading Horizon Dataset ---
+   Loaded 45679 rows, 385 columns
+   Date range: 1901-06-30 to 2026-07-22
+
+--- Extending intraday quotes (yfinance) ---
+   intraday extend: Treasury_10Y carried to 2026-07-22 via yfinance
+   intraday extend: Treasury_30Y carried to 2026-07-22 via yfinance
+   intraday extend: Treasury_5Y carried to 2026-07-22 via yfinance
+   intraday extend: Treasury_3M carried to 2026-07-22 via yfinance
+   intraday extend: VIX carried to 2026-07-23 via yfinance
+   Extended date range: 1901-06-30 to 2026-07-23
+
+--- Loading Layer-1 Nowcast Overlays ---
+   Growth_Nowcast_WEI_z: latest 2026-07-23, 6713 non-NaN obs
+
+--- Computing Indices (strict anchor + Layer-1 bridge) ---
+   Computing Labor Pressure (LPI)...
+      bridge: LPI 2026-06-01→2026-07-23 OOS corr=+0.76 sign=82% σ=0.43 n=8950 noos=8194 · model=LinearRegression · noise=0%
+   Computing Inflation Heat (PCI)...
+      bridge: PCI 2026-07-22→2026-07-23 OOS corr=+0.06 sign=48% σ=n/a n=7984 noos=7228 · FALLBACK=low_oos_skill (held last value)
+   Computing Activity Pulse (GCI)...
+   Computing Housing Tide (HCI)...
+   Computing Consumer Pulse (CCI)...
+      bridge: CCI 2026-01-01→2026-07-23 OOS corr=+0.26 sign=61% σ=0.72 n=9987 noos=9231 · model=ElasticNet · noise=0%
+   Computing Capex Thrust (BCI)...
+      bridge: BCI 2026-07-21→2026-07-23 OOS corr=+0.35 sign=57% σ=0.87 n=10188 noos=9432 · model=ElasticNet · noise=0%
+   Computing Global Risk Tide (TCI)...
+      bridge: TCI 2026-07-17→2026-07-23 OOS corr=+0.94 sign=92% σ=0.48 n=6837 noos=6081 · model=ElasticNet · noise=0%
+   Computing Fiscal Pressure (FPI)...
+      bridge: FPI 2026-07-17→2026-07-23 OOS corr=+0.67 sign=73% σ=0.60 n=12729 noos=11973 · model=ElasticNet · noise=0%
+   Computing Labor Fragility (LFI)...
+      bridge: LFI 2026-07-13→2026-07-23 OOS corr=+0.54 sign=72% σ=0.39 n=8970 noos=8214 · model=ElasticNet · noise=0%
+   Computing Liquidity Cushion (LCI)...
+      bridge: LCI 2026-07-17→2026-07-23 OOS corr=+0.75 sign=70% σ=0.48 n=2903 noos=2147 · model=LinearRegression · noise=2%
+   Computing Credit Tide (FCI)...
+      bridge: FCI 2026-07-21→2026-07-23 OOS corr=+0.96 sign=90% σ=0.25 n=10188 noos=9432 · model=ElasticNet · noise=0%
+   Computing Credit-Labor Gap (CLG)...
+   Computing Macro Risk Index (MRI)...
+   Computing Labor Dynamism (LDI)...
+      bridge: LDI 2026-07-01→2026-07-23 OOS corr=+0.69 sign=80% σ=0.46 n=8980 noos=8224 · model=ElasticNet · noise=0%
+   Computing Yield-Funding Stress (YFS)...
+   Computing SVI (Spread-Volatility Imbalance)...
+   Computing EMD (Equity Momentum Divergence)...
+   Computing Liquidity Stage...
+   Computing Bill-SOFR Spread...
+   Computing RMP Index (placeholder - needs Treasury data)...
+   Computing MSI (Market Structure Index)...
+   Computing SBD (Structure-Breadth Divergence)...
+   Computing SPI (Sentiment & Positioning Index)...
+   Computing SSD (Sentiment-Structure Divergence)...
+   Computing REC_PROB (Recession Probability)...
+      Generated 13352 probability estimates
+   Computing WARNING_LEVEL (Threshold Warning System)...
+   Computing ENSEMBLE_RISK (Risk Ensemble)...
+      Warning Level: RED
+      Ensemble Regime: PRE_CRISIS
+      Adjusted Probability: 57.2%
+      Discontinuity Premium: +40.0%
+      Allocation Multiplier: 0.15x
+
+--- Building Output ---
+   Computing allocation-impact composites (validated 2026-06-15)...
+   Generated 438091 index observations
+   Cleaned and rewrote 438091 rows across 38 index_ids in lighthouse_indices
+
+--- Verification: Latest Index Values ---
+
+Latest values (2026-07-23):
+--------------------------------------------------
+   ALLOC_CONS_ROTATION    0.016  [NEUTRAL             ]  
+   ALLOC_CREDIT_LABOR_GAP    0.344  [NEUTRAL             ]  
+   ALLOC_CURVE_STEEPENER    0.344  [NEUTRAL             ]  
+   ALLOC_CYCLICAL_DEFENSIVE    0.098  [NEUTRAL             ]  
+   ALLOC_DOLLAR_EM   -0.247  [NEUTRAL             ]  
+   ALLOC_ENERGY_MOMENTUM   -0.416  [NEUTRAL             ]  
+   ALLOC_INCOME_DEPLETION    0.663  [SIGNAL              ]  
+   ALLOC_INVENTORY_DESTOCK    0.093  [NEUTRAL             ]  
+   ALLOC_MULTIPLIER    0.150  [CAPITAL PRESERVATION]  
+   ALLOC_REALYIELD_GOLD   -0.926  [INVERSE             ]  
+   BASE_REC_PROB    0.172  [LOW RISK            ]  
+   BCI           1.194  [BUSINESS BOOM       ]  
+   BILL_SOFR     0.260  [BILLS VERY RICH     ]  
+   CCI           0.051  [FATIGUED            ]  
+   CLG          -0.270  [MISPRICED           ] ✓ ~-1.84 (Mispriced)
+   DISCONTINUITY_PREMIUM    0.400  [EXTREME             ]  
+   EMD           0.361  [NEUTRAL             ]  
+   ENSEMBLE_RISK    0.572  [PRE_CRISIS          ]  
+   FCI           0.263  [NEUTRAL             ]  
+   FPI           1.248  [HIGH STRESS         ]  
+   GCI           1.458  [STRONG GROWTH       ]  
+   HCI          -0.230  [FROZEN              ]  
+   LCI           0.074  [NEUTRAL             ] ⚠ ~-0.8 (Scarce)
+   LDI           0.381  [SLUGGISH            ]  
+   LFI           0.415  [NEUTRAL             ] ⚠ ~0.93 (Elevated)
+   LIQ_STAGE     1.000  [STAGE 1 - RRP DEPLETION]  
+   LPI           0.471  [NEUTRAL             ]  
+   MRI          -0.009  [NEUTRAL             ] ⚠ ~1.1 (High Risk)
+   MSI          -0.413  [TRANSITIONAL        ]  
+   PCI           0.205  [ON TARGET           ]  
+   REC_PROB      0.707  [HIGH RISK           ]  
+   SBD          -0.204  [ALIGNED             ]  
+   SPI          -0.560  [NEUTRAL             ]  
+   SSD          -0.910  [EUPHORIA + STRONG   ]  
+   SVI           0.714  [BALANCED            ]  
+   TCI          -1.637  [TRADE CRISIS        ]  
+   WARNING_LEVEL    4.000  [RED                 ]  
+   YFS           0.170  [NORMAL              ]  
+--------------------------------------------------
+Index computation complete.
+
+======================================================================
+COMPUTING CRYPTO INDICES
+======================================================================
+
+--- Computing Crypto Indices ---
+   Computing CLI (Crypto Liquidity Impulse)...
+   Computing SLI (Stablecoin Liquidity Impulse)...
+   Skipping retired paid-fundamentals indices (CFI/CDI/CVI/CTI/sector health)
+   Generated 15134 crypto index observations
+   Wrote 15134 crypto index rows to lighthouse_indices
+
+--- Verification: Latest Crypto Index Values ---
+
+Latest crypto values (2026-07-23):
+------------------------------------------------------------
+   CLI                           -0.033  [NEUTRAL]
+   CRYPTO_DEFI_LIQUIDITY         -1.443  [CONTRACTING]
+   SLI                           -0.117  [STABLE]
+   SLI_MCAP                     258.621  [N/A]
+   SLI_ROC_30D                   -0.856  [N/A]
+   SLI_ROC_90D_ANN              -13.660  [N/A]
+------------------------------------------------------------
+Crypto index computation complete.
+CRYPTO_DEFI_LIQUIDITY: wrote 1773 rows 2021-09-15..2026-07-23 latest=-1.41 (CONTRACTING)
+   [ok] SUPERCORE_HEAT          13353 rows  1990-01-01..2026-07-23  latest +0.08 (NEUTRAL)
+   [ok] PERSISTENCE_GAP         13353 rows  1990-01-01..2026-07-23  latest -0.55 (LOW)
+   [ok] PIPELINE_IMPULSE        13353 rows  1990-01-01..2026-07-23  latest +0.45 (NEUTRAL)
+   [ok] TREND_HEAT              13353 rows  1990-01-01..2026-07-23  latest -1.43 (LOW)
+   [ok] AFFORD_PRESSURE         13353 rows  1990-01-01..2026-07-23  latest +1.18 (ELEVATED)
+   [ok] FROZEN_DIVERGENCE       13353 rows  1990-01-01..2026-07-23  latest -0.58 (LOW)
+   [ok] INTEREST_CROWDOUT       13353 rows  1990-01-01..2026-07-23  latest -0.55 (LOW)
+   [ok] QUALITY_PRESSURE        13353 rows  1990-01-01..2026-07-23  latest -1.93 (VERY LOW)
+   [ok] VOL_TERM_GAP            12624 rows  1991-12-31..2026-07-23  latest -0.12 (NEUTRAL)
+   [ok] FCI_CHANNELS            13353 rows  1990-01-01..2026-07-23  latest -0.25 (NEUTRAL)
+   [ok] CAPACITY_SLACK          13353 rows  1990-01-01..2026-07-23  latest +0.43 (NEUTRAL)
+
+Wrote 146154 rows across 11 descriptive indicators
+Freshness OK: 57 indicators current through yesterday.
+
+--- Lighthouse Master Database ---
+Total Observations: 4,743,508
+Total Series: 2733
+Date Range: 1854-10-01 to 2036-10-01
+
+By Source:
+                                                       source  series
+                                                         AAII       4
+                                                          BEA     267
+                                                          BLS      31
+                                                 BLS via FRED       1
+                                           Census M3 via FRED       3
+                                                    CoinGecko      62
+                                                     Computed      13
+                                                    DefiLlama     424
+                                                      Derived       2
+                                                 Derived/CBOE       1
+                                                         FRED    1686
+                                                  LHM Nowcast      12
+                               Lighthouse Macro risk ensemble       1
+                                          Lighthouse_Computed       1
+                                                       NY Fed       5
+                                                        NYFED      10
+                                                         OECD      35
+                                                          OFR      21
+St. Louis Fed (Thornton & Wheelock, Making Sense of Dissents)       1
+                                                  TradingView      49
+                                               TreasuryDirect       5
+                                                        UMich       1
+                                                        Yahoo      45
+                                                       Zillow      42
+                                               external:T5YIE       2
+                                                nowcast:FEDDT       1
+                                                 nowcast:ICSA       6
+                                            nowcast:TV_USMAPL       1
+                                 nowcast:ZILLOW_ZHVI_NATIONAL       1
+
+By Category (Top 15):
+                  category  series
+                   Curated     722
+          Crypto_Chain_TVL     406
+     Industrial_Production     213
+          Business_Lending     138
+                   Housing     113
+      Regional_Fed_Surveys     110
+           Personal_Income      88
+     Employment_Cost_Index      76
+      Employment_Situation      73
+     GDP_National_Accounts      64
+       CPI_Urban_Consumers      60
+             Crypto_Prices      57
+            Treasury_Rates      40
+Govt_Receipts_Expenditures      38
+         Corporate_Profits      37
+
+Data Quality:
+data_quality  series
+        good    1309
+insufficient      38
+       stale    1355
+     suspect      22
+     warning       9
+
+Recent Updates:
+                 timestamp source  series_updated  observations_added  duration_seconds    status
+2026-07-23T06:25:05.901019    ALL            1364             1670935       1499.237904 completed
+2026-07-22T06:25:21.810240    ALL            1346             1431540       1518.838373 completed
+2026-07-21T15:43:30.035319    ALL            1399             1788382       5971.479564 completed
+2026-07-20T06:26:36.257522    ALL            1348             1432170       1589.795422 completed
+2026-07-19T06:22:22.018980    ALL            1349             1432678       1334.768297 completed
+Database backed up to /Users/bob/LHM/Data/databases/backups
+Removed old backup: Lighthouse_Master_20260721.db
+[2026-07-23 06:28:15] ============================================================
+[2026-07-23 06:28:15] LIGHTHOUSE MACRO - MULTI-DESTINATION SYNC
+[2026-07-23 06:28:15] ============================================================
+[2026-07-23 06:28:15] GIT SYNC: Starting...
+[2026-07-23 06:28:18] GIT SYNC: Committed: Daily pipeline sync 2026-07-23 06:28
+[2026-07-23 06:28:21] GIT SYNC: Pushed to origin/main.
+[2026-07-23 06:28:21] CLOUD SYNC: Starting...
+[2026-07-23 06:28:21] CLOUD SYNC [iCloud]: Lighthouse_Master_20260723.db already exists, skipping.
+[2026-07-23 06:28:21] CLOUD SYNC [Dropbox]: Lighthouse_Master_20260723.db already exists, skipping.
+[2026-07-23 06:28:21] CLOUD SYNC [Dropbox]: Synced Strategy/
+[2026-07-23 06:28:21] CLOUD SYNC [Dropbox]: Synced Brand/
+[2026-07-23 06:28:22] CLOUD SYNC [iCloud]: Mirrored chart library
+[2026-07-23 06:28:22] ----------------------------------------
+[2026-07-23 06:28:22] SYNC SUMMARY:
+[2026-07-23 06:28:22]   GitHub: OK
+[2026-07-23 06:28:22]   Cloud: OK
+[2026-07-23 06:28:22] ============================================================
+
+======================================================================
+THRESHOLD ALERTS
+======================================================================
+  TRANSITION: SBD ACCUMULATION -> ALIGNED
+
+======================================================================
+MORNING BRIEF
+======================================================================
+WARNING: Morning brief failed: cannot import name 'build_brief' from 'morning_brief' (/Users/bob/LHM/Scripts/data_pipeline/morning_brief.py)
+
+======================================================================
+BUILDING PILLAR SUB-DATABASES
+======================================================================
+
+  Building Pillar  1: Labor (129 series mapped)
+           129 series found, 84,488 obs, 35,996 index rows, 11.8 MB
+
+  Building Pillar  2: Prices (308 series mapped)
+           308 series found, 173,705 obs, 17,246 index rows, 21.3 MB
+
+  Building Pillar  3: Growth (364 series mapped)
+           364 series found, 1,658,548 obs, 47,384 index rows, 158.1 MB
+
+  Building Pillar  4: Housing (184 series mapped)
+           184 series found, 103,436 obs, 29,669 index rows, 14.7 MB
+
+  Building Pillar  5: Consumer (172 series mapped)
+           172 series found, 50,153 obs, 21,725 index rows, 7.7 MB
+
+  Building Pillar  6: Business (166 series mapped)
+           166 series found, 82,575 obs, 19,451 index rows, 10.5 MB
+
+  Building Pillar  7: Trade (112 series mapped)
+           112 series found, 353,159 obs, 16,041 index rows, 35.6 MB
+
+  Building Pillar  8: Government (149 series mapped)
+           140 series found, 416,251 obs, 9,010 index rows, 39.9 MB
+           9 series not in master DB: ['ICERATES1100EUR10Y', 'ICERATES1100EUR20Y', 'ICERATES1100USD1Y', 'ICERATES1100USD30Y', 'ICERATES1100USD3Y', 'ICERATES1100USD4Y', 'ICERATES1100USD5Y', 'ICERATES1200EUR30Y', 'ICERATES1200EUR5Y']
+
+  Building Pillar  9: Financial (234 series mapped)
+           234 series found, 476,216 obs, 35,577 index rows, 54.5 MB
+
+  Building Pillar 10: Plumbing (208 series mapped)
+           208 series found, 279,496 obs, 11,919 index rows, 28.4 MB
+
+  Building Pillar 11: Structure (36 series mapped)
+           36 series found, 209,800 obs, 9,010 index rows, 23.4 MB
+
+  Building Pillar 12: Sentiment (16 series mapped)
+           16 series found, 69,269 obs, 21,131 index rows, 9.9 MB
+
+======================================================================
+PILLAR DATABASE STATS
+======================================================================
+  Pillar  1: Labor        |  129 series |   84,488 obs |  8 indices |  11.8 MB | built 2026-07-23T06:28:24
+  Pillar  2: Prices       |  308 series |  173,705 obs |  6 indices |  21.3 MB | built 2026-07-23T06:28:25
+  Pillar  3: Growth       |  364 series | 1,658,548 obs |  6 indices | 158.1 MB | built 2026-07-23T06:28:45
+  Pillar  4: Housing      |  184 series |  103,436 obs |  6 indices |  14.7 MB | built 2026-07-23T06:28:46
+  Pillar  5: Consumer     |  172 series |   50,153 obs |  6 indices |   7.7 MB | built 2026-07-23T06:28:46
+  Pillar  6: Business     |  166 series |   82,575 obs |  6 indices |  10.5 MB | built 2026-07-23T06:28:49
+  Pillar  7: Trade        |  112 series |  353,159 obs |  6 indices |  35.6 MB | built 2026-07-23T06:28:52
+  Pillar  8: Government   |  140 series |  416,251 obs |  5 indices |  39.9 MB | built 2026-07-23T06:28:56
+  Pillar  9: Financial    |  234 series |  476,216 obs |  7 indices |  54.5 MB | built 2026-07-23T06:29:00
+  Pillar 10: Plumbing     |  208 series |  279,496 obs |  6 indices |  28.4 MB | built 2026-07-23T06:29:01
+  Pillar 11: Structure    |   36 series |  209,800 obs |  5 indices |  23.4 MB | built 2026-07-23T06:29:03
+  Pillar 12: Sentiment    |   16 series |   69,269 obs |  9 indices |   9.9 MB | built 2026-07-23T06:29:03
+
+  Total size: 415.9 MB

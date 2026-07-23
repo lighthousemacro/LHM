@@ -293,3 +293,4 @@ INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "POST /auth/request HTTP/1
 INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /terminal HTTP/1.1" 302 Found
 INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /d HTTP/1.1" 200 OK
 INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     43.157.181.189:0 - "GET / HTTP/1.1" 200 OK

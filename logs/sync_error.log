@@ -2064,3 +2064,7 @@ Everything up-to-date
 
 Exception ignored while flushing sys.stdout:
 OSError: [Errno 28] No space left on device
+[2026-07-23 19:30:04] git fetch failed: error: cannot open '.git/FETCH_HEAD': No space left on device
+
+Exception ignored while flushing sys.stdout:
+OSError: [Errno 28] No space left on device

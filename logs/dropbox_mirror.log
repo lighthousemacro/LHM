@@ -3197,3 +3197,41 @@ rsync(86654): error: /Users/bob/LHM/Scripts/.tmp.driveupload/2060: open (2) in /
 === 2026-07-23 16:00:00 mirror start ===
 === 2026-07-23 16:00:04 mirror end (exit 0) ===
 === 2026-07-23 16:30:00 mirror start ===
+=== 2026-07-23 16:30:04 mirror end (exit 0) ===
+=== 2026-07-23 17:00:00 mirror start ===
+rsync(33151): error: mkstempat: 'logs/.dropbox_mirror.log.eMIvuSrjdS': No space left on device
+rsync(33151): error: mkstempat: 'logs/.freshness_check_error.log.KBwRtwf3Eu': No space left on device
+rsync(33151): error: mkstempat: 'logs/.substack_dashboard.log.xKzkwKdzCm': No space left on device
+rsync(33151): error: mkstempat: 'logs/.substack_dashboard_stderr.log.GlUpdR0sKa': No space left on device
+rsync(33151): error: mkstempat: 'logs/.substack_dashboard_stdout.log.KLzWBEqraj': No space left on device
+rsync(33151): error: mkstempat: 'logs/.sync.log.TnxCmpv9Fw': No space left on device
+=== 2026-07-23 17:00:03 mirror end (exit 0) ===
+=== 2026-07-23 17:30:00 mirror start ===
+rsync(34185): error: mkstempat: 'logs/.dropbox_mirror.log.R53irQ8dpZ': No space left on device
+rsync(34185): error: mkstempat: 'logs/.freshness_check_error.log.Xat1aA69FW': No space left on device
+rsync(34185): error: mkstempat: 'logs/.substack_dashboard.log.OT8wYbIBUv': No space left on device
+rsync(34185): error: mkstempat: 'logs/.substack_dashboard_stderr.log.kKmocg6ZVI': No space left on device
+rsync(34185): error: mkstempat: 'logs/.substack_dashboard_stdout.log.2DSbhspkuP': No space left on device
+rsync(34185): error: mkstempat: 'logs/.sync.log.tKrh8aM6bs': No space left on device
+=== 2026-07-23 17:30:03 mirror end (exit 0) ===
+=== 2026-07-23 18:00:01 mirror start ===
+rsync(35348): error: mkstempat: 'logs/.dropbox_mirror.log.PqPsm7bL7L': No space left on device
+rsync(35348): error: mkstempat: 'logs/.freshness_check_error.log.bMvd2en0Tu': No space left on device
+rsync(35348): error: mkstempat: 'logs/.substack_dashboard.log.dpZpE4j1Ao': No space left on device
+rsync(35348): error: mkstempat: 'logs/.substack_dashboard_stderr.log.J37vVu6Yu0': No space left on device
+rsync(35348): error: mkstempat: 'logs/.substack_dashboard_stdout.log.mqeX54gRy9': No space left on device
+rsync(35348): error: mkstempat: 'logs/.sync.log.zdxHKiPodB': No space left on device
+=== 2026-07-23 18:00:04 mirror end (exit 0) ===
+=== 2026-07-23 18:30:00 mirror start ===
+rsync(36588): error: mkstempat: 'logs/.dropbox_mirror.log.sfB25gwj8p': No space left on device
+rsync(36588): error: mkstempat: 'logs/.freshness_check_error.log.mJ92Si5TR6': No space left on device
+rsync(36588): error: mkstempat: 'logs/.lhmbot_server.log.8oK4rSxjZr': No space left on device
+rsync(36588): error: mkstempat: 'logs/.pharos_app.log.wziXraQfzG': No space left on device
+rsync(36588): error: mkstempat: 'logs/.substack_dashboard.log.BAzYnxxljD': No space left on device
+rsync(36588): error: mkstempat: 'logs/.substack_dashboard_stderr.log.yQIY3K72R2': No space left on device
+rsync(36588): error: mkstempat: 'logs/.substack_dashboard_stdout.log.e7M8w9DYHo': No space left on device
+rsync(36588): error: mkstempat: 'logs/.sync.log.2fyYWCBxLF': No space left on device
+=== 2026-07-23 18:30:03 mirror end (exit 0) ===
+=== 2026-07-23 19:00:00 mirror start ===
+rsync(37781): error: mkstempat: 'logs/.dropbox_mirror.log.NOvXWZIM9l': No space left on device
+=== 2026-07-23 19:00:03 mirror end (exit 0) ===

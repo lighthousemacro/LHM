@@ -284,3 +284,12 @@ INFO:     43.157.22.109:0 - "GET / HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:bce7:4cd1:582e:de91:0 - "GET / HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:bce7:4cd1:582e:de91:0 - "GET / HTTP/1.1" 200 OK
 INFO:     3.80.216.148:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /apple-touch-icon.png HTTP/1.1" 404 Not Found
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:1700:9e20:2e60:c7de:7952:81cd:60b2:0 - "GET /d/labor HTTP/1.1" 200 OK

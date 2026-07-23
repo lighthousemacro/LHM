@@ -387,3 +387,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-22_hiking-at-what/beam_preview
 [2026-07-22 07:50:49] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-22_hiking-at-what/beam_preview.html
 [2026-07-22 07:50:49] Opened in browser.
 [2026-07-22 07:50:49] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-23 07:45:00] ════════ DAILY DRAFT RUN START (2026-07-23) ════════
+[2026-07-23 07:45:00] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

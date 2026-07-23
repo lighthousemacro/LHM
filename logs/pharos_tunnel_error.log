@@ -145,3 +145,4 @@
 2026-07-22T06:42:23Z WRN Connection terminated error="datagram manager encountered a failure while serving" connIndex=2
 2026-07-22T06:42:34Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::2
 2026-07-22T06:42:34Z INF Registered tunnel connection connIndex=2 connection=fb8b8676-9abb-43fb-8058-5b2c065f194b event=0 ip=2606:4700:a8::2 location=ewr15 protocol=quic
+2026-07-23T12:14:28Z WRN Your version 2026.7.2 is outdated. We recommend upgrading it to 2026.7.3

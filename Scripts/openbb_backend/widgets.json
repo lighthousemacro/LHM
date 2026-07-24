@@ -402,7 +402,7 @@
     "paramName": "chain_id",
     "value": "plumbing_credit_labor",
     "label": "Chain",
-    "description": "plumbing_credit_labor / rates_housing_consumer / sentiment_structure_risk",
+    "description": "plumbing_credit_labor / rates_housing_consumer / sentiment_structure_risk / dollar_trade_growth / fiscal_term_premium_housing / labor_consumer_business",
     "show": true,
     "options": [
      {
@@ -416,6 +416,18 @@
      {
       "value": "sentiment_structure_risk",
       "label": "Sentiment \u2192 Structure \u2192 Risk"
+     },
+     {
+      "value": "dollar_trade_growth",
+      "label": "Dollar \u2192 Trade \u2192 Growth"
+     },
+     {
+      "value": "fiscal_term_premium_housing",
+      "label": "Fiscal \u2192 Term Premium \u2192 Housing"
+     },
+     {
+      "value": "labor_consumer_business",
+      "label": "Labor \u2192 Consumer \u2192 Business"
      }
     ]
    }
@@ -3248,6 +3260,600 @@
     "type": "text",
     "paramName": "series_ids",
     "value": "JTSJOL,JTSQUR,JTSHIR,JTSLDL,DPRIME,DRTSCILM,DRBLACBS,BUSLOANS",
+    "label": "Series IDs",
+    "show": true
+   }
+  ],
+  "data": {
+   "table": {
+    "showAll": true,
+    "columnsDefs": [
+     {
+      "field": "series_id",
+      "headerName": "ID",
+      "pinned": "left",
+      "width": 150
+     },
+     {
+      "field": "title",
+      "headerName": "Title",
+      "width": 280
+     },
+     {
+      "field": "date",
+      "headerName": "Date",
+      "cellDataType": "date",
+      "width": 110
+     },
+     {
+      "field": "value",
+      "headerName": "Value",
+      "cellDataType": "number",
+      "width": 120
+     },
+     {
+      "field": "units",
+      "headerName": "Units",
+      "width": 110
+     }
+    ]
+   }
+  }
+ },
+ "lhm_rest_sales": {
+  "name": "Restaurants \u2014 Sales Pulse",
+  "description": "Food services & drinking places vs restaurants & eating places, YoY. Is the table still full?",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "RSFSDP,MRTSSM7225USN",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "transform",
+    "value": "yoy",
+    "show": false
+   },
+   {
+    "type": "number",
+    "paramName": "periods",
+    "value": 12,
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_rest_jobs": {
+  "name": "Restaurants \u2014 Staffing",
+  "description": "Leisure & hospitality employment, YoY. The staffing side of the dining room.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "USLAH",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "transform",
+    "value": "yoy",
+    "show": false
+   },
+   {
+    "type": "number",
+    "paramName": "periods",
+    "value": 12,
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_rest_quits": {
+  "name": "Restaurants \u2014 Quit Signal",
+  "description": "JOLTS quits rate, leisure & hospitality. The sector's truth serum: nobody quits into a bad market.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "JTS7000QUR",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_rest_tiles": {
+  "name": "Restaurants \u2014 Latest Board",
+  "description": "Latest reads across the restaurant complex.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "table",
+  "endpoint": "latest",
+  "gridData": {
+   "w": 40,
+   "h": 12
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "RSFSDP,MRTSSM7225USN,USLAH,JTS7000QUR",
+    "label": "Series IDs",
+    "show": true
+   }
+  ],
+  "data": {
+   "table": {
+    "showAll": true,
+    "columnsDefs": [
+     {
+      "field": "series_id",
+      "headerName": "ID",
+      "pinned": "left",
+      "width": 150
+     },
+     {
+      "field": "title",
+      "headerName": "Title",
+      "width": 280
+     },
+     {
+      "field": "date",
+      "headerName": "Date",
+      "cellDataType": "date",
+      "width": 110
+     },
+     {
+      "field": "value",
+      "headerName": "Value",
+      "cellDataType": "number",
+      "width": 120
+     },
+     {
+      "field": "units",
+      "headerName": "Units",
+      "width": 110
+     }
+    ]
+   }
+  }
+ },
+ "lhm_retail_sales": {
+  "name": "Retail \u2014 Sales Mix",
+  "description": "Headline retail vs ex-food-services vs nonstore (e-commerce proxy), YoY. Where the wallet actually goes.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "RSAFS,RSXFS,RSNSR",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "transform",
+    "value": "yoy",
+    "show": false
+   },
+   {
+    "type": "number",
+    "paramName": "periods",
+    "value": 12,
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_retail_staples": {
+  "name": "Retail \u2014 Staples vs Fuel",
+  "description": "Grocery vs gasoline station sales, YoY. The non-discretionary floor under the print.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "RSGCS,RSGASS",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "transform",
+    "value": "yoy",
+    "show": false
+   },
+   {
+    "type": "number",
+    "paramName": "periods",
+    "value": 12,
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_retail_jobs": {
+  "name": "Retail \u2014 Jobs & Quits",
+  "description": "Retail trade employment YoY against the JOLTS retail quits rate.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "USTRADE",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "transform",
+    "value": "yoy",
+    "show": false
+   },
+   {
+    "type": "number",
+    "paramName": "periods",
+    "value": 12,
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_retail_tiles": {
+  "name": "Retail \u2014 Latest Board",
+  "description": "Latest reads across the retail complex.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "table",
+  "endpoint": "latest",
+  "gridData": {
+   "w": 40,
+   "h": 12
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "RSAFS,RSXFS,RSNSR,RSGCS,RSGASS,USTRADE,JTS4400QUR",
+    "label": "Series IDs",
+    "show": true
+   }
+  ],
+  "data": {
+   "table": {
+    "showAll": true,
+    "columnsDefs": [
+     {
+      "field": "series_id",
+      "headerName": "ID",
+      "pinned": "left",
+      "width": 150
+     },
+     {
+      "field": "title",
+      "headerName": "Title",
+      "width": 280
+     },
+     {
+      "field": "date",
+      "headerName": "Date",
+      "cellDataType": "date",
+      "width": 110
+     },
+     {
+      "field": "value",
+      "headerName": "Value",
+      "cellDataType": "number",
+      "width": 120
+     },
+     {
+      "field": "units",
+      "headerName": "Units",
+      "width": 110
+     }
+    ]
+   }
+  }
+ },
+ "lhm_svc_ism": {
+  "name": "Services \u2014 ISM Complex",
+  "description": "ISM Services: business activity, new orders, employment. The service economy's forward gauges.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "TV_USNMBA,TV_USNMNO,TV_USNMEMP",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_svc_construction": {
+  "name": "Trades \u2014 Construction Pulse",
+  "description": "Construction employment YoY. The trades' hiring cycle.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "USCONS",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "transform",
+    "value": "yoy",
+    "show": false
+   },
+   {
+    "type": "number",
+    "paramName": "periods",
+    "value": 12,
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_svc_spend": {
+  "name": "Trades \u2014 Construction Spending",
+  "description": "Total construction spending, YoY. The pipeline behind the hiring.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "chart",
+  "endpoint": "series_panel",
+  "gridData": {
+   "w": 20,
+   "h": 15
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "TV_USCONSTS",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "rebase",
+    "value": "false",
+    "show": false
+   },
+   {
+    "type": "text",
+    "paramName": "transform",
+    "value": "yoy",
+    "show": false
+   },
+   {
+    "type": "number",
+    "paramName": "periods",
+    "value": 12,
+    "show": false
+   },
+   {
+    "type": "date",
+    "paramName": "start_date",
+    "label": "Start",
+    "show": true
+   },
+   {
+    "type": "date",
+    "paramName": "end_date",
+    "label": "End",
+    "show": true
+   }
+  ]
+ },
+ "lhm_svc_tiles": {
+  "name": "Services & Trades \u2014 Latest Board",
+  "description": "Latest reads across services and the trades.",
+  "category": "Lighthouse Macro",
+  "subCategory": "Operators",
+  "type": "table",
+  "endpoint": "latest",
+  "gridData": {
+   "w": 40,
+   "h": 12
+  },
+  "params": [
+   {
+    "type": "text",
+    "paramName": "series_ids",
+    "value": "TV_USNMBA,TV_USNMNO,TV_USNMEMP,TV_USNMPR,USCONS,TV_USCONSTS",
     "label": "Series IDs",
     "show": true
    }

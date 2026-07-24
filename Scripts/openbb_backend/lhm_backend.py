@@ -293,6 +293,36 @@ CHAINS: dict[str, dict[str, Any]] = {
             {"step": 4, "node": "MRI", "role": "Macro Risk"},
         ],
     },
+    "dollar_trade_growth": {
+        "label": "Dollar → Trade → Growth",
+        "description": "Dollar strength tightens global conditions, transmits through trade into domestic activity.",
+        "links": [
+            {"step": 1, "node": "DTWEXBGS", "role": "Trade-Weighted Dollar", "kind": "series"},
+            {"step": 2, "node": "TCI",      "role": "Global Risk Tide"},
+            {"step": 3, "node": "GCI",      "role": "Activity Pulse"},
+            {"step": 4, "node": "BCI",      "role": "Capex Thrust"},
+        ],
+    },
+    "fiscal_term_premium_housing": {
+        "label": "Fiscal → Term Premium → Housing",
+        "description": "Fiscal pressure feeds the term premium, long rates set mortgage cost, housing absorbs it.",
+        "links": [
+            {"step": 1, "node": "FPI",          "role": "Fiscal Pressure"},
+            {"step": 2, "node": "THREEFYTP10",  "role": "10Y Term Premium (ACM)", "kind": "series"},
+            {"step": 3, "node": "MORTGAGE30US", "role": "30Y Mortgage",           "kind": "series"},
+            {"step": 4, "node": "HCI",          "role": "Housing Tide"},
+        ],
+    },
+    "labor_consumer_business": {
+        "label": "Labor → Consumer → Business",
+        "description": "Labor fragility hits the paycheck, the consumer pulls back, business investment follows.",
+        "links": [
+            {"step": 1, "node": "LFI", "role": "Labor Fragility"},
+            {"step": 2, "node": "CCI", "role": "Consumer Pulse"},
+            {"step": 3, "node": "BCI", "role": "Capex Thrust"},
+            {"step": 4, "node": "GCI", "role": "Activity Pulse"},
+        ],
+    },
 }
 
 

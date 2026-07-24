@@ -1,1136 +1,1238 @@
 [
-  {
-    "name": "Pharos \u2014 The Framework",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "The engine room. The Watch, the Risk Desk, twelve pillars across three engines, the transmission chains, and the divergence screens.",
-    "allowCustomization": true,
-    "tabs": {
-      "watch": {
-        "id": "watch",
-        "name": "The Watch",
-        "layout": [
-          {
-            "i": "lhm_health",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 5
-          },
-          {
-            "i": "lhm_engine_summary",
-            "x": 0,
-            "y": 5,
-            "w": 20,
-            "h": 12
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 20,
-            "y": 5,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_risk_model",
-            "x": 0,
-            "y": 17,
-            "w": 20,
-            "h": 12
-          },
-          {
-            "i": "lhm_mri_history",
-            "x": 0,
-            "y": 29,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 25,
-            "w": 20,
-            "h": 19
-          }
-        ]
-      },
-      "pulse": {
-        "id": "pulse",
-        "name": "Pulse",
-        "layout": [
-          {
-            "i": "lhm_health",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 5
-          },
-          {
-            "i": "lhm_engine_summary",
-            "x": 0,
-            "y": 5,
-            "w": 20,
-            "h": 12
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_mri_history",
-            "x": 0,
-            "y": 17,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_composite_history",
-            "x": 0,
-            "y": 32,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_pulse_tiles",
-            "x": 20,
-            "y": 20,
-            "w": 20,
-            "h": 15
-          }
-        ]
-      },
-      "risk": {
-        "id": "risk",
-        "name": "Risk Desk",
-        "layout": [
-          {
-            "i": "lhm_risk_model",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_recprob_history",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_mri_history",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 0,
-            "y": 31,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "labor": {
-        "id": "labor",
-        "name": "Labor",
-        "layout": [
-          {
-            "i": "lhm_labor_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_labor_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "prices": {
-        "id": "prices",
-        "name": "Prices",
-        "layout": [
-          {
-            "i": "lhm_prices_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_prices_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "growth": {
-        "id": "growth",
-        "name": "Growth",
-        "layout": [
-          {
-            "i": "lhm_growth_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_growth_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "housing": {
-        "id": "housing",
-        "name": "Housing",
-        "layout": [
-          {
-            "i": "lhm_housing_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_housing_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "consumer": {
-        "id": "consumer",
-        "name": "Consumer",
-        "layout": [
-          {
-            "i": "lhm_consumer_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_consumer_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "business": {
-        "id": "business",
-        "name": "Business",
-        "layout": [
-          {
-            "i": "lhm_business_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_business_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "trade": {
-        "id": "trade",
-        "name": "Trade",
-        "layout": [
-          {
-            "i": "lhm_trade_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_trade_keyseries",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "government": {
-        "id": "government",
-        "name": "Government",
-        "layout": [
-          {
-            "i": "lhm_government_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_rates_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "financial": {
-        "id": "financial",
-        "name": "Financial",
-        "layout": [
-          {
-            "i": "lhm_financial_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_credit_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "plumbing": {
-        "id": "plumbing",
-        "name": "Plumbing",
-        "layout": [
-          {
-            "i": "lhm_plumbing_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_plumbing_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "structure": {
-        "id": "structure",
-        "name": "Structure",
-        "layout": [
-          {
-            "i": "lhm_structure_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_breadth_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "sentiment": {
-        "id": "sentiment",
-        "name": "Sentiment",
-        "layout": [
-          {
-            "i": "lhm_sentiment_composite",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_composites_latest",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_sentiment_panel",
-            "x": 0,
-            "y": 34,
-            "w": 40,
-            "h": 15
-          }
-        ]
-      },
-      "chain": {
-        "id": "chain",
-        "name": "Chain",
-        "layout": [
-          {
-            "i": "lhm_transmission_chain",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 18
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 18,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_composite_history",
-            "x": 20,
-            "y": 18,
-            "w": 20,
-            "h": 20
-          }
-        ]
-      },
-      "real_check": {
-        "id": "real_check",
-        "name": "Real Check",
-        "layout": [
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_composite_history",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_divergence_grid",
-            "x": 0,
-            "y": 20,
-            "w": 40,
-            "h": 18
-          }
-        ]
-      },
-      "divergence": {
-        "id": "divergence",
-        "name": "Divergence",
-        "layout": [
-          {
-            "i": "lhm_divergence_pair",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 12
-          },
-          {
-            "i": "lhm_divergence_grid",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 18
-          },
-          {
-            "i": "lhm_pillar_heatmap",
-            "x": 0,
-            "y": 12,
-            "w": 20,
-            "h": 20
-          },
-          {
-            "i": "lhm_composite_history",
-            "x": 20,
-            "y": 18,
-            "w": 20,
-            "h": 14
-          }
-        ]
-      }
-    },
-    "groups": [
-      {
-        "name": "Composite",
-        "type": "param",
-        "paramName": "index_id",
-        "defaultValue": "MRI",
-        "options": [
-          {
-            "value": "MRI",
-            "label": "MRI \u2014 Macro Risk Index"
-          },
-          {
-            "value": "LFI",
-            "label": "LFI \u2014 Labor Fragility"
-          },
-          {
-            "value": "LCI",
-            "label": "LCI \u2014 Liquidity Cushion"
-          },
-          {
-            "value": "FCI",
-            "label": "FCI \u2014 Financial Conditions"
-          },
-          {
-            "value": "MSI",
-            "label": "MSI \u2014 Market Structure"
-          },
-          {
-            "value": "SPI",
-            "label": "SPI \u2014 Sentiment & Positioning"
-          },
-          {
-            "value": "CLG",
-            "label": "CLG \u2014 Credit-Labor Gap"
-          }
-        ]
-      },
-      {
-        "name": "Chain",
-        "type": "param",
-        "paramName": "chain_id",
-        "defaultValue": "plumbing_credit_labor",
-        "options": [
-          {
-            "value": "plumbing_credit_labor",
-            "label": "Plumbing \u2192 Credit \u2192 Labor"
-          },
-          {
-            "value": "rates_housing_consumer",
-            "label": "Rates \u2192 Housing \u2192 Consumer"
-          },
-          {
-            "value": "sentiment_structure_risk",
-            "label": "Sentiment \u2192 Structure \u2192 Risk"
-          }
-        ]
-      },
-      {
-        "name": "Pair",
-        "type": "endpointParam",
-        "paramName": "market_node",
-        "defaultValue": "MSI"
-      },
-      {
-        "name": "Real",
-        "type": "endpointParam",
-        "paramName": "real_node",
-        "defaultValue": "LFI"
-      }
+ {
+  "name": "Pharos \u2014 The Framework",
+  "img": "",
+  "img_dark": "",
+  "img_light": "",
+  "description": "The engine room. The Watch, the Risk Desk, twelve pillars across three engines, the transmission chains, and the divergence screens.",
+  "allowCustomization": true,
+  "tabs": {
+   "watch": {
+    "id": "watch",
+    "name": "The Watch",
+    "layout": [
+     {
+      "i": "lhm_health",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 5
+     },
+     {
+      "i": "lhm_engine_summary",
+      "x": 0,
+      "y": 5,
+      "w": 20,
+      "h": 12
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 20,
+      "y": 5,
+      "w": 20,
+      "h": 20
+     },
+     {
+      "i": "lhm_risk_model",
+      "x": 0,
+      "y": 17,
+      "w": 20,
+      "h": 12
+     },
+     {
+      "i": "lhm_mri_history",
+      "x": 0,
+      "y": 29,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 25,
+      "w": 20,
+      "h": 19
+     }
     ]
+   },
+   "pulse": {
+    "id": "pulse",
+    "name": "Pulse",
+    "layout": [
+     {
+      "i": "lhm_health",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 5
+     },
+     {
+      "i": "lhm_engine_summary",
+      "x": 0,
+      "y": 5,
+      "w": 20,
+      "h": 12
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 20
+     },
+     {
+      "i": "lhm_mri_history",
+      "x": 0,
+      "y": 17,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_composite_history",
+      "x": 0,
+      "y": 32,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_pulse_tiles",
+      "x": 20,
+      "y": 20,
+      "w": 20,
+      "h": 15
+     }
+    ]
+   },
+   "risk": {
+    "id": "risk",
+    "name": "Risk Desk",
+    "layout": [
+     {
+      "i": "lhm_risk_model",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_recprob_history",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_mri_history",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 0,
+      "y": 31,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "labor": {
+    "id": "labor",
+    "name": "Labor",
+    "layout": [
+     {
+      "i": "lhm_labor_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_labor_keyseries",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "prices": {
+    "id": "prices",
+    "name": "Prices",
+    "layout": [
+     {
+      "i": "lhm_prices_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_prices_keyseries",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "growth": {
+    "id": "growth",
+    "name": "Growth",
+    "layout": [
+     {
+      "i": "lhm_growth_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_growth_keyseries",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "housing": {
+    "id": "housing",
+    "name": "Housing",
+    "layout": [
+     {
+      "i": "lhm_housing_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_housing_keyseries",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "consumer": {
+    "id": "consumer",
+    "name": "Consumer",
+    "layout": [
+     {
+      "i": "lhm_consumer_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_consumer_keyseries",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "business": {
+    "id": "business",
+    "name": "Business",
+    "layout": [
+     {
+      "i": "lhm_business_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_business_keyseries",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "trade": {
+    "id": "trade",
+    "name": "Trade",
+    "layout": [
+     {
+      "i": "lhm_trade_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_trade_keyseries",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "government": {
+    "id": "government",
+    "name": "Government",
+    "layout": [
+     {
+      "i": "lhm_government_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_rates_panel",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "financial": {
+    "id": "financial",
+    "name": "Financial",
+    "layout": [
+     {
+      "i": "lhm_financial_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_credit_panel",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "plumbing": {
+    "id": "plumbing",
+    "name": "Plumbing",
+    "layout": [
+     {
+      "i": "lhm_plumbing_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_plumbing_panel",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "structure": {
+    "id": "structure",
+    "name": "Structure",
+    "layout": [
+     {
+      "i": "lhm_structure_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_breadth_panel",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "sentiment": {
+    "id": "sentiment",
+    "name": "Sentiment",
+    "layout": [
+     {
+      "i": "lhm_sentiment_composite",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_composites_latest",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_sentiment_panel",
+      "x": 0,
+      "y": 34,
+      "w": 40,
+      "h": 15
+     }
+    ]
+   },
+   "chain": {
+    "id": "chain",
+    "name": "Chain",
+    "layout": [
+     {
+      "i": "lhm_transmission_chain",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 18
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 18,
+      "w": 20,
+      "h": 20
+     },
+     {
+      "i": "lhm_composite_history",
+      "x": 20,
+      "y": 18,
+      "w": 20,
+      "h": 20
+     }
+    ]
+   },
+   "real_check": {
+    "id": "real_check",
+    "name": "Real Check",
+    "layout": [
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 20
+     },
+     {
+      "i": "lhm_composite_history",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 20
+     },
+     {
+      "i": "lhm_divergence_grid",
+      "x": 0,
+      "y": 20,
+      "w": 40,
+      "h": 18
+     }
+    ]
+   },
+   "divergence": {
+    "id": "divergence",
+    "name": "Divergence",
+    "layout": [
+     {
+      "i": "lhm_divergence_pair",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 12
+     },
+     {
+      "i": "lhm_divergence_grid",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 18
+     },
+     {
+      "i": "lhm_pillar_heatmap",
+      "x": 0,
+      "y": 12,
+      "w": 20,
+      "h": 20
+     },
+     {
+      "i": "lhm_composite_history",
+      "x": 20,
+      "y": 18,
+      "w": 20,
+      "h": 14
+     }
+    ]
+   }
   },
-  {
-    "name": "Pharos \u2014 Markets & Main Street",
-    "img": "",
-    "img_dark": "",
-    "img_light": "",
-    "description": "The board. Six asset classes from equities to crypto, and the Main Street suite built for operators.",
-    "allowCustomization": true,
-    "tabs": {
-      "flow": {
-        "id": "flow",
-        "name": "Flow",
-        "layout": [
-          {
-            "i": "lhm_rates_panel",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_credit_panel",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_plumbing_panel",
-            "x": 0,
-            "y": 15,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_breadth_panel",
-            "x": 20,
-            "y": 15,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_sentiment_panel",
-            "x": 0,
-            "y": 30,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_pulse_tiles",
-            "x": 20,
-            "y": 30,
-            "w": 20,
-            "h": 15
-          }
-        ]
-      },
-      "equities": {
-        "id": "equities",
-        "name": "Equities",
-        "layout": [
-          {
-            "i": "lhm_eq_indices",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_eq_sectors",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_breadth_panel",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_sentiment_panel",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_eq_tiles",
-            "x": 0,
-            "y": 31,
-            "w": 20,
-            "h": 12
-          },
-          {
-            "i": "lhm_eq_sector_tiles",
-            "x": 20,
-            "y": 31,
-            "w": 20,
-            "h": 12
-          }
-        ]
-      },
-      "rates": {
-        "id": "rates",
-        "name": "Rates",
-        "layout": [
-          {
-            "i": "lhm_rates_panel",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_rates_curve",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_rates_real",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_rates_tiles",
-            "x": 0,
-            "y": 30,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_treasury_auctions",
-            "x": 20,
-            "y": 30,
-            "w": 20,
-            "h": 15
-          }
-        ]
-      },
-      "credit": {
-        "id": "credit",
-        "name": "Credit",
-        "layout": [
-          {
-            "i": "lhm_credit_panel",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_credit_etfs",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_clg_history",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_credit_tiles",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 15
-          }
-        ]
-      },
-      "currencies": {
-        "id": "currencies",
-        "name": "Currencies",
-        "layout": [
-          {
-            "i": "lhm_fx_dollar",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_fx_majors",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_fx_tiles",
-            "x": 0,
-            "y": 16,
-            "w": 40,
-            "h": 13
-          }
-        ]
-      },
-      "commodities": {
-        "id": "commodities",
-        "name": "Commodities",
-        "layout": [
-          {
-            "i": "lhm_cmdty_energy",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_cmdty_metals",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_cmdty_vol",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_cmdty_tiles",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          }
-        ]
-      },
-      "crypto": {
-        "id": "crypto",
-        "name": "Crypto",
-        "layout": [
-          {
-            "i": "lhm_crypto_majors",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 16
-          },
-          {
-            "i": "lhm_crypto_cdli",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_crypto_sli",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_crypto_tiles",
-            "x": 0,
-            "y": 30,
-            "w": 40,
-            "h": 12
-          }
-        ]
-      },
-      "main_street": {
-        "id": "main_street",
-        "name": "Main Street",
-        "layout": [
-          {
-            "i": "lhm_ms_regime",
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 10
-          },
-          {
-            "i": "lhm_ms_spending",
-            "x": 0,
-            "y": 10,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_ms_wage_price",
-            "x": 20,
-            "y": 10,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_ms_rent",
-            "x": 0,
-            "y": 25,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_ms_credit",
-            "x": 20,
-            "y": 25,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_ms_jobs",
-            "x": 0,
-            "y": 40,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_ms_quits",
-            "x": 20,
-            "y": 40,
-            "w": 20,
-            "h": 15
-          },
-          {
-            "i": "lhm_ms_scorecard",
-            "x": 0,
-            "y": 55,
-            "w": 40,
-            "h": 13
-          }
-        ]
-      },
-      "cost_margin": {
-        "id": "cost_margin",
-        "name": "Cost & Margin",
-        "layout": [
-          {
-            "i": "lhm_cost_ppi",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_cost_energy",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_cost_wages",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_cost_freight",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_cost_tiles",
-            "x": 0,
-            "y": 30,
-            "w": 40,
-            "h": 12
-          }
-        ]
-      },
-      "hiring_credit": {
-        "id": "hiring_credit",
-        "name": "Hiring & Credit",
-        "layout": [
-          {
-            "i": "lhm_hire_flows",
-            "x": 0,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_hire_financing",
-            "x": 20,
-            "y": 0,
-            "w": 20,
-            "h": 16
-          },
-          {
-            "i": "lhm_hire_sloos",
-            "x": 0,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_hire_bizcredit",
-            "x": 20,
-            "y": 16,
-            "w": 20,
-            "h": 14
-          },
-          {
-            "i": "lhm_hire_tiles",
-            "x": 0,
-            "y": 30,
-            "w": 40,
-            "h": 12
-          }
-        ]
-      }
-    },
-    "groups": []
-  }
+  "groups": [
+   {
+    "name": "Composite",
+    "type": "param",
+    "paramName": "index_id",
+    "defaultValue": "MRI",
+    "options": [
+     {
+      "value": "MRI",
+      "label": "MRI \u2014 Macro Risk Index"
+     },
+     {
+      "value": "LFI",
+      "label": "LFI \u2014 Labor Fragility"
+     },
+     {
+      "value": "LCI",
+      "label": "LCI \u2014 Liquidity Cushion"
+     },
+     {
+      "value": "FCI",
+      "label": "FCI \u2014 Financial Conditions"
+     },
+     {
+      "value": "MSI",
+      "label": "MSI \u2014 Market Structure"
+     },
+     {
+      "value": "SPI",
+      "label": "SPI \u2014 Sentiment & Positioning"
+     },
+     {
+      "value": "CLG",
+      "label": "CLG \u2014 Credit-Labor Gap"
+     }
+    ]
+   },
+   {
+    "name": "Chain",
+    "type": "param",
+    "paramName": "chain_id",
+    "defaultValue": "plumbing_credit_labor",
+    "options": [
+     {
+      "value": "plumbing_credit_labor",
+      "label": "Plumbing \u2192 Credit \u2192 Labor"
+     },
+     {
+      "value": "rates_housing_consumer",
+      "label": "Rates \u2192 Housing \u2192 Consumer"
+     },
+     {
+      "value": "sentiment_structure_risk",
+      "label": "Sentiment \u2192 Structure \u2192 Risk"
+     }
+    ]
+   },
+   {
+    "name": "Pair",
+    "type": "endpointParam",
+    "paramName": "market_node",
+    "defaultValue": "MSI"
+   },
+   {
+    "name": "Real",
+    "type": "endpointParam",
+    "paramName": "real_node",
+    "defaultValue": "LFI"
+   }
+  ]
+ },
+ {
+  "name": "Pharos \u2014 Markets & Main Street",
+  "img": "",
+  "img_dark": "",
+  "img_light": "",
+  "description": "The board. Six asset classes from equities to crypto, and the six-monitor Main Street suite built for operators.",
+  "allowCustomization": true,
+  "tabs": {
+   "flow": {
+    "id": "flow",
+    "name": "Flow",
+    "layout": [
+     {
+      "i": "lhm_rates_panel",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_credit_panel",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_plumbing_panel",
+      "x": 0,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_breadth_panel",
+      "x": 20,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_sentiment_panel",
+      "x": 0,
+      "y": 30,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_pulse_tiles",
+      "x": 20,
+      "y": 30,
+      "w": 20,
+      "h": 15
+     }
+    ]
+   },
+   "equities": {
+    "id": "equities",
+    "name": "Equities",
+    "layout": [
+     {
+      "i": "lhm_eq_indices",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_eq_sectors",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_breadth_panel",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_sentiment_panel",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_eq_tiles",
+      "x": 0,
+      "y": 31,
+      "w": 20,
+      "h": 12
+     },
+     {
+      "i": "lhm_eq_sector_tiles",
+      "x": 20,
+      "y": 31,
+      "w": 20,
+      "h": 12
+     }
+    ]
+   },
+   "rates": {
+    "id": "rates",
+    "name": "Rates",
+    "layout": [
+     {
+      "i": "lhm_rates_panel",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_rates_curve",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_rates_real",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_rates_tiles",
+      "x": 0,
+      "y": 30,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_treasury_auctions",
+      "x": 20,
+      "y": 30,
+      "w": 20,
+      "h": 15
+     }
+    ]
+   },
+   "credit": {
+    "id": "credit",
+    "name": "Credit",
+    "layout": [
+     {
+      "i": "lhm_credit_panel",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_credit_etfs",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_clg_history",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_credit_tiles",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 15
+     }
+    ]
+   },
+   "currencies": {
+    "id": "currencies",
+    "name": "Currencies",
+    "layout": [
+     {
+      "i": "lhm_fx_dollar",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_fx_majors",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_fx_tiles",
+      "x": 0,
+      "y": 16,
+      "w": 40,
+      "h": 13
+     }
+    ]
+   },
+   "commodities": {
+    "id": "commodities",
+    "name": "Commodities",
+    "layout": [
+     {
+      "i": "lhm_cmdty_energy",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_cmdty_metals",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_cmdty_vol",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_cmdty_tiles",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     }
+    ]
+   },
+   "crypto": {
+    "id": "crypto",
+    "name": "Crypto",
+    "layout": [
+     {
+      "i": "lhm_crypto_majors",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 16
+     },
+     {
+      "i": "lhm_crypto_cdli",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_crypto_sli",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_crypto_tiles",
+      "x": 0,
+      "y": 30,
+      "w": 40,
+      "h": 12
+     }
+    ]
+   },
+   "main_street": {
+    "id": "main_street",
+    "name": "Main Street",
+    "layout": [
+     {
+      "i": "lhm_ms_regime",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 10
+     },
+     {
+      "i": "lhm_ms_spending",
+      "x": 0,
+      "y": 10,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_ms_wage_price",
+      "x": 20,
+      "y": 10,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_ms_rent",
+      "x": 0,
+      "y": 25,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_ms_credit",
+      "x": 20,
+      "y": 25,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_ms_jobs",
+      "x": 0,
+      "y": 40,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_ms_quits",
+      "x": 20,
+      "y": 40,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_ms_scorecard",
+      "x": 0,
+      "y": 55,
+      "w": 40,
+      "h": 13
+     }
+    ]
+   },
+   "cost_margin": {
+    "id": "cost_margin",
+    "name": "Cost & Margin",
+    "layout": [
+     {
+      "i": "lhm_cost_ppi",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_cost_energy",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_cost_wages",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_cost_freight",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_cost_tiles",
+      "x": 0,
+      "y": 30,
+      "w": 40,
+      "h": 12
+     }
+    ]
+   },
+   "hiring_credit": {
+    "id": "hiring_credit",
+    "name": "Hiring & Credit",
+    "layout": [
+     {
+      "i": "lhm_hire_flows",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_hire_financing",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 16
+     },
+     {
+      "i": "lhm_hire_sloos",
+      "x": 0,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_hire_bizcredit",
+      "x": 20,
+      "y": 16,
+      "w": 20,
+      "h": 14
+     },
+     {
+      "i": "lhm_hire_tiles",
+      "x": 0,
+      "y": 30,
+      "w": 40,
+      "h": 12
+     }
+    ]
+   },
+   "restaurants": {
+    "id": "restaurants",
+    "name": "Restaurants & Food",
+    "layout": [
+     {
+      "i": "lhm_rest_sales",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_rest_jobs",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_rest_quits",
+      "x": 0,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_rest_tiles",
+      "x": 20,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     }
+    ]
+   },
+   "retail": {
+    "id": "retail",
+    "name": "Retail",
+    "layout": [
+     {
+      "i": "lhm_retail_sales",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_retail_staples",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_retail_jobs",
+      "x": 0,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_retail_tiles",
+      "x": 20,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     }
+    ]
+   },
+   "services_trades": {
+    "id": "services_trades",
+    "name": "Services & Trades",
+    "layout": [
+     {
+      "i": "lhm_svc_ism",
+      "x": 0,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_svc_construction",
+      "x": 20,
+      "y": 0,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_svc_spend",
+      "x": 0,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     },
+     {
+      "i": "lhm_svc_tiles",
+      "x": 20,
+      "y": 15,
+      "w": 20,
+      "h": 15
+     }
+    ]
+   }
+  },
+  "groups": []
+ }
 ]

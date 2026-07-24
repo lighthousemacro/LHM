@@ -364,3 +364,4 @@ INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/sentiment HTTP/1.1
 INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/sentiment HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/business HTTP/1.1" 200 OK
 INFO:     216.244.66.233:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     216.244.66.233:0 - "GET / HTTP/1.1" 200 OK

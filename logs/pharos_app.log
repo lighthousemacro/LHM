@@ -335,3 +335,10 @@ INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d HTTP/1.1" 200 OK
 INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/the-watch HTTP/1.1" 200 OK
 INFO:     18.97.9.103:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
 INFO:     18.97.9.99:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /d/labor HTTP/1.1" 200 OK

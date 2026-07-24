@@ -1,12 +1,16 @@
-[2026-07-23 07:45:00] ════════ DAILY DRAFT RUN START (2026-07-23) ════════
-[2026-07-23 07:45:00] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-Done. The daily unattended draft is built and open in the browser.
+[2026-07-24 11:54:31] ════════ DAILY DRAFT RUN START (2026-07-24) ════════
+[2026-07-24 11:54:31] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Morning packet is built and open in the browser.
 
-**The piece: The Beam — "Openings Came Back. Nobody's Quitting."** (Pillar 1 Labor). The scout picked it because it was the strongest untouched thread of the week: the May JOLTS report shows openings up 707k in two months (6.89M → 7.59M) while hires fell 365k, the quits rate posted its twelfth straight month at or below the 2.0% pre-recessionary threshold, and hires-per-opening dropped to 0.68 from 0.80. The angle: a rate market handicapping Warsh hikes is leaning on the one JOLTS series that is free to fake, while every worker-behavior series says the labor market is frozen, not strong. It pairs with Tuesday's hike-vs-inflation Beam without repeating it, and hits the Two Economies frame on the squeezed-economy side.
+**The pick:** Thursday Beam, Pillar 9 — **"The Last Calm Market."** This week everything repriced for next week's possible Warsh hike (hike odds ~34% vs 12% a week ago, 2Y at a cycle-high 4.31%, 10Y pressing 17-month highs, a record $7B weekly outflow from IG bond funds, equity breadth breaking down) — and high yield spreads went the other way, finishing at 268bps, 9bps off the cycle tight, with $534M flowing in. The mechanism the packet builds toward: the calm is subsidized by duration flight into the shortest-duration corner of fixed income plus ~$30B of AI data-center paper, not a verdict on default risk.
 
-Pipeline outputs in `Outputs/beam_2026-07-23_openings-nobody-quits/`: scout brief, data summary (8 series staged to CSV, all fresh, no gaps), 6-section draft, 10 branded charts (5 published + 5 reference, 2x rule, QC'd visually), manifest, and a fully base64-inlined HTML preview with a BUILD NOTES block on top. Key assumptions noted there: Beam over the Wednesday Note default, JOLTS is the May print (latest available), claims cite is the Jul 11 week since today's print lands after the build, and the LFI chart is toolkit-only per the no-composites rule. Nothing was published anywhere.
+**In the packet:** the one-paragraph briefing thread, a full data block (internal DB closes + sourced external cites + consensus-vs-framework + four invalidation conditions), 10 rendered charts (5 publish + 5 supplementary per the 2x rule), the six locked Beam interview questions sharpened to today's numbers, and three headline options.
 
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-23_openings-nobody-quits/beam_preview.html
-[2026-07-23 07:51:13] claude exited status=0 in 6m 13s
-[2026-07-23 07:51:13] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-23_openings-nobody-quits/beam_preview.html
-[2026-07-23 07:51:13] Opened in browser.
+**Integrity notes** (full list in `build_notes.md`): the MSI -1.14 is a raw print (21d average is -0.34, so it's framed as a flag, not a regime call); the MRI's odd one-day jump on Jul 18 was left out of the packet pending verification; external intraday levels (2Y 4.38%, Brent $94.9) are cited to source and need a live-tape refresh before publish; chart 4 has a cosmetic pill overlap.
+
+Nothing was published, sent, or scheduled anywhere.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-24_the-last-calm-market/morning_packet.html
+[2026-07-24 12:03:44] claude exited status=0 in 9m 13s
+[2026-07-24 12:03:44] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-24_the-last-calm-market/morning_packet.html
+[2026-07-24 12:03:44] Opened in browser.

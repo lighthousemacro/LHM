@@ -342,3 +342,4 @@ INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /terminal HTTP/1.1" 3
 INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /d HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
 INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     35.171.41.249:0 - "GET /robots.txt HTTP/1.1" 404 Not Found

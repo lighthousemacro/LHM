@@ -323,3 +323,13 @@ INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/labor HTTP/1.1" 20
 INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/prices HTTP/1.1" 200 OK
 INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/growth HTTP/1.1" 200 OK
 INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/housing HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/consumer HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/business HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/trade HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/government HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/financial HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/plumbing HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/structure HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/sentiment HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/the-watch HTTP/1.1" 200 OK

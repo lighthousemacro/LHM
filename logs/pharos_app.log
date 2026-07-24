@@ -350,3 +350,16 @@ INFO:     2600:4041:5d22:c100:4044:b4a8:e55c:82a9:0 - "GET /d/the-watch HTTP/1.1
 INFO:     104.198.164.23:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
 INFO:     136.115.55.140:0 - "GET / HTTP/1.1" 200 OK
 INFO:     43.159.128.155:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/sentiment HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/sentiment HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b8a8:52b2:7004:4fc2:0 - "GET /d/business HTTP/1.1" 200 OK

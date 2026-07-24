@@ -333,3 +333,5 @@ INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/structure HTTP/1.1
 INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/sentiment HTTP/1.1" 200 OK
 INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d HTTP/1.1" 200 OK
 INFO:     2a00:23c6:7ba3:ee01:e0c4:2908:8e7f:2c6a:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     18.97.9.103:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     18.97.9.99:0 - "GET / HTTP/1.1" 200 OK

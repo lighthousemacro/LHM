@@ -650,3 +650,6 @@
 [2026-07-24 06:29:24] [HIGH] Recession probability ELEVATED: 70.1%
 [2026-07-24 06:29:24] [CRITICAL] WARNING SYSTEM: RED. Multiple indicators flashing.
 [2026-07-24 06:29:24] [HIGH] WARNING SYSTEM: AMBER. Elevated risk signals.
+
+[2026-07-24 11:57:02] THRESHOLD ALERT CHECK
+[2026-07-24 11:57:02] No new alerts or transitions.

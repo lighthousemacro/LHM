@@ -400,3 +400,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-23_openings-nobody-quits/beam_
 [2026-07-23 07:51:13] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-23_openings-nobody-quits/beam_preview.html
 [2026-07-23 07:51:13] Opened in browser.
 [2026-07-23 07:51:13] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-24 11:54:31] ════════ DAILY DRAFT RUN START (2026-07-24) ════════
+[2026-07-24 11:54:31] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

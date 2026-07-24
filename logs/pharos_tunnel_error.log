@@ -146,3 +146,38 @@
 2026-07-22T06:42:34Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::2
 2026-07-22T06:42:34Z INF Registered tunnel connection connIndex=2 connection=fb8b8676-9abb-43fb-8058-5b2c065f194b event=0 ip=2606:4700:a8::2 location=ewr15 protocol=quic
 2026-07-23T12:14:28Z WRN Your version 2026.7.2 is outdated. We recommend upgrading it to 2026.7.3
+2026-07-24T15:54:31Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-24T15:54:31Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-24T15:54:31Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-24T15:54:31Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-24T15:54:31Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-24T15:54:31Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-24T15:54:31Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-24T15:54:31Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-24T15:54:32Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-24T15:54:32Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-24T15:54:32Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-24T15:54:32Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-24T15:54:32Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-24T15:54:32Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-24T15:54:32Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-24T15:54:32Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-24T15:54:32Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-24T15:54:32Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-24T15:54:32Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-24T15:54:32Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-24T15:54:32Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on 192.168.1.1:53: write udp 192.168.1.193:63885->192.168.1.1:53: write: broken pipe"
+2026-07-24T15:54:35Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on 192.168.1.1:53: write udp 192.168.1.193:63317->192.168.1.1:53: write: broken pipe"
+2026-07-24T15:54:35Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=3
+2026-07-24T15:54:35Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=1
+2026-07-24T15:54:35Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on 192.168.1.1:53: write udp 192.168.1.193:49476->192.168.1.1:53: write: broken pipe"
+2026-07-24T15:54:35Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on 192.168.1.1:53: write udp 192.168.1.193:50941->192.168.1.1:53: write: broken pipe"
+2026-07-24T15:54:35Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
+2026-07-24T15:54:35Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=2606:4700:a0::9
+2026-07-24T15:54:39Z INF Registered tunnel connection connIndex=0 connection=2d087c58-183b-4cc3-91fc-3593f66e7ed0 event=0 ip=2606:4700:a0::9 location=ewr01 protocol=quic
+2026-07-24T15:54:49Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a0::7
+2026-07-24T15:54:49Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::2
+2026-07-24T15:54:49Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=2606:4700:a8::9
+2026-07-24T15:54:49Z INF Registered tunnel connection connIndex=1 connection=1c6dda5a-df0a-4d3b-bec7-7705ed81027d event=0 ip=2606:4700:a8::9 location=ewr15 protocol=quic
+2026-07-24T15:54:49Z INF Registered tunnel connection connIndex=3 connection=f0d1db48-530e-4744-b88d-6f1bf545d011 event=0 ip=2606:4700:a0::7 location=ewr13 protocol=quic
+2026-07-24T15:54:49Z INF Registered tunnel connection connIndex=2 connection=0c7229d3-0e02-48b1-955d-cbad852a01c7 event=0 ip=2606:4700:a8::2 location=ewr12 protocol=quic

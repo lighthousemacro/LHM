@@ -1184,3 +1184,4 @@
 2026-07-24 11:56:37 [INFO]   MSPNHSUS: refreshed (+762 obs)
 2026-07-24 11:56:43 [INFO]   MSACSR: refreshed (+762 obs)
 2026-07-24 11:56:43 [INFO] Freshness check done: 3 series refreshed, 2,286 obs added.
+2026-07-24 12:35:52 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

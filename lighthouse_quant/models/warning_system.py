@@ -307,27 +307,30 @@ THRESHOLDS = {
     # MACRO (GDP-GDI, Fiscal)
     # ==========================================
     "macro": {
-        # MRI Composite
+        # MRI Composite — thresholds on the standardized (2026-06-15) MRI scale,
+        # aligned to the canonical regime bands (Elevated / High Risk / Crisis).
+        # Old 0.10/0.25/0.50 were calibrated to the pre-standardization scale and
+        # all sat inside the Neutral band (fired 32/27/21% of months 2002-2026).
         "MRI_LATE_CYCLE": {
             "index": "MRI",
-            "threshold": 0.10,
+            "threshold": 0.5,
             "direction": "above",
             "severity": "warning",
-            "description": "MRI in late cycle territory"
+            "description": "MRI in Elevated band (late cycle)"
         },
         "MRI_PRERECESSION": {
             "index": "MRI",
-            "threshold": 0.25,
+            "threshold": 1.0,
             "direction": "above",
             "severity": "critical",
-            "description": "MRI in pre-recession territory"
+            "description": "MRI in High Risk band (pre-recession)"
         },
         "MRI_RECESSION": {
             "index": "MRI",
-            "threshold": 0.50,
+            "threshold": 1.5,
             "direction": "above",
             "severity": "override",
-            "description": "MRI in recession territory"
+            "description": "MRI in Crisis band"
         },
 
         # Yield Curve
@@ -570,7 +573,21 @@ class WarningSystem:
         asof = f" AND date <= '{date}'" if date else ""
         reserves_current = self._get_series_value("Bank_Reserves", date)
         if reserves_current is None:
-            reserves_current = 2879  # Fallback to recent known value
+            # No reserve data available: report that honestly instead of
+            # fabricating a level (old behavior hardcoded 2879).
+            return ReserveManagementAssessment(
+                reserves_current=float("nan"),
+                reserves_lclor=LCLOR,
+                reserves_buffer=float("nan"),
+                drain_rate_monthly=float("nan"),
+                months_to_lclor=float("nan"),
+                fed_intervention_active=False,
+                fed_balance_sheet_change=0.0,
+                rmp_estimated_pace=0.0,
+                net_drain_rate=float("nan"),
+                assessment="DATA UNAVAILABLE: Bank_Reserves missing as of this date. RMP not assessed.",
+                risk_modifier=0.0,
+            )
 
         reserves_buffer = reserves_current - LCLOR
 

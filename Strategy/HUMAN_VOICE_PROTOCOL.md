@@ -41,4 +41,9 @@ Adjust per piece only if the piece genuinely differed. Never leave it blank on a
 
 - Machine-paraphrase to lower a detector score.
 - Prompt any model to "make this sound more human" as a substitute for Bob rewriting it.
+- **Run drafts through Grammarly's rewriter (or any paraphrase tool).** Field-tested 2026-07-25 on Beacon Part IV: the Grammarly pass was flagged BY Pangram (6 AI-High blocks + 1 Lightly-AI-Assisted), reintroduced 8+ em-dashes and two antithesis structures, and killed the piece's title line. Grammarly's rewrite engine is machine paraphrase, which is precisely what Pangram's classifier is trained to catch. Spell/typo checking is fine. Sentence rewrites are not.
 - Publicly discuss detector mechanics, scores, or workarounds. If asked, the answer is the AI statement above, said confidently.
+
+## Honest limits of the lints
+
+`humanize_lint.py` catches heuristic tells (cadence, lexicon, scaffolds). It passed the Part IV draft that Pangram still flagged, because a neural classifier keys on distributional fingerprints no regex sees. The lints are necessary, not sufficient. The only layer that actually defeats a modern classifier is Layer 0: sentences Bob spoke or typed. When a block flags at the checker despite clean lints, the answer is the interview flow (see the Part IV `REWRITE_KIT.md` for the working template: per-block facts-that-must-survive + interview questions, Bob answers out loud, engine assembles verbatim).

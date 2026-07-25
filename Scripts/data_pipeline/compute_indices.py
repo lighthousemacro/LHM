@@ -1514,12 +1514,13 @@ def compute_liquidity_stage(df: pd.DataFrame) -> pd.Series:
     # Stage 1: RRP < $500B
     stage = stage.fillna(1)
 
-    # Stage 2: RRP < $200B
-    stage = stage.where(~(rrp < 200000), 2)
+    # Stage 2: RRP < $200B (RRP_Usage is in billions; the old 200000 threshold
+    # compared billions to $200T, so every RRP-era row scored stage >= 2)
+    stage = stage.where(~(rrp < 200), 2)
 
     # Stage 3: EFFR elevated (proxy: EFFR > SOFR + 5bps)
     effr_sofr_spread = effr - sofr
-    stage = stage.where(~((rrp < 200000) & (effr_sofr_spread > 0.05)), 3)
+    stage = stage.where(~((rrp < 200) & (effr_sofr_spread > 0.05)), 3)
 
     return stage
 

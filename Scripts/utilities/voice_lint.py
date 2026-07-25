@@ -75,11 +75,19 @@ LONGFORM = ("beacon", "horizon", "beam")
 
 def lint(path: Path) -> tuple[list, list]:
     text = path.read_text(encoding="utf-8", errors="ignore")
+    # HTML comments are working notes, not published copy: blank them out
+    # line-preservingly so reported line numbers stay true.
+    def _blank(m: re.Match) -> str:
+        return re.sub(r"[^\n]", "", m.group(0))
+    text = re.sub(r"<!--.*?-->", _blank, text, flags=re.S)
     lines = text.splitlines()
     fails, warns = [], []
     for i, line in enumerate(lines, 1):
         s = line.strip()
         if not s:
+            continue
+        # Sources block uses semicolons as citation separators, standard form.
+        if s.startswith("**Sources:**"):
             continue
         for name, rx, note in FAIL:
             for m in rx.finditer(line):

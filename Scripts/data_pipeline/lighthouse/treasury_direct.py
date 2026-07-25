@@ -113,7 +113,7 @@ def fetch_mspd_table_3(start_date: str = "2000-01-31") -> pd.DataFrame:
     """MSPD table 3 (marketable detail). Used for bills share."""
     log.info("Fetching MSPD table 3 (marketable detail) ...")
     params = {
-        "fields": "record_date,security_class1_desc,outstanding_amt",
+        "fields": "record_date,security_class1_desc,security_class2_desc,outstanding_amt",
         "filter": f"record_date:gte:{start_date}",
         "sort": "record_date",
     }
@@ -128,17 +128,27 @@ def fetch_mspd_table_3(start_date: str = "2000-01-31") -> pd.DataFrame:
 
 
 def compute_bills_share(mspd3: pd.DataFrame) -> pd.DataFrame:
-    """Bills outstanding / total marketable outstanding by month. Returns date, value (%)."""
+    """Bills outstanding / total marketable outstanding by month. Returns date, value (%).
+
+    MSPD table 3 mixes three row kinds per record_date: CUSIP detail rows
+    (outstanding_amt often literally "null" for the newest bills), per-class
+    subtotal rows ("Total Treasury Bills"), and one "Total Marketable" row.
+    Summing everything double-counts and skews with the null mix (the pre-2026-07
+    series printed ~16.5% when the true share was ~21.6%). Use ONLY the summary
+    rows: numerator = "Total Treasury Bills" subtotal, denominator = the
+    "Total Marketable" row.
+    """
     if mspd3.empty:
         return pd.DataFrame(columns=["date", "value"])
 
-    def is_bills(row) -> bool:
-        s = (row.get("security_class1_desc") or "").lower()
-        return "bills" in s
+    c1 = mspd3["security_class1_desc"].fillna("").str.strip()
+    c2 = mspd3.get("security_class2_desc")
+    c2 = c2.fillna("").str.strip() if c2 is not None else pd.Series("", index=mspd3.index)
 
-    bills_total = (mspd3[mspd3.apply(is_bills, axis=1)]
+    bills_total = (mspd3[c2 == "Total Treasury Bills"]
                    .groupby("record_date")["outstanding_amt"].sum())
-    grand_total = mspd3.groupby("record_date")["outstanding_amt"].sum()
+    grand_total = (mspd3[c1 == "Total Marketable"]
+                   .groupby("record_date")["outstanding_amt"].sum())
     out = (bills_total / grand_total * 100.0).reset_index()
     out.columns = ["date", "value"]
     out = out.dropna()

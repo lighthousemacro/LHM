@@ -225,6 +225,7 @@ FRED_CURATED = {
 
     # Commodities
     "DCOILWTICO": "WTI Crude",
+    "DCOILBRENTEU": "Brent Crude (Europe)",
     "GASREGW": "US Regular Gasoline Retail",
     "DTWEXBGS": "Trade Weighted Dollar",
 
@@ -323,7 +324,7 @@ FRED_CURATED = {
     "T5YIE": "5Y Breakeven Inflation",
 
     # Term Premium
-    "THREEFYTP10": "10Y Term Premium ACM",
+    "THREEFYTP10": "10Y Term Premium (Kim-Wright)",
 
     # ===== PILLAR 1 (LABOR) ADDITIONS - Feb 2026 =====
 
@@ -561,8 +562,8 @@ FRED_CURATED = {
     "A822RL1Q225SBEA": "Real Govt Spending Growth",
 
     # Term Premium (ACM Model)
-    "THREEFYTP5": "5Y Term Premium ACM",
-    "THREEFYTP2": "2Y Term Premium ACM",
+    "THREEFYTP5": "5Y Term Premium (Kim-Wright)",
+    "THREEFYTP2": "2Y Term Premium (Kim-Wright)",
 
     # Inventories
     "ISRATIO": "Inventory Sales Ratio Total",
@@ -1005,10 +1006,10 @@ FRED_CURATED = {
     "T10Y3MM": "10Y-3M Spread Monthly",
 
     # Term Premium
-    "THREEFF1": "1-Year Treasury Term Premium ACM",
-    "THREEFF2": "2-Year Treasury Term Premium ACM",
-    "THREEFF5": "5-Year Treasury Term Premium ACM",
-    "THREEFF10": "10-Year Treasury Term Premium ACM",
+    "THREEFF1": "Fitted Instantaneous Forward Rate 1 Years Hence (Kim-Wright)",
+    "THREEFF2": "Fitted Instantaneous Forward Rate 2 Years Hence (Kim-Wright)",
+    "THREEFF5": "Fitted Instantaneous Forward Rate 5 Years Hence (Kim-Wright)",
+    "THREEFF10": "Fitted Instantaneous Forward Rate 10 Years Hence (Kim-Wright)",
     "TERMT": "Short-Term Treasury Term Premium",
 
     # Spread Measures

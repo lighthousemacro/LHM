@@ -373,3 +373,11 @@ INFO:     185.191.171.5:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
 INFO:     85.208.96.194:0 - "GET /auth/request HTTP/1.1" 405 Method Not Allowed
 INFO:     98.88.137.2:0 - "GET / HTTP/1.1" 200 OK
 INFO:     98.91.211.81:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /static/favicon.ico HTTP/1.1" 304 Not Modified
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /d/growth HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /d/housing HTTP/1.1" 200 OK

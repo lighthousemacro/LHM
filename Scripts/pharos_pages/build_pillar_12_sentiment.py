@@ -31,6 +31,12 @@ def build():
             (-1.0, "-1.0 EUPHORIA, FADE", VENUS, "--", 1.0, "top", -0.06),
         ],
         window=63,  # sentiment is the noisiest composite, flatten more than the 21d default (~3mo)
+        # The 63d average IS the indicator, so the z levels have to describe it. Raw SPI
+        # runs sd 0.95; the 63d average runs sd 0.26 with a full range of -0.84 to +0.77.
+        # Un-rescaled, the +1.5 and -1.0 lines below were unreachable (0.000% of history
+        # on both sides) and regime() could only ever return UNREMARKABLE. Rescaled, the
+        # bands sit at their canonical frequencies: +1.5 fires 6.8%, -1.0 fires 16.4%.
+        restandardize=True,
     )
     # AAII stored as decimal fractions in the DB; display in percent
     spread = load_obs("AAII_Bull_Bear_Spread") * 100.0

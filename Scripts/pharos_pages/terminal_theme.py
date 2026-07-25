@@ -199,6 +199,53 @@ def flush_regime_labels(ax):
         threshold_callout(ax, txt, y, color, band=band)
 
 
+def _gutter_label(ax, text, y_target, color):
+    """Threshold label parked in the reserved right-hand gutter, at its own level.
+
+    Used when a banded box would need a diagonal arrow across the data to reach its
+    line. Nudges vertically if two thresholds sit close enough to overlap, and stays
+    clear of the last-value pill, which also lives in the gutter.
+    """
+    lo, hi = ax.get_ylim()
+    span = hi - lo
+    used = getattr(ax, "_gutter_levels", None)
+    if used is None:
+        # Seed with the last-value pill's level. Thresholds are drawn before the pill,
+        # so we read it off the plotted line rather than waiting for pill() to run.
+        # Without this, a threshold sitting near the current value collides with it.
+        # Pick the data line, not a reference line: zero_line/sigma_refs are drawn
+        # first and carry only two points, so "first line" grabbed the wrong series.
+        used = []
+        data_lines = [ln for ln in ax.get_lines() if len(ln.get_ydata()) > 5]
+        if data_lines:
+            longest = max(data_lines, key=lambda ln: len(ln.get_ydata()))
+            yd = [y for y in longest.get_ydata() if y == y]
+            if yd:
+                used.append(float(yd[-1]))
+        ax._gutter_levels = used
+
+    # Step AWAY from whatever it collides with, not blindly upward, which could push
+    # the label straight into the thing it was avoiding.
+    gap = 0.075 * span
+    y = y_target
+    for step in range(1, 7):
+        clash = [u for u in used if abs(y - u) < gap]
+        if not clash:
+            break
+        away = -1.0 if y_target <= sum(clash) / len(clash) else 1.0
+        y = y_target + away * gap * step
+    used.append(y)
+    ax.annotate(
+        text, xy=(1.0, y), xycoords=ax.get_yaxis_transform(),
+        xytext=(6, 0), textcoords="offset points",
+        fontsize=7.5, fontweight="bold", color=color,
+        ha="left", va="center",
+        bbox=dict(boxstyle="round,pad=0.28", facecolor=DARK_LIFT,
+                  edgecolor=DARK_SPINE, linewidth=0.8, alpha=0.95),
+        zorder=6, annotation_clip=False,
+    )
+
+
 def threshold_callout(ax, text, y_target, color, band=None):
     """Boxed label in the top/bottom band with a thin arrow to its line/level.
 
@@ -208,9 +255,9 @@ def threshold_callout(ax, text, y_target, color, band=None):
     never collide with each other, the legend, or the RHS pill. Arrow points to
     the referenced level near the right end of the line.
     """
+    lo, hi = ax.get_ylim()
+    span = hi - lo
     if band is None:
-        lo, hi = ax.get_ylim()
-        span = hi - lo
         # Prefer the band with less data living in it, so the box never sits
         # on a line. Tie goes to the band nearest the referenced level.
         ys = [y for ln in ax.get_lines() for y in ln.get_ydata()
@@ -221,13 +268,33 @@ def threshold_callout(ax, text, y_target, color, band=None):
             band = "top" if occ_top < occ_bot else "bottom"
         else:
             band = "top" if y_target >= (lo + hi) / 2 else "bottom"
-    slots = getattr(ax, "_callout_slots", None)
-    if slots is None:
-        slots = {"top": 0, "bottom": 0}
-        ax._callout_slots = slots
-    xs = {"top": [0.42, 0.63, 0.22, 0.80], "bottom": [0.32, 0.55, 0.13, 0.74]}[band]
-    x_box = xs[slots[band] % len(xs)]
-    slots[band] += 1
+
+    # If the box would land in the band OPPOSITE its own level, the arrow has to
+    # cross the whole plot to reach it, which is exactly the diagonal-over-data the
+    # 7/20 rule bans. In that case label the line in the right-hand gutter instead:
+    # the x-axis padding already reserves that space, so the text sits beside the
+    # line it names, at its own level, with no arrow and nothing crossed.
+    on_far_side = ((band == "bottom" and y_target > lo + 0.55 * span)
+                   or (band == "top" and y_target < lo + 0.45 * span))
+    if on_far_side:
+        _gutter_label(ax, text, y_target, color)
+        return
+    # Horizontal layout is width-aware. Fixed slot positions used to collide as soon
+    # as two labels were long (a 22-char label at fontsize 8 is wider than the old
+    # 0.32 -> 0.55 gap, so the first box got overlapped and its tail clipped). We keep
+    # a per-band cursor and advance it by the label's estimated rendered width.
+    cursors = getattr(ax, "_callout_cursors", None)
+    if cursors is None:
+        cursors = {"top": 0.30, "bottom": 0.22}
+        ax._callout_cursors = cursors
+    fig_w_px = ax.figure.get_size_inches()[0] * ax.figure.dpi
+    ax_frac = ax.get_position().width
+    # Bold 8pt averages ~0.60em per char; +pad for the rounded bbox.
+    est_w = (len(text) * 8 * 0.60) / max(fig_w_px * ax_frac, 1.0) + 0.02
+    x_box = cursors[band]
+    if x_box + est_w > 0.98:  # would run off the right edge, restart the row
+        x_box = 0.02
+    cursors[band] = x_box + est_w + 0.015
     y_box = 0.94 if band == "top" else 0.06
     ax.annotate(
         text,

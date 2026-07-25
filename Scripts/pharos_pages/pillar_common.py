@@ -30,20 +30,45 @@ def band_state(z: float, hi_label: str = "ABOVE TREND", lo_label: str = "BELOW T
 
 def hline(ax, y: float, label: str, color=VENUS, ls="--", lw=1.0, va="bottom", dy=0.0):
     """Threshold line. Label renders as a banded box-and-arrow callout, never on
-    the line itself (Bob 7/20). va/dy kept for signature compatibility, unused."""
+    the line itself (Bob 7/20).
+
+    va picks the band ("top"/"bottom") when a caller wants to override the
+    occupancy heuristic. It used to be accepted and discarded, which is why two
+    callouts on one chart could both land in the same band and overlap. dy stays
+    unused, kept so existing positional call sites don't shift.
+    """
     ax.axhline(y, color=color, linewidth=lw, alpha=0.75, linestyle=ls)
     if label:
-        threshold_callout(ax, label, y, color)
+        band = va if va in ("top", "bottom") else None
+        threshold_callout(ax, label, y, color, band=band)
 
 
 def chart_composite(index_id: str, display: str, thresholds: list[tuple] | None = None,
-                    window: int = 21):
+                    window: int = 21, restandardize: bool = False):
     """Composite: one clean smoothed line, no raw daily artifact. We smooth the
-    already-computed z-score for display (21d = house standard); we never recompute
-    the z-score on smoothed data. Pass a larger window for noisier composites.
-    Returns (b64, smooth)."""
+    already-computed z-score for display (21d = house standard). Pass a larger window
+    for noisier composites.
+
+    restandardize re-scales the SMOOTHED series to unit variance. Use it whenever the
+    page draws threshold lines in z units and smoothing has compressed the amplitude
+    enough that those lines are unreachable (Bob 7/25: the 21d average IS the
+    indicator, so the z levels have to describe that series, not the raw daily one).
+    SPI is the case that needs it: raw sd 0.95 collapses to 0.60 once smoothed, so a
+    +1.5 line sits outside a range the plotted line reaches 0.04% of the time. Most
+    macro composites keep 98-99% of their amplitude through the 21d window and must be
+    left alone, because their bands already mean what they say.
+
+    Caveat worth knowing: the rescale uses full-history mean and sd, so it is a
+    display transform, not a point-in-time signal. Don't reuse it for backtests.
+
+    Returns (b64, smooth).
+    """
     s = load_index(index_id)
     smooth = s.rolling(window).mean().dropna()
+    if restandardize:
+        sd = smooth.std()
+        if sd and sd > 0:
+            smooth = (smooth - smooth.mean()) / sd
     start = smooth.index.min()
     fig, ax = dark_fig()
     add_recessions(ax, start)

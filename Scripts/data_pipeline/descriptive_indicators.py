@@ -45,8 +45,6 @@ INDICATORS = {
         basket=[("A091RC1Q027SBEA", +1, "yoy"), ("GDP", -1, "yoy")]),
     "QUALITY_PRESSURE": dict(  # within-IG quality premium (BAA minus AAA)
         basket=[("BAA10Y", +1, "level"), ("AAA10Y", -1, "level")]),
-    "VOL_TERM_GAP": dict(  # equity-vol term structure (spot VIX vs 3-month)
-        basket=[("VIXCLS", +1, "level"), ("VXVCLS", -1, "level")]),
     "FCI_CHANNELS": dict(  # financial-conditions sub-channels (risk+credit+leverage)
         basket=[("NFCIRISK", +1, "level"), ("NFCICREDIT", +1, "level"),
                 ("NFCILEVERAGE", +1, "level")]),
@@ -102,11 +100,51 @@ def compute(conn, basket, target_index, z_window=60):
     return comp.reindex(full).sort_index().ffill().reindex(target_index)
 
 
+def vtg_status(v):
+    """VOL_TERM_GAP status on raw vol points (2026-07 construct fix)."""
+    if pd.isna(v):
+        return "NO DATA"
+    if v > 5:
+        return "ACUTE BACKWARDATION"
+    if v > 0:
+        return "BACKWARDATION"
+    return "CONTANGO"
+
+
+def compute_vol_term_gap(conn):
+    """VOL_TERM_GAP rebuilt in place (2026-07 regime study, Phase 2): raw
+    spread VIXCLS minus VXVCLS in vol points, daily, joint trading dates,
+    from 2007-12-04 (VXVCLS inception). Positive = backwardation = stress.
+    No z-scores, no composites, no full-sample statistics. The prior
+    rolling-z composite disagreed with true backwardation in 25.2% of
+    post-2008 months, including reading calm at 2020-03-31. Pre-2008 rows
+    (z(VIX) in disguise) are deleted, not migrated."""
+    vix = load_series(conn, "VIXCLS")
+    vxv = load_series(conn, "VXVCLS")
+    if vix.empty or vxv.empty:
+        return pd.Series(dtype=float)
+    return (vix - vxv).dropna().loc["2007-12-04":]
+
+
 def main():
     conn = sqlite3.connect(DB_PATH, timeout=60)
     conn.execute("PRAGMA busy_timeout=60000")
     target_index = pd.date_range("1990-01-01", pd.Timestamp.today().normalize(), freq="D")
     total = 0
+
+    # VOL_TERM_GAP: dedicated raw-spread path (leaves the shared z pipeline)
+    vtg = compute_vol_term_gap(conn)
+    if not vtg.empty:
+        conn.execute("DELETE FROM lighthouse_indices WHERE index_id='VOL_TERM_GAP'")
+        rows = [(d.strftime("%Y-%m-%d"), "VOL_TERM_GAP", round(float(v), 4), vtg_status(v))
+                for d, v in vtg.items()]
+        conn.executemany(
+            "INSERT OR REPLACE INTO lighthouse_indices (date, index_id, value, status) "
+            "VALUES (?,?,?,?)", rows)
+        total += len(rows)
+        print(f"   [ok] {'VOL_TERM_GAP':<22} {len(rows):>6} rows  "
+              f"{vtg.index.min().date()}..{vtg.index.max().date()}  "
+              f"latest {vtg.iloc[-1]:+.2f} vol pts ({vtg_status(vtg.iloc[-1])})")
     for code, spec in INDICATORS.items():
         s = compute(conn, spec["basket"], target_index).dropna()
         if s.empty:

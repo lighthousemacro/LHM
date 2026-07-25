@@ -28,6 +28,9 @@ ERAS=[("2008-09-15","GFC / Lehman"),("2011-08-01","EU debt · US downgrade"),
       ("2020-03-01","COVID shock"),("2022-06-01","Fastest hikes in 40y"),("2025-04-01","Tariff shock")]
 
 ORDINAL={'LIQ_STAGE','WARNING_LEVEL'}  # regime stages — never smooth
+# raw daily series where a 3-month average would bury the signal
+# (VOL_TERM_GAP is a vol-point spread whose spikes last days, 2026-07 construct fix)
+RAW_UNSMOOTHED=ORDINAL|{'VOL_TERM_GAP'}
 
 def _cadence_win(x):
     """3-month smoothing window in native cadence: 63 obs for daily, 3 for monthly."""
@@ -168,7 +171,7 @@ def descriptive_card(iid):
     m=META.get(iid,{})
     # every composite reads off the 3-month average (Bob 7/20: z off the 3m, for all of them);
     # ordinal regime stages stay raw
-    smoothed = iid not in ORDINAL
+    smoothed = iid not in RAW_UNSMOOTHED
     fig,ax=new_fig(figsize=(14,8))
     if smoothed:
         xs=_three_mo(x)

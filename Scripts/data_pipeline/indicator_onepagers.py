@@ -114,7 +114,8 @@ META = {
   "SSD": dict(cat=5, name="Sentiment-Structure Divergence (SSD)", tier="DESCRIPTOR",
     m="Sentiment vs structure gap — capitulation vs blow-off risk."),
   "VOL_TERM_GAP": dict(cat=5, name="Vol Term-Structure Gap", tier="descriptive",
-    m="Spot VIX vs 3-month VIX — backwardation (stress) vs contango (calm)."),
+    m="Spot VIX minus 3-month VIX, raw vol points, daily since 2007-12 (2026-07 construct fix). "
+      "Backwardation (>0) = stress, >5 acute; contango (<=0) = calm."),
   "QUALITY_PRESSURE": dict(cat=5, name="Quality Pressure", tier="descriptive",
     m="Within-investment-grade quality premium (BAA−AAA) — risk appetite inside credit."),
   "FCI_CHANNELS": dict(cat=5, name="FCI Channels", tier="descriptive",

@@ -48,7 +48,9 @@ MACRO_COMPOSITES = {
     # Descriptive/diagnostic expansion (daily-FF monthly composites, 2026-06-15)
     "SUPERCORE_HEAT", "PERSISTENCE_GAP", "PIPELINE_IMPULSE", "TREND_HEAT",
     "AFFORD_PRESSURE", "FROZEN_DIVERGENCE", "INTEREST_CROWDOUT", "QUALITY_PRESSURE",
-    "VOL_TERM_GAP", "FCI_CHANNELS", "CAPACITY_SLACK",
+    "FCI_CHANNELS", "CAPACITY_SLACK",
+    # VOL_TERM_GAP removed 2026-07-25: rebuilt as a raw daily VIX-VIX3M
+    # spread, so it belongs on the default daily-market tolerance.
 }
 CRYPTO_PREFIXES = ("SLI", "CLI", "CRYPTO_")
 

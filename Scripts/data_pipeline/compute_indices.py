@@ -36,7 +36,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, "/Users/bob/LHM")
 
 from lighthouse.config import DB_PATH as CONFIG_DB_PATH
-from lighthouse_quant.models.recession_probability import compute_recession_probability
+from lighthouse_quant.models.recession_probability import (
+    compute_recession_probability,
+    compute_recession_probabilities,
+)
 from lighthouse_quant.models.warning_system import WarningSystem, WarningLevel
 from lighthouse_quant.models.risk_ensemble import RiskEnsemble, compute_ensemble_risk
 
@@ -231,8 +234,14 @@ STATUS_THRESHOLDS = {
         (-1.5, "EUPHORIA + STRONG"),
         (-999, "BLOW-OFF TOP RISK")
     ],
-    # Recession Probability
+    # Recession Probability (Model B; same bands for both horizons)
     "REC_PROB": [
+        (0.70, "HIGH RISK"),
+        (0.40, "ELEVATED"),
+        (0.20, "MODERATE"),
+        (-999, "LOW RISK")
+    ],
+    "REC_PROB_6M": [
         (0.70, "HIGH RISK"),
         (0.40, "ELEVATED"),
         (0.20, "MODERATE"),
@@ -2405,20 +2414,23 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
     print("   Computing SSD (Sentiment-Structure Divergence)...")
     ssd = compute_ssd(spi, msi)
 
-    # Recession Probability Model
-    print("   Computing REC_PROB (Recession Probability)...")
+    # Recession Probability Model (Model B, adopted 2026-07-25: walk-forward
+    # fitted logistic, both horizons, no rolling-mean bandage — the old
+    # hand-set model saturated the sigmoid and needed 63d smoothing to chart)
+    print("   Computing REC_PROB / REC_PROB_6M (Model B, walk-forward)...")
     try:
-        rec_prob = compute_recession_probability(conn)
-        print(f"      Generated {len(rec_prob)} probability estimates")
-        # Smooth: the raw model flips 0<->100% on a near-daily basis (known
-        # 2026-06 defect — unusable raw). A ~3-month rolling mean turns it into a
-        # stable, chartable probability without shifting the underlying level.
-        if isinstance(rec_prob, pd.Series) and rec_prob.dropna().shape[0] > 63:
-            rec_prob = rec_prob.rolling(63, min_periods=10).mean()
-            rec_prob.name = "REC_PROB"
+        rec_prob_df = compute_recession_probabilities(conn)
+        rec_prob = rec_prob_df["REC_PROB"]
+        rec_prob.name = "REC_PROB"
+        rec_prob_6m = rec_prob_df["REC_PROB_6M"]
+        rec_prob_6m.name = "REC_PROB_6M"
+        print(f"      Generated {len(rec_prob)} daily rows "
+              f"(latest 12m {rec_prob.dropna().iloc[-1]:.3f}, "
+              f"6m {rec_prob_6m.dropna().iloc[-1]:.3f})")
     except Exception as e:
         print(f"      WARNING: Recession probability computation failed: {e}")
         rec_prob = pd.Series(dtype=float, name="REC_PROB")
+        rec_prob_6m = pd.Series(dtype=float, name="REC_PROB_6M")
 
     # Warning System & Risk Ensemble (latest only - these are point-in-time)
     print("   Computing WARNING_LEVEL (Threshold Warning System)...")
@@ -2473,8 +2485,9 @@ def compute_all_indices(conn: sqlite3.Connection, latest_only: bool = False) -> 
         "LIQ_STAGE": liq_stage,
         "BILL_SOFR": bill_sofr,
         "RMP_Index": rmp_index,  # Placeholder - needs Treasury buyback data
-        # Recession Probability
+        # Recession Probability (Model B, both horizons)
         "REC_PROB": rec_prob,
+        "REC_PROB_6M": rec_prob_6m,
     }
 
     # Allocation-impact composites (validated 2026-06-15). Built from

@@ -244,3 +244,4 @@
 2026-07-25T03:16:41Z INF Registered tunnel connection connIndex=2 connection=52eadfa1-14d4-4fa2-b894-398eae437cb5 event=0 ip=2606:4700:a8::2 location=ewr12 protocol=quic
 2026-07-25T03:16:41Z INF Registered tunnel connection connIndex=3 connection=cc2e66af-ffc4-49d6-916b-bda0b36693e8 event=0 ip=2606:4700:a0::7 location=ewr13 protocol=quic
 2026-07-25T03:27:36Z WRN Your version 2026.7.2 is outdated. We recommend upgrading it to 2026.7.3
+2026-07-25T09:50:04Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com: i/o timeout"

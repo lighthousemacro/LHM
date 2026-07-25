@@ -122,13 +122,13 @@ def chart_lines(series: list[tuple[pd.Series, str]], thresholds: list[tuple] | N
 # dead model and is banned from every page.
 NOWCASTS = {
     "GDP": dict(nowcast="LHM_GDP_NOWCAST", fitted="LHM_GDP_FITTED", target="GDPC1",
-                label="Real GDP YoY", r2="0.71"),
+                label="Real GDP YoY", r2="0.75"),
     "LABOR": dict(nowcast="LHM_LABOR_NOWCAST", fitted="LHM_LABOR_FITTED", target="PAYEMS",
-                  label="Payrolls YoY", r2="0.71"),
+                  label="Payrolls YoY", r2="0.69"),
     "HOUSING": dict(nowcast="LHM_HOUSING_NOWCAST", fitted="LHM_HOUSING_FITTED", target="CSUSHPINSA",
                     label="Case-Shiller YoY", r2="0.89"),
     "INDPRO": dict(nowcast="LHM_INDPRO_NOWCAST", fitted="LHM_INDPRO_FITTED", target="INDPRO",
-                   label="Industrial Production YoY", r2="0.61"),
+                   label="Industrial Production YoY", r2="0.57"),
 }
 
 

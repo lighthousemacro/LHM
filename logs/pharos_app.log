@@ -369,3 +369,5 @@ INFO:     163.116.240.76:0 - "GET / HTTP/1.1" 200 OK
 INFO:     163.116.240.76:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
 INFO:     43.135.182.43:0 - "GET / HTTP/1.1" 200 OK
 INFO:     66.249.66.34:0 - "GET / HTTP/1.1" 200 OK
+INFO:     185.191.171.5:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     85.208.96.194:0 - "GET /auth/request HTTP/1.1" 405 Method Not Allowed

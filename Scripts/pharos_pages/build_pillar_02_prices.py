@@ -87,8 +87,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Inflation Heat Index", "The composite inflation read. Daily in gray, "
-                   "21d average carries the read.", pci_b64),
+        chart_card("PCI", "The composite inflation read. Where the pipeline pressure "
+                   "sits before it reaches the headline print.", pci_b64),
         chart_card("The Last Mile", "Headline, core, and core PCE against the 2% target. "
                    "Shelter makes the last mile sticky, with a 12 to 18 month lead.", infl_b64),
         chart_card("Pipeline Pressure", "PPI all commodities YoY. What producers pay "

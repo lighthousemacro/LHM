@@ -356,6 +356,29 @@ class SentimentFetcher:
                              ("VIX_percentile_252d", date_str, float(value)))
                     obs_count += 1
 
+                # VIX / VIX3M term-structure ratio (>1 = backwardation).
+                # Was a one-off ingestion orphaned at 2026-05-15; derived daily here now.
+                c.execute("""SELECT date, value FROM observations
+                            WHERE series_id = 'VXVCLS'
+                            ORDER BY date""")
+                vxv_rows = c.fetchall()
+                if vxv_rows:
+                    vxv = pd.DataFrame(vxv_rows, columns=["date", "VIX3M"])
+                    vxv["date"] = pd.to_datetime(vxv["date"])
+                    vxv = vxv.set_index("date")["VIX3M"]
+                    backwardation = (df["VIX"] / vxv).dropna()
+                    for date, value in backwardation.items():
+                        date_str = date.strftime("%Y-%m-%d")
+                        c.execute("INSERT OR REPLACE INTO observations VALUES (?,?,?)",
+                                 ("VIX_BACKWARDATION", date_str, float(value)))
+                        obs_count += 1
+                    c.execute("""INSERT OR REPLACE INTO series_meta
+                                (series_id, title, source, category, frequency, units, last_updated, last_fetched)
+                                VALUES (?,?,?,?,?,?,?,?)""",
+                             ("VIX_BACKWARDATION", "VIX/VIX3M term structure (>1=backwardation)",
+                              "Derived/CBOE", "Sentiment", "Daily", "Ratio",
+                              datetime.now().isoformat(), datetime.now().isoformat()))
+
                 # Update metadata
                 for series_id, title in [
                     ("VIX_vs_50d_pct", "VIX % vs 50-day MA"),

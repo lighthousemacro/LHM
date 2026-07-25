@@ -88,9 +88,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Market Breadth Pulse", "The composite structure read. Divergence between "
-                   "price and participation is distribution. Daily in gray, 21d average "
-                   "carries the read.", msi_b64),
+        chart_card("MSI", "The composite structure read. Divergence between price and "
+                   "participation is distribution.", msi_b64),
         chart_card("Swing Breadth", "Percent of S&P 500 members above their 50d average, "
                    "with the 25 washed-out and 80 crowded bands.", b50_b64),
         chart_card("Primary Trend Participation", "Percent above the 200d average. How much "

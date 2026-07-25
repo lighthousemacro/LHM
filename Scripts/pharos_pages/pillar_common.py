@@ -86,6 +86,78 @@ def chart_composite_monthly(index_id: str, display: str, thresholds: list[tuple]
     return to_b64(fig), s
 
 
+def chart_composite_lead(index_id: str, display: str, target_id: str, target_label: str,
+                         lead_months: int, transform: str = "yoy", window: int = 21,
+                         invert_target: bool = False, legend_loc: str = "upper left"):
+    """Composite plotted against the thing it actually leads, with the composite
+    advanced by `lead_months` so the two lines sit on top of each other.
+
+    If a page claims a lead, it shows the lead (Bob 7/25). The composite is shifted
+    FORWARD in time, so the last `lead_months` of composite history extend past the
+    target and read as the forward implication. The lead is measured, never asserted:
+    see Scripts/pharos_pages/lead_calibration.py for the cross-correlation that
+    picks `lead_months`. Never overlay a series that is an input to the composite;
+    that correlation is circular.
+
+    transform: "yoy" (percent change vs 12mo prior) or "diff12" (12mo change in level,
+    for series already expressed in percent, e.g. the unemployment rate).
+    Returns (b64, smooth composite, correlation at the plotted lead).
+    """
+    comp = load_index(index_id).rolling(window).mean().dropna()
+    compm = comp.resample("MS").mean().dropna()
+
+    t = load_obs(target_id).resample("MS").mean().dropna()
+    t = t.diff(12) if transform == "diff12" else t.pct_change(12) * 100
+    t = t.dropna()
+    if invert_target:
+        t = -t
+
+    shifted = compm.copy()
+    shifted.index = shifted.index + pd.DateOffset(months=lead_months)
+
+    joined = pd.concat([shifted.rename("c"), t.rename("t")], axis=1).dropna()
+    corr = float(joined["c"].corr(joined["t"])) if len(joined) > 24 else float("nan")
+
+    start = max(shifted.index.min(), t.index.min())
+    fig, ax = dark_fig()
+    add_recessions(ax, start)
+    zero_line(ax)
+    sw = shifted[shifted.index >= start]
+    ax.plot(sw.index, sw.values, color=SKY, linewidth=2.0,
+            label=f"{display} advanced {lead_months}mo ({sw.iloc[-1]:+.2f}z)")
+    # House dual-axis convention: composite (Sky) keeps the primary RHS, the
+    # overlaid target (Dusk) goes on the LHS. Both get a pill on their own side.
+    ax2 = ax.twinx()
+    tw = t[t.index >= start]
+    ax2.plot(tw.index, tw.values, color=DUSK, linewidth=1.6,
+             label=f"{target_label} ({tw.iloc[-1]:+.1f}%)")
+
+    style_ax(ax)
+    for sp in ax2.spines.values():
+        sp.set_visible(False)
+    ax2.yaxis.set_ticks_position("left")
+    ax2.yaxis.set_label_position("left")
+    ax2.tick_params(axis="y", colors=DUSK, labelsize=8)
+    ax2.set_ylabel("")
+    set_xlim(ax, start, sw.index.max())
+    ax2.set_xlim(ax.get_xlim())
+
+    # Only the composite gets a pill. The target's history ends before the advanced
+    # composite does, so a last-value pill for it would float mid-chart and read as a
+    # floating annotation. Its latest value rides in the legend label instead.
+    v, d = latest(sw)
+    pill(ax, d, v, f"{v:+.2f}", SKY)
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    leg = ax.legend(h1 + h2, l1 + l2, loc=legend_loc, frameon=True)
+    leg.get_frame().set_facecolor(DARK_MUTED)
+    leg.get_frame().set_edgecolor(DOLDRUMS)
+    for txt in leg.get_texts():
+        txt.set_color(FOG)
+        txt.set_fontsize(8)
+    return to_b64(fig), comp, corr
+
+
 def chart_lines(series: list[tuple[pd.Series, str]], thresholds: list[tuple] | None = None,
                 zero: bool = False, start: pd.Timestamp | None = None,
                 fmt: str = "{:+.1f}", pill_series: int = 0, legend_loc: str = "upper left"):

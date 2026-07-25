@@ -85,8 +85,7 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Credit Tide Index", "The composite credit read. Spreads lead defaults. "
-                   "Daily in gray, 21d average carries the read.", fci_b64),
+        chart_card("FCI", "The composite credit read. Spreads lead defaults.", fci_b64),
         chart_card("The Spread Complex", "HY and IG option-adjusted spreads. Below 300 bps "
                    "high yield is pricing a world without accidents.", oas_b64),
         chart_card("Credit-Labor Gap", "When spreads price one story and labor tells "

@@ -88,8 +88,7 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Sentiment Tide Index", "The composite positioning read. Contrarian at "
-                   "extremes only. Daily in gray, 21d average carries the read.", spi_b64),
+        chart_card("SPI", "The composite positioning read. Contrarian at extremes only.", spi_b64),
         chart_card("The Crowd", "AAII bull-bear spread with the +30 euphoria and -20 "
                    "capitulation extremes marked.", spread_b64),
         chart_card("Bulls and Bears", "The raw survey lines. The spread carries the "

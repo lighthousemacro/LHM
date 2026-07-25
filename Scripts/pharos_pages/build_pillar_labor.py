@@ -167,8 +167,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Labor Fragility Index", "The pressure underneath the labor market. "
-                   "The stuff that moves before the headline. Daily in gray, 21d average carries the read.", lfi_b64),
+        chart_card("LFI", "The pressure underneath the labor market. The stuff that "
+                   "moves before the headline.", lfi_b64),
         chart_card("The Quit Signal", "Quits are truth serum. Workers only walk when they "
                    "are confident. The 2.0% floor has preceded every modern recession.", quits_b64),
         chart_card("Payrolls Momentum", "Headline payroll growth YoY. By the time this "

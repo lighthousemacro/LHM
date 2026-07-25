@@ -63,8 +63,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Capex Thrust Index", "The composite business investment read. Capex is "
-                   "a forward commitment. Daily in gray, 21d average carries the read.", bci_b64),
+        chart_card("BCI", "The composite business investment read. Capex is a forward "
+                   "commitment, which is what makes it worth watching.", bci_b64),
         chart_card("Orders Momentum", "Durable goods orders YoY. Businesses order equipment "
                    "when they believe in the next two years.", ord_b64),
         chart_card("Capacity", "Utilization says whether the capital stock is working. "

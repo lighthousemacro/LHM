@@ -81,8 +81,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Fiscal Pressure Index", "The composite fiscal read, structural by "
-                   "nature. Daily in gray, 21d average carries the read.", fpi_b64),
+        chart_card("FPI", "The composite fiscal read. Structural by nature, which means "
+                   "it moves in years rather than quarters.", fpi_b64),
         chart_card("The Long End", "10Y and 30Y Treasury yields. Where fiscal supply "
                    "meets duration demand, term premium lives here.", yields_b64),
         chart_card("The Deficit Run-Rate", "Federal surplus or deficit, 12-month rolling "

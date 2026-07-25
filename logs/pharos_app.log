@@ -381,3 +381,4 @@ INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /d HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
 INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /d/growth HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /d/housing HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET /d/growth HTTP/1.1" 200 OK

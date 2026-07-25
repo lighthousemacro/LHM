@@ -66,8 +66,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Global Risk Tide Index", "The composite external read. Dollar dynamics "
-                   "drive the rotation. Daily in gray, 21d average carries the read.", tci_b64),
+        chart_card("TCI", "The composite external read. Dollar dynamics drive the "
+                   "rotation.", tci_b64),
         chart_card("The Dollar", "Trade-weighted broad dollar. A strong dollar tightens "
                    "global conditions with a 3 to 6 month lead.", dxy_b64),
         chart_card("Dollar Momentum", "YoY change in the broad dollar. The rate of change "

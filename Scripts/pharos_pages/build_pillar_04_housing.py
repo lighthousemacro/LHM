@@ -9,9 +9,19 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pillar_common import (  # noqa: E402
     DUSK, OCEAN, SEA, SKY, VENUS,
-    assemble, chart_card, chart_composite, chart_lines, chart_nowcast,
-    latest, load_obs, nowcast_tile, tile, yoy,
+    assemble, chart_card, chart_composite, chart_composite_lead, chart_lines,
+    chart_nowcast, latest, load_obs, nowcast_tile, tile, yoy,
 )
+
+# Measured, not asserted. `lead_calibration.py HCI` sweeps every non-component target:
+# industrial production peaks at 16 months (r 0.53) with a clean interior peak, rising
+# into 16 and falling after. Residential investment scores higher (0.64 at 23mo) but is
+# quarterly and still climbing at the edge of the window, so we don't lean on it.
+# The old "6 to 9 month" claim does not hold at the composite level: correlation there
+# is roughly half the peak. Permits and starts do lead on that horizon, and they are
+# HCI inputs, which is most likely where the 6-to-9 figure came from.
+HCI_LEAD_MONTHS = 16
+HCI_LEAD_TARGET = "INDPRO"
 
 
 def regime(z: float) -> tuple[str, str]:
@@ -24,6 +34,10 @@ def regime(z: float) -> tuple[str, str]:
 
 def build():
     hci_b64, hci = chart_composite("HCI", "HCI")
+    lead_b64, _, lead_corr = chart_composite_lead(
+        "HCI", "HCI", HCI_LEAD_TARGET, "Industrial production YoY (LHS)",
+        HCI_LEAD_MONTHS,
+    )
     starts = load_obs("HOUST")
     permits = load_obs("PERMIT")
     sp_b64, _ = chart_lines(
@@ -49,13 +63,14 @@ def build():
     mo_v, _ = latest(mort)
 
     verdict_text = (
-        f"HCI 21d average at {hci_v:+.2f}. Starts at {st_v:,.0f}k and permits at "
+        f"HCI at {hci_v:+.2f}. Starts at {st_v:,.0f}k and permits at "
         f"{pm_v:,.0f}k annualized, with the 30Y mortgage at {mo_v:.2f}%. "
-        f"Permits lead starts, and both lead the cycle by 6 to 9 months."
+        f"Permits lead starts by a quarter or so. The composite leads the goods cycle "
+        f"by about {HCI_LEAD_MONTHS} months."
     )
 
     tiles = "".join([
-        tile("Housing Tide", f"{hci_v:+.2f}", "", "HCI, 21d avg z",
+        tile("Housing Tide", f"{hci_v:+.2f}", "", "Composite z",
              state, "st-ok" if state == "RISING TIDE" else "st-alert" if state == "EBBING" else "st-flat", SKY),
         tile("Starts", f"{st_v:,.0f}", "k", f"SAAR, {st_d.strftime('%b %Y')}",
              "SOFT" if st_v < 1300 else "STEADY", "st-warn" if st_v < 1300 else "st-flat", DUSK),
@@ -67,8 +82,14 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Housing Tide Index", "The composite housing read. Rate sensitive, "
-                   "6 to 9 month lead. Daily in gray, 21d average carries the read.", hci_b64),
+        chart_card("HCI", "The composite housing read. Starts, existing sales, months' "
+                   "supply, home prices and the 30Y mortgage in one z-score. The most "
+                   "rate-sensitive pillar we track.", hci_b64),
+        chart_card("What HCI Leads", "HCI advanced "
+                   f"{HCI_LEAD_MONTHS} months against industrial production. Housing "
+                   f"commits capital before the goods cycle responds, so the composite "
+                   f"turns first and the real economy follows more than a year later. "
+                   f"Correlation {lead_corr:+.2f} at the plotted lead.", lead_b64),
         chart_card("Starts and Permits", "Permits lead starts, starts lead completions. "
                    "The front of the housing pipeline.", sp_b64),
         chart_card("The Price of Money", "The 30Y mortgage rate sets the affordability "
@@ -85,12 +106,13 @@ def build():
     wwcm = (
         "Permits turning up for three consecutive months. "
         "The 30Y mortgage sustained below 6%. "
-        "HCI 21d average crossing above +0.5."
+        "HCI crossing above +0.5."
     )
 
     assemble(
         slug="housing", filename="pillar_04_housing.html", h1="HOUSING", pillar_no=4,
-        subtitle="Pillar 4. Frozen equilibrium, rate sensitive. Lead time 6 to 9 months.",
+        subtitle=f"Pillar 4. Frozen equilibrium, rate sensitive. Leads the goods cycle "
+                 f"by about {HCI_LEAD_MONTHS} months.",
         verdict_label="Housing Regime", state=state, state_color=color,
         verdict_text=verdict_text, tiles_html=tiles,
         read_title="The Read",

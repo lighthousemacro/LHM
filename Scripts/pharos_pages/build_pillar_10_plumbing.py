@@ -89,8 +89,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Liquidity Cushion Index", "The composite plumbing read. Daily in gray, "
-                   "21d average carries the read. Lead time 1 to 4 weeks.", lci_b64),
+        chart_card("LCI", "The composite plumbing read. The fastest pillar we track, "
+                   "1 to 4 weeks.", lci_b64),
         chart_card("Reverse Repo", "The RRP facility balance in billions, with the 200B "
                    "reference line marked.", rrp_b64),
         chart_card("The Corridor", "Effective fed funds minus interest on reserve balances, "

@@ -68,8 +68,8 @@ def build():
     ])
 
     charts = "".join([
-        chart_card("Consumer Pulse Index", "The composite consumer read. 68% of GDP. "
-                   "Daily in gray, 21d average carries the read.", cci_b64),
+        chart_card("CCI", "The composite consumer read. 68% of GDP, and the last "
+                   "domino to fall.", cci_b64),
         chart_card("Real Spending", "Real PCE YoY. The single number the whole cycle "
                    "eventually answers to.", pce_b64),
         chart_card("The Buffer", "The saving rate is the margin of safety. Below 4.5% "

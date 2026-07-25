@@ -32,16 +32,23 @@ def design(c, cfg):
     d = pd.concat([ty.rename("y"), Pm], axis=1).dropna(); d = d[d.index >= cfg["start"]]
     return d, Pdf, tgt, ty
 
-def validate(key, cfg, c):
+def validate(key, cfg, c, save_dir=None):
     d, Pdf, tgt, ty = design(c, cfg)
     X, y = d.drop(columns="y").values, d["y"].values
-    sc = StandardScaler().fit(X)
     n0 = max(24, len(d)//4)
     preds, acts, prev = [], [], []
     for i in range(n0, len(d)):
-        m = ElasticNetCV(l1_ratio=[.5,.9,1], cv=4, max_iter=3000).fit(sc.transform(X[:i]), y[:i])
-        preds.append(m.predict(sc.transform(X[i:i+1]))[0]); acts.append(y[i]); prev.append(y[i-1])
+        # scaler fit on the training window only (was full-sample: a look-ahead
+        # that leaked future feature moments into every walk-forward step)
+        sc_i = StandardScaler().fit(X[:i])
+        m = ElasticNetCV(l1_ratio=[.5,.9,1], cv=4, max_iter=3000).fit(sc_i.transform(X[:i]), y[:i])
+        preds.append(m.predict(sc_i.transform(X[i:i+1]))[0]); acts.append(y[i]); prev.append(y[i-1])
     preds, acts, prev = map(np.array, (preds, acts, prev))
+    if save_dir:
+        # persist the walk-forward predictions with dates: this is the honest
+        # pseudo-real-time history (unlike LHM_*_FITTED, which is in-sample)
+        pd.DataFrame({"date": d.index[n0:], "wf_pred": preds, "actual": acts}).to_csv(
+            f"{save_dir}/LHM_{key}_NOWCAST_WF.csv", index=False)
     err = preds - acts
     oos_r = np.corrcoef(preds, acts)[0,1]
     # true out-of-sample R² (1 - SSE/SST): penalizes LEVEL bias, not just co-movement. Can be
@@ -53,7 +60,8 @@ def validate(key, cfg, c):
     recent_bias = err[-12:].mean()
     # linear recalibration: actual = a + b*pred  (least squares on OOS)
     b_cal, a_cal = np.polyfit(preds, acts, 1)
-    # live prediction (full-sample fit) + calibrated
+    # live prediction (full-sample fit) + calibrated — full-sample scaler is correct here
+    sc = StandardScaler().fit(X)
     full = ElasticNetCV(l1_ratio=[.1,.5,.7,.9,.95,1], cv=5, max_iter=6000, random_state=0).fit(sc.transform(X), y)
     live_raw = full.predict(sc.transform(Pdf.dropna().tail(1).values))[0]
     # guard: only trust the linear recalibration when it's stable (near-unit slope). An extreme
@@ -78,9 +86,14 @@ def validate(key, cfg, c):
 def main(write=False):
     c = sqlite3.connect(nm.DB)
     rows = []
+    save_dir = None
+    if write:
+        import os
+        save_dir = "/Users/bob/LHM/Working/db_overview/nowcast_wf_preds"
+        os.makedirs(save_dir, exist_ok=True)
     for key, cfg in nm.TARGETS.items():
         try:
-            r = validate(key, cfg, c); rows.append(r)
+            r = validate(key, cfg, c, save_dir=save_dir); rows.append(r)
             print(f"{r['label']:32} OOS r={r['oos_r']:.2f}  R2={r['oos_r2']:+.2f}  bias={r['bias']:+.2f}  RMSE={r['rmse']:.2f}  "
                   f"dir-hit={r['dir_hit']:.0%}  recent-bias={r['recent_bias']:+.2f}")
             print(f"   raw live {r['latest_raw']:+.2f}%  ->  CALIBRATED {r['latest']:+.2f}%  (vs last print {r['last_print']:+.2f}%)  [{r['calib']}]")

@@ -24,7 +24,7 @@ sys.path.insert(0, '/Users/bob/LHM/Scripts/backtest')
 sys.path.insert(0, '/Users/bob/LHM/Scripts/analysis')
 
 from lhm_chart_template import (  # noqa: E402
-    COLORS, brand_fig, new_fig, save_fig, set_theme, set_xlim_to_data,
+    COLORS, brand_fig, new_fig, new_fig_multi, save_fig, set_theme, set_xlim_to_data,
     style_ax, style_single_ax,
 )
 import regime_book_backtest as rbb  # noqa: E402
@@ -357,7 +357,8 @@ def main():
                chart_23_allocation_through_time, chart_24_current_allocation,
                chart_25_stops_table, chart_26_trade_distribution,
                chart_27_rolling_excess, chart_28_summary_table,
-               chart_29_cap_sweep, chart_30_universe_modes]:
+               chart_29_cap_sweep, chart_30_universe_modes,
+               chart_31_long_short]:
         print(f'  {fn.__name__} ...', end=' ', flush=True)
         fn()
         print('ok')
@@ -451,6 +452,64 @@ def chart_30_universe_modes():
     _footnote(fig, 'Six sleeve proxies cannot fill ten slots, so that book sits mostly in cash by construction. '
                    'Each line uses its own in-sample-selected position cap.')
     save_fig(fig, f'{OUT}/chart_30_universe_modes.png')
+
+def chart_31_long_short():
+    """Does the short side pay? Trade outcomes by side, plus net exposure."""
+    log = R['ls_log']
+    expo = R['ls_exposure']
+
+    fig, axes = new_fig_multi(2, 1, figsize=(14, 10))
+    ax1, ax2 = axes
+
+    bins = np.arange(-60, 125, 5)
+    lo = log.loc[log.side == 'long', 'ret'] * 100
+    sh = log.loc[log.side == 'short', 'ret'] * 100
+    ax1.hist(lo, bins=bins, color=COLORS['ocean'], alpha=0.85,
+             edgecolor='white', linewidth=0.5, label=f'Longs ({len(lo)} trades)')
+    ax1.hist(sh, bins=bins, color=COLORS['dusk'], alpha=0.85,
+             edgecolor='white', linewidth=0.5, label=f'Shorts ({len(sh)} trades)')
+    ax1.axvline(lo.mean(), color=COLORS['ocean'], linestyle='--', linewidth=1.5)
+    ax1.axvline(sh.mean(), color=COLORS['dusk'], linestyle='--', linewidth=1.5)
+    ax1.text(lo.mean(), ax1.get_ylim()[1] * 0.9,
+             f'  longs avg {lo.mean():+.1f}%, win {(lo>0).mean()*100:.0f}%',
+             fontsize=9.5, color=COLORS['ocean'], fontweight='bold')
+    ax1.text(sh.mean(), ax1.get_ylim()[1] * 0.62,
+             f'shorts avg {sh.mean():+.1f}%, win {(sh>0).mean()*100:.0f}%  ',
+             fontsize=9.5, color=COLORS['dusk'], fontweight='bold', ha='right')
+    style_ax(ax1, right_primary=False)
+    ax1.tick_params(axis='both', length=0)
+    ax1.xaxis.set_major_formatter(plt.FuncFormatter(lambda v, p: f'{v:+.0f}%'))
+    ax1.set_ylabel('Trades', fontsize=10)
+    ax1.set_title('Trade outcomes by side', fontsize=11, fontweight='bold',
+                  loc='left', color=COLORS['deep'])
+    leg = ax1.legend(loc='upper right', fontsize=9.5, frameon=True, framealpha=0.95,
+                     edgecolor=COLORS['doldrums'])
+    leg.get_frame().set_linewidth(0.5)
+
+    net = expo.net.resample('W-FRI').last() * 100
+    ax2.fill_between(net.index, net.values, 0, where=net.values >= 0,
+                     color=COLORS['ocean'], alpha=0.35, interpolate=True)
+    ax2.fill_between(net.index, net.values, 0, where=net.values < 0,
+                     color=COLORS['dusk'], alpha=0.35, interpolate=True)
+    ax2.plot(net.index, net.values, color=COLORS['deep'], linewidth=1.4)
+    ax2.axhline(0, color=COLORS['fog'], linewidth=1.0)
+    style_ax(ax2, right_primary=False)
+    ax2.tick_params(axis='both', length=0)
+    ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, p: f'{v:+.0f}%'))
+    ax2.set_ylabel('Net exposure', fontsize=10)
+    ax2.set_title(f'Net exposure — averages {expo.net.mean()*100:+.0f}%, '
+                  f'ranges {expo.net.min()*100:+.0f}% to {expo.net.max()*100:+.0f}%',
+                  fontsize=11, fontweight='bold', loc='left', color=COLORS['deep'])
+
+    brand_fig(fig,
+              title='The Short Side Does Not Pay On This Ranking',
+              subtitle='Symmetric long/short run of the same rules, trade outcomes by side and net exposure through time',
+              source=SRC, data_date=DATA_DATE)
+    _footnote(fig, 'Shorts are fully collateralized, so gross never exceeds 100% and there is no leverage in this version. '
+                   'Mirror entry, mirror stops, mirror ranking. Adding the short side cuts CAGR from 11.5% to 9.0% and '
+                   'deepens max drawdown from 21% to 31%.')
+    save_fig(fig, f'{OUT}/chart_31_long_short.png')
+
 
 if __name__ == '__main__':
     main()

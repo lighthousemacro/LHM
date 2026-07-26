@@ -135,15 +135,23 @@ def precompute(data, regime: pd.Series, universe=None):
         if len(c) < 400:
             continue
         a, trail = atr(df), c.rolling(22).max()
+        trough = c.rolling(22).min()
         entry = ((c > sma200) & (rs > rs.rolling(63).mean())).values
+        # Short entry is the exact mirror: price below its 200-day AND losing
+        # ground to the benchmark. Short stops mirror the long stops too, so a
+        # class keeps the same exit logic on both sides of the book.
+        entry_s = ((c < sma200) & (rs < rs.rolling(63).mean())).values
         pre[t] = dict(
             cls=CLASS_MAP[t], index=idx, close=c.values,
             ret=c.pct_change().fillna(0).values, rs=rs.values,
             mom=(rs / rs.shift(126) - 1).values,
-            entry=entry,
+            entry=entry, entry_s=entry_s,
             below200={X: (c < sma200 * (1 - X)).values for X in X_GRID},
             atrk={k: (c < (trail - k * a)).values for k in K_GRID},
             rsl={L: (rs < rs.rolling(L).mean()).values for L in L_GRID},
+            above200={X: (c > sma200 * (1 + X)).values for X in X_GRID},
+            atrk_s={k: (c > (trough + k * a)).values for k in K_GRID},
+            rsl_s={L: (rs > rs.rolling(L).mean()).values for L in L_GRID},
             regime=regime.reindex(idx).ffill().values,
         )
     return pre
@@ -157,6 +165,18 @@ def exit_array(p, subset, X, k, L):
         ex |= p['atrk'][k]
     if 'rs' in subset:
         ex |= p['rsl'][L]
+    return ex
+
+
+def exit_array_short(p, subset, X, k, L):
+    """Mirror of exit_array for a short position (a cover signal)."""
+    ex = np.zeros(len(p['close']), dtype=bool)
+    if '200d' in subset:
+        ex |= p['above200'][X]
+    if 'atr' in subset:
+        ex |= p['atrk_s'][k]
+    if 'rs' in subset:
+        ex |= p['rsl_s'][L]
     return ex
 
 
@@ -357,6 +377,146 @@ def concentrated_book(pre, exit_of, regime: pd.Series, edge: pd.DataFrame,
     return eqc.pct_change().fillna(0.0), wdf, np.array(trades), pd.DataFrame(trade_log)
 
 
+
+def long_short_book(pre, exit_of, cover_of, regime: pd.Series, edge: pd.DataFrame,
+                    K=K_BOOK, edge_weight=0.5, max_weight=0.25, allow_short=True):
+    """Symmetric long/short book. Ten slots total, gross capped at 100%.
+
+    Shorts are fully collateralized: entering a short reserves its notional from
+    cash, so gross exposure can never exceed the account and there is no
+    leverage in this version. A short's contribution to equity is
+    collateral + (notional - current liability), which is the honest mark.
+    Net exposure floats with how many slots each side can fill.
+    """
+    dates = pd.DatetimeIndex(sorted(set().union(*[set(p['index']) for p in pre.values()])))
+    di = {d: i for i, d in enumerate(dates)}
+    tks = list(pre)
+    n, m = len(dates), len(tks)
+    RET = np.full((n, m), np.nan)
+    ENT_L = np.zeros((n, m)); ENT_S = np.zeros((n, m))
+    MOM = np.full((n, m), np.nan)
+    EX_L = np.zeros((n, m)); EX_S = np.zeros((n, m))
+    CL = np.full((n, m), np.nan)
+    for j, t in enumerate(tks):
+        p = pre[t]
+        rows = [di[d] for d in p['index']]
+        RET[rows, j] = p['ret']
+        ENT_L[rows, j] = p['entry']; ENT_S[rows, j] = p['entry_s']
+        MOM[rows, j] = p['mom']
+        CL[rows, j] = p['close']
+        EX_L[rows, j] = exit_of[t]; EX_S[rows, j] = cover_of[t]
+
+    reg = regime.reindex(dates).ffill().shift(1)
+    edge_dates = edge.index.get_level_values(0).unique().sort_values()
+
+    cash = 1.0
+    pos = {}          # j -> dict(side, val, notional, liab, entry_px)
+    cd = {}
+    equity_curve = np.zeros(n)
+    weights = np.zeros((n, m))
+    net_exp = np.zeros(n); gross_exp = np.zeros(n)
+    trade_log = []
+    edge_cache, cached_key = None, None
+
+    def contribution(q):
+        return q['val'] if q['side'] > 0 else (q['notional'] + (q['notional'] - q['liab']))
+
+    for i, d in enumerate(dates):
+        for j, q in pos.items():
+            r = RET[i, j]
+            if np.isnan(r):
+                continue
+            if q['side'] > 0:
+                q['val'] *= (1 + r)
+            else:
+                q['liab'] *= (1 + r)
+        equity = cash + sum(contribution(q) for q in pos.values())
+
+        if max_weight is not None and equity > 0:
+            for j, q in list(pos.items()):
+                if q['side'] > 0:
+                    over = q['val'] - max_weight * equity
+                    if over > 0:
+                        q['val'] -= over
+                        cash += over
+                else:
+                    over = q['notional'] - max_weight * equity
+                    if over > 0:
+                        # trim the short pro rata, releasing collateral and P&L
+                        frac = over / q['notional']
+                        released = frac * (q['notional'] + (q['notional'] - q['liab']))
+                        q['notional'] -= over
+                        q['liab'] *= (1 - frac)
+                        cash += released
+            equity = cash + sum(contribution(q) for q in pos.values())
+
+        equity_curve[i] = equity
+        if equity > 0:
+            for j, q in pos.items():
+                w = (q['val'] if q['side'] > 0 else -q['notional']) / equity
+                weights[i, j] = w
+            net_exp[i] = weights[i].sum()
+            gross_exp[i] = np.abs(weights[i]).sum()
+
+        for j in list(cd):
+            cd[j] -= 1
+            if cd[j] <= 0:
+                del cd[j]
+
+        for j, q in list(pos.items()):
+            hit = (EX_L[i, j] == 1) if q['side'] > 0 else (EX_S[i, j] == 1)
+            if np.isnan(CL[i, j]) or hit or i == n - 1:
+                if not np.isnan(CL[i, j]):
+                    raw = CL[i, j] / q['entry_px'] - 1
+                    trade_log.append(dict(ticker=tks[j], exit=d,
+                                          side='long' if q['side'] > 0 else 'short',
+                                          ret=raw if q['side'] > 0 else -raw))
+                cash += contribution(q)
+                del pos[j]
+                cd[j] = 3
+
+        if len(pos) < K and cash > 1e-6:
+            st = reg.iloc[i]
+            prior = edge_dates[edge_dates < d]
+            key = (prior[-1] if len(prior) else None, st)
+            if key != cached_key:
+                cached_key = key
+                edge_cache = (edge.loc[key] if (key[0] is not None and key in edge.index)
+                              else None)
+            cand = []
+            for j in range(m):
+                if j in pos or j in cd or np.isnan(MOM[i, j]):
+                    continue
+                e = edge_cache.get(tks[j], np.nan) if edge_cache is not None else np.nan
+                e = e / 100.0 if np.isfinite(e) else 0.0
+                if ENT_L[i, j] == 1:
+                    cand.append((MOM[i, j] + edge_weight * e, +1, j))
+                elif allow_short and ENT_S[i, j] == 1:
+                    # short score is the mirror: most negative momentum and the
+                    # worst regime edge become the strongest short candidates
+                    cand.append((-(MOM[i, j] + edge_weight * e), -1, j))
+            cand.sort(reverse=True)
+            for _, side, j in cand[:K - len(pos)]:
+                alloc = min(equity / K, cash)
+                if alloc <= 1e-6:
+                    break
+                cash -= alloc
+                if side > 0:
+                    pos[j] = dict(side=1, val=alloc, notional=alloc, liab=alloc,
+                                  entry_px=CL[i, j])
+                else:
+                    pos[j] = dict(side=-1, val=0.0, notional=alloc, liab=alloc,
+                                  entry_px=CL[i, j])
+
+    eqc = pd.Series(equity_curve, index=dates)
+    first = eqc.ne(eqc.iloc[0]).idxmax() if (eqc != eqc.iloc[0]).any() else eqc.index[0]
+    eqc = eqc.loc[first:]
+    wdf = pd.DataFrame(weights, index=dates, columns=tks).loc[first:]
+    expo = pd.DataFrame({'net': net_exp, 'gross': gross_exp}, index=dates).loc[first:]
+    log = pd.DataFrame(trade_log)
+    return eqc.pct_change().fillna(0.0), wdf, expo, log
+
+
 # -------------------------------------------------------------------- runner
 
 def run(mode='sub', verbose=True):
@@ -431,6 +591,26 @@ def run(mode='sub', verbose=True):
     print(f'  -> winning cap: {CAP_LABEL}')
     capped, capped_w, capped_tr, capped_log = cap_runs[best_cap]
 
+    # ---- Stage 3: symmetric long/short, same ranking, same stops ----
+    print('\nStage 3 — symmetric long/short (margin live 2026-07-26, no leverage in v1)')
+    cover_of = {t: exit_array_short(p, *best_by_class[p['cls']]) for t, p in pre.items()}
+    ls_book, ls_w, ls_expo, ls_log = long_short_book(
+        pre, exit_of, cover_of, regime, edge, max_weight=best_cap)
+    ls_stats = metrics(ls_book, ls_log.ret.values if not ls_log.empty else np.array([]))
+    n_short = int((ls_log.side == 'short').sum()) if not ls_log.empty else 0
+    print(f'  gross avg {ls_expo.gross.mean()*100:.0f}%  net avg {ls_expo.net.mean()*100:+.0f}%  '
+          f'net range {ls_expo.net.min()*100:+.0f}% to {ls_expo.net.max()*100:+.0f}%')
+    print(f'  {n_short} short trades of {len(ls_log)} total')
+    if not ls_log.empty:
+        by_side = ls_log.groupby('side').ret.agg(['count', 'mean',
+                                                  lambda x: (x > 0).mean()])
+        by_side.columns = ['trades', 'avg_return', 'win_rate']
+        print(by_side.round(3).to_string())
+        by_side.to_csv(f'{OUT}/long_short_by_side.csv')
+    ls_w.to_parquet(f'{OUT}/weights_long_short.parquet')
+    ls_expo.to_parquet(f'{OUT}/exposure_long_short.parquet')
+    ls_log.to_csv(f'{OUT}/trade_log_long_short.csv', index=False)
+
     spy = data[BENCH]['Close'].pct_change().fillna(0)
     spy = spy.reindex(book.index).fillna(0)
     agg = data['AGG']['Close'].pct_change().fillna(0).reindex(book.index).fillna(0)
@@ -445,6 +625,7 @@ def run(mode='sub', verbose=True):
     out = {}
     for label, series, tlg in [('Regime Book', book, tlog),
                                (f'Regime Book, {CAP_LABEL} cap', capped, capped_log),
+                               ('Long/short, same rules', ls_book, ls_log),
                                ('Plain 200d top-10', base, base_log),
                                ('SPY', spy, None),
                                ('60/40', sixty40, None)]:
@@ -474,6 +655,7 @@ def run(mode='sub', verbose=True):
         print(f'  {k:10s} {v*100:5.1f}%')
     print(f'\nWritten to {OUT}')
     return dict(mode=mode, stops=stops, results=res, weights=weights, book=book,
+                ls_book=ls_book, ls_weights=ls_w, ls_exposure=ls_expo, ls_log=ls_log,
                 capped=capped, capped_weights=capped_w, capped_trades=capped_log,
                 cap_sweep=caps, best_cap=best_cap, cap_label=CAP_LABEL,
                 baseline=base, spy=spy, sixty40=sixty40, trades=tlog)

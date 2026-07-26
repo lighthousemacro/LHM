@@ -140,7 +140,35 @@ def load_index(index_id: str) -> pd.Series:
     return d.set_index('date').value
 
 
-def growth_inflation_regime(smooth: int = 21) -> pd.DataFrame:
+def _debounce(state: pd.Series, min_run: int) -> pd.Series:
+    """Hold the prior regime until a new one has persisted `min_run` days.
+
+    Raw sign flips around zero produce one- and two-day regimes that no book
+    could ever trade. The de-bounce keeps the classification honest about
+    what is actually a regime versus what is noise crossing a threshold.
+    """
+    if min_run <= 1:
+        return state
+    out = []
+    current = None
+    pending, pending_n = None, 0
+    for v in state:
+        if current is None:
+            current = v
+        elif v == current:
+            pending, pending_n = None, 0
+        else:
+            if v == pending:
+                pending_n += 1
+            else:
+                pending, pending_n = v, 1
+            if pending_n >= min_run:
+                current, pending, pending_n = v, None, 0
+        out.append(current)
+    return pd.Series(out, index=state.index)
+
+
+def growth_inflation_regime(smooth: int = 21, min_run: int = 21) -> pd.DataFrame:
     """Daily growth/inflation quadrant from Activity Pulse and Inflation Heat."""
     gci = load_index('GCI').resample('D').ffill()
     pci = load_index('PCI').resample('D').ffill()
@@ -149,16 +177,20 @@ def growth_inflation_regime(smooth: int = 21) -> pd.DataFrame:
     df = pd.concat([g.rename('growth'), i.rename('inflation')], axis=1).dropna()
     up_g = df.growth > 0
     up_i = df.inflation > 0
-    df['quadrant'] = np.select(
+    raw = pd.Series(np.select(
         [up_g & ~up_i, up_g & up_i, ~up_g & up_i, ~up_g & ~up_i],
-        QUADRANTS, default=None)
+        QUADRANTS, default=None), index=df.index)
+    df['quadrant_raw'] = raw
+    df['quadrant'] = _debounce(raw, min_run)
     return df
 
 
-def mri_regime(smooth: int = 21) -> pd.DataFrame:
+def mri_regime(smooth: int = 21, min_run: int = 21) -> pd.DataFrame:
     mri = load_index('MRI').resample('D').ffill().rolling(smooth, min_periods=smooth).mean()
     band = pd.cut(mri, [-np.inf, -0.5, 0.5, 1.0, 1.5, np.inf], labels=MRI_BANDS)
-    return pd.DataFrame({'mri': mri, 'band': band}).dropna()
+    out = pd.DataFrame({'mri': mri, 'band': band}).dropna()
+    out['band'] = _debounce(out.band.astype(object), min_run)
+    return out
 
 
 def recprob_regime() -> pd.DataFrame:
@@ -245,7 +277,7 @@ def rolling_returns(tickers: dict, months: int = 3) -> pd.DataFrame:
     px = load_prices(list(tickers.values()))
     px = px.rename(columns={v: k for k, v in tickers.items()})
     wk = px.resample('W-FRI').last()
-    return wk.pct_change(months * 4 + 1) * 100
+    return wk.pct_change(months * 4 + 1, fill_method=None) * 100
 
 
 if __name__ == '__main__':

@@ -408,3 +408,19 @@ INFO:     190.123.232.69:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
 INFO:     54.226.9.66:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
 INFO:     43.134.15.174:0 - "GET / HTTP/1.1" 200 OK
 INFO:     181.94.227.45:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET / HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/trade HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/prices HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/growth HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/housing HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/consumer HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/consumer HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/business HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/trade HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/government HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:f5ac:c5a8:7d1:887e:0 - "GET /d/financial HTTP/1.1" 200 OK

@@ -398,3 +398,10 @@ INFO:     2600:4041:5d22:c100:b178:fec1:8b26:8a87:0 - "GET / HTTP/1.1" 302 Found
 INFO:     43.130.71.237:0 - "GET / HTTP/1.1" 200 OK
 INFO:     23.27.145.65:0 - "GET / HTTP/1.1" 200 OK
 INFO:     23.27.145.31:0 - "GET / HTTP/1.1" 200 OK
+INFO:     190.123.232.69:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     190.123.232.69:0 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 Not Found
+INFO:     190.123.232.69:0 - "GET /apple-touch-icon.png HTTP/1.1" 404 Not Found
+INFO:     190.123.232.69:0 - "GET /d HTTP/1.1" 302 Found
+INFO:     190.123.232.69:0 - "GET / HTTP/1.1" 200 OK
+INFO:     190.123.232.69:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     190.123.232.69:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK

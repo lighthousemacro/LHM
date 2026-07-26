@@ -72,7 +72,19 @@ CLASS_MAP = {
     # crypto
     'BTC-USD': 'crypto',
 }
-UNIVERSE = list(CLASS_MAP)
+# Granularity modes. The book can bet at the asset-class level (six sleeves,
+# one instrument each) or at the sub-asset-class level (the full ladder), or
+# both. Sub-asset bets give the ranking more to choose from and let the book
+# express WHICH part of a sleeve is working, at the cost of more correlated
+# candidates competing for the same ten slots.
+UNIVERSE_MODES = {
+    'majors': 'SPY IEF LQD DBC GLD UUP'.split(),
+    'majors_plus': 'SPY IEF LQD DBC GLD UUP BTC-USD VNQ'.split(),
+    'sub': list(CLASS_MAP),
+}
+UNIVERSE = UNIVERSE_MODES['sub']
+
+CAP_GRID = [0.15, 0.20, 0.25, 1 / 3, 0.50, None]
 
 SUBSETS = [('200d',), ('atr',), ('rs',), ('200d', 'atr'), ('200d', 'rs'),
            ('atr', 'rs'), ('200d', 'atr', 'rs')]
@@ -85,7 +97,7 @@ def fetch():
     if os.path.exists(CACHE):
         return pickle.load(open(CACHE, 'rb'))
     import yfinance as yf
-    tickers = sorted(set(UNIVERSE + [BENCH]))
+    tickers = sorted(set(UNIVERSE_MODES['sub'] + [BENCH]))
     raw = yf.download(tickers, start=START, auto_adjust=True, progress=False,
                       group_by='ticker', threads=True)
     data = {}
@@ -107,11 +119,11 @@ def atr(df, n=14):
     return tr.rolling(n).mean()
 
 
-def precompute(data, regime: pd.Series):
+def precompute(data, regime: pd.Series, universe=None):
     """Per-ticker signal arrays plus the regime label aligned to each date."""
     bench = data[BENCH]['Close']
     pre = {}
-    for t in UNIVERSE:
+    for t in (universe if universe is not None else UNIVERSE):
         if t not in data:
             continue
         df = data[t]
@@ -347,17 +359,18 @@ def concentrated_book(pre, exit_of, regime: pd.Series, edge: pd.DataFrame,
 
 # -------------------------------------------------------------------- runner
 
-def run():
+def run(mode='sub', verbose=True):
     print('Fetching prices...')
     data = fetch()
     gi = rar.growth_inflation_regime()
     regime = gi.quadrant
-    pre = precompute(data, regime)
+    universe = UNIVERSE_MODES[mode]
+    pre = precompute(data, regime, universe)
 
     classes = {}
     for t, p in pre.items():
         classes.setdefault(p['cls'], {})[t] = p
-    print(f'Universe: {len(pre)} instruments across {len(classes)} classes: '
+    print(f'Universe [{mode}]: {len(pre)} instruments across {len(classes)} classes: '
           + ', '.join(f'{c}({len(v)})' for c, v in classes.items()))
 
     # ---- Stage 1: best single stop per asset class, in-sample only ----
@@ -393,8 +406,30 @@ def run():
     book, weights, trades, tlog = concentrated_book(pre, exit_of, regime, edge)
     base_exit = {t: exit_array(p, ('200d',), 0.02, None, None) for t, p in pre.items()}
     base, base_w, base_tr, base_log = concentrated_book(pre, base_exit, regime, edge, edge_weight=0.0)
-    capped, capped_w, capped_tr, capped_log = concentrated_book(
-        pre, exit_of, regime, edge, max_weight=0.25)
+    # ---- Stage 2b: the single-position cap, chosen the same way the stops were ----
+    # Scored IN-SAMPLE ONLY on the same payoff-preserving objective, so the cap
+    # is walk-forward selected rather than picked after seeing the blow-up.
+    print('\nStage 2b — single-position cap sweep (in-sample <= 2020)')
+    cap_rows, cap_runs = [], {}
+    for cap in CAP_GRID:
+        cb, cw, ctr, clog = concentrated_book(pre, exit_of, regime, edge, max_weight=cap)
+        cap_runs[cap] = (cb, cw, ctr, clog)
+        m_is = metrics(cb, clog.loc[pd.to_datetime(clog['exit']) <= IS_END, 'ret'].values
+                       if not clog.empty else np.array([]), START, IS_END)
+        score = objective(m_is)
+        cap_rows.append(dict(cap='none' if cap is None else f'{cap*100:.0f}%',
+                             score=score, IS_CAGR=m_is['CAGR'], IS_Vol=m_is['Vol'],
+                             IS_MaxDD=m_is['MaxDD'], IS_Sortino=m_is['Sortino'],
+                             IS_Calmar=m_is['Calmar'], IS_Omega=m_is['Omega']))
+        print(f'  cap {"none" if cap is None else f"{cap*100:.0f}%":>5}  score {score:7.2f}  '
+              f'IS CAGR {m_is["CAGR"]*100:5.1f}%  MaxDD {m_is["MaxDD"]*100:6.1f}%  '
+              f'Sortino {m_is["Sortino"]:.2f}  Calmar {m_is["Calmar"]:.2f}')
+    caps = pd.DataFrame(cap_rows).sort_values('score', ascending=False)
+    caps.to_csv(f'{OUT}/cap_sweep.csv', index=False)
+    best_cap = CAP_GRID[int(np.argmax([r['score'] for r in cap_rows]))]
+    CAP_LABEL = 'none' if best_cap is None else f'{best_cap*100:.0f}%'
+    print(f'  -> winning cap: {CAP_LABEL}')
+    capped, capped_w, capped_tr, capped_log = cap_runs[best_cap]
 
     spy = data[BENCH]['Close'].pct_change().fillna(0)
     spy = spy.reindex(book.index).fillna(0)
@@ -409,7 +444,7 @@ def run():
 
     out = {}
     for label, series, tlg in [('Regime Book', book, tlog),
-                               ('Regime Book, 25% cap', capped, capped_log),
+                               (f'Regime Book, {CAP_LABEL} cap', capped, capped_log),
                                ('Plain 200d top-10', base, base_log),
                                ('SPY', spy, None),
                                ('60/40', sixty40, None)]:
@@ -438,10 +473,25 @@ def run():
     for k, v in cur.items():
         print(f'  {k:10s} {v*100:5.1f}%')
     print(f'\nWritten to {OUT}')
-    return dict(stops=stops, results=res, weights=weights, book=book,
+    return dict(mode=mode, stops=stops, results=res, weights=weights, book=book,
                 capped=capped, capped_weights=capped_w, capped_trades=capped_log,
+                cap_sweep=caps, best_cap=best_cap, cap_label=CAP_LABEL,
                 baseline=base, spy=spy, sixty40=sixty40, trades=tlog)
 
 
 if __name__ == '__main__':
-    run()
+    mode = sys.argv[1] if len(sys.argv) > 1 else 'sub'
+    if mode == 'compare':
+        summaries = {}
+        for m in ('majors', 'majors_plus', 'sub'):
+            print('\n' + '=' * 78 + f'\nUNIVERSE MODE: {m}\n' + '=' * 78)
+            r = run(m)
+            summaries[m] = r['results']
+        comp = pd.concat(summaries, names=['universe'])
+        comp.to_csv(f'{OUT}/universe_mode_comparison.csv')
+        print('\n\nHEAD-TO-HEAD (book only)\n')
+        book = comp[comp.index.get_level_values('strategy').str.startswith('Regime Book')]
+        print(book[['CAGR', 'Vol', 'MaxDD', 'Sortino', 'Calmar', 'Omega',
+                    'NTrades']].round(3).to_string())
+    else:
+        run(mode)

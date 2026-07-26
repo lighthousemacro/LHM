@@ -198,13 +198,18 @@ def chart_24_current_allocation():
 
 def chart_25_stops_table():
     df = STOPS.copy()
-    df['Stop'] = df.apply(lambda r: {
-        '200d': f'200-day break, {r.X*100:.1f}% buffer',
-        'atr': f'ATR chandelier, {r.k}x',
-        'rs': f'Relative trend, {int(r.L)}-day',
-    }.get(r.stop, ' + '.join(
-        {'200d': f'200-day break {r.X*100:.1f}%', 'atr': f'ATR {r.k:g}x',
-         'rs': f'Rel trend {int(r.L)}d'}[s] for s in r.stop.split('+'))), axis=1)
+    def _stop_label(r):
+        parts = []
+        for tag in r.stop.split('+'):
+            if tag == '200d':
+                parts.append(f'200-day break, {r.X * 100:.1f}% buffer')
+            elif tag == 'atr':
+                parts.append(f'ATR chandelier, {r.k:g}x')
+            elif tag == 'rs':
+                parts.append(f'Relative trend, {int(r.L)}-day')
+        return ' + '.join(parts)
+
+    df['Stop'] = df.apply(_stop_label, axis=1)
     df['Asset class'] = df.asset_class.map(CLASS_LABEL)
     show = df[['Asset class', 'Stop', 'IS_Sortino', 'IS_Payoff', 'IS_CAGR',
                'IS_MaxDD', 'NTrades']].copy()
@@ -351,12 +356,101 @@ def main():
     for fn in [chart_21_equity_curve, chart_22_drawdowns,
                chart_23_allocation_through_time, chart_24_current_allocation,
                chart_25_stops_table, chart_26_trade_distribution,
-               chart_27_rolling_excess, chart_28_summary_table]:
+               chart_27_rolling_excess, chart_28_summary_table,
+               chart_29_cap_sweep, chart_30_universe_modes]:
         print(f'  {fn.__name__} ...', end=' ', flush=True)
         fn()
         print('ok')
     print(f'\nRendered to {OUT}')
 
+
+
+
+def chart_29_cap_sweep():
+    """In-sample cap sweep: what the position cap buys and what it costs."""
+    sw = R['cap_sweep'].copy()
+    order = ['15%', '20%', '25%', '33%', '50%', 'none']
+    sw['ord'] = sw.cap.map({c: i for i, c in enumerate(order)})
+    sw = sw.sort_values('ord')
+    x = np.arange(len(sw))
+
+    fig, ax = new_fig(figsize=(14, 8))
+    ax2 = ax.twinx()
+    ax.bar(x, sw.IS_MaxDD * 100, 0.55, color=COLORS['dusk'],
+           edgecolor='white', linewidth=0.6, label='Max drawdown (left)')
+    ax2.plot(x, sw.IS_CAGR * 100, color=COLORS['ocean'], linewidth=2.6,
+             marker='o', markersize=7, label='CAGR (right)')
+    ax2.plot(x, sw.IS_Sortino * 10, color=COLORS['sea'], linewidth=2.2,
+             marker='s', markersize=6, linestyle='--', label='Sortino x10 (right)')
+    best = R['cap_label']
+    bi = list(sw.cap).index(best)
+    ax.axvline(bi, color=COLORS['venus'], linestyle='--', linewidth=1.4)
+    ax.text(bi, ax.get_ylim()[0] * 0.92, f'  winner: {best}', fontsize=9.5,
+            color=COLORS['venus'], fontweight='bold', va='bottom')
+    ax.set_xticks(x)
+    ax.set_xticklabels([c if c != 'none' else 'no cap' for c in sw.cap],
+                       fontsize=10.5, fontweight='bold')
+    style_ax(ax, right_primary=False)
+    ax.tick_params(axis='both', length=0)
+    ax2.tick_params(axis='both', length=0)
+    for sp in ax2.spines.values():
+        sp.set_visible(False)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, p: f'{v:.0f}%'))
+    ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, p: f'{v:.0f}'))
+    ax.set_ylabel('Max drawdown', fontsize=10, color=COLORS['dusk'])
+    ax2.set_ylabel('CAGR %  /  Sortino x10', fontsize=10, color=COLORS['ocean'])
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    leg = ax.legend(h1 + h2, l1 + l2, loc='lower left', fontsize=9.5, frameon=True,
+                    framealpha=0.95, edgecolor=COLORS['doldrums'])
+    leg.get_frame().set_linewidth(0.5)
+    brand_fig(fig,
+              title='The Cap Is Cheap and the Level Barely Matters',
+              subtitle='In-sample statistics by maximum weight allowed in any single position, scored on the objective that picked the stops',
+              source=SRC, data_date=pd.Timestamp(rbb.IS_END))
+    _footnote(fig, 'Scored in-sample through 2020 only, so the cap is walk-forward selected rather than chosen after the fact. '
+                   'Every cap beats no cap; the 15% to 33% range is a statistical tie.')
+    save_fig(fig, f'{OUT}/chart_29_cap_sweep.png')
+
+
+def chart_30_universe_modes():
+    """Six sleeves versus the full sub-asset ladder."""
+    curves = {}
+    for mode, label, color in [
+            ('sub', 'Sub-asset class bets (XLV, SMH, DBE...)', COLORS['ocean']),
+            ('majors_plus', 'Eight sleeve proxies (SPY, IEF, GLD...)', COLORS['dusk']),
+            ('majors', 'Six sleeve proxies only', COLORS['sky'])]:
+        r = rbb.run(mode)
+        curves[label] = (r['capped'], color, r['cap_label'])
+
+    fig, ax = new_fig(figsize=(14, 8))
+    for label, (s, color, cap) in curves.items():
+        eq = (1 + s).cumprod()
+        ax.plot(eq.index, eq.values, color=color, linewidth=2.6,
+                label=f'{label} — {cap} cap')
+        ax.annotate(f'{eq.iloc[-1]:.1f}x', xy=(eq.index[-1], eq.iloc[-1]),
+                    xytext=(8, 0), textcoords='offset points', fontsize=9,
+                    fontweight='bold', color='white', va='center',
+                    bbox=dict(boxstyle='round,pad=0.28', facecolor=color, edgecolor='none'))
+    eq = (1 + SPY).cumprod()
+    ax.plot(eq.index, eq.values, color=COLORS['doldrums'], linewidth=1.8,
+            label='S&P 500')
+    ax.set_yscale('log')
+    style_ax(ax)
+    ax.tick_params(axis='both', length=0)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, p: f'{v:.0f}x'))
+    ax.set_ylabel('Growth of $1, log scale', fontsize=10)
+    set_xlim_to_data(ax, BOOK.index)
+    leg = ax.legend(loc='upper left', fontsize=9.5, frameon=True, framealpha=0.95,
+                    edgecolor=COLORS['doldrums'])
+    leg.get_frame().set_linewidth(0.5)
+    brand_fig(fig,
+              title='Betting the Sleeve Is Not the Same as Betting Inside It',
+              subtitle='The same rules run at asset-class granularity versus sub-asset class granularity',
+              source=SRC, data_date=DATA_DATE)
+    _footnote(fig, 'Six sleeve proxies cannot fill ten slots, so that book sits mostly in cash by construction. '
+                   'Each line uses its own in-sample-selected position cap.')
+    save_fig(fig, f'{OUT}/chart_30_universe_modes.png')
 
 if __name__ == '__main__':
     main()

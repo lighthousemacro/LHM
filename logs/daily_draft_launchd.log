@@ -440,3 +440,11 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-28_level-not-risk/morning_pack
 [2026-07-25 07:53:15] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-28_level-not-risk/morning_packet.html
 [2026-07-25 07:53:16] Opened in browser.
 [2026-07-25 07:53:16] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-07-26 07:58:01] ════════ DAILY DRAFT RUN START (2026-07-26) ════════
+[2026-07-26 07:58:02] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Housing was covered 7/16. The open, timely thread is the consumer under Thursday's GDP advance print. Let me verify against real data.
+API Error: Connection closed mid-response. The response above may be incomplete.
+[2026-07-26 09:18:28] claude exited status=1 in 80m 26s
+[2026-07-26 09:18:28] No PREVIEW_PATH in output — falling back to newest *preview*.html touched in the last 3h.
+[2026-07-26 09:18:29] WARNING: no preview HTML found. Check the run log: /Users/bob/LHM/logs/daily_draft_2026-07-26.log
+[2026-07-26 09:18:29] ════════ DAILY DRAFT RUN END (status=1) ════════

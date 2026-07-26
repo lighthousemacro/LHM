@@ -1,22 +1,7 @@
-[2026-07-25 07:45:03] ════════ DAILY DRAFT RUN START (2026-07-25) ════════
-[2026-07-25 07:45:03] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-Verified: zero RRP references, and all 7 emdashes are in packet chrome (title, "Where it sits" labels, one table placeholder) — none in the briefing prose or interview questions that feed copy. Packet is open in the browser.
-
-**Today's packet: "Level, Not Risk" — The Beam, targeting Tue Jul 28.**
-
-The thread: over the past month the 10-year went 4.50% → 4.71% and the 2-year went 4.16% → 4.37%. Both ends, +21bps, to the basis point. The curve barely moved (+30 → +36bps), HY OAS widened 6bps to 277 and stayed under the 300 complacency line, and the VIX is *lower* than a month ago. Consensus filed the S&P's 2.6% giveback as the growth scare arriving. The framework reads a level repricing that compressed multiples for a week.
-
-Two things worth flagging from the build:
-
-**I did not use a single proprietary composite.** MRI and LPI both step-changed on *Saturday* Jul 18 — not a release day — and MRI then printed an identical -0.6570 on both Jul 24 and Jul 25. Yesterday's run flagged the same MRI jump. It looks like a recompute artifact and possibly a stale carry-forward now. The recompute step needs a look. The packet runs entirely on raw `observations` series with real release dates, which costs it nothing.
-
-**A dramatic-looking thread died correctly.** Raw SPI hit +1.51 (93rd percentile fear) with SSD +1.53 and MSI -1.03, which read as capitulation. Under the 21-day smoothing rule those are -0.10, -0.08 and -0.35 — all neutral. One-day spikes, not a regime. I also computed a fear-plus-calm-credit analogue (80% hit rate vs 62% when credit is stressed) and left it out: n=20 across only 8 episodes, not citable. It's in the sidecar as a research thread if you want it built properly.
-
-Ten charts rendered to brand, five publish and five supplementary. I corrected two chart titles mid-build because "internals rolled over" was only true on a 5-day window — over the month, breadth and the McClellan Summation both *improved*. Also fixed a doubled "Lighthouse Macro" source-line prefix and re-rendered all ten.
-
-Nothing was published, sent, or pushed. Full QC log in `build_notes.md`.
-
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-28_level-not-risk/morning_packet.html
-[2026-07-25 07:53:15] claude exited status=0 in 8m 12s
-[2026-07-25 07:53:15] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-28_level-not-risk/morning_packet.html
-[2026-07-25 07:53:16] Opened in browser.
+[2026-07-26 07:58:01] ════════ DAILY DRAFT RUN START (2026-07-26) ════════
+[2026-07-26 07:58:02] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Housing was covered 7/16. The open, timely thread is the consumer under Thursday's GDP advance print. Let me verify against real data.
+API Error: Connection closed mid-response. The response above may be incomplete.
+[2026-07-26 09:18:28] claude exited status=1 in 80m 26s
+[2026-07-26 09:18:28] No PREVIEW_PATH in output — falling back to newest *preview*.html touched in the last 3h.
+[2026-07-26 09:18:29] WARNING: no preview HTML found. Check the run log: /Users/bob/LHM/logs/daily_draft_2026-07-26.log

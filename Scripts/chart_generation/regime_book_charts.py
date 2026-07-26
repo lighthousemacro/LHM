@@ -76,11 +76,14 @@ def chart_21_equity_curve():
               ('Plain 200-day top-10 baseline', BASE, COLORS['sky'], 1.8),
               ('S&P 500', SPY, COLORS['dusk'], 2.0),
               ('60/40', S6040, COLORS['doldrums'], 1.8)]
+    ends = sorted([(1 + s).cumprod().iloc[-1] for _, s, _, _ in series], reverse=True)
     for label, s, c, lw in series:
         eq = (1 + s).cumprod()
         ax.plot(eq.index, eq.values, color=c, linewidth=lw, label=label)
+        # stagger the end pills so near-identical finishes do not overlap
+        dy = (ends.index(eq.iloc[-1]) - (len(ends) - 1) / 2) * 3
         ax.annotate(f'{eq.iloc[-1]:.1f}x', xy=(eq.index[-1], eq.iloc[-1]),
-                    xytext=(8, 0), textcoords='offset points', fontsize=9,
+                    xytext=(8, dy), textcoords='offset points', fontsize=9,
                     fontweight='bold', color='white', va='center',
                     bbox=dict(boxstyle='round,pad=0.28', facecolor=c, edgecolor='none'))
     ax.set_yscale('log')
@@ -100,9 +103,8 @@ def chart_21_equity_curve():
               title='Ten Slots, No Rebalancing, Stops That Fit the Asset',
               subtitle='Growth of one dollar since 2007, regime book versus a plain trend baseline, the S&P 500 and 60/40',
               source=SRC, data_date=DATA_DATE)
-    _footnote(fig, 'Uncapped, a single parabolic position (Bitcoin in 2017) grows to most of the book and takes it down with it. '
-                   'The 25% cap is the only rule that ever trims a winner. Long-only, cash-settled, no leverage. Stops optimized through 2020 '
-                   'and held fixed thereafter. Gross of costs and taxes. Internal research, not a track record.')
+    _footnote(fig, 'Uncapped, one parabolic position (Bitcoin, 2017) grows into most of the book and takes it down with it.\n'
+                   'Long-only, no leverage, gross of costs. Stops fixed after 2020. Internal research, not a track record.')
     save_fig(fig, f'{OUT}/chart_21_equity_curve.png')
 
 
@@ -199,10 +201,10 @@ def chart_25_stops_table():
     df['Stop'] = df.apply(lambda r: {
         '200d': f'200-day break, {r.X*100:.1f}% buffer',
         'atr': f'ATR chandelier, {r.k}x',
-        'rs': f'Relative trend, {r.L}-day',
+        'rs': f'Relative trend, {int(r.L)}-day',
     }.get(r.stop, ' + '.join(
-        {'200d': f'200-day break {r.X*100:.1f}%', 'atr': f'ATR {r.k}x',
-         'rs': f'Rel trend {r.L}d'}[s] for s in r.stop.split('+'))), axis=1)
+        {'200d': f'200-day break {r.X*100:.1f}%', 'atr': f'ATR {r.k:g}x',
+         'rs': f'Rel trend {int(r.L)}d'}[s] for s in r.stop.split('+'))), axis=1)
     df['Asset class'] = df.asset_class.map(CLASS_LABEL)
     show = df[['Asset class', 'Stop', 'IS_Sortino', 'IS_Payoff', 'IS_CAGR',
                'IS_MaxDD', 'NTrades']].copy()
@@ -219,6 +221,7 @@ def chart_25_stops_table():
                    cellLoc='center', loc='center')
     tbl.auto_set_font_size(False)
     tbl.set_fontsize(10)
+    tbl.auto_set_column_width(col=list(range(len(show.columns))))
     tbl.scale(1, 2.1)
     for (r, c), cell in tbl.get_celld().items():
         cell.set_edgecolor('white')
@@ -319,6 +322,7 @@ def chart_28_summary_table():
                    cellLoc='center', loc='center')
     tbl.auto_set_font_size(False)
     tbl.set_fontsize(9.5)
+    tbl.auto_set_column_width(col=list(range(len(show.columns))))
     tbl.scale(1, 1.9)
     for (rr, c), cell in tbl.get_celld().items():
         cell.set_edgecolor('white')
@@ -328,10 +332,11 @@ def chart_28_summary_table():
             cell.set_text_props(color='white', fontweight='bold')
         else:
             strat = show.iloc[rr - 1, 0]
-            cell.set_facecolor('#e8f1f7' if strat == 'Regime Book'
+            hero = strat == 'Regime Book, 25% cap'
+            cell.set_facecolor('#e8f1f7' if hero
                                else (COLORS['offwhite'] if rr % 2 else 'white'))
             cell.set_text_props(color=COLORS['deep'],
-                                fontweight='bold' if strat == 'Regime Book' else 'normal')
+                                fontweight='bold' if hero else 'normal')
     brand_fig(fig,
               title='The Scorecard',
               subtitle='Full sample, in-sample and out-of-sample statistics for the book and its benchmarks',

@@ -405,3 +405,5 @@ INFO:     190.123.232.69:0 - "GET /d HTTP/1.1" 302 Found
 INFO:     190.123.232.69:0 - "GET / HTTP/1.1" 200 OK
 INFO:     190.123.232.69:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
 INFO:     190.123.232.69:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 200 OK
+INFO:     54.226.9.66:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     43.134.15.174:0 - "GET / HTTP/1.1" 200 OK

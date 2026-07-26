@@ -141,11 +141,21 @@ def precompute(data, regime: pd.Series, universe=None):
         # ground to the benchmark. Short stops mirror the long stops too, so a
         # class keeps the same exit logic on both sides of the book.
         entry_s = ((c < sma200) & (rs < rs.rolling(63).mean())).values
+        # Short-side GATES. A short has to clear a higher bar than the mirror of
+        # a long: being below trend is not a thesis, it is a dip until the trend
+        # itself has rolled over and the name is losing ground persistently.
+        slope200 = sma200.diff(21)
+        gates = dict(
+            downtrend=(slope200 < 0).values,                    # the 200d itself is falling
+            deep=(c < sma200 * 0.97).values,                    # 3% below, not brushing it
+            persistent=(rs < rs.rolling(126).mean()).values,    # 6mo of losing to SPY, not 3
+            no_bounce=(c < c.rolling(22).max() * 0.95).values,  # not already snapping back
+        )
         pre[t] = dict(
             cls=CLASS_MAP[t], index=idx, close=c.values,
             ret=c.pct_change().fillna(0).values, rs=rs.values,
             mom=(rs / rs.shift(126) - 1).values,
-            entry=entry, entry_s=entry_s,
+            entry=entry, entry_s=entry_s, gates=gates,
             below200={X: (c < sma200 * (1 - X)).values for X in X_GRID},
             atrk={k: (c < (trail - k * a)).values for k in K_GRID},
             rsl={L: (rs < rs.rolling(L).mean()).values for L in L_GRID},
@@ -379,7 +389,9 @@ def concentrated_book(pre, exit_of, regime: pd.Series, edge: pd.DataFrame,
 
 
 def long_short_book(pre, exit_of, cover_of, regime: pd.Series, edge: pd.DataFrame,
-                    K=K_BOOK, edge_weight=0.5, max_weight=0.25, allow_short=True):
+                    K=K_BOOK, edge_weight=0.5, max_weight=0.25, allow_short=True,
+                    short_gates=(), risk_gate=None, edge_floor=None,
+                    max_shorts=None):
     """Symmetric long/short book. Ten slots total, gross capped at 100%.
 
     Shorts are fully collateralized: entering a short reserves its notional from
@@ -401,13 +413,23 @@ def long_short_book(pre, exit_of, cover_of, regime: pd.Series, edge: pd.DataFram
         p = pre[t]
         rows = [di[d] for d in p['index']]
         RET[rows, j] = p['ret']
-        ENT_L[rows, j] = p['entry']; ENT_S[rows, j] = p['entry_s']
+        ENT_L[rows, j] = p['entry']
+        es = p['entry_s'].copy()
+        for g in short_gates:
+            es &= p['gates'][g]
+        ENT_S[rows, j] = es
         MOM[rows, j] = p['mom']
         CL[rows, j] = p['close']
         EX_L[rows, j] = exit_of[t]; EX_S[rows, j] = cover_of[t]
 
     reg = regime.reindex(dates).ffill().shift(1)
     edge_dates = edge.index.get_level_values(0).unique().sort_values()
+    # Macro permission to be short at all. Shorting into a benign risk regime is
+    # how a trend book bleeds; the gate says only press when the dial agrees.
+    if risk_gate is not None:
+        rg = risk_gate.reindex(dates).ffill().shift(1).fillna(False).astype(bool).values
+    else:
+        rg = np.ones(n, dtype=bool)
 
     cash = 1.0
     pos = {}          # j -> dict(side, val, notional, liab, entry_px)
@@ -491,12 +513,16 @@ def long_short_book(pre, exit_of, cover_of, regime: pd.Series, edge: pd.DataFram
                 e = e / 100.0 if np.isfinite(e) else 0.0
                 if ENT_L[i, j] == 1:
                     cand.append((MOM[i, j] + edge_weight * e, +1, j))
-                elif allow_short and ENT_S[i, j] == 1:
+                elif (allow_short and ENT_S[i, j] == 1 and rg[i]
+                      and (edge_floor is None or e * 100 < edge_floor)):
                     # short score is the mirror: most negative momentum and the
                     # worst regime edge become the strongest short candidates
                     cand.append((-(MOM[i, j] + edge_weight * e), -1, j))
             cand.sort(reverse=True)
+            n_short_open = sum(1 for q in pos.values() if q['side'] < 0)
             for _, side, j in cand[:K - len(pos)]:
+                if side < 0 and max_shorts is not None and n_short_open >= max_shorts:
+                    continue
                 alloc = min(equity / K, cash)
                 if alloc <= 1e-6:
                     break
@@ -507,6 +533,7 @@ def long_short_book(pre, exit_of, cover_of, regime: pd.Series, edge: pd.DataFram
                 else:
                     pos[j] = dict(side=-1, val=0.0, notional=alloc, liab=alloc,
                                   entry_px=CL[i, j])
+                    n_short_open += 1
 
     eqc = pd.Series(equity_curve, index=dates)
     first = eqc.ne(eqc.iloc[0]).idxmax() if (eqc != eqc.iloc[0]).any() else eqc.index[0]
@@ -594,8 +621,77 @@ def run(mode='sub', verbose=True):
     # ---- Stage 3: symmetric long/short, same ranking, same stops ----
     print('\nStage 3 — symmetric long/short (margin live 2026-07-26, no leverage in v1)')
     cover_of = {t: exit_array_short(p, *best_by_class[p['cls']]) for t, p in pre.items()}
-    ls_book, ls_w, ls_expo, ls_log = long_short_book(
+    # Baseline: the naive mirror, kept as the control.
+    mirror_book, mirror_w, mirror_expo, mirror_log = long_short_book(
         pre, exit_of, cover_of, regime, edge, max_weight=best_cap)
+    m_is = metrics(mirror_book,
+                   mirror_log.loc[pd.to_datetime(mirror_log['exit']) <= IS_END, 'ret'].values,
+                   START, IS_END)
+    print(f'  mirror (control): IS CAGR {m_is["CAGR"]*100:5.1f}%  '
+          f'Sortino {m_is["Sortino"]:.2f}  score {objective(m_is):.2f}')
+
+    # ---- Stage 3b: what does a short have to clear to be worth taking? ----
+    # A short is not a long with the sign flipped. Search the gate stack the same
+    # way the stops and the cap were searched: in-sample only, same objective.
+    print('\nStage 3b — short-side gate ablation (in-sample <= 2020)')
+    GATES = ['downtrend', 'deep', 'persistent', 'no_bounce']
+    # risk-regime permission: only short when the risk dial is off Low Risk
+    mri_band = rar.mri_regime().band
+    risk_on_gate = mri_band.isin(['Elevated', 'High Risk', 'Crisis'])
+    # or when growth is rolling over
+    contraction_gate = regime.isin(['Contraction', 'Stagflation'])
+
+    variants = []
+    for r in range(len(GATES) + 1):
+        for combo in itertools.combinations(GATES, r):
+            variants.append((combo, None, None, None, 'none'))
+    # layer the macro permissions onto the full technical stack
+    full = tuple(GATES)
+    variants += [
+        (full, risk_on_gate, None, None, 'MRI elevated+'),
+        (full, contraction_gate, None, None, 'growth rolling over'),
+        (full, risk_on_gate, -5.0, None, 'MRI + negative regime edge'),
+        (full, None, -5.0, None, 'negative regime edge'),
+        (full, risk_on_gate, None, 3, 'MRI + max 3 shorts'),
+        (full, risk_on_gate, -5.0, 3, 'MRI + edge + max 3 shorts'),
+    ]
+
+    ls_rows, ls_runs = [], {}
+    for combo, rgate, floor, mx, tag in variants:
+        b, w, ex, lg = long_short_book(
+            pre, exit_of, cover_of, regime, edge, max_weight=best_cap,
+            short_gates=combo, risk_gate=rgate, edge_floor=floor, max_shorts=mx)
+        is_tr = (lg.loc[pd.to_datetime(lg['exit']) <= IS_END] if not lg.empty
+                 else pd.DataFrame(columns=['ret', 'side']))
+        mm = metrics(b, is_tr['ret'].values, START, IS_END)
+        if mm is None:
+            continue
+        sh = is_tr[is_tr.side == 'short'] if 'side' in is_tr else is_tr
+        key = ('+'.join(combo) if combo else 'mirror only') + f' | {tag}'
+        ls_runs[key] = (b, w, ex, lg)
+        ls_rows.append(dict(gates=key, score=objective(mm), IS_CAGR=mm['CAGR'],
+                            IS_MaxDD=mm['MaxDD'], IS_Sortino=mm['Sortino'],
+                            IS_Calmar=mm['Calmar'], n_short=len(sh),
+                            short_avg=sh.ret.mean() if len(sh) else np.nan,
+                            short_win=(sh.ret > 0).mean() if len(sh) else np.nan))
+    ls_tab = pd.DataFrame(ls_rows).sort_values('score', ascending=False)
+    ls_tab.to_csv(f'{OUT}/short_gate_ablation.csv', index=False)
+    print(ls_tab.head(12).round(3).to_string(index=False))
+
+    # Long-only is in the running: if no short variant beats it in-sample, the
+    # honest answer is that the short side does not belong in the book.
+    long_only_score = objective(metrics(
+        capped, capped_log.loc[pd.to_datetime(capped_log['exit']) <= IS_END, 'ret'].values,
+        START, IS_END))
+    best_row = ls_tab.iloc[0]
+    print(f'\n  best short variant IS score {best_row.score:.2f}  vs  '
+          f'long-only {long_only_score:.2f}')
+    if best_row.score <= long_only_score:
+        print('  -> no short variant clears long-only in-sample. Shorts stay out.')
+    else:
+        print(f'  -> shorts earn a place: {best_row.gates}')
+    ls_book, ls_w, ls_expo, ls_log = ls_runs[best_row.gates]
+    LS_LABEL = best_row.gates
     ls_stats = metrics(ls_book, ls_log.ret.values if not ls_log.empty else np.array([]))
     n_short = int((ls_log.side == 'short').sum()) if not ls_log.empty else 0
     print(f'  gross avg {ls_expo.gross.mean()*100:.0f}%  net avg {ls_expo.net.mean()*100:+.0f}%  '
@@ -625,7 +721,8 @@ def run(mode='sub', verbose=True):
     out = {}
     for label, series, tlg in [('Regime Book', book, tlog),
                                (f'Regime Book, {CAP_LABEL} cap', capped, capped_log),
-                               ('Long/short, same rules', ls_book, ls_log),
+                               ('Long/short, naive mirror', mirror_book, mirror_log),
+                               ('Long/short, gated shorts', ls_book, ls_log),
                                ('Plain 200d top-10', base, base_log),
                                ('SPY', spy, None),
                                ('60/40', sixty40, None)]:
@@ -656,6 +753,9 @@ def run(mode='sub', verbose=True):
     print(f'\nWritten to {OUT}')
     return dict(mode=mode, stops=stops, results=res, weights=weights, book=book,
                 ls_book=ls_book, ls_weights=ls_w, ls_exposure=ls_expo, ls_log=ls_log,
+                ls_label=LS_LABEL, ls_ablation=ls_tab,
+                long_only_is_score=long_only_score, mirror_book=mirror_book,
+                mirror_log=mirror_log, mirror_exposure=mirror_expo,
                 capped=capped, capped_weights=capped_w, capped_trades=capped_log,
                 cap_sweep=caps, best_cap=best_cap, cap_label=CAP_LABEL,
                 baseline=base, spy=spy, sixty40=sixty40, trades=tlog)

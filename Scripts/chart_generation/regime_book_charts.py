@@ -358,7 +358,7 @@ def main():
                chart_25_stops_table, chart_26_trade_distribution,
                chart_27_rolling_excess, chart_28_summary_table,
                chart_29_cap_sweep, chart_30_universe_modes,
-               chart_31_long_short]:
+               chart_31_long_short, chart_32_short_gates]:
         print(f'  {fn.__name__} ...', end=' ', flush=True)
         fn()
         print('ok')
@@ -455,8 +455,8 @@ def chart_30_universe_modes():
 
 def chart_31_long_short():
     """Does the short side pay? Trade outcomes by side, plus net exposure."""
-    log = R['ls_log']
-    expo = R['ls_exposure']
+    log = R['mirror_log']
+    expo = R['mirror_exposure']
 
     fig, axes = new_fig_multi(2, 1, figsize=(14, 10))
     ax1, ax2 = axes
@@ -509,6 +509,41 @@ def chart_31_long_short():
                    'Mirror entry, mirror stops, mirror ranking. Adding the short side cuts CAGR from 11.5% to 9.0% and '
                    'deepens max drawdown from 21% to 31%.')
     save_fig(fig, f'{OUT}/chart_31_long_short.png')
+
+
+def chart_32_short_gates():
+    """What a short has to clear, and whether clearing it is enough."""
+    tab = R['ls_ablation'].copy().head(10).iloc[::-1]
+    labels = [g.replace('downtrend+deep+persistent+no_bounce', 'full technical stack')
+               .replace(' | none', '  (no macro gate)').replace(' | ', '  +  ')
+              for g in tab.gates]
+    long_only = R['results'].loc[('Regime Book, 25% cap', 'IS')]
+
+    fig, ax = new_fig(figsize=(14, 9))
+    colors = [COLORS['ocean'] if v > 0 else COLORS['dusk'] for v in tab.score]
+    ax.barh(range(len(tab)), tab.score, color=colors, edgecolor='white', linewidth=0.6)
+    lo_score = R['long_only_is_score']
+    ax.axvline(lo_score, color=COLORS['venus'], linestyle='--', linewidth=1.6)
+    ax.text(lo_score, len(tab) - 0.4, ' long-only, no shorts at all',
+            fontsize=9.5, color=COLORS['venus'], fontweight='bold', va='top')
+    ax.set_yticks(range(len(tab)))
+    ax.set_yticklabels(labels, fontsize=8.5)
+    ax.yaxis.tick_left()
+    fig.subplots_adjust(left=0.34, right=0.95)
+    style_ax(ax, right_primary=False)
+    ax.tick_params(axis='both', length=0)
+    ax.set_xlim(min(tab.score.min(), lo_score) - 1.5, max(tab.score.max(), lo_score) + 1.2)
+    for i, (v, ns) in enumerate(zip(tab.score, tab.n_short)):
+        ax.text(v + 0.12, i, f'{v:.1f}   ({int(ns)} shorts)', va='center',
+                fontsize=8, color=COLORS['doldrums'])
+    brand_fig(fig,
+              title='Raising the Bar Stops the Bleeding Without Making Shorts Pay',
+              subtitle='In-sample objective score by short-side gate stack, against a book that never shorts at all',
+              source=SRC, data_date=pd.Timestamp(rbb.IS_END))
+    _footnote(fig, 'downtrend = the 200-day is falling. deep = 3% below it. persistent = six months of losing to the benchmark.\n'
+                   'no_bounce = not already snapping back. Macro gates add the risk dial and the regime edge.\n'
+                   'The best stack clears long-only by 0.7 points on six in-sample short trades. That is not a result.')
+    save_fig(fig, f'{OUT}/chart_32_short_gates.png')
 
 
 if __name__ == '__main__':

@@ -1186,3 +1186,26 @@
 2026-07-24 11:56:43 [INFO] Freshness check done: 3 series refreshed, 2,286 obs added.
 2026-07-24 12:35:52 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-07-24 23:18:10 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-27 08:37:43 [WARNING] Attempt 1 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series?series_id=GDPC1&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 2s...
+2026-07-27 08:37:45 [WARNING] Attempt 2 failed: 429 Client Error: Too Many Requests for url: https://api.stlouisfed.org/fred/series?series_id=GDPC1&api_key=11893c506c07b3b8647bf16cf60586e8&file_type=json. Retrying in 4s...
+2026-07-27 08:48:47 [INFO] Stale series (4):
+  DGORDER: db=2026-05-01 -> fred=2026-06-01
+  ADXTNO: db=2026-05-01 -> fred=2026-06-01
+  NEWORDER: db=2026-05-01 -> fred=2026-06-01
+  ANDENO: db=2026-05-01 -> fred=2026-06-01
+2026-07-27 09:49:55 [ERROR]   DGORDER: fetch failed: database is locked
+2026-07-27 11:52:00 [ERROR]   ADXTNO: fetch failed: database is locked
+2026-07-27 11:52:02 [ERROR]   NEWORDER: fetch failed: database disk image is malformed
+2026-07-27 11:52:03 [ERROR]   ANDENO: fetch failed: database disk image is malformed
+2026-07-27 11:52:03 [INFO] Freshness check done: 0 series refreshed, 0 obs added.
+2026-07-27 12:38:43 [WARNING] Attempt 1 failed: HTTPSConnectionPool(host='api.stlouisfed.org', port=443): Read timed out. (read timeout=30). Retrying in 2s...
+2026-07-27 12:38:47 [INFO] Stale series (4):
+  DGORDER: db=2026-05-01 -> fred=2026-06-01
+  ADXTNO: db=2026-05-01 -> fred=2026-06-01
+  NEWORDER: db=2026-05-01 -> fred=2026-06-01
+  ANDENO: db=2026-05-01 -> fred=2026-06-01
+2026-07-27 12:52:52 [ERROR]   DGORDER: fetch failed: database is locked
+2026-07-27 13:41:50 [ERROR]   ADXTNO: fetch failed: database disk image is malformed
+2026-07-27 13:41:50 [ERROR]   NEWORDER: fetch failed: database disk image is malformed
+2026-07-27 13:41:51 [ERROR]   ANDENO: fetch failed: database disk image is malformed
+2026-07-27 13:41:51 [INFO] Freshness check done: 0 series refreshed, 0 obs added.

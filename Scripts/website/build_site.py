@@ -38,11 +38,19 @@ DASH = "—"  # em-dash placeholder used ONLY for missing data, never in copy
 
 # ---------------------------------------------------------------- mappings
 # Master tiles: (display label, index_id, value format)
+#
+# ALLOC_MULTIPLIER and WARNING_LEVEL were pulled from the public board on
+# 2026-07-28. Both come out of the ensemble/warning layer, whose liquidity
+# thresholds still read a structurally-zero RRP as an exhausted QT-era buffer,
+# so they pin at CAPITAL PRESERVATION / RED regardless of conditions. The board
+# was showing MRI "Low Risk" and a 0.15x multiplier side by side. This mirrors
+# the 2026-07-20 Watch display decision: show the base cycle read, keep the
+# merged ensemble off the public surface until the premium layer is era-aware.
 MASTER = [
     ("MACRO RISK INDEX", "MRI", "signed"),
     ("RECESSION PROBABILITY", "REC_PROB", "pct"),
-    ("ALLOCATION MULTIPLIER", "ALLOC_MULTIPLIER", "mult"),
-    ("WARNING LEVEL", "WARNING_LEVEL", "int"),
+    ("RECESSION PROBABILITY · 6M", "REC_PROB_6M", "pct"),
+    ("CREDIT-LABOR GAP", "CLG", "signed"),
 ]
 
 # 12 pillars: (n, display name, primary composite index_id)
@@ -109,22 +117,22 @@ def pretty_status(status: str | None) -> str:
 # busy (e.g. the pipeline is mid-recompute). Keeps the board real instead of
 # blank or hung. Live/backup always take precedence when reachable.
 FALLBACK_INDICES = {
-    "MRI": {"value": 0.1087, "status": "LATE CYCLE", "date": "2026-05-17"},
-    "REC_PROB": {"value": 0.1793, "status": "LOW RISK", "date": "2026-06-14"},
-    "ALLOC_MULTIPLIER": {"value": 0.15, "status": "CAPITAL PRESERVATION", "date": "2026-06-14"},
-    "WARNING_LEVEL": {"value": 4.0, "status": "RED", "date": "2026-06-14"},
-    "LFI": {"value": 0.0352, "status": "NEUTRAL", "date": "2026-05-17"},
-    "PCI": {"value": 0.0161, "status": "ON TARGET", "date": "2026-05-17"},
-    "GCI": {"value": 2.6691, "status": "STRONG GROWTH", "date": "2026-06-14"},
-    "HCI": {"value": 0.1765, "status": "FROZEN", "date": "2026-05-17"},
-    "CCI": {"value": -0.7098, "status": "STRESSED", "date": "2026-05-17"},
-    "BCI": {"value": 0.1307, "status": "SLOWING", "date": "2026-05-17"},
-    "TCI": {"value": -0.8367, "status": "HEADWIND", "date": "2026-05-17"},
-    "FPI": {"value": 0.6482, "status": "ELEVATED", "date": "2026-05-17"},
-    "FCI": {"value": 0.2185, "status": "NEUTRAL", "date": "2026-05-17"},
-    "LCI": {"value": 0.0689, "status": "TIGHT", "date": "2026-05-17"},
-    "MSI": {"value": -0.4729, "status": "TRANSITIONAL", "date": "2026-06-14"},
-    "SPI": {"value": 1.7864, "status": "EXTREME FEAR", "date": "2026-06-14"},
+    "MRI": {"value": -0.6519, "status": "LOW RISK", "date": "2026-07-26"},
+    "REC_PROB": {"value": 0.1321, "status": "LOW RISK", "date": "2026-07-26"},
+    "REC_PROB_6M": {"value": 0.0346, "status": "LOW RISK", "date": "2026-07-26"},
+    "CLG": {"value": -0.2956, "status": "MISPRICED", "date": "2026-07-26"},
+    "LFI": {"value": -0.5446, "status": "HEALTHY", "date": "2026-07-26"},
+    "PCI": {"value": 0.2579, "status": "ON TARGET", "date": "2026-07-26"},
+    "GCI": {"value": 1.3876, "status": "STRONG GROWTH", "date": "2026-07-26"},
+    "HCI": {"value": -0.263, "status": "FROZEN", "date": "2026-07-26"},
+    "CCI": {"value": 0.0125, "status": "FATIGUED", "date": "2026-07-26"},
+    "BCI": {"value": 1.1156, "status": "BUSINESS BOOM", "date": "2026-07-26"},
+    "TCI": {"value": -1.6375, "status": "TRADE CRISIS", "date": "2026-07-26"},
+    "FPI": {"value": 1.2475, "status": "HIGH STRESS", "date": "2026-07-26"},
+    "FCI": {"value": 0.1142, "status": "NEUTRAL", "date": "2026-07-26"},
+    "LCI": {"value": 0.164, "status": "NEUTRAL", "date": "2026-07-26"},
+    "MSI": {"value": -1.029, "status": "BEARISH", "date": "2026-07-26"},
+    "SPI": {"value": 1.5088, "status": "CAPITULATION", "date": "2026-07-26"},
 }
 
 _QUERY = """

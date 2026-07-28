@@ -3114,3 +3114,9 @@
 2026-07-28T00:14:33Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.193
 2026-07-28T00:14:34Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.193
 2026-07-28T00:14:34Z INF Registered tunnel connection connIndex=0 connection=8a8c34c7-ac30-4ae0-a725-fc1a3e651b3d event=0 ip=198.41.200.193 location=ewr14 protocol=quic
+2026-07-28T00:18:29Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=2606:4700:a0::2
+2026-07-28T00:18:29Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::9
+2026-07-28T00:18:29Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a0::4
+2026-07-28T00:18:34Z INF Registered tunnel connection connIndex=3 connection=d013bf1f-b3c7-4b3b-a9de-0edf78537561 event=0 ip=2606:4700:a8::9 location=ewr14 protocol=quic
+2026-07-28T00:18:34Z INF Registered tunnel connection connIndex=2 connection=999ef260-63a1-472a-82bd-89ed3973c531 event=0 ip=2606:4700:a0::4 location=ewr05 protocol=quic
+2026-07-28T00:18:34Z INF Registered tunnel connection connIndex=1 connection=20bb2162-7f77-429e-b090-aa60c872b36a event=0 ip=2606:4700:a0::2 location=ewr13 protocol=quic

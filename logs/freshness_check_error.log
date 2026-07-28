@@ -1219,3 +1219,8 @@
 2026-07-27 16:42:14 [ERROR]   NEWORDER: fetch failed: database disk image is malformed
 2026-07-27 16:42:15 [ERROR]   ANDENO: fetch failed: database disk image is malformed
 2026-07-27 16:42:15 [INFO] Freshness check done: 0 series refreshed, 0 obs added.
+2026-07-28 08:58:16 [INFO] Stale series (4):
+  DGORDER: db=2026-05-01 -> fred=2026-06-01
+  ADXTNO: db=2026-05-01 -> fred=2026-06-01
+  NEWORDER: db=2026-05-01 -> fred=2026-06-01
+  ANDENO: db=2026-05-01 -> fred=2026-06-01

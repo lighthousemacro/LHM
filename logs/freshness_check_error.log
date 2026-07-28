@@ -1239,3 +1239,14 @@
 2026-07-28 13:13:40 [ERROR]   NEWORDER: fetch failed: database disk image is malformed
 2026-07-28 13:13:40 [ERROR]   ANDENO: fetch failed: database disk image is malformed
 2026-07-28 13:13:41 [INFO] Freshness check done: 0 series refreshed, 0 obs added.
+2026-07-28 16:51:48 [WARNING] Attempt 1 failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer')). Retrying in 2s...
+2026-07-28 16:52:30 [INFO] Stale series (4):
+  DGORDER: db=2026-05-01 -> fred=2026-06-01
+  ADXTNO: db=2026-05-01 -> fred=2026-06-01
+  NEWORDER: db=2026-05-01 -> fred=2026-06-01
+  ANDENO: db=2026-05-01 -> fred=2026-06-01
+2026-07-28 16:52:30 [ERROR]   DGORDER: fetch failed: database disk image is malformed
+2026-07-28 16:52:31 [ERROR]   ADXTNO: fetch failed: database disk image is malformed
+2026-07-28 16:52:31 [ERROR]   NEWORDER: fetch failed: database disk image is malformed
+2026-07-28 16:52:32 [ERROR]   ANDENO: fetch failed: database disk image is malformed
+2026-07-28 16:52:32 [INFO] Freshness check done: 0 series refreshed, 0 obs added.

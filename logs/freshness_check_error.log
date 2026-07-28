@@ -1224,3 +1224,8 @@
   ADXTNO: db=2026-05-01 -> fred=2026-06-01
   NEWORDER: db=2026-05-01 -> fred=2026-06-01
   ANDENO: db=2026-05-01 -> fred=2026-06-01
+2026-07-28 09:16:11 [ERROR]   DGORDER: fetch failed: database is locked
+2026-07-28 09:16:43 [ERROR]   ADXTNO: fetch failed: database disk image is malformed
+2026-07-28 09:16:43 [ERROR]   NEWORDER: fetch failed: database disk image is malformed
+2026-07-28 09:16:44 [ERROR]   ANDENO: fetch failed: database disk image is malformed
+2026-07-28 09:16:44 [INFO] Freshness check done: 0 series refreshed, 0 obs added.

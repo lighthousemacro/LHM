@@ -39,18 +39,17 @@ DASH = "—"  # em-dash placeholder used ONLY for missing data, never in copy
 # ---------------------------------------------------------------- mappings
 # Master tiles: (display label, index_id, value format)
 #
-# ALLOC_MULTIPLIER and WARNING_LEVEL were pulled from the public board on
-# 2026-07-28. Both come out of the ensemble/warning layer, whose liquidity
-# thresholds still read a structurally-zero RRP as an exhausted QT-era buffer,
-# so they pin at CAPITAL PRESERVATION / RED regardless of conditions. The board
-# was showing MRI "Low Risk" and a 0.15x multiplier side by side. This mirrors
-# the 2026-07-20 Watch display decision: show the base cycle read, keep the
-# merged ensemble off the public surface until the premium layer is era-aware.
+# ALLOC_MULTIPLIER and WARNING_LEVEL came off this board on 2026-07-28 and went
+# back on the same day once the cause was fixed. Both derive from the warning
+# layer, whose RRP thresholds fired an override every day against a
+# structurally-zero RRP, pinning the board at RED / 0.15x next to an MRI of
+# -0.65 LOW RISK. The RRP flags are era-gated now (see warning_system.py), so
+# these tiles track conditions again: YELLOW / 0.80x as of the fix.
 MASTER = [
     ("MACRO RISK INDEX", "MRI", "signed"),
     ("RECESSION PROBABILITY", "REC_PROB", "pct"),
-    ("RECESSION PROBABILITY · 6M", "REC_PROB_6M", "pct"),
-    ("CREDIT-LABOR GAP", "CLG", "signed"),
+    ("ALLOCATION MULTIPLIER", "ALLOC_MULTIPLIER", "mult"),
+    ("WARNING LEVEL", "WARNING_LEVEL", "int"),
 ]
 
 # 12 pillars: (n, display name, primary composite index_id)
@@ -117,22 +116,22 @@ def pretty_status(status: str | None) -> str:
 # busy (e.g. the pipeline is mid-recompute). Keeps the board real instead of
 # blank or hung. Live/backup always take precedence when reachable.
 FALLBACK_INDICES = {
-    "MRI": {"value": -0.6519, "status": "LOW RISK", "date": "2026-07-26"},
-    "REC_PROB": {"value": 0.1321, "status": "LOW RISK", "date": "2026-07-26"},
-    "REC_PROB_6M": {"value": 0.0346, "status": "LOW RISK", "date": "2026-07-26"},
-    "CLG": {"value": -0.2956, "status": "MISPRICED", "date": "2026-07-26"},
-    "LFI": {"value": -0.5446, "status": "HEALTHY", "date": "2026-07-26"},
-    "PCI": {"value": 0.2579, "status": "ON TARGET", "date": "2026-07-26"},
-    "GCI": {"value": 1.3876, "status": "STRONG GROWTH", "date": "2026-07-26"},
-    "HCI": {"value": -0.263, "status": "FROZEN", "date": "2026-07-26"},
-    "CCI": {"value": 0.0125, "status": "FATIGUED", "date": "2026-07-26"},
-    "BCI": {"value": 1.1156, "status": "BUSINESS BOOM", "date": "2026-07-26"},
-    "TCI": {"value": -1.6375, "status": "TRADE CRISIS", "date": "2026-07-26"},
-    "FPI": {"value": 1.2475, "status": "HIGH STRESS", "date": "2026-07-26"},
-    "FCI": {"value": 0.1142, "status": "NEUTRAL", "date": "2026-07-26"},
-    "LCI": {"value": 0.164, "status": "NEUTRAL", "date": "2026-07-26"},
-    "MSI": {"value": -1.029, "status": "BEARISH", "date": "2026-07-26"},
-    "SPI": {"value": 1.5088, "status": "CAPITULATION", "date": "2026-07-26"},
+    "MRI": {"value": -0.6509, "status": "LOW RISK", "date": "2026-07-28"},
+    "REC_PROB": {"value": 0.1323, "status": "LOW RISK", "date": "2026-07-28"},
+    "ALLOC_MULTIPLIER": {"value": 0.8, "status": "NORMAL", "date": "2026-07-28"},
+    "WARNING_LEVEL": {"value": 2.0, "status": "YELLOW", "date": "2026-07-28"},
+    "LFI": {"value": -0.5446, "status": "HEALTHY", "date": "2026-07-28"},
+    "PCI": {"value": 0.2579, "status": "ON TARGET", "date": "2026-07-28"},
+    "GCI": {"value": 1.3876, "status": "STRONG GROWTH", "date": "2026-07-28"},
+    "HCI": {"value": -0.263, "status": "FROZEN", "date": "2026-07-28"},
+    "CCI": {"value": 0.0125, "status": "FATIGUED", "date": "2026-07-28"},
+    "BCI": {"value": 1.1156, "status": "BUSINESS BOOM", "date": "2026-07-28"},
+    "TCI": {"value": -1.6375, "status": "TRADE CRISIS", "date": "2026-07-28"},
+    "FPI": {"value": 1.2475, "status": "HIGH STRESS", "date": "2026-07-28"},
+    "FCI": {"value": 0.1147, "status": "NEUTRAL", "date": "2026-07-28"},
+    "LCI": {"value": 0.1685, "status": "NEUTRAL", "date": "2026-07-28"},
+    "MSI": {"value": -1.029, "status": "BEARISH", "date": "2026-07-28"},
+    "SPI": {"value": 1.5088, "status": "CAPITULATION", "date": "2026-07-28"},
 }
 
 _QUERY = """

@@ -110,11 +110,29 @@ THRESHOLDS = {
     # ==========================================
     "liquidity": {
         # RRP Exhaustion - THE critical buffer (data in billions)
+        #
+        # ERA-GATED 2026-07-28. These thresholds were written for the QT drain,
+        # when RRP was a live buffer running down from $2.5T and each step lower
+        # was information. That era is over. RRP has been pinned near zero since
+        # 2025 (0.675 on 2026-07-24), so "below $100B" is now the permanent
+        # baseline rather than a signal, and it was firing an override every
+        # single day. The board read WARNING LEVEL 4 / RED and ALLOC_MULTIPLIER
+        # 0.15x while MRI sat at -0.65 LOW RISK and the reserve assessment in
+        # the same report said $3.08T reserves, $278B buffer, stable.
+        #
+        # The gate does not change what these flags mean, it restores the
+        # precondition they always assumed: that RRP is a buffer with something
+        # in it. Once the trailing year never clears $250B, the buffer is not
+        # depleting, it is simply gone, and the liquidity read belongs to
+        # reserves vs LCLOR and the funding spreads below. Same defect class as
+        # the discontinuity-premium layer applying QT-era RRP thresholds to eras
+        # where RRP was structurally zero.
         "RRP_DEPLETED": {
             "series": "RRP_Usage",
             "threshold": 100,  # $100B (stored as 100)
             "direction": "below",
             "severity": "override",  # Forces AMBER minimum
+            "era_gate": {"lookback_days": 365, "require_max_above": 250},
             "description": "ON RRP below $100B - primary shock absorber exhausted"
         },
         "RRP_CRITICAL": {
@@ -122,6 +140,7 @@ THRESHOLDS = {
             "threshold": 250,  # $250B (stored as 250)
             "direction": "below",
             "severity": "critical",
+            "era_gate": {"lookback_days": 365, "require_max_above": 250},
             "description": "ON RRP below $250B - buffer severely depleted"
         },
 
@@ -537,6 +556,51 @@ class WarningSystem:
 
         return self._data_cache.get(cache_key)
 
+    def _series_max_over(self, series_name: str, lookback_days: int,
+                         date: str = None) -> Optional[float]:
+        """Max of a series over the trailing window ending at `date`.
+
+        Used by era gates to ask whether a threshold's precondition still holds
+        (e.g. is RRP still a buffer with anything in it), rather than whether a
+        level has been crossed. Point-in-time safe: honors the as-of date so a
+        historical evaluation sees only its own trailing window.
+        """
+        cache_key = f"max_{series_name}_{lookback_days}_{date or 'latest'}"
+        if cache_key not in self._data_cache:
+            try:
+                if date:
+                    end = f"'{date}'"
+                else:
+                    end = (f"(SELECT MAX(date) FROM horizon_dataset "
+                           f"WHERE {series_name} IS NOT NULL)")
+                query = (
+                    f"SELECT MAX({series_name}) AS mx FROM horizon_dataset "
+                    f"WHERE {series_name} IS NOT NULL "
+                    f"AND date <= {end} "
+                    f"AND date >= date({end}, '-{int(lookback_days)} day')"
+                )
+                result = pd.read_sql(query, self.conn)
+                mx = result.iloc[0]["mx"] if not result.empty else None
+                self._data_cache[cache_key] = None if mx is None else float(mx)
+            except Exception:
+                self._data_cache[cache_key] = None
+        return self._data_cache.get(cache_key)
+
+    def _era_gate_open(self, config: dict, date: str = None) -> bool:
+        """True when a flag's era precondition still holds (or it has none)."""
+        gate = config.get("era_gate")
+        if not gate:
+            return True
+        series = gate.get("series") or config.get("series")
+        if not series:
+            return True
+        mx = self._series_max_over(series, gate.get("lookback_days", 365), date)
+        if mx is None:
+            # No data to judge the era with. Leave the flag live rather than
+            # silently disarming a threshold on a query miss.
+            return True
+        return mx > gate["require_max_above"]
+
     def _get_index_value(self, index_name: str, date: str = None) -> Optional[float]:
         """Get latest value for an index from lighthouse_indices."""
         cache_key = f"index_{index_name}_{date or 'latest'}"
@@ -717,6 +781,21 @@ class WarningSystem:
                 triggered=False,
                 severity=config["severity"],
                 description=config["description"] + " [NO DATA]"
+            )
+
+        # Era gate: does this threshold's precondition still hold? A flag whose
+        # regime has ended reports its value but stops firing, so it neither
+        # drives the level nor disappears from the report.
+        if not self._era_gate_open(config, date):
+            return ThresholdFlag(
+                name=flag_name,
+                category=category,
+                current_value=current_value,
+                threshold=config["threshold"],
+                direction=config["direction"],
+                triggered=False,
+                severity=config["severity"],
+                description=config["description"] + " [ERA-GATED: regime ended]"
             )
 
         # Check if triggered

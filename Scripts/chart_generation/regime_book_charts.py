@@ -358,7 +358,8 @@ def main():
                chart_25_stops_table, chart_26_trade_distribution,
                chart_27_rolling_excess, chart_28_summary_table,
                chart_29_cap_sweep, chart_30_universe_modes,
-               chart_31_long_short, chart_32_short_gates]:
+               chart_31_long_short, chart_32_short_gates,
+               chart_33_construction_frontier]:
         print(f'  {fn.__name__} ...', end=' ', flush=True)
         fn()
         print('ok')
@@ -544,6 +545,55 @@ def chart_32_short_gates():
                    'no_bounce = not already snapping back. Macro gates add the risk dial and the regime edge.\n'
                    'The best stack clears long-only by 0.7 points on six in-sample short trades. That is not a result.')
     save_fig(fig, f'{OUT}/chart_32_short_gates.png')
+
+
+def chart_33_construction_frontier():
+    """Every construction choice as a risk/return point, against the objective."""
+    res = R['results'].reset_index()
+    keep = {
+        'Regime Book': ('No caps at all', COLORS['doldrums'], 'o'),
+        'Regime Book, 25% cap': ('Weight cap only', COLORS['ocean'], 'o'),
+        'Regime Book + class cap': ('Weight cap + class cap', COLORS['sea'], 'o'),
+        'Long/short, gated shorts': ('Gated long/short', COLORS['venus'], 'o'),
+        'Plain 200d top-10': ('Plain trend baseline', COLORS['sky'], 's'),
+        'SPY': ('S&P 500', COLORS['dusk'], '^'),
+        '60/40': ('60/40', COLORS['deep'], '^'),
+    }
+    fig, ax = new_fig(figsize=(14, 8))
+    ax.axhspan(10, ax.get_ylim()[1] if ax.get_ylim()[1] > 10 else 20,
+               color=COLORS['sea'], alpha=0.06, zorder=0)
+
+    for strat, (label, color, marker) in keep.items():
+        sub = res[res.strategy == strat]
+        for _, r in sub.iterrows():
+            if r.window == 'IS':
+                continue
+            x, y = abs(r.MaxDD) * 100, r.CAGR * 100
+            filled = r.window == 'FULL'
+            ax.scatter(x, y, s=190 if filled else 95, color=color,
+                       marker=marker, edgecolor='white', linewidth=1.2,
+                       alpha=1.0 if filled else 0.45, zorder=3)
+            if filled:
+                ax.annotate(label, xy=(x, y), xytext=(9, 6),
+                            textcoords='offset points', fontsize=9,
+                            fontweight='bold', color=color)
+    ax.axhline(10, color=COLORS['sea'], linestyle='--', linewidth=1.4, zorder=1)
+    ax.text(ax.get_xlim()[1], 10, ' 10% nominal objective ', fontsize=9,
+            color=COLORS['sea'], fontweight='bold', va='bottom', ha='right')
+    style_ax(ax, right_primary=False)
+    ax.tick_params(axis='both', length=0)
+    ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda v, p: f'{v:.0f}%'))
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, p: f'{v:.0f}%'))
+    ax.set_xlabel('Max drawdown, deeper to the right', fontsize=10)
+    ax.set_ylabel('CAGR', fontsize=10)
+    brand_fig(fig,
+              title='Every Construction Choice Is a Risk Dial, Not a Free Lunch',
+              subtitle='Return against drawdown for each variant, solid markers full sample and faded markers out-of-sample',
+              source=SRC, data_date=DATA_DATE)
+    _footnote(fig, 'Up and to the left is better: more return, shallower drawdown.\n'
+                   'The class cap buys a shallower drawdown by giving up return and lands below the 10% objective.\n'
+                   'The weight cap alone clears the objective on both windows.')
+    save_fig(fig, f'{OUT}/chart_33_construction_frontier.png')
 
 
 if __name__ == '__main__':

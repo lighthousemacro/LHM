@@ -248,11 +248,26 @@ def metrics(book, trades, lo=None, hi=None):
 
 
 def objective(m):
+    """Payoff-preserving blend, for comparing STOPS (same trade structure)."""
     if m is None or m['NTrades'] < 20:
         return -1e9
     vals = [m['Sortino'], m['Calmar'], m['Omega'], np.log1p(max(m['Payoff'], 0)),
             m['Expectancy'] * 100]
     return float(np.nansum(vals))
+
+
+def objective_pathwise(m):
+    """Trade-count-neutral score, for comparing PORTFOLIO CONSTRUCTION choices.
+
+    The per-trade terms in `objective` (payoff, expectancy) are not comparable
+    across variants that change how many positions exist. A book that holds five
+    names and 50% cash books fewer, longer, larger trades and scores a huge
+    expectancy without earning a better return path. Caps and slot limits get
+    judged on the equity curve alone.
+    """
+    if m is None:
+        return -1e9
+    return float(np.nansum([m['Sortino'], m['Calmar'], m['Omega']]))
 
 
 # ------------------------------------------------------------- regime scoring
@@ -284,7 +299,8 @@ def regime_edge_panel(pre, regime: pd.Series) -> pd.DataFrame:
 
 
 def concentrated_book(pre, exit_of, regime: pd.Series, edge: pd.DataFrame,
-                      K=K_BOOK, edge_weight=0.5, max_weight=None):
+                      K=K_BOOK, edge_weight=0.5, max_weight=None,
+                      max_per_class=None):
     """Top-K book that compounds. Returns (daily returns, weights frame, trades)."""
     dates = pd.DatetimeIndex(sorted(set().union(*[set(p['index']) for p in pre.values()])))
     di = {d: i for i, d in enumerate(dates)}
@@ -307,6 +323,9 @@ def concentrated_book(pre, exit_of, regime: pd.Series, edge: pd.DataFrame,
     reg = regime.reindex(dates).ffill().shift(1)
     # edge lookup: for each date use the most recent month-end estimate
     edge_dates = edge.index.get_level_values(0).unique().sort_values()
+    # Ten slots is only ten bets if the slots hold different things. SHY, IEF,
+    # AGG, TIP and MBB are one duration bet wearing five tickers.
+    cls_of = np.array([pre[t]['cls'] for t in tks])
 
     cash = 1.0
     posval, entry_px, cd = {}, {}, {}
@@ -371,13 +390,26 @@ def concentrated_book(pre, exit_of, regime: pd.Series, edge: pd.DataFrame,
                         score += edge_weight * (e / 100.0)
                 cand.append((score, j))
             cand.sort(reverse=True)
-            for _, j in cand[:K - len(posval)]:
+            if max_per_class is not None:
+                held = {}
+                for j in posval:
+                    held[cls_of[j]] = held.get(cls_of[j], 0) + 1
+            filled = 0
+            for _, j in cand:
+                if filled >= K - len(posval):
+                    break
+                if max_per_class is not None:
+                    c = cls_of[j]
+                    if held.get(c, 0) >= max_per_class:
+                        continue
+                    held[c] = held.get(c, 0) + 1
                 alloc = min(equity / K, cash)
                 if alloc <= 1e-6:
                     break
                 posval[j] = alloc
                 cash -= alloc
                 entry_px[j] = CL[i, j]
+                filled += 1
 
     eqc = pd.Series(equity_curve, index=dates)
     first = eqc.ne(eqc.iloc[0]).idxmax() if (eqc != eqc.iloc[0]).any() else eqc.index[0]
@@ -603,7 +635,7 @@ def run(mode='sub', verbose=True):
         cap_runs[cap] = (cb, cw, ctr, clog)
         m_is = metrics(cb, clog.loc[pd.to_datetime(clog['exit']) <= IS_END, 'ret'].values
                        if not clog.empty else np.array([]), START, IS_END)
-        score = objective(m_is)
+        score = objective_pathwise(m_is)
         cap_rows.append(dict(cap='none' if cap is None else f'{cap*100:.0f}%',
                              score=score, IS_CAGR=m_is['CAGR'], IS_Vol=m_is['Vol'],
                              IS_MaxDD=m_is['MaxDD'], IS_Sortino=m_is['Sortino'],
@@ -617,6 +649,37 @@ def run(mode='sub', verbose=True):
     CAP_LABEL = 'none' if best_cap is None else f'{best_cap*100:.0f}%'
     print(f'  -> winning cap: {CAP_LABEL}')
     capped, capped_w, capped_tr, capped_log = cap_runs[best_cap]
+
+    # ---- Stage 2c: per-asset-class slot cap ----
+    # Ten slots is only ten bets if they are different bets. Search the class
+    # cap in-sample on the same objective, same as the stops and the weight cap.
+    print('\nStage 2c — per-asset-class slot cap sweep (in-sample <= 2020)')
+    cls_rows, cls_runs = [], {}
+    for mx in [1, 2, 3, 4, None]:
+        cb, cw, ctr, clog = concentrated_book(pre, exit_of, regime, edge,
+                                              max_weight=best_cap, max_per_class=mx)
+        cls_runs[mx] = (cb, cw, ctr, clog)
+        m_is = metrics(cb, clog.loc[pd.to_datetime(clog['exit']) <= IS_END, 'ret'].values
+                       if not clog.empty else np.array([]), START, IS_END)
+        # how concentrated is the book in practice
+        cls_series = pd.Series([pre[t]['cls'] for t in cw.columns if t != 'Cash'],
+                               index=[t for t in cw.columns if t != 'Cash'])
+        held = (cw.drop(columns=['Cash'], errors='ignore') > 1e-4)
+        eff = held.groupby(cls_series, axis=1).any().sum(axis=1)
+        cls_rows.append(dict(cap='none' if mx is None else mx,
+                             score=objective_pathwise(m_is), IS_CAGR=m_is['CAGR'],
+                             IS_Vol=m_is['Vol'], IS_MaxDD=m_is['MaxDD'],
+                             IS_Sortino=m_is['Sortino'], IS_Calmar=m_is['Calmar'],
+                             avg_classes_held=eff[eff > 0].mean()))
+        print(f'  max {"none" if mx is None else mx:>4} per class  score {objective_pathwise(m_is):7.2f}  '
+              f'IS CAGR {m_is["CAGR"]*100:5.1f}%  MaxDD {m_is["MaxDD"]*100:6.1f}%  '
+              f'Sortino {m_is["Sortino"]:.2f}  avg distinct classes held {eff[eff>0].mean():.1f}')
+    cls_tab = pd.DataFrame(cls_rows).sort_values('score', ascending=False)
+    cls_tab.to_csv(f'{OUT}/class_cap_sweep.csv', index=False)
+    best_class_cap = cls_tab.iloc[0].cap
+    best_class_cap = None if best_class_cap == 'none' else int(best_class_cap)
+    print(f'  -> winning class cap: {best_class_cap if best_class_cap else "none"}')
+    diversified, div_w, div_tr, div_log = cls_runs[best_class_cap]
 
     # ---- Stage 3: symmetric long/short, same ranking, same stops ----
     print('\nStage 3 — symmetric long/short (margin live 2026-07-26, no leverage in v1)')
@@ -721,6 +784,7 @@ def run(mode='sub', verbose=True):
     out = {}
     for label, series, tlg in [('Regime Book', book, tlog),
                                (f'Regime Book, {CAP_LABEL} cap', capped, capped_log),
+                               ('Regime Book + class cap', diversified, div_log),
                                ('Long/short, naive mirror', mirror_book, mirror_log),
                                ('Long/short, gated shorts', ls_book, ls_log),
                                ('Plain 200d top-10', base, base_log),
@@ -753,6 +817,8 @@ def run(mode='sub', verbose=True):
     print(f'\nWritten to {OUT}')
     return dict(mode=mode, stops=stops, results=res, weights=weights, book=book,
                 ls_book=ls_book, ls_weights=ls_w, ls_exposure=ls_expo, ls_log=ls_log,
+                diversified=diversified, div_weights=div_w, div_log=div_log,
+                class_cap=best_class_cap, class_cap_sweep=cls_tab,
                 ls_label=LS_LABEL, ls_ablation=ls_tab,
                 long_only_is_score=long_only_score, mirror_book=mirror_book,
                 mirror_log=mirror_log, mirror_exposure=mirror_expo,

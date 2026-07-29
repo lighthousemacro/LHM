@@ -429,3 +429,5 @@ INFO:     185.163.209.125:0 - "GET / HTTP/1.1" 200 OK
 INFO:     43.153.19.83:0 - "GET / HTTP/1.1" 200 OK
 INFO:     43.164.3.23:0 - "GET / HTTP/1.1" 200 OK
 INFO:     43.131.32.36:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2a09:bac0:1000:c48::1c:317:0 - "HEAD / HTTP/1.1" 405 Method Not Allowed
+INFO:     2a09:bac0:1000:c48::4:37a:0 - "HEAD / HTTP/1.1" 405 Method Not Allowed

@@ -5432,3 +5432,4 @@
 2026-07-29T22:36:28Z INF Registered tunnel connection connIndex=1 connection=94df7e66-35a2-465b-8994-191379049e99 event=0 ip=2606:4700:a0::2 location=ewr11 protocol=quic
 2026-07-29T22:36:46Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::9
 2026-07-29T22:36:52Z INF Registered tunnel connection connIndex=3 connection=8a5b7ab6-715c-4e77-9f63-b0b0ff7933c6 event=0 ip=2606:4700:a8::9 location=ewr15 protocol=quic
+2026-07-29T22:55:50Z WRN Your version 2026.7.2 is outdated. We recommend upgrading it to 2026.7.3

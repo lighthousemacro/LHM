@@ -1,0 +1,12 @@
+=== site publish 2026-07-29 07:48:24 ===
+-- syncing Substack export
+substack export sync: 0 new post(s), 83 total
+-- rebuilding Reading Room
+Reading Room built: 69 posts (35 free, 34 members)
+  -> /Users/bob/LHM/Website/research/index.html + 69 article pages + reader.css
+  -> /Users/bob/LHM/Website/feed.xml
+-- rebuilding homepage
+INFO: dashboard read from live
+OK: wrote /Users/bob/LHM/Website/index.html (77,906 bytes)
+    dashboard as-of 2026-07-28; 7 research items
+-- pushed, live in a few minutes at https://lighthousemacro.com

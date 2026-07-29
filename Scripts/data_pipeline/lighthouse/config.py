@@ -96,6 +96,8 @@ FRED_CURATED = {
     "U6RATE": "Unemployment Rate U6",
     "CIVPART": "Labor Force Participation",
     "PAYEMS": "Total Nonfarm Payrolls",
+    "SMS00000000000000021": "Employment Diffusion Index 1-Month Span",
+    "SMS00000000000000022": "Employment Diffusion Index 3-Month Span",
     "ICSA": "Initial Jobless Claims",
     "CCSA": "Continued Claims",
     "JTS1000JOR": "JOLTS Job Openings Rate",

@@ -21,6 +21,7 @@ Key Insight from Horizon Jan 2026:
 
 import pandas as pd
 import numpy as np
+import re
 import sqlite3
 from datetime import datetime
 from typing import Dict, List, Tuple, Optional
@@ -161,15 +162,22 @@ THRESHOLDS = {
         },
 
         # Funding Spreads (data in percentage points, e.g., 0.01 = 1bp)
+        #
+        # REWIRED 2026-07-28. Both flags pointed at "SOFR_EFFR_Spread", which is
+        # not a column in horizon_dataset and never has been, so they returned
+        # NO DATA on every evaluation back through 2024 and never once fired.
+        # One of them is an override. With the RRP flags era-gated, funding
+        # spreads are the live liquidity sensor, so a blind one is the whole
+        # category going dark. Computed from the SOFR and EFFR columns instead.
         "SOFR_EFFR_STRESS": {
-            "series": "SOFR_EFFR_Spread",
+            "series_expr": "SOFR - EFFR",
             "threshold": 0.15,  # 15 bps = 0.15 pct points
             "direction": "above",
             "severity": "critical",
             "description": "SOFR-EFFR spread > 15bps - funding stress emerging"
         },
         "SOFR_EFFR_CRISIS": {
-            "series": "SOFR_EFFR_Spread",
+            "series_expr": "SOFR - EFFR",
             "threshold": 0.25,  # 25 bps = 0.25 pct points
             "direction": "above",
             "severity": "override",
@@ -556,6 +564,28 @@ class WarningSystem:
 
         return self._data_cache.get(cache_key)
 
+    def _get_series_expr_value(self, expr: str, date: str = None) -> Optional[float]:
+        """Evaluate a SQL expression over horizon_dataset columns, as-of `date`.
+
+        For thresholds that watch a relationship rather than a stored column
+        (SOFR-EFFR, for instance). Every column named in the expression must be
+        non-null on the row, so a spread is never computed off half its legs.
+        """
+        cache_key = f"expr_{expr}_{date or 'latest'}"
+        if cache_key not in self._data_cache:
+            try:
+                cols = re.findall(r"[A-Za-z_][A-Za-z0-9_]*", expr)
+                guard = " AND ".join(f"{c} IS NOT NULL" for c in cols)
+                asof = f" AND date <= '{date}'" if date else ""
+                query = (f"SELECT date, ({expr}) AS v FROM horizon_dataset "
+                         f"WHERE {guard}{asof} ORDER BY date DESC LIMIT 1")
+                result = pd.read_sql(query, self.conn)
+                self._data_cache[cache_key] = (
+                    float(result.iloc[0]["v"]) if not result.empty else None)
+            except Exception:
+                self._data_cache[cache_key] = None
+        return self._data_cache.get(cache_key)
+
     def _series_max_over(self, series_name: str, lookback_days: int,
                          date: str = None) -> Optional[float]:
         """Max of a series over the trailing window ending at `date`.
@@ -766,6 +796,8 @@ class WarningSystem:
         # Get current value
         if "series" in config:
             current_value = self._get_series_value(config["series"], date)
+        elif "series_expr" in config:
+            current_value = self._get_series_expr_value(config["series_expr"], date)
         elif "index" in config:
             current_value = self._get_index_value(config["index"], date)
         else:

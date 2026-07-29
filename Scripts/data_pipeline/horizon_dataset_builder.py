@@ -47,6 +47,8 @@ HORIZON_SERIES = {
     "CIVPART": {"name": "LFPR", "freq": "M", "transforms": ["yoy_diff", "z"]},
     "LNS11300060": {"name": "LFPR_Prime_Age_25_54", "freq": "M", "transforms": ["yoy_diff", "z"]},
     "PAYEMS": {"name": "Nonfarm_Payrolls", "freq": "M", "transforms": ["yoy_pct", "mom_diff", "mom_diff_3ma"]},
+    "SMS00000000000000021": {"name": "Employment_Diffusion", "freq": "M", "transforms": ["3mo_ma"]},
+    "SMS00000000000000022": {"name": "Employment_Diffusion_3M", "freq": "M", "transforms": []},
     "ICSA": {"name": "Initial_Claims", "freq": "W", "transforms": ["yoy_pct", "4wk_ma", "z"]},
     "CCSA": {"name": "Continued_Claims", "freq": "W", "transforms": ["yoy_pct", "4wk_ma", "z"]},
     "JTS1000JOR": {"name": "JOLTS_Openings_Rate", "freq": "M", "transforms": ["yoy_diff", "z"]},

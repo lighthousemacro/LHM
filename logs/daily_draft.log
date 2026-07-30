@@ -1,6 +1,19 @@
-[2026-07-29 07:48:24] ════════ DAILY DRAFT RUN START (2026-07-29) ════════
-[2026-07-29 07:48:24] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-API Error: Connection closed mid-response. The response above may be incomplete.
-[2026-07-29 11:34:57] claude exited status=1 in 226m 33s
-[2026-07-29 11:34:57] No PREVIEW_PATH in output — falling back to newest *preview*.html touched in the last 3h.
-[2026-07-29 11:51:07] WARNING: no preview HTML found. Check the run log: /Users/bob/LHM/logs/daily_draft_2026-07-29.log
+[2026-07-30 07:49:22] ════════ DAILY DRAFT RUN START (2026-07-30) ════════
+[2026-07-30 07:49:22] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Morning packet is built and open.
+
+**The thread (picked solo):** the Jul 29 FOMC hold and what the curve did after it. The Fed held 3.50-3.75% for a seventh straight meeting, 9-3, with three dissents *for a hike*. The bond market went the other way anyway: 6-month bills -10bps, 30-year +11bps to a 5.20% close, the highest since Jul 12 2007. The curve didn't shift, it bent. And the decomposition is the story — at five years the real yield fell 6bps while the breakeven rose 8bps, but at thirty the real yield rose 6bps to **2.98%, the highest reading in the entire 30-year TIPS series**. So it's a repricing of the real cost of lending long, not of expected inflation. Credit didn't confirm (HY still 284bps, inside the 300 line) and the Dow led equities down, not the Nasdaq.
+
+**Format:** The Beam (Thursday slot). Ten charts rendered, five for the piece and five supplementary. Six sharpened interview questions, no publication prose written.
+
+Two things worth knowing:
+
+- **Composites cited: zero.** `lighthouse_indices` prints 7/30 byte-identical to 7/29 on MSI/SPI/SBD/SSD, and MSI step-changed -0.92 → -1.61 overnight with no market event. Same recompute signature flagged on Jul 25, still unresolved. Every number in the packet is a raw observation with a real release date.
+- **Section 5 puts a live invalidation in front of you.** Tuesday's Beam argued the +21bps move was a level repricing because the curve stayed parallel. Yesterday it stopped being parallel. The packet asks whether you want to say that out loud rather than skipping it.
+
+Also: Q2 GDP advance drops at 8:30 this morning and core PCE tomorrow, so re-pull before the Beam ships. Full assumption log in `build_notes.md`.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-07-30_credibility-curve/morning_packet.html
+[2026-07-30 08:20:58] claude exited status=0 in 31m 36s
+[2026-07-30 08:20:58] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-07-30_credibility-curve/morning_packet.html
+[2026-07-30 08:21:02] Opened in browser.

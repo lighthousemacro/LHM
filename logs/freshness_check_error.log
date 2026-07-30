@@ -1255,3 +1255,31 @@
 2026-07-29 13:51:22 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-07-29 16:45:20 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-07-30 08:35:41 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-07-30 14:46:40 [INFO] Stale series (13):
+  PCEPI: db=2026-05-01 -> fred=2026-06-01
+  PCEPILFE: db=2026-05-01 -> fred=2026-06-01
+  PCE: db=2026-05-01 -> fred=2026-06-01
+  PCEDG: db=2026-05-01 -> fred=2026-06-01
+  PCEND: db=2026-05-01 -> fred=2026-06-01
+  PCES: db=2026-05-01 -> fred=2026-06-01
+  PSAVERT: db=2026-05-01 -> fred=2026-06-01
+  DSPIC96: db=2026-05-01 -> fred=2026-06-01
+  ICSA: db=2026-07-18 -> fred=2026-07-25
+  CCSA: db=2026-07-11 -> fred=2026-07-18
+  NETEXP: db=2026-01-01 -> fred=2026-04-01
+  GDP: db=2026-01-01 -> fred=2026-04-01
+  GDPC1: db=2026-01-01 -> fred=2026-04-01
+2026-07-30 14:46:54 [INFO]   PCEPI: refreshed (+810 obs)
+2026-07-30 14:46:57 [INFO]   PCEPILFE: refreshed (+810 obs)
+2026-07-30 14:47:02 [INFO]   PCE: refreshed (+810 obs)
+2026-07-30 14:47:04 [INFO]   PCEDG: refreshed (+810 obs)
+2026-07-30 14:47:05 [INFO]   PCEND: refreshed (+810 obs)
+2026-07-30 14:47:07 [INFO]   PCES: refreshed (+810 obs)
+2026-07-30 14:47:08 [INFO]   PSAVERT: refreshed (+810 obs)
+2026-07-30 14:47:09 [INFO]   DSPIC96: refreshed (+810 obs)
+2026-07-30 14:47:13 [INFO]   ICSA: refreshed (+3108 obs)
+2026-07-30 14:47:15 [INFO]   CCSA: refreshed (+3107 obs)
+2026-07-30 14:47:16 [INFO]   NETEXP: refreshed (+318 obs)
+2026-07-30 14:47:16 [INFO]   GDP: refreshed (+318 obs)
+2026-07-30 14:47:17 [INFO]   GDPC1: refreshed (+318 obs)
+2026-07-30 14:47:18 [INFO] Freshness check done: 13 series refreshed, 13,649 obs added.

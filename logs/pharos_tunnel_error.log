@@ -5706,3 +5706,5 @@
 2026-07-30T00:05:33Z INF Registered tunnel connection connIndex=2 connection=2b2b0939-4108-4317-b8ed-46e0c01b336d event=0 ip=2606:4700:a0::4 location=ewr11 protocol=quic
 2026-07-30T00:05:33Z INF Registered tunnel connection connIndex=3 connection=6bb12846-8bc2-4986-885f-e47b99844087 event=0 ip=2606:4700:a8::9 location=ewr15 protocol=quic
 2026-07-30T00:05:33Z INF Registered tunnel connection connIndex=1 connection=4d2bc9ed-eab9-4723-8f9b-b2a588a929cd event=0 ip=2606:4700:a0::2 location=ewr11 protocol=quic
+2026-07-30T02:40:26Z ERR  error="Incoming request ended abruptly: context canceled" connIndex=2 event=1 ingressRule=0 originService=http://localhost:8800
+2026-07-30T02:40:26Z ERR Request failed error="Incoming request ended abruptly: context canceled" connIndex=2 dest=http://pharos.lighthousemacro.com/ event=0 ip=2606:4700:a0::4 type=http

@@ -471,3 +471,5 @@ INFO:     201.221.228.213:0 - "GET /d HTTP/1.1" 302 Found
 INFO:     201.221.228.213:0 - "GET / HTTP/1.1" 200 OK
 INFO:     201.221.228.213:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 304 Not Modified
 INFO:     201.221.228.213:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     66.249.66.42:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     66.249.66.44:0 - "GET / HTTP/1.1" 200 OK

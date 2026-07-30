@@ -40,11 +40,13 @@ ORDER=(
 
 ok=0; failed=()
 for script in $ORDER; do
-  path="$ROOT/Scripts/pharos_pages/$script"
-  [[ -f "$path" ]] || { echo "  ! missing $script"; failed+=("$script"); continue; }
+  # NOT "path": in zsh the lowercase `path` is tied to $PATH, so assigning a
+  # string to it wipes the command search path for the rest of the script.
+  script_path="$ROOT/Scripts/pharos_pages/$script"
+  [[ -f "$script_path" ]] || { echo "  ! missing $script"; failed+=("$script"); continue; }
   # Builders write the .html only on success, so a failure leaves yesterday's
   # good page in place rather than truncating it.
-  if "$PY" "$path" > /tmp/pharos_$script.log 2>&1; then
+  if "$PY" "$script_path" > /tmp/pharos_$script.log 2>&1; then
     ok=$((ok+1)); echo "  ok   $script"
   else
     failed+=("$script"); echo "  FAIL $script"; tail -3 /tmp/pharos_$script.log | sed 's/^/       /'
@@ -56,13 +58,18 @@ if (( ${#failed[@]} > 0 )); then
   echo "-- FAILED: ${failed[*]}"
 fi
 
-# Staleness guard: the landing board must carry today's date or the paid terminal
-# is quietly serving an old tape.
-TODAY=$(date '+%Y-%m-%d')
+# Staleness guard: the landing board must be freshly written or the paid terminal
+# is quietly serving an old tape. (zsh will not take $(...) inside $(( )), so the
+# timestamps are captured first.)
 if [[ -f "$OUT/the_watch.html" ]]; then
-  AGE=$(( ( $(date +%s) - $(stat -f %m "$OUT/the_watch.html") ) / 3600 ))
+  NOW=$(date +%s)
+  MTIME=$(stat -f %m "$OUT/the_watch.html")
+  AGE=$(( (NOW - MTIME) / 3600 ))
   echo "-- the_watch.html last written ${AGE}h ago"
-  (( AGE > 26 )) && echo "   !! WARNING: landing board did not refresh"
+  if (( AGE > 26 )); then
+    echo "   !! WARNING: landing board did not refresh"
+    exit 1
+  fi
 fi
 
 (( ${#failed[@]} > 0 )) && exit 1

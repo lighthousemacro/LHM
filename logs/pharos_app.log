@@ -464,3 +464,10 @@ INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "POST /auth/request HTTP/1
 INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /d/the-watch HTTP/1.1" 200 OK
 INFO:     170.106.72.178:0 - "GET / HTTP/1.1" 200 OK
 INFO:     43.155.140.157:0 - "GET / HTTP/1.1" 200 OK
+INFO:     201.221.228.213:0 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 Not Found
+INFO:     201.221.228.213:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     201.221.228.213:0 - "GET /apple-touch-icon.png HTTP/1.1" 404 Not Found
+INFO:     201.221.228.213:0 - "GET /d HTTP/1.1" 302 Found
+INFO:     201.221.228.213:0 - "GET / HTTP/1.1" 200 OK
+INFO:     201.221.228.213:0 - "GET /static/apple-touch-icon.png HTTP/1.1" 304 Not Modified
+INFO:     201.221.228.213:0 - "GET /static/favicon.ico HTTP/1.1" 200 OK

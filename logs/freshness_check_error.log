@@ -1283,3 +1283,4 @@
 2026-07-30 14:47:16 [INFO]   GDP: refreshed (+318 obs)
 2026-07-30 14:47:17 [INFO]   GDPC1: refreshed (+318 obs)
 2026-07-30 14:47:18 [INFO] Freshness check done: 13 series refreshed, 13,649 obs added.
+2026-07-30 16:35:47 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

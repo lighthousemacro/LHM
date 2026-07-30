@@ -5870,3 +5870,6 @@
 2026-07-30T08:16:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=2606:4700:a0::2
 2026-07-30T08:16:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::9
 2026-07-30T08:16:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a0::4
+2026-07-30T08:16:34Z INF Registered tunnel connection connIndex=1 connection=5cbba62a-7629-487b-9296-743d459f3ed3 event=0 ip=2606:4700:a0::2 location=ewr11 protocol=quic
+2026-07-30T08:16:34Z INF Registered tunnel connection connIndex=3 connection=fd558d26-ed67-411e-b3a8-15499bb7b054 event=0 ip=2606:4700:a8::9 location=ewr14 protocol=quic
+2026-07-30T08:16:34Z INF Registered tunnel connection connIndex=2 connection=4d7ddd7f-8fb1-4a5d-ade1-895b43bad057 event=0 ip=2606:4700:a0::4 location=ewr11 protocol=quic

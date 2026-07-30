@@ -438,3 +438,25 @@ INFO:     49.51.233.46:0 - "GET / HTTP/1.1" 200 OK
 INFO:     192.133.77.16:0 - "GET /robots.txt HTTP/1.1" 404 Not Found
 INFO:     43.157.22.57:0 - "GET / HTTP/1.1" 200 OK
 INFO:     199.16.157.180:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /api/health HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /dashboards HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /reading-room HTTP/1.1" 404 Not Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "POST /auth/request HTTP/1.1" 403 Forbidden
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "POST /auth/request HTTP/1.1" 403 Forbidden
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "POST /auth/request HTTP/1.1" 303 See Other
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /terminal HTTP/1.1" 302 Found
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /d HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /d/the-watch HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /d/plumbing HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:2562:b995:33d0:5d7f:0 - "GET /d/sentiment HTTP/1.1" 200 OK

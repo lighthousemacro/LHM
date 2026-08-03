@@ -1,0 +1,13 @@
+=== pharos refresh 2026-08-03 13:40:15 ===
+  FAIL build_the_watch.py
+         File "/opt/homebrew/lib/python3.14/site-packages/pandas/io/sql.py", line 2676, in execute
+           raise ex from exc
+       pandas.errors.DatabaseError: Execution failed on sql 'SELECT date, value FROM lighthouse_indices WHERE index_id = ? ORDER BY date': database is locked
+  FAIL build_pillar_labor.py
+         File "/opt/homebrew/lib/python3.14/site-packages/pandas/io/sql.py", line 2676, in execute
+           raise ex from exc
+       pandas.errors.DatabaseError: Execution failed on sql 'SELECT date, value FROM lighthouse_indices WHERE index_id = ? ORDER BY date': database is locked
+  FAIL build_pillar_02_prices.py
+         File "/opt/homebrew/lib/python3.14/site-packages/pandas/io/sql.py", line 2676, in execute
+           raise ex from exc
+       pandas.errors.DatabaseError: Execution failed on sql 'SELECT date, value FROM observations WHERE series_id = ? ORDER BY date': database is locked

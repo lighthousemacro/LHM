@@ -1,2 +1,25 @@
 [2026-08-03 13:40:16] ════════ DAILY DRAFT RUN START (2026-08-03) ════════
 [2026-08-03 13:40:16] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Packet is built and open in your browser.
+
+**The thread: "Two Clocks" — a Beam for Tue Aug 4.**
+
+The Iran strike was called off over the weekend and the energy complex repriced hard. But unevenly: crude gave back 58% of the war premium, while **wholesale gasoline gave back 98%** — RBOB is at $2.997 against $2.985 before any of it started. The pump was $4.096 and *still rising* as of the Jul 27 EIA print. The equity market banked the relief in full — S&P +3.89% in three sessions, Dow to a record, discretionary +5.72% while staples fell 2.87%.
+
+**The build reversed its own thesis halfway through, and that's what makes the piece.** The obvious version was "24 cents of relief is coming, on a lag." Chart 3 killed it: the retailer margin is $0.688, the **0.8th percentile since 2019**. Retailers absorbed roughly 47 cents of the spike instead of charging it. So much of the crude decline just cancels a price increase that was still owed rather than delivering relief. Normalising the margin against today's wholesale puts the pump near $3.97 — about **13 cents, half the headline math**. That's a falsifiable contrarian call the Aug 17 EIA print settles cleanly.
+
+Three things worth flagging:
+
+- **I killed the first thread on purpose.** Raw MSI printed −1.60, below the broken-structure line and the 7th percentile since 2001. Its 21-day mean is −0.45. Neutral. A spike, not a regime — same trap the Jul 25 run caught. The Jul 20 Beam had also already run breadth divergence.
+- **Two accuracy traps are called out in the packet.** The S&P is *not* at a record (−0.12% vs Jun 2); the **Dow** is. And crude did *not* round-trip — only wholesale gasoline did. Overstating either breaks the argument.
+- **The DB needs attention.** It hasn't been written since Jul 30 14:47, threw `database disk image is malformed` on a bulk read, and `MAX(date)` on observations returns 2036-10-01. Fourth corruption event. The packet cites zero composites as a result — several were stale carry-forwards (GCI unchanged 46 observations).
+
+One open item I couldn't close: **crack spreads weren't checked.** If refining economics rather than retailer absorption explain the compressed margin, the mechanism section needs rewriting. Question 5 flags it and instructs not to assert either way.
+
+Ten charts rendered, five in-piece and five supplementary. Nothing was published, sent, or pushed.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-08-04_two-clocks/morning_packet.html
+[2026-08-03 14:31:57] claude exited status=0 in 51m 40s
+[2026-08-03 14:31:58] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-08-04_two-clocks/morning_packet.html
+[2026-08-03 14:32:17] Opened in browser.
+[2026-08-03 14:32:17] ════════ DAILY DRAFT RUN END (status=0) ════════

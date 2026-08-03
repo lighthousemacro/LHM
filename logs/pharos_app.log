@@ -595,3 +595,9 @@ INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "POST /auth/request HTTP/1
 INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "GET / HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "GET /healthz HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "POST /auth/request HTTP/1.1" 403 Forbidden
+INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "POST /auth/request HTTP/1.1" 403 Forbidden
+INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:a157:e1ca:cc01:b623:0 - "POST /auth/request HTTP/1.1" 403 Forbidden

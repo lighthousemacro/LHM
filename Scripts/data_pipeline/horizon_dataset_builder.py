@@ -112,6 +112,7 @@ HORIZON_SERIES = {
     "T5YFF": {"name": "Spread_5Y_FF", "freq": "D", "transforms": ["diff"]},
     "DFII5": {"name": "TIPS_5Y", "freq": "D", "transforms": ["diff"]},
     "DFII10": {"name": "TIPS_10Y", "freq": "D", "transforms": ["diff"]},
+    "DFII30": {"name": "TIPS_30Y", "freq": "D", "transforms": ["diff"]},
     "THREEFYTP10": {"name": "Term_Premium_10Y", "freq": "D", "transforms": ["diff", "z"]},
     "MORTGAGE30US": {"name": "Mortgage_30Y", "freq": "W", "transforms": ["diff", "yoy_diff"]},
     "BAMLH0A0HYM2": {"name": "HY_OAS", "freq": "D", "transforms": ["diff", "yoy_diff", "z"]},

@@ -67,7 +67,7 @@ plt.rcParams["font.family"] = ["Inter", "Helvetica Neue", "Arial", "DejaVu Sans"
 
 # ---------------------------------------------------------------- data
 def load_obs(series_id: str) -> pd.Series:
-    with sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True) as conn:
+    with sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, timeout=60) as conn:
         df = pd.read_sql_query(
             "SELECT date, value FROM observations WHERE series_id = ? ORDER BY date",
             conn, params=(series_id,), parse_dates=["date"],
@@ -78,7 +78,7 @@ def load_obs(series_id: str) -> pd.Series:
 
 
 def load_index(index_id: str) -> pd.Series:
-    with sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True) as conn:
+    with sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, timeout=60) as conn:
         df = pd.read_sql_query(
             "SELECT date, value FROM lighthouse_indices WHERE index_id = ? ORDER BY date",
             conn, params=(index_id,), parse_dates=["date"],
@@ -89,7 +89,7 @@ def load_index(index_id: str) -> pd.Series:
 
 
 def index_status(index_id: str) -> str:
-    with sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True) as conn:
+    with sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, timeout=60) as conn:
         row = conn.execute(
             "SELECT status FROM lighthouse_indices WHERE index_id = ? ORDER BY date DESC LIMIT 1",
             (index_id,),

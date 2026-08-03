@@ -6890,3 +6890,9 @@
 2026-08-03T17:40:37Z INF Registered tunnel connection connIndex=3 connection=91f4c7c5-b749-4a5a-a3f3-fff7f50ee829 event=0 ip=2606:4700:a8::8 location=ewr15 protocol=quic
 2026-08-03T17:40:38Z INF Registered tunnel connection connIndex=2 connection=2ce39734-8a86-4868-91fc-b2eb43a2fdb4 event=0 ip=2606:4700:a8::2 location=ewr15 protocol=quic
 2026-08-03T17:40:38Z INF Registered tunnel connection connIndex=1 connection=a1f3c6df-009b-43ce-ab51-5eb30c56f9bb event=0 ip=198.41.192.27 location=ewr11 protocol=quic
+2026-08-03T18:55:14Z ERR  error="Incoming request ended abruptly: context canceled" connIndex=3 event=1 ingressRule=0 originService=http://localhost:8800
+2026-08-03T18:55:15Z ERR Request failed error="Incoming request ended abruptly: context canceled" connIndex=3 dest=https://pharos.lighthousemacro.com/d/labor event=0 ip=2606:4700:a8::8 type=http
+2026-08-03T18:55:16Z ERR  error="stream 33 canceled by remote with error code 0" connIndex=3 event=1 ingressRule=0 originService=http://localhost:8800
+2026-08-03T18:55:16Z ERR  error="stream 29 canceled by remote with error code 0" connIndex=3 event=1 ingressRule=0 originService=http://localhost:8800
+2026-08-03T18:55:16Z ERR Request failed error="stream 29 canceled by remote with error code 0" connIndex=3 dest=https://pharos.lighthousemacro.com/d/labor event=0 ip=2606:4700:a8::8 type=http
+2026-08-03T18:55:16Z ERR Request failed error="stream 33 canceled by remote with error code 0" connIndex=3 dest=https://pharos.lighthousemacro.com/d/labor event=0 ip=2606:4700:a8::8 type=http

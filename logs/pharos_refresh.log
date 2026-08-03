@@ -11,3 +11,21 @@
          File "/opt/homebrew/lib/python3.14/site-packages/pandas/io/sql.py", line 2676, in execute
            raise ex from exc
        pandas.errors.DatabaseError: Execution failed on sql 'SELECT date, value FROM observations WHERE series_id = ? ORDER BY date': database is locked
+  ok   build_pillar_03_growth.py
+  FAIL build_pillar_04_housing.py
+         File "/opt/homebrew/lib/python3.14/site-packages/pandas/io/sql.py", line 2676, in execute
+           raise ex from exc
+       pandas.errors.DatabaseError: Execution failed on sql 'SELECT date, value FROM observations WHERE series_id = ? ORDER BY date': database is locked
+  ok   build_pillar_05_consumer.py
+  ok   build_pillar_06_business.py
+  ok   build_pillar_07_trade.py
+  ok   build_pillar_08_government.py
+  ok   build_pillar_09_financial.py
+  ok   build_pillar_10_plumbing.py
+  ok   build_pillar_11_structure.py
+  ok   build_pillar_12_sentiment.py
+  ok   build_index.py
+-- rebuilt 10/14 boards
+-- FAILED: build_the_watch.py build_pillar_labor.py build_pillar_02_prices.py build_pillar_04_housing.py
+-- the_watch.html last written 101h ago
+   !! WARNING: landing board did not refresh

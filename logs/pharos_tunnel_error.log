@@ -6896,3 +6896,4 @@
 2026-08-03T18:55:16Z ERR  error="stream 29 canceled by remote with error code 0" connIndex=3 event=1 ingressRule=0 originService=http://localhost:8800
 2026-08-03T18:55:16Z ERR Request failed error="stream 29 canceled by remote with error code 0" connIndex=3 dest=https://pharos.lighthousemacro.com/d/labor event=0 ip=2606:4700:a8::8 type=http
 2026-08-03T18:55:16Z ERR Request failed error="stream 33 canceled by remote with error code 0" connIndex=3 dest=https://pharos.lighthousemacro.com/d/labor event=0 ip=2606:4700:a8::8 type=http
+2026-08-03T19:18:09Z WRN Your version 2026.7.2 is outdated. We recommend upgrading it to 2026.7.3

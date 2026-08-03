@@ -1290,3 +1290,4 @@
 2026-08-03 13:43:22 [ERROR]   UMCSENT: fetch failed: database is locked
 2026-08-03 13:44:19 [INFO]   MICH: refreshed (+582 obs)
 2026-08-03 13:44:23 [INFO] Freshness check done: 1 series refreshed, 582 obs added.
+2026-08-03 16:36:16 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.

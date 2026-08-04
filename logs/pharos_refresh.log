@@ -45,3 +45,8 @@
   ok   build_pillar_09_financial.py
   ok   build_pillar_10_plumbing.py
   ok   build_pillar_11_structure.py
+  ok   build_pillar_12_sentiment.py
+  ok   build_index.py
+-- rebuilt 13/14 boards
+-- FAILED: build_the_watch.py
+-- the_watch.html last written 22h ago

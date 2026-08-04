@@ -1,2 +1,23 @@
 [2026-08-04 13:30:26] ════════ DAILY DRAFT RUN START (2026-08-04) ════════
 [2026-08-04 13:30:26] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Packet is built and open in the browser.
+
+**Today's thread — "Thirty-Three Months" (The Beam):** ISM Manufacturing Employment printed 52.8 for July, breaking a 33-month contraction, the longest drought since 1983. Headline 55.6 vs 53.9 consensus, strongest since May 2022, all five components expanding.
+
+The differentiated part is what the framework did to it, and it reversed twice mid-build:
+
+- The thread started as "this signal has decayed, fade it" — the ISM/payroll correlation looked like it fell from +0.69 to +0.46 post-1990. **Excluding six COVID months, the post-1990 correlation is +0.65.** The entire apparent decay was the pandemic. The survey isn't broken, and that framing would have been wrong.
+- The real break survives the exclusion: the **slope** went from 8.8k to 5.3k jobs per index point. At 52.8 that's +7k/month, not the +28k the old relationship implied.
+- The "fade it" case then weakened too. This signal fired in May 2024 (-114k over six months) and Jan 2025 (-48k), but **overtime rose +0.4 hours into this crossing vs +0.2 and -0.1 into the two that failed**, and the six-month payroll sum had already flipped positive before the survey turned.
+
+So it lands two-sided with a 72-hour referee: **July manufacturing payrolls, Friday Aug 7.** Prior three prints -1k, -2k, +3k.
+
+Ten charts rendered to brand (5 publish + 5 supplementary, 2x budget met), three visual-QC failures caught and fixed. Six sharpened interview questions with the data points mapped under each. Zero proprietary composites cited — the staleness audit found GCI hasn't moved in 64 observations and most composites are carry-forwards, and the no-composites-in-published-content rule applies regardless.
+
+Two things worth your attention in `build_notes.md`: `MAX(date)` on `observations` still returns **2036-10-01**, so the future-dated junk rows from the Jul 28 event are still unfixed, and the DB was locked mid-write on first connect (worked around read-only, no writes attempted).
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-08-04_thirty-three-months/morning_packet.html
+[2026-08-04 14:18:11] claude exited status=0 in 47m 44s
+[2026-08-04 14:18:11] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-08-04_thirty-three-months/morning_packet.html
+[2026-08-04 14:18:11] Opened in browser.
+[2026-08-04 14:18:11] ════════ DAILY DRAFT RUN END (status=0) ════════

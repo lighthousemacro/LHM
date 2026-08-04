@@ -1,24 +1,22 @@
-[2026-08-03 13:40:16] ════════ DAILY DRAFT RUN START (2026-08-03) ════════
-[2026-08-03 13:40:16] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-Packet is built and open in your browser.
+[2026-08-04 13:30:26] ════════ DAILY DRAFT RUN START (2026-08-04) ════════
+[2026-08-04 13:30:26] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+Packet is built and open in the browser.
 
-**The thread: "Two Clocks" — a Beam for Tue Aug 4.**
+**Today's thread — "Thirty-Three Months" (The Beam):** ISM Manufacturing Employment printed 52.8 for July, breaking a 33-month contraction, the longest drought since 1983. Headline 55.6 vs 53.9 consensus, strongest since May 2022, all five components expanding.
 
-The Iran strike was called off over the weekend and the energy complex repriced hard. But unevenly: crude gave back 58% of the war premium, while **wholesale gasoline gave back 98%** — RBOB is at $2.997 against $2.985 before any of it started. The pump was $4.096 and *still rising* as of the Jul 27 EIA print. The equity market banked the relief in full — S&P +3.89% in three sessions, Dow to a record, discretionary +5.72% while staples fell 2.87%.
+The differentiated part is what the framework did to it, and it reversed twice mid-build:
 
-**The build reversed its own thesis halfway through, and that's what makes the piece.** The obvious version was "24 cents of relief is coming, on a lag." Chart 3 killed it: the retailer margin is $0.688, the **0.8th percentile since 2019**. Retailers absorbed roughly 47 cents of the spike instead of charging it. So much of the crude decline just cancels a price increase that was still owed rather than delivering relief. Normalising the margin against today's wholesale puts the pump near $3.97 — about **13 cents, half the headline math**. That's a falsifiable contrarian call the Aug 17 EIA print settles cleanly.
+- The thread started as "this signal has decayed, fade it" — the ISM/payroll correlation looked like it fell from +0.69 to +0.46 post-1990. **Excluding six COVID months, the post-1990 correlation is +0.65.** The entire apparent decay was the pandemic. The survey isn't broken, and that framing would have been wrong.
+- The real break survives the exclusion: the **slope** went from 8.8k to 5.3k jobs per index point. At 52.8 that's +7k/month, not the +28k the old relationship implied.
+- The "fade it" case then weakened too. This signal fired in May 2024 (-114k over six months) and Jan 2025 (-48k), but **overtime rose +0.4 hours into this crossing vs +0.2 and -0.1 into the two that failed**, and the six-month payroll sum had already flipped positive before the survey turned.
 
-Three things worth flagging:
+So it lands two-sided with a 72-hour referee: **July manufacturing payrolls, Friday Aug 7.** Prior three prints -1k, -2k, +3k.
 
-- **I killed the first thread on purpose.** Raw MSI printed −1.60, below the broken-structure line and the 7th percentile since 2001. Its 21-day mean is −0.45. Neutral. A spike, not a regime — same trap the Jul 25 run caught. The Jul 20 Beam had also already run breadth divergence.
-- **Two accuracy traps are called out in the packet.** The S&P is *not* at a record (−0.12% vs Jun 2); the **Dow** is. And crude did *not* round-trip — only wholesale gasoline did. Overstating either breaks the argument.
-- **The DB needs attention.** It hasn't been written since Jul 30 14:47, threw `database disk image is malformed` on a bulk read, and `MAX(date)` on observations returns 2036-10-01. Fourth corruption event. The packet cites zero composites as a result — several were stale carry-forwards (GCI unchanged 46 observations).
+Ten charts rendered to brand (5 publish + 5 supplementary, 2x budget met), three visual-QC failures caught and fixed. Six sharpened interview questions with the data points mapped under each. Zero proprietary composites cited — the staleness audit found GCI hasn't moved in 64 observations and most composites are carry-forwards, and the no-composites-in-published-content rule applies regardless.
 
-One open item I couldn't close: **crack spreads weren't checked.** If refining economics rather than retailer absorption explain the compressed margin, the mechanism section needs rewriting. Question 5 flags it and instructs not to assert either way.
+Two things worth your attention in `build_notes.md`: `MAX(date)` on `observations` still returns **2036-10-01**, so the future-dated junk rows from the Jul 28 event are still unfixed, and the DB was locked mid-write on first connect (worked around read-only, no writes attempted).
 
-Ten charts rendered, five in-piece and five supplementary. Nothing was published, sent, or pushed.
-
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-08-04_two-clocks/morning_packet.html
-[2026-08-03 14:31:57] claude exited status=0 in 51m 40s
-[2026-08-03 14:31:58] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-08-04_two-clocks/morning_packet.html
-[2026-08-03 14:32:17] Opened in browser.
+PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-08-04_thirty-three-months/morning_packet.html
+[2026-08-04 14:18:11] claude exited status=0 in 47m 44s
+[2026-08-04 14:18:11] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-08-04_thirty-three-months/morning_packet.html
+[2026-08-04 14:18:11] Opened in browser.

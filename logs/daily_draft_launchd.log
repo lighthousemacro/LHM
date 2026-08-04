@@ -517,3 +517,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-08-04_two-clocks/morning_packet.h
 [2026-08-03 14:31:58] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-08-04_two-clocks/morning_packet.html
 [2026-08-03 14:32:17] Opened in browser.
 [2026-08-03 14:32:17] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-08-04 13:30:26] ════════ DAILY DRAFT RUN START (2026-08-04) ════════
+[2026-08-04 13:30:26] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

@@ -1291,3 +1291,27 @@
 2026-08-03 13:44:19 [INFO]   MICH: refreshed (+582 obs)
 2026-08-03 13:44:23 [INFO] Freshness check done: 1 series refreshed, 582 obs added.
 2026-08-03 16:36:16 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-08-04 13:32:15 [INFO] Stale series (11):
+  JTSJOL: db=2026-05-01 -> fred=2026-06-01
+  JTSHIL: db=2026-05-01 -> fred=2026-06-01
+  JTSQUL: db=2026-05-01 -> fred=2026-06-01
+  JTSQUR: db=2026-05-01 -> fred=2026-06-01
+  JTSHIR: db=2026-05-01 -> fred=2026-06-01
+  JTSTSR: db=2026-05-01 -> fred=2026-06-01
+  JTS1000JOR: db=2026-05-01 -> fred=2026-06-01
+  JTS1000QUR: db=2026-05-01 -> fred=2026-06-01
+  JTS1000HIR: db=2026-05-01 -> fred=2026-06-01
+  BOPGSTB: db=2026-05-01 -> fred=2026-06-01
+  BOPGTB: db=2026-05-01 -> fred=2026-06-01
+2026-08-04 13:33:51 [ERROR]   JTSJOL: fetch failed: database is locked
+2026-08-04 13:34:41 [INFO]   JTSHIL: refreshed (+307 obs)
+2026-08-04 13:34:45 [INFO]   JTSQUL: refreshed (+307 obs)
+2026-08-04 13:34:48 [INFO]   JTSQUR: refreshed (+307 obs)
+2026-08-04 13:34:53 [INFO]   JTSHIR: refreshed (+307 obs)
+2026-08-04 13:34:57 [INFO]   JTSTSR: refreshed (+307 obs)
+2026-08-04 13:35:09 [INFO]   JTS1000JOR: refreshed (+307 obs)
+2026-08-04 13:35:42 [INFO]   JTS1000QUR: refreshed (+307 obs)
+2026-08-04 13:35:52 [INFO]   JTS1000HIR: refreshed (+307 obs)
+2026-08-04 13:35:59 [INFO]   BOPGSTB: refreshed (+414 obs)
+2026-08-04 13:36:04 [INFO]   BOPGTB: refreshed (+414 obs)
+2026-08-04 13:36:15 [INFO] Freshness check done: 10 series refreshed, 3,284 obs added.

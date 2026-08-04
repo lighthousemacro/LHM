@@ -35,3 +35,15 @@ WARN: live + backup unavailable (locked/slow (pipeline writing?)); using last-kn
 OK: wrote /Users/bob/LHM/Website/index.html (81,257 bytes)
     dashboard as-of 2026-07-28; 7 research items
   !! dashboard did not read live, refusing to publish a stale board
+=== site publish 2026-08-04 13:30:25 ===
+-- syncing Substack export
+substack export sync: 0 new post(s), 84 total
+-- rebuilding Reading Room
+Reading Room built: 70 posts (35 free, 35 members)
+  -> /Users/bob/LHM/Website/research/index.html + 70 article pages + reader.css
+  -> /Users/bob/LHM/Website/feed.xml
+-- rebuilding homepage
+WARN: live + backup unavailable (locked/slow (pipeline writing?)); using last-known snapshot.
+OK: wrote /Users/bob/LHM/Website/index.html (81,257 bytes)
+    dashboard as-of 2026-07-28; 7 research items
+  !! dashboard did not read live, refusing to publish a stale board

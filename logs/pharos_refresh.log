@@ -50,3 +50,13 @@
 -- rebuilt 13/14 boards
 -- FAILED: build_the_watch.py
 -- the_watch.html last written 22h ago
+=== pharos refresh 2026-08-05 15:46:07 ===
+  ok   build_the_watch.py
+  ok   build_pillar_labor.py
+  ok   build_pillar_02_prices.py
+  ok   build_pillar_03_growth.py
+  ok   build_pillar_04_housing.py
+  ok   build_pillar_05_consumer.py
+  ok   build_pillar_06_business.py
+  ok   build_pillar_07_trade.py
+  ok   build_pillar_08_government.py

@@ -6933,3 +6933,39 @@
 2026-08-04T17:30:47Z INF Registered tunnel connection connIndex=3 connection=716e7ccd-1359-4014-bfd1-c6791b76d324 event=0 ip=2606:4700:a8::8 location=ewr15 protocol=quic
 2026-08-04T17:30:47Z INF Registered tunnel connection connIndex=2 connection=04e40180-6d7d-46a6-9f91-6b8581a3b55c event=0 ip=2606:4700:a8::2 location=ewr12 protocol=quic
 2026-08-05T09:54:05Z WRN Your version 2026.7.2 is outdated. We recommend upgrading it to 2026.7.3
+2026-08-05T19:46:11Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.57
+2026-08-05T19:46:10Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-05T19:46:10Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-05T19:46:10Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.57
+2026-08-05T19:46:10Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-05T19:46:10Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-05T19:46:10Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-05T19:46:10Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-05T19:46:12Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:62541->[::1]:53: read: connection refused"
+2026-08-05T19:46:12Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.57
+2026-08-05T19:46:12Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-05T19:46:12Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-05T19:46:12Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.57
+2026-08-05T19:46:12Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.27
+2026-08-05T19:46:12Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.57
+2026-08-05T19:46:12Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-05T19:46:12Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-05T19:46:12Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-05T19:46:12Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-05T19:46:12Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-05T19:46:12Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-05T19:46:13Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:61410->[::1]:53: read: connection refused"
+2026-08-05T19:46:13Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:56889->[::1]:53: read: connection refused"
+2026-08-05T19:46:13Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
+2026-08-05T19:46:13Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.57
+2026-08-05T19:46:13Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:60132->[::1]:53: read: connection refused"
+2026-08-05T19:46:13Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=3
+2026-08-05T19:46:14Z ERR Failed to refresh protocol error="lookup protocol-v2.argotunnel.com on [::1]:53: read udp [::1]:52334->[::1]:53: read: connection refused"
+2026-08-05T19:46:14Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=1
+2026-08-05T19:46:20Z INF Registered tunnel connection connIndex=0 connection=290a1fcb-6fed-47a7-91f1-63cafed58e5f event=0 ip=198.41.192.57 location=ewr01 protocol=quic
+2026-08-05T19:46:22Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-05T19:46:22Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-05T19:46:22Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.27
+2026-08-05T19:46:25Z INF Registered tunnel connection connIndex=3 connection=c24499e5-3d92-444d-95b8-282907847e12 event=0 ip=2606:4700:a8::8 location=ewr16 protocol=quic
+2026-08-05T19:46:26Z INF Registered tunnel connection connIndex=2 connection=11594b26-db7d-4511-9109-95ce0dba1cb6 event=0 ip=2606:4700:a8::2 location=ewr15 protocol=quic
+2026-08-05T19:46:26Z INF Registered tunnel connection connIndex=1 connection=a9239985-c068-4769-9373-95218ff074e8 event=0 ip=198.41.192.27 location=ewr11 protocol=quic

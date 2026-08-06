@@ -746,3 +746,12 @@
 
 [2026-08-05 16:12:10] THRESHOLD ALERT CHECK
 [2026-08-05 16:12:10] No new alerts or transitions.
+
+[2026-08-06 06:28:16] THRESHOLD ALERT CHECK
+[2026-08-06 06:28:16] === REGIME TRANSITIONS ===
+[2026-08-06 06:28:16] SBD: ALIGNED -> EXTREME DISTRIBUTION (0.402 -> 1.897)
+[2026-08-06 06:28:16] SSD: FEAR + WEAK -> CAPITULATION LOW (0.506 -> 1.811)
+[2026-08-06 06:28:16] === THRESHOLD ALERTS ===
+[2026-08-06 06:28:16] [HIGH] SBD DISTRIBUTION: Generals without soldiers (1.897). Breadth diverging from price.
+[2026-08-06 06:28:16] [CRITICAL] SBD EXTREME: Distribution warning at 1.897. Major divergence.
+[2026-08-06 06:28:16] [HIGH] SSD CAPITULATION: Fear + weak structure (1.811). Watch for bottom formation.

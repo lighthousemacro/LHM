@@ -1,2 +1,22 @@
 [2026-08-06 07:46:09] ════════ DAILY DRAFT RUN START (2026-08-06) ════════
 [2026-08-06 07:46:09] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The packet is built and open in the browser.
+
+**Today's call:** The Beam (Thursday), on the one thread worth Bob's name this morning — **the Fed eased to 3.63% and the long end went the other way.** Thirty-year at 5.18%, mortgage at 6.66% and still rising week over week, ten-year term premium back to 0.87 after a decade near zero. Eleven of twelve pillars read neutral-to-strong; Fiscal Pressure at +1.47 is the only elevated one, and it sits exactly where the curve is pointing. Payrolls tomorrow don't resolve it — a hot print pushes the term premium, not the cycle.
+
+What's in the packet:
+- **The thread** in one briefing paragraph, plus the Two Economies cohort split (S&P 500 at 7,724 against UMich sentiment at 49.5)
+- **34 sourced data points** across four blocks, every one pulled from `observations` with its own as-of date, nothing interpolated
+- **10 charts** rendered to brand, 5 publication + 5 supplementary, each with a placement note
+- **The six locked Beam questions**, sharpened to today's numbers, with the specific data and chart refs to pull into each answer
+- **Headline plus two alternates**
+
+Two things I killed rather than shipped: the Structure-Breadth Divergence printed +1.90 / "EXTREME DISTRIBUTION" and the Sentiment-Structure Divergence printed +1.81 / "CAPITULATION LOW" — both are artifacts. Actual breadth improved over the same window (members above the 200-day 67.8% → 71.6%, net new highs 0 → 27). The composites spiked because price outran breadth in z-score space. Worth a look at that computation. Also flagged: `VIX_Close`, `DXY_Close`, and `Gold_Close` aren't in the DB under those ids, so no vol or dollar chart was built rather than proxying. All logged in `build_notes.md`.
+
+Nothing was published, sent, or posted, and no prose was written for the piece.
+
+PREVIEW_PATH: /Users/bob/LHM/Outputs/the-fed-eased-the-long-end-didnt/MORNING_PACKET_2026-08-06.html
+[2026-08-06 09:39:38] claude exited status=0 in 113m 29s
+[2026-08-06 09:39:38] PREVIEW READY → /Users/bob/LHM/Outputs/the-fed-eased-the-long-end-didnt/MORNING_PACKET_2026-08-06.html
+[2026-08-06 09:39:38] Opened in browser.
+[2026-08-06 09:39:38] ════════ DAILY DRAFT RUN END (status=0) ════════

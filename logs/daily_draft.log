@@ -1,16 +1,21 @@
-[2026-08-05 15:46:08] ════════ DAILY DRAFT RUN START (2026-08-05) ════════
-[2026-08-05 15:46:09] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
-Packet is built and open in the browser.
+[2026-08-06 07:46:09] ════════ DAILY DRAFT RUN START (2026-08-06) ════════
+[2026-08-06 07:46:09] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM
+The packet is built and open in the browser.
 
-**Today's thread — "The Price Stopped Asking" (The Beam, Pillars 4 / 9 / 5).** The conventional mortgage credit-risk premium has collapsed to 31.6bps on a 21-day average, the 7.5th percentile since 2017 and roughly half the 59.5bps that prevailed pre-2020. Widen to the full cross-section and the ordering inverts: FHA at 6.435% and VA at 6.289% both price *below* the 6.643% charged to a 740-plus borrower with twenty percent down. FHA crossed under prime conventional in 2023 and has stayed there three years running. Meanwhile delinquency has climbed from a 1.70% trough to 1.89%, single-family starts fell to 895k, and builder sentiment sits at 34. The price of mortgage credit has stopped carrying borrower information, so the sorting moved from price to access.
+**Today's call:** The Beam (Thursday), on the one thread worth Bob's name this morning — **the Fed eased to 3.63% and the long end went the other way.** Thirty-year at 5.18%, mortgage at 6.66% and still rising week over week, ten-year term premium back to 0.87 after a decade near zero. Eleven of twelve pillars read neutral-to-strong; Fiscal Pressure at +1.47 is the only elevated one, and it sits exactly where the curve is pointing. Payrolls tomorrow don't resolve it — a hot print pushes the term premium, not the cycle.
 
-Ten charts rendered to brand standard, five for the piece and five for the paid supplementary pack. Six sharpened interview questions with the data points mapped under each. Three headlines.
+What's in the packet:
+- **The thread** in one briefing paragraph, plus the Two Economies cohort split (S&P 500 at 7,724 against UMich sentiment at 49.5)
+- **34 sourced data points** across four blocks, every one pulled from `observations` with its own as-of date, nothing interpolated
+- **10 charts** rendered to brand, 5 publication + 5 supplementary, each with a placement note
+- **The six locked Beam questions**, sharpened to today's numbers, with the specific data and chart refs to pull into each answer
+- **Headline plus two alternates**
 
-Two things worth knowing, both logged in `build_notes.md`. I killed a Two Economies cohort-homeownership angle because the data ran the opposite way (Black-alone homeownership is *up* 1.5pts year over year), and I dropped a strong JOLTS labor-flows thread because yesterday's Beam already pointed Pillar 1 at Friday's payrolls. Two chart annotations failed verification against the series and were corrected before the final render.
+Two things I killed rather than shipped: the Structure-Breadth Divergence printed +1.90 / "EXTREME DISTRIBUTION" and the Sentiment-Structure Divergence printed +1.81 / "CAPITULATION LOW" — both are artifacts. Actual breadth improved over the same window (members above the 200-day 67.8% → 71.6%, net new highs 0 → 27). The composites spiked because price outran breadth in z-score space. Worth a look at that computation. Also flagged: `VIX_Close`, `DXY_Close`, and `Gold_Close` aren't in the DB under those ids, so no vol or dollar chart was built rather than proxying. All logged in `build_notes.md`.
 
-The DB was healthy this run, unlike Aug 3. Nothing was published anywhere.
+Nothing was published, sent, or posted, and no prose was written for the piece.
 
-PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-08-05_price-stopped-asking/morning_packet.html
-[2026-08-05 16:31:53] claude exited status=0 in 45m 44s
-[2026-08-05 16:31:53] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-08-05_price-stopped-asking/morning_packet.html
-[2026-08-05 16:31:54] Opened in browser.
+PREVIEW_PATH: /Users/bob/LHM/Outputs/the-fed-eased-the-long-end-didnt/MORNING_PACKET_2026-08-06.html
+[2026-08-06 09:39:38] claude exited status=0 in 113m 29s
+[2026-08-06 09:39:38] PREVIEW READY → /Users/bob/LHM/Outputs/the-fed-eased-the-long-end-didnt/MORNING_PACKET_2026-08-06.html
+[2026-08-06 09:39:38] Opened in browser.

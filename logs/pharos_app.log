@@ -1143,3 +1143,9 @@ INFO:     152.89.204.250:0 - "GET /d/labor HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:7d0d:254e:25a0:d1bb:0 - "GET / HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:7d0d:254e:25a0:d1bb:0 - "GET /healthz HTTP/1.1" 200 OK
 INFO:     2600:4041:5d22:c100:7d0d:254e:25a0:d1bb:0 - "POST /auth/request HTTP/1.1" 403 Forbidden
+INFO:     152.89.204.250:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     43.157.22.57:0 - "GET / HTTP/1.1" 200 OK
+INFO:     138.19.119.94:0 - "GET /d/labor HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:7d0d:254e:25a0:d1bb:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:7d0d:254e:25a0:d1bb:0 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     2600:4041:5d22:c100:7d0d:254e:25a0:d1bb:0 - "POST /auth/request HTTP/1.1" 403 Forbidden

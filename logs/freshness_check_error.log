@@ -1318,3 +1318,9 @@
 2026-08-04 16:35:46 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-08-05 15:47:52 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
 2026-08-05 16:35:44 [INFO] All release-sensitive series are up-to-date. Nothing to fetch.
+2026-08-06 08:44:18 [INFO] Stale series (2):
+  ICSA: db=2026-07-25 -> fred=2026-08-01
+  CCSA: db=2026-07-18 -> fred=2026-07-25
+2026-08-06 08:44:31 [INFO]   ICSA: refreshed (+3109 obs)
+2026-08-06 08:44:37 [INFO]   CCSA: refreshed (+3108 obs)
+2026-08-06 08:44:37 [INFO] Freshness check done: 2 series refreshed, 6,217 obs added.

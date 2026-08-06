@@ -7326,3 +7326,76 @@
 2026-08-06T04:09:38Z WRN Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
 2026-08-06T04:09:54Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::2
 2026-08-06T04:09:57Z INF Registered tunnel connection connIndex=2 connection=8a99965e-7f5c-47ed-ab3d-af0f22e41472 event=0 ip=2606:4700:a8::2 location=ewr12 protocol=quic
+2026-08-06T04:37:07Z ERR failed to run the datagram handler error="write udp4 0.0.0.0:63530->198.41.192.27:7844: sendmsg: network is unreachable" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:07Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: write udp4 0.0.0.0:55165->198.41.192.57:7844: sendmsg: network is unreachable" connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:07Z ERR failed to run the datagram handler error="write udp6 [::]:50662->[2606:4700:a8::8]:7844: sendmsg: no route to host" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:07Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: write udp6 [::]:50662->[2606:4700:a8::8]:7844: sendmsg: no route to host" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:07Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: write udp4 0.0.0.0:63530->198.41.192.27:7844: sendmsg: network is unreachable" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:07Z ERR failed to run the datagram handler error="write udp6 [::]:57503->[2606:4700:a8::2]:7844: sendmsg: no route to host" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:07Z ERR failed to run the datagram handler error="write udp4 0.0.0.0:55165->198.41.192.57:7844: sendmsg: network is unreachable" connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:07Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: write udp6 [::]:57503->[2606:4700:a8::2]:7844: sendmsg: no route to host" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:07Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:07Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:07Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:07Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:07Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:07Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:07Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:07Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:07Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:07Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:07Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:07Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:08Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=1
+2026-08-06T04:37:08Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=2
+2026-08-06T04:37:09Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:09Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=3
+2026-08-06T04:37:09Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp4 0.0.0.0:55165->198.41.192.57:7844: sendmsg: network is unreachable" connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:09Z INF Retrying connection in up to 4s connIndex=0 event=0 ip=198.41.192.57
+2026-08-06T04:37:10Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:10Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp6 [::]:55165->[2606:4700:a0::7]:7844: sendmsg: no route to host" connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:10Z INF Retrying connection in up to 8s connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:12Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T04:37:12Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp4 0.0.0.0:55165->198.41.192.107:7844: sendmsg: network is unreachable" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T04:37:12Z INF Retrying connection in up to 16s connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T04:37:13Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:13Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:13Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:13Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp4 0.0.0.0:63530->198.41.192.27:7844: sendmsg: network is unreachable" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:13Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp6 [::]:57503->[2606:4700:a8::2]:7844: sendmsg: no route to host" connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:13Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp6 [::]:50662->[2606:4700:a8::8]:7844: sendmsg: no route to host" connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:13Z INF Retrying connection in up to 4s connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:37:13Z INF Retrying connection in up to 4s connIndex=2 event=0 ip=2606:4700:a8::2
+2026-08-06T04:37:13Z INF Retrying connection in up to 4s connIndex=3 event=0 ip=2606:4700:a8::8
+2026-08-06T04:37:14Z ERR Connection terminated error="failed to dial to edge with quic: write udp4 0.0.0.0:63530->198.41.192.27:7844: sendmsg: network is unreachable" connIndex=1
+2026-08-06T04:37:15Z ERR Connection terminated error="failed to dial to edge with quic: write udp6 [::]:57503->[2606:4700:a8::2]:7844: sendmsg: no route to host" connIndex=2
+2026-08-06T04:37:16Z ERR Connection terminated error="failed to dial to edge with quic: write udp6 [::]:50662->[2606:4700:a8::8]:7844: sendmsg: no route to host" connIndex=3
+2026-08-06T04:37:24Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:29Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: write udp6 [::]:55165->[2606:4700:a0::7]:7844: sendmsg: no route to host" connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:29Z ERR failed to run the datagram handler error="write udp6 [::]:55165->[2606:4700:a0::7]:7844: sendmsg: no route to host" connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.13
+2026-08-06T04:37:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=2606:4700:a0::3
+2026-08-06T04:37:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.200.193
+2026-08-06T04:37:30Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:30Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:30Z INF Retrying connection in up to 32s connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:30Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp6 [::]:63530->[2606:4700:a0::3]:7844: sendmsg: no route to host" connIndex=1 event=0 ip=2606:4700:a0::3
+2026-08-06T04:37:30Z INF Retrying connection in up to 8s connIndex=1 event=0 ip=2606:4700:a0::3
+2026-08-06T04:37:30Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp4 0.0.0.0:50662->198.41.200.13:7844: sendmsg: network is unreachable" connIndex=3 event=0 ip=198.41.200.13
+2026-08-06T04:37:30Z INF Retrying connection in up to 8s connIndex=3 event=0 ip=198.41.200.13
+2026-08-06T04:37:30Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp4 0.0.0.0:57503->198.41.200.193:7844: sendmsg: network is unreachable" connIndex=2 event=0 ip=198.41.200.193
+2026-08-06T04:37:30Z INF Retrying connection in up to 8s connIndex=2 event=0 ip=198.41.200.193
+2026-08-06T04:37:33Z ERR Connection terminated error="failed to dial to edge with quic: write udp6 [::]:63530->[2606:4700:a0::3]:7844: sendmsg: no route to host" connIndex=1
+2026-08-06T04:37:35Z ERR Connection terminated error="failed to dial to edge with quic: write udp4 0.0.0.0:50662->198.41.200.13:7844: sendmsg: network is unreachable" connIndex=3
+2026-08-06T04:37:35Z ERR Connection terminated error="failed to dial to edge with quic: write udp4 0.0.0.0:57503->198.41.200.193:7844: sendmsg: network is unreachable" connIndex=2
+2026-08-06T04:37:43Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:44Z ERR Failed to dial a quic connection error="failed to dial to edge with quic: write udp6 [::]:55165->[2606:4700:a0::7]:7844: sendmsg: no route to host" connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:44Z INF Retrying connection in up to 1m4s connIndex=0 event=0 ip=2606:4700:a0::7
+2026-08-06T04:37:55Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T04:38:01Z INF Registered tunnel connection connIndex=0 connection=8e2d7c35-909e-4c8f-8c32-9200e289a297 event=0 ip=198.41.192.107 location=ewr01 protocol=quic
+2026-08-06T04:38:47Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T04:38:47Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T04:38:47Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T04:38:51Z INF Registered tunnel connection connIndex=3 connection=81f73f87-8683-4f9a-acae-1f22ea98b463 event=0 ip=2606:4700:a8::5 location=ewr12 protocol=quic
+2026-08-06T04:38:51Z INF Registered tunnel connection connIndex=2 connection=695ef641-2c25-4503-84ef-bb69031b3db6 event=0 ip=2606:4700:a8::8 location=ewr14 protocol=quic
+2026-08-06T04:38:51Z INF Registered tunnel connection connIndex=1 connection=e7051538-3ed7-430e-97ef-667dc0c515f4 event=0 ip=198.41.192.27 location=ewr11 protocol=quic

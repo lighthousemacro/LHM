@@ -557,3 +557,5 @@ PREVIEW_PATH: /Users/bob/LHM/Outputs/beam_2026-08-05_price-stopped-asking/mornin
 [2026-08-05 16:31:53] PREVIEW READY → /Users/bob/LHM/Outputs/beam_2026-08-05_price-stopped-asking/morning_packet.html
 [2026-08-05 16:31:54] Opened in browser.
 [2026-08-05 16:31:54] ════════ DAILY DRAFT RUN END (status=0) ════════
+[2026-08-06 07:46:09] ════════ DAILY DRAFT RUN START (2026-08-06) ════════
+[2026-08-06 07:46:09] claude: /Users/bob/.local/bin/claude   cwd: /Users/bob/LHM

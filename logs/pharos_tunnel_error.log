@@ -7430,3 +7430,11 @@
 2026-08-06T07:45:14Z INF Registered tunnel connection connIndex=2 connection=835a9271-ca95-4f6a-86ea-0c41373dc3f2 event=0 ip=2606:4700:a8::8 location=ewr12 protocol=quic
 2026-08-06T07:45:14Z INF Registered tunnel connection connIndex=1 connection=12d0cbea-d35c-498e-b480-70710a948a67 event=0 ip=198.41.192.27 location=ewr11 protocol=quic
 2026-08-06T07:45:14Z INF Registered tunnel connection connIndex=3 connection=6991d97e-1f33-48f1-ab8d-742457e72792 event=0 ip=2606:4700:a8::5 location=ewr14 protocol=quic
+2026-08-06T08:13:52Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T08:13:52Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T08:13:52Z WRN failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T08:13:52Z WRN Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T08:13:52Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T08:13:52Z WRN Connection terminated error="datagram manager encountered a failure while serving" connIndex=3
+2026-08-06T08:13:59Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T08:13:59Z INF Registered tunnel connection connIndex=3 connection=eab72cbf-7396-42c7-ad04-a9f68cd93930 event=0 ip=2606:4700:a8::5 location=ewr14 protocol=quic

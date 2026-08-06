@@ -242,3 +242,6 @@ https://pharos.lighthousemacro.com
 2026-08-06T13:01:28.763955+00:00  ok
 2026-08-06T13:37:45.845030+00:00  ok
 2026-08-06T14:06:02.924577+00:00  ok
+2026-08-06T15:52:52.702470+00:00  PHAROS DOWN
+- gate check failed: The read operation timed out
+https://pharos.lighthousemacro.com

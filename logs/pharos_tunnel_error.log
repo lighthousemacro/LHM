@@ -7399,3 +7399,28 @@
 2026-08-06T04:38:51Z INF Registered tunnel connection connIndex=3 connection=81f73f87-8683-4f9a-acae-1f22ea98b463 event=0 ip=2606:4700:a8::5 location=ewr12 protocol=quic
 2026-08-06T04:38:51Z INF Registered tunnel connection connIndex=2 connection=695ef641-2c25-4503-84ef-bb69031b3db6 event=0 ip=2606:4700:a8::8 location=ewr14 protocol=quic
 2026-08-06T04:38:51Z INF Registered tunnel connection connIndex=1 connection=e7051538-3ed7-430e-97ef-667dc0c515f4 event=0 ip=198.41.192.27 location=ewr11 protocol=quic
+2026-08-06T07:44:48Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T07:44:49Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T07:44:49Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T07:44:48Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T07:44:48Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T07:44:48Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T07:44:48Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T07:44:48Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T07:44:50Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T07:44:50Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T07:44:50Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T07:44:50Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T07:44:50Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T07:44:50Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T07:44:50Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T07:44:50Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T07:44:50Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T07:44:50Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T07:44:50Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T07:44:50Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T07:44:51Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=1
+2026-08-06T07:44:51Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=2
+2026-08-06T07:44:51Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T07:44:52Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=3
+2026-08-06T07:44:54Z INF Registered tunnel connection connIndex=0 connection=0ede1c31-9ff7-4904-a2dc-6c09c5ca5fa6 event=0 ip=198.41.192.107 location=ewr01 protocol=quic

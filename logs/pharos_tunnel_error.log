@@ -7704,3 +7704,97 @@
 2026-08-06T12:44:00Z INF Registered tunnel connection connIndex=3 connection=2b0831c6-91bb-4b0e-b944-cd885e2bd405 event=0 ip=2606:4700:a8::5 location=ewr14 protocol=quic
 2026-08-06T12:44:00Z INF Registered tunnel connection connIndex=1 connection=4cef3ae5-60ca-457b-919d-d80766f14455 event=0 ip=198.41.192.27 location=ewr11 protocol=quic
 2026-08-06T12:44:00Z INF Registered tunnel connection connIndex=2 connection=327bcbe4-eb4f-4d06-bc7b-f6f9b2161239 event=0 ip=2606:4700:a8::8 location=ewr12 protocol=quic
+2026-08-06T13:00:14Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:00:14Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:00:14Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:00:14Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:00:14Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:00:14Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:00:14Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:00:14Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:00:16Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:00:16Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:00:16Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:00:16Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:00:16Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:00:16Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:00:16Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:00:16Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:00:16Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:00:16Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:00:16Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:00:16Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:00:16Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=3
+2026-08-06T13:00:16Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
+2026-08-06T13:00:17Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:00:17Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=1
+2026-08-06T13:00:21Z INF Registered tunnel connection connIndex=0 connection=a291b6e3-0a83-43b7-b35f-a7235a56c4cf event=0 ip=198.41.192.107 location=ewr01 protocol=quic
+2026-08-06T13:03:58Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:03:58Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:03:58Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:04:01Z INF Registered tunnel connection connIndex=3 connection=3ecc41e1-beb5-4548-ba41-7404ca3bb81d event=0 ip=2606:4700:a8::5 location=ewr14 protocol=quic
+2026-08-06T13:04:01Z INF Registered tunnel connection connIndex=1 connection=6b0a685d-f367-4d59-9132-238b0990858c event=0 ip=198.41.192.27 location=ewr11 protocol=quic
+2026-08-06T13:04:01Z INF Registered tunnel connection connIndex=2 connection=185bc270-fbaa-4c20-9900-b69f37d23177 event=0 ip=2606:4700:a8::8 location=ewr12 protocol=quic
+2026-08-06T13:19:34Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:19:34Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:19:34Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:19:34Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:19:34Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:19:34Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:19:34Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:19:34Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:19:34Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:19:34Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:19:34Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:19:34Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:19:34Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:19:34Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:19:34Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:19:34Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:19:34Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:19:34Z ERR failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:19:34Z ERR Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:19:34Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:19:34Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=1
+2026-08-06T13:19:35Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
+2026-08-06T13:19:35Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=3
+2026-08-06T13:19:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:19:36Z INF Registered tunnel connection connIndex=0 connection=fb795802-8cf0-4676-a851-0b2e95e62383 event=0 ip=198.41.192.107 location=ewr01 protocol=quic
+2026-08-06T13:21:59Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:21:59Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:22:01Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:22:01Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:22:01Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:22:01Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:22:03Z INF Registered tunnel connection connIndex=0 connection=62d868df-d670-49e8-aee7-af8b4ad84d5b event=0 ip=198.41.192.107 location=ewr01 protocol=quic
+2026-08-06T13:23:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:23:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:23:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:23:41Z INF Registered tunnel connection connIndex=2 connection=9fb2a5e1-b749-4ffd-bac3-006030ddb69d event=0 ip=2606:4700:a8::8 location=ewr12 protocol=quic
+2026-08-06T13:23:41Z INF Registered tunnel connection connIndex=1 connection=58556631-1699-4b7e-b27c-e265490a9cce event=0 ip=198.41.192.27 location=ewr11 protocol=quic
+2026-08-06T13:23:41Z INF Registered tunnel connection connIndex=3 connection=06d638bd-6ac0-4717-a371-54ab0ce97826 event=0 ip=2606:4700:a8::5 location=ewr14 protocol=quic
+2026-08-06T13:29:44Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:29:44Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:29:44Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:29:44Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:29:44Z WRN failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:29:44Z WRN failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:29:44Z WRN Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:29:44Z WRN Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:29:44Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=2606:4700:a8::5
+2026-08-06T13:29:44Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.27
+2026-08-06T13:29:44Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:29:44Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:29:44Z WRN failed to serve tunnel connection error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:29:44Z WRN Serve tunnel error error="datagram manager encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:29:44Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:29:45Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:29:45Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:29:45Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:29:45Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:29:45Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=2606:4700:a8::8
+2026-08-06T13:29:45Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
+2026-08-06T13:29:45Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=1
+2026-08-06T13:29:45Z ERR Connection terminated error="datagram manager encountered a failure while serving" connIndex=3
+2026-08-06T13:29:45Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.107
+2026-08-06T13:29:46Z INF Registered tunnel connection connIndex=0 connection=ed3d786c-6243-4d0c-8b2e-532605399303 event=0 ip=198.41.192.107 location=ewr01 protocol=quic

@@ -1,0 +1,17 @@
+# Project tooling config for the LHM monorepo.
+#
+# This is intentionally minimal: it configures pytest only. The repo is not yet
+# packaged/installable, so the test suite makes the relevant source directories
+# importable via tests/conftest.py rather than an installed distribution.
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-ra --strict-markers"
+filterwarnings = [
+    # Surface warnings during tests, but don't let upstream deprecations fail CI.
+    "default",
+]
